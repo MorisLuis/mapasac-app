@@ -3,5 +3,11 @@ module.exports = {
     ios: {
       automaticPodsInstallation: true
     }
-  }
+  },
+
+  'react-native-vector-icons': {
+    platforms: {
+      ios: null,
+    },
+  },
 }
