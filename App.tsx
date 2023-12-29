@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Tab } from './src/navigator/Tab';
 
-export const App = () => {
+const App = () => {
 
   return (
     <NavigationContainer>
@@ -10,3 +10,5 @@ export const App = () => {
     </NavigationContainer>
   );
 };
+
+export default App;
