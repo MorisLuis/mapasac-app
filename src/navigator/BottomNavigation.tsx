@@ -5,7 +5,7 @@ import { ScannerNavigation } from './ScannerNavigation';
 import { Profile } from '../screens/Profile';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const Tab = () => {
+export const BottomNavigation = () => {
 
     const BottomTabIOS = createBottomTabNavigator();
 
@@ -14,10 +14,9 @@ export const Tab = () => {
             sceneContainerStyle={{
                 backgroundColor: 'white'
             }}
-            
 
             screenOptions={({ route }) => ({
-                tabBarIcon: ({ color, focused, size }) => {
+                tabBarIcon: ({ color }) => {
 
                     let iconName: string = '';
                     switch (route.name) {
@@ -39,9 +38,8 @@ export const Tab = () => {
             })}
         >
             <BottomTabIOS.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
-            <BottomTabIOS.Screen name="Scanner" options={{ title: 'Escaner' }} component={ScannerNavigation} />
+            <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
             <BottomTabIOS.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
-
         </BottomTabIOS.Navigator>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, View, Text } from 'react-native';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
@@ -34,17 +34,26 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     };
 
+    useEffect(() => {
+        console.log('Camera');
+    }, [])
+
     return (
-        <View style={{ flex: 1 }}>
-            {backCamera && (
-                <View style={{ flex: 1 }}>
+        <View style={{ 
+            flex: 1,
+            backgroundColor: "red"
+            }}>
+            <View style={{ flex: 1 }}>
                     <Button title="Abrir cámara trasera" onPress={handleCameraOpen} />
-                    <Camera
-                        style={{ flex: 1 }}
-                        device={backCamera}
-                        isActive={selectedDevice !== null}
-                        codeScanner={isScannerActive ? codeScanner : undefined}
-                    />
+                    {
+                        backCamera && 
+                        <Camera
+                            style={{ flex: 1 }}
+                            device={backCamera}
+                            isActive={selectedDevice !== null}
+                            codeScanner={isScannerActive ? codeScanner : undefined}
+                        />
+                    }
                     <Button title="Toggle Scanner" onPress={toggleScanner} />
                     <View>
                         {
@@ -56,7 +65,6 @@ const CustomCamera: React.FC = () => {
                         }
                     </View>
                 </View>
-            )}
         </View>
     );
 };
