@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Button, View, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
+import { ScannerCodeCard } from '../../components/Cards/ScannerCodeCard';
+import ModalBottom from '../../components/Modals/ModalBottom';
 
 const CustomCamera: React.FC = () => {
     const [scannedCodes, setScannedCodes] = useState<string | undefined>();
@@ -22,7 +25,6 @@ const CustomCamera: React.FC = () => {
         }
     });
 
-
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 
@@ -34,39 +36,102 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     };
 
-    useEffect(() => {
-        console.log('Camera');
-    }, [])
+    const handleCloseProductModalScanned = () => {
+        setScannedCodes(undefined)
+    }
 
     return (
-        <View style={{ 
-            flex: 1,
-            backgroundColor: "red"
-            }}>
-            <View style={{ flex: 1 }}>
-                    <Button title="Abrir cámara trasera" onPress={handleCameraOpen} />
-                    {
-                        backCamera && 
-                        <Camera
-                            style={{ flex: 1 }}
-                            device={backCamera}
-                            isActive={selectedDevice !== null}
-                            codeScanner={isScannerActive ? codeScanner : undefined}
-                        />
-                    }
-                    <Button title="Toggle Scanner" onPress={toggleScanner} />
-                    <View>
-                        {
-                            scannedCodes &&
-                            <View>
-                                <Text>Scanned Codes:</Text>
-                                <Text>{scannedCodes}</Text>
-                            </View>
-                        }
+        <View style={styles.cameraScreen}>
+            <View style={styles.content}>
+                {
+                    backCamera &&
+                    <Camera
+                        style={styles.camera}
+                        device={backCamera}
+                        isActive={selectedDevice !== null}
+                        codeScanner={isScannerActive ? codeScanner : undefined}
+                    />
+                }
+
+                {
+                    selectedDevice &&
+                    <View style={styles.iconStyle} >
+                        <Icon name="scan-outline" size={250} color="white" />
                     </View>
-                </View>
+                }
+
+                {
+                    !selectedDevice &&
+                    <TouchableOpacity
+                        style={styles.toogleButton}
+                        onPress={handleCameraOpen}
+                    >
+                        <Text style={styles.buttonText}>Abrir cámara</Text>
+                    </TouchableOpacity>
+                }
+
+                <TouchableOpacity
+                    style={styles.toogleButton}
+                    onPress={toggleScanner}
+                >
+                    <Text style={styles.buttonText}>Escanear</Text>
+                </TouchableOpacity>
+
+            </View>
+            <ModalBottom
+                visible={scannedCodes ? true : false}
+                scannedCodes={scannedCodes}
+                onClose={handleCloseProductModalScanned}
+            />
         </View>
     );
 };
 
 export default CustomCamera;
+
+
+const styles = StyleSheet.create({
+    cameraScreen: {
+        flex: 1,
+        backgroundColor: "beige",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    content: {
+        backgroundColor: "white",
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        //position: "relative"
+    },
+    camera: {
+        flex: 1,
+        height: "100%",
+        width: "100%",
+        position: "absolute",
+        top: 0
+    },
+    toogleButton: {
+        backgroundColor: "#0E1727",
+        top: "80%",
+        left: "25%",
+        width: "50%",
+        color: "white",
+        borderRadius: 5,
+        marginBottom: 10
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        padding: 10,
+        display: "flex",
+        textAlign: "center"
+    },
+    iconStyle: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: [{ translateX: -125 }, { translateY: -150 }],
+    } as ViewStyle
+})

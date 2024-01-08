@@ -5,7 +5,7 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 interface CustomTabButtonProps {
     children: React.ReactNode;
     onPress: () => void;
-    accessibilityLabel?: string; // Hacer que accessibilityLabel sea opcional
+    accessibilityLabel?: string; 
     active: boolean;
 }
 

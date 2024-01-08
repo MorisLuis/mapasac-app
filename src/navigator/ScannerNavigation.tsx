@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import React, { useState } from 'react';
 
 import CustomCamera from '../screens/Camera/Camera';
 import { LogBox, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Inventory } from '../screens/Camera/Inventory';
 import { AddProduct } from '../screens/Camera/AddProduct';
-import { CustomTabBar } from '../components/Common/CustomTabBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-
 LogBox.ignoreLogs(['Sending'])
-const Tab = createMaterialTopTabNavigator();
-
 
 export const ScannerNavigation = () => {
 
@@ -33,13 +28,13 @@ export const ScannerNavigation = () => {
     return (
         <View style={styles.container}>
             <SafeAreaView style={styles.menu}>
-                <TouchableOpacity onPress={() => setSelectedTab('Camera')}  style={styles.menuItem}>
-                    <Text style={styles.tabContent}>Camera</Text>
+                <TouchableOpacity onPress={() => setSelectedTab('Camera')} style={[styles.menuItem, selectedTab === 'Camera' && styles.selectedTabContent]}>
+                    <Text style={styles.tabContent}>Camara</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedTab('Inventory')}  style={styles.menuItem}>
+                <TouchableOpacity onPress={() => setSelectedTab('Inventory')} style={[styles.menuItem, selectedTab === 'Inventory' && styles.selectedTabContent]}>
                     <Text style={styles.tabContent}>Inventario</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedTab('AddProduct')}  style={styles.menuItem}>
+                <TouchableOpacity onPress={() => setSelectedTab('AddProduct')} style={[styles.menuItem, selectedTab === 'AddProduct' && styles.selectedTabContent]}>
                     <Text style={styles.tabContent}>+</Text>
                 </TouchableOpacity>
             </SafeAreaView>
@@ -53,14 +48,11 @@ export const ScannerNavigation = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "orange",
         height: "100%"
     },
     menu: {
         flexDirection: 'row',
-        //justifyContent: 'space-around',
         alignItems: 'center',
-        height: 100,
         position: 'absolute',
         width: '100%',
         top: 0,
@@ -81,4 +73,7 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
     },
+    selectedTabContent: {
+        backgroundColor: "orange"
+    }
 });
