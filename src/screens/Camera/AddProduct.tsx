@@ -12,7 +12,7 @@ export const AddProduct = () => {
         <SafeAreaView
             style={{
                 padding: 10,
-                paddingTop: 30
+                paddingTop: 80
             }}>
             <Text>Agregar Producto Manual</Text>
         </SafeAreaView>
