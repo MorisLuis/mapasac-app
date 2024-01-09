@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
-import { ScannerCodeCard } from '../../components/Cards/ScannerCodeCard';
 import ModalBottom from '../../components/Modals/ModalBottom';
+import ModalComplete from '../../components/Modals/ModalComplete';
+import { ProductDetails } from '../../components/Modals/ModalRenders/ProductDetails';
+import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
 
 const CustomCamera: React.FC = () => {
     const [scannedCodes, setScannedCodes] = useState<string | undefined>();
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+    const [openModalProductDetails, setOpenModalProductDetails] = useState(false);
 
     const codeScanner = useCodeScanner({
         codeTypes: ['qr', 'ean-13'],
@@ -28,17 +31,24 @@ const CustomCamera: React.FC = () => {
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 
-    const toggleScanner = () => {
-        setIsScannerActive((prev) => !prev);
-    };
-
-    const handleCameraOpen = () => {
-        setSelectedDevice(backCamera?.id || null);
-    };
-
     const handleCloseProductModalScanned = () => {
         setScannedCodes(undefined)
     }
+
+    const handleModalProductDetails = () =>  {
+        handleCloseProductModalScanned();
+        setOpenModalProductDetails(!openModalProductDetails);
+    }
+
+    useEffect(() => {
+        setIsScannerActive(selectedDevice !== null); // Actualizar el estado del scanner cuando la cámara está activa
+    }, [selectedDevice]);
+
+    useEffect(() => {
+        setSelectedDevice(backCamera?.id || null);
+    }, [])
+
+    console.log({openModalProductDetails})
 
     return (
         <View style={styles.cameraScreen}>
@@ -59,30 +69,27 @@ const CustomCamera: React.FC = () => {
                         <Icon name="scan-outline" size={250} color="white" />
                     </View>
                 }
-
-                {
-                    !selectedDevice &&
-                    <TouchableOpacity
-                        style={styles.toogleButton}
-                        onPress={handleCameraOpen}
-                    >
-                        <Text style={styles.buttonText}>Abrir cámara</Text>
-                    </TouchableOpacity>
-                }
-
-                <TouchableOpacity
-                    style={styles.toogleButton}
-                    onPress={toggleScanner}
-                >
-                    <Text style={styles.buttonText}>Escanear</Text>
-                </TouchableOpacity>
-
             </View>
+
             <ModalBottom
                 visible={scannedCodes ? true : false}
-                scannedCodes={scannedCodes}
                 onClose={handleCloseProductModalScanned}
-            />
+            >
+                <ScannerResult
+                    scannedCodes={scannedCodes}
+                    onClose={handleCloseProductModalScanned}
+                    handleModalProductDetails={handleModalProductDetails}
+                />
+            </ModalBottom>
+
+            <ModalComplete
+                visible={openModalProductDetails}
+                onClose={handleModalProductDetails}
+            >
+                <ProductDetails
+                    scannedCodes={scannedCodes}
+                />
+            </ModalComplete>
         </View>
     );
 };
@@ -102,7 +109,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        //position: "relative"
     },
     camera: {
         flex: 1,

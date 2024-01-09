@@ -3,19 +3,19 @@ import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-interface ModalBottomInterface {
+interface ModalCompleteInterface {
     visible: boolean;
     onClose: () => void;
     children: any
 }
 
-const ModalBottom = ({
+const ModalComplete = ({
     visible,
     onClose,
     children
-}: ModalBottomInterface) => {
+}: ModalCompleteInterface) => {
 
-    return (
+    return  (
 
         <Modal
             animationType="slide"
@@ -28,7 +28,7 @@ const ModalBottom = ({
                 blurType="light"
                 blurAmount={5}
             >
-                <View style={styles.modalBottom}>
+                <View style={styles.modalComplete}>
                     <View style={styles.modalContent}>
                         <TouchableOpacity style={styles.header} onPress={onClose}>
                             <Icon name="close-circle-outline" size={30} color="gray" />
@@ -44,10 +44,10 @@ const ModalBottom = ({
     );
 };
 
-export default ModalBottom;
+export default ModalComplete;
 
 const styles = StyleSheet.create({
-    modalBottom: {
+    modalComplete: {
         flex: 1,
         justifyContent: "flex-end"
     },
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        height: "30%"
+        height: "90%"
     },
     header: {
         width: "100%",
