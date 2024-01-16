@@ -34,9 +34,9 @@ export const ScannerNavigation = () => {
                 <TouchableOpacity onPress={() => setSelectedTab('Inventory')} style={[styles.menuItem, selectedTab === 'Inventory' && styles.selectedTabContent]}>
                     <Text style={styles.tabContent}>Inventario</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSelectedTab('AddProduct')} style={[styles.menuItem, selectedTab === 'AddProduct' && styles.selectedTabContent]}>
+{/*                 <TouchableOpacity onPress={() => setSelectedTab('AddProduct')} style={[styles.menuItem, selectedTab === 'AddProduct' && styles.selectedTabContent]}>
                     <Text style={styles.tabContent}>+</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </SafeAreaView>
 
             {renderScreen()}

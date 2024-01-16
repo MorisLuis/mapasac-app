@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
 import { ProductDetails } from '../../components/Modals/ModalRenders/ProductDetails';
 import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CustomCamera: React.FC = () => {
     const [scannedCodes, setScannedCodes] = useState<string | undefined>();
@@ -66,9 +67,15 @@ const CustomCamera: React.FC = () => {
                 {
                     selectedDevice &&
                     <View style={styles.iconStyle} >
-                        <Icon name="scan-outline" size={250} color="white" />
+                        <Icon name="scan-outline" size={250} color="white"/>
                     </View>
                 }
+
+                <SafeAreaView style={styles.bagContent}>
+                    <View style={styles.bag}>
+
+                    </View>
+                </SafeAreaView>
             </View>
 
             <ModalBottom
@@ -139,5 +146,20 @@ const styles = StyleSheet.create({
         top: "50%",
         left: "50%",
         transform: [{ translateX: -125 }, { translateY: -150 }],
-    } as ViewStyle
+    } as ViewStyle,
+    bagContent: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        position: "absolute",
+        top: 0,
+        right: 0,
+        paddingHorizontal: 10,
+    },
+    bag: {
+        backgroundColor: "white",
+        width: 35,
+        height: 35,
+        borderRadius: 100,
+    },
 })
