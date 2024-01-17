@@ -27,7 +27,7 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
         case '[InventoryBag] - Remove Product':
             return {
                 ...state,
-                bag: state.bag.filter(product => product.Codigo !== action.payload.Codigo)
+                bag: state.bag.filter(product => (product.Codigo && product.Familia) !== (action.payload.Codigo && action.payload.Familia))
             }
 
         case '[InventoryBag] - Clear Bag':

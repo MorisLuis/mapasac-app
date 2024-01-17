@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     productInventoryCard: {
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
         borderWidth: 0.5,
         borderColor: 'black',
         borderRadius: 8, 
@@ -22,14 +21,25 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     productInventoryCard__Image: {
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 80,
         marginRight: 10,
         borderRadius: 5
     },
     productInventoryCard__stock: {
-        backgroundColor: "gray",
+        backgroundColor: "beige",
+        borderColor: "black",
+        borderWidth: 1,
         borderRadius: 100,
-        padding: 10
+        padding: 10,
+        width: 40,
+        height: 40,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    delete: {
+        color: "red",
+        paddingVertical: 10
     }
 });

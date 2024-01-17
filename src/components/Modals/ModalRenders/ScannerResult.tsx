@@ -135,7 +135,7 @@ const fakeProduct : PorductInterface = {
     Descripcion: "Product Description",
     Id_Familia: 123,
     Codigo: "233ABC123",
-    Familia: "Product Family",
+    Familia: "NIKE",
     CodigoPrecio: "XYZ456",
     Precio: 49.99,
     CodigoExsitencia: "EFG789",

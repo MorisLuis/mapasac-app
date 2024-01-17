@@ -5,11 +5,15 @@ import { Image, Text, View } from 'react-native';
 import PorductInterface from '../../interface/product.ts';
 
 interface ProductInventoryCardInterface {
-    product: PorductInterface
+    product: PorductInterface;
+    showDelete?: boolean;
+    onDelete?: (product: PorductInterface) => void;
 }
 
 export const ProductInventoryCard = ({
-    product
+    product,
+    showDelete,
+    onDelete
 } : ProductInventoryCardInterface) => {
 
     return (
@@ -24,6 +28,11 @@ export const ProductInventoryCard = ({
                 <View>
                     <Text>{product.Descripcion}</Text>
                     <Text>Codigo: {product.Codigo}</Text>
+                    <Text>Familia: {product.Familia}</Text>
+
+                    {
+                        showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
+                    }
                 </View>
 
                 <View style={styles.productInventoryCard__stock}>

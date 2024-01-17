@@ -19,27 +19,24 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
 
-    console.log({bag: state.bag})
-
-
-    const addProduct = ( product: PorductInterface) => {
-        console.log({product})
+    const addProduct = (product: PorductInterface) => {
 
         // Validate if not already added this product.
-        const isAlreadyInBag = state.bag.some((item : PorductInterface) => item.Codigo === product.Codigo )
+        const isAlreadyInBag = state.bag.some((item: PorductInterface) =>
+            item.Codigo === product.Codigo && item.Familia === product.Familia
+        );
 
-        if(isAlreadyInBag) return;
+        if (isAlreadyInBag) return;
 
-        dispatch({type: '[InventoryBag] - Add Product', payload: product})
+        dispatch({ type: '[InventoryBag] - Add Product', payload: product })
     }
 
-    const removeProduct = ( product: PorductInterface ) => {
-        dispatch({type: '[InventoryBag] - Remove Product', payload: product})
+    const removeProduct = (product: PorductInterface) => {
+        dispatch({ type: '[InventoryBag] - Remove Product', payload: product })
     }
 
     const cleanBag = () => {
-        console.log("clean")
-        dispatch({type: '[InventoryBag] - Clear Bag', payload: []})
+        dispatch({ type: '[InventoryBag] - Clear Bag', payload: [] })
     }
 
     useEffect(() => {
