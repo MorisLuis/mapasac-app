@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useState } from 'react';
+
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../../interface/product';
+import { Counter } from '../../Ui/Counter';
 
 interface ScannerResultInterface {
     scannedCodes?: string;
@@ -14,10 +16,17 @@ export const ScannerResult = ({
     onClose
 }: ScannerResultInterface) => {
 
-    const { addProduct, cleanBag } = useContext(InventoryBagContext)
+    const { addProduct } = useContext(InventoryBagContext)
+    const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
-        addProduct(fakeProduct)
+
+        const inventoryBody = {
+            ...fakeProduct,
+            Piezas: counterProduct
+        }
+
+        addProduct(inventoryBody)
         onClose()
     }
 
@@ -40,14 +49,9 @@ export const ScannerResult = ({
                 </View>
 
                 <Icon name="expand-outline" size={20} color="black" />
-
             </View>
 
-            <View style={styles.counter}>
-                <Icon name="remove-circle-outline" size={35} color="black" />
-                <Text>1</Text>
-                <Icon name="add-circle-outline" size={35} color="black" />
-            </View>
+            <Counter counter={counterProduct} setCounter={setCounterProduct}/>
 
             <TouchableOpacity
                 style={styles.toogleButton}
@@ -56,26 +60,6 @@ export const ScannerResult = ({
                 <Text style={styles.buttonText}>Agregar al inventario</Text>
             </TouchableOpacity>
 
-            {/* PRODUCT NOT AVAILABLE CODE */}
-
-            {/* <View style={styles.productNotFound}>
-                            <View style={styles.productNotFoundText}>
-                                <Image
-                                    style={styles.productIcon}
-                                    source={{
-                                        uri: 'https://reactnative.dev/img/tiny_logo.png',
-                                    }}
-                                />
-
-                                <View style={styles.productNotFoundMessage}>
-                                    <Text style={styles.productNotFoundTitle}>No se encontro producto.</Text>
-                                    <Text>000</Text>
-                                </View>
-                            </View>
-
-                            <Icon name="add-circle-sharp" size={25} color="black" />
-
-                        </View> */}
         </View>
 
     )
@@ -160,7 +144,7 @@ const fakeProduct : PorductInterface = {
     Marca: "BrandXYZ",
     Id_Marca: 456,
     Id_ListaPrecios: 789,
-    Piezas: 5,
+    Piezas: 0,
     Impto: 0.08,
     imagen: [{
         url: "https://example.com/image.jpg",

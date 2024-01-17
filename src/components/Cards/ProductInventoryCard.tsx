@@ -1,13 +1,18 @@
 import React from 'react';
 
 import { styles } from '../../theme/UI/cardsStyles.tsx';
-import { Image, Text, View } from 'react-native'
-import { SvgXml } from 'react-native-svg'
-import logoCircleSvg from "../../assets/svg/svg.tsx"
+import { Image, Text, View } from 'react-native';
+import PorductInterface from '../../interface/product.ts';
 
-export const ProductInventoryCard = () => {
+interface ProductInventoryCardInterface {
+    product: PorductInterface
+}
+
+export const ProductInventoryCard = ({
+    product
+} : ProductInventoryCardInterface) => {
+
     return (
-
         <View style={styles.productInventoryCard}>
             <Image
                 style={styles.productInventoryCard__Image}
@@ -17,15 +22,14 @@ export const ProductInventoryCard = () => {
             />
             <View style={styles.productInventoryCard__data}>
                 <View>
-                    <Text>Rotulador</Text>
-                    <Text>Codigo: 2023902u4</Text>
+                    <Text>{product.Descripcion}</Text>
+                    <Text>Codigo: {product.Codigo}</Text>
                 </View>
 
                 <View style={styles.productInventoryCard__stock}>
-                    <Text>10</Text>
+                    <Text>{product.Piezas}</Text>
                 </View>
             </View>
-
         </View>
     )
 }

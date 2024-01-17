@@ -24,7 +24,7 @@ export const InventoryBag = ({
 
             {
                 bag.map((product) =>
-                    <ProductInventoryCard key={product.Codigo} />
+                    <ProductInventoryCard key={product.Codigo} product={product}/>
                 )
             }
 
