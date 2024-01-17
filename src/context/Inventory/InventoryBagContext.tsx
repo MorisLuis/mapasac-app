@@ -6,6 +6,7 @@ interface ContextProps {
     addProduct: (product: PorductInterface) => void;
     removeProduct: (product: PorductInterface) => void;
     cleanBag: () => void;
+    bag: PorductInterface[];
 
     numberOfItems: number;
 }

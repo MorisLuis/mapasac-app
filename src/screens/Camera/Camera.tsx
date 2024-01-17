@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, Touchable, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 import ModalBottom from '../../components/Modals/ModalBottom';
@@ -8,12 +8,17 @@ import ModalComplete from '../../components/Modals/ModalComplete';
 import { ProductDetails } from '../../components/Modals/ModalRenders/ProductDetails';
 import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { InventoryBag } from '../../components/Modals/ModalRenders/InventoryBag';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 const CustomCamera: React.FC = () => {
     const [scannedCodes, setScannedCodes] = useState<string | undefined>();
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+    const { numberOfItems } = useContext(InventoryBagContext)
+
     const [openModalProductDetails, setOpenModalProductDetails] = useState(false);
+    const [openModalBagInventory, setOpenModalBagInventory] = useState(false);
 
     const codeScanner = useCodeScanner({
         codeTypes: ['qr', 'ean-13'],
@@ -36,9 +41,13 @@ const CustomCamera: React.FC = () => {
         setScannedCodes(undefined)
     }
 
-    const handleModalProductDetails = () =>  {
+    const handleModalProductDetails = () => {
         handleCloseProductModalScanned();
         setOpenModalProductDetails(!openModalProductDetails);
+    }
+
+    const handleCloseModalBagInventory = () => {
+        setOpenModalBagInventory(false)
     }
 
     useEffect(() => {
@@ -49,7 +58,6 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     }, [])
 
-    console.log({openModalProductDetails})
 
     return (
         <View style={styles.cameraScreen}>
@@ -67,17 +75,18 @@ const CustomCamera: React.FC = () => {
                 {
                     selectedDevice &&
                     <View style={styles.iconStyle} >
-                        <Icon name="scan-outline" size={250} color="white"/>
+                        <Icon name="scan-outline" size={250} color="white" />
                     </View>
                 }
 
-                <SafeAreaView style={styles.bagContent}>
-                    <View style={styles.bag}>
-
-                    </View>
+                <SafeAreaView style={styles.bagContent} >
+                    <TouchableOpacity style={styles.bag} onPress={() => setOpenModalBagInventory(true)}>
+                        <Text style={styles.bagNumber}>{numberOfItems}</Text>
+                    </TouchableOpacity>
                 </SafeAreaView>
             </View>
 
+            {/* SCANNER RESULT MODAL */}
             <ModalBottom
                 visible={scannedCodes ? true : false}
                 onClose={handleCloseProductModalScanned}
@@ -85,16 +94,26 @@ const CustomCamera: React.FC = () => {
                 <ScannerResult
                     scannedCodes={scannedCodes}
                     onClose={handleCloseProductModalScanned}
-                    handleModalProductDetails={handleModalProductDetails}
                 />
             </ModalBottom>
 
+            {/* PRODUCT DETAIL MODAL */}
             <ModalComplete
                 visible={openModalProductDetails}
                 onClose={handleModalProductDetails}
             >
                 <ProductDetails
                     scannedCodes={scannedCodes}
+                />
+            </ModalComplete>
+
+            {/* BAG INVENTORY MODAL */}
+            <ModalComplete
+                visible={openModalBagInventory}
+                onClose={handleCloseModalBagInventory}
+            >
+                <InventoryBag
+                    onClose={handleCloseModalBagInventory}
                 />
             </ModalComplete>
         </View>
@@ -112,10 +131,12 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     content: {
-        backgroundColor: "white",
         flex: 1,
         width: "100%",
         height: "100%",
+        borderEndEndRadius: 20, 
+        borderEndStartRadius:20,
+        overflow: "hidden"
     },
     camera: {
         flex: 1,
@@ -123,23 +144,6 @@ const styles = StyleSheet.create({
         width: "100%",
         position: "absolute",
         top: 0
-    },
-    toogleButton: {
-        backgroundColor: "#0E1727",
-        top: "80%",
-        left: "25%",
-        width: "50%",
-        color: "white",
-        borderRadius: 5,
-        marginBottom: 10
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        padding: 10,
-        display: "flex",
-        textAlign: "center"
     },
     iconStyle: {
         position: "absolute",
@@ -157,9 +161,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     bag: {
-        backgroundColor: "white",
+        backgroundColor: "#EDBD42",
         width: 35,
         height: 35,
         borderRadius: 100,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderColor: "black",
+        borderWidth: 1
     },
+    bagNumber: {
+        color: "white"
+    }
 })

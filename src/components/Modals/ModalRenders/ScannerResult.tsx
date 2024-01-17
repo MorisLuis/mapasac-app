@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
+import PorductInterface from '../../../interface/product';
 
 interface ScannerResultInterface {
     scannedCodes?: string;
     onClose: () => void;
-    handleModalProductDetails: () => void
 }
 
 export const ScannerResult = ({
     scannedCodes,
-    onClose,
-    handleModalProductDetails
+    onClose
 }: ScannerResultInterface) => {
+
+    const { addProduct, cleanBag } = useContext(InventoryBagContext)
+
+    const handleAddToInventory = () => {
+        addProduct(fakeProduct)
+        onClose()
+    }
+
+
     return (
         <View>
             <View style={styles.product}>
@@ -42,7 +51,7 @@ export const ScannerResult = ({
 
             <TouchableOpacity
                 style={styles.toogleButton}
-                onPress={handleModalProductDetails}
+                onPress={handleAddToInventory}
             >
                 <Text style={styles.buttonText}>Agregar al inventario</Text>
             </TouchableOpacity>
@@ -130,7 +139,6 @@ const styles = StyleSheet.create({
     },
     productNotFoundMessage: {
         marginLeft: 10
-
     },
     productNotFoundTitle: {
         fontSize: 18,
@@ -138,3 +146,24 @@ const styles = StyleSheet.create({
         marginBottom: 5
     }
 });
+
+const fakeProduct : PorductInterface = {
+    Descripcion: "Product Description",
+    Id_Familia: 123,
+    Codigo: "233ABC123",
+    Familia: "Product Family",
+    CodigoPrecio: "XYZ456",
+    Precio: 49.99,
+    CodigoExsitencia: "EFG789",
+    Existencia: 100,
+    Id_Almacen: 1,
+    Marca: "BrandXYZ",
+    Id_Marca: 456,
+    Id_ListaPrecios: 789,
+    Piezas: 5,
+    Impto: 0.08,
+    imagen: [{
+        url: "https://example.com/image.jpg",
+        id: 1234
+    }]
+};

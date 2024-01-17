@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import CustomCamera from '../screens/Camera/Camera';
 import { LogBox, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Inventory } from '../screens/Camera/Inventory';
-import { AddProduct } from '../screens/Camera/AddProduct';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-LogBox.ignoreLogs(['Sending'])
+//LogBox.ignoreLogs(['Sending'])
 
 export const ScannerNavigation = () => {
 
@@ -18,8 +17,6 @@ export const ScannerNavigation = () => {
                 return <CustomCamera />;
             case 'Inventory':
                 return <Inventory />;
-            case 'AddProduct':
-                return <AddProduct />;
             default:
                 return null;
         }
@@ -34,9 +31,6 @@ export const ScannerNavigation = () => {
                 <TouchableOpacity onPress={() => setSelectedTab('Inventory')} style={[styles.menuItem, selectedTab === 'Inventory' && styles.selectedTabContent]}>
                     <Text style={styles.tabContent}>Inventario</Text>
                 </TouchableOpacity>
-{/*                 <TouchableOpacity onPress={() => setSelectedTab('AddProduct')} style={[styles.menuItem, selectedTab === 'AddProduct' && styles.selectedTabContent]}>
-                    <Text style={styles.tabContent}>+</Text>
-                </TouchableOpacity> */}
             </SafeAreaView>
 
             {renderScreen()}
@@ -54,13 +48,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        width: '100%',
+        width: '70%',
         top: 0,
         backgroundColor: 'transparent',
         zIndex: 1
     },
     menuItem: {
-        backgroundColor: "yellow",
+        backgroundColor: "#068fff8c",
         paddingHorizontal: 15,
         paddingVertical: 5,
         borderRadius: 20,
@@ -74,6 +68,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     selectedTabContent: {
-        backgroundColor: "orange"
+        backgroundColor: "#068FFF",
     }
 });
