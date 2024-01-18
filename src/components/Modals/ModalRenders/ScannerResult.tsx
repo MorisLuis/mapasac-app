@@ -7,12 +7,12 @@ import PorductInterface from '../../../interface/product';
 import { Counter } from '../../Ui/Counter';
 
 interface ScannerResultInterface {
-    scannedCodes?: string;
+    product: PorductInterface;
     onClose: () => void;
 }
 
 export const ScannerResult = ({
-    scannedCodes,
+    product,
     onClose
 }: ScannerResultInterface) => {
 
@@ -22,7 +22,7 @@ export const ScannerResult = ({
     const handleAddToInventory = () => {
 
         const inventoryBody = {
-            ...fakeProduct,
+            ...product,
             Piezas: counterProduct
         }
 
@@ -30,38 +30,47 @@ export const ScannerResult = ({
         onClose()
     }
 
-
     return (
         <View>
-            <View style={styles.product}>
-                <View style={styles.productText}>
-                    <Image
-                        style={styles.productIcon}
-                        source={{
-                            uri: 'https://reactnative.dev/img/tiny_logo.png',
-                        }}
-                    />
+            {
+                product ?
+                    <View>
+                        <View style={styles.product}>
+                            <View style={styles.productText}>
+                                <Image
+                                    style={styles.productIcon}
+                                    source={{
+                                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                    }}
+                                />
 
-                    <View style={styles.productMessage}>
-                        <Text>Codigo: </Text>
-                        <Text>{scannedCodes}</Text>
+                                <View style={styles.productMessage}>
+                                    <Text>Codigo: </Text>
+                                    <Text>{product?.CodBar}</Text>
+                                    <Text>{product?.Marca}</Text>
+                                </View>
+                            </View>
+
+                            <Icon name="expand-outline" size={20} color="black" />
+                        </View>
+
+                        <Counter counter={counterProduct} setCounter={setCounterProduct} />
+
+                        <TouchableOpacity
+                            style={styles.toogleButton}
+                            onPress={handleAddToInventory}
+                        >
+                            <Text style={styles.buttonText}>Agregar al inventario</Text>
+                        </TouchableOpacity>
                     </View>
-                </View>
-
-                <Icon name="expand-outline" size={20} color="black" />
-            </View>
-
-            <Counter counter={counterProduct} setCounter={setCounterProduct}/>
-
-            <TouchableOpacity
-                style={styles.toogleButton}
-                onPress={handleAddToInventory}
-            >
-                <Text style={styles.buttonText}>Agregar al inventario</Text>
-            </TouchableOpacity>
-
+                    :
+                    <View>
+                        <Text>
+                            No existe producto
+                        </Text>
+                    </View>
+            }
         </View>
-
     )
 }
 
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const fakeProduct : PorductInterface = {
+/* const fakeProduct : PorductInterface = {
     Descripcion: "Product Description",
     Id_Familia: 123,
     Codigo: "233ABC123",
@@ -151,3 +160,4 @@ const fakeProduct : PorductInterface = {
         id: 1234
     }]
 };
+ */

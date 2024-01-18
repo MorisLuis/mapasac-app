@@ -1,23 +1,25 @@
 import React from 'react';
 
 import { styles } from '../../theme/UI/cardsStyles.tsx';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import PorductInterface from '../../interface/product.ts';
 
 interface ProductInventoryCardInterface {
     product: PorductInterface;
     showDelete?: boolean;
     onDelete?: (product: PorductInterface) => void;
+    onClick?: () => void 
 }
 
 export const ProductInventoryCard = ({
     product,
     showDelete,
-    onDelete
-} : ProductInventoryCardInterface) => {
+    onDelete,
+    onClick
+}: ProductInventoryCardInterface) => {
 
     return (
-        <View style={styles.productInventoryCard}>
+        <TouchableOpacity style={styles.productInventoryCard} onPress={onClick}>
             <Image
                 style={styles.productInventoryCard__Image}
                 source={{
@@ -27,8 +29,8 @@ export const ProductInventoryCard = ({
             <View style={styles.productInventoryCard__data}>
                 <View>
                     <Text>{product.Descripcion}</Text>
-                    <Text>Codigo: {product.Codigo}</Text>
-                    <Text>Familia: {product.Familia}</Text>
+                    <Text>Codigo: {product?.Codigo}</Text>
+                    <Text>Marca: {product?.Marca}</Text>
 
                     {
                         showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
@@ -36,9 +38,9 @@ export const ProductInventoryCard = ({
                 </View>
 
                 <View style={styles.productInventoryCard__stock}>
-                    <Text>{product.Piezas}</Text>
+                    <Text>{product.Piezas || product.Existencia}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

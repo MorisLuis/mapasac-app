@@ -17,4 +17,6 @@ export default interface PorductInterface {
         url: string,
         id: number
     }];
+
+    CodBar?: string
 }

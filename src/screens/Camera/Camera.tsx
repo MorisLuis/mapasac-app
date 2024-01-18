@@ -1,35 +1,65 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, Touchable, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
 import { ProductDetails } from '../../components/Modals/ModalRenders/ProductDetails';
 import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { InventoryBag } from '../../components/Modals/ModalRenders/InventoryBag';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import { getProductByCodeBar } from '../../services/products';
+import PorductInterface from '../../interface/product';
+import ModalMiddle from '../../components/Modals/ModalMiddle';
+import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 
 const CustomCamera: React.FC = () => {
-    const [scannedCodes, setScannedCodes] = useState<string | undefined>();
+
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
-    const { numberOfItems } = useContext(InventoryBagContext)
+    const [isScanningAllowed, setIsScanningAllowed] = useState(true)
+    const { numberOfItems } = useContext(InventoryBagContext);
+
+    const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
+    const [productSelected, setProductSelected] = useState<PorductInterface>()
 
     const [openModalProductDetails, setOpenModalProductDetails] = useState(false);
     const [openModalBagInventory, setOpenModalBagInventory] = useState(false);
+    const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
+    const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
+
 
     const codeScanner = useCodeScanner({
-        codeTypes: ['qr', 'ean-13'],
-        onCodeScanned: (codes) => {
-            if (codes.length > 0) {
-                const scannedCode = codes[0]; // Obtener el primer código escaneado
-                const codeValue = scannedCode.value; // Suponiendo que 'value' contiene el valor del código escaneado
+        codeTypes: ['qr', 'ean-13', 'code-128'],
+        onCodeScanned: async (codes) => {
+            if (codes.length > 0 && isScanningAllowed && !productsScanned) {
+                setIsScanningAllowed(false);
+                const scannedCode = codes[0];
+                const codeValue = scannedCode.value;
 
-                // Usar 'codeValue' para realizar alguna operación o mostrarlo en tu componente
-                console.log(`Scanned code value: ${codeValue}`);
-                setScannedCodes(codeValue)
+                if (!codeValue) return;
+
+                try {
+                    const response = await getProductByCodeBar(codeValue);
+
+                    if( response.length > 1 ) {
+                        setOpenModalProductFoundByCodebar(true)
+                    } else {
+                        setOpenModalScannerResult(true)
+                    }
+
+                    setProductsScanned(response);
+                    console.log(`Scanned code value: ${codeValue}`);
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                } finally {
+                    setTimeout(() => {
+                        setIsScanningAllowed(true);
+                    }, 2000);
+                }
             }
         }
     });
@@ -38,20 +68,34 @@ const CustomCamera: React.FC = () => {
     const backCamera = devices.find((device) => device.position === 'back');
 
     const handleCloseProductModalScanned = () => {
-        setScannedCodes(undefined)
+        setOpenModalScannerResult(false);
+        setProductSelected(undefined);
+        setProductsScanned(undefined);
     }
 
-    const handleModalProductDetails = () => {
-        handleCloseProductModalScanned();
-        setOpenModalProductDetails(!openModalProductDetails);
+    const handleCloseModalProductsFoundByCodebar = () => {
+        setOpenModalProductFoundByCodebar(false);
+        setProductsScanned(undefined)
     }
 
     const handleCloseModalBagInventory = () => {
         setOpenModalBagInventory(false)
     }
 
+    const handleModalProductDetails = () => {
+        handleCloseProductModalScanned();
+        setOpenModalProductDetails(!openModalProductDetails);
+        setProductSelected(undefined);
+    }
+
+    const handleSelectProduct = (product: PorductInterface) => {
+        setProductSelected(product);
+        setOpenModalProductFoundByCodebar(false);
+        setOpenModalScannerResult(true);
+    }
+
     useEffect(() => {
-        setIsScannerActive(selectedDevice !== null); // Actualizar el estado del scanner cuando la cámara está activa
+        setIsScannerActive(selectedDevice !== null);
     }, [selectedDevice]);
 
     useEffect(() => {
@@ -86,14 +130,25 @@ const CustomCamera: React.FC = () => {
                 </SafeAreaView>
             </View>
 
+            {/* PRODUCTS FOUND BY CODEBAR */}
+            <ModalMiddle
+                visible={openModalProductFoundByCodebar}
+                onClose={handleCloseModalProductsFoundByCodebar}
+            >
+                <ProductFindByCodeBar
+                    products={productsScanned as PorductInterface[]}
+                    onClick={handleSelectProduct}
+                />
+            </ModalMiddle>
+
             {/* SCANNER RESULT MODAL */}
             <ModalBottom
-                visible={scannedCodes ? true : false}
+                visible={openModalScannerResult}
                 onClose={handleCloseProductModalScanned}
             >
                 <ScannerResult
-                    scannedCodes={scannedCodes}
                     onClose={handleCloseProductModalScanned}
+                    product={productSelected as PorductInterface}
                 />
             </ModalBottom>
 
@@ -102,9 +157,7 @@ const CustomCamera: React.FC = () => {
                 visible={openModalProductDetails}
                 onClose={handleModalProductDetails}
             >
-                <ProductDetails
-                    scannedCodes={scannedCodes}
-                />
+                <ProductDetails/>
             </ModalComplete>
 
             {/* BAG INVENTORY MODAL */}
@@ -134,8 +187,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        borderEndEndRadius: 20, 
-        borderEndStartRadius:20,
+        borderEndEndRadius: 20,
+        borderEndStartRadius: 20,
         overflow: "hidden"
     },
     camera: {
@@ -175,3 +228,5 @@ const styles = StyleSheet.create({
         color: "white"
     }
 })
+
+
