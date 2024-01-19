@@ -19,8 +19,8 @@ export const ProductFindByCodeBar = ({
             {
                 products?.map((product) =>
                     <ProductInventoryCard
-                        key={`${product.Codigo}-${product.Id_Marca}`}
-                        product={product}
+                    key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                    product={product}
                         onClick={() => onClick?.(product)}
                     />
                 )

@@ -38,8 +38,8 @@ export const InventoryBag = ({
             {
                 bag.map((product) =>
                     <ProductInventoryCard
-                        key={`${product.Codigo}-${product.Id_Marca}`}
-                        product={product}
+                    key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                    product={product}
                         onDelete={onDelete}
                         showDelete
                     />

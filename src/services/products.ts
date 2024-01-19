@@ -12,9 +12,23 @@ const getProductByCodeBar = async (codeBar: string) => {
     }
 
     return product
+};
+
+const getProductsByStock = async () => {
+
+    let products;
+    try {        
+        const getProduct = await api.get(`/api/product/byStock`);
+        products = getProduct.data;
+    } catch (error: any) {
+        console.log({error: error.message})
+    }
+
+    return products
 }
 
 
 export {
-    getProductByCodeBar
+    getProductByCodeBar,
+    getProductsByStock
 }

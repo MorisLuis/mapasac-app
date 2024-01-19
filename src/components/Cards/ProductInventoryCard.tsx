@@ -30,7 +30,10 @@ export const ProductInventoryCard = ({
                 <View>
                     <Text>{product.Descripcion}</Text>
                     <Text>Codigo: {product?.Codigo}</Text>
+                    <Text>Id_Marca: {product?.Id_Marca}</Text>
                     <Text>Marca: {product?.Marca}</Text>
+
+                    <Text>Almacen: {product?.Id_Almacen}</Text>
 
                     {
                         showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
