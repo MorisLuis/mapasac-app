@@ -23,7 +23,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
         // Validate if not already added this product.
         const isAlreadyInBag = state.bag.some((item: PorductInterface) =>
-            item.Codigo === product.Codigo && item.Familia === product.Familia
+            item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca
         );
 
         if (isAlreadyInBag) return;
