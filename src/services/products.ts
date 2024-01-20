@@ -4,24 +4,26 @@ import { api } from "../api/api";
 const getProductByCodeBar = async (codeBar: string) => {
 
     let product;
-    try {        
+    try {
         const getProduct = await api.get(`/api/product/byStockAndCodeBar/${codeBar}`);
         product = getProduct.data;
     } catch (error: any) {
-        console.log({error: error.message})
+        console.log({ error: error.message })
     }
 
     return product
 };
 
-const getProductsByStock = async () => {
+
+
+const getProductsByStock = async ( PageNumber : number ) => {
 
     let products;
-    try {        
-        const getProduct = await api.get(`/api/product/byStock`);
+    try {
+        const getProduct = await api.get(`/api/product/byStock?PageNumber=${PageNumber}&PageSize=10`);
         products = getProduct.data;
     } catch (error: any) {
-        console.log({error: error.message})
+        console.log({ error: error.message })
     }
 
     return products
