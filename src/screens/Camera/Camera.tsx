@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, TouchableOpacity, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +15,7 @@ import { getProductByCodeBar } from '../../services/products';
 import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';  // Importa las funciones necesarias para solicitar permisos
 
 const CustomCamera: React.FC = () => {
 
@@ -31,6 +32,32 @@ const CustomCamera: React.FC = () => {
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
 
+    const handleCloseProductModalScanned = () => {
+        setOpenModalScannerResult(false);
+        setProductSelected(undefined);
+        setProductsScanned(undefined);
+    }
+
+    const handleCloseModalProductsFoundByCodebar = () => {
+        setOpenModalProductFoundByCodebar(false);
+        setProductsScanned(undefined)
+    }
+
+    const handleCloseModalBagInventory = () => {
+        setOpenModalBagInventory(false)
+    }
+
+    const handleModalProductDetails = () => {
+        handleCloseProductModalScanned();
+        setOpenModalProductDetails(!openModalProductDetails);
+        setProductSelected(undefined);
+    }
+
+    const handleSelectProduct = (product: PorductInterface) => {
+        setProductSelected(product);
+        setOpenModalProductFoundByCodebar(false);
+        setOpenModalScannerResult(true);
+    }
 
     const codeScanner = useCodeScanner({
         codeTypes: ['qr', 'ean-13', 'code-128'],
@@ -67,47 +94,48 @@ const CustomCamera: React.FC = () => {
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 
-    const handleCloseProductModalScanned = () => {
-        setOpenModalScannerResult(false);
-        setProductSelected(undefined);
-        setProductsScanned(undefined);
-    }
-
-    const handleCloseModalProductsFoundByCodebar = () => {
-        setOpenModalProductFoundByCodebar(false);
-        setProductsScanned(undefined)
-    }
-
-    const handleCloseModalBagInventory = () => {
-        setOpenModalBagInventory(false)
-    }
-
-    const handleModalProductDetails = () => {
-        handleCloseProductModalScanned();
-        setOpenModalProductDetails(!openModalProductDetails);
-        setProductSelected(undefined);
-    }
-
-    const handleSelectProduct = (product: PorductInterface) => {
-        setProductSelected(product);
-        setOpenModalProductFoundByCodebar(false);
-        setOpenModalScannerResult(true);
-    }
-
     useEffect(() => {
         setIsScannerActive(selectedDevice !== null);
     }, [selectedDevice]);
 
+    const [permission, setPermission] = useState(false)
+
     useEffect(() => {
-        setSelectedDevice(backCamera?.id || null);
-    }, [])
+        // Verificar y solicitar permisos al cargar el componente
+        const requestCameraPermission = async () => {
+            try {
+                let permission;
+                console.log(Platform.OS)
+                if (Platform.OS === 'android') {
+                    const result = await request(PERMISSIONS.ANDROID.CAMERA);
+                    permission = result === RESULTS.GRANTED;
+                } else if (Platform.OS === 'ios') {
+                    const result = await request(PERMISSIONS.IOS.CAMERA);
+                    permission = result === RESULTS.GRANTED;
+                }
+    
+                if (permission) {
+                    // Permiso concedido, puedes iniciar la cámara aquí.
+                    setSelectedDevice(backCamera?.id || null);
+                    setPermission(true);
+                } else {
+                    // Permiso denegado, maneja esta situación.
+                    console.log('Permiso de cámara denegado');
+                }
+            } catch (error) {
+                console.error('Error al solicitar permiso de cámara:', error);
+            }
+        };
+    
+        requestCameraPermission();
+    }, []);
 
 
     return (
         <View style={styles.cameraScreen}>
             <View style={styles.content}>
                 {
-                    backCamera &&
+                    (backCamera && permission) &&
                     <Camera
                         style={styles.camera}
                         device={backCamera}

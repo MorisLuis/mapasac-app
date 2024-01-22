@@ -52,4 +52,7 @@ target 'OleiApp' do
       :mac_catalyst_enabled => false
     )
   end
+
+  pod 'Permission-Handlers', '~> 4.3.0'
+
 end
