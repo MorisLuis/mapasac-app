@@ -21,7 +21,7 @@ export const Home = () => {
                 marginTop: top + 10
             }}
         >
-            <Text style={styles.title}> Inicio </Text>
+            <Text style={styles.title}>Inicio jeje</Text>
 
             <Text>
                 <Icon name="home-outline" size={80} color={colores.primary} />

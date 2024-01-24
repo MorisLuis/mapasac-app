@@ -73,6 +73,7 @@ PODS:
   - hermes-engine/Pre-built (0.73.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
+  - QuickLayout (3.0.0)
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -1134,6 +1135,9 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - SocketRocket (0.6.1)
+  - SVProgressHUD (2.2.5)
+  - SwiftEntryKit (1.2.3):
+    - QuickLayout (= 3.0.0)
   - VisionCamera (3.8.2):
     - React
     - React-callinvoker
@@ -1220,6 +1224,8 @@ DEPENDENCIES:
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - SVProgressHUD (~> 2.2.5)
+  - SwiftEntryKit (= 1.2.3)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1237,7 +1243,10 @@ SPEC REPOS:
     - fmt
     - libevent
     - OpenSSL-Universal
+    - QuickLayout
     - SocketRocket
+    - SVProgressHUD
+    - SwiftEntryKit
 
 EXTERNAL SOURCES:
   boost:
@@ -1373,6 +1382,7 @@ SPEC CHECKSUMS:
   hermes-engine: 34304f8c6e8fa68f63a5fe29af82f227d817d7a7
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 5e3631b27c08716986980ef23eed8abdee1cdcaf
   RCTTypeSafety: 02a64828b0b428eb4f63de1397d44fb2d0747e85
@@ -1422,9 +1432,11 @@ SPEC CHECKSUMS:
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RNVectorIcons: 210f910e834e3485af40693ad4615c1ec22fc02b
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftEntryKit: 340713c2e4a6662c5149629990bf1088bf5f0389
   VisionCamera: 4b98b273902ac18491bb68481b6601f1f0da0f2d
   Yoga: 44003f970aa541b79dfdd59cf236fda41bd5890f
 
-PODFILE CHECKSUM: 84132da2d46c207a9190297341684fdbe63c16ce
+PODFILE CHECKSUM: 86a0c4a59e0560cc981c8d4506f16b5a49c70c94
 
 COCOAPODS: 1.14.3

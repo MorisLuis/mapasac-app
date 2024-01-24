@@ -101,33 +101,7 @@ const CustomCamera: React.FC = () => {
     const [permission, setPermission] = useState(false)
 
     useEffect(() => {
-        // Verificar y solicitar permisos al cargar el componente
-        const requestCameraPermission = async () => {
-            try {
-                let permission;
-                console.log(Platform.OS)
-                if (Platform.OS === 'android') {
-                    const result = await request(PERMISSIONS.ANDROID.CAMERA);
-                    permission = result === RESULTS.GRANTED;
-                } else if (Platform.OS === 'ios') {
-                    const result = await request(PERMISSIONS.IOS.CAMERA);
-                    permission = result === RESULTS.GRANTED;
-                }
-    
-                if (permission) {
-                    // Permiso concedido, puedes iniciar la cámara aquí.
-                    setSelectedDevice(backCamera?.id || null);
-                    setPermission(true);
-                } else {
-                    // Permiso denegado, maneja esta situación.
-                    console.log('Permiso de cámara denegado');
-                }
-            } catch (error) {
-                console.error('Error al solicitar permiso de cámara:', error);
-            }
-        };
-    
-        requestCameraPermission();
+        setSelectedDevice(backCamera?.id || null);
     }, []);
 
 
@@ -135,7 +109,7 @@ const CustomCamera: React.FC = () => {
         <View style={styles.cameraScreen}>
             <View style={styles.content}>
                 {
-                    (backCamera && permission) &&
+                    (backCamera) &&
                     <Camera
                         style={styles.camera}
                         device={backCamera}
