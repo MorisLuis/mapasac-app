@@ -5,12 +5,22 @@ import { styles } from '../../theme/UI/cardsStyles';
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import PorductInterface from '../../interface/product';
+import { useNavigation } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+
 
 export const Inventory = () => {
 
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>()
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const {navigate} = useNavigation<NativeStackNavigationProp<InventoryNavigationStackParamList>>();
+
+    const navigateToInventaryDetails = () => {
+        navigate('InventaryDetails')
+    };
 
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
@@ -22,7 +32,7 @@ export const Inventory = () => {
 
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return (
-            <ProductInventoryCard product={item} />
+            <ProductInventoryCard product={item} onClick={() => handlePress(item)} />
         );
     };
 
@@ -37,6 +47,11 @@ export const Inventory = () => {
 
     const loadMoreItem = () => {
         setCurrentPage(currentPage + 1);
+    };
+
+    const handlePress = (item: PorductInterface) => {
+        console.log(`Elemento presionado: ${item.Codigo}`)
+        navigateToInventaryDetails()
     };
 
     useEffect(() => {

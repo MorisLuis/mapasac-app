@@ -4,19 +4,35 @@ import CustomCamera from '../screens/Camera/Camera';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { InventoryNavigation } from './InventoryNavigation';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
 
 export const ScannerNavigation = () => {
 
-    const TopTabs = createMaterialTopTabNavigator();
-    const navigate = useNavigation();
+    const [selectedTab, setSelectedTab] = useState('Camera');
+
+    const renderScreen = () => {
+        switch (selectedTab) {
+            case 'Camera':
+                return <CustomCamera />;
+            case 'Inventory':
+                return <InventoryNavigation />;
+            default:
+                return null;
+        }
+    };
 
     return (
-        <TopTabs.Navigator>
-            <TopTabs.Screen name="camera" options={{ title: "Camara" }} component={CustomCamera} />
-            <TopTabs.Screen name="inventary" options={{ title: "Inventario", }} component={InventoryNavigation} />
-        </TopTabs.Navigator>
+        <View style={styles.container}>
+            <SafeAreaView style={styles.menu}>
+                <TouchableOpacity onPress={() => setSelectedTab('Camera')} style={[styles.menuItem, selectedTab === 'Camera' && styles.selectedTabContent]}>
+                    <Text style={styles.tabContent}>Camara</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedTab('Inventory')} style={[styles.menuItem, selectedTab === 'Inventory' && styles.selectedTabContent]}>
+                    <Text style={styles.tabContent}>Inventario</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+
+            {renderScreen()}
+        </View>
     )
 };
 

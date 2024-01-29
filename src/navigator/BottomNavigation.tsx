@@ -14,7 +14,6 @@ export const BottomNavigation = () => {
             sceneContainerStyle={{
                 backgroundColor: 'white'
             }}
-
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ color }) => {
 
@@ -38,7 +37,7 @@ export const BottomNavigation = () => {
             })}
         >
             <BottomTabIOS.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
-            <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
+            <BottomTabIOS.Screen name="Scanner" options={{ headerShown: true, title: "Escaner" }} component={ScannerNavigation} />
             <BottomTabIOS.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
         </BottomTabIOS.Navigator>
     )
