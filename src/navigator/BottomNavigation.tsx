@@ -4,6 +4,7 @@ import { Home } from '../screens/Home';
 import { ScannerNavigation } from './ScannerNavigation';
 import { Profile } from '../screens/Profile';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 
 export const BottomNavigation = () => {
 
@@ -37,7 +38,7 @@ export const BottomNavigation = () => {
             })}
         >
             <BottomTabIOS.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
-            <BottomTabIOS.Screen name="Scanner" options={{ headerShown: true, title: "Escaner" }} component={ScannerNavigation} />
+            <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
             <BottomTabIOS.Screen name="Profile" options={{ title: 'Perfil' }} component={Profile} />
         </BottomTabIOS.Navigator>
     )

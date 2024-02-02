@@ -1,55 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import CustomCamera from '../screens/Camera/Camera';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, View } from 'react-native';
 import { InventoryNavigation } from './InventoryNavigation';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 
 export const ScannerNavigation = () => {
 
     const TopTabs = createMaterialTopTabNavigator();
-    const navigate = useNavigation();
+    const { top } = useSafeAreaInsets();
 
     return (
-        <TopTabs.Navigator>
-            <TopTabs.Screen name="camera" options={{ title: "Camara" }} component={CustomCamera} />
-            <TopTabs.Screen name="inventary" options={{ title: "Inventario", }} component={InventoryNavigation} />
-        </TopTabs.Navigator>
+        <View
+            style={{
+                marginTop: top + 10,
+                flex: 1
+            }}
+        >
+            <TopTabs.Navigator>
+                <TopTabs.Screen name="camera" options={{ title: "Camara" }} component={CustomCamera} />
+                <TopTabs.Screen
+                    name="Inventory"
+                    options={{ 
+                        title: "Inventario"
+                    }}
+                    component={InventoryNavigation}
+                />
+            </TopTabs.Navigator>
+            
+        </View>
     )
 };
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        height: "100%"
-    },
-    menu: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'absolute',
-        width: '70%',
-        top: 0,
-        backgroundColor: 'transparent',
-        zIndex: 1
-    },
-    menuItem: {
-        backgroundColor: "#068fff8c",
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-        borderRadius: 20,
-        marginHorizontal: 5
-    },
-    tabContent: {
-        fontSize: 14,
-        minHeight: 20,
-        minWidth: 60,
-        flex: 1,
-        textAlign: 'center',
-    },
-    selectedTabContent: {
-        backgroundColor: "#068FFF",
-    }
-});

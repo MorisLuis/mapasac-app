@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, StatusBar, Text, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { styles } from '../../theme/UI/cardsStyles';
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
@@ -18,8 +17,8 @@ export const Inventory = () => {
 
     const {navigate} = useNavigation<NativeStackNavigationProp<InventoryNavigationStackParamList>>();
 
-    const navigateToInventaryDetails = () => {
-        navigate('InventaryDetails')
+    const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
+        navigate('InventoryDetails', { selectedProduct });
     };
 
     const handleGetProductsByStock = async () => {
@@ -50,8 +49,7 @@ export const Inventory = () => {
     };
 
     const handlePress = (item: PorductInterface) => {
-        console.log(`Elemento presionado: ${item.Codigo}`)
-        navigateToInventaryDetails()
+        navigateToInventaryDetails(item)
     };
 
     useEffect(() => {
@@ -59,12 +57,10 @@ export const Inventory = () => {
     }, [currentPage])
 
     return (
-        <SafeAreaView style={{
-            padding: 10,
-            paddingTop: 80
+        <View style={{
+            padding: 10
         }}>
             <Text style={styles.title}> Inventario </Text>
-            <StatusBar backgroundColor="#000" />
             <FlatList
                 data={productsInInventory}
                 renderItem={renderItem}
@@ -73,6 +69,6 @@ export const Inventory = () => {
                 onEndReached={loadMoreItem}
                 onEndReachedThreshold={0}
             />
-        </SafeAreaView>
+        </View>
     )
 }

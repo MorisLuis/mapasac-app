@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
@@ -15,7 +14,6 @@ import { getProductByCodeBar } from '../../services/products';
 import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
-import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';  // Importa las funciones necesarias para solicitar permisos
 
 const CustomCamera: React.FC = () => {
 
@@ -125,11 +123,11 @@ const CustomCamera: React.FC = () => {
                     </View>
                 }
 
-                <SafeAreaView style={styles.bagContent} >
+                <View style={styles.bagContent} >
                     <TouchableOpacity style={styles.bag} onPress={() => setOpenModalBagInventory(true)}>
                         <Text style={styles.bagNumber}>{numberOfItems}</Text>
                     </TouchableOpacity>
-                </SafeAreaView>
+                </View>
             </View>
 
             {/* PRODUCTS FOUND BY CODEBAR */}
