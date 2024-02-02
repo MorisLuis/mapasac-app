@@ -4,7 +4,6 @@ import { Home } from '../screens/Home';
 import { ScannerNavigation } from './ScannerNavigation';
 import { Profile } from '../screens/Profile';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 
 export const BottomNavigation = () => {
 

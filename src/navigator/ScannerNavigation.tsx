@@ -1,11 +1,10 @@
 import React from 'react';
 
 import CustomCamera from '../screens/Camera/Camera';
-import { SafeAreaView, View } from 'react-native';
-import { InventoryNavigation } from './InventoryNavigation';
+import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProductDetailsPage } from '../screens/ProductDetailsPage';
+import { Inventory } from '../screens/Camera/Inventory';
 
 export const ScannerNavigation = () => {
 
@@ -20,16 +19,17 @@ export const ScannerNavigation = () => {
             }}
         >
             <TopTabs.Navigator>
-                <TopTabs.Screen name="camera" options={{ title: "Camara" }} component={CustomCamera} />
                 <TopTabs.Screen
-                    name="Inventory"
-                    options={{ 
-                        title: "Inventario"
-                    }}
-                    component={InventoryNavigation}
+                    name="camera"
+                    options={{ title: "Camara" }}
+                    component={CustomCamera}
+                />
+
+                <TopTabs.Screen
+                    name="Inventario"
+                    component={Inventory}
                 />
             </TopTabs.Navigator>
-            
         </View>
     )
 };

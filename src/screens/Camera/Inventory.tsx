@@ -6,7 +6,6 @@ import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCar
 import PorductInterface from '../../interface/product';
 import { useNavigation } from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import { InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 
 
 export const Inventory = () => {
@@ -15,7 +14,7 @@ export const Inventory = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const {navigate} = useNavigation<NativeStackNavigationProp<InventoryNavigationStackParamList>>();
+    const {navigate} = useNavigation<any>();
 
     const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
         navigate('InventoryDetails', { selectedProduct });
@@ -64,7 +63,7 @@ export const Inventory = () => {
             <FlatList
                 data={productsInInventory}
                 renderItem={renderItem}
-                keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
                 ListFooterComponent={renderLoader}
                 onEndReached={loadMoreItem}
                 onEndReachedThreshold={0}

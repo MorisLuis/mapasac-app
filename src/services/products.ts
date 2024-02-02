@@ -1,12 +1,23 @@
 import { api } from "../api/api";
 
+const getProductDetails = async (id: string, marca: string) => {
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/${id}?Marca=${marca}`);
+        product = getProduct.data;
+
+    } catch (error: any) {
+        console.log({ error: error })
+    }
+
+    return product
+}
 
 const getProductByCodeBar = async (codeBar: string) => {
 
     let product;
     try {
         const getProduct = await api.get(`/api/product/byStockAndCodeBar/${codeBar}`);
-        console.log({getProduct})
         product = getProduct.data;
 
     } catch (error: any) {
@@ -18,7 +29,7 @@ const getProductByCodeBar = async (codeBar: string) => {
 
 
 
-const getProductsByStock = async ( PageNumber : number ) => {
+const getProductsByStock = async (PageNumber: number) => {
 
     let products;
     try {
@@ -34,5 +45,6 @@ const getProductsByStock = async ( PageNumber : number ) => {
 
 export {
     getProductByCodeBar,
-    getProductsByStock
+    getProductsByStock,
+    getProductDetails
 }

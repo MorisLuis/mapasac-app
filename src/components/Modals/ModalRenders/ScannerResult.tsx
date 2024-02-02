@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../../interface/product';
 import { Counter } from '../../Ui/Counter';
+import { useNavigation } from '@react-navigation/native';
 
 interface ScannerResultInterface {
     product: PorductInterface;
@@ -18,6 +19,7 @@ export const ScannerResult = ({
 
     const { addProduct } = useContext(InventoryBagContext)
     const [counterProduct, setCounterProduct] = useState<number>(0);
+    const { navigate } = useNavigation<any>();
 
     const handleAddToInventory = () => {
 
@@ -30,6 +32,12 @@ export const ScannerResult = ({
         onClose()
     }
 
+    const handleExpandProductDetails = () => {
+        onClose()
+        navigate('ProductDetails', { selectedProduct: product });
+    }
+    
+    console.log({product})
     return (
         <View>
             {
@@ -51,7 +59,11 @@ export const ScannerResult = ({
                                 </View>
                             </View>
 
-                            <Icon name="expand-outline" size={20} color="black" />
+                            <TouchableOpacity
+                                onPress={handleExpandProductDetails}
+                            >
+                                <Icon name="expand-outline" size={20} color="black" />
+                            </TouchableOpacity>
                         </View>
 
                         <Counter counter={counterProduct} setCounter={setCounterProduct} />
