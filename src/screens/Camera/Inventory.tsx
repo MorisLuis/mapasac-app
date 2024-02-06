@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StatusBar, Text, View } from 'react-native'
-import { styles } from '../../theme/UI/cardsStyles';
+import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native'
+
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import PorductInterface from '../../interface/product';
 import { useNavigation } from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 
 
 export const Inventory = () => {
@@ -14,10 +15,14 @@ export const Inventory = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const {navigate} = useNavigation<any>();
+    const { navigate } = useNavigation<any>();
 
     const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
         navigate('InventoryDetails', { selectedProduct });
+    };
+
+    const navigateToSearch = () => {
+        navigate('SearchProduct');
     };
 
     const handleGetProductsByStock = async () => {
@@ -59,7 +64,22 @@ export const Inventory = () => {
         <View style={{
             padding: 10
         }}>
-            <Text style={styles.title}> Inventario </Text>
+            <View style={styles.header}>
+                <Text style={styles.title}> Inventario </Text>
+                <View style={styles.actions}>
+                    <Icon
+                        name="add-outline"
+                        size={30}
+                    />
+
+                    <Icon
+                        name="search-outline"
+                        size={30}
+                        style={styles.iconSearch}
+                        onPress={navigateToSearch}
+                    />
+                </View>
+            </View>
             <FlatList
                 data={productsInInventory}
                 renderItem={renderItem}
@@ -71,3 +91,24 @@ export const Inventory = () => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 20
+    },
+    title: {
+        display: "flex",
+        fontSize: 40
+    },
+    actions: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    iconSearch: {
+        marginLeft: 15
+    }
+})

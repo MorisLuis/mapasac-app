@@ -37,7 +37,6 @@ export const ScannerResult = ({
         navigate('ProductDetails', { selectedProduct: product });
     }
     
-    console.log({product})
     return (
         <View>
             {

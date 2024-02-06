@@ -5,9 +5,16 @@ import { ScannerNavigation } from './ScannerNavigation';
 import { Profile } from '../screens/Profile';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
+export type BottomNavigationStackParamList = {
+    Home: any;
+    Scanner: any;
+    Profile: any;
+};
+
 export const BottomNavigation = () => {
 
-    const BottomTabIOS = createBottomTabNavigator();
+    const BottomTabIOS = createBottomTabNavigator<BottomNavigationStackParamList>();
 
     return (
         <BottomTabIOS.Navigator

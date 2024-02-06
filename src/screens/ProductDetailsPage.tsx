@@ -1,7 +1,6 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, TouchableOpacity } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
 
@@ -32,7 +31,7 @@ export const ProductDetailsPage = ({ route }: any) => {
             <Text>Navegar a InventaryDetails</Text>
             <Text>
                 {
-                    JSON.stringify(productDetails)
+                    productDetails && JSON.stringify(productDetails)
                 }
             </Text>
         </TouchableOpacity>
