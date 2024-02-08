@@ -14,6 +14,7 @@ import { getProductByCodeBar } from '../../services/products';
 import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomCamera: React.FC = () => {
 
@@ -29,6 +30,8 @@ const CustomCamera: React.FC = () => {
     const [openModalBagInventory, setOpenModalBagInventory] = useState(false);
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
+
+    const { navigate } = useNavigation<any>();
 
     const handleCloseProductModalScanned = () => {
         setOpenModalScannerResult(false);
@@ -70,7 +73,7 @@ const CustomCamera: React.FC = () => {
                 try {
                     const response = await getProductByCodeBar(codeValue);
 
-                    if( response.length > 1 ) {
+                    if (response.length > 1) {
                         setOpenModalProductFoundByCodebar(true)
                     } else {
                         setOpenModalScannerResult(true)
@@ -119,9 +122,20 @@ const CustomCamera: React.FC = () => {
                 {
                     selectedDevice &&
                     <View style={styles.iconStyle} >
-                        <Icon name="scan-outline" size={250} color="white" />
+                        <Icon name="scan-outline" size={150} color="white" />
                     </View>
                 }
+
+                <View style={styles.scannerOptions}>
+
+                    <TouchableOpacity style={styles.option} onPress={() => navigate('ImageGallery')}>
+                        <Icon name="image-outline" size={30} color="white" />
+                    </TouchableOpacity>
+                    <View style={styles.option}>
+                        <Icon name="text-outline" size={30} color="white" />
+                    </View>
+                </View>
+
 
                 <View style={styles.bagContent} >
                     <TouchableOpacity style={styles.bag} onPress={() => setOpenModalBagInventory(true)}>
@@ -157,7 +171,7 @@ const CustomCamera: React.FC = () => {
                 visible={openModalProductDetails}
                 onClose={handleModalProductDetails}
             >
-                <ProductDetails/>
+                <ProductDetails />
             </ModalComplete>
 
             {/* BAG INVENTORY MODAL */}
@@ -202,19 +216,19 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: "50%",
         left: "50%",
-        transform: [{ translateX: -125 }, { translateY: -150 }],
+        transform: [{ translateX: -75 }, { translateY: -150 }]
     } as ViewStyle,
     bagContent: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end",
         position: "absolute",
-        top: 0,
+        top: 20,
         right: 0,
         paddingHorizontal: 10,
     },
     bag: {
-        backgroundColor: "#EDBD42",
+        backgroundColor: "gray",
         width: 35,
         height: 35,
         borderRadius: 100,
@@ -226,7 +240,25 @@ const styles = StyleSheet.create({
     },
     bagNumber: {
         color: "white"
+    },
+    scannerOptions: {
+        display: "flex",
+        flexDirection: "row",
+        position: "absolute",
+        bottom: "10%",
+        left: "50%",
+        transform: [{ translateX: -65 }],
+        backgroundColor: 'gray',
+        borderRadius: 10,
+        paddingHorizontal: 15
+    },
+    option: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10
     }
+
 })
 
 
