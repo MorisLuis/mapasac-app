@@ -44,7 +44,7 @@ export const SearchProductScreen = () => {
             headerLargeTitle: true,
             headerTitle: "Productos",
             headerSearchBarOptions: {
-                placeholder: "Friends",
+                placeholder: "Buscar producto...",
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },

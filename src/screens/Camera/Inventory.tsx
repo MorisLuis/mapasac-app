@@ -68,11 +68,6 @@ export const Inventory = () => {
                 <Text style={styles.title}> Inventario </Text>
                 <View style={styles.actions}>
                     <Icon
-                        name="add-outline"
-                        size={30}
-                    />
-
-                    <Icon
                         name="search-outline"
                         size={30}
                         style={styles.iconSearch}

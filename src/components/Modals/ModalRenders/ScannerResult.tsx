@@ -34,6 +34,7 @@ export const ScannerResult = ({
 
     const handleExpandProductDetails = () => {
         onClose()
+        console.log("opeeeen!")
         navigate('ProductDetails', { selectedProduct: product });
     }
     
@@ -150,25 +151,3 @@ const styles = StyleSheet.create({
         marginBottom: 5
     }
 });
-
-/* const fakeProduct : PorductInterface = {
-    Descripcion: "Product Description",
-    Id_Familia: 123,
-    Codigo: "233ABC123",
-    Familia: "NIKE",
-    CodigoPrecio: "XYZ456",
-    Precio: 49.99,
-    CodigoExsitencia: "EFG789",
-    Existencia: 100,
-    Id_Almacen: 1,
-    Marca: "BrandXYZ",
-    Id_Marca: 456,
-    Id_ListaPrecios: 789,
-    Piezas: 0,
-    Impto: 0.08,
-    imagen: [{
-        url: "https://example.com/image.jpg",
-        id: 1234
-    }]
-};
- */

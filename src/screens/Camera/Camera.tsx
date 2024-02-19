@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
@@ -15,6 +15,7 @@ import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { useNavigation } from '@react-navigation/native';
+import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
 
 const CustomCamera: React.FC = () => {
 
@@ -30,6 +31,7 @@ const CustomCamera: React.FC = () => {
     const [openModalBagInventory, setOpenModalBagInventory] = useState(false);
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
+    const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
 
     const { navigate } = useNavigation<any>();
 
@@ -44,6 +46,11 @@ const CustomCamera: React.FC = () => {
         setProductsScanned(undefined)
     }
 
+
+    const handleCloseModalFindByBarcodeInput = () => {
+        setOpenModalFindByCodebarInput(false);
+    }
+
     const handleCloseModalBagInventory = () => {
         setOpenModalBagInventory(false)
     }
@@ -52,6 +59,18 @@ const CustomCamera: React.FC = () => {
         handleCloseProductModalScanned();
         setOpenModalProductDetails(!openModalProductDetails);
         setProductSelected(undefined);
+    }
+
+    const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
+        handleCloseModalFindByBarcodeInput();
+
+        if (response.length > 1) {
+            setOpenModalProductFoundByCodebar(true)
+        } else {
+            setOpenModalScannerResult(true)
+        }
+
+        setProductsScanned(response);
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
@@ -72,14 +91,7 @@ const CustomCamera: React.FC = () => {
 
                 try {
                     const response = await getProductByCodeBar(codeValue);
-
-                    if (response.length > 1) {
-                        setOpenModalProductFoundByCodebar(true)
-                    } else {
-                        setOpenModalScannerResult(true)
-                    }
-
-                    setProductsScanned(response);
+                    handleOpenProductsFoundByCodebar(response);
                     console.log(`Scanned code value: ${codeValue}`);
                 } catch (error) {
                     console.error('Error fetching product:', error);
@@ -98,8 +110,6 @@ const CustomCamera: React.FC = () => {
     useEffect(() => {
         setIsScannerActive(selectedDevice !== null);
     }, [selectedDevice]);
-
-    const [permission, setPermission] = useState(false)
 
     useEffect(() => {
         setSelectedDevice(backCamera?.id || null);
@@ -122,18 +132,18 @@ const CustomCamera: React.FC = () => {
                 {
                     selectedDevice &&
                     <View style={styles.iconStyle} >
-                        <Icon name="scan-outline" size={150} color="white" />
+                        <Icon name="scan-outline" size={300} color="white" />
                     </View>
                 }
 
                 <View style={styles.scannerOptions}>
-
-                    <TouchableOpacity style={styles.option} onPress={() => navigate('ImageGallery')}>
+                    {/* <TouchableOpacity style={styles.option} onPress={() => navigate('ImageGallery')}>
                         <Icon name="image-outline" size={30} color="white" />
+                    </TouchableOpacity> */}
+
+                    <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
+                        <Icon name="barcode-outline" size={30} color="white" />
                     </TouchableOpacity>
-                    <View style={styles.option}>
-                        <Icon name="text-outline" size={30} color="white" />
-                    </View>
                 </View>
 
 
@@ -143,6 +153,17 @@ const CustomCamera: React.FC = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+
+
+            {/*  */}
+            <ModalMiddle
+                visible={openModalFindByCodebarInput}
+                onClose={handleCloseModalFindByBarcodeInput}
+            >
+                <ProductFindByCodebarInput
+                    handleOpenProductsFoundByCodebar={handleOpenProductsFoundByCodebar}
+                />
+            </ModalMiddle>
 
             {/* PRODUCTS FOUND BY CODEBAR */}
             <ModalMiddle
@@ -216,7 +237,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: "50%",
         left: "50%",
-        transform: [{ translateX: -75 }, { translateY: -150 }]
+        transform: [{ translateX: -150 }, { translateY: -150 }]
     } as ViewStyle,
     bagContent: {
         display: "flex",

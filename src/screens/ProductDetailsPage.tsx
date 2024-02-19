@@ -25,6 +25,8 @@ export const ProductDetailsPage = ({ route }: any) => {
         handleGetProductDetails()
     }, [])
 
+    console.log({productDetails})
+
 
     return (
         <TouchableOpacity onPress={navigateBackToInventario} style={styles.ProductDetailsPage}>
