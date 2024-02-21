@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from '../screens/Home';
 import { ScannerNavigation } from './ScannerNavigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProfileNavigation } from './ProfileNavigation';
+import { HomeNavigation } from './HomeNavigation';
 
 
 export type BottomNavigationStackParamList = {
@@ -43,7 +43,7 @@ export const BottomNavigation = () => {
                 }
             })}
         >
-            <BottomTabIOS.Screen name="Home" options={{ title: 'Inicio' }} component={Home} />
+            <BottomTabIOS.Screen name="Home" options={{ title: 'Inicio' }} component={HomeNavigation} />
             <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
             <BottomTabIOS.Screen name="Profile" options={{ title: 'Perfil' }} component={ProfileNavigation} />
         </BottomTabIOS.Navigator>

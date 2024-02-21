@@ -1,19 +1,19 @@
 import React from 'react';
-
-import { createStackNavigator } from '@react-navigation/stack';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import PorductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
 import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ImageGallery from '../screens/Camera/ImageGallery';
+import { StatisticPage } from '../screens/Home/StatisticPage';
 
 export type InventoryNavigationStackParamList = {
     BottomNavigation: undefined;
     InventoryDetails: { selectedProduct: PorductInterface };
     ProductDetails: { selectedProduct?: PorductInterface };
     ImageGallery: any;
-    SearchProduct: any
+    SearchProduct: any;
+    statisticsPage: {estatus: string}
 };
 
 export const AppNavigation = () => {
@@ -28,7 +28,7 @@ export const AppNavigation = () => {
                 options={{ headerShown: false }}
             />
 
-            {/* Other pages */}
+            {/* Inventory pages */}
             <Stack.Screen
                 name="InventoryDetails"
                 component={ProductDetailsPage}
@@ -42,6 +42,8 @@ export const AppNavigation = () => {
                     headerShown: true,
                 }}
             />
+
+            {/* Camera Pages */}
             <Stack.Screen
                 name="ImageGallery"
                 component={ImageGallery}
@@ -54,6 +56,16 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="SearchProduct"
                 component={SearchProductScreen}
+            />
+
+            {/* Statistics Page */}
+            <Stack.Screen
+                name="statisticsPage"
+                component={StatisticPage}
+                options={{
+                    headerBackTitle: "Atrás",
+                    headerTitle: "Productos"
+                }}
             />
         </Stack.Navigator>
     )
