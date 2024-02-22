@@ -58,6 +58,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	
 	<false/>
 </dict>
 </plist>
