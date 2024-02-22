@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
+import { updateCostos } from '../services/costos';
 
 export const ProductDetailsPage = ({ route }: any) => {
 
@@ -15,21 +16,27 @@ export const ProductDetailsPage = ({ route }: any) => {
         navigation.goBack();
     };
 
-
     const handleGetProductDetails = async () => {
         const productData = await getProductDetails(Codigo, Marca);
         setProductDetails(productData)
+    }
+
+    const handleCreateCodebar = async () => {
+
+        if (!productDetails) return;
+
+        await updateCostos({
+            codigo: productDetails?.Codigo,
+            Id_Marca: productDetails?.Id_Marca
+        })
     }
 
     useEffect(() => {
         handleGetProductDetails()
     }, [])
 
-    console.log({productDetails})
-
-
     return (
-        <TouchableOpacity onPress={navigateBackToInventario} style={styles.ProductDetailsPage}>
+        <View style={styles.ProductDetailsPage}>
             <View style={styles.section}>
                 <Text style={styles.title}>Descripcion: </Text>
                 <Text style={styles.data}>{productDetails?.Descripcion}</Text>
@@ -58,7 +65,7 @@ export const ProductDetailsPage = ({ route }: any) => {
                 <Text style={styles.title}>Precio: </Text>
                 <Text style={styles.data}>{productDetails?.Precio}</Text>
             </View>
-            {
+            {/* {
                 productDetails?.CodBar ?
                     <View style={styles.section}>
                         <Text style={styles.title}>Codigo de barras: </Text>
@@ -70,8 +77,13 @@ export const ProductDetailsPage = ({ route }: any) => {
                             <Text style={styles.buttonText}>Crear codigo de barras</Text>
                         </TouchableOpacity>
                     </View>
-            }
-        </TouchableOpacity>
+            } */}
+            <View style={styles.container}>
+                <TouchableOpacity style={styles.button} onPress={handleCreateCodebar}>
+                    <Text style={styles.buttonText}>Crear codigo de barras</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     )
 }
 
