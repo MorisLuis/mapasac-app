@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, View } from 'react-native'
+import { FlatList, SafeAreaView, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
@@ -19,7 +19,7 @@ export const SearchProductScreen = () => {
 
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return (
-            <ProductItemSearch product={item} onClick={() => handlePress(item)}/>
+            <ProductItemSearch product={item} onClick={() => handlePress(item)} />
         );
     };
 
@@ -27,8 +27,8 @@ export const SearchProductScreen = () => {
         setCurrentPage(currentPage + 1);
     };
 
-    const navigateToProduct  = (selectedProduct: PorductInterface) => {
-        navigation.navigate('InventoryDetails', {selectedProduct});
+    const navigateToProduct = (selectedProduct: PorductInterface) => {
+        navigation.navigate('InventoryDetails', { selectedProduct });
     };
 
     const handlePress = (item: PorductInterface) => {
@@ -54,19 +54,21 @@ export const SearchProductScreen = () => {
 
 
     return (
-        <View
-            style={{
-                padding: 10,
-                paddingVertical: 20
-            }}
-        >
-            <FlatList
-                data={productsInInventory}
-                renderItem={renderItem}
-                keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
-                onEndReached={loadMoreItem}
-                onEndReachedThreshold={0}
-            />
-        </View>
+        <SafeAreaView>
+            <View
+                style={{
+                    padding: 20
+                }}
+            >
+
+                <FlatList
+                    data={productsInInventory}
+                    renderItem={renderItem}
+                    keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
+                    onEndReached={loadMoreItem}
+                    onEndReachedThreshold={0}
+                />
+            </View>
+        </SafeAreaView>
     )
 }

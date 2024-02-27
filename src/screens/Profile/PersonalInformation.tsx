@@ -15,8 +15,6 @@ export const PersonalInformation = () => {
         console.log('Personal Information effect');
     }, [])
 
-    console.log({user})
-
     return (
         <View
             style={{
@@ -24,7 +22,6 @@ export const PersonalInformation = () => {
                 marginTop: top + 10
             }}
         >
-            <Text style={styles.title}> Informacion personal </Text>
             <Text>
                 { JSON.stringify( user, null, 5 ) }
             </Text>        

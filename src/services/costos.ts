@@ -17,8 +17,6 @@ const updateCostos = async ({
 
     try {
         const updatedProduct = await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
-        //const product = getProduct.data;
-        console.log({ updatedProduct })
 
     } catch (error: any) {
         console.log({ error: error })

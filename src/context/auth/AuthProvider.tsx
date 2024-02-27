@@ -80,8 +80,6 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const {data} = await api.post('/api/auth/login', { email: correo, password });
 
-            console.log({data})
-
             dispatch({
                 type: 'signUp',
                 payload: {

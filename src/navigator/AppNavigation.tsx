@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatisticPage } from '../screens/Home/StatisticPage';
 import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
+import { ProfileNavigation } from './ProfileNavigation';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -15,7 +16,8 @@ export type InventoryNavigationStackParamList = {
     ProductDetails: { selectedProduct?: PorductInterface };
     ImageGallery: any;
     SearchProduct: any;
-    statisticsPage: { estatus: string }
+    statisticsPage: { estatus: string },
+    profileApp: any
 };
 
 export const AppNavigation = () => {
@@ -44,6 +46,11 @@ export const AppNavigation = () => {
                         <Stack.Screen
                             name="InventoryDetails"
                             component={ProductDetailsPage}
+                            options={{
+                                headerTitle: "Detalles de Producto",
+                                headerShown: true,
+                                headerBackTitle: "Atrás"
+                            }}
                         />
                         <Stack.Screen
                             name="ProductDetails"
@@ -52,6 +59,7 @@ export const AppNavigation = () => {
                                 presentation: "modal",
                                 headerTitle: "Detalles de Producto",
                                 headerShown: true,
+                                headerBackTitle: "Atrás"
                             }}
                         />
 
@@ -59,6 +67,10 @@ export const AppNavigation = () => {
                         <Stack.Screen
                             name="SearchProduct"
                             component={SearchProductScreen}
+                            options={{
+                                headerShown: true,
+                                headerBackTitle: "Atrás"
+                            }}
                         />
 
                         {/* Statistics Page */}
@@ -70,6 +82,13 @@ export const AppNavigation = () => {
                                 headerTitle: "Productos"
                             }}
                         />
+
+                        {/* PROFILE */}
+                        {/* <Stack.Screen
+                            name="profileApp"
+                            component={ProfileNavigation}
+                        options={{ headerShown: true, title:"prueba" }}
+                        /> */}
                     </>
             }
         </Stack.Navigator>

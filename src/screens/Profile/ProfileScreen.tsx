@@ -21,8 +21,6 @@ export const ProfileScreen = () => {
 
     return (
         <View style={styles.ProfileScreen}>
-            <Text style={styles.title}> Perfil</Text>
-
             <SafeAreaView style={styles.content}>
                 <TouchableOpacity onPress={onClick} style={styles.section}>
                     <View>

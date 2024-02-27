@@ -12,9 +12,7 @@ export const ProfileNavigation = () => {
         <ProfileTabs.Navigator>
             <ProfileTabs.Screen
                 name="profile"
-                options={{ 
-                    headerShown: false,
-                }}
+                options={{ headerShown: true, title:"Perfil" }}
                 component={ProfileScreen}
             />
             <ProfileTabs.Screen
@@ -22,9 +20,11 @@ export const ProfileNavigation = () => {
                 component={PersonalInformation}
                 options={{
                     headerTitle: "Información Personal",
-                    //headerShown: false
+                    headerShown: true,
+                    headerBackTitle: "Atrás"
                 }}
             />
+
         </ProfileTabs.Navigator>
     )
 };
