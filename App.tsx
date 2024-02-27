@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { BottomNavigation } from './src/navigator/BottomNavigation';
 import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider';
+import { AuthProvider } from './src/context/auth/AuthProvider';
+
 import { AppNavigation } from './src/navigator/AppNavigation';
 
 const App = () => {
@@ -17,9 +18,11 @@ const App = () => {
 
 const AppState = ({ children }: any ) => {
   return (
-    <InventoryProvider>
-      { children }
-    </InventoryProvider>
+    <AuthProvider>
+      <InventoryProvider>
+        { children }
+      </InventoryProvider>
+    </AuthProvider>
   )
 }
 

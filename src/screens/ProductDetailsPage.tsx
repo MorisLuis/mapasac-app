@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
 import { updateCostos } from '../services/costos';

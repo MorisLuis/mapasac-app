@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 
-import { Text, TouchableOpacity, View } from 'react-native'
-import { styles } from '../../theme/appTheme';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 
 export const ProfileScreen = () => {
 
-    const { top } = useSafeAreaInsets();
+    const { logOut } = useContext( AuthContext );
     const { navigate } = useNavigation<any>();
 
     useEffect(() => {
@@ -20,25 +20,52 @@ export const ProfileScreen = () => {
     }
 
     return (
-        <View
-            style={{
-                ...styles.globalMargin,
-                marginTop: top + 10
-            }}
-        >
+        <View style={styles.ProfileScreen}>
             <Text style={styles.title}> Perfil</Text>
-            <TouchableOpacity
-                onPress={onClick}
-                style={{
-                    padding: 10,
-                    borderWidth: 1,
-                    borderRadius: 5
-                }}
-            >
-                <View>
-                    <Text>Información Personal</Text>
-                </View>
-            </TouchableOpacity>
+
+            <SafeAreaView style={styles.content}>
+                <TouchableOpacity onPress={onClick} style={styles.section}>
+                    <View>
+                        <Text>Información Personal</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={logOut}>
+                    <View >
+                        <Text style={styles.logoutText}>Log out</Text>
+                    </View>
+                </TouchableOpacity>
+            </SafeAreaView>
+
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    ProfileScreen: {
+        padding: 20,
+        flex: 1
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingBottom: 20,
+    },
+    content:{
+        display: "flex",
+        flexDirection: "column",
+        alignContent:"space-between",
+        justifyContent: "space-between", 
+        flex: 1
+    },
+    section: {
+        padding: 10,
+        borderWidth: 1,
+        borderRadius: 5
+    },
+    logoutText: {
+        color: "red",
+        fontSize: 16
+    }
+})

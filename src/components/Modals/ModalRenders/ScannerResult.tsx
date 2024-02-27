@@ -34,7 +34,6 @@ export const ScannerResult = ({
 
     const handleExpandProductDetails = () => {
         onClose()
-        console.log("opeeeen!")
         navigate('ProductDetails', { selectedProduct: product });
     }
     
