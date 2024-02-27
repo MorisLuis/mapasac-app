@@ -1,20 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
-import { updateCostos } from '../services/costos';
+import { LoadingScreen } from './LoadingScreen';
 
 export const ProductDetailsPage = ({ route }: any) => {
 
     const { selectedProduct: { Codigo, Marca } } = route.params;
-    const navigation = useNavigation();
     const [productDetails, setProductDetails] = useState<PorductInterface>()
-
-    // Función para navegar de regreso a Inventario
-    const navigateBackToInventario = () => {
-        navigation.goBack();
-    };
 
     const handleGetProductDetails = async () => {
         const productData = await getProductDetails(Codigo, Marca);
@@ -23,20 +16,30 @@ export const ProductDetailsPage = ({ route }: any) => {
 
     const handleCreateCodebar = async () => {
 
-        if (!productDetails) return;
+        alert("No disponible aun")
+
+        /* if (!productDetails) return;
 
         await updateCostos({
             codigo: productDetails?.Codigo,
             Id_Marca: productDetails?.Id_Marca
-        })
+        }) */
     }
 
     useEffect(() => {
         handleGetProductDetails()
     }, [])
 
-    return (
+    return productDetails ?
         <View style={styles.ProductDetailsPage}>
+            <View style={styles.imageContainer}>
+                <Image
+                    style={styles.image}
+                    source={{
+                        uri: productDetails?.imagen[0].url,
+                    }}
+                />
+            </View>
             <View style={styles.section}>
                 <Text style={styles.title}>Descripcion: </Text>
                 <Text style={styles.data}>{productDetails?.Descripcion}</Text>
@@ -65,7 +68,7 @@ export const ProductDetailsPage = ({ route }: any) => {
                 <Text style={styles.title}>Precio: </Text>
                 <Text style={styles.data}>{productDetails?.Precio}</Text>
             </View>
-            {/* {
+            {
                 productDetails?.CodBar ?
                     <View style={styles.section}>
                         <Text style={styles.title}>Codigo de barras: </Text>
@@ -73,18 +76,19 @@ export const ProductDetailsPage = ({ route }: any) => {
                     </View>
                     :
                     <View style={styles.container}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={handleCreateCodebar}>
                             <Text style={styles.buttonText}>Crear codigo de barras</Text>
                         </TouchableOpacity>
                     </View>
-            } */}
-            <View style={styles.container}>
+            }
+            {/* <View style={styles.container}>
                 <TouchableOpacity style={styles.button} onPress={handleCreateCodebar}>
                     <Text style={styles.buttonText}>Crear codigo de barras</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
-    )
+        :
+        <LoadingScreen/>
 }
 
 const styles = StyleSheet.create({
@@ -95,6 +99,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         display: "flex",
         flexDirection: "row"
+    },
+    imageContainer: {
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20
+    },
+    image: {
+        width: "50%",
+        minHeight: 120,
+        marginRight: 10,
+        borderRadius: 5
     },
     title: {
         fontWeight: "bold"

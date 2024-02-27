@@ -82,13 +82,6 @@ export const AppNavigation = () => {
                                 headerTitle: "Productos"
                             }}
                         />
-
-                        {/* PROFILE */}
-                        {/* <Stack.Screen
-                            name="profileApp"
-                            component={ProfileNavigation}
-                        options={{ headerShown: true, title:"prueba" }}
-                        /> */}
                     </>
             }
         </Stack.Navigator>

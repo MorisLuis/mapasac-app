@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getProductsStatistics } from '../../services/statistics';
 import PorductInterface from '../../interface/product';
+import { LoadingScreen } from '../LoadingScreen';
 
 export const StatisticPage = ({ route }: any) => {
     const { params: { path } } = route;
     const [products, setProducts] = useState<Partial<PorductInterface>[]>()
 
     useEffect(() => {
-        console.log('Profile effect');
-
         const fetchData = async () => {
             const result = await getProductsStatistics({ path: path, page: 1 });
             setProducts(result)
@@ -18,9 +17,8 @@ export const StatisticPage = ({ route }: any) => {
         fetchData()
     }, [])
 
-    return (
+    return products ? (
         <View style={styles.StatisticPage}>
-
             <View style={styles.productsContent}>
                 {
                     products && products.map((item, index) =>
@@ -38,6 +36,8 @@ export const StatisticPage = ({ route }: any) => {
             </View>
         </View>
     )
+    :
+    <LoadingScreen/>
 }
 
 const styles = StyleSheet.create({

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { styles } from '../../theme/UI/cardsStyles.tsx';
+import { styles } from '../../theme/UI/cardsStyles';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import PorductInterface from '../../interface/product.ts';
+import PorductInterface from '../../interface/product.js';
 
 interface ProductInventoryCardInterface {
     product: PorductInterface;
@@ -23,12 +23,12 @@ export const ProductInventoryCard = ({
             <Image
                 style={styles.productInventoryCard__Image}
                 source={{
-                    uri: 'https://images.unsplash.com/photo-1704402838495-7d2ac0798b8d?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                    uri: product.imagen[0].url,
                 }}
             />
             <View style={styles.productInventoryCard__data}>
-                <View>
-                    <Text>{product.Descripcion}</Text>
+                <View style={styles.information}>
+                    <Text style={styles.description}>{product.Descripcion}</Text>
                     <Text>Codigo: {product?.Codigo}</Text>
                     <Text>Id_Marca: {product?.Id_Marca}</Text>
                     <Text>Marca: {product?.Marca}</Text>
@@ -40,7 +40,7 @@ export const ProductInventoryCard = ({
                     }
                 </View>
 
-                <View style={styles.productInventoryCard__stock}>
+                <View style={styles.stock}>
                     <Text>{product.Piezas || product.Existencia}</Text>
                 </View>
             </View>

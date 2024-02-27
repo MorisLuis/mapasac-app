@@ -15,24 +15,30 @@ export const styles = StyleSheet.create({
         padding: 10,
         marginBottom:10
     },
+    productInventoryCard__Image: {
+        width: 60,
+        minHeight: 80,
+        marginRight: 10,
+        borderRadius: 5
+    },
     productInventoryCard__data: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between"
     },
-    productInventoryCard__Image: {
-        width: 60,
-        height: 80,
-        marginRight: 10,
-        borderRadius: 5
+    information: {
+        width: "85%"
     },
-    productInventoryCard__stock: {
+    description:{
+        fontWeight: "bold"
+    },
+    stock: {
         backgroundColor: "beige",
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 100,
         padding: 10,
-        width: 40,
+        minWidth: 40,
         height: 40,
         display: "flex",
         justifyContent: "center",

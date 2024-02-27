@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
+import { LoadingScreen } from './LoadingScreen';
 
 export const SearchProductScreen = () => {
 
@@ -53,7 +54,7 @@ export const SearchProductScreen = () => {
     }, [navigation]);
 
 
-    return (
+    return  (productsInInventory && productsInInventory.length > 0) ? (
         <SafeAreaView>
             <View
                 style={{
@@ -71,4 +72,6 @@ export const SearchProductScreen = () => {
             </View>
         </SafeAreaView>
     )
+    :
+    <LoadingScreen/>
 }
