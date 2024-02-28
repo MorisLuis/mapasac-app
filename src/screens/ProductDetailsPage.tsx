@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
 import { LoadingScreen } from './LoadingScreen';
 
 export const ProductDetailsPage = ({ route }: any) => {
+    const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
     const { selectedProduct: { Codigo, Marca } } = route.params;
     const [productDetails, setProductDetails] = useState<PorductInterface>()
@@ -36,7 +37,7 @@ export const ProductDetailsPage = ({ route }: any) => {
                 <Image
                     style={styles.image}
                     source={{
-                        uri: productDetails?.imagen[0].url,
+                        uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
                     }}
                 />
             </View>

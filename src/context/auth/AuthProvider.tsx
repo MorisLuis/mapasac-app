@@ -41,6 +41,7 @@ const AUTH_INITIAL_STATE: AuthState = {
 export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
+    const [loggingIn, setLoggingIn] = useState(false)
 
     useEffect(() => {
         checkToken();
@@ -76,8 +77,9 @@ export const AuthProvider = ({ children }: any) => {
     }
 
     const signIn = async ({ correo, password }: LoginData) => {
-
+        setLoggingIn(true)
         try {
+            state.status = "checking"
             const {data} = await api.post('/api/auth/login', { email: correo, password });
 
             dispatch({
@@ -91,6 +93,8 @@ export const AuthProvider = ({ children }: any) => {
             await AsyncStorage.setItem('token', data.token);
 
         } catch (error: any) {
+            setLoggingIn(false)
+
             dispatch({
                 type: 'addError',
                 payload: error?.response?.data?.msg || 'Información incorrecta'
@@ -99,6 +103,7 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logOut = async () => {
+        setLoggingIn(false);
         await AsyncStorage.removeItem('token');
         dispatch({ type: 'logout' });
     };
@@ -111,6 +116,7 @@ export const AuthProvider = ({ children }: any) => {
         <AuthContext.Provider value={{
             ...state,
             signIn,
+            loggingIn,
             logOut,
             removeError,
         }}>

@@ -7,6 +7,7 @@ type ContextProps = {
     token: string | null;
     user: UserInterface | null;
     status: 'checking' | 'authenticated' | 'not-authenticated';
+    loggingIn: boolean;
     signIn: (loginData: LoginData) => void;
     logOut: () => void;
     removeError: () => void;

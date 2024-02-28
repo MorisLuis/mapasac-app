@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ProductInventoryCard } from '../../Cards/ProductInventoryCard'
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext'
 import PorductInterface from '../../../interface/product'
 import { postInventory, postInventoryDetails } from '../../../services/inventory'
+import { LoadingScreen } from '../../../screens/LoadingScreen'
 
 interface InventoryBagInterface {
     onClose: () => void
@@ -13,7 +14,9 @@ export const InventoryBag = ({
     onClose
 }: InventoryBagInterface) => {
 
+
     const { bag, cleanBag, numberOfItems, removeProduct } = useContext(InventoryBagContext)
+    const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
 
     const handleCleanTemporal = () => {
         cleanBag()
@@ -25,13 +28,15 @@ export const InventoryBag = ({
     }
 
     const onPostInventary = async () => {
+        setCreateInventaryLoading(true)
         await postInventory();
         await postInventoryDetails(bag);
         cleanBag();
         onClose();
+        setCreateInventaryLoading(false)
     }
 
-    return (
+    return !createInventaryLoading ? (
         <View>
             <Text style={styles.title}>Nuevo Inventario</Text>
 
@@ -63,7 +68,9 @@ export const InventoryBag = ({
                 <Text style={styles.buttonText}>Crear Inventario</Text>
             </TouchableOpacity>
         </View>
-    )
+    ) 
+    :
+    <LoadingScreen/>
 }
 
 

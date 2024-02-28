@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,32 +15,37 @@ const ModalBottom = ({
     children
 }: ModalBottomInterface) => {
 
-    return (
+    const handleDismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
 
+    return (
         <Modal
             animationType="slide"
             transparent={true}
             visible={visible}
             onRequestClose={onClose}
         >
-            <BlurView
-                style={StyleSheet.absoluteFill}
-                blurType="light"
-                blurAmount={5}
-            >
-                <View style={styles.modalBottom}>
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity style={styles.header} onPress={onClose}>
-                            <Icon name="close-circle-outline" size={30} color="gray" />
-                        </TouchableOpacity>
-
-                        {children}
-
+            <BlurView style={StyleSheet.absoluteFill} blurType="light" blurAmount={5}>
+                <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+                    <View style={styles.modalBottom}>
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        >
+                            <View style={styles.modalContent}>
+                                <TouchableWithoutFeedback onPress={() => {}}>
+                                    {/* Evita que se propague el toque para que no cierre el teclado */}
+                                    <View style={styles.header}>
+                                        <Icon name="close-circle-outline" size={30} color="gray" />
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                {children}
+                            </View>
+                        </KeyboardAvoidingView>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </BlurView>
         </Modal>
-
     );
 };
 
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        height: "30%"
+        //height: "30%"
     },
     header: {
         width: "100%",

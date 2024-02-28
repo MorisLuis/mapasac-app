@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../../interface/product';
@@ -23,6 +23,8 @@ export const ScannerResult = ({
 
     const handleAddToInventory = () => {
 
+        console.log({counterProduct})
+
         const inventoryBody = {
             ...product,
             Piezas: counterProduct
@@ -38,7 +40,7 @@ export const ScannerResult = ({
     }
     
     return (
-        <View>
+        <KeyboardAvoidingView>
             {
                 product ?
                     <View>
@@ -81,7 +83,7 @@ export const ScannerResult = ({
                         </Text>
                     </View>
             }
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

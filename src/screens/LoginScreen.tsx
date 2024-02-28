@@ -6,12 +6,13 @@ import { loginStyles } from '../theme/loginTheme';
 import { useForm } from '../hooks/useForm';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext } from '../context/auth/AuthContext';
+import { LoadingScreen } from './LoadingScreen';
 
 interface Props extends StackScreenProps<any, any> { }
 
 export const LoginScreen = ({ navigation }: Props) => {
 
-    const { signIn, errorMessage, removeError } = useContext(AuthContext);
+    const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
 
     const { email, password, onChange } = useForm({
         email: '',
@@ -33,6 +34,8 @@ export const LoginScreen = ({ navigation }: Props) => {
         signIn({ correo: email, password });
     }
 
+    if ( loggingIn ) return <LoadingScreen />
+
     return (
         <>
             {/* Background */}
@@ -40,7 +43,6 @@ export const LoginScreen = ({ navigation }: Props) => {
                 style={{ flex: 1 }}
                 behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
             >
-
 
                 <View style={loginStyles.formContainer}>
                     {/* Keyboard avoid view */}

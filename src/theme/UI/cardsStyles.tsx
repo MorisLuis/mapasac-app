@@ -24,10 +24,11 @@ export const styles = StyleSheet.create({
     productInventoryCard__data: {
         flex: 1,
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        maxWidth: "100%"
     },
     information: {
-        width: "85%"
+        //width: "80%"
     },
     description:{
         fontWeight: "bold"
@@ -42,7 +43,8 @@ export const styles = StyleSheet.create({
         height: 40,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        //maxWidth: "20%",
     },
     delete: {
         color: "red",

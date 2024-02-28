@@ -7,16 +7,15 @@ import axios from 'axios';
 )
  */
 
+/* export const api = axios.create(
+    {
+        baseURL: 'http://172.20.10.3:5001'
+    }
+) */
+
+
 export const api = axios.create(
     {
         baseURL: 'http://172.20.10.3:5001'
     }
 )
-
-
-/* export const api = axios.create(
-    {
-        baseURL: 'http://192.168.100.136:5001'
-    }
-)
- */

@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: "10%",
         left: "50%",
-        transform: [{ translateX: -65 }],
+        transform: [{ translateX: -35 }],
         backgroundColor: 'gray',
         borderRadius: 10,
         paddingHorizontal: 15
