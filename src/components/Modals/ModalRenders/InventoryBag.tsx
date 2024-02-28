@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ProductInventoryCard } from '../../Cards/ProductInventoryCard'
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext'
 import PorductInterface from '../../../interface/product'
-import { postInventory, postInventoryDetails } from '../../../services/inventory'
 import { LoadingScreen } from '../../../screens/LoadingScreen'
 
 interface InventoryBagInterface {
@@ -15,7 +14,7 @@ export const InventoryBag = ({
 }: InventoryBagInterface) => {
 
 
-    const { bag, cleanBag, numberOfItems, removeProduct } = useContext(InventoryBagContext)
+    const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
 
     const handleCleanTemporal = () => {
@@ -43,8 +42,8 @@ export const InventoryBag = ({
             {
                 bag.map((product) =>
                     <ProductInventoryCard
-                    key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
-                    product={product}
+                        key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                        product={product}
                         onDelete={onDelete}
                         showDelete
                     />
@@ -68,9 +67,9 @@ export const InventoryBag = ({
                 <Text style={styles.buttonText}>Crear Inventario</Text>
             </TouchableOpacity>
         </View>
-    ) 
-    :
-    <LoadingScreen/>
+    )
+        :
+        <LoadingScreen />
 }
 
 

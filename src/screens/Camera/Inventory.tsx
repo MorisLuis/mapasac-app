@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native'
 
 import { getProductsByStock } from '../../services/products';
@@ -6,6 +6,7 @@ import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCar
 import PorductInterface from '../../interface/product';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 
 
@@ -14,6 +15,7 @@ export const Inventory = () => {
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>()
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const { inventoryCreated } = useContext(InventoryBagContext);
 
     const { navigate } = useNavigation<any>();
 
@@ -59,6 +61,15 @@ export const Inventory = () => {
     useEffect(() => {
         handleGetProductsByStock()
     }, [currentPage])
+
+    useEffect(() => {
+        if(!inventoryCreated) return;
+        console.log("inventoryCreated")
+        setCurrentPage(1)
+        setProductsInInventory(undefined)
+        handleGetProductsByStock()
+    }, [inventoryCreated])
+
 
     return (
         <View style={{

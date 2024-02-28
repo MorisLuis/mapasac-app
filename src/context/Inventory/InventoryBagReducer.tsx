@@ -3,6 +3,8 @@ import { InventoryBagInterface } from "./InventoryBagProvider";
 
 
 type InventoryBagActionType =
+    | { type: '[InventoryBag] - Post Inventory', payload: string | undefined }
+    | { type: '[InventoryBag] - Post Inventory Details', payload: PorductInterface[] }
     | { type: '[InventoryBag] - Add Product', payload: PorductInterface }
     | { type: '[InventoryBag] - Remove Product', payload: PorductInterface }
     | { type: '[InventoryBag] - Clear Bag', payload: [] }
@@ -17,6 +19,16 @@ type InventoryBagActionType =
 export const innventoryBagReducer = (state: InventoryBagInterface, action: InventoryBagActionType): InventoryBagInterface => {
 
     switch (action.type) {
+
+        case '[InventoryBag] - Post Inventory':
+            return {
+                ...state
+            }
+
+        case '[InventoryBag] - Post Inventory Details':
+            return {
+                ...state
+            }
 
         case '[InventoryBag] - Add Product':
             return {

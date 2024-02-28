@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import PorductInterface from '../../interface/product';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
+import { api } from '../../api/api';
 
 
 export interface InventoryBagInterface {
@@ -18,6 +19,7 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
+    const [inventoryCreated, setInventoryCreated] = useState(false)
 
     const addProduct = (product: PorductInterface) => {
 
@@ -39,6 +41,38 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         dispatch({ type: '[InventoryBag] - Clear Bag', payload: [] })
     }
 
+
+    const postInventory = async (descripcion?: string) => {
+
+        try {
+            await api.post(`/api/inventory`, { descripcion });
+            dispatch({ type: '[InventoryBag] - Post Inventory', payload: descripcion })
+            setInventoryCreated(true)
+        } catch (error) {
+            console.log({ error })
+            setInventoryCreated(false);
+        } finally {
+            setTimeout(() => {
+                setInventoryCreated(false);
+            }, 1000);
+        }
+
+    };
+
+
+    const postInventoryDetails = async (products: PorductInterface[]) => {
+
+        try {
+            await api.post(`/api/inventory/inventoryDetails`, products);
+            dispatch({ type: '[InventoryBag] - Post Inventory Details', payload: products })
+            setInventoryCreated(true)
+        } catch (error) {
+            console.log({ error })
+        }
+
+    }
+
+
     useEffect(() => {
         const numberOfItems = state.bag.length;
 
@@ -55,6 +89,9 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             ...state,
             addProduct,
             removeProduct,
+            postInventory,
+            postInventoryDetails,
+            inventoryCreated,
             cleanBag
         }}
         >

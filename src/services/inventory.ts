@@ -3,10 +3,10 @@ import PorductInterface from "../interface/product";
 
 
 
-const postInventory = async (descripcion?: string) => {
+/* const postInventory = async (descripcion?: string) => {
 
     try {
-        const postInventory = await api.post(`/api/inventory`, { descripcion });
+        await api.post(`/api/inventory`, { descripcion });
 
     } catch (error) {
         console.log({error})
@@ -28,4 +28,4 @@ const postInventoryDetails = async (products : PorductInterface[] ) => {
 export {
     postInventory,
     postInventoryDetails
-}
+} */

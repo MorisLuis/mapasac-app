@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
         maxWidth: "100%"
     },
     information: {
-        //width: "80%"
+        maxWidth: "80%"
     },
     description:{
         fontWeight: "bold"
