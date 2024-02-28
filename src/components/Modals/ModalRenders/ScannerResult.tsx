@@ -23,8 +23,6 @@ export const ScannerResult = ({
 
     const handleAddToInventory = () => {
 
-        console.log({counterProduct})
-
         const inventoryBody = {
             ...product,
             Piezas: counterProduct
@@ -35,10 +33,10 @@ export const ScannerResult = ({
     }
 
     const handleExpandProductDetails = () => {
-        onClose()
         navigate('ProductDetails', { selectedProduct: product });
+
     }
-    
+
     return (
         <KeyboardAvoidingView>
             {

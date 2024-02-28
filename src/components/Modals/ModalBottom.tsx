@@ -19,12 +19,12 @@ const ModalBottom = ({
         Keyboard.dismiss();
     };
 
+
     return (
         <Modal
             animationType="slide"
             transparent={true}
             visible={visible}
-            onRequestClose={onClose}
         >
             <BlurView style={StyleSheet.absoluteFill} blurType="light" blurAmount={5}>
                 <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
@@ -33,8 +33,7 @@ const ModalBottom = ({
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         >
                             <View style={styles.modalContent}>
-                                <TouchableWithoutFeedback onPress={() => {}}>
-                                    {/* Evita que se propague el toque para que no cierre el teclado */}
+                                <TouchableWithoutFeedback onPress={onClose}>
                                     <View style={styles.header}>
                                         <Icon name="close-circle-outline" size={30} color="gray" />
                                     </View>

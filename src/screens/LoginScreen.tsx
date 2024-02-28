@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
+
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
-
-
 import { loginStyles } from '../theme/loginTheme';
 import { useForm } from '../hooks/useForm';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -34,7 +33,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         signIn({ correo: email, password });
     }
 
-    if ( loggingIn ) return <LoadingScreen />
+    if (loggingIn) return <LoadingScreen />
 
     return (
         <>

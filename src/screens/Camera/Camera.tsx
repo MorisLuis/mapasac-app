@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
@@ -14,7 +14,6 @@ import { getProductByCodeBar } from '../../services/products';
 import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
-import { useNavigation } from '@react-navigation/native';
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
 
 const CustomCamera: React.FC = () => {
@@ -33,8 +32,7 @@ const CustomCamera: React.FC = () => {
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
     const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
 
-    const { navigate } = useNavigation<any>();
-
+    // Close modals.
     const handleCloseProductModalScanned = () => {
         setOpenModalScannerResult(false);
         setProductSelected(undefined);
@@ -55,6 +53,7 @@ const CustomCamera: React.FC = () => {
         setOpenModalBagInventory(false)
     }
 
+    ///
     const handleModalProductDetails = () => {
         handleCloseProductModalScanned();
         setOpenModalProductDetails(!openModalProductDetails);

@@ -7,7 +7,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatisticPage } from '../screens/Home/StatisticPage';
 import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
-import { ProfileNavigation } from './ProfileNavigation';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
