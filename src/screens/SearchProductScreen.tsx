@@ -61,7 +61,6 @@ export const SearchProductScreen = () => {
                     padding: 20
                 }}
             >
-
                 <FlatList
                     data={productsInInventory}
                     renderItem={renderItem}

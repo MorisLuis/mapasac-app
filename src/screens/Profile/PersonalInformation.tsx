@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
 import { Text, View } from 'react-native'
-import { styles } from '../../theme/appTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthContext } from '../../context/auth/AuthContext';
 
@@ -16,12 +15,7 @@ export const PersonalInformation = () => {
     }, [])
 
     return (
-        <View
-            style={{
-                ...styles.globalMargin,
-                marginTop: top + 10
-            }}
-        >
+        <View>
             <Text>
                 { JSON.stringify( user, null, 5 ) }
             </Text>        
