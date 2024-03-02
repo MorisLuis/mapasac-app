@@ -73,6 +73,7 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
+        console.log({product})
         setProductSelected(product);
         setOpenModalProductFoundByCodebar(false);
         setOpenModalScannerResult(true);

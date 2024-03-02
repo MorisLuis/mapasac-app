@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
@@ -8,15 +8,12 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
-
-
 export const Inventory = () => {
 
-    const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>()
+    const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const { inventoryCreated } = useContext(InventoryBagContext);
-
     const { navigate } = useNavigation<any>();
 
     const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
@@ -27,18 +24,8 @@ export const Inventory = () => {
         navigate('SearchProduct');
     };
 
-    const handleGetProductsByStock = async () => {
-        setIsLoading(true);
-        const porducts = await getProductsByStock(currentPage)
-        setProductsInInventory(productsInInventory ? [...productsInInventory, ...porducts] : porducts)
-        setIsLoading(false);
-    }
-
-
     const renderItem = ({ item }: { item: PorductInterface }) => {
-        return (
-            <ProductInventoryCard product={item} onClick={() => handlePress(item)} />
-        );
+        return <ProductInventoryCard product={item} onClick={() => handlePress(item)} />;
     };
 
     const renderLoader = () => {
@@ -50,7 +37,18 @@ export const Inventory = () => {
         );
     };
 
+    const handleGetProductsByStock = async () => {
+        setIsLoading(true);
+        const products = await getProductsByStock(currentPage)
+        setProductsInInventory(prevProducts =>
+            inventoryCreated ? products :
+                prevProducts ? [...prevProducts, ...products] : products
+        );
+        setIsLoading(false);
+    }
+
     const loadMoreItem = () => {
+        if (inventoryCreated) return;
         setCurrentPage(currentPage + 1);
     };
 
@@ -58,23 +56,25 @@ export const Inventory = () => {
         navigateToInventaryDetails(item)
     };
 
+    const resetInventory = () => {
+        setCurrentPage(1);
+        setProductsInInventory([]);
+    };
+
     useEffect(() => {
+        if (!inventoryCreated) return;
+        resetInventory();
+        handleGetProductsByStock();
+    }, [inventoryCreated]);
+
+
+    useEffect(() => {
+        if (inventoryCreated) return;
         handleGetProductsByStock()
     }, [currentPage])
 
-    useEffect(() => {
-        if(!inventoryCreated) return;
-        console.log("inventoryCreated")
-        setCurrentPage(1)
-        setProductsInInventory(undefined)
-        handleGetProductsByStock()
-    }, [inventoryCreated])
-
-
     return (
-        <View style={{
-            padding: 10
-        }}>
+        <View>
             <View style={styles.header}>
                 <Text style={styles.title}> Inventario </Text>
                 <View style={styles.actions}>
