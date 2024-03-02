@@ -6,6 +6,7 @@ import { useForm } from '../hooks/useForm';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoadingScreen } from './LoadingScreen';
+import { buttonStyles } from '../theme/UI/buttons';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -95,10 +96,10 @@ export const LoginScreen = ({ navigation }: Props) => {
                     <View style={loginStyles.buttonContainer}>
                         <TouchableOpacity
                             activeOpacity={0.8}
-                            style={loginStyles.button}
+                            style={[buttonStyles.button, buttonStyles.black]}
                             onPress={onLogin}
                         >
-                            <Text style={loginStyles.buttonText} >Login</Text>
+                            <Text style={buttonStyles.buttonText} >Login</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

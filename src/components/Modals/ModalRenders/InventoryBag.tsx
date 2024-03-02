@@ -4,6 +4,8 @@ import { ProductInventoryCard } from '../../Cards/ProductInventoryCard'
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext'
 import PorductInterface from '../../../interface/product'
 import { LoadingScreen } from '../../../screens/LoadingScreen'
+import { buttonStyles } from '../../../theme/UI/buttons'
+import { globalStyles } from '../../../theme/appTheme'
 
 interface InventoryBagInterface {
     onClose: () => void
@@ -53,18 +55,18 @@ export const InventoryBag = ({
             {
                 numberOfItems > 0 &&
                 <TouchableOpacity
-                    style={styles.toogleButton}
+                    style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
                     onPress={handleCleanTemporal}
                 >
-                    <Text style={styles.buttonText}>Limpiar carrito</Text>
+                    <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
                 </TouchableOpacity>
             }
 
             <TouchableOpacity
-                style={styles.postInventoryButton}
+                style={[buttonStyles.button, buttonStyles.black]}
                 onPress={onPostInventary}
             >
-                <Text style={styles.buttonText}>Crear Inventario</Text>
+                <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
             </TouchableOpacity>
         </View>
     )

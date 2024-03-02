@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { getProductByCodeBar } from '../../../services/products';
+import { buttonStyles } from '../../../theme/UI/buttons';
 
 export const ProductFindByCodebarInput = ({
     handleOpenProductsFoundByCodebar
@@ -20,13 +21,13 @@ export const ProductFindByCodebarInput = ({
                 style={styles.ProductFindByCodebarInput_input}
                 onChangeText={onChangeBarcode}
                 value={Barcode}
-                placeholder="useless placeholder"
+                placeholder="Ej: 6541q"
             />
             <TouchableOpacity
-                style={styles.ProductFindByCodebarInput_button}
+                style={[buttonStyles.button, buttonStyles.black]}
                 onPress={handleSearchProductByCodebarInput}
             >
-                <Text style={styles.ProductFindByCodebarInput_button_text}>Buscar producto</Text>
+                <Text style={buttonStyles.buttonText}>Buscar producto</Text>
             </TouchableOpacity>
         </View>
     );

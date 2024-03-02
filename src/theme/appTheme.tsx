@@ -40,6 +40,9 @@ export const globalStyles = {
     globalMarginBottom: {
         marginBottom: 20
     },
+    globalMarginBottomSmall: {
+        marginBottom: 10
+    },
     blur: {
         //-webkit-backdrop-filter: blur(10px);
         backdropFilter: "blur(10px)",

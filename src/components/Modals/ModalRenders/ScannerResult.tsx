@@ -6,6 +6,8 @@ import { InventoryBagContext } from '../../../context/Inventory/InventoryBagCont
 import PorductInterface from '../../../interface/product';
 import { Counter } from '../../Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
 
 interface ScannerResultInterface {
     product: PorductInterface;
@@ -41,7 +43,7 @@ export const ScannerResult = ({
         <KeyboardAvoidingView>
             {
                 product ?
-                    <View>
+                    <View style={styles.ScannerResult}>
                         <View style={styles.product}>
                             <View style={styles.productText}>
                                 <Image
@@ -68,10 +70,10 @@ export const ScannerResult = ({
                         <Counter counter={counterProduct} setCounter={setCounterProduct} />
 
                         <TouchableOpacity
-                            style={styles.toogleButton}
+                            style={[buttonStyles.button, buttonStyles.black]}
                             onPress={handleAddToInventory}
                         >
-                            <Text style={styles.buttonText}>Agregar al inventario</Text>
+                            <Text style={buttonStyles.buttonText}>Agregar al inventario</Text>
                         </TouchableOpacity>
                     </View>
                     :
@@ -86,13 +88,15 @@ export const ScannerResult = ({
 }
 
 const styles = StyleSheet.create({
-
+    ScannerResult:{
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom
+    },
     product: {
         display: "flex",
         alignItems: 'center',
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 25
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom
     },
     productText: {
         display: "flex",
@@ -111,29 +115,14 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 25
-    },
-    toogleButton: {
-        backgroundColor: "blue",
-        width: "100%",
-        color: "white",
-        borderRadius: 5,
-        marginBottom: 10
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        padding: 10,
-        display: "flex",
-        textAlign: "center"
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom
     },
     productNotFound: {
         display: "flex",
         alignItems: 'center',
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 25
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom
     },
     productNotFoundText: {
         display: "flex",
@@ -147,6 +136,6 @@ const styles = StyleSheet.create({
     productNotFoundTitle: {
         fontSize: 18,
         fontWeight: "bold",
-        marginBottom: 5
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom
     }
 });
