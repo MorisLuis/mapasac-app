@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getBriefProductsStatistics } from '../../services/statistics';
 import { useNavigation } from '@react-navigation/native';
+import { globalStyles } from '../../theme/appTheme';
 
 interface statisticsInterface {
     Estatus: string,
@@ -34,8 +35,6 @@ export const Home = () => {
 
     return (
         <View style={styles.Home}>
-            <Text style={styles.title}>Inicio</Text>
-
             <View style={styles.statisticContent}>
                 {
                     statistics && statistics.map((item, index) =>
@@ -59,8 +58,7 @@ export const Home = () => {
 
 const styles = StyleSheet.create({
     Home: {
-        marginTop: top + 10,
-        padding: 10
+        padding: globalStyles.globalPadding.padding
     },
     title: {
         fontSize: 20,

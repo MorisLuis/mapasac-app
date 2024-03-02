@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, SafeAreaView, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
 import { LoadingScreen } from './LoadingScreen';
+import { globalStyles } from '../theme/appTheme';
 
 export const SearchProductScreen = () => {
 
@@ -54,13 +55,9 @@ export const SearchProductScreen = () => {
     }, [navigation]);
 
 
-    return  (productsInInventory && productsInInventory.length > 0) ? (
+    return (productsInInventory && productsInInventory.length > 0) ? (
         <SafeAreaView>
-            <View
-                style={{
-                    padding: 20
-                }}
-            >
+            <View style={styles.SearchProductScreen}>
                 <FlatList
                     data={productsInInventory}
                     renderItem={renderItem}
@@ -71,6 +68,13 @@ export const SearchProductScreen = () => {
             </View>
         </SafeAreaView>
     )
-    :
-    <LoadingScreen/>
+        :
+        <LoadingScreen />
 }
+
+
+const styles = StyleSheet.create({
+    SearchProductScreen: {
+        padding: globalStyles.globalPadding.padding
+    }
+})

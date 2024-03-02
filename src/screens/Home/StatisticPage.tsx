@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getProductsStatistics } from '../../services/statistics';
 import PorductInterface from '../../interface/product';
 import { LoadingScreen } from '../LoadingScreen';
+import { globalStyles } from '../../theme/appTheme';
 
 export const StatisticPage = ({ route }: any) => {
     const { params: { path } } = route;
@@ -42,11 +43,10 @@ export const StatisticPage = ({ route }: any) => {
 
 const styles = StyleSheet.create({
     StatisticPage: {
-        padding: 10
+        padding: globalStyles.globalPadding.padding
     },
     productsContent: {
         
-
     },
     productCard: {
         backgroundColor: "beige",

@@ -35,51 +35,50 @@ export const ProductDetailsPage = ({ route }: any) => {
 
 
     return productDetails ?
-        <View>
-            <ScrollView style={productDetailsStyles.ProductDetailsPage}>
-                <View style={productDetailsStyles.imageContainer}>
-                    <Image
-                        style={productDetailsStyles.image}
-                        source={{
-                            uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
-                        }}
-                    />
+        <ScrollView style={productDetailsStyles.ProductDetailsPage}>
+            <View style={productDetailsStyles.imageContainer}>
+                <Image
+                    style={productDetailsStyles.image}
+                    source={{
+                        uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
+                    }}
+                />
+            </View>
+            <View style={productDetailsStyles.header}>
+                <Text style={productDetailsStyles.description}>{productDetails?.Descripcion}</Text>
+                <View>
+                    <Text style={productDetailsStyles.price}>Precio</Text>
+                    <Text>{format(productDetails?.Precio)}</Text>
                 </View>
-                <View style={productDetailsStyles.header}>
-                    <Text style={productDetailsStyles.description}>{productDetails?.Descripcion}</Text>
-                    <View>
-                        <Text style={productDetailsStyles.price}>Precio</Text>
-                        <Text>{format(productDetails?.Precio)}</Text>
-                    </View>
-                </View>
+            </View>
 
-                <View style={productDetailsStyles.information}>
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Codigo:</Text>
-                        <Text>{productDetails?.Codigo}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Existencia:</Text>
-                        <Text>{productDetails?.Existencia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Familia:</Text>
-                        <Text>{productDetails?.Familia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Marca:</Text>
-                        <Text>{productDetails?.Marca}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
+            <View style={productDetailsStyles.information}>
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Codigo:</Text>
+                    <Text>{productDetails?.Codigo}</Text>
+                    <View style={productDetailsStyles.separator} />
                 </View>
 
-                {/* {
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Existencia:</Text>
+                    <Text>{productDetails?.Existencia}</Text>
+                    <View style={productDetailsStyles.separator} />
+                </View>
+
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Familia:</Text>
+                    <Text>{productDetails?.Familia}</Text>
+                    <View style={productDetailsStyles.separator} />
+                </View>
+
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Marca:</Text>
+                    <Text>{productDetails?.Marca}</Text>
+                    <View style={productDetailsStyles.separator} />
+                </View>
+            </View>
+
+            {/* {
                 productDetails?.CodBar ?
                     <View style={productDetailsStyles.section}>
                         <Text style={productDetailsStyles.title}>Codigo de barras: </Text>
@@ -92,13 +91,12 @@ export const ProductDetailsPage = ({ route }: any) => {
                         </TouchableOpacity>
                     </View>
             } */}
-                {/* <View style={productDetailsStyles.container}>
+            {/* <View style={productDetailsStyles.container}>
                 <TouchableOpacity style={productDetailsStyles.button} onPress={handleCreateCodebar}>
                     <Text style={productDetailsStyles.buttonText}>Crear codigo de barras</Text>
                 </TouchableOpacity>
             </View> */}
-            </ScrollView>
-        </View>
+        </ScrollView>
         :
         <LoadingScreen />
 }

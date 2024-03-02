@@ -4,6 +4,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { globalStyles } from '../../theme/appTheme';
 
 
 export const ProfileScreen = () => {
@@ -42,8 +43,8 @@ export const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
     ProfileScreen: {
-        padding: 20,
-        flex: 1
+        flex: 1,
+        padding: globalStyles.globalPadding.padding
     },
     title: {
         fontSize: 20,

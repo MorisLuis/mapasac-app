@@ -6,7 +6,7 @@ import { Animated } from "react-native";
 
 export const productDetailsStyles = StyleSheet.create({
     ProductDetailsPage: {
-        padding: 20,
+        padding: globalStyles.globalPadding.padding,
         height: "100%",
         backgroundColor: colores.background_color
     },

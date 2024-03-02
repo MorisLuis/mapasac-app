@@ -7,6 +7,7 @@ import PorductInterface from '../../interface/product';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import { globalFont, globalStyles } from '../../theme/appTheme';
 
 export const Inventory = () => {
 
@@ -74,7 +75,7 @@ export const Inventory = () => {
     }, [currentPage])
 
     return (
-        <View>
+        <View style={styles.Inventory}>
             <View style={styles.header}>
                 <Text style={styles.title}> Inventario </Text>
                 <View style={styles.actions}>
@@ -99,16 +100,18 @@ export const Inventory = () => {
 }
 
 const styles = StyleSheet.create({
-
+    Inventory:{
+        padding: globalStyles.globalPadding.padding
+    },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 20
+        marginBottom: 20,
     },
     title: {
         display: "flex",
-        fontSize: 40
+        fontSize: globalFont.font_med
     },
     actions: {
         display: "flex",
