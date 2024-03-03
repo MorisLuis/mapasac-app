@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { globalStyles } from "./appTheme";
 
 
 
@@ -8,7 +9,20 @@ export const loginStyles = StyleSheet.create({
         paddingHorizontal: 30,
         justifyContent:'center',
         height: 600,
-        marginBottom: 50,
+        marginBottom: 50
+    },
+    imageContainer: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent:'center',
+        width:"100%",
+        height: "15%",
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
+    },
+    image: {
+        maxWidth: "40%",
+        objectFit: "cover",
+        height:"100%"
     },
     title: {
         color: 'black',
@@ -16,47 +30,8 @@ export const loginStyles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
     },
-    label: {
-        marginTop: 25,
-        color: 'black',
-        fontWeight: 'bold',
-    },
-    inputField: {
-        color:'black',
-        fontSize: 20,
-    },
-    inputFieldIOS: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 2,
-        paddingBottom: 4
-    },
     buttonContainer: {
         alignItems: 'center',
         marginTop: 50
-    },
-    button: {
-        borderWidth: 2,
-        borderColor: 'blue',
-        paddingHorizontal: 20,
-        paddingVertical: 5,
-        borderRadius: 100
-    },
-    buttonText: {
-        fontSize: 18,
-        color: 'blue'
-    },
-    newUserContainer: {
-        alignItems: 'flex-end',
-        marginTop: 10
-    },
-    buttonReturn: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        borderWidth: 1,
-        borderColor: 'black',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 100
     }
 });

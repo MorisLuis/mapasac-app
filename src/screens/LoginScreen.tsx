@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image } from 'react-native';
 import { loginStyles } from '../theme/loginTheme';
 import { useForm } from '../hooks/useForm';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoadingScreen } from './LoadingScreen';
 import { buttonStyles } from '../theme/UI/buttons';
+import { inputStyles } from '../theme/UI/inputs';
+import { globalStyles } from '../theme/appTheme';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -47,46 +49,42 @@ export const LoginScreen = ({ navigation }: Props) => {
                 <View style={loginStyles.formContainer}>
                     {/* Keyboard avoid view */}
 
-                    <Text style={loginStyles.title}>Login</Text>
+                    <View style={loginStyles.imageContainer}>
+                        <Image
+                            style={loginStyles.image}
+                            source={require('../assets/logo01.png')}
+                        />
+                    </View>
 
-                    <Text style={loginStyles.label}>Email:</Text>
+
+                    <Text style={[loginStyles.title]}>Bienvenido!</Text>
+                    <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>Por favor, inicia sesión abajo.</Text>
+
                     <TextInput
-                        placeholder="Ingrese su email"
+                        placeholder="Escribe tu e-mail..."
                         placeholderTextColor="black"
                         keyboardType="email-address"
                         underlineColorAndroid="black"
-                        style={[
-                            loginStyles.inputField,
-                            (Platform.OS === 'ios') && loginStyles.inputFieldIOS
-                        ]}
+                        style={[inputStyles.input, globalStyles.globalMarginBottom]}
                         selectionColor="black"
 
                         onChangeText={(value) => onChange(value, 'email')}
                         value={email}
                         onSubmitEditing={onLogin}
-
-
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
 
-
-                    <Text style={loginStyles.label}>Contraseña:</Text>
                     <TextInput
-                        placeholder="Ingrese su constraseña"
+                        placeholder="Escribe tu contraseña..."
                         placeholderTextColor="black"
                         underlineColorAndroid="black"
                         secureTextEntry
-                        style={[
-                            loginStyles.inputField,
-                            (Platform.OS === 'ios') && loginStyles.inputFieldIOS
-                        ]}
+                        style={[inputStyles.input]}
                         selectionColor="black"
-
                         onChangeText={(value) => onChange(value, 'password')}
                         value={password}
                         onSubmitEditing={onLogin}
-
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
@@ -99,7 +97,7 @@ export const LoginScreen = ({ navigation }: Props) => {
                             style={[buttonStyles.button, buttonStyles.black]}
                             onPress={onLogin}
                         >
-                            <Text style={buttonStyles.buttonText} >Login</Text>
+                            <Text style={buttonStyles.buttonText} >Iniciar sesión</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
