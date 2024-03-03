@@ -214,7 +214,7 @@ export default CustomCamera;
 const styles = StyleSheet.create({
     cameraScreen: {
         flex: 1,
-        backgroundColor: "beige",
+        backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center"
     },

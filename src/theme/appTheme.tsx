@@ -35,7 +35,7 @@ export const colores = {
 
 export const globalStyles = {
     globalPadding: {
-        padding: 10
+        padding: 20
     },
     globalMarginBottom: {
         marginBottom: 20
