@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colores } from '../../theme/appTheme';
 
 interface ModalMiddleInterface {
     visible: boolean;
@@ -31,11 +32,11 @@ const ModalMiddle = ({
                 <View style={styles.ModalMiddle}>
                     <View style={styles.modalContent}>
                         <TouchableOpacity style={styles.header} onPress={onClose}>
-                            <Icon name="close-circle-outline" size={30} color="gray" />
+                            <Icon name="close-outline" size={24} color="black" />
                         </TouchableOpacity>
-
-                        {children}
-
+                        <View style={styles.modalChildren}>
+                            {children}
+                        </View>
                     </View>
                 </View>
             </BlurView>
@@ -53,12 +54,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     modalContent: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 20,
-        paddingLeft: 20,
-        shadowColor: '#000',
+        backgroundColor: colores.background_color,
+        shadowColor: colores.color_secondary,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -70,15 +67,23 @@ const styles = StyleSheet.create({
         height: "auto",
         borderRadius: 10
     },
+    modalChildren:{
+        paddingTop: 10,
+        paddingRight: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+    },
     header: {
         width: "100%",
         top: 0,
         right: 0,
-        paddingRight: 0,
-        paddingBottom: 10,
-        paddingLeft: 0,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         display: "flex",
         alignItems: "flex-end",
+        borderWidth: 1,
+        borderColor: "transparent",
+        borderBottomColor: colores.color_border
     }
 });
 

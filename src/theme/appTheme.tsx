@@ -13,6 +13,7 @@ export const colores = {
     color_green: "#1F8A70",
     color_gray: "gray",
     color_yellow: "#EDBD42",
+    color_black: "black",
 
     //Border
     color_border: "#dfdfdf",

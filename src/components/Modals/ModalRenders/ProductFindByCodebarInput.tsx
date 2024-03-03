@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { getProductByCodeBar } from '../../../services/products';
 import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
+import { inputStyles } from '../../../theme/UI/inputs';
 
 export const ProductFindByCodebarInput = ({
     handleOpenProductsFoundByCodebar
-} : any) => {
+}: any) => {
 
     const [Barcode, onChangeBarcode] = useState('');
 
@@ -18,7 +20,7 @@ export const ProductFindByCodebarInput = ({
         <View style={styles.ProductFindByCodebarInput}>
             <Text style={styles.ProductFindByCodebarInput_title}>Escribe el codigo de barras:</Text>
             <TextInput
-                style={styles.ProductFindByCodebarInput_input}
+                style={[inputStyles.input, globalStyles.globalMarginBottomSmall]}
                 onChangeText={onChangeBarcode}
                 value={Barcode}
                 placeholder="Ej: 6541q"

@@ -199,6 +199,7 @@ const CustomCamera: React.FC = () => {
             <ModalComplete
                 visible={openModalBagInventory}
                 onClose={handleCloseModalBagInventory}
+                title="Nuevo Inventario"
             >
                 <InventoryBag
                     onClose={handleCloseModalBagInventory}

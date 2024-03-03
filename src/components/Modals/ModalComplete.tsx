@@ -2,16 +2,20 @@ import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colores } from '../../theme/appTheme';
+import { Text } from 'react-native';
 
 interface ModalCompleteInterface {
     visible: boolean;
     onClose: () => void;
+    title?: string,
     children: any
 }
 
 const ModalComplete = ({
     visible,
     onClose,
+    title,
     children
 }: ModalCompleteInterface) => {
 
@@ -31,11 +35,15 @@ const ModalComplete = ({
                     <View style={styles.modalComplete}>
                         <View style={styles.modalContent}>
                             <TouchableOpacity style={styles.header} onPress={onClose}>
-                                <Icon name="close-circle-outline" size={30} color="gray" />
+                                <Icon name="close-outline" size={24} color="black" />
+                                {
+                                    title &&
+                                    <Text style={styles.title}>{title}</Text>
+                                }
                             </TouchableOpacity>
-
+                            <View style={styles.modalChildren}>
                             {children}
-
+                        </View>                        
                         </View>
                     </View>
                 </BlurView>
@@ -52,11 +60,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end"
     },
     modalContent: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 15,
-        paddingLeft: 20,
+        backgroundColor: colores.background_color,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -68,15 +72,28 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "90%"
     },
+    modalChildren:{
+        paddingTop: 10,
+        paddingRight: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+    },
     header: {
         width: "100%",
         top: 0,
         right: 0,
-        paddingRight: 0,
-        paddingBottom: 10,
-        paddingLeft: 0,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         display: "flex",
-        alignItems: "flex-end",
+        flexDirection: 'row-reverse',
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "transparent",
+        borderBottomColor: colores.color_border,
+    },
+    title:{
+        fontWeight: 'bold'
     }
 });
 

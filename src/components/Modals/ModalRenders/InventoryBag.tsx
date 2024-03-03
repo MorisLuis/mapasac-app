@@ -39,8 +39,6 @@ export const InventoryBag = ({
 
     return !createInventaryLoading ? (
         <View>
-            <Text style={styles.title}>Nuevo Inventario</Text>
-
             {
                 bag.map((product) =>
                     <ProductInventoryCard
@@ -53,21 +51,28 @@ export const InventoryBag = ({
             }
 
             {
-                numberOfItems > 0 &&
-                <TouchableOpacity
-                    style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
-                    onPress={handleCleanTemporal}
-                >
-                    <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
-                </TouchableOpacity>
+                numberOfItems > 0 ?
+                <>
+                    <TouchableOpacity
+                        style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
+                        onPress={handleCleanTemporal}
+                    >
+                        <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[buttonStyles.button, buttonStyles.black]}
+                        onPress={onPostInventary}
+                    >
+                        <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
+                    </TouchableOpacity>
+                </>
+                :
+                <View>
+                    <Text>Agrega productos al inventario</Text>
+                </View>
             }
 
-            <TouchableOpacity
-                style={[buttonStyles.button, buttonStyles.black]}
-                onPress={onPostInventary}
-            >
-                <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
-            </TouchableOpacity>
+
         </View>
     )
         :
