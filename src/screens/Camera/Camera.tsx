@@ -15,6 +15,7 @@ import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomCamera: React.FC = () => {
 
@@ -31,6 +32,7 @@ const CustomCamera: React.FC = () => {
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
     const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
+    const { navigate } = useNavigation<any>();
 
     // Close modals.
     const handleCloseProductModalScanned = () => {
@@ -51,6 +53,7 @@ const CustomCamera: React.FC = () => {
 
     const handleCloseModalBagInventory = () => {
         setOpenModalBagInventory(false)
+        ///navigate('BagInventory');
     }
 
     ///
@@ -73,7 +76,7 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
-        console.log({product})
+        console.log({ product })
         setProductSelected(product);
         setOpenModalProductFoundByCodebar(false);
         setOpenModalScannerResult(true);
@@ -147,8 +150,9 @@ const CustomCamera: React.FC = () => {
                 </View>
 
 
+                {/* BAG */}
                 <View style={styles.bagContent} >
-                    <TouchableOpacity style={styles.bag} onPress={() => setOpenModalBagInventory(true)}>
+                    <TouchableOpacity style={styles.bag} onPress={() => navigate('BagInventory')}>
                         <Text style={styles.bagNumber}>{numberOfItems}</Text>
                     </TouchableOpacity>
                 </View>
@@ -201,9 +205,7 @@ const CustomCamera: React.FC = () => {
                 onClose={handleCloseModalBagInventory}
                 title="Nuevo Inventario"
             >
-                <InventoryBag
-                    onClose={handleCloseModalBagInventory}
-                />
+                <InventoryBag onClose={handleCloseModalBagInventory}/>
             </ModalComplete>
         </View>
     );

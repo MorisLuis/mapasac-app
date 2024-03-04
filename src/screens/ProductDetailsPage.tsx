@@ -5,6 +5,8 @@ import PorductInterface from '../interface/product';
 import { LoadingScreen } from './LoadingScreen';
 import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { format } from '../utils/currency';
+import { globalStyles } from '../theme/appTheme';
+import { buttonStyles } from '../theme/UI/buttons';
 
 export const ProductDetailsPage = ({ route }: any) => {
     const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -91,11 +93,11 @@ export const ProductDetailsPage = ({ route }: any) => {
                         </TouchableOpacity>
                     </View>
             } */}
-            {/* <View style={productDetailsStyles.container}>
-                <TouchableOpacity style={productDetailsStyles.button} onPress={handleCreateCodebar}>
-                    <Text style={productDetailsStyles.buttonText}>Crear codigo de barras</Text>
+            <View >
+                <TouchableOpacity style={buttonStyles.button} onPress={handleCreateCodebar}>
+                    <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
                 </TouchableOpacity>
-            </View> */}
+            </View>
         </ScrollView>
         :
         <LoadingScreen />

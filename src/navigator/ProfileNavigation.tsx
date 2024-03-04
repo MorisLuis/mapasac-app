@@ -24,7 +24,6 @@ export const ProfileNavigation = () => {
                     headerBackTitle: "Atrás"
                 }}
             />
-
         </ProfileTabs.Navigator>
     )
 };

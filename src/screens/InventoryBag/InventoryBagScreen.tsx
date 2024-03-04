@@ -1,27 +1,23 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { ProductInventoryCard } from '../../Cards/ProductInventoryCard'
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext'
-import PorductInterface from '../../../interface/product'
-import { LoadingScreen } from '../../../screens/LoadingScreen'
-import { buttonStyles } from '../../../theme/UI/buttons'
-import { globalStyles } from '../../../theme/appTheme'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
+import PorductInterface from '../../interface/product'
+import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
+import { buttonStyles } from '../../theme/UI/buttons'
+import { globalStyles } from '../../theme/appTheme'
+import { LoadingScreen } from '../LoadingScreen'
+import { useNavigation } from '@react-navigation/native'
 
-interface InventoryBagInterface {
-    onClose: () => void
-}
-
-export const InventoryBag = ({
-    onClose
-}: InventoryBagInterface) => {
+export const InventoryBagScreen = () => {
 
 
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
+    const { navigate } = useNavigation<any>();
 
     const handleCleanTemporal = () => {
         cleanBag()
-        onClose()
+        //onClose()
     }
 
     const onDelete = (product: PorductInterface) => {
@@ -33,12 +29,14 @@ export const InventoryBag = ({
         await postInventory();
         await postInventoryDetails(bag);
         cleanBag();
-        onClose();
+        //onClose();
         setCreateInventaryLoading(false)
     }
 
     return !createInventaryLoading ? (
         <View>
+            <Button title="Siguiente" onPress={() => navigate('TypeMovement')} />
+
             {
                 bag.map((product) =>
                     <ProductInventoryCard
