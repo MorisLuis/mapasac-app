@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const colores = {
     primary: '#5856D6',
     color_primary: "#f1f1f1",
-    color_secondary: "hsla(207, 20%, 76%, 0.1)",
+    color_secondary: "#b6c3ce1a",
     color_tertiary: "#0E1727",
     color_cuaternary: "#F9FAFA",
 

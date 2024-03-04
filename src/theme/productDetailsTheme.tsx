@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
 import { colores, globalFont, globalStyles } from "./appTheme";
-import { Animated } from "react-native";
-
-//const translateXValue: Animated.Value = new Animated.Value(0);
 
 export const productDetailsStyles = StyleSheet.create({
     ProductDetailsPage: {
