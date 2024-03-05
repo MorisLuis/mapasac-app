@@ -16,6 +16,30 @@ export const buttonStyles = StyleSheet.create({
         alignItems:"center"
     },
 
+    button_small: {
+        height: 26,
+        backgroundColor: "#c6d1f6",
+        borderColor: "transparent",
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        width: "100%",
+        color: colores.color_tertiary,
+    },
+
+    button_line: {
+        height: 36,
+        backgroundColor: "transparent",
+        borderWidth: 0,
+        borderColor: "transparent",
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        width: "100%",
+        color: colores.text_color_secondary,
+        display: "flex",
+        justifyContent:"center",
+        alignItems:"center"
+    },
+
     buttonText: {
         color: colores.text_color_secondary,
         fontSize: globalFont.font_normal
@@ -24,6 +48,10 @@ export const buttonStyles = StyleSheet.create({
     buttonTextSecondary: {
         color: colores.text_color,
         fontSize: globalFont.font_normal
+    },
+
+    button_line_text: {
+        textDecorationLine: "underline"
     },
 
     svg: {
@@ -42,16 +70,6 @@ export const buttonStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colores.color_border_tertiary,
         color: colores.text_color
-    },
-
-    button_small: {
-        height: 26,
-        backgroundColor: "#c6d1f6",
-        borderColor: "transparent",
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        width: "100%",
-        color: colores.color_tertiary,
     },
 
     black: {

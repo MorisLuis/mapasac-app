@@ -4,11 +4,11 @@ export const colores = {
     primary: '#5856D6',
     color_primary: "#f1f1f1",
     color_secondary: "#b6c3ce1a",
-    color_tertiary: "#0E1727",
+    color_tertiary: "#0e17278e",
     color_cuaternary: "#F9FAFA",
 
     //Colores
-    color_red: "#ff0000",
+    color_red: "#ff000056",
     color_blue: "#068FFF",
     color_green: "#1F8A70",
     color_gray: "gray",
@@ -16,14 +16,14 @@ export const colores = {
     color_black: "black",
 
     //Border
-    color_border: "#dfdfdf",
+    color_border: "#dfdfdf", 
     color_border_secondary: "#cacaca",
     color_border_tertiary: "#0E1727",
 
     //Text
-    text_color: "rgb(29 42 54/1)",
-    text_color_light: "rgb(101 116 130/1)",
-    text_color_secondary: "#f9f9f9",
+    text_color: "#1d2a36", //Azul
+    text_color_light: "#657482", //
+    text_color_secondary: "#f9f9f9", //
 
     //Background
     background_color: "white",

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import PorductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
@@ -8,8 +9,8 @@ import { StatisticPage } from '../screens/Home/StatisticPage';
 import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { BagInventoryNavigation } from './BagInventoryNavigation';
-import { Button } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import { buttonStyles } from '../theme/UI/buttons';
+import { Text, TouchableOpacity } from 'react-native';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -27,7 +28,6 @@ export const AppNavigation = () => {
 
     const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
     const { status } = useContext(AuthContext);
-    const { navigate } = useNavigation<any>();
 
     return (
         <Stack.Navigator>
@@ -52,14 +52,16 @@ export const AppNavigation = () => {
                             options={({ navigation }) => ({
                                 presentation: "modal",
                                 headerShown: true,
-                                headerRight: () => (
-                                    <Button
-                                        onPress={() => {
-                                            // Cerrar el modal
-                                            navigation.goBack();
-                                        }}
-                                        title="Cerrar"
-                                    />
+                                title: 'Inventario',
+                                headerLeft: () => (
+                                    <TouchableOpacity
+                                        onPress={() => navigation.goBack()}
+                                        ///title="Cerrar"
+                                        style={[buttonStyles.button, buttonStyles.white, { width: "auto"}]}
+                                    >
+                                        <Text>Cerrar</Text>
+                                    </TouchableOpacity>
+
                                 ),
                             })}
                         />

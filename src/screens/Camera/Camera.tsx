@@ -151,11 +151,11 @@ const CustomCamera: React.FC = () => {
 
 
                 {/* BAG */}
-                <View style={styles.bagContent} >
+                {/* <View style={styles.bagContent} >
                     <TouchableOpacity style={styles.bag} onPress={() => navigate('BagInventory')}>
                         <Text style={styles.bagNumber}>{numberOfItems}</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
 
@@ -197,15 +197,6 @@ const CustomCamera: React.FC = () => {
                 onClose={handleModalProductDetails}
             >
                 <ProductDetails />
-            </ModalComplete>
-
-            {/* BAG INVENTORY MODAL */}
-            <ModalComplete
-                visible={openModalBagInventory}
-                onClose={handleCloseModalBagInventory}
-                title="Nuevo Inventario"
-            >
-                <InventoryBag onClose={handleCloseModalBagInventory}/>
             </ModalComplete>
         </View>
     );

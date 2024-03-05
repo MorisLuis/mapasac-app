@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
@@ -75,39 +75,44 @@ export const Inventory = () => {
     }, [currentPage])
 
     return (
-        <View style={styles.Inventory}>
-            <View style={styles.header}>
-                <Text style={styles.title}> Inventario </Text>
-                <View style={styles.actions}>
-                    <Icon
-                        name="search-outline"
-                        size={30}
-                        style={styles.iconSearch}
-                        onPress={navigateToSearch}
-                    />
+        <SafeAreaView>
+            <View style={styles.Inventory}>
+                <View style={styles.header}>
+                    <Text style={styles.title}> Inventario </Text>
+                    <View style={styles.actions}>
+                        <Icon
+                            name="search-outline"
+                            size={30}
+                            style={styles.iconSearch}
+                            onPress={navigateToSearch}
+                        />
+                    </View>
                 </View>
+                <FlatList
+                    data={productsInInventory}
+                    renderItem={renderItem}
+                    keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
+                    ListFooterComponent={renderLoader}
+                    onEndReached={loadMoreItem}
+                    onEndReachedThreshold={0}
+                />
             </View>
-            <FlatList
-                data={productsInInventory}
-                renderItem={renderItem}
-                keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
-                ListFooterComponent={renderLoader}
-                onEndReached={loadMoreItem}
-                onEndReachedThreshold={0}
-            />
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    Inventory:{
-        padding: globalStyles.globalPadding.padding
+    Inventory: {
+        paddingHorizontal: globalStyles.globalPadding.padding
     },
     header: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 20,
+
+        // This margin is because he CutumTabBar is 30px and we added 10px more
+        marginTop: 40
     },
     title: {
         display: "flex",
