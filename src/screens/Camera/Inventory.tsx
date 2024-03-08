@@ -7,7 +7,7 @@ import PorductInterface from '../../interface/product';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-import { globalFont, globalStyles } from '../../theme/appTheme';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 
 export const Inventory = () => {
 
@@ -103,7 +103,8 @@ export const Inventory = () => {
 
 const styles = StyleSheet.create({
     Inventory: {
-        paddingHorizontal: globalStyles.globalPadding.padding
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        backgroundColor: colores.background_color
     },
     header: {
         flexDirection: "row",

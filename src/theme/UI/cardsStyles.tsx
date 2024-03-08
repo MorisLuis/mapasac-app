@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colores, globalStyles } from '../appTheme';
 
 
 export const styles = StyleSheet.create({
@@ -10,10 +11,19 @@ export const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         borderWidth: 0.5,
-        borderColor: 'black',
-        borderRadius: 8, 
+        borderColor: colores.color_border_secondary,
+        backgroundColor: colores.background_color_secondary,
+        borderRadius: 8,
         padding: 10,
-        marginBottom:10
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: -3,
+        },
+        shadowOpacity: 0.06,
+        shadowRadius: 3,
+        elevation: 3,
     },
     productInventoryCard__Image: {
         width: 60,
@@ -27,17 +37,25 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         maxWidth: "100%"
     },
+    dataItem:{
+        display: "flex",
+        flexDirection: "row"
+    },
+    label:{
+        fontWeight: "bold",
+        marginRight: globalStyles.globalMarginBottomSmall.marginBottom
+    },
     information: {
         maxWidth: "80%"
     },
-    description:{
+    description: {
         fontWeight: "bold"
     },
     stock: {
-        backgroundColor: "beige",
-        borderColor: "black",
+        backgroundColor: colores.background_color,
+        borderColor: colores.color_border,
         borderWidth: 1,
-        borderRadius: 100,
+        borderRadius: 8,
         padding: 10,
         minWidth: 40,
         height: 40,

@@ -30,11 +30,26 @@ export const ProductInventoryCard = ({
             />
             <View style={styles.productInventoryCard__data}>
                 <View style={styles.information}>
-                    <Text style={styles.description}>{product.Descripcion}</Text>
-                    <Text>Codigo: {product?.Codigo}</Text>
-                    <Text>Id_Marca: {product?.Id_Marca}</Text>
-                    <Text>Marca: {product?.Marca}</Text>
-                    <Text>Almacen: {product?.Id_Almacen}</Text>
+                    <View>
+                        <Text style={styles.description}>{product.Descripcion}</Text>
+                    </View>
+
+                    <View style={styles.dataItem}>
+                        <Text style={styles.label}>Codigo:</Text>
+                        <Text>{product?.Codigo}</Text>
+                    </View>
+
+                    <View style={styles.dataItem}>
+                        <Text style={styles.label}>Marca:</Text>
+                        <Text>{product?.Marca}</Text>
+                    </View>
+
+
+                    <View style={styles.dataItem}>
+                        <Text style={styles.label}>Almacen:</Text>
+                        <Text>{product?.Id_Almacen}</Text>
+                    </View>
+
                     {
                         showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
                     }

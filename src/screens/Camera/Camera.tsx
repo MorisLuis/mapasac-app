@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
@@ -8,31 +8,26 @@ import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
 import { ProductDetails } from '../../components/Modals/ModalRenders/ProductDetails';
 import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
-import { InventoryBag } from '../../components/Modals/ModalRenders/InventoryBag';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { getProductByCodeBar } from '../../services/products';
 import PorductInterface from '../../interface/product';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
-import { useNavigation } from '@react-navigation/native';
+import { colores } from '../../theme/appTheme';
 
 const CustomCamera: React.FC = () => {
 
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)
-    const { numberOfItems } = useContext(InventoryBagContext);
 
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
     const [productSelected, setProductSelected] = useState<PorductInterface>()
 
     const [openModalProductDetails, setOpenModalProductDetails] = useState(false);
-    const [openModalBagInventory, setOpenModalBagInventory] = useState(false);
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
     const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
-    const { navigate } = useNavigation<any>();
 
     // Close modals.
     const handleCloseProductModalScanned = () => {
@@ -51,12 +46,6 @@ const CustomCamera: React.FC = () => {
         setOpenModalFindByCodebarInput(false);
     }
 
-    const handleCloseModalBagInventory = () => {
-        setOpenModalBagInventory(false)
-        ///navigate('BagInventory');
-    }
-
-    ///
     const handleModalProductDetails = () => {
         handleCloseProductModalScanned();
         setOpenModalProductDetails(!openModalProductDetails);
@@ -76,7 +65,6 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
-        console.log({ product })
         setProductSelected(product);
         setOpenModalProductFoundByCodebar(false);
         setOpenModalScannerResult(true);
@@ -145,17 +133,9 @@ const CustomCamera: React.FC = () => {
                     </TouchableOpacity> */}
 
                     <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
-                        <Icon name="barcode-outline" size={30} color="white" />
+                        <Icon name="barcode-outline" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-
-
-                {/* BAG */}
-                {/* <View style={styles.bagContent} >
-                    <TouchableOpacity style={styles.bag} onPress={() => navigate('BagInventory')}>
-                        <Text style={styles.bagNumber}>{numberOfItems}</Text>
-                    </TouchableOpacity>
-                </View> */}
             </View>
 
 
@@ -261,17 +241,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         position: "absolute",
         bottom: "10%",
-        left: "50%",
-        transform: [{ translateX: -35 }],
-        backgroundColor: 'gray',
-        borderRadius: 10,
-        paddingHorizontal: 15
+        right: "10%",
+        //transform: [{ translateX: -35 }],
+        backgroundColor:  colores.background_color,
+        borderRadius: 100,
+        padding: 5
     },
     option: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: 10
+        padding: 10,
+        backgroundColor:  colores.background_color,
+        borderRadius: 100,
+        borderWidth: 2,
+        borderColor: "black"
     }
 
 })
