@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View} from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomCamera from '../screens/Camera/Camera';
 import { Inventory } from '../screens/Camera/Inventory';
 import { CustomTabBar } from '../components/Navigation/CustomTabBar';
@@ -9,7 +8,6 @@ import { CustomTabBar } from '../components/Navigation/CustomTabBar';
 const TopTabs = createMaterialTopTabNavigator();
 
 export const ScannerNavigation = () => {
-    const { top } = useSafeAreaInsets();
 
     return (
         <View style={{ flex: 1 }}>

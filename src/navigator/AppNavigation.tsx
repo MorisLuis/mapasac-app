@@ -56,7 +56,6 @@ export const AppNavigation = () => {
                                 headerLeft: () => (
                                     <TouchableOpacity
                                         onPress={() => navigation.goBack()}
-                                        ///title="Cerrar"
                                         style={[buttonStyles.button, buttonStyles.white, { width: "auto"}]}
                                     >
                                         <Text>Cerrar</Text>

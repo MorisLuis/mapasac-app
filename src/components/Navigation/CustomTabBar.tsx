@@ -1,15 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colores, globalStyles } from '../../theme/appTheme';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
     const { numberOfItems } = useContext(InventoryBagContext);
+    const { user } = useContext(AuthContext);
+
     const { navigate } = useNavigation<any>();
-    //const { top } = useSafeAreaInsets();
+
+
+    const getTypeOfMovementsName = () => {
+        let name;
+        if ( user?.Id_TipoMovInv?.Accion === 1) {
+            name = "Inventario"
+        } else if (user?.Id_TipoMovInv?.Accion === 2 ) {
+            name = "Salida"
+        } else {
+            name = "Traspaso"
+        }
+        return name
+    }
+
+    useEffect( () => {
+        getTypeOfMovementsName()
+    }, [user])
+
 
     const renderTabButton = (route: any, index: number) => {
         const { options } = descriptors[route.key];
@@ -57,7 +77,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
                 <View style={styles.bagContent} >
                     <TouchableOpacity style={styles.bag} onPress={() => navigate('BagInventory')}>
-                        <Text style={styles.bagNumber}>Traspaso ( {numberOfItems} )</Text>
+                        <Text style={styles.bagNumber}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
                     </TouchableOpacity>
                 </View>
             </View>

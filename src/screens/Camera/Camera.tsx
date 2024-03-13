@@ -133,7 +133,7 @@ const CustomCamera: React.FC = () => {
                     </TouchableOpacity> */}
 
                     <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
-                        <Icon name="barcode-outline" size={30} color="black" />
+                        <Icon name="barcode-outline" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: 10,
+        padding: 7.5,
         backgroundColor:  colores.background_color,
         borderRadius: 100,
         borderWidth: 2,

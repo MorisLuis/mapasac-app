@@ -52,4 +52,9 @@ export default interface UserInterface {
     Id_UsuarioOLEI: number | null;
     PasswordOLEI: number | null;
     Id_ClienteDBCLIENTES: number | null;
+
+    Id_TipoMovInv?: {
+        Id_TipoMovInv: number,
+        Accion: number
+    };
 }

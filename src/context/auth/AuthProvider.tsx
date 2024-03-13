@@ -25,9 +25,9 @@ export interface LoginData {
 }
 
 export interface RegisterData {
-    correo:   string;
+    correo: string;
     password: string;
-    nombre:   string;
+    nombre: string;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: any) => {
     const checkToken = async () => {
         const token = await AsyncStorage.getItem('token');
 
-        
+
         // No token, no autenticado
         if (!token) return dispatch({ type: 'notAuthenticated' });
 
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }: any) => {
         setLoggingIn(true)
         try {
             state.status = "checking"
-            const {data} = await api.post('/api/auth/login', { email: correo, password });
+            const { data } = await api.post('/api/auth/login', { email: correo, password });
 
             dispatch({
                 type: 'signUp',
@@ -112,6 +112,17 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'removeError' });
     };
 
+    const updateTypeOfMovements = async (value: number) => {
+        try {
+            const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
+            const typeOfMov = getTypeOfMovements.data;
+            dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
+
+        } catch (error: any) {
+            console.log({ error: error })
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             ...state,
@@ -119,6 +130,7 @@ export const AuthProvider = ({ children }: any) => {
             loggingIn,
             logOut,
             removeError,
+            updateTypeOfMovements
         }}>
             {children}
         </AuthContext.Provider>
