@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
 
     ProductFindByCodeBar: {
         width: "auto",
-        //height: "20%"
     },
     title: {
         fontSize: 20,

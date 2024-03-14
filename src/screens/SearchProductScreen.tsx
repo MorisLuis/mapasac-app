@@ -8,6 +8,7 @@ import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
 import { LoadingScreen } from './LoadingScreen';
 import { colores, globalStyles } from '../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { CustomBackButton } from '../components/Ui/CustomHeader';
 
 export const SearchProductScreen = () => {
 
@@ -46,7 +47,7 @@ export const SearchProductScreen = () => {
         navigation.setOptions({
             headerLargeTitle: true,
             headerTitle: "Productos",
-            headerLeft: () => <CustomBackButton navigation={navigation}/>,
+            headerLeft: () => <CustomBackButton navigation={navigation} />,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto...",
                 onChangeText: (event: any) => {
@@ -84,41 +85,3 @@ const styles = StyleSheet.create({
         marginTop: globalStyles.globalPadding.padding,
     }
 })
-
-
-export const CustomBackButton = ({navigation} : any) => {
-
-    const handlePress = () => {
-        navigation.goBack()
-    };
-
-    return (
-        <TouchableOpacity
-            style={stylesHeaderBack.back}
-            onPress={handlePress}
-        >
-            <Icon name="chevron-back-outline" size={20} color="black" />
-            <Text style={stylesHeaderBack.backText}>Atrás</Text>
-        </TouchableOpacity>
-    );
-};
-
-const stylesHeaderBack = StyleSheet.create({
-    back: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        position: 'absolute',
-        left: 0,
-        bottom: -10
-    },
-    backText: {
-        fontWeight: 'bold',
-        fontSize: 14,
-        marginLeft: 3,
-    },
-    titleHeader: {
-        fontWeight: 'bold',
-        fontSize: 16
-    }
-});

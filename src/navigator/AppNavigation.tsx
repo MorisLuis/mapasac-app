@@ -7,10 +7,9 @@ import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
-import { BagInventoryNavigation } from './BagInventoryNavigation';
-import { buttonStyles } from '../theme/UI/buttons';
-import { Text, TouchableOpacity } from 'react-native';
-import { CustomHeader } from '../components/Ui/CustomHeader';
+import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
+import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
+import { useNavigation } from '@react-navigation/native';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -48,19 +47,13 @@ export const AppNavigation = () => {
 
                         <Stack.Screen
                             name="BagInventory"
-                            component={BagInventoryNavigation}
-                            options={({ navigation }) => ({
+                            component={InventoryBagScreen}
+                            options={({navigation}) => ({
                                 presentation: "modal",
                                 headerShown: true,
                                 title: 'Inventario',
                                 headerLeft: () => (
-                                    <TouchableOpacity
-                                        onPress={() => navigation.goBack()}
-                                        style={[buttonStyles.button, buttonStyles.white, { width: "auto"}]}
-                                    >
-                                        <Text>Cerrar</Text>
-                                    </TouchableOpacity>
-
+                                    <CustomBackButton navigation={navigation} />
                                 ),
                             })}
                         />
@@ -70,8 +63,8 @@ export const AppNavigation = () => {
                             name="InventoryDetails"
                             component={ProductDetailsPage}
                             options={({ navigation }) => ({
-                                header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation}  />,
-                            })} 
+                                header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} />,
+                            })}
                         />
                         <Stack.Screen
                             name="ProductDetails"
@@ -88,7 +81,7 @@ export const AppNavigation = () => {
                         <Stack.Screen
                             name="SearchProduct"
                             component={SearchProductScreen}
-                            
+
                             options={{
                                 headerShown: true,
                                 headerBackTitle: "Atrás"

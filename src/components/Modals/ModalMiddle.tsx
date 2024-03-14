@@ -65,7 +65,9 @@ const styles = StyleSheet.create({
         elevation: 5,
         width: "95%",
         height: "auto",
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colores.color_border
     },
     modalChildren:{
         paddingTop: 10,

@@ -78,6 +78,12 @@ export const buttonStyles = StyleSheet.create({
     },
 
 
+    yellow: {
+        backgroundColor: colores.color_yellow,
+        color: colores.text_color_secondary
+    },
+
+
     red: {
         backgroundColor: `rgba(${colores.color_red}, 0.3)`,
         color: `rgba(${colores.color_red}, 0.5)`,

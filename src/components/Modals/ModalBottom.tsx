@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colores, globalStyles } from '../../theme/appTheme';
 
 interface ModalBottomInterface {
     visible: boolean;
@@ -34,11 +35,13 @@ const ModalBottom = ({
                         >
                             <View style={styles.modalContent}>
                                 <TouchableWithoutFeedback onPress={onClose}>
-                                    <View style={styles.header}>
-                                        <Icon name="close-circle-outline" size={30} color="gray" />
-                                    </View>
+                                    <TouchableOpacity style={styles.header} onPress={onClose}>
+                                        <Icon name="close-outline" size={24} color="black" />
+                                    </TouchableOpacity>
                                 </TouchableWithoutFeedback>
-                                {children}
+                                <View style={styles.modalChildren}>
+                                    {children}
+                                </View>
                             </View>
                         </KeyboardAvoidingView>
                     </View>
@@ -56,12 +59,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end"
     },
     modalContent: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 15,
-        paddingLeft: 20,
-        shadowColor: '#000',
+        backgroundColor: colores.background_color,
+        shadowColor: colores.background_color_tertiary,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -70,17 +69,28 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        //height: "30%"
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colores.color_border
+    },
+    modalChildren: {
+        paddingTop: 10,
+        paddingRight: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
     },
     header: {
         width: "100%",
         top: 0,
         right: 0,
-        paddingRight: 0,
-        paddingBottom: 10,
-        paddingLeft: 0,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         display: "flex",
         alignItems: "flex-end",
+        borderWidth: 1,
+        borderColor: "transparent",
+        borderBottomColor: colores.color_border,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
     }
 });
 

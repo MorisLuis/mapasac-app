@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
 import PorductInterface from '../../interface/product'
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
 import { buttonStyles } from '../../theme/UI/buttons'
 import { colores, globalStyles } from '../../theme/appTheme'
 import { LoadingScreen } from '../LoadingScreen'
-import { InventoryFooter } from './InventoryFooter'
 
 export const InventoryBagScreen = () => {
 
@@ -16,7 +15,6 @@ export const InventoryBagScreen = () => {
 
     const handleCleanTemporal = () => {
         cleanBag()
-        //onClose()
     }
 
     const onDelete = (product: PorductInterface) => {
@@ -28,7 +26,6 @@ export const InventoryBagScreen = () => {
         await postInventory();
         await postInventoryDetails(bag);
         cleanBag();
-        //onClose();
         setCreateInventaryLoading(false)
     }
 
@@ -45,30 +42,28 @@ export const InventoryBagScreen = () => {
                         />
                     )
                 }
-
-                {
-                    numberOfItems > 0 ?
-                        <>
-                            <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
-                                onPress={handleCleanTemporal}
-                            >
-                                <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.black]}
-                                onPress={onPostInventary}
-                            >
-                                <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
-                            </TouchableOpacity>
-                        </>
-                        :
-                        <View>
-                            <Text>Agrega productos al inventario</Text>
-                        </View>
-                }
             </View>
-            <InventoryFooter buttonBackAvailable={false}/>
+            {
+                numberOfItems > 0 ?
+                    <View style={styles.footer}>
+                        <TouchableOpacity
+                            style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
+                            onPress={handleCleanTemporal}
+                        >
+                            <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[buttonStyles.button, buttonStyles.black]}
+                            onPress={onPostInventary}
+                        >
+                            <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <SafeAreaView>
+                        <Text>Agrega productos al inventario</Text>
+                    </SafeAreaView>
+            }
         </SafeAreaView>
     )
         :
@@ -82,10 +77,18 @@ const styles = StyleSheet.create({
         height: "100%",
         //backgroundColor:"red",
     },
-    
-    content:{
+
+    content: {
         padding: globalStyles.globalPadding.padding,
         minHeight: "auto",
-        height: "90%"
+        height: "85%"
+    },
+    footer: {
+        backgroundColor: colores.background_color_tertiary,
+        padding: globalStyles.globalPadding.padding,
+        height: "100%",
+        display: "flex",
+        borderTopWidth: 1,
+        borderColor: colores.color_border
     }
 });

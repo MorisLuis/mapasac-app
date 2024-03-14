@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalStyles } from '../../theme/appTheme';
 
@@ -52,3 +52,44 @@ const styles = StyleSheet.create({
         fontSize: 16
     }
 })
+
+
+export const CustomBackButton = ({ navigation }: any) => {
+
+
+    const handlePress = () => {
+        navigation.goBack()
+    };
+
+    return (
+
+        <TouchableOpacity
+            style={stylesHeaderBack.back}
+            onPress={handlePress}
+        >
+            <Icon name="chevron-back-outline" size={20} color="black" />
+            <Text style={stylesHeaderBack.backText}>Atrás</Text>
+        </TouchableOpacity>
+    );
+};
+
+
+
+const stylesHeaderBack = StyleSheet.create({
+    back: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        left: 0,
+        bottom: 0
+    },
+    backText: {
+        fontWeight: 'bold',
+        fontSize: 14,
+        marginLeft: 3,
+    },
+    titleHeader: {
+        fontWeight: 'bold',
+        fontSize: 16
+    }
+});

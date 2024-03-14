@@ -29,14 +29,14 @@ export const Counter = ({
 
     return (
         <View style={styles.counter}>
-            <Icon name="remove-circle-outline" size={35} color="black" onPress={subtractProduct}/>
+            <Icon name="remove-outline" size={24} color="black" onPress={subtractProduct}/>
             <TextInput
                 style={styles.input}
                 value={counter.toString()}
                 onChangeText={handleInputChange}
                 keyboardType="numeric"
             />
-            <Icon name="add-circle-outline" size={35} color="black" onPress={addProduct}/>
+            <Icon name="add-outline" size={24} color="black" onPress={addProduct}/>
         </View>
     )
 }

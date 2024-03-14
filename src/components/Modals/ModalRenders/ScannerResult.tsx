@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 
-import { Image, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../../interface/product';
 import { Counter } from '../../Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
-import { globalStyles } from '../../../theme/appTheme';
+import { globalFont, globalStyles } from '../../../theme/appTheme';
 
 interface ScannerResultInterface {
     product: PorductInterface;
@@ -46,34 +46,37 @@ export const ScannerResult = ({
                     <View style={styles.ScannerResult}>
                         <View style={styles.product}>
                             <View style={styles.productText}>
-                                <Image
-                                    style={styles.productIcon}
-                                    source={{
-                                        uri: 'https://reactnative.dev/img/tiny_logo.png',
-                                    }}
-                                />
-
                                 <View style={styles.productMessage}>
-                                    <Text>Codigo: </Text>
-                                    <Text>{product?.CodBar}</Text>
-                                    <Text>{product?.Marca}</Text>
+                                    <Text style={styles.codeLabel}>Codigo: </Text>
+                                    <Text style={styles.codeValue}>{product?.Codigo}</Text>
+                                    <View style={styles.otherInfo}>
+                                        <Text>{product?.CodBar}</Text>
+                                        <Text>/</Text>
+                                        <Text>{product?.Marca}</Text>
+                                    </View>
                                 </View>
                             </View>
-
-                            <TouchableOpacity
-                                onPress={handleExpandProductDetails}
-                            >
-                                <Icon name="expand-outline" size={20} color="black" />
-                            </TouchableOpacity>
                         </View>
 
-                        <Counter counter={counterProduct} setCounter={setCounterProduct} />
+                        <View style={{ display: "flex", flexDirection: "row" }}>
+                            <TouchableOpacity
+                                onPress={handleExpandProductDetails}
+                                style={[buttonStyles.button, buttonStyles.white, { width: "35%", marginRight: "5%" }]}
+                            >
+                                <Text style={buttonStyles.buttonTextSecondary}>Ver producto</Text>
+                            </TouchableOpacity>
+                            <View style={{ width: "55%", marginLeft: "5%" }}>
+                                <Counter counter={counterProduct} setCounter={setCounterProduct} />
+                            </View>
+                        </View>
+
 
                         <TouchableOpacity
-                            style={[buttonStyles.button, buttonStyles.black]}
+                            style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row'}]}
                             onPress={handleAddToInventory}
                         >
-                            <Text style={buttonStyles.buttonText}>Agregar al inventario</Text>
+                            <Icon name="expand-outline" size={16} color="black" style={{ marginRight: 10}} />
+                            <Text style={buttonStyles.buttonTextSecondary}>Agregar al inventario</Text>
                         </TouchableOpacity>
                     </View>
                     :
@@ -88,7 +91,7 @@ export const ScannerResult = ({
 }
 
 const styles = StyleSheet.create({
-    ScannerResult:{
+    ScannerResult: {
         paddingBottom: globalStyles.globalMarginBottom.marginBottom
     },
     product: {
@@ -105,6 +108,25 @@ const styles = StyleSheet.create({
     },
     productMessage: {
         marginLeft: 10
+    },
+    code: {
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: "center"
+    },
+    codeLabel: {
+        fontSize: globalFont.font_normal,
+        marginRight: globalStyles.globalMarginBottomSmall.marginBottom,
+    },
+    codeValue: {
+        fontSize: globalFont.font_med,
+        fontWeight: "bold"
+    },
+    otherInfo: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10
     },
     productIcon: {
         width: 50,

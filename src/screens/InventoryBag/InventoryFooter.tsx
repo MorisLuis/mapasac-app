@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalStyles } from '../../theme/appTheme';
 
+// Not using in this moment
 interface InventoryFooterInterface {
     buttonBackAvailable?: boolean,
     buttonNextAvailable?: boolean
