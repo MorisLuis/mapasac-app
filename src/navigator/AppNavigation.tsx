@@ -5,12 +5,12 @@ import PorductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
 import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatisticPage } from '../screens/Home/StatisticPage';
 import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { BagInventoryNavigation } from './BagInventoryNavigation';
 import { buttonStyles } from '../theme/UI/buttons';
 import { Text, TouchableOpacity } from 'react-native';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -69,11 +69,9 @@ export const AppNavigation = () => {
                         <Stack.Screen
                             name="InventoryDetails"
                             component={ProductDetailsPage}
-                            options={{
-                                headerTitle: "Detalles de Producto",
-                                headerShown: true,
-                                headerBackTitle: "Atrás"
-                            }}
+                            options={({ navigation }) => ({
+                                header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation}  />,
+                            })} 
                         />
                         <Stack.Screen
                             name="ProductDetails"
@@ -90,19 +88,10 @@ export const AppNavigation = () => {
                         <Stack.Screen
                             name="SearchProduct"
                             component={SearchProductScreen}
+                            
                             options={{
                                 headerShown: true,
                                 headerBackTitle: "Atrás"
-                            }}
-                        />
-
-                        {/* Statistics Page */}
-                        <Stack.Screen
-                            name="statisticsPage"
-                            component={StatisticPage}
-                            options={{
-                                headerBackTitle: "Atrás",
-                                headerTitle: "Productos"
                             }}
                         />
                     </>

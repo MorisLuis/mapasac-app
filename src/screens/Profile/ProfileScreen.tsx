@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { globalFont, globalStyles } from '../../theme/appTheme';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
 
@@ -35,8 +35,6 @@ export const ProfileScreen = () => {
                     <Icon name="help-circle-outline" size={24} color="black" />
                 </TouchableOpacity>
 
-
-
                 <TouchableOpacity onPress={logOut} style={[buttonStyles.button, globalStyles.globalMarginBottom]}>
                     <Text style={buttonStyles.buttonText}>Cerrar sesión</Text>
                 </TouchableOpacity>
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
     ProfileScreen: {
         flex: 1,
         padding: globalStyles.globalPadding.padding,
+        backgroundColor: colores.background_color
     },
     content: {
         display: "flex",

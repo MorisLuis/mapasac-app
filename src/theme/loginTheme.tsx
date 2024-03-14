@@ -1,9 +1,13 @@
 import { StyleSheet } from "react-native";
-import { globalStyles } from "./appTheme";
+import { colores, globalStyles } from "./appTheme";
 
 
 
 export const loginStyles = StyleSheet.create({
+    LoginScreen: {
+        flex: 1,
+        backgroundColor: colores.background_color
+    },
     formContainer: {
         flex: 1,
         paddingHorizontal: 30,

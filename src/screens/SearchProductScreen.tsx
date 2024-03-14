@@ -1,12 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
 import { LoadingScreen } from './LoadingScreen';
-import { globalStyles } from '../theme/appTheme';
+import { colores, globalStyles } from '../theme/appTheme';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const SearchProductScreen = () => {
 
@@ -45,19 +46,20 @@ export const SearchProductScreen = () => {
         navigation.setOptions({
             headerLargeTitle: true,
             headerTitle: "Productos",
+            headerLeft: () => <CustomBackButton navigation={navigation}/>,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto...",
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },
-            },
+            }
         });
     }, [navigation]);
 
 
     return (productsInInventory && productsInInventory.length > 0) ? (
-        <SafeAreaView>
-            <View style={styles.SearchProductScreen}>
+        <SafeAreaView style={styles.SearchProductScreen}>
+            <View style={styles.content}>
                 <FlatList
                     data={productsInInventory}
                     renderItem={renderItem}
@@ -75,6 +77,48 @@ export const SearchProductScreen = () => {
 
 const styles = StyleSheet.create({
     SearchProductScreen: {
-        padding: globalStyles.globalPadding.padding
+        backgroundColor: colores.background_color
+    },
+    content:{
+        paddingHorizontal:  globalStyles.globalPadding.padding,
+        marginTop: globalStyles.globalPadding.padding,
     }
 })
+
+
+export const CustomBackButton = ({navigation} : any) => {
+
+    const handlePress = () => {
+        navigation.goBack()
+    };
+
+    return (
+        <TouchableOpacity
+            style={stylesHeaderBack.back}
+            onPress={handlePress}
+        >
+            <Icon name="chevron-back-outline" size={20} color="black" />
+            <Text style={stylesHeaderBack.backText}>Atrás</Text>
+        </TouchableOpacity>
+    );
+};
+
+const stylesHeaderBack = StyleSheet.create({
+    back: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        left: 0,
+        bottom: -10
+    },
+    backText: {
+        fontWeight: 'bold',
+        fontSize: 14,
+        marginLeft: 3,
+    },
+    titleHeader: {
+        fontWeight: 'bold',
+        fontSize: 16
+    }
+});
