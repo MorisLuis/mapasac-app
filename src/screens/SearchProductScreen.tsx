@@ -49,7 +49,8 @@ export const SearchProductScreen = () => {
             headerTitle: "Productos",
             headerLeft: () => <CustomBackButton navigation={navigation} />,
             headerSearchBarOptions: {
-                placeholder: "Buscar producto...",
+                placeholder: "Buscar producto por nombre...",
+                placeholderTextColor: colores.color_blue,
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },

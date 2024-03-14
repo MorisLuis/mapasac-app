@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 1,
         width: "100%",
-        //backgroundColor: colores.color_red,
+        //backgroundColor: colores.background_color,
         height: 35,
     },
     content: {
