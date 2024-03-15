@@ -2,8 +2,8 @@ import { api } from "../api/api";
 
 export interface Id_TipoMovInvInterface {
     Id_TipoMovInv: number;
-    Accion?: number;
-    Descripcion?: string,
+    Accion: number;
+    Descripcion: string,
     Id_AlmDest?: number
 }
 

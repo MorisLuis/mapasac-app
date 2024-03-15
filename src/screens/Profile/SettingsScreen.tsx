@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { colores, globalStyles } from '../../theme/appTheme';
 import { selectStyles } from '../../theme/UI/inputs';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { AuthContext } from '../../context/auth/AuthContext';
 import RNPickerSelect from 'react-native-picker-select';
+import { Selector } from '../../components/Ui/Selector';
 
 export const SettingsScreen = () => {
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
     const { user, updateTypeOfMovements } = useContext(AuthContext);
-    const [selectedLanguage, setSelectedLanguage] = useState();
 
     const onChangetTypeOfMovement = () => {
         if (!typeSelected) return
@@ -27,23 +27,35 @@ export const SettingsScreen = () => {
         }
         setTypeSelected(user?.Id_TipoMovInv?.Id_TipoMovInv)
         handleGetTypeOfMovements()
-
     }, []);
+
 
     return (
         <View style={styles.SettingsScreen}>
-            <RNPickerSelect
-                onValueChange={(value) => setTypeSelected(value)}
-                placeholder={{
-                    label: 'Selecciona una opción...',
-                    value: null,
-                }}
-                items={typeOfMovement.map((item: any) => {
-                    return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
-                })}
-                onDonePress={onChangetTypeOfMovement}
-                style={selectStyles}
-            />
+            {
+                typeSelected && typeOfMovement.length > 0 ?
+                    <Selector
+                        label={"Tipo de movimiento"}
+                        items={typeOfMovement.map((item: any) => {
+                            return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
+                        })}
+                        value={
+                            typeSelected !== undefined && typeOfMovement.length > 0 ?
+                                typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
+                                'Selecciona una opción...'
+                        }
+
+                        //Methods
+                        onDone={onChangetTypeOfMovement}
+                        onValueChange={(value) => setTypeSelected(value)}
+                    />
+                    :
+                    <View>
+                        <Text>
+                            cargando...
+                        </Text>
+                    </View>
+            }
         </View>
     )
 }
@@ -52,21 +64,7 @@ const styles = StyleSheet.create({
     SettingsScreen: {
         flex: 1,
         padding: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color
-    },
-    content: {
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-    },
-    section: {
-        paddingVertical: 10,
-        borderWidth: 1,
-        borderColor: "transparent",
-        borderBottomColor: 'black',
-        display: "flex",
-        flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: "center",
+        backgroundColor: colores.background_color,
+        paddingVertical:  globalStyles.globalPadding.padding * 2
     }
 })
