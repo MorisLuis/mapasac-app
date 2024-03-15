@@ -5,6 +5,7 @@ import { colores, globalStyles } from '../../theme/appTheme';
 import { selectStyles } from '../../theme/UI/inputs';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { AuthContext } from '../../context/auth/AuthContext';
+import RNPickerSelect from 'react-native-picker-select';
 
 export const SettingsScreen = () => {
 
@@ -31,14 +32,18 @@ export const SettingsScreen = () => {
 
     return (
         <View style={styles.SettingsScreen}>
-            {/* <RNPickerSelect
-                onValueChange={(value) => console.log(value)}
-                items={[
-                    { label: 'Football', value: 'football' },
-                    { label: 'Baseball', value: 'baseball' },
-                    { label: 'Hockey', value: 'hockey' },
-                ]}
-            /> */}
+            <RNPickerSelect
+                onValueChange={(value) => setTypeSelected(value)}
+                placeholder={{
+                    label: 'Selecciona una opción...',
+                    value: null,
+                }}
+                items={typeOfMovement.map((item: any) => {
+                    return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
+                })}
+                onDonePress={onChangetTypeOfMovement}
+                style={selectStyles}
+            />
         </View>
     )
 }

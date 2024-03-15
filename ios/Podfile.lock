@@ -1134,6 +1134,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.22.3):
     - React-Core
+  - RNCPicker (2.6.1):
+    - React-Core
   - RNGestureHandler (2.15.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1239,6 +1241,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeCameraKit (from `../node_modules/react-native-camera-kit`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -1376,6 +1379,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera-kit"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -1458,6 +1463,7 @@ SPEC CHECKSUMS:
   ReactCommon: 2947b0bffd82ea0e58ca7928881152d4c6dae9af
   ReactNativeCameraKit: 9d46a5d7dd544ca64aa9c03c150d2348faf437eb
   RNCAsyncStorage: 10591b9e0a91eaffee14e69b3721009759235125
+  RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
   RNGestureHandler: 67fb54b3e6ca338a8044e85cd6f340265aa41091
   RNPermissions: e8d5f054c1d7e704220028b2b2b13b64b1bc28c9
   RNScreens: 17e2f657f1b09a71ec3c821368a04acbb7ebcb46
@@ -1469,6 +1475,6 @@ SPEC CHECKSUMS:
   VisionCamera: 7a5c87805b13adaaa557132b44879ed1e1e39786
   Yoga: a716eea57d0d3430219c0a5a233e1e93ee931eb7
 
-PODFILE CHECKSUM: 86a0c4a59e0560cc981c8d4506f16b5a49c70c94
+PODFILE CHECKSUM: 7bfc12564de06524e66e5b4507816447544d20f2
 
 COCOAPODS: 1.14.3
