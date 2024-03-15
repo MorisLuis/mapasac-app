@@ -6,6 +6,7 @@ import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCar
 import { buttonStyles } from '../../theme/UI/buttons'
 import { colores, globalStyles } from '../../theme/appTheme'
 import { LoadingScreen } from '../LoadingScreen'
+import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 
 export const InventoryBagScreen = () => {
 
@@ -31,18 +32,21 @@ export const InventoryBagScreen = () => {
 
     return !createInventaryLoading ? (
         <SafeAreaView style={styles.InventoryBagScreen}>
-            <View style={styles.content}>
-                {
-                    bag.map((product) =>
-                        <ProductInventoryCard
-                            key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
-                            product={product}
-                            onDelete={onDelete}
-                            showDelete
-                        />
-                    )
-                }
-            </View>
+            {
+                bag.length > 0 &&
+                <View style={styles.content}>
+                    {
+                        bag.map((product) =>
+                            <ProductInventoryCard
+                                key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                                product={product}
+                                onDelete={onDelete}
+                                showDelete
+                            />
+                        )
+                    }
+                </View>
+            }
             {
                 numberOfItems > 0 ?
                     <View style={styles.footer}>
@@ -60,9 +64,13 @@ export const InventoryBagScreen = () => {
                         </TouchableOpacity>
                     </View>
                     :
-                    <SafeAreaView>
-                        <Text>Agrega productos al inventario</Text>
-                    </SafeAreaView>
+                    <View style={styles.message}>
+                        <EmptyMessageCard
+                            title="No tienes productos en inventario"
+                            message='Agrega productos al inventario'
+                            icon='albums-outline'
+                        />
+                    </View>
             }
         </SafeAreaView>
     )
@@ -75,13 +83,15 @@ const styles = StyleSheet.create({
     InventoryBagScreen: {
         backgroundColor: colores.background_color,
         height: "100%",
-        //backgroundColor:"red",
     },
 
     content: {
-        padding: globalStyles.globalPadding.padding,
         minHeight: "auto",
-        height: "85%"
+        height: "85%",
+        padding: globalStyles.globalPadding.padding
+    },
+    message: {
+        padding: globalStyles.globalPadding.padding
     },
     footer: {
         backgroundColor: colores.background_color_tertiary,

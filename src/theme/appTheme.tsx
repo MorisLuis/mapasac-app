@@ -63,8 +63,8 @@ export const globalStyles = {
 
 export const globalFont = {
     //Font-size
-    font_big: 60,
-    font_med: 30,
+    font_big: 28,
+    font_med: 22,
     font_normal: 16,
     font_sm: 14,
 };

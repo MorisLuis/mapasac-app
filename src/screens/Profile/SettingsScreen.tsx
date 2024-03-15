@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { StyleSheet, View } from 'react-native'
 import { colores, globalStyles } from '../../theme/appTheme';
@@ -12,6 +11,7 @@ export const SettingsScreen = () => {
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
     const { user, updateTypeOfMovements } = useContext(AuthContext);
+    const [selectedLanguage, setSelectedLanguage] = useState();
 
     const onChangetTypeOfMovement = () => {
         if (!typeSelected) return
@@ -31,25 +31,14 @@ export const SettingsScreen = () => {
 
     return (
         <View style={styles.SettingsScreen}>
-            {
-                typeOfMovement &&
-                <RNPickerSelect
-
-                    onValueChange={(value) => setTypeSelected(value)}
-
-                    placeholder={{
-                        label: 'Selecciona una opción...',
-                        value: null,
-                    }}
-                    items={typeOfMovement.map((item: any) => {
-                        return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
-                    })}
-                    onDonePress={onChangetTypeOfMovement}
-
-                    style={selectStyles}
-                    //value={typeSelected === null ? undefined : typeSelected}
-                />
-            }
+            {/* <RNPickerSelect
+                onValueChange={(value) => console.log(value)}
+                items={[
+                    { label: 'Football', value: 'football' },
+                    { label: 'Baseball', value: 'baseball' },
+                    { label: 'Hockey', value: 'hockey' },
+                ]}
+            /> */}
         </View>
     )
 }
