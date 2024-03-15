@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { colores, globalFont } from "../appTheme";
 
 export const buttonStyles = StyleSheet.create({
+    // Button size
     button: {
         height: 36,
         backgroundColor: colores.color_tertiary,
@@ -40,6 +41,7 @@ export const buttonStyles = StyleSheet.create({
         alignItems:"center"
     },
 
+    // Button text
     buttonText: {
         color: colores.text_color_secondary,
         fontSize: globalFont.font_normal
@@ -47,6 +49,11 @@ export const buttonStyles = StyleSheet.create({
 
     buttonTextSecondary: {
         color: colores.text_color,
+        fontSize: globalFont.font_normal
+    },
+
+    buttonTextRed: {
+        color: colores.color_red,
         fontSize: globalFont.font_normal
     },
 
@@ -85,8 +92,8 @@ export const buttonStyles = StyleSheet.create({
 
 
     red: {
-        backgroundColor: `rgba(${colores.color_red}, 0.3)`,
-        color: `rgba(${colores.color_red}, 0.5)`,
+        backgroundColor: colores.color_red_light,
+        color: colores.color_red_light,
     },
 
     transparent: {

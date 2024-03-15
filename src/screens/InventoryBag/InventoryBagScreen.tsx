@@ -7,14 +7,19 @@ import { buttonStyles } from '../../theme/UI/buttons'
 import { colores, globalStyles } from '../../theme/appTheme'
 import { LoadingScreen } from '../LoadingScreen'
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
+import ModalBottom from '../../components/Modals/ModalBottom'
+import ModalDecision from '../../components/Modals/ModalDecision'
 
 export const InventoryBagScreen = () => {
 
 
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
+    const [openModalDecision, setOpenModalDecision] = useState(false)
+
 
     const handleCleanTemporal = () => {
+        setOpenModalDecision(false)
         cleanBag()
     }
 
@@ -31,48 +36,67 @@ export const InventoryBagScreen = () => {
     }
 
     return !createInventaryLoading ? (
-        <SafeAreaView style={styles.InventoryBagScreen}>
-            {
-                bag.length > 0 &&
-                <View style={styles.content}>
-                    {
-                        bag.map((product) =>
-                            <ProductInventoryCard
-                                key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
-                                product={product}
-                                onDelete={onDelete}
-                                showDelete
+        <>
+            <SafeAreaView style={styles.InventoryBagScreen}>
+                {
+                    bag.length > 0 &&
+                    <View style={styles.content}>
+                        {
+                            bag.map((product) =>
+                                <ProductInventoryCard
+                                    key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                                    product={product}
+                                    onDelete={onDelete}
+                                    showDelete
+                                />
+                            )
+                        }
+                    </View>
+                }
+                {
+                    numberOfItems > 0 ?
+                        <View style={styles.footer}>
+                            <TouchableOpacity
+                                style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
+                                onPress={() => setOpenModalDecision(true)}
+                            >
+                                <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[buttonStyles.button, buttonStyles.black]}
+                                onPress={onPostInventary}
+                            >
+                                <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={styles.message}>
+                            <EmptyMessageCard
+                                title="No tienes productos en inventario"
+                                message='Agrega productos al inventario'
+                                icon='albums-outline'
                             />
-                        )
-                    }
-                </View>
-            }
-            {
-                numberOfItems > 0 ?
-                    <View style={styles.footer}>
-                        <TouchableOpacity
-                            style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
-                            onPress={handleCleanTemporal}
-                        >
-                            <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[buttonStyles.button, buttonStyles.black]}
-                            onPress={onPostInventary}
-                        >
-                            <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
-                        </TouchableOpacity>
-                    </View>
-                    :
-                    <View style={styles.message}>
-                        <EmptyMessageCard
-                            title="No tienes productos en inventario"
-                            message='Agrega productos al inventario'
-                            icon='albums-outline'
-                        />
-                    </View>
-            }
-        </SafeAreaView>
+                        </View>
+                }
+            </SafeAreaView>
+            <ModalDecision
+                visible={openModalDecision}
+                message="Seguro de limpiar el inventario actual?"
+            >
+                <TouchableOpacity
+                    style={[buttonStyles.button, buttonStyles.red, globalStyles.globalMarginBottomSmall]}
+                    onPress={handleCleanTemporal}
+                >
+                    <Text style={buttonStyles.buttonTextRed}>Limpiar carrito</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[buttonStyles.button, buttonStyles.white]}
+                    onPress={() => setOpenModalDecision(false)}
+                >
+                    <Text style={buttonStyles.buttonTextSecondary}>Cancelar</Text>
+                </TouchableOpacity>
+            </ModalDecision>
+        </>
     )
         :
         <LoadingScreen />

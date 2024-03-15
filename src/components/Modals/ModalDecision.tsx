@@ -1,59 +1,62 @@
-import { BlurView } from '@react-native-community/blur';
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
+import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 
 interface ModalDecisionInterface {
-    visible: boolean,
-    onClose: () => void,
-    children: React.ReactNode
+    visible: boolean;
+    children: any;
+    message: string
 }
 
-export const ModalDecision = ({
+const ModalDecision = ({
     visible,
-    onClose,
-    children
-}: ModalDecisionInterface ) => {
+    children,
+    message
+}: ModalDecisionInterface) => {
+
+    const handleDismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
+
     return (
         <Modal
             animationType="slide"
             transparent={true}
             visible={visible}
-            onRequestClose={onClose}
         >
-            <BlurView
-                style={StyleSheet.absoluteFill}
-                blurType="light"
-                blurAmount={5}
-            >
-                <View style={styles.ModalDecision}>
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity style={styles.header} onPress={onClose}>
-                            <Icon name="close-circle-outline" size={30} color="gray" />
-                        </TouchableOpacity>
-
-                        {children}
-
+            <BlurView style={StyleSheet.absoluteFill} blurType="dark" blurAmount={1}>
+                <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+                    <View style={styles.ModalDecision}>
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        >
+                            <View style={styles.modalContent}>
+                                <Text style={styles.message}>{message}</Text>
+                                <View style={styles.modalChildren}>
+                                    {children}
+                                </View>
+                            </View>
+                        </KeyboardAvoidingView>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             </BlurView>
-        </Modal>    
-        )
-}
+        </Modal>
+    );
+};
+
+export default ModalDecision;
 
 const styles = StyleSheet.create({
     ModalDecision: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        justifyContent: "flex-end"
     },
     modalContent: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 20,
-        paddingLeft: 20,
-        shadowColor: '#000',
+        backgroundColor: colores.background_color,
+        shadowColor: colores.background_color_tertiary,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -61,18 +64,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        width: "95%",
-        height: "auto",
-        borderRadius: 10
-    },
-    header: {
         width: "100%",
-        top: 0,
-        right: 0,
-        paddingRight: 0,
-        paddingBottom: 10,
-        paddingLeft: 0,
-        display: "flex",
-        alignItems: "flex-end",
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colores.color_border
+    },
+    modalChildren: {
+        padding: globalStyles.globalPadding.padding,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
+    },
+    message:{
+        fontSize: globalFont.font_med,
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingTop:  globalStyles.globalPadding.padding,
+        width: "85%",
     }
 });
+

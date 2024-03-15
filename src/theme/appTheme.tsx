@@ -8,12 +8,16 @@ export const colores = {
     color_cuaternary: "#F9FAFA",
 
     //Colores
-    color_red: "#ff000056",
+    color_red: "#ff0000",
     color_blue: "#068FFF",
     color_green: "#1F8A70",
     color_gray: "gray",
     color_yellow: "#EDBD42",
     color_black: "black",
+
+    //Colores claros
+    color_red_light: "#ff000056",
+
 
     //Border
     color_border: "#dfdfdf", 
