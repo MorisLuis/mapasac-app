@@ -18,13 +18,17 @@ export const buttonStyles = StyleSheet.create({
     },
 
     button_small: {
-        height: 26,
+        minHeight: 26,
         backgroundColor: "#c6d1f6",
         borderColor: "transparent",
         borderRadius: 8,
         paddingHorizontal: 10,
+        paddingVertical: 5,
         width: "100%",
         color: colores.color_tertiary,
+        display: "flex",
+        justifyContent:"center",
+        alignItems:"center"
     },
 
     button_line: {

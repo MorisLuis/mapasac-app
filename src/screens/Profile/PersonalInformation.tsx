@@ -1,14 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 
 import { StyleSheet, Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 
 
 export const PersonalInformation = () => {
 
-    const { top } = useSafeAreaInsets();
     const { user } = useContext(AuthContext);
 
     useEffect(() => {

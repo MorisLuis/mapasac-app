@@ -9,6 +9,7 @@ import { LoadingScreen } from '../LoadingScreen'
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 import ModalBottom from '../../components/Modals/ModalBottom'
 import ModalDecision from '../../components/Modals/ModalDecision'
+import { SuccesMessage } from '../../components/SuccesMessage'
 
 export const InventoryBagScreen = () => {
 
@@ -79,6 +80,7 @@ export const InventoryBagScreen = () => {
                         </View>
                 }
             </SafeAreaView>
+
             <ModalDecision
                 visible={openModalDecision}
                 message="Seguro de limpiar el inventario actual?"
