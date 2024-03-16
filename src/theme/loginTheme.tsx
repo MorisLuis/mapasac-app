@@ -20,13 +20,20 @@ export const loginStyles = StyleSheet.create({
         alignItems: "center",
         justifyContent:'center',
         width:"100%",
-        height: "15%",
+        height: 120,
         marginBottom: globalStyles.globalMarginBottom.marginBottom
+
     },
+
     image: {
         maxWidth: "40%",
         objectFit: "cover",
         height:"100%"
+    },
+    imageActived: {
+        maxWidth: "30%",
+        objectFit: "cover",
+        height:"80%"
     },
     title: {
         color: 'black',
@@ -39,3 +46,30 @@ export const loginStyles = StyleSheet.create({
         marginTop: 50
     }
 });
+
+
+/* 
+    const [keyboardActive, setKeyboardActive] = useState(false);
+
+useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardActive(true);
+            }
+        );
+
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardActive(false);
+            }
+        );
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
+
+*/

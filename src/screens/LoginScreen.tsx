@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { loginStyles } from '../theme/loginTheme';
@@ -9,6 +9,7 @@ import { LoadingScreen } from './LoadingScreen';
 import { buttonStyles } from '../theme/UI/buttons';
 import { inputStyles } from '../theme/UI/inputs';
 import { globalStyles } from '../theme/appTheme';
+import useKeyboardStatus from '../hooks/useKeyboardStatus';
 
 interface Props extends StackScreenProps<any, any> { }
 
@@ -36,6 +37,9 @@ export const LoginScreen = ({ navigation }: Props) => {
         signIn({ correo: email, password });
     }
 
+    const keyboardActive = useKeyboardStatus();
+
+
     if (loggingIn) return <LoadingScreen />
 
     return (
@@ -49,7 +53,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
                 <View style={loginStyles.imageContainer}>
                     <Image
-                        style={loginStyles.image}
+                        style={[keyboardActive ? loginStyles.imageActived : loginStyles.image]}
                         source={require('../assets/logo01.png')}
                     />
                 </View>
