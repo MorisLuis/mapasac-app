@@ -20,19 +20,28 @@ export const ProfileScreen = () => {
     return (
         <View style={styles.ProfileScreen}>
             <SafeAreaView style={styles.content}>
-                <TouchableOpacity onPress={( ) => navigate('personalInformation')} style={styles.section}>
+                <Text style={styles.title}>Configuación</Text>
+
+                <TouchableOpacity onPress={() => navigate('personalInformation')} style={styles.section}>
                     <Text>Información Personal</Text>
-                    <Icon name="chevron-forward-outline" size={24} color="black" />
+                    <Icon name="person-outline" size={22} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('settingsSceen')} style={[styles.section]}>
+                <TouchableOpacity onPress={() => navigate('settingsSceen')} style={[styles.section, globalStyles.globalMarginBottom]}>
                     <Text>Configuración General</Text>
-                    <Icon name="settings-outline" size={24} color="black" />
+                    <Icon name="settings-outline" size={22} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('personalInformation')} style={[styles.section, globalStyles.globalMarginBottom]}>
-                    <Text>Soporte</Text>
-                    <Icon name="help-circle-outline" size={24} color="black" />
+                <Text style={styles.title}>Legal</Text>
+
+                <TouchableOpacity onPress={() => navigate('privacyScreen')} style={[styles.section]}>
+                    <Text>Aviso de privacidad</Text>
+                    <Icon name="book-outline" size={22} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigate('termsOfUseScreen')} style={[styles.section, globalStyles.globalMarginBottom, { marginBottom: 40 }]}>
+                    <Text>Terminos de uso</Text>
+                    <Icon name="book-outline" size={22} color="black" />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={logOut} style={[buttonStyles.button, globalStyles.globalMarginBottom]}>
@@ -68,5 +77,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "space-between",
         alignItems: "center",
+    },
+    title: {
+        fontSize: globalFont.font_med,
+        fontWeight: "bold",
+        paddingTop: globalStyles.globalPadding.padding
     }
 })

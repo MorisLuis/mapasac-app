@@ -30,10 +30,12 @@ export const SettingsScreen = () => {
     }, []);
 
 
+    const visible = (typeOfMovement.length > 0) ? true : false
+
     return (
         <View style={styles.SettingsScreen}>
             {
-                typeSelected && typeOfMovement.length > 0 ?
+                visible ?
                     <Selector
                         label={"Tipo de movimiento"}
                         items={typeOfMovement.map((item: any) => {
