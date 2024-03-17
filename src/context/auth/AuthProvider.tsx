@@ -6,6 +6,7 @@ import { api } from '../../api/api';
 import { AuthContext } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Toast from 'react-native-toast-message';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -113,11 +114,15 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const updateTypeOfMovements = async (value: number) => {
+        console.log({value})
         try {
             const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
             const typeOfMov = getTypeOfMovements.data;
             dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
-
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se cambio el tipo de movimiento!',
+            })
         } catch (error: any) {
             console.log({ error: error })
         }

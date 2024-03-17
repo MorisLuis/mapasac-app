@@ -7,6 +7,7 @@ import { SettingsScreen } from '../screens/Profile/SettingsScreen';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 import { PrivacyScreen } from '../screens/Profile/PrivacyScreen';
 import { TermsOfUseScreen } from '../screens/Profile/TermsOfUseScreen';
+import { ShowToastMessage } from '../components/ToastMesage';
 
 export const ProfileNavigation = () => {
 

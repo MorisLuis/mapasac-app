@@ -4,6 +4,7 @@ import { colores, globalStyles } from '../../theme/appTheme';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { ShowToastMessage } from '../ToastMesage';
 
 export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
@@ -70,6 +71,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     return (
         <SafeAreaView style={styles.customTabBar}>
+
             <View style={styles.content}>
                 <View style={styles.navigation}>
                     {state.routes.map(renderTabButton)}

@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { colores, globalStyles } from '../../theme/appTheme';
-import { selectStyles } from '../../theme/UI/inputs';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { AuthContext } from '../../context/auth/AuthContext';
-import RNPickerSelect from 'react-native-picker-select';
 import { Selector } from '../../components/Ui/Selector';
+import Toast from 'react-native-toast-message';
 
 export const SettingsScreen = () => {
 
@@ -33,32 +32,35 @@ export const SettingsScreen = () => {
     const visible = (typeOfMovement.length > 0) ? true : false
 
     return (
-        <View style={styles.SettingsScreen}>
-            {
-                visible ?
-                    <Selector
-                        label={"Tipo de movimiento"}
-                        items={typeOfMovement.map((item: any) => {
-                            return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
-                        })}
-                        value={
-                            typeSelected !== undefined && typeOfMovement.length > 0 ?
-                                typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
-                                'Selecciona una opción...'
-                        }
+        <>
+            <View style={styles.SettingsScreen}>
+                {
+                    visible ?
+                        <Selector
+                            label={"Tipo de movimiento"}
+                            items={typeOfMovement.map((item: any) => {
+                                return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
+                            })}
+                            value={
+                                typeSelected !== undefined && typeOfMovement.length > 0 ?
+                                    typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
+                                    'Selecciona una opción...'
+                            }
 
-                        //Methods
-                        onDone={onChangetTypeOfMovement}
-                        onValueChange={(value) => setTypeSelected(value)}
-                    />
-                    :
-                    <View>
-                        <Text>
-                            cargando...
-                        </Text>
-                    </View>
-            }
-        </View>
+                            //Methods
+                            onDone={onChangetTypeOfMovement}
+                            onValueChange={(value) => setTypeSelected(value)}
+                        />
+                        :
+                        <View>
+                            <Text>
+                                cargando...
+                            </Text>
+                        </View>
+                }
+            </View>
+
+        </>
     )
 }
 
@@ -67,6 +69,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color,
-        paddingVertical:  globalStyles.globalPadding.padding * 2
+        paddingVertical: globalStyles.globalPadding.padding * 2
     }
 })

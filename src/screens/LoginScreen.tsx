@@ -1,19 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { loginStyles } from '../theme/loginTheme';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image } from 'react-native';
 import { useForm } from '../hooks/useForm';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoadingScreen } from './LoadingScreen';
+import useKeyboardStatus from '../hooks/useKeyboardStatus';
+import { Button } from 'react-native';
+import Toast from 'react-native-toast-message';
+
+import { loginStyles } from '../theme/loginTheme';
 import { buttonStyles } from '../theme/UI/buttons';
 import { inputStyles } from '../theme/UI/inputs';
 import { globalStyles } from '../theme/appTheme';
-import useKeyboardStatus from '../hooks/useKeyboardStatus';
+import { ToastMessage } from '../components/ToastMesage';
 
-interface Props extends StackScreenProps<any, any> { }
 
-export const LoginScreen = ({ navigation }: Props) => {
+
+
+export const LoginScreen = () => {
 
     const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
 
@@ -39,6 +44,12 @@ export const LoginScreen = ({ navigation }: Props) => {
 
     const keyboardActive = useKeyboardStatus();
 
+    const showToast = () => {
+        Toast.show({
+            type: 'tomatoToast',
+            text1: "bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70"
+        });
+    }
 
     if (loggingIn) return <LoadingScreen />
 
@@ -47,8 +58,8 @@ export const LoginScreen = ({ navigation }: Props) => {
             style={loginStyles.LoginScreen}
             behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
         >
-
             <View style={loginStyles.formContainer}>
+
                 {/* Keyboard avoid view */}
 
                 <View style={loginStyles.imageContainer}>
