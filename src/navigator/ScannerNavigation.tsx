@@ -4,7 +4,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import CustomCamera from '../screens/Camera/Camera';
 import { Inventory } from '../screens/Camera/Inventory';
 import { CustomTabBar } from '../components/Navigation/CustomTabBar';
-import { SuccesMessage } from '../components/SuccesMessage';
 
 const TopTabs = createMaterialTopTabNavigator();
 

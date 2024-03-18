@@ -128,10 +128,6 @@ const CustomCamera: React.FC = () => {
                 }
 
                 <View style={styles.scannerOptions}>
-                    {/* <TouchableOpacity style={styles.option} onPress={() => navigate('ImageGallery')}>
-                        <Icon name="image-outline" size={30} color="white" />
-                    </TouchableOpacity> */}
-
                     <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
                         <Icon name="barcode-outline" size={24} color="black" />
                     </TouchableOpacity>

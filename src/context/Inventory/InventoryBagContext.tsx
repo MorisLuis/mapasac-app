@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import PorductInterface from "../../interface/product";
+import { inventoryDataInterface } from "./InventoryBagProvider";
 
 
 interface ContextProps {
@@ -11,6 +12,7 @@ interface ContextProps {
     bag: PorductInterface[];
     inventoryCreated: boolean;
     numberOfItems: number;
+    inventoryData: inventoryDataInterface
 }
 
 export const InventoryBagContext = createContext({} as ContextProps)

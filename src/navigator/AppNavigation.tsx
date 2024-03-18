@@ -22,7 +22,8 @@ export type InventoryNavigationStackParamList = {
     ImageGallery: any;
     SearchProduct: any;
     statisticsPage: { estatus: string },
-    profileApp: any
+    profileApp: any;
+    SuccesMessage: any
 };
 
 export const AppNavigation = () => {
@@ -32,10 +33,6 @@ export const AppNavigation = () => {
 
     return (
         <>
-            {/* <SafeAreaView>
-                <SuccesMessage />
-            </SafeAreaView> */}
-
             <Stack.Navigator>
                 {
                     (status !== 'authenticated') ?
@@ -88,10 +85,17 @@ export const AppNavigation = () => {
                             <Stack.Screen
                                 name="SearchProduct"
                                 component={SearchProductScreen}
-
                                 options={{
                                     headerShown: true,
                                     headerBackTitle: "Atrás"
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name="SuccesMessage"
+                                component={SuccesMessage}
+                                options={{
+                                    headerShown: false,
                                 }}
                             />
                         </>

@@ -7,9 +7,8 @@ import { buttonStyles } from '../../theme/UI/buttons'
 import { colores, globalStyles } from '../../theme/appTheme'
 import { LoadingScreen } from '../LoadingScreen'
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
-import ModalBottom from '../../components/Modals/ModalBottom'
 import ModalDecision from '../../components/Modals/ModalDecision'
-import { SuccesMessage } from '../../components/SuccesMessage'
+import { useNavigation } from '@react-navigation/native'
 
 export const InventoryBagScreen = () => {
 
@@ -17,6 +16,7 @@ export const InventoryBagScreen = () => {
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
     const [openModalDecision, setOpenModalDecision] = useState(false)
+    const { navigate } = useNavigation<any>();
 
 
     const handleCleanTemporal = () => {
@@ -29,11 +29,14 @@ export const InventoryBagScreen = () => {
     }
 
     const onPostInventary = async () => {
-        setCreateInventaryLoading(true)
+        setCreateInventaryLoading(true);
         await postInventory();
         await postInventoryDetails(bag);
         cleanBag();
-        setCreateInventaryLoading(false)
+        setOpenModalDecision(false);
+        setCreateInventaryLoading(false);
+        navigate('Scanner');
+        navigate('SuccesMessage');
     }
 
     return !createInventaryLoading ? (

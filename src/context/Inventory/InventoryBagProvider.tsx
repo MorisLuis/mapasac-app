@@ -1,25 +1,41 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import PorductInterface from '../../interface/product';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
+import { AuthContext } from '../auth/AuthContext';
 
+export interface inventoryDataInterface {
+    result: undefined,
+    Id_Almacen: null,
+    Folio: null,
+    Fecha: undefined,
+    Id_TipoMovInv: null
+}
 
 export interface InventoryBagInterface {
     bag: PorductInterface[];
     numberOfItems: number;
+    inventoryData: inventoryDataInterface
 }
 
 export const InventoryBagInitialState: InventoryBagInterface = {
     bag: [],
-    numberOfItems: 0
-}
+    numberOfItems: 0,
+    inventoryData: {
+        result: undefined,
+        Id_Almacen: null,
+        Folio: null,
+        Fecha: undefined,
+        Id_TipoMovInv: null
+    }}
 
 
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [inventoryCreated, setInventoryCreated] = useState(false)
+    const { user } = useContext(AuthContext);
 
     const addProduct = (product: PorductInterface) => {
 
@@ -45,8 +61,13 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const postInventory = async (descripcion?: string) => {
 
         try {
-            await api.post(`/api/inventory`, { descripcion });
-            dispatch({ type: '[InventoryBag] - Post Inventory', payload: descripcion })
+            const inventorybody = {
+                descripcion,
+                Id_TipoMovInv: user?.Id_TipoMovInv?.Id_TipoMovInv
+            }
+            const inventory = await api.post(`/api/inventory`, inventorybody);
+            console.log({inventory: JSON.stringify(inventory.data, null, 2)})
+            dispatch({ type: '[InventoryBag] - Post Inventory', payload: inventory.data })
             setInventoryCreated(true)
         } catch (error) {
             console.log({ error })

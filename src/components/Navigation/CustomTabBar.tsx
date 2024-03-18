@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 1,
         width: "100%",
-        //backgroundColor: colores.background_color,
         height: 35,
     },
     content: {
@@ -104,7 +103,6 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "space-between",
         paddingHorizontal: globalStyles.globalPadding.padding,
-        //backgroundColor: 'red',
         height: 30
     },
     navigation: {
