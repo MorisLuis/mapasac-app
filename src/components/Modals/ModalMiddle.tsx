@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores } from '../../theme/appTheme';
@@ -7,13 +7,15 @@ import { colores } from '../../theme/appTheme';
 interface ModalMiddleInterface {
     visible: boolean;
     onClose: () => void;
-    children: any
+    children: any;
+    title?: string
 }
 
 const ModalMiddle = ({
     visible,
     onClose,
-    children
+    children,
+    title
 }: ModalMiddleInterface) => {
 
     return (
@@ -32,6 +34,10 @@ const ModalMiddle = ({
                 <View style={styles.ModalMiddle}>
                     <View style={styles.modalContent}>
                         <TouchableOpacity style={styles.header} onPress={onClose}>
+                            {
+                                title ?
+                                    <Text style={styles.title}>{title}</Text> : <Text></Text>
+                            }
                             <Icon name="close-outline" size={24} color="black" />
                         </TouchableOpacity>
                         <View style={styles.modalChildren}>
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colores.color_border
     },
-    modalChildren:{
+    modalChildren: {
         paddingTop: 10,
         paddingRight: 20,
         paddingBottom: 20,
@@ -82,10 +88,15 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         display: "flex",
-        alignItems: "flex-end",
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: "center",
         borderWidth: 1,
         borderColor: "transparent",
         borderBottomColor: colores.color_border
+    },
+    title: {
+        fontWeight: "bold"
     }
 });
 
