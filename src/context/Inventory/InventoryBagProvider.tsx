@@ -66,7 +66,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
                 Id_TipoMovInv: user?.Id_TipoMovInv?.Id_TipoMovInv
             }
             const inventory = await api.post(`/api/inventory`, inventorybody);
-            console.log({inventory: JSON.stringify(inventory.data, null, 2)})
             dispatch({ type: '[InventoryBag] - Post Inventory', payload: inventory.data })
             setInventoryCreated(true)
         } catch (error) {

@@ -114,7 +114,6 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const updateTypeOfMovements = async (value: number) => {
-        console.log({value})
         try {
             const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
             const typeOfMov = getTypeOfMovements.data;
