@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colores, globalFont, globalStyles } from '../theme/appTheme'
-import { buttonStyles } from '../theme/UI/buttons'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { InventoryBagContext } from '../context/Inventory/InventoryBagContext';
@@ -12,8 +11,6 @@ export const SuccesMessage = () => {
     const { navigate } = useNavigation<any>();
     const { inventoryData } = useContext(InventoryBagContext);
 
-    console.log({inventoryData})
-
     return (
         <SafeAreaView style={{ backgroundColor: colores.background_color}}>
             <View style={[styles.SuccesMessage]}>
@@ -22,7 +19,7 @@ export const SuccesMessage = () => {
                 </TouchableOpacity>
                 <View style={styles.content}>
                     <Text style={styles.title}>Tu inventario ha sido exitoso</Text>
-                    <Text style={styles.text}>Tu inventario con el folio {inventoryData.Folio} ha sido realizado y lo ha recibido.</Text>
+                    <Text style={styles.text}>Tu inventario con el folio {inventoryData.Folio} ha sido realizado.</Text>
                     {/* <TouchableOpacity style={[buttonStyles.button_small, styles.actions]} onPress={() => console.log("close")}>
                         <Text style={buttonStyles.buttonTextSecondary}>Ver resumen</Text>
                     </TouchableOpacity> */}

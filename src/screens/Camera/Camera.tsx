@@ -55,7 +55,7 @@ const CustomCamera: React.FC = () => {
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
         handleCloseModalFindByBarcodeInput();
 
-        if (response.length > 1) {
+        if (response.length > 0) {
             setOpenModalProductFoundByCodebar(true)
         } else {
             setOpenModalScannerResult(true)
