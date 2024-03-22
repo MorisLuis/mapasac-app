@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ViewStyle, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
@@ -14,8 +14,11 @@ import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
 import { colores } from '../../theme/appTheme';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomCamera: React.FC = () => {
+
+    const { navigate } = useNavigation<any>();
 
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
@@ -239,7 +242,18 @@ const styles = StyleSheet.create({
         bottom: "10%",
         right: "10%",
         //transform: [{ translateX: -35 }],
-        backgroundColor:  colores.background_color,
+        backgroundColor: colores.background_color,
+        borderRadius: 100,
+        padding: 5
+    },
+    scannerOptions2: {
+        display: "flex",
+        flexDirection: "row",
+        position: "absolute",
+        bottom: "20%",
+        right: "20%",
+        //transform: [{ translateX: -35 }],
+        backgroundColor: colores.color_blue,
         borderRadius: 100,
         padding: 5
     },
@@ -248,7 +262,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 7.5,
-        backgroundColor:  colores.background_color,
+        backgroundColor: colores.background_color,
         borderRadius: 100,
         borderWidth: 2,
         borderColor: "black"

@@ -12,6 +12,7 @@ import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { useNavigation } from '@react-navigation/native';
 import { SuccesMessage } from '../components/SuccesMessage';
 import { SafeAreaView } from 'react-native';
+import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -23,13 +24,14 @@ export type InventoryNavigationStackParamList = {
     SearchProduct: any;
     statisticsPage: { estatus: string },
     profileApp: any;
-    SuccesMessage: any
+    SuccesMessage: any;
+    TypeOfMovement: any
 };
 
 export const AppNavigation = () => {
 
     const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
-    const { status } = useContext(AuthContext);
+    const { status, loggingIn } = useContext(AuthContext);
 
     return (
         <>
@@ -43,6 +45,17 @@ export const AppNavigation = () => {
                         />
                         :
                         <>
+                            {
+                                loggingIn &&
+                                <Stack.Screen
+                                    name="TypeOfMovement"
+                                    component={TypeOfMovementScreen}
+                                    options={{
+                                        headerShown: false,
+                                    }}
+                                />
+                            }
+
                             <Stack.Screen
                                 name="BottomNavigation"
                                 component={BottomNavigation}
@@ -91,6 +104,7 @@ export const AppNavigation = () => {
                                 }}
                             />
 
+                            {/* Other pages */}
                             <Stack.Screen
                                 name="SuccesMessage"
                                 component={SuccesMessage}

@@ -2,20 +2,15 @@ import React, { useContext, useEffect } from 'react';
 
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image } from 'react-native';
 import { useForm } from '../hooks/useForm';
-import { StackScreenProps } from '@react-navigation/stack';
 import { AuthContext } from '../context/auth/AuthContext';
 import { LoadingScreen } from './LoadingScreen';
 import useKeyboardStatus from '../hooks/useKeyboardStatus';
-import { Button } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { loginStyles } from '../theme/loginTheme';
 import { buttonStyles } from '../theme/UI/buttons';
 import { inputStyles } from '../theme/UI/inputs';
 import { globalStyles } from '../theme/appTheme';
-import { ToastMessage } from '../components/ToastMesage';
-
-
 
 
 export const LoginScreen = () => {
