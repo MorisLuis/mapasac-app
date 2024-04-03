@@ -6,15 +6,18 @@ import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeO
 import { AuthContext } from '../../context/auth/AuthContext';
 import { Selector } from '../../components/Ui/Selector';
 import Toast from 'react-native-toast-message';
+import Toggle from '../../components/Ui/Toggle';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 export const SettingsScreen = () => {
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
     const { user, updateTypeOfMovements } = useContext(AuthContext);
+    const { vibration, handleVibrationState } = useContext(SettingsContext);
 
     const onChangetTypeOfMovement = () => {
-        console.log({typeSelected})
+        console.log({ typeSelected })
         if (typeSelected === undefined || typeSelected === null) return
         updateTypeOfMovements(typeSelected)
     }
@@ -29,7 +32,6 @@ export const SettingsScreen = () => {
         handleGetTypeOfMovements()
     }, []);
 
-
     const visible = (typeOfMovement.length > 0) ? true : false
 
     return (
@@ -37,25 +39,35 @@ export const SettingsScreen = () => {
             <View style={styles.SettingsScreen}>
                 {
                     visible ?
-                        <Selector
-                            label={"Tipo de movimiento"}
-                            items={typeOfMovement.map((item: any) => {
-                                return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
-                            })}
-                            value={
-                                typeSelected !== undefined && typeOfMovement.length > 0 ?
-                                    typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
-                                    'Selecciona una opción...'
-                            }
+                        <>
+                            <Selector
+                                label={"Tipo de movimiento"}
+                                items={typeOfMovement.map((item: any) => {
+                                    return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
+                                })}
+                                value={
+                                    typeSelected !== undefined && typeOfMovement.length > 0 ?
+                                        typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
+                                        'Selecciona una opción...'
+                                }
 
-                            //Methods
-                            onDone={onChangetTypeOfMovement}
-                            onValueChange={(value) => setTypeSelected(value)}
-                        />
+                                //Methods
+                                onDone={onChangetTypeOfMovement}
+                                onValueChange={(value) => setTypeSelected(value)}
+                            />
+
+                            <Toggle
+                                label='Vibracion en escaneo'
+                                message="Hacer vibrar el celular cuando escaneas."
+                                extraStyles={{ marginTop: 20 }}
+                                value={vibration}
+                                onChange={(value: boolean) => handleVibrationState(value)}
+                            />
+                        </>
                         :
                         <View>
                             <Text>
-                                cargando...
+                                Cargando...
                             </Text>
                         </View>
                 }

@@ -28,7 +28,8 @@ export const InventoryBagInitialState: InventoryBagInterface = {
         Folio: null,
         Fecha: undefined,
         Id_TipoMovInv: null
-    }}
+    }
+}
 
 
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {

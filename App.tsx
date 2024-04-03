@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider';
+import { SettingsProvider } from './src/context/settings/SettingsProvider';
 import { AuthProvider } from './src/context/auth/AuthProvider';
+
 import { AppNavigation } from './src/navigator/AppNavigation';
-import Toast from 'react-native-toast-message';
 import { ShowToastMessage } from './src/components/ToastMesage';
 
 const App = () => {
@@ -13,8 +14,7 @@ const App = () => {
       <AppState>
         <AppNavigation />
       </AppState>
-      {/* <Toast /> */}
-      <ShowToastMessage/>
+      <ShowToastMessage />
     </NavigationContainer>
   );
 };
@@ -22,9 +22,11 @@ const App = () => {
 const AppState = ({ children }: any) => {
   return (
     <AuthProvider>
-      <InventoryProvider>
-        {children}
-      </InventoryProvider>
+      <SettingsProvider>
+        <InventoryProvider>
+          {children}
+        </InventoryProvider>
+      </SettingsProvider>
     </AuthProvider>
   )
 }

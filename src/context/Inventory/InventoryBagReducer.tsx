@@ -1,4 +1,3 @@
-import InventoryInterface from "../../interface/inventory";
 import PorductInterface from "../../interface/product";
 import { InventoryBagInterface, inventoryDataInterface } from "./InventoryBagProvider";
 

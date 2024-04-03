@@ -3,7 +3,7 @@ import React from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import { selectStyles } from '../../theme/UI/inputs';
 import { StyleSheet, Text, View } from 'react-native'
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { globalFont, globalStyles } from '../../theme/appTheme';
 
 interface SelectorInterface {
     items: any[];

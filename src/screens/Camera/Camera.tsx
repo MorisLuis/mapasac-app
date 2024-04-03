@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, TouchableOpacity, Button } from 'react-native';
+import { View, StyleSheet, ViewStyle, TouchableOpacity, Button, Vibration } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
@@ -15,12 +15,13 @@ import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/Produ
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
 import { colores } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 const CustomCamera: React.FC = () => {
 
     const { updateBarCode, codeBarStatus } = useContext(AuthContext);
+    const { vibration } = useContext(SettingsContext);
 
-    console.log({codeBarStatus})
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)
@@ -74,6 +75,12 @@ const CustomCamera: React.FC = () => {
         setOpenModalScannerResult(true);
     }
 
+    const handleVibrate = () => {
+        if ( vibration ) {
+            Vibration.vibrate(500);
+        }
+    };
+
     const codeScanner = useCodeScanner({
         codeTypes: ['qr', 'ean-13', 'code-128'],
         onCodeScanned: async (codes) => {
@@ -88,6 +95,7 @@ const CustomCamera: React.FC = () => {
                     const response = await getProductByCodeBar(codeValue);
                     console.log({ response })
                     handleOpenProductsFoundByCodebar(response);
+                    handleVibrate()
                     if (response.length < 1) {
                         console.log({ codeValue })
                         updateBarCode(codeValue)
@@ -106,6 +114,7 @@ const CustomCamera: React.FC = () => {
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
+
 
     useEffect(() => {
         setIsScannerActive(selectedDevice !== null);
