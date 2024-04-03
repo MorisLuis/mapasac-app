@@ -14,7 +14,8 @@ export const SettingsScreen = () => {
     const { user, updateTypeOfMovements } = useContext(AuthContext);
 
     const onChangetTypeOfMovement = () => {
-        if (!typeSelected) return
+        console.log({typeSelected})
+        if (typeSelected === undefined || typeSelected === null) return
         updateTypeOfMovements(typeSelected)
     }
 

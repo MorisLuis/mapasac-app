@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { View, StyleSheet, ViewStyle, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,12 +14,13 @@ import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/ProductFindByCodebarInput';
 import { colores } from '../../theme/appTheme';
-import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 const CustomCamera: React.FC = () => {
 
-    const { navigate } = useNavigation<any>();
+    const { updateBarCode, codeBarStatus } = useContext(AuthContext);
 
+    console.log({codeBarStatus})
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)
@@ -85,7 +86,12 @@ const CustomCamera: React.FC = () => {
 
                 try {
                     const response = await getProductByCodeBar(codeValue);
+                    console.log({ response })
                     handleOpenProductsFoundByCodebar(response);
+                    if (response.length < 1) {
+                        console.log({ codeValue })
+                        updateBarCode(codeValue)
+                    }
                     console.log(`Scanned code value: ${codeValue}`);
                 } catch (error) {
                     console.error('Error fetching product:', error);
@@ -138,7 +144,7 @@ const CustomCamera: React.FC = () => {
             </View>
 
 
-            {/*  */}
+            {/* PRODUCTS FOUND BY INPUT */}
             <ModalMiddle
                 visible={openModalFindByCodebarInput}
                 onClose={handleCloseModalFindByBarcodeInput}
@@ -167,6 +173,8 @@ const CustomCamera: React.FC = () => {
                 <ScannerResult
                     onClose={handleCloseProductModalScanned}
                     product={productSelected as PorductInterface}
+                    handleSelectFindByCode={() => setOpenModalFindByCodebarInput(true)}
+                    fromInput={true}
                 />
             </ModalBottom>
 

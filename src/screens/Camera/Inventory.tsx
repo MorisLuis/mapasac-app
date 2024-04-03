@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 export const Inventory = () => {
 
@@ -16,6 +17,7 @@ export const Inventory = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const { inventoryCreated } = useContext(InventoryBagContext);
     const { navigate } = useNavigation<any>();
+    const { handleCodebarScannedProcces} = useContext(AuthContext);
 
     const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
         navigate('InventoryDetails', { selectedProduct });
@@ -54,6 +56,7 @@ export const Inventory = () => {
     };
 
     const handlePress = (item: PorductInterface) => {
+        handleCodebarScannedProcces(false);
         navigateToInventaryDetails(item)
     };
 
@@ -73,6 +76,7 @@ export const Inventory = () => {
         if (inventoryCreated) return;
         handleGetProductsByStock()
     }, [currentPage])
+
 
     return (
         <SafeAreaView>

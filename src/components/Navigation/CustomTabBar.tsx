@@ -17,8 +17,10 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     const getTypeOfMovementsName = () => {
         let name;
-        if ( user?.Id_TipoMovInv?.Accion === 1) {
+        if (user?.Id_TipoMovInv?.Accion === 1 && user?.Id_TipoMovInv?.Id_TipoMovInv === 0) { // Inventario fisico
             name = "Inventario"
+        } else if ( user?.Id_TipoMovInv?.Accion === 1) {
+            name = "Entrada"
         } else if (user?.Id_TipoMovInv?.Accion === 2 ) {
             name = "Salida"
         } else {

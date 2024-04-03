@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalStyles } from '../../theme/appTheme';
 
 export const CustomHeader = ({ navigation, title, backAvailable = true }: any) => {
+    
     return (
         <SafeAreaView style={styles.CustomHeader}>
             {
@@ -62,7 +63,6 @@ export const CustomBackButton = ({ navigation }: any) => {
     };
 
     return (
-
         <TouchableOpacity
             style={stylesHeaderBack.back}
             onPress={handlePress}

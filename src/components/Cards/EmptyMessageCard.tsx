@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         borderColor: colores.color_border,
         width: "100%",
         padding: globalStyles.globalPadding.padding,
-        minHeight: "40%",
+        //minHeight: "40%",
         borderRadius: 10,
         display: "flex",
         justifyContent: "center",

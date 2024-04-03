@@ -13,6 +13,8 @@ export interface AuthState {
     token: string | null;
     errorMessage: string;
     user: UserInterface | null;
+    codeBar?: string;
+    codeBarStatus?: boolean
 }
 
 export interface LoginResponse {
@@ -35,14 +37,17 @@ const AUTH_INITIAL_STATE: AuthState = {
     status: 'checking',
     token: null,
     user: null,
-    errorMessage: ''
+    errorMessage: '',
+    codeBar: "",
+    codeBarStatus: false
 }
 
 
 export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
-    const [loggingIn, setLoggingIn] = useState(false)
+    const [loggingIn, setLoggingIn] = useState(false);
+    const [codebarScannedProcces, setCodebarScannedProcces] = useState(false);
 
     useEffect(() => {
         checkToken();
@@ -127,6 +132,20 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
+    const updateBarCode = async (value: string) => {
+        try {
+            handleCodebarScannedProcces(true)
+            dispatch({ type: 'codeBar', codeBar: value });
+        } catch (error: any) {
+            handleCodebarScannedProcces(false)
+            console.log({ error: error })
+        }
+    }
+
+    const handleCodebarScannedProcces = (value: boolean) => {
+        dispatch({ type: 'codeBarStatus', codeBarStatus: value });
+    }
+
     return (
         <AuthContext.Provider value={{
             ...state,
@@ -134,7 +153,9 @@ export const AuthProvider = ({ children }: any) => {
             loggingIn,
             logOut,
             removeError,
-            updateTypeOfMovements
+            updateBarCode,
+            updateTypeOfMovements,
+            handleCodebarScannedProcces
         }}>
             {children}
         </AuthContext.Provider>

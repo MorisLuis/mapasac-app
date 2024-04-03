@@ -9,10 +9,9 @@ import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
 import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
-import { useNavigation } from '@react-navigation/native';
 import { SuccesMessage } from '../components/SuccesMessage';
-import { SafeAreaView } from 'react-native';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
+import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -20,12 +19,16 @@ export type InventoryNavigationStackParamList = {
     BagInventory: undefined;
     InventoryDetails: { selectedProduct: PorductInterface };
     ProductDetails: { selectedProduct?: PorductInterface };
-    ImageGallery: any;
+    //ImageGallery: any;
     SearchProduct: any;
-    statisticsPage: { estatus: string },
-    profileApp: any;
+    //statisticsPage: { estatus: string },
+    //profileApp: any;
     SuccesMessage: any;
-    TypeOfMovement: any
+    TypeOfMovement: any;
+    SearchProductModal: any;
+    //UpdateCodeBar: any;
+    //UpdateCodeBarWithInput: any;
+    CodebarUpdateNavigation: { product: PorductInterface, selectedProduct: any }
 };
 
 export const AppNavigation = () => {
@@ -104,12 +107,32 @@ export const AppNavigation = () => {
                                 }}
                             />
 
+                            <Stack.Screen
+                                name="SearchProductModal"
+                                component={SearchProductScreen}
+                                options={{
+                                    presentation: "modal",
+                                    headerTitle: "Buscar Producto",
+                                    headerShown: true,
+                                    headerBackTitle: "Atrás"
+                                }}
+                            />
+
                             {/* Other pages */}
                             <Stack.Screen
                                 name="SuccesMessage"
                                 component={SuccesMessage}
                                 options={{
                                     headerShown: false,
+                                }}
+                            />
+
+                            <Stack.Screen
+                                name="CodebarUpdateNavigation"
+                                component={CodebarUpdateNavigation}
+                                options={{
+                                    presentation: "modal",
+                                    headerShown: false
                                 }}
                             />
                         </>

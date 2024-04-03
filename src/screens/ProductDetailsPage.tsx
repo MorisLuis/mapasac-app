@@ -1,49 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, {  useContext, useState } from 'react'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
 import { LoadingScreen } from './LoadingScreen';
 import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { format } from '../utils/currency';
-import { globalStyles } from '../theme/appTheme';
 import { buttonStyles } from '../theme/UI/buttons';
-import { updateCostos } from '../services/costos';
-import ModalMiddle from '../components/Modals/ModalMiddle';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export const ProductDetailsPage = ({ route }: any) => {
-    const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
+    const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
     const { selectedProduct: { Codigo, Marca } } = route.params;
-    const [productDetails, setProductDetails] = useState<PorductInterface>()
-    const [openModalUpdateCodebar, setOpenModalUpdateCodebar] = useState(false);
-    const [updatingCostos, setUpdatingCostos] = useState(false)
+    const navigation = useNavigation<any>();
+    const [productDetails, setProductDetails] = useState<PorductInterface>();
+    const { updateBarCode } = useContext(AuthContext);
+
+    const handleOptionsToUpdateCodebar = () => {
+        navigation.navigate('CodebarUpdateNavigation', { productDetails, selectedProduct: { Codigo, Marca } })
+    }
 
     const handleGetProductDetails = async () => {
         const productData = await getProductDetails(Codigo, Marca);
         setProductDetails(productData)
     }
 
-    const handleCreateCodebar = async () => {
-        if (!productDetails) return;
-        setUpdatingCostos(true)
+    useFocusEffect(
+        React.useCallback(() => {
+            handleGetProductDetails();
 
-        await updateCostos({
-            codigo: productDetails?.Codigo,
-            Id_Marca: productDetails?.Id_Marca,
-            body: {
-                CodBar: ''
-            }
-        })
-
-        setOpenModalUpdateCodebar(false);
-        handleGetProductDetails();
-        setUpdatingCostos(false);
-    }
-
-    useEffect(() => {
-        handleGetProductDetails()
-    }, [])
-
+            /* return () => {
+                updateBarCode('')
+            }; */
+        }, [])
+    );
 
     return productDetails ?
         <>
@@ -102,41 +93,13 @@ export const ProductDetailsPage = ({ route }: any) => {
 
                 {
                     !productDetails?.CodBar &&
-                    <TouchableOpacity style={buttonStyles.button} onPress={() => setOpenModalUpdateCodebar(true)}>
-                        <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
-                    </TouchableOpacity>
+                    <>
+                        <TouchableOpacity style={buttonStyles.button} onPress={handleOptionsToUpdateCodebar}>
+                            <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
+                        </TouchableOpacity>
+                    </>
                 }
             </ScrollView>
-
-            <ModalMiddle
-                visible={openModalUpdateCodebar}
-                onClose={() => setOpenModalUpdateCodebar(false)}
-                title='Quieres actualizar codigo de barras?'
-            >
-                {
-                    updatingCostos ?
-                        <View>
-                            <Text>Cargando...</Text>
-                        </View>
-                        :
-                        <>
-                            <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.black, globalStyles.globalMarginBottomSmall]}
-                                onPress={handleCreateCodebar}
-                                disabled={updatingCostos}
-                            >
-                                <Text style={buttonStyles.buttonText}>Actualizar</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.white]}
-                                onPress={() => setOpenModalUpdateCodebar(false)}
-                                disabled={updatingCostos}
-                            >
-                                <Text style={buttonStyles.buttonTextSecondary}>Cancelar</Text>
-                            </TouchableOpacity>
-                        </>
-                }
-            </ModalMiddle>
         </>
         :
         <LoadingScreen />

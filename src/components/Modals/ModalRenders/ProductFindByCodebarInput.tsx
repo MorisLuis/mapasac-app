@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { getProductByCodeBar } from '../../../services/products';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { colores, globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
+import PorductInterface from '../../../interface/product';
+import { AuthContext } from '../../../context/auth/AuthContext';
+
+interface ProductFindByCodebarInputInterface {
+    handleOpenProductsFoundByCodebar: (response: PorductInterface[]) => void
+}
 
 export const ProductFindByCodebarInput = ({
     handleOpenProductsFoundByCodebar
-}: any) => {
+}: ProductFindByCodebarInputInterface) => {
 
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
+    const { updateBarCode } = useContext(AuthContext);
 
     const handleSearchProductByCodebarInput = async () => {
+        updateBarCode('')
         let response;
         if(typeOfSearch === 'code') {
             response = await getProductByCodeBar(undefined, Barcode);
         } else {
+            updateBarCode(Barcode)
             response = await getProductByCodeBar(Barcode, undefined);
         }
-        console.log(JSON.stringify(response, null, 2))
         handleOpenProductsFoundByCodebar(response)
     }
 
@@ -60,7 +68,7 @@ export const ProductFindByCodebarInput = ({
 
 const styles = StyleSheet.create({
     ProductFindByCodebarInput: {
-        // Aplica cualquier estilo necesario para la vista principal
+        
     },
     ProductFindByCodebarInput_title: {
         marginBottom: 10,

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Button, Image, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../../interface/product';
@@ -8,20 +8,27 @@ import { Counter } from '../../Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
+import { AuthContext } from '../../../context/auth/AuthContext';
+import { EmptyMessageCard } from '../../Cards/EmptyMessageCard';
 
 interface ScannerResultInterface {
     product: PorductInterface;
     onClose: () => void;
+    handleSelectFindByCode: () => void;
+    fromInput: boolean
 }
 
 export const ScannerResult = ({
     product,
-    onClose
+    onClose,
+    handleSelectFindByCode,
+    fromInput
 }: ScannerResultInterface) => {
 
     const { addProduct } = useContext(InventoryBagContext)
-    const [counterProduct, setCounterProduct] = useState<number>(0);
+    const { codeBar } = useContext(AuthContext);
     const { navigate } = useNavigation<any>();
+    const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
 
@@ -36,7 +43,19 @@ export const ScannerResult = ({
 
     const handleExpandProductDetails = () => {
         navigate('ProductDetails', { selectedProduct: product });
+    }
 
+    const handleSearchByCode = () => {
+        onClose()
+        handleSelectFindByCode()
+    }
+
+    const handleAssignCodeToProduct = () => {
+        onClose()
+        console.log("enter handleAssignCodeToProduct")
+        setTimeout(() => {
+            navigate('SearchProductModal', { modal: true })
+        }, 500);
     }
 
     return (
@@ -72,18 +91,33 @@ export const ScannerResult = ({
 
 
                         <TouchableOpacity
-                            style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row'}]}
+                            style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row' }]}
                             onPress={handleAddToInventory}
                         >
-                            <Icon name="expand-outline" size={16} color="black" style={{ marginRight: 10}} />
+                            <Icon name="expand-outline" size={16} color="black" style={{ marginRight: 10 }} />
                             <Text style={buttonStyles.buttonTextSecondary}>Agregar al inventario</Text>
                         </TouchableOpacity>
                     </View>
                     :
                     <View>
-                        <Text>
-                            No existe producto
-                        </Text>
+                        <EmptyMessageCard title={fromInput ? `No existe producto con este codigo.` : `No existe producto con codigo de barras:`} message={`${codeBar}`} icon='help-circle'/>
+
+                        <TouchableOpacity
+                            onPress={handleSearchByCode}
+                            style={[buttonStyles.button, buttonStyles.white, { marginVertical: globalStyles.globalMarginBottomSmall.marginBottom }]}
+                        >
+                            <Text style={buttonStyles.buttonTextSecondary}>Buscar producto</Text>
+                        </TouchableOpacity>
+
+                        {
+                            (codeBar && codeBar !== "") &&
+                            <TouchableOpacity
+                                onPress={handleAssignCodeToProduct}
+                                style={[buttonStyles.button, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]}
+                            >
+                                <Text style={buttonStyles.buttonText}>Asignar a un producto</Text>
+                            </TouchableOpacity>
+                        }
                     </View>
             }
         </KeyboardAvoidingView>

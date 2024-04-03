@@ -2,10 +2,13 @@ import { api } from "../api/api";
 import CostosInterface from "../interface/costos";
 
 
+interface CostosInterfaceExtend extends CostosInterface {
+    codeRandom: string
+}
 interface updateCostosInterface {
     codigo: string;
     Id_Marca: number;
-    body?: Partial<CostosInterface>
+    body?: Partial<CostosInterfaceExtend>
 }
 
 

@@ -7,13 +7,21 @@ import { colores, globalStyles } from '../../theme/appTheme';
 interface ModalBottomInterface {
     visible: boolean;
     onClose: () => void;
-    children: any
+    children: any;
+
+    blurNotAvailable?: boolean;
+    blurType?: any;
+    blurAmount?: number
 }
 
 const ModalBottom = ({
     visible,
     onClose,
-    children
+    children,
+
+    blurNotAvailable = false,
+    blurType = "light",
+    blurAmount = 5
 }: ModalBottomInterface) => {
 
     const handleDismissKeyboard = () => {
@@ -21,32 +29,47 @@ const ModalBottom = ({
     };
 
 
+    const render = () => {
+        return (
+            <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+                <View style={styles.modalBottom}>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    >
+                        <View style={styles.modalContent}>
+                            <TouchableWithoutFeedback onPress={onClose}>
+                                <TouchableOpacity style={styles.header} onPress={onClose}>
+                                    <Icon name="close-outline" size={24} color="black" />
+                                </TouchableOpacity>
+                            </TouchableWithoutFeedback>
+                            <View style={styles.modalChildren}>
+                                {children}
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
+                </View>
+            </TouchableWithoutFeedback>
+        )
+    }
+
+
     return (
         <Modal
             animationType="slide"
             transparent={true}
             visible={visible}
+
         >
-            <BlurView style={StyleSheet.absoluteFill} blurType="light" blurAmount={5}>
-                <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-                    <View style={styles.modalBottom}>
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                        >
-                            <View style={styles.modalContent}>
-                                <TouchableWithoutFeedback onPress={onClose}>
-                                    <TouchableOpacity style={styles.header} onPress={onClose}>
-                                        <Icon name="close-outline" size={24} color="black" />
-                                    </TouchableOpacity>
-                                </TouchableWithoutFeedback>
-                                <View style={styles.modalChildren}>
-                                    {children}
-                                </View>
-                            </View>
-                        </KeyboardAvoidingView>
-                    </View>
-                </TouchableWithoutFeedback>
-            </BlurView>
+            {
+                blurNotAvailable ?
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    {render()}
+                </View>
+                :
+                <BlurView style={StyleSheet.absoluteFill} blurType={blurType} blurAmount={blurAmount}>
+                    {render()}
+                </BlurView>
+            }
         </Modal>
     );
 };

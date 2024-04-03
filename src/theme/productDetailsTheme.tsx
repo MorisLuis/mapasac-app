@@ -73,4 +73,26 @@ export const productDetailsStyles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: `${colores.color_tertiary}${Math.round(0.25 * 255).toString(16)}`,
     },
+    optionsContent:{
+
+    },
+    optionCodebar: {
+        backgroundColor: colores.background_color_secondary,
+        padding: globalStyles.globalPadding.padding,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: colores.color_border,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
+    },
+    optionCodebar_icon: {
+        marginRight: globalStyles.globalMarginBottomSmall.marginBottom,
+    },
+    selectedOption:{
+        backgroundColor: colores.color_yellow,
+        borderColor: colores.color_border_tertiary,
+        display: "flex"
+    }
 })

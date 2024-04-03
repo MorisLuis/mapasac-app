@@ -29,7 +29,7 @@ export const TypeOfMovementScreen = () => {
     };
 
     const onChangetTypeOfMovement = () => {
-        if (!typeSelected) return
+        if (typeSelected === undefined || typeSelected === null) return
         updateTypeOfMovements(typeSelected);
         navigate('BottomNavigation')
     }
@@ -41,6 +41,7 @@ export const TypeOfMovementScreen = () => {
         }
         handleGetTypeOfMovements()
     }, []);
+
 
     return (
         <View style={styles.container}>
@@ -54,7 +55,7 @@ export const TypeOfMovementScreen = () => {
                 keyExtractor={typeOfMovement => `${typeOfMovement.Id_TipoMovInv}`}
             />
 
-            {typeSelected && (
+            {(typeSelected || typeSelected == 0) && (
                 <View style={styles.footer}>
                     <TouchableOpacity style={[buttonStyles.button]} onPress={onChangetTypeOfMovement}>
                         <Text style={[buttonStyles.buttonText]}>Avanzar</Text>
