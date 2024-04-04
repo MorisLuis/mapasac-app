@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "space-between",
         alignItems: "center",
+        borderBottomWidth: 0.7
     },
     title: {
         fontSize: globalFont.font_med,

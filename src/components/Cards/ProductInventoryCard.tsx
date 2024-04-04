@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from '../../theme/UI/cardsStyles';
 import PorductInterface from '../../interface/product.js';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ProductInventoryCardInterface {
     product: PorductInterface;
@@ -21,12 +22,20 @@ export const ProductInventoryCard = ({
 
     return (
         <TouchableOpacity style={styles.productInventoryCard} onPress={onClick}>
-            <Image
-                style={styles.productInventoryCard__Image}
-                source={{
-                    uri: product.imagen ? product.imagen[0]?.url : imageDefault,
-                }}
-            />
+            {
+                product?.imagen ?
+                    <Image
+                        style={styles.productInventoryCard__Image}
+                        source={{
+                            uri: product?.imagen ? product?.imagen[0]?.url : imageDefault,
+                        }}
+                    />
+                    :
+                    <View style={styles.notImage}>
+                        <Icon name={'camera'} size={20} color="black" /* style={styles.icon}  *//>
+                        <Text style={styles.notImageText} numberOfLines={2}>OLEI SOFTWARE SOFTWARESOFTWARE SOFTWARE SOFTWARE</Text>
+                    </View>
+            }
             <View style={styles.productInventoryCard__data}>
                 <View style={styles.information}>
                     <View>
@@ -35,23 +44,22 @@ export const ProductInventoryCard = ({
 
                     <View style={styles.dataItem}>
                         <Text style={styles.label}>Codigo:</Text>
-                        <Text>{product?.Codigo}</Text>
+                        <Text style={styles.dataItemText}>{product?.Codigo}</Text>
                     </View>
 
                     <View style={styles.dataItem}>
                         <Text style={styles.label}>Marca:</Text>
-                        <Text>{product?.Marca}</Text>
+                        <Text style={styles.dataItemText}>{product?.Marca}</Text>
                     </View>
 
-
-                    <View style={styles.dataItem}>
+                    {/* <View style={styles.dataItem}>
                         <Text style={styles.label}>Almacen:</Text>
                         <Text>{product?.Id_Almacen}</Text>
-                    </View>
+                    </View> */}
 
-                    <View style={styles.dataItem}>
+                    {/* <View style={styles.dataItem}>
                         <Text>{product?.CodBar ? "" : "NO TIENE!!"}</Text>
-                    </View>
+                    </View> */}
 
                     {
                         showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>

@@ -16,6 +16,7 @@ import { ProductFindByCodebarInput } from '../../components/Modals/ModalRenders/
 import { colores } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SettingsContext } from '../../context/settings/SettingsContext';
+import { BlurView } from '@react-native-community/blur';
 
 const CustomCamera: React.FC = () => {
 
@@ -76,7 +77,7 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleVibrate = () => {
-        if ( vibration ) {
+        if (vibration) {
             Vibration.vibrate(500);
         }
     };
@@ -144,10 +145,20 @@ const CustomCamera: React.FC = () => {
                 }
 
                 <View style={styles.scannerOptions}>
+                    <BlurView style={styles.option} blurType="light" blurAmount={20}>
+                        <View style={styles.optionContent}>
+                            <TouchableOpacity  onPress={() => setOpenModalFindByCodebarInput(true)}>
+                                <Icon name="barcode-outline" size={24} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                    </BlurView>
+                </View>
+
+                {/* <View style={styles.scannerOptions}>
                     <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
                         <Icon name="barcode-outline" size={24} color="black" />
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
 
@@ -256,33 +267,22 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: "10%",
         right: "10%",
-        //transform: [{ translateX: -35 }],
-        backgroundColor: colores.background_color,
-        borderRadius: 100,
-        padding: 5
-    },
-    scannerOptions2: {
-        display: "flex",
-        flexDirection: "row",
-        position: "absolute",
-        bottom: "20%",
-        right: "20%",
-        //transform: [{ translateX: -35 }],
-        backgroundColor: colores.color_blue,
-        borderRadius: 100,
-        padding: 5
+        padding: 5,
     },
     option: {
+        borderRadius: 30,
+        padding: 5,
+    },
+    optionContent: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: 7.5,
-        backgroundColor: colores.background_color,
+        padding: 10,
         borderRadius: 100,
         borderWidth: 2,
         borderColor: "black"
-    }
 
+    }
 })
 
 

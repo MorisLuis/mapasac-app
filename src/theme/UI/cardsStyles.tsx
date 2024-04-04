@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colores, globalStyles } from '../appTheme';
+import { colores, globalFont, globalStyles } from '../appTheme';
 
 
 export const styles = StyleSheet.create({
@@ -15,19 +15,19 @@ export const styles = StyleSheet.create({
         backgroundColor: colores.background_color_secondary,
         borderRadius: 8,
         padding: 10,
-        marginBottom: 10,
-        shadowColor: '#000',
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        /* shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: -3,
         },
         shadowOpacity: 0.06,
         shadowRadius: 3,
-        elevation: 3,
+        elevation: 3, */
     },
     productInventoryCard__Image: {
         width: 60,
-        minHeight: 80,
+        minHeight: 70,
         marginRight: 10,
         borderRadius: 5
     },
@@ -37,19 +37,24 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         maxWidth: "100%"
     },
-    dataItem:{
+    dataItem: {
         display: "flex",
         flexDirection: "row"
     },
-    label:{
+    dataItemText: {
+        fontSize: 12
+    },
+    label: {
         fontWeight: "bold",
-        marginRight: globalStyles.globalMarginBottomSmall.marginBottom
+        marginRight: globalStyles.globalMarginBottomSmall.marginBottom,
+        fontSize: 12
     },
     information: {
         maxWidth: "80%"
     },
     description: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
     },
     stock: {
         backgroundColor: colores.background_color,
@@ -67,5 +72,30 @@ export const styles = StyleSheet.create({
     delete: {
         color: "red",
         paddingVertical: 10
-    }
+    },
+    notImage: {
+        //flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        minHeight: 70,
+        marginRight: 10,
+        borderRadius: 5,
+        backgroundColor: colores.background_color_tertiary,
+        borderWidth: 1,
+        borderColor: colores.color_border
+        /* minHeight: 80,
+        marginRight: 10,
+        borderRadius: 5 */
+    },
+    notImageText: {
+        fontWeight: 'bold',
+        fontSize: 8,
+        textAlign: "center",
+        lineHeight: 8, 
+        maxHeight: 40,
+        overflow: 'hidden',
+        paddingHorizontal: 2
+    },
 });

@@ -81,13 +81,13 @@ const styles = StyleSheet.create({
     },
     optionContainer: {
         padding: 10,
-        marginVertical: 5,
-        borderWidth: 1,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        borderWidth: 0.7,
         borderRadius: 5,
-        borderColor: colores.color_border,
+        borderColor: colores.color_border_tertiary,
     },
     optionText: {
-        fontSize: 16,
+        fontSize: globalFont.font_sm,
     },
     selectedOption: {
         backgroundColor: colores.color_yellow,

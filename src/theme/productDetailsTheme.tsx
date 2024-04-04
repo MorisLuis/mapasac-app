@@ -23,7 +23,7 @@ export const productDetailsStyles = StyleSheet.create({
         height: "90%",
         width: "60%",
         resizeMode: 'contain',
-        backgroundColor: colores.background_color_tertiary, // O cualquier otro color de fondo que desees
+        backgroundColor: colores.background_color_tertiary,
         shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 1,
@@ -34,6 +34,17 @@ export const productDetailsStyles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        fontWeight: 'bold',
+        
+    },
+    notImageText: {
+        fontWeight: 'bold',
+        fontSize: globalFont.font_med,
+        textAlign: "center",
+        lineHeight: globalFont.font_med,
+        //maxHeight: 40,
+        overflow: 'hidden',
+        paddingHorizontal: globalStyles.globalPadding.padding
     },
     header: {
         marginBottom: globalStyles.globalMarginBottom.marginBottom,

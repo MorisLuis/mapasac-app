@@ -7,6 +7,7 @@ import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { format } from '../utils/currency';
 import { buttonStyles } from '../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const ProductDetailsPage = ({ route }: any) => {
 
@@ -21,6 +22,7 @@ export const ProductDetailsPage = ({ route }: any) => {
 
     const handleGetProductDetails = async () => {
         const productData = await getProductDetails(Codigo, Marca);
+        console.log({ productData: JSON.stringify(productData, null, 2) })
         setProductDetails(productData)
     }
 
@@ -34,12 +36,20 @@ export const ProductDetailsPage = ({ route }: any) => {
         <>
             <ScrollView style={productDetailsStyles.ProductDetailsPage}>
                 <View style={productDetailsStyles.imageContainer}>
-                    <Image
-                        style={productDetailsStyles.image}
-                        source={{
-                            uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
-                        }}
-                    />
+                    {
+                        productDetails?.imagen ?
+                            <Image
+                                style={productDetailsStyles.image}
+                                source={{
+                                    uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
+                                }}
+                            />
+                            :
+                            <View style={productDetailsStyles.notImage}>
+                                <Icon name={'camera'} size={24} color="black" /* style={styles.icon}  */ />
+                                <Text style={productDetailsStyles.notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
+                            </View>
+                    }
                 </View>
                 <View style={productDetailsStyles.header}>
                     <Text style={productDetailsStyles.description}>{productDetails?.Descripcion}</Text>
