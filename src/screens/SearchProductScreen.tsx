@@ -51,15 +51,6 @@ export const SearchProductScreen = ({ route }: any) => {
         getSearchData("")
     }, [])
 
-   /*  useFocusEffect(
-        React.useCallback(() => {
-            return () => {
-                //handleCodebarScannedProcces(false);
-                updateBarCode('')
-            };
-        }, [])
-    ); */
-
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLargeTitle: router?.modal ? false : true,

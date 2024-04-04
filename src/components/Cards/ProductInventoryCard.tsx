@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { styles } from '../../theme/UI/cardsStyles';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { styles } from '../../theme/UI/cardsStyles';
 import PorductInterface from '../../interface/product.js';
 
 interface ProductInventoryCardInterface {
@@ -48,6 +47,10 @@ export const ProductInventoryCard = ({
                     <View style={styles.dataItem}>
                         <Text style={styles.label}>Almacen:</Text>
                         <Text>{product?.Id_Almacen}</Text>
+                    </View>
+
+                    <View style={styles.dataItem}>
+                        <Text>{product?.CodBar ? "" : "NO TIENE!!"}</Text>
                     </View>
 
                     {

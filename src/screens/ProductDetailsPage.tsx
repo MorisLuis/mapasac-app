@@ -1,4 +1,4 @@
-import React, {  useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
@@ -7,7 +7,6 @@ import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { format } from '../utils/currency';
 import { buttonStyles } from '../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../context/auth/AuthContext';
 
 export const ProductDetailsPage = ({ route }: any) => {
 
@@ -15,7 +14,6 @@ export const ProductDetailsPage = ({ route }: any) => {
     const { selectedProduct: { Codigo, Marca } } = route.params;
     const navigation = useNavigation<any>();
     const [productDetails, setProductDetails] = useState<PorductInterface>();
-    const { updateBarCode } = useContext(AuthContext);
 
     const handleOptionsToUpdateCodebar = () => {
         navigation.navigate('CodebarUpdateNavigation', { productDetails, selectedProduct: { Codigo, Marca } })
@@ -29,10 +27,6 @@ export const ProductDetailsPage = ({ route }: any) => {
     useFocusEffect(
         React.useCallback(() => {
             handleGetProductDetails();
-
-            /* return () => {
-                updateBarCode('')
-            }; */
         }, [])
     );
 

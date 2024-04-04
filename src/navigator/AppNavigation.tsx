@@ -12,6 +12,7 @@ import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../components/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
+import CameraModal from '../components/CameraModal';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -28,7 +29,8 @@ export type InventoryNavigationStackParamList = {
     SearchProductModal: any;
     //UpdateCodeBar: any;
     //UpdateCodeBarWithInput: any;
-    CodebarUpdateNavigation: { product: PorductInterface, selectedProduct: any }
+    CodebarUpdateNavigation: { product: PorductInterface, selectedProduct: any },
+    CameraModal: any
 };
 
 export const AppNavigation = () => {
@@ -135,6 +137,19 @@ export const AppNavigation = () => {
                                     headerShown: false
                                 }}
                             />
+
+                            {/* <Stack.Screen
+                                name="CameraModal"
+                                component={CameraModal}
+                                options={({ navigation }) => ({
+                                    presentation: "modal",
+                                    headerShown: true,
+                                    title: 'Camara',
+                                    headerLeft: () => (
+                                        <CustomBackButton navigation={navigation} />
+                                    ),
+                                })}
+                            /> */}
                         </>
                 }
             </Stack.Navigator>

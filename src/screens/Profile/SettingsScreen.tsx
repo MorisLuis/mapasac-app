@@ -17,7 +17,6 @@ export const SettingsScreen = () => {
     const { vibration, handleVibrationState } = useContext(SettingsContext);
 
     const onChangetTypeOfMovement = () => {
-        console.log({ typeSelected })
         if (typeSelected === undefined || typeSelected === null) return
         updateTypeOfMovements(typeSelected)
     }
