@@ -16,7 +16,6 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     const [state, dispatch] = useReducer(settingsReducer, SettingsInitialState);
 
     const handleVibrationState = (value: boolean) => {
-        //console.log({value})
         dispatch({ type: '[Settings] - Vibration state', vibration: value });
     }
 

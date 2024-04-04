@@ -93,11 +93,9 @@ const CustomCamera: React.FC = () => {
 
                 try {
                     const response = await getProductByCodeBar(codeValue);
-                    console.log({ response })
                     handleOpenProductsFoundByCodebar(response);
                     handleVibrate()
                     if (response.length < 1) {
-                        console.log({ codeValue })
                         updateBarCode(codeValue)
                     }
                     console.log(`Scanned code value: ${codeValue}`);

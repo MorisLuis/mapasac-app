@@ -8,7 +8,6 @@ export const productDetailsStyles = StyleSheet.create({
         backgroundColor: colores.background_color
     },
     imageContainer: {
-        //flex: 1,
         minHeight: 300,
         backgroundColor: colores.background_color_tertiary,
         borderWidth: 1,
@@ -24,6 +23,7 @@ export const productDetailsStyles = StyleSheet.create({
         height: "90%",
         width: "60%",
         resizeMode: 'contain',
+        backgroundColor: colores.background_color_tertiary, // O cualquier otro color de fondo que desees
         shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 1,

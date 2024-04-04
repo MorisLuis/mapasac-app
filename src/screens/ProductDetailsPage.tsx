@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import PorductInterface from '../interface/product';
 import { LoadingScreen } from './LoadingScreen';

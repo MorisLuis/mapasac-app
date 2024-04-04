@@ -22,23 +22,7 @@ const getTypeOfMovements = async () => {
 
 }
 
-/* const updateTypeOfMovements = async (Id_TipoMovInv: number) => {
 
-    let typeOfMov;
-
-    console.log({Id_TipoMovInv})
-    try {
-        const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv });
-        typeOfMov = getTypeOfMovements.data;
-
-    } catch (error: any) {
-        console.log({ error: error })
-    }
-
-    return typeOfMov
-}
- */
 export {
     getTypeOfMovements,
-    //updateTypeOfMovements
 }

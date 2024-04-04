@@ -20,7 +20,6 @@ const Toggle = ({
 
     const [isEnabled, setIsEnabled] = useState(value ? value : false);
     const toggleSwitch = () => {
-        console.log({isEnabled})
         onChange(!isEnabled)
         setIsEnabled(previousState => !isEnabled);
     };

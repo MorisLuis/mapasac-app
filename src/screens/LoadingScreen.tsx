@@ -8,7 +8,8 @@ export const LoadingScreen = () => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: colores.background_color
+            backgroundColor: colores.background_color,
+            height: "100%"
         }}>
             <ActivityIndicator 
                 size={ 50 }

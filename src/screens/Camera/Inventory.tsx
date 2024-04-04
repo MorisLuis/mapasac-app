@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { LoadingScreen } from '../LoadingScreen';
 
 export const Inventory = () => {
 
@@ -34,9 +35,8 @@ export const Inventory = () => {
     const renderLoader = () => {
         return (
             isLoading ?
-                <View>
-                    <Text>Cargando...</Text>
-                </View> : null
+                <LoadingScreen/>
+                : null
         );
     };
 
@@ -79,8 +79,8 @@ export const Inventory = () => {
 
 
     return (
-        <SafeAreaView>
-            <View style={styles.Inventory}>
+        <SafeAreaView style={styles.Inventory}>
+            <View style={styles.content}>
                 <View style={styles.header}>
                     <Text style={styles.title}> Inventario </Text>
                     <View style={styles.actions}>
@@ -107,8 +107,12 @@ export const Inventory = () => {
 
 const styles = StyleSheet.create({
     Inventory: {
-        paddingHorizontal: globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color
+    },
+    content: {
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        backgroundColor: colores.background_color,
+        height: "100%"
     },
     header: {
         flexDirection: "row",
