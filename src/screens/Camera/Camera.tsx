@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, TouchableOpacity, Button, Vibration } from 'react-native';
+import { View, StyleSheet, ViewStyle, TouchableOpacity, Vibration, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
 
 import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
@@ -17,6 +17,7 @@ import { colores } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { BlurView } from '@react-native-community/blur';
+import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
 
 const CustomCamera: React.FC = () => {
 
@@ -81,36 +82,40 @@ const CustomCamera: React.FC = () => {
             Vibration.vibrate(500);
         }
     };
+    const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
+        if (codes.length > 0 && isScanningAllowed && !productsScanned) {
+            setIsScanningAllowed(false);
+            const scannedCode = codes[0];
+            const codeValue = scannedCode.value;
 
-    const codeScanner = useCodeScanner({
-        codeTypes: ['qr', 'ean-13', 'code-128'],
-        onCodeScanned: async (codes) => {
-            if (codes.length > 0 && isScanningAllowed && !productsScanned) {
-                setIsScanningAllowed(false);
-                const scannedCode = codes[0];
-                const codeValue = scannedCode.value;
+            if (!codeValue) return;
 
-                if (!codeValue) return;
-
-                try {
-                    const response = await getProductByCodeBar(codeValue);
-                    handleOpenProductsFoundByCodebar(response);
-                    handleVibrate()
-                    if (response.length < 1) {
-                        updateBarCode(codeValue)
-                    }
-                    console.log(`Scanned code value: ${codeValue}`);
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                } finally {
-                    setTimeout(() => {
-                        setIsScanningAllowed(true);
-                    }, 2000);
+            try {
+                const response = await getProductByCodeBar(codeValue);
+                handleOpenProductsFoundByCodebar(response);
+                handleVibrate()
+                if (response.length < 1) {
+                    updateBarCode(codeValue)
                 }
+                console.log(`Scanned code value: ${codeValue}`);
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            } finally {
+                setTimeout(() => {
+                    setIsScanningAllowed(true);
+                }, 2000);
             }
         }
-    });
+    })
 
+    const { props: cameraProps, highlights } = useBarcodeScanner({
+        fps: 5,
+        barcodeTypes: ["qr", "ean-13", "code-128"], // optional
+        onBarcodeScanned: (barcodes) => {
+            "worklet";
+            onFaceDetected(barcodes)
+        },
+    });
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 
@@ -129,25 +134,26 @@ const CustomCamera: React.FC = () => {
             <View style={styles.content}>
                 {
                     (backCamera) &&
-                    <Camera
-                        style={styles.camera}
-                        device={backCamera}
-                        isActive={selectedDevice !== null}
-                        codeScanner={isScannerActive ? codeScanner : undefined}
-                    />
+                    <>
+                        <Camera
+                            style={styles.camera}
+                            device={backCamera}
+                            isActive={selectedDevice !== null}
+                            {...cameraProps}
+                        />
+                        <CameraHighlights highlights={highlights} color="peachpuff" />
+                    </>
                 }
 
-                {
-                    selectedDevice &&
-                    <View style={styles.iconStyle} >
-                        <Icon name="scan-outline" size={300} color="white" />
-                    </View>
-                }
+                <View style={styles.message}>
+                    <Text style={styles.textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
+                </View>
+
 
                 <View style={styles.scannerOptions}>
                     <BlurView style={styles.option} blurType="light" blurAmount={20}>
                         <View style={styles.optionContent}>
-                            <TouchableOpacity  onPress={() => setOpenModalFindByCodebarInput(true)}>
+                            <TouchableOpacity onPress={() => setOpenModalFindByCodebarInput(true)}>
                                 <Icon name="barcode-outline" size={24} color="black" />
                             </TouchableOpacity>
                         </View>
@@ -281,7 +287,21 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderWidth: 2,
         borderColor: "black"
-
+    },
+    message: {
+        position: "absolute",
+        top: "25%",
+        left: "25%",
+        width: "50%",
+        display: "flex",
+        alignItems: "center",
+        textAlign: 'center'
+    },
+    textmessage: {
+        color: colores.text_color_secondary,
+        display: "flex",
+        alignItems: "center",
+        textAlign: 'center'
     }
 })
 

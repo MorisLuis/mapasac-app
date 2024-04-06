@@ -4,7 +4,15 @@
     "module": "commonjs",
     "jsx": "react",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@mgcrea/vision-camera-code-scanner": [
+        "./../src"
+      ]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
 }
