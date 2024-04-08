@@ -18,6 +18,7 @@ import { AuthContext } from '../../context/auth/AuthContext';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { BlurView } from '@react-native-community/blur';
 import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
+import Scan from '../../assets/scan.svg';
 
 const CustomCamera: React.FC = () => {
 
@@ -149,6 +150,9 @@ const CustomCamera: React.FC = () => {
                     <Text style={styles.textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
                 </View>
 
+                <View style={styles.scanSvgContainer}>
+                    <Scan width={300} height={300} />
+                </View>
 
                 <View style={styles.scannerOptions}>
                     <BlurView style={styles.option} blurType="light" blurAmount={20}>
@@ -302,6 +306,12 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         textAlign: 'center'
+    },
+    scanSvgContainer: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: [{ translateX: -150 }, { translateY: -150 }]
     }
 })
 
