@@ -22,9 +22,10 @@ import Scan from '../../assets/scan.svg';
 
 const CustomCamera: React.FC = () => {
 
-    const { updateBarCode, codeBarStatus } = useContext(AuthContext);
+    const { updateBarCode, user } = useContext(AuthContext);
     const { vibration } = useContext(SettingsContext);
 
+    console.log({user: JSON.stringify(user, null, 2)})
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)
