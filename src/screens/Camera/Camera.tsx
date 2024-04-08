@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { View, StyleSheet, ViewStyle, TouchableOpacity, Vibration, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -28,6 +28,8 @@ const CustomCamera: React.FC = () => {
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)
+
+    const [lightOn, setLightOn] = useState(false)
 
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
     const [productSelected, setProductSelected] = useState<PorductInterface>()
@@ -86,8 +88,8 @@ const CustomCamera: React.FC = () => {
         }
     };
     const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
-        
-        if ( !productsScanned && codes.length > 0) {
+
+        if (!productsScanned && codes.length > 0) {
             setIsScanningAllowed(false);
             const scannedCode = codes[0];
             const codeValue = scannedCode.value;
@@ -114,6 +116,7 @@ const CustomCamera: React.FC = () => {
     const { props: cameraProps, highlights } = useBarcodeScanner({
         fps: 5,
         barcodeTypes: ["qr", "ean-13", "code-128"], // optional
+        
         onBarcodeScanned: (barcodes) => {
             "worklet";
             onFaceDetected(barcodes)
@@ -131,6 +134,7 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     }, []);
 
+
     return (
         <View style={styles.cameraScreen}>
             <View style={styles.content}>
@@ -140,15 +144,22 @@ const CustomCamera: React.FC = () => {
                         <Camera
                             style={styles.camera}
                             device={backCamera}
+                            torch={lightOn ? "on" : "off"}
                             isActive={
                                 isScanningAllowed === false ? false :
-                                selectedDevice !== null
+                                    selectedDevice !== null
                             }
                             {...cameraProps}
                         />
                         <CameraHighlights highlights={highlights} color={colores.color_red} />
                     </>
                 }
+
+                <View style={styles.flash}>
+                    <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
+                        <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="white" />
+                    </TouchableOpacity>
+                </View>
 
                 <View style={styles.message}>
                     <Text style={styles.textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
@@ -167,12 +178,6 @@ const CustomCamera: React.FC = () => {
                         </View>
                     </BlurView>
                 </View>
-
-                {/* <View style={styles.scannerOptions}>
-                    <TouchableOpacity style={styles.option} onPress={() => setOpenModalFindByCodebarInput(true)}>
-                        <Icon name="barcode-outline" size={24} color="black" />
-                    </TouchableOpacity>
-                </View> */}
             </View>
 
 
@@ -246,41 +251,12 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0
     },
-    iconStyle: {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: [{ translateX: -150 }, { translateY: -150 }]
-    } as ViewStyle,
-    bagContent: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        position: "absolute",
-        top: 20,
-        right: 0,
-        paddingHorizontal: 10,
-    },
-    bag: {
-        backgroundColor: "gray",
-        width: 35,
-        height: 35,
-        borderRadius: 100,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        borderColor: "black",
-        borderWidth: 1
-    },
-    bagNumber: {
-        color: "white"
-    },
     scannerOptions: {
         display: "flex",
         flexDirection: "row",
         position: "absolute",
         bottom: "10%",
-        right: "10%",
+        right: "7.5%",
         padding: 5,
     },
     option: {
@@ -316,6 +292,11 @@ const styles = StyleSheet.create({
         top: "50%",
         left: "50%",
         transform: [{ translateX: -150 }, { translateY: -150 }]
+    },
+    flash: {
+        position: "absolute",
+        right: "7.5%",
+        top: 100
     }
 })
 
