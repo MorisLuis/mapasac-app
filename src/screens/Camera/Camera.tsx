@@ -42,11 +42,13 @@ const CustomCamera: React.FC = () => {
         setOpenModalScannerResult(false);
         setProductSelected(undefined);
         setProductsScanned(undefined);
+        setIsScanningAllowed(true);
     }
 
     const handleCloseModalProductsFoundByCodebar = () => {
         setOpenModalProductFoundByCodebar(false);
         setProductsScanned(undefined)
+        setIsScanningAllowed(true)
     }
 
 
@@ -84,7 +86,8 @@ const CustomCamera: React.FC = () => {
         }
     };
     const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
-        if (codes.length > 0 && isScanningAllowed && !productsScanned) {
+        
+        if ( !productsScanned && codes.length > 0) {
             setIsScanningAllowed(false);
             const scannedCode = codes[0];
             const codeValue = scannedCode.value;
@@ -103,7 +106,6 @@ const CustomCamera: React.FC = () => {
                 console.error('Error fetching product:', error);
             } finally {
                 setTimeout(() => {
-                    setIsScanningAllowed(true);
                 }, 2000);
             }
         }
@@ -129,7 +131,6 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     }, []);
 
-
     return (
         <View style={styles.cameraScreen}>
             <View style={styles.content}>
@@ -139,10 +140,13 @@ const CustomCamera: React.FC = () => {
                         <Camera
                             style={styles.camera}
                             device={backCamera}
-                            isActive={selectedDevice !== null}
+                            isActive={
+                                isScanningAllowed === false ? false :
+                                selectedDevice !== null
+                            }
                             {...cameraProps}
                         />
-                        <CameraHighlights highlights={highlights} color="peachpuff" />
+                        <CameraHighlights highlights={highlights} color={colores.color_red} />
                     </>
                 }
 
