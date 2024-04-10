@@ -22,7 +22,6 @@ export const ProductDetailsPage = ({ route }: any) => {
 
     const handleGetProductDetails = async () => {
         const productData = await getProductDetails(Codigo, Marca);
-        console.log({ productData: JSON.stringify(productData, null, 2) })
         setProductDetails(productData)
     }
 

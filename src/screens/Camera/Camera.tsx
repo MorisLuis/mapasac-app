@@ -25,7 +25,6 @@ const CustomCamera: React.FC = () => {
     const { updateBarCode, user } = useContext(AuthContext);
     const { vibration } = useContext(SettingsContext);
 
-    console.log({user: JSON.stringify(user, null, 2)})
     const [isScannerActive, setIsScannerActive] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true)

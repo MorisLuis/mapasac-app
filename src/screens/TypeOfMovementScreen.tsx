@@ -12,6 +12,7 @@ export const TypeOfMovementScreen = () => {
     const { updateTypeOfMovements } = useContext(AuthContext);
     const { navigate } = useNavigation<any>();
 
+
     const handleOptionSelect = (option: number) => {
         setTypeSelected(option);
     };

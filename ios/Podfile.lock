@@ -1138,7 +1138,7 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.23.1):
     - React-Core
-  - RNCPicker (2.7.2):
+  - RNCPicker (2.7.5):
     - React-Core
   - RNGestureHandler (2.16.0):
     - glog
@@ -1480,7 +1480,7 @@ SPEC CHECKSUMS:
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
   ReactNativeCameraKit: 9d46a5d7dd544ca64aa9c03c150d2348faf437eb
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
-  RNCPicker: 82ccad5b08259dc09310082118cbb6c136d7da67
+  RNCPicker: 3e2c37a8328f368ce14da050cdc8231deb5fc9f9
   RNGestureHandler: bc2cdb2dc42facdf34992ae364b8a728e19a3686
   RNPermissions: 294531ede5a64d1528463e88fffef05675842042
   RNScreens: b6b64d956af3715adbfe84808694ae82d3fec74f

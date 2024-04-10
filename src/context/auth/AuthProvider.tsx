@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
-    const [codebarScannedProcces, setCodebarScannedProcces] = useState(false);
 
     useEffect(() => {
         checkToken();

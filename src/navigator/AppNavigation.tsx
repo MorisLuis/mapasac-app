@@ -9,7 +9,7 @@ import { LoginScreen } from '../screens/LoginScreen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
 import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
-import { SuccesMessage } from '../components/SuccesMessage';
+import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import CameraModal from '../components/CameraModal';
@@ -50,7 +50,7 @@ export const AppNavigation = () => {
                         />
                         :
                         <>
-                            {
+                            {/* {
                                 loggingIn &&
                                 <Stack.Screen
                                     name="TypeOfMovement"
@@ -59,7 +59,15 @@ export const AppNavigation = () => {
                                         headerShown: false,
                                     }}
                                 />
-                            }
+                            } */}
+
+                            <Stack.Screen
+                                name="TypeOfMovement"
+                                component={TypeOfMovementScreen}
+                                options={{
+                                    headerShown: false,
+                                }}
+                            />
 
                             <Stack.Screen
                                 name="BottomNavigation"
@@ -137,19 +145,6 @@ export const AppNavigation = () => {
                                     headerShown: false
                                 }}
                             />
-
-                            {/* <Stack.Screen
-                                name="CameraModal"
-                                component={CameraModal}
-                                options={({ navigation }) => ({
-                                    presentation: "modal",
-                                    headerShown: true,
-                                    title: 'Camara',
-                                    headerLeft: () => (
-                                        <CustomBackButton navigation={navigation} />
-                                    ),
-                                })}
-                            /> */}
                         </>
                 }
             </Stack.Navigator>
