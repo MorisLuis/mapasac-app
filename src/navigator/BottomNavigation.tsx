@@ -22,24 +22,24 @@ export const BottomNavigation = () => {
             screenOptions={({ route, navigation }) => ({
                 tabBarIcon: ({ color, focused }) => {
                     let iconName: string = '';
-                    let iconColor: string = focused ? colores.text_color : colores.text_color_light;
+                    let iconColor: string = focused ? colores.color_yellow : colores.text_color_light;
 
                     switch (route.name) {
                         case 'Home':
                             iconName = 'home-outline'
                             break;
                         case 'Scanner':
-                            iconName = 'scan-outline'
+                            iconName = focused ? 'scan' : 'scan-outline'
                             break;
                         case 'Profile':
-                            iconName = 'person-outline'
+                            iconName = focused ? 'person' : 'person-outline'
                             break;
                     }
 
                     return (
                         <View>
                             <Icon name={iconName} size={20} color={iconColor} />
-                            {
+                            {/* {
                                 focused &&
                                 <View style={{
                                     height:4,
@@ -50,12 +50,12 @@ export const BottomNavigation = () => {
                                     top: -10,
                                     left: -5
                                 }}></View>
-                            }
+                            } */}
                         </View>
                     )
                 },
                 tabBarLabelStyle: {
-                    color: route.name === navigation.getState().routes[navigation.getState().index].name ? colores.text_color : colores.text_color_light
+                    color: route.name === navigation.getState().routes[navigation.getState().index].name ? colores.color_yellow : colores.text_color_light
                 },
                 tabBarStyle: {
                     backgroundColor: colores.background_color,

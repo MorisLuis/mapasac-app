@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { View, StyleSheet, ViewStyle, TouchableOpacity, Vibration, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Vibration, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 
@@ -125,6 +125,23 @@ const CustomCamera: React.FC = () => {
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 
+    const getTypeOfMovementsName = () => {
+        let name;
+        if (user?.Id_TipoMovInv?.Accion === 1 && user?.Id_TipoMovInv?.Id_TipoMovInv === 0) { // Inventario fisico
+            name = "al Inventario"
+        } else if (user?.Id_TipoMovInv?.Accion === 1) {
+            name = "a la Entrada"
+        } else if (user?.Id_TipoMovInv?.Accion === 2) {
+            name = "a la Salida"
+        } else {
+            name = "Traspaso"
+        }
+        return name
+    }
+
+    useEffect(() => {
+        getTypeOfMovementsName()
+    }, [user])
 
     useEffect(() => {
         setIsScannerActive(selectedDevice !== null);
@@ -162,7 +179,7 @@ const CustomCamera: React.FC = () => {
                 </View>
 
                 <View style={styles.message}>
-                    <Text style={styles.textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
+                    <Text style={styles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
                 </View>
 
                 <View style={styles.scanSvgContainer}>
