@@ -52,7 +52,6 @@ export const ScannerResult = ({
 
     const handleAssignCodeToProduct = () => {
         onClose()
-        console.log("enter handleAssignCodeToProduct")
         setTimeout(() => {
             navigate('SearchProductModal', { modal: true })
         }, 500);

@@ -19,6 +19,7 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { BlurView } from '@react-native-community/blur';
 import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
 import Scan from '../../assets/scan.svg';
+import { Worklets } from 'react-native-worklets-core';
 
 const CustomCamera: React.FC = () => {
 
@@ -88,7 +89,7 @@ const CustomCamera: React.FC = () => {
         }
     };
 
-    /* const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
+    const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
 
         if (!productsScanned && codes?.length > 0) {
             setIsScanningAllowed(false);
@@ -121,9 +122,9 @@ const CustomCamera: React.FC = () => {
             "worklet";
             onFaceDetected(barcodes);
         },
-    }); */
+    });
 
-    const codeScanner = useCodeScanner({
+   /*  const codeScanner = useCodeScanner({
         codeTypes: ["qr", "ean-13", "code-128"], // opcional
         onCodeScanned: async (codes) => {
             if (!productsScanned && codes?.length > 0) {
@@ -149,7 +150,7 @@ const CustomCamera: React.FC = () => {
                 }
             }
         }
-    })
+    }) */
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
@@ -195,10 +196,10 @@ const CustomCamera: React.FC = () => {
                                 isScanningAllowed === false ? false :
                                     selectedDevice !== null
                             }
-                            codeScanner={codeScanner}
-                        /* {...cameraProps} */
+                            //codeScanner={codeScanner}
+                        {...cameraProps}
                         />
-                        {/* <CameraHighlights highlights={highlights} color={colores.color_red} /> */}
+                        <CameraHighlights highlights={highlights} color={colores.color_red} />
                     </>
                 }
 

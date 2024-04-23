@@ -76,8 +76,6 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const token = await AsyncStorage.getItem('token');
 
-            console.log({token})
-
             // No token, no autenticado
             if (!token) return dispatch({ type: 'notAuthenticated' });
     
@@ -88,8 +86,6 @@ export const AuthProvider = ({ children }: any) => {
                     'x-token': token || ''
                 }
             });
-
-            console.log({resp})
     
             if (resp.status !== 200) {
                 return dispatch({ type: 'notAuthenticated' });
