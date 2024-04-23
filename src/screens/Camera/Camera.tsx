@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { View, StyleSheet, TouchableOpacity, Vibration, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 
 import ModalBottom from '../../components/Modals/ModalBottom';
 import ModalComplete from '../../components/Modals/ModalComplete';
@@ -87,8 +87,8 @@ const CustomCamera: React.FC = () => {
             Vibration.vibrate(500);
         }
     };
-    
-    const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
+
+    /* const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
 
         if (!productsScanned && codes?.length > 0) {
             setIsScanningAllowed(false);
@@ -121,7 +121,35 @@ const CustomCamera: React.FC = () => {
             "worklet";
             onFaceDetected(barcodes);
         },
-    });
+    }); */
+
+    const codeScanner = useCodeScanner({
+        codeTypes: ["qr", "ean-13", "code-128"], // opcional
+        onCodeScanned: async (codes) => {
+            if (!productsScanned && codes?.length > 0) {
+                setIsScanningAllowed(false);
+                const scannedCode = codes?.[0];
+                const codeValue = scannedCode.value;
+
+                if (!codeValue) return;
+
+                try {
+                    const response = await getProductByCodeBar(codeValue);
+                    handleOpenProductsFoundByCodebar(response);
+                    handleVibrate()
+                    if (response.length < 1) {
+                        updateBarCode(codeValue)
+                    }
+                    console.log(`Scanned code value: ${codeValue}`);
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                } finally {
+                    setTimeout(() => {
+                    }, 2000);
+                }
+            }
+        }
+    })
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
@@ -167,9 +195,10 @@ const CustomCamera: React.FC = () => {
                                 isScanningAllowed === false ? false :
                                     selectedDevice !== null
                             }
-                            {...cameraProps}
+                            codeScanner={codeScanner}
+                        /* {...cameraProps} */
                         />
-                        <CameraHighlights highlights={highlights} color={colores.color_red} />
+                        {/* <CameraHighlights highlights={highlights} color={colores.color_red} /> */}
                     </>
                 }
 
