@@ -30,9 +30,13 @@ export const TypeOfMovementScreen = () => {
     };
 
     const onChangetTypeOfMovement = () => {
-        if (typeSelected === undefined || typeSelected === null) return
-        updateTypeOfMovements(typeSelected);
-        navigate('BottomNavigation')
+        try {            
+            if (typeSelected === undefined || typeSelected === null) return
+            updateTypeOfMovements(typeSelected);
+            navigate('BottomNavigation')
+        } catch (error) {
+            console.log({error})
+        }
     }
 
     useEffect(() => {

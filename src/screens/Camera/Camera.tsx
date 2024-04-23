@@ -87,11 +87,12 @@ const CustomCamera: React.FC = () => {
             Vibration.vibrate(500);
         }
     };
+    
     const onFaceDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
 
-        if (!productsScanned && codes.length > 0) {
+        if (!productsScanned && codes?.length > 0) {
             setIsScanningAllowed(false);
-            const scannedCode = codes[0];
+            const scannedCode = codes?.[0];
             const codeValue = scannedCode.value;
 
             if (!codeValue) return;
@@ -115,13 +116,13 @@ const CustomCamera: React.FC = () => {
 
     const { props: cameraProps, highlights } = useBarcodeScanner({
         fps: 5,
-        barcodeTypes: ["qr", "ean-13", "code-128"], // optional
-        
+        barcodeTypes: ["qr", "ean-13", "code-128"], // opcional
         onBarcodeScanned: (barcodes) => {
             "worklet";
-            onFaceDetected(barcodes)
+            onFaceDetected(barcodes);
         },
     });
+
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
 

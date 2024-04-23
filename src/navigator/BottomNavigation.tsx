@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ScannerNavigation } from './ScannerNavigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProfileNavigation } from './ProfileNavigation';
-import { HomeNavigation } from './HomeNavigation';
 import { colores } from '../theme/appTheme';
 import { View } from 'react-native';
 
@@ -20,7 +19,7 @@ export const BottomNavigation = () => {
     return (
         <BottomTabIOS.Navigator
             screenOptions={({ route, navigation }) => ({
-                tabBarIcon: ({ color, focused }) => {
+                tabBarIcon: ({ focused }) => {
                     let iconName: string = '';
                     let iconColor: string = focused ? colores.color_yellow : colores.text_color_light;
 
@@ -39,18 +38,6 @@ export const BottomNavigation = () => {
                     return (
                         <View>
                             <Icon name={iconName} size={20} color={iconColor} />
-                            {/* {
-                                focused &&
-                                <View style={{
-                                    height:4,
-                                    width: 30,
-                                    borderRadius: 100,
-                                    backgroundColor: colores.color_yellow,
-                                    position: "absolute",
-                                    top: -10,
-                                    left: -5
-                                }}></View>
-                            } */}
                         </View>
                     )
                 },

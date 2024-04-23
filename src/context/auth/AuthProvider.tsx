@@ -7,6 +7,8 @@ import { AuthContext } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -47,38 +49,63 @@ export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
+    const navigation = useNavigation<StackNavigationProp<any>>();
+
+    useEffect(() => {
+        if (state.status !== 'checking') {
+            if (state.status === 'authenticated') {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'TypeOfMovement' }],
+                })
+            } else {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'LoginPage' }],
+                })
+            }
+        }
+    }, [state.status])
 
     useEffect(() => {
         checkToken();
     }, [])
 
     const checkToken = async () => {
-        const token = await AsyncStorage.getItem('token');
 
+        try {
+            const token = await AsyncStorage.getItem('token');
 
-        // No token, no autenticado
-        if (!token) return dispatch({ type: 'notAuthenticated' });
+            console.log({token})
 
-        // Hay token
-        const resp = await api.get('/api/auth/renew', {
-            headers: {
-                'Content-type': 'application/json',
-                'x-token': token || ''
+            // No token, no autenticado
+            if (!token) return dispatch({ type: 'notAuthenticated' });
+    
+            // Hay token
+            const resp = await api.get('/api/auth/renew', {
+                headers: {
+                    'Content-type': 'application/json',
+                    'x-token': token || ''
+                }
+            });
+
+            console.log({resp})
+    
+            if (resp.status !== 200) {
+                return dispatch({ type: 'notAuthenticated' });
             }
-        });
-
-        if (resp.status !== 200) {
-            return dispatch({ type: 'notAuthenticated' });
+    
+            await AsyncStorage.setItem('token', resp.data.token);
+            dispatch({
+                type: 'signUp',
+                payload: {
+                    token: resp.data.token,
+                    user: resp.data.user
+                }
+            });
+        } catch (error) {
+            console.log({errorincheck: error})
         }
-
-        await AsyncStorage.setItem('token', resp.data.token);
-        dispatch({
-            type: 'signUp',
-            payload: {
-                token: resp.data.token,
-                user: resp.data.user
-            }
-        });
     }
 
     const signIn = async ({ correo, password }: LoginData) => {

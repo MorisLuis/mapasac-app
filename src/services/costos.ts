@@ -19,7 +19,7 @@ const updateCostos = async ({
 }: updateCostosInterface) => {
 
     try {
-        const updatedProduct = await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
+        await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
 
     } catch (error: any) {
         console.log({ error: error })
