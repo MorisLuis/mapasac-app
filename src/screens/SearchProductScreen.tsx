@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import {  useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
-import { LoadingScreen } from './LoadingScreen';
 import { colores, globalFont, globalStyles } from '../theme/appTheme';
 import { CustomBackButton } from '../components/Ui/CustomHeader';
 import ModalBottom from '../components/Modals/ModalBottom';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/auth/AuthContext';
+import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
 
 
 
@@ -20,7 +20,7 @@ export const SearchProductScreen = ({ route }: any) => {
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
     const [currentPage, setCurrentPage] = useState(1);
-    const { codeBar, updateBarCode } = useContext(AuthContext);
+    const { codeBar } = useContext(AuthContext);
     const [openModalAdvice, setOpenModalAdvice] = useState(router?.modal ? true : false)
 
     const getSearchData = async (searchTerm: string) => {
@@ -96,10 +96,10 @@ export const SearchProductScreen = ({ route }: any) => {
                         <Text style={styles.titleHeader}>Asignar producto</Text>
                     </View>
                     <View style={styles.adviceMessage}>
-                            <Text style={styles.adviceMessage1}>
-                                Selecciona un producto al cual podrás asignarle el código de barras: <Text style={{ fontWeight: 'bold' }}>{codeBar}</Text>
-                            </Text>
-                        
+                        <Text style={styles.adviceMessage1}>
+                            Selecciona un producto al cual podrás asignarle el código de barras: <Text style={{ fontWeight: 'bold' }}>{codeBar}</Text>
+                        </Text>
+
                         <Text style={styles.adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
                     </View>
                 </View>
@@ -107,7 +107,13 @@ export const SearchProductScreen = ({ route }: any) => {
         </>
     )
         :
-        <LoadingScreen />
+        <SafeAreaView style={styles.SearchProductScreen}>
+            <View style={styles.content}>
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <ProductInventoryCardSkeleton key={index} />
+                ))}
+            </View>
+        </SafeAreaView>
 }
 
 

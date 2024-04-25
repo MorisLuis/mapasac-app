@@ -54,15 +54,6 @@ export const ProductInventoryCard = ({
                         <Text style={styles.dataItemText}>{product?.Marca}</Text>
                     </View>
 
-                    {/* <View style={styles.dataItem}>
-                        <Text style={styles.label}>Almacen:</Text>
-                        <Text>{product?.Id_Almacen}</Text>
-                    </View> */}
-
-                    {/* <View style={styles.dataItem}>
-                        <Text>{product?.CodBar ? "" : "NO TIENE!!"}</Text>
-                    </View> */}
-
                     {
                         showDelete && <Text style={styles.delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
                     }

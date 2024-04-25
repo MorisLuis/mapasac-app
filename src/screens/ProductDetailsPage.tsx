@@ -8,6 +8,7 @@ import { format } from '../utils/currency';
 import { buttonStyles } from '../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
 
 export const ProductDetailsPage = ({ route }: any) => {
 
@@ -105,5 +106,5 @@ export const ProductDetailsPage = ({ route }: any) => {
             </ScrollView>
         </>
         :
-        <LoadingScreen />
+        <ProductDetailsSkeleton/>
 }

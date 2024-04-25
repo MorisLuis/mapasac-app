@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { LoadingScreen } from '../LoadingScreen';
+import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
+
 
 export const Inventory = () => {
 
@@ -18,7 +19,7 @@ export const Inventory = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const { inventoryCreated } = useContext(InventoryBagContext);
     const { navigate } = useNavigation<any>();
-    const { handleCodebarScannedProcces} = useContext(AuthContext);
+    const { handleCodebarScannedProcces } = useContext(AuthContext);
 
     const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
         navigate('InventoryDetails', { selectedProduct });
@@ -35,10 +36,13 @@ export const Inventory = () => {
     const renderLoader = () => {
         return (
             isLoading ?
-                <LoadingScreen/>
+                Array.from({ length: 10 }).map((_, index) => (
+                    <ProductInventoryCardSkeleton key={index} />
+                ))
                 : null
         );
     };
+    
 
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
@@ -80,6 +84,7 @@ export const Inventory = () => {
 
     return (
         <SafeAreaView style={styles.Inventory}>
+            
             <View style={styles.content}>
                 <View style={styles.header}>
                     <Text style={styles.title}> Inventario </Text>
@@ -92,6 +97,8 @@ export const Inventory = () => {
                         />
                     </View>
                 </View>
+
+
                 <FlatList
                     data={productsInInventory}
                     renderItem={renderItem}
@@ -100,7 +107,10 @@ export const Inventory = () => {
                     onEndReached={loadMoreItem}
                     onEndReachedThreshold={0}
                 />
+
             </View>
+
+
         </SafeAreaView>
     )
 }

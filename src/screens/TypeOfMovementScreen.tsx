@@ -5,13 +5,15 @@ import { buttonStyles } from '../theme/UI/buttons';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../services/typeOfMovement';
 import { AuthContext } from '../context/auth/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
+import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
 
 export const TypeOfMovementScreen = () => {
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
     const { updateTypeOfMovements } = useContext(AuthContext);
     const { navigate } = useNavigation<any>();
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleOptionSelect = (option: number) => {
         setTypeSelected(option);
@@ -30,20 +32,33 @@ export const TypeOfMovementScreen = () => {
     };
 
     const onChangetTypeOfMovement = () => {
-        try {            
+        try {
             if (typeSelected === undefined || typeSelected === null) return
             updateTypeOfMovements(typeSelected);
             navigate('BottomNavigation')
         } catch (error) {
-            console.log({error})
+            console.log({ error })
         }
     }
 
+    const renderLoader = () => {
+        return (
+            isLoading ?
+                Array.from({ length: 10 }).map((_, index) => (
+                    <TypeOfMovementSkeleton key={index} />
+                ))
+                : null
+        );
+    };
+
+    const handleGetTypeOfMovements = async () => {
+        setIsLoading(true);
+        const types = await getTypeOfMovements();
+        setTypeOfMovement(types);
+        setIsLoading(false);
+    }
+
     useEffect(() => {
-        const handleGetTypeOfMovements = async () => {
-            const types = await getTypeOfMovements();
-            setTypeOfMovement(types)
-        }
         handleGetTypeOfMovements()
     }, []);
 
@@ -58,7 +73,10 @@ export const TypeOfMovementScreen = () => {
                 data={typeOfMovement}
                 renderItem={renderOption}
                 keyExtractor={typeOfMovement => `${typeOfMovement.Id_TipoMovInv}`}
+                ListFooterComponent={renderLoader}
+                onEndReachedThreshold={0}
             />
+
 
             {(typeSelected || typeSelected == 0) && (
                 <View style={styles.footer}>
