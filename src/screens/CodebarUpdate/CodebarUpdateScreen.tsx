@@ -15,7 +15,7 @@ type optionSelectedInterface = {
     title: string
 }
 
-export const CodebarUpdateScreen = ({ productDetails, route }: any) => {
+export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
     const navigation = useNavigation<any>();
     const { codeBar, codeBarStatus, updateBarCode, handleCodebarScannedProcces } = useContext(AuthContext);

@@ -42,7 +42,6 @@ export const InventoryBagScreen = () => {
     }
 
     const closeModalHandler = React.useCallback(() => {
-        console.log("closeModalHandler")
         handleCameraAvailable(true)
     }, []);
 

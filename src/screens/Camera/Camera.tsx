@@ -184,7 +184,6 @@ const CustomCamera: React.FC = () => {
                     <BlurView style={styles.option} blurType="light" blurAmount={20}>
                         <View style={styles.optionContent}>
                             <TouchableOpacity onPress={() => {
-                                console.log("icon")
                                 handleCameraAvailable(false);
                                 setOpenModalFindByCodebarInput(true);
                             }}>
