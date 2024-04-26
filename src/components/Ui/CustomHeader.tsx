@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
 })
 
 
-export const CustomBackButton = ({ navigation }: any) => {
+export const CustomBackButton = ({ navigation, onClick }: any) => {
 
 
     const handlePress = () => {
-        navigation.goBack()
+        onClick?.();
+        navigation.goBack();
     };
 
     return (

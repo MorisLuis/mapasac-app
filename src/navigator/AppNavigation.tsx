@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import PorductInterface from '../interface/product';
@@ -11,6 +11,7 @@ import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
+import { SettingsContext } from '../context/settings/SettingsContext';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: any;
@@ -29,6 +30,7 @@ export type InventoryNavigationStackParamList = {
 export const AppNavigation = () => {
 
     const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
+    const { handleCameraAvailable } = useContext(SettingsContext);
 
     return (
         <Stack.Navigator>
@@ -60,7 +62,7 @@ export const AppNavigation = () => {
                     headerShown: true,
                     title: 'Inventario',
                     headerLeft: () => (
-                        <CustomBackButton navigation={navigation} />
+                        <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />
                     ),
                 })}
             />

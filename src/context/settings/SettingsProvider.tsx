@@ -4,12 +4,13 @@ import { settingsReducer } from './settingsReducer';
 
 export interface SettingsInterface {
     vibration: boolean;
+    cameraAvailable: boolean;
 }
 
 export const SettingsInitialState: SettingsInterface = {
-    vibration: true
+    vibration: true,
+    cameraAvailable: true
 }
-
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
 
@@ -19,10 +20,15 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         dispatch({ type: '[Settings] - Vibration state', vibration: value });
     }
 
+    const handleCameraAvailable = (value: boolean) => {
+        dispatch({ type: '[Settings] - CameraAvailable state', cameraAvailable: value });
+    }
+
     return (
         <SettingsContext.Provider value={{
             ...state,
-            handleVibrationState
+            handleVibrationState,
+            handleCameraAvailable
         }}
         >
             {children}

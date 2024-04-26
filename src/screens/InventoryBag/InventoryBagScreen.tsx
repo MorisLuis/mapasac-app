@@ -8,7 +8,8 @@ import { colores, globalStyles } from '../../theme/appTheme'
 import { LoadingScreen } from '../LoadingScreen'
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 import ModalDecision from '../../components/Modals/ModalDecision'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { SettingsContext } from '../../context/settings/SettingsContext'
 
 export const InventoryBagScreen = () => {
 
@@ -17,6 +18,7 @@ export const InventoryBagScreen = () => {
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
     const [openModalDecision, setOpenModalDecision] = useState(false)
     const { navigate } = useNavigation<any>();
+    const { handleCameraAvailable } = useContext(SettingsContext);
 
 
     const handleCleanTemporal = () => {
@@ -38,6 +40,22 @@ export const InventoryBagScreen = () => {
         navigate('Scanner');
         navigate('SuccesMessage');
     }
+
+    const closeModalHandler = React.useCallback(() => {
+        console.log("closeModalHandler")
+        handleCameraAvailable(true)
+    }, []);
+
+
+        // Este efecto se ejecutará cuando la pantalla reciba el foco
+        useFocusEffect(
+            React.useCallback(() => {
+                return () => {
+                    closeModalHandler(); // Ejecutar la función al cerrar el modal
+                };
+            }, [])
+        );
+    
 
     return !createInventaryLoading ? (
         <>

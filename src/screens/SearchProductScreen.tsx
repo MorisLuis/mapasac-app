@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
@@ -11,16 +11,19 @@ import ModalBottom from '../components/Modals/ModalBottom';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
+import { SettingsContext } from '../context/settings/SettingsContext';
 
 
 
 export const SearchProductScreen = ({ route }: any) => {
 
     const router = route.params;
+    const { codeBar } = useContext(AuthContext);
+    const { handleCameraAvailable, cameraAvailable } = useContext(SettingsContext);
+
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
     const [currentPage, setCurrentPage] = useState(1);
-    const { codeBar } = useContext(AuthContext);
     const [openModalAdvice, setOpenModalAdvice] = useState(router?.modal ? true : false)
 
     const getSearchData = async (searchTerm: string) => {
@@ -47,6 +50,11 @@ export const SearchProductScreen = ({ route }: any) => {
         navigateToProduct(item)
     };
 
+    const closeModalHandler = React.useCallback(() => {
+        handleCameraAvailable(true)
+    }, []);
+
+
     useEffect(() => {
         getSearchData("")
     }, [])
@@ -55,7 +63,7 @@ export const SearchProductScreen = ({ route }: any) => {
         navigation.setOptions({
             headerLargeTitle: router?.modal ? false : true,
             headerTitle: "Productos",
-            headerLeft: () => <CustomBackButton navigation={navigation} />,
+            headerLeft: () => <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto por nombre...",
                 placeholderTextColor: colores.color_blue,
@@ -65,6 +73,15 @@ export const SearchProductScreen = ({ route }: any) => {
             }
         });
     }, [navigation]);
+
+    // Este efecto se ejecutará cuando la pantalla reciba el foco
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                closeModalHandler(); // Ejecutar la función al cerrar el modal
+            };
+        }, [])
+    );
 
 
     return (productsInInventory && productsInInventory.length > 0) ? (

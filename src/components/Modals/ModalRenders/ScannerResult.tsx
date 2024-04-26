@@ -10,6 +10,7 @@ import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { AuthContext } from '../../../context/auth/AuthContext';
 import { EmptyMessageCard } from '../../Cards/EmptyMessageCard';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
 
 interface ScannerResultInterface {
     product: PorductInterface;
@@ -27,6 +28,8 @@ export const ScannerResult = ({
 
     const { addProduct } = useContext(InventoryBagContext)
     const { codeBar } = useContext(AuthContext);
+    const { handleCameraAvailable } = useContext(SettingsContext);
+
     const { navigate } = useNavigation<any>();
     const [counterProduct, setCounterProduct] = useState<number>(0);
 
@@ -51,6 +54,7 @@ export const ScannerResult = ({
     }
 
     const handleAssignCodeToProduct = () => {
+        handleCameraAvailable(false)
         onClose()
         setTimeout(() => {
             navigate('SearchProductModal', { modal: true })

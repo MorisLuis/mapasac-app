@@ -5,12 +5,14 @@ import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { BlurView } from '@react-native-community/blur';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
     const { numberOfItems } = useContext(InventoryBagContext);
     const { user } = useContext(AuthContext);
+    const { handleCameraAvailable } = useContext(SettingsContext);
 
     const { navigate } = useNavigation<any>();
 
@@ -40,6 +42,13 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
         const isFocused = state.index === index;
 
         const onPress = () => {
+
+            if(route?.name === "camera") {
+                handleCameraAvailable(true)
+            } else {
+                handleCameraAvailable(false)
+            }
+
             const event = navigation.emit({
                 type: 'tabPress',
                 target: route.key,
@@ -86,7 +95,10 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 </View>
 
                 <View style={styles.bagContent} >
-                    <TouchableOpacity style={styles.navButton} onPress={() => navigate('BagInventory')}>
+                    <TouchableOpacity style={styles.navButton} onPress={() => {
+                        handleCameraAvailable(false)
+                        navigate('BagInventory')
+                    }}>
                         <BlurView
                             style={styles.blurContainer}
                             blurType="light"
