@@ -7,15 +7,25 @@ import { CustomHeader } from '../components/Ui/CustomHeader';
 import { colores, globalStyles } from '../theme/appTheme';
 import PorductInterface from '../interface/product';
 
+type CodebarUpdateNavigationInterface = {
+    route?: {
+        params: {
+            productDetails: PorductInterface;
+            selectedProduct: { Codigo: string; Marca: string };
+        };
+    };
+};
+
+
 export type InventoryNavigationStackParamList = {
     UpdateCodeBarScreen: { product: PorductInterface };
     UpdateCodeBarWithInput: any
 };
 
-export const CodebarUpdateNavigation = ({ route }: any) => {
-    const Stack = createStackNavigator<InventoryNavigationStackParamList>();
-    const { productDetails, selectedProduct } = route.params;
+export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterface) => {
 
+    const Stack = createStackNavigator<InventoryNavigationStackParamList>();
+    const { productDetails, selectedProduct } = route?.params ?? {};
 
     return (
         <Stack.Navigator initialRouteName="UpdateCodeBarScreen">
@@ -28,7 +38,7 @@ export const CodebarUpdateNavigation = ({ route }: any) => {
                         </View>
                 })}
             >
-                {props => <CodebarUpdateScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct}/>}
+                {props => <CodebarUpdateScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct} />}
             </Stack.Screen>
             <Stack.Screen
                 name="UpdateCodeBarWithInput"
@@ -39,7 +49,7 @@ export const CodebarUpdateNavigation = ({ route }: any) => {
                         </View>
                 })}
             >
-                {props => <CodebarUpdateWithInputScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct}/>}
+                {props => <CodebarUpdateWithInputScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct} />}
             </Stack.Screen>
         </Stack.Navigator>
     );

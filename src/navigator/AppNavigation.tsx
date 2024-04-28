@@ -1,30 +1,31 @@
 import React, { useContext } from 'react';
 
-import { ProductDetailsPage } from '../screens/ProductDetailsPage';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PorductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
-import { SearchProductScreen } from '../screens/SearchProductScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '../screens/LoginScreen';
 import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
-import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
-import { SuccesMessage } from '../screens/SuccesMessage';
-import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
 
+import { ProductDetailsPage } from '../screens/productDetailsPage';
+import { LoginScreen } from '../screens/LoginScreen';
+import { SearchProductScreen } from '../screens/SearchProductScreen';
+import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
+import { SuccesMessage } from '../screens/SuccesMessage';
+import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
+
 export type InventoryNavigationStackParamList = {
-    LoginPage: any;
+    LoginPage: undefined;
     BottomNavigation: undefined;
     BagInventory: undefined;
     InventoryDetails: { selectedProduct: PorductInterface };
     ProductDetails: { selectedProduct?: PorductInterface };
-    SearchProduct: any;
-    SuccesMessage: any;
-    TypeOfMovement: any;
-    SearchProductModal: any;
+    SuccesMessage: undefined;
+    TypeOfMovement: undefined;
+    SearchProduct: undefined;
+    SearchProductModal: { modal: boolean };
     CodebarUpdateNavigation: { product: PorductInterface, selectedProduct: any },
-    CameraModal: any
+    CameraModal: undefined
 };
 
 export const AppNavigation = () => {
@@ -67,7 +68,6 @@ export const AppNavigation = () => {
                 })}
             />
 
-            {/* Inventory pages */}
             <Stack.Screen
                 name="InventoryDetails"
                 component={ProductDetailsPage}
@@ -75,6 +75,7 @@ export const AppNavigation = () => {
                     header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} />,
                 })}
             />
+
             <Stack.Screen
                 name="ProductDetails"
                 component={ProductDetailsPage}
@@ -86,7 +87,6 @@ export const AppNavigation = () => {
                 }}
             />
 
-            {/* Camera Pages */}
             <Stack.Screen
                 name="SearchProduct"
                 component={SearchProductScreen}
@@ -107,7 +107,6 @@ export const AppNavigation = () => {
                 }}
             />
 
-            {/* Other pages */}
             <Stack.Screen
                 name="SuccesMessage"
                 component={SuccesMessage}
@@ -124,7 +123,6 @@ export const AppNavigation = () => {
                     headerShown: false
                 }}
             />
-
         </Stack.Navigator>
     )
 }

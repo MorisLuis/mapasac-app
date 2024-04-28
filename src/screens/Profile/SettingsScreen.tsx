@@ -5,7 +5,6 @@ import { colores, globalStyles } from '../../theme/appTheme';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { Selector } from '../../components/Ui/Selector';
-import Toast from 'react-native-toast-message';
 import Toggle from '../../components/Ui/Toggle';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 

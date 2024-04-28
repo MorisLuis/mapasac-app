@@ -14,17 +14,25 @@ import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInv
 import { SettingsContext } from '../context/settings/SettingsContext';
 
 
+type SearchProductScreenInterface = {
+    route?: {
+        params: {
+            modal: boolean;
+        };
+    };
+};
 
-export const SearchProductScreen = ({ route }: any) => {
 
-    const router = route.params;
+export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
+
+    const { modal } = route?.params ?? {};
     const { codeBar } = useContext(AuthContext);
-    const { handleCameraAvailable, cameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable } = useContext(SettingsContext);
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [openModalAdvice, setOpenModalAdvice] = useState(router?.modal ? true : false)
+    const [openModalAdvice, setOpenModalAdvice] = useState(modal ? true : false)
 
     const getSearchData = async (searchTerm: string) => {
         const products = await getSearchProductInStock(searchTerm ? searchTerm : "")
@@ -33,7 +41,7 @@ export const SearchProductScreen = ({ route }: any) => {
 
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return (
-            <ProductItemSearch fromModal={router?.modal ? router?.modal : false} product={item} onClick={() => handlePress(item)} />
+            <ProductItemSearch fromModal={modal ? modal : false} product={item} onClick={() => handlePress(item)} />
         );
     };
 
@@ -61,7 +69,7 @@ export const SearchProductScreen = ({ route }: any) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLargeTitle: router?.modal ? false : true,
+            headerLargeTitle: modal ? false : true,
             headerTitle: "Productos",
             headerLeft: () => <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />,
             headerSearchBarOptions: {

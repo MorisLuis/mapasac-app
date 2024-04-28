@@ -1,13 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-interface ProductDetailsInterface {
-    scannedCodes?: string
-}
-
-export const ProductDetails = ({
-    scannedCodes
-} : ProductDetailsInterface) => {
+export const ProductDetails = () => {
 
     return (
         <View style={styles.product}>

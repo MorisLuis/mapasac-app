@@ -959,7 +959,7 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
-  - react-native-pager-view (6.3.0):
+  - react-native-pager-view (6.3.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1462,7 +1462,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 6f392912435adb8fbf4c3eee0e79a0a0b4e4b717
   react-native-blur: 799045500f56146afc46245148080e7b7623cb75
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
-  react-native-pager-view: 0eb900a8c5d83c02a74b0125d4b5f9fdcc5b8f44
+  react-native-pager-view: f1e72cb827406f1b49f007ab07400197d421b6e7
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   react-native-worklets-core: 2efe80a3ee87fe5e6fefa814e0e20c2708d3ad25
   React-nativeconfig: 754233aac2a769578f828093b672b399355582e6

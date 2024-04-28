@@ -13,14 +13,16 @@ export const ProductFindByCodeBar = ({
     onClick
 }: ProductFindByCodeBarInterface) => {
 
+    if (!products) return;
+
     return (
         <View style={styles.ProductFindByCodeBar}>
             <Text style={styles.title}>Productos</Text>
             {
-                products?.map((product) =>
+                products.map((product) =>
                     <ProductInventoryCard
-                    key={`${product.Codigo}-${product.Id_Marca}-${product.Id_Almacen}`}
-                    product={product}
+                        key={`${product.Codigo}-${product.Id_Marca}-${product.Id_Almacen}`}
+                        product={product}
                         onClick={() => onClick?.(product)}
                     />
                 )

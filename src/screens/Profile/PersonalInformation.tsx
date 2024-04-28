@@ -54,10 +54,6 @@ export const PersonalInformation = () => {
                     <Text>{user?.Id_Almacen}</Text>
                 </View>
             </View>
-
-            {/* <Text>
-                {JSON.stringify(user, null, 5)}
-            </Text> */}
         </View>
     )
 }

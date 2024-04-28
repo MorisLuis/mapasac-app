@@ -14,35 +14,13 @@ import { ProductInventoryCardSkeleton } from '../../components/Skeletons/Product
 
 export const Inventory = () => {
 
+    const { inventoryCreated } = useContext(InventoryBagContext);
+    const { handleCodebarScannedProcces } = useContext(AuthContext);
+    const { navigate } = useNavigation<any>();
+    
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const { inventoryCreated } = useContext(InventoryBagContext);
-    const { navigate } = useNavigation<any>();
-    const { handleCodebarScannedProcces } = useContext(AuthContext);
-
-    const navigateToInventaryDetails = (selectedProduct: PorductInterface) => {
-        navigate('InventoryDetails', { selectedProduct });
-    };
-
-    const navigateToSearch = () => {
-        navigate('SearchProduct');
-    };
-
-    const renderItem = ({ item }: { item: PorductInterface }) => {
-        return <ProductInventoryCard product={item} onClick={() => handlePress(item)} />;
-    };
-
-    const renderLoader = () => {
-        return (
-            isLoading ?
-                Array.from({ length: 10 }).map((_, index) => (
-                    <ProductInventoryCardSkeleton key={index} />
-                ))
-                : null
-        );
-    };
-    
 
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
@@ -59,14 +37,29 @@ export const Inventory = () => {
         setCurrentPage(currentPage + 1);
     };
 
-    const handlePress = (item: PorductInterface) => {
+    const handlePressProduct = (selectedProduct: PorductInterface) => {
         handleCodebarScannedProcces(false);
-        navigateToInventaryDetails(item)
+        navigate('InventoryDetails', { selectedProduct });
     };
 
     const resetInventory = () => {
         setCurrentPage(1);
         setProductsInInventory([]);
+    };
+
+    // Renders
+    const renderItem = ({ item }: { item: PorductInterface }) => {
+        return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
+    };
+
+    const renderLoader = () => {
+        return (
+            isLoading ?
+                Array.from({ length: 10 }).map((_, index) => (
+                    <ProductInventoryCardSkeleton key={index} />
+                ))
+                : null
+        );
     };
 
     useEffect(() => {
@@ -75,12 +68,10 @@ export const Inventory = () => {
         handleGetProductsByStock();
     }, [inventoryCreated]);
 
-
     useEffect(() => {
         if (inventoryCreated) return;
         handleGetProductsByStock()
     }, [currentPage])
-
 
     return (
         <SafeAreaView style={styles.Inventory}>
@@ -93,11 +84,10 @@ export const Inventory = () => {
                             name="search-outline"
                             size={30}
                             style={styles.iconSearch}
-                            onPress={navigateToSearch}
+                            onPress={() => navigate('SearchProduct')}
                         />
                     </View>
                 </View>
-
 
                 <FlatList
                     data={productsInInventory}
@@ -129,8 +119,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 20,
-
-        // This margin is because he CutumTabBar is 30px and we added 10px more
         marginTop: 40
     },
     title: {

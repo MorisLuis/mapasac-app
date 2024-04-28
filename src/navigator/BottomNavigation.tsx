@@ -7,9 +7,8 @@ import { colores } from '../theme/appTheme';
 import { View } from 'react-native';
 
 export type BottomNavigationStackParamList = {
-    Home: any;
-    Scanner: any;
-    Profile: any;
+    Scanner: undefined;
+    Profile: undefined;
 };
 
 export const BottomNavigation = () => {
@@ -24,9 +23,6 @@ export const BottomNavigation = () => {
                     let iconColor: string = focused ? colores.color_yellow : colores.text_color_light;
 
                     switch (route.name) {
-                        case 'Home':
-                            iconName = 'home-outline'
-                            break;
                         case 'Scanner':
                             iconName = focused ? 'scan' : 'scan-outline'
                             break;

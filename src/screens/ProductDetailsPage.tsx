@@ -1,30 +1,43 @@
 import React, { useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
-import PorductInterface from '../interface/product';
-import { LoadingScreen } from './LoadingScreen';
-import { productDetailsStyles } from '../theme/productDetailsTheme';
+import ProductInterface from '../interface/product';
 import { format } from '../utils/currency';
 import { buttonStyles } from '../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
+import { productDetailsStyles } from '../theme/productDetailsTheme';
 
-export const ProductDetailsPage = ({ route }: any) => {
+type ProductDetailsPageInterface = {
+    route?: {
+        params: {
+            productDetails: ProductInterface;
+            selectedProduct: { Codigo: string; Marca: string };
+        };
+    };
+};
 
-    const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-    const { selectedProduct: { Codigo, Marca } } = route.params;
+export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
+    const { productDetails, selectedProduct } = route?.params ?? {};
+    const { Codigo, Marca } = selectedProduct ?? {};
+
+
     const navigation = useNavigation<any>();
-    const [productDetails, setProductDetails] = useState<PorductInterface>();
+    const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
 
     const handleOptionsToUpdateCodebar = () => {
-        navigation.navigate('CodebarUpdateNavigation', { productDetails, selectedProduct: { Codigo, Marca } })
-    }
+        navigation.navigate('CodebarUpdateNavigation', { productDetails, selectedProduct });
+    };
 
     const handleGetProductDetails = async () => {
-        const productData = await getProductDetails(Codigo, Marca);
-        setProductDetails(productData)
-    }
+        try {
+            const productData = await getProductDetails(Codigo as string, Marca as string);
+            setProductDetailsData(productData);
+        } catch (error) {
+            console.error('Error fetching product details:', error);
+        }
+    };
 
     useFocusEffect(
         React.useCallback(() => {
@@ -32,79 +45,70 @@ export const ProductDetailsPage = ({ route }: any) => {
         }, [])
     );
 
-    return productDetails ?
-        <>
-            <ScrollView style={productDetailsStyles.ProductDetailsPage}>
-                <View style={productDetailsStyles.imageContainer}>
-                    {
-                        productDetails?.imagen ?
-                            <Image
-                                style={productDetailsStyles.image}
-                                source={{
-                                    uri: productDetails?.imagen ? productDetails?.imagen[0]?.url : imageDefault,
-                                }}
-                            />
-                            :
-                            <View style={productDetailsStyles.notImage}>
-                                <Icon name={'camera'} size={24} color="black" /* style={styles.icon}  */ />
-                                <Text style={productDetailsStyles.notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
-                            </View>
-                    }
+    return productDetailsData ? (
+        <ScrollView style={productDetailsStyles.ProductDetailsPage}>
+            <View style={productDetailsStyles.imageContainer}>
+                {productDetailsData.imagen ? (
+                    <Image
+                        style={productDetailsStyles.image}
+                        source={{
+                            uri: productDetailsData.imagen[0]?.url
+                        }}
+                    />
+                ) : (
+                    <View style={productDetailsStyles.notImage}>
+                        <Icon name={'camera'} size={24} color="black" />
+                        <Text style={productDetailsStyles.notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
+                    </View>
+                )}
+            </View>
+            <View style={productDetailsStyles.header}>
+                <Text style={productDetailsStyles.description}>{productDetailsData.Descripcion}</Text>
+                <View>
+                    <Text style={productDetailsStyles.price}>Precio</Text>
+                    <Text>{format(productDetailsData.Precio)}</Text>
                 </View>
-                <View style={productDetailsStyles.header}>
-                    <Text style={productDetailsStyles.description}>{productDetails?.Descripcion}</Text>
-                    <View>
-                        <Text style={productDetailsStyles.price}>Precio</Text>
-                        <Text>{format(productDetails?.Precio)}</Text>
-                    </View>
-                </View>
+            </View>
 
-                <View style={productDetailsStyles.information}>
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Codigo:</Text>
-                        <Text>{productDetails?.Codigo}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Existencia:</Text>
-                        <Text>{productDetails?.Existencia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Familia:</Text>
-                        <Text>{productDetails?.Familia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Marca:</Text>
-                        <Text>{productDetails?.Marca}</Text>
-                        {
-                            productDetails?.CodBar &&
-                            <View style={productDetailsStyles.separator} />
-                        }
-                    </View>
-                    {
-                        productDetails?.CodBar &&
-                        <View style={productDetailsStyles.data}>
-                            <Text style={productDetailsStyles.label}>Codigo de barras: </Text>
-                            <Text>{productDetails?.CodBar}</Text>
-                        </View>
-                    }
+            <View style={productDetailsStyles.information}>
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Codigo:</Text>
+                    <Text>{productDetailsData.Codigo}</Text>
+                    <View style={productDetailsStyles.separator} />
                 </View>
 
-                {
-                    !productDetails?.CodBar &&
-                    <>
-                        <TouchableOpacity style={buttonStyles.button} onPress={handleOptionsToUpdateCodebar}>
-                            <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
-                        </TouchableOpacity>
-                    </>
-                }
-            </ScrollView>
-        </>
-        :
-        <ProductDetailsSkeleton/>
-}
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Existencia:</Text>
+                    <Text>{productDetailsData.Existencia}</Text>
+                    <View style={productDetailsStyles.separator} />
+                </View>
+
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Familia:</Text>
+                    <Text>{productDetailsData.Familia}</Text>
+                    <View style={productDetailsStyles.separator} />
+                </View>
+
+                <View style={productDetailsStyles.data}>
+                    <Text style={productDetailsStyles.label}>Marca:</Text>
+                    <Text>{productDetailsData.Marca}</Text>
+                    {productDetailsData.CodBar && <View style={productDetailsStyles.separator} />}
+                </View>
+                {productDetailsData.CodBar && (
+                    <View style={productDetailsStyles.data}>
+                        <Text style={productDetailsStyles.label}>Codigo de barras: </Text>
+                        <Text>{productDetailsData.CodBar}</Text>
+                    </View>
+                )}
+            </View>
+
+            {!productDetailsData.CodBar && (
+                <TouchableOpacity style={buttonStyles.button} onPress={handleOptionsToUpdateCodebar}>
+                    <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
+                </TouchableOpacity>
+            )}
+        </ScrollView>
+    ) : (
+        <ProductDetailsSkeleton />
+    );
+};

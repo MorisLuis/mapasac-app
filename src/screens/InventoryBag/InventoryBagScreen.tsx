@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
-import PorductInterface from '../../interface/product'
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
 import { buttonStyles } from '../../theme/UI/buttons'
 import { colores, globalStyles } from '../../theme/appTheme'
@@ -13,21 +12,17 @@ import { SettingsContext } from '../../context/settings/SettingsContext'
 
 export const InventoryBagScreen = () => {
 
-
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
+    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { navigate } = useNavigation<any>();
+
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
     const [openModalDecision, setOpenModalDecision] = useState(false)
-    const { navigate } = useNavigation<any>();
-    const { handleCameraAvailable } = useContext(SettingsContext);
 
 
     const handleCleanTemporal = () => {
         setOpenModalDecision(false)
         cleanBag()
-    }
-
-    const onDelete = (product: PorductInterface) => {
-        removeProduct(product)
     }
 
     const onPostInventary = async () => {
@@ -46,19 +41,19 @@ export const InventoryBagScreen = () => {
     }, []);
 
 
-        // Este efecto se ejecutará cuando la pantalla reciba el foco
-        useFocusEffect(
-            React.useCallback(() => {
-                return () => {
-                    closeModalHandler(); // Ejecutar la función al cerrar el modal
-                };
-            }, [])
-        );
-    
+    // Este efecto se ejecutará cuando la pantalla reciba el foco
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                closeModalHandler();
+            };
+        }, [])
+    );
 
     return !createInventaryLoading ? (
         <>
             <SafeAreaView style={styles.InventoryBagScreen}>
+                {/* PRODUCTS */}
                 {
                     bag.length > 0 &&
                     <View style={styles.content}>
@@ -67,13 +62,15 @@ export const InventoryBagScreen = () => {
                                 <ProductInventoryCard
                                     key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
                                     product={product}
-                                    onDelete={onDelete}
+                                    onDelete={() => removeProduct(product)}
                                     showDelete
                                 />
                             )
                         }
                     </View>
                 }
+
+                {/* FOOTER */}
                 {
                     numberOfItems > 0 ?
                         <View style={styles.footer}>
@@ -100,6 +97,7 @@ export const InventoryBagScreen = () => {
                         </View>
                 }
             </SafeAreaView>
+
 
             <ModalDecision
                 visible={openModalDecision}

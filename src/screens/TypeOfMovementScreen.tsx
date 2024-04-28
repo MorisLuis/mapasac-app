@@ -5,10 +5,10 @@ import { buttonStyles } from '../theme/UI/buttons';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../services/typeOfMovement';
 import { AuthContext } from '../context/auth/AuthContext';
 import { useNavigation } from '@react-navigation/native';
-import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
 import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
 
 export const TypeOfMovementScreen = () => {
+
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
     const { updateTypeOfMovements } = useContext(AuthContext);
