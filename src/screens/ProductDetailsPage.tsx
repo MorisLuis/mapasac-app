@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import ProductInterface from '../interface/product';
@@ -8,6 +8,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
 import { productDetailsStyles } from '../theme/productDetailsTheme';
+import { SettingsContext } from '../context/settings/SettingsContext';
 
 type ProductDetailsPageInterface = {
     route?: {
@@ -21,6 +22,7 @@ type ProductDetailsPageInterface = {
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const { productDetails, selectedProduct } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
+    const { handleCameraAvailable } = useContext(SettingsContext);
 
 
     const navigation = useNavigation<any>();
@@ -41,6 +43,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            handleCameraAvailable(false);
             handleGetProductDetails();
         }, [])
     );

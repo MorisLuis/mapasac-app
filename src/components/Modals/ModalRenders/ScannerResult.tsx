@@ -55,8 +55,8 @@ export const ScannerResult = ({
     }
 
     const handleAssignCodeToProduct = () => {
-        handleCameraAvailable(false)
         onClose()
+        handleCameraAvailable(false)
         setTimeout(() => {
             navigate('SearchProductModal', { modal: true })
         }, 500);

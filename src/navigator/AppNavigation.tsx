@@ -72,7 +72,7 @@ export const AppNavigation = () => {
                 name="InventoryDetails"
                 component={ProductDetailsPage}
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} />,
+                    header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} back={() => handleCameraAvailable(true)}/>,
                 })}
             />
 

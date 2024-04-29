@@ -3,7 +3,12 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalStyles } from '../../theme/appTheme';
 
-export const CustomHeader = ({ navigation, title, backAvailable = true }: any) => {
+export const CustomHeader = ({ 
+    navigation, 
+    title, 
+    backAvailable = true, 
+    back
+}: any) => {
     
     return (
         <SafeAreaView style={styles.CustomHeader}>
@@ -11,7 +16,10 @@ export const CustomHeader = ({ navigation, title, backAvailable = true }: any) =
                 backAvailable &&
                 <TouchableOpacity
                     style={styles.back}
-                    onPress={() => navigation.goBack()}
+                    onPress={() => {
+                        back?.()
+                        navigation.goBack()
+                    }}
                 >
                     <Icon name="chevron-back-outline" size={20} color="black" />
                     <Text style={styles.backText}>Atrás</Text>

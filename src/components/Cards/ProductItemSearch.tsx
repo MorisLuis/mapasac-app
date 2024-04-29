@@ -21,7 +21,6 @@ export const ProductItemSearch = ({
 }: ProductItemSearchInterface) => {
 
     const {  user } = useContext(AuthContext);
-    const imageDefault = 'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=2762&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 
     return (
         <TouchableOpacity style={styles.ProductItemSearch} onPress={onClick}>
@@ -30,7 +29,7 @@ export const ProductItemSearch = ({
                     <Image
                         style={styles.productInventoryCard__Image}
                         source={{
-                            uri: product?.imagen ? product?.imagen[0]?.url : imageDefault,
+                            uri: product?.imagen[0]?.url
                         }}
                     />
                     :

@@ -5,7 +5,6 @@ import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
 import { BlurView } from '@react-native-community/blur';
 import ModalBottom from '../../components/Modals/ModalBottom';
-import ModalComplete from '../../components/Modals/ModalComplete';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { SearchCodebarWithInput } from '../../components/Modals/ModalRenders/SearchCodebarWithInput';
@@ -36,6 +35,7 @@ const CustomCamera: React.FC = () => {
 
     // Close modals.
     const handleCloseProductModalScanned = () => {
+        console.log("handleCloseProductModalScanned")
         setOpenModalScannerResult(false);
         setProductSelected(undefined);
         setProductsScanned(undefined);
@@ -100,9 +100,9 @@ const CustomCamera: React.FC = () => {
                 console.log(`Scanned code value: ${codeValue}`);
             } catch (error) {
                 console.error('Error fetching product:', error);
-            } finally {
+            } /* finally {
                 setTimeout(() => { }, 2000);
-            }
+            } */
         }
     })
 

@@ -41,7 +41,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return (
-            <ProductItemSearch fromModal={modal ? modal : false} product={item} onClick={() => handlePress(item)} />
+            <ProductItemSearch fromModal={modal ? modal : false} product={item} onClick={() => navigateToProduct(item)} />
         );
     };
 
@@ -52,10 +52,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
         navigation.goBack()
         navigation.navigate('InventoryDetails', { selectedProduct });
-    };
-
-    const handlePress = (item: PorductInterface) => {
-        navigateToProduct(item)
     };
 
     const closeModalHandler = React.useCallback(() => {
