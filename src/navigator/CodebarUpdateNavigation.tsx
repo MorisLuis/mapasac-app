@@ -39,7 +39,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                         </View>
                 })}
             >
-                {props => <CodebarUpdateScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct} />}
+                {props => <CodebarUpdateScreen {...props} productDetails={selectedProduct} /* selectedProduct={selectedProduct} */ />}
             </Stack.Screen>
             
             <Stack.Screen

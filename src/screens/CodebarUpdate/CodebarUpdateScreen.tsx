@@ -17,6 +17,7 @@ type optionSelectedInterface = {
 
 export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
+
     const navigation = useNavigation<any>();
     const { codeBar, codeBarStatus, updateBarCode, handleCodebarScannedProcces } = useContext(AuthContext);
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
@@ -28,6 +29,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
     const handleGoToNextStep = () => {
+        console.log({selectedOption})
         if (selectedOption.screen === "updateWithCode") {
             hanldeUpdateCodebarWithCodeFound()
         } else if (selectedOption.screen === "updateWithRandomCode") {
@@ -40,6 +42,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     }
 
     const hanldeUpdateCodebarWithCodeFound = async () => {
+        console.log({productDetails})
         if (!productDetails) return;
 
         await updateCostos({

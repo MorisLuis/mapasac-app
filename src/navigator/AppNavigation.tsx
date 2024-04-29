@@ -13,6 +13,7 @@ import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: undefined;
@@ -32,6 +33,7 @@ export const AppNavigation = () => {
 
     const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
     const { handleCameraAvailable } = useContext(SettingsContext);
+    const { updateBarCode } = useContext(AuthContext);
 
     return (
         <Stack.Navigator>
@@ -72,7 +74,10 @@ export const AppNavigation = () => {
                 name="InventoryDetails"
                 component={ProductDetailsPage}
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} back={() => handleCameraAvailable(true)}/>,
+                    header: props => <CustomHeader {...props} title="Detalles de Producto" navigation={navigation} back={() => {
+                        handleCameraAvailable(true)
+                        updateBarCode('')
+                    }}/>,
                 })}
             />
 
