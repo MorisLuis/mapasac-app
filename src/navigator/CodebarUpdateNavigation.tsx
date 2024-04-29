@@ -29,6 +29,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
 
     return (
         <Stack.Navigator initialRouteName="UpdateCodeBarScreen">
+
             <Stack.Screen
                 name="UpdateCodeBarScreen"
                 options={({ navigation }) => ({
@@ -40,6 +41,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
             >
                 {props => <CodebarUpdateScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct} />}
             </Stack.Screen>
+            
             <Stack.Screen
                 name="UpdateCodeBarWithInput"
                 options={({ navigation }) => ({

@@ -48,14 +48,14 @@ const CustomCamera: React.FC = () => {
         handleCameraAvailable(true)
     }
 
-    const handleCloseModalFindByBarcodeInput = () => {
+    const handleCloseModalFindByBarcodeInput = (cameraAvailable?: boolean) => {
         setOpenModalFindByCodebarInput(false);
-        handleCameraAvailable(true);
+        handleCameraAvailable(cameraAvailable === false ? cameraAvailable : true);
     }
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
-        handleCloseModalFindByBarcodeInput();
+        handleCloseModalFindByBarcodeInput(false);
 
         if (response.length > 0) {
             setOpenModalProductFoundByCodebar(true)
@@ -78,7 +78,7 @@ const CustomCamera: React.FC = () => {
         }
     };
     
-    const handleLight = () => {
+    const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         setOpenModalFindByCodebarInput(true);
     }
@@ -160,7 +160,7 @@ const CustomCamera: React.FC = () => {
                 <View style={cameraStyles.scannerOptions}>
                     <BlurView style={cameraStyles.option} blurType="light" blurAmount={20}>
                         <View style={cameraStyles.optionContent}>
-                            <TouchableOpacity onPress={handleLight}>
+                            <TouchableOpacity onPress={handleOpenInputModal}>
                                 <Icon name="barcode-outline" size={24} color="black" />
                             </TouchableOpacity>
                         </View>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
 import { buttonStyles } from '../../theme/UI/buttons'
@@ -9,6 +9,7 @@ import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 import ModalDecision from '../../components/Modals/ModalDecision'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SettingsContext } from '../../context/settings/SettingsContext'
+import PorductInterface from '../../interface/product'
 
 export const InventoryBagScreen = () => {
 
@@ -41,6 +42,17 @@ export const InventoryBagScreen = () => {
     }, []);
 
 
+    // Renders
+    const renderItem = ({ item }: { item: PorductInterface }) => {
+        return (
+            <ProductInventoryCard
+                product={item}
+                onDelete={() => removeProduct(item)}
+                showDelete
+            />
+        )
+    };
+
     // Este efecto se ejecutará cuando la pantalla reciba el foco
     useFocusEffect(
         React.useCallback(() => {
@@ -53,21 +65,17 @@ export const InventoryBagScreen = () => {
     return !createInventaryLoading ? (
         <>
             <SafeAreaView style={styles.InventoryBagScreen}>
+
                 {/* PRODUCTS */}
                 {
                     bag.length > 0 &&
-                    <View style={styles.content}>
-                        {
-                            bag.map((product) =>
-                                <ProductInventoryCard
-                                    key={`${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
-                                    product={product}
-                                    onDelete={() => removeProduct(product)}
-                                    showDelete
-                                />
-                            )
-                        }
-                    </View>
+                    <FlatList
+                        style={styles.content}
+                        data={bag}
+                        renderItem={renderItem}
+                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                        onEndReachedThreshold={0}
+                    />
                 }
 
                 {/* FOOTER */}
@@ -132,7 +140,8 @@ const styles = StyleSheet.create({
     content: {
         minHeight: "auto",
         height: "85%",
-        padding: globalStyles.globalPadding.padding
+        padding: globalStyles.globalPadding.padding,
+        marginBottom: "37.5%"
     },
     message: {
         padding: globalStyles.globalPadding.padding
@@ -140,7 +149,10 @@ const styles = StyleSheet.create({
     footer: {
         backgroundColor: colores.background_color_tertiary,
         padding: globalStyles.globalPadding.padding,
-        height: "100%",
+        height: "25%",
+        width: "100%",
+        position: "absolute",
+        bottom: 0,
         display: "flex",
         borderTopWidth: 1,
         borderColor: colores.color_border
