@@ -1,12 +1,12 @@
-import PorductInterface from "../../interface/product";
+import PorductInterface, { PorductInterfaceBag } from "../../interface/product";
 import { InventoryBagInterface, inventoryDataInterface } from "./InventoryBagProvider";
 
 
 type InventoryBagActionType =
     | { type: '[InventoryBag] - Post Inventory', payload: inventoryDataInterface | undefined }
     | { type: '[InventoryBag] - Post Inventory Details', payload: PorductInterface[] }
-    | { type: '[InventoryBag] - Add Product', payload: PorductInterface }
-    | { type: '[InventoryBag] - Remove Product', payload: PorductInterface }
+    | { type: '[InventoryBag] - Add Product', payload: PorductInterfaceBag }
+    | { type: '[InventoryBag] - Remove Product', payload: PorductInterfaceBag }
     | { type: '[InventoryBag] - Clear Bag', payload: [] }
     | {
         type: '[InventoryBag] - Update Summary',
@@ -40,7 +40,9 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
         case '[InventoryBag] - Remove Product':
             return {
                 ...state,
-                bag: state.bag.filter(product => (product.Codigo !== action.payload.Codigo) || (product.Id_Marca !== action.payload.Id_Marca) || (product.Id_Almacen !== action.payload.Id_Almacen))
+                bag: state.bag.filter(product => (product.key !== action.payload.key) )
+
+                //bag: state.bag.filter(product => (product.Codigo !== action.payload.Codigo) || (product.Id_Marca !== action.payload.Id_Marca) || (product.Id_Almacen !== action.payload.Id_Almacen))
             }
 
         case '[InventoryBag] - Clear Bag':

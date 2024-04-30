@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalStyles } from '../../theme/appTheme';
@@ -32,11 +32,32 @@ const ModalBottom = ({
     const render = () => {
         return (
             <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+
+
                 <View style={styles.modalBottom}>
+
                     <KeyboardAvoidingView
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     >
+                        {/* <View
+                            style={{
+                                backgroundColor: "#EDBD42",
+                                width: "100%",
+                                height: 100,
+                                borderTopLeftRadius: 10,
+                                borderTopRightRadius: 10,
+                                position: "absolute",
+                                top: -60,
+                                left: 0,
+                                zIndex: -1,
+                                padding: 20
+                            }}
+                        >
+                            <Text>Ya has agregado 20 piezas a este producto.</Text>
+                        </View> */}
+
                         <View style={styles.modalContent}>
+
                             <TouchableWithoutFeedback onPress={onClose}>
                                 <TouchableOpacity style={styles.header} onPress={onClose}>
                                     <Icon name="close-outline" size={24} color="black" />
@@ -62,13 +83,13 @@ const ModalBottom = ({
         >
             {
                 blurNotAvailable ?
-                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    {render()}
-                </View>
-                :
-                <BlurView style={StyleSheet.absoluteFill} blurType={blurType} blurAmount={blurAmount}>
-                    {render()}
-                </BlurView>
+                    <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        {render()}
+                    </View>
+                    :
+                    <BlurView style={StyleSheet.absoluteFill} blurType={blurType} blurAmount={blurAmount}>
+                        {render()}
+                    </BlurView>
             }
         </Modal>
     );
@@ -79,7 +100,8 @@ export default ModalBottom;
 const styles = StyleSheet.create({
     modalBottom: {
         flex: 1,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        position: 'relative',
     },
     modalContent: {
         backgroundColor: colores.background_color,

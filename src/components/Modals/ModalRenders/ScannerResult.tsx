@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,7 +7,7 @@ import PorductInterface from '../../../interface/product';
 import { Counter } from '../../Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
-import {  globalStyles } from '../../../theme/appTheme';
+import { globalStyles } from '../../../theme/appTheme';
 import { AuthContext } from '../../../context/auth/AuthContext';
 import { EmptyMessageCard } from '../../Cards/EmptyMessageCard';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
@@ -16,18 +16,20 @@ import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultThem
 interface ScannerResultInterface {
     product: PorductInterface;
     onClose: () => void;
-    handleSelectFindByCode: () => void;
+    handleSelectFindByCode?: () => void;
     fromInput: boolean;
+    seeProductDetails?: boolean
 }
 
 export const ScannerResult = ({
     product,
     onClose,
     handleSelectFindByCode,
-    fromInput
+    fromInput,
+    seeProductDetails = true
 }: ScannerResultInterface) => {
 
-    const { addProduct } = useContext(InventoryBagContext)
+    const { addProduct, bag } = useContext(InventoryBagContext)
     const { codeBar } = useContext(AuthContext);
     const { handleCameraAvailable } = useContext(SettingsContext);
 
@@ -51,7 +53,7 @@ export const ScannerResult = ({
 
     const handleSearchByCode = () => {
         onClose()
-        handleSelectFindByCode()
+        handleSelectFindByCode?.()
     }
 
     const handleAssignCodeToProduct = () => {
@@ -61,6 +63,14 @@ export const ScannerResult = ({
             navigate('SearchProductModal', { modal: true })
         }, 500);
     }
+
+
+    useEffect(() => {
+        const isAlreadyInBag = bag.some((item: PorductInterface) =>
+            item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
+        )
+        console.log({ isAlreadyInBag })
+    }, [])
 
     return (
         <KeyboardAvoidingView>
@@ -81,14 +91,18 @@ export const ScannerResult = ({
                             </View>
                         </View>
 
-                        <View style={{ display: "flex", flexDirection: "row" }}>
-                            <TouchableOpacity
-                                onPress={handleExpandProductDetails}
-                                style={[buttonStyles.button, buttonStyles.white, { width: "35%", marginRight: "5%" }]}
-                            >
-                                <Text style={buttonStyles.buttonTextSecondary}>Ver producto</Text>
-                            </TouchableOpacity>
-                            <View style={{ width: "55%", marginLeft: "5%" }}>
+                        <View style={{ display: "flex", flexDirection: "row", justifyContent: !seeProductDetails ? "center" : "flex-end" }}>
+                            {
+                                seeProductDetails &&
+                                <TouchableOpacity
+                                    onPress={handleExpandProductDetails}
+                                    style={[buttonStyles.button, buttonStyles.white, { width: "35%", marginRight: "5%" }]}
+                                >
+                                    <Text style={buttonStyles.buttonTextSecondary}>Ver producto</Text>
+                                </TouchableOpacity>
+
+                            }
+                            <View style={{ width: "55%", marginLeft: "5%"}}>
                                 <Counter counter={counterProduct} setCounter={setCounterProduct} />
                             </View>
                         </View>
@@ -98,13 +112,13 @@ export const ScannerResult = ({
                             style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row' }]}
                             onPress={handleAddToInventory}
                         >
-                            <Icon name="expand-outline" size={16} color="black" style={{ marginRight: 10 }} />
+                            <Icon name="add-circle-outline" size={16} color="black" style={{ marginRight: 10 }} />
                             <Text style={buttonStyles.buttonTextSecondary}>Agregar al inventario</Text>
                         </TouchableOpacity>
                     </View>
                     :
                     <View>
-                        <EmptyMessageCard title={fromInput ? `No existe producto con este codigo.` : `No existe producto con codigo de barras:`} message={`${codeBar}`} icon='help-circle'/>
+                        <EmptyMessageCard title={fromInput ? `No existe producto con este codigo.` : `No existe producto con codigo de barras:`} message={`${codeBar}`} icon='help-circle' />
 
                         <TouchableOpacity
                             onPress={handleSearchByCode}

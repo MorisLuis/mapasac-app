@@ -9,7 +9,7 @@ import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 import ModalDecision from '../../components/Modals/ModalDecision'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SettingsContext } from '../../context/settings/SettingsContext'
-import PorductInterface from '../../interface/product'
+import PorductInterface, { PorductInterfaceBag } from '../../interface/product'
 
 export const InventoryBagScreen = () => {
 
@@ -43,7 +43,7 @@ export const InventoryBagScreen = () => {
 
 
     // Renders
-    const renderItem = ({ item }: { item: PorductInterface }) => {
+    const renderItem = ({ item }: { item: PorductInterfaceBag }) => {
         return (
             <ProductInventoryCard
                 product={item}
@@ -62,6 +62,8 @@ export const InventoryBagScreen = () => {
         }, [])
     );
 
+    console.log({bag: JSON.stringify(bag, null, 2)})
+
     return !createInventaryLoading ? (
         <>
             <SafeAreaView style={styles.InventoryBagScreen}>
@@ -73,7 +75,7 @@ export const InventoryBagScreen = () => {
                         style={styles.content}
                         data={bag}
                         renderItem={renderItem}
-                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}`}
+                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
                         onEndReachedThreshold={0}
                     />
                 }

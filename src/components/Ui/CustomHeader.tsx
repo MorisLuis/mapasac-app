@@ -7,20 +7,23 @@ interface CustomHeaderInterface {
     navigation: any;
     title: string;
     backAvailable?: boolean;
-    back?: () => void
+    back?: () => void;
 }
 
 export const CustomHeader = ({ 
     navigation, 
     title, 
     backAvailable = true, 
-    back
+    back,
 }: CustomHeaderInterface) => {
 
     const handleOnPress = () => {
-        back?.()
-        navigation.goBack()
+        if (back && typeof back === 'function') {
+            back();
+        }
+        navigation.goBack();
     }
+
     
     return (
         <SafeAreaView style={styles.CustomHeader}>
@@ -63,11 +66,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 14,
         marginLeft: 3,
-
     },
     titleHeader: {
         fontWeight: 'bold',
         fontSize: 16
+    },
+    right: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 20,
+        bottom: 0,
+    },
+    rightText: {
+        fontWeight: 'bold',
+        fontSize: 14,
+        marginLeft: 3,
+        color: colores.color_blue
     }
 })
 

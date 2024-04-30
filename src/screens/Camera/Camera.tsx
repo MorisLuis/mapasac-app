@@ -17,11 +17,13 @@ import Scan from '../../assets/scan.svg';
 import PorductInterface from '../../interface/product';
 import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
 import UserInterface from '../../interface/user';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 
 const CustomCamera: React.FC = () => {
 
     const { updateBarCode, user } = useContext(AuthContext);
+
     const { vibration, cameraAvailable, handleCameraAvailable } = useContext(SettingsContext);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [lightOn, setLightOn] = useState(false)
@@ -193,6 +195,7 @@ const CustomCamera: React.FC = () => {
             {/* SCANNER RESULT - MODAL */}
             <ModalBottom
                 visible={openModalScannerResult}
+                //visible={true}
                 onClose={handleCloseProductModalScanned}
             >
                 <ScannerResult

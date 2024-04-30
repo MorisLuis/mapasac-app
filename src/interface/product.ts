@@ -20,3 +20,7 @@ export default interface PorductInterface {
 
     CodBar?: string
 }
+
+export interface PorductInterfaceBag extends PorductInterface {
+    key: number
+}

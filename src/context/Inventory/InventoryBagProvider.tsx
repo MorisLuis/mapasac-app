@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import PorductInterface from '../../interface/product';
+import PorductInterface, { PorductInterfaceBag } from '../../interface/product';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
@@ -14,7 +14,7 @@ export interface inventoryDataInterface {
 }
 
 export interface InventoryBagInterface {
-    bag: PorductInterface[];
+    bag: PorductInterfaceBag[];
     numberOfItems: number;
     inventoryData: inventoryDataInterface
 }
@@ -35,22 +35,26 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
-    const [inventoryCreated, setInventoryCreated] = useState(false)
+    const [inventoryCreated, setInventoryCreated] = useState(false);
+    const [keyNumber, setKeyNumber] = useState(0)
     const { user } = useContext(AuthContext);
 
     const addProduct = (product: PorductInterface) => {
 
+        setKeyNumber(keyNumber + 1)
+        const newKey = keyNumber + 1
+
         // Validate if not already added this product.
-        const isAlreadyInBag = state.bag.some((item: PorductInterface) =>
+        /* const isAlreadyInBag = state.bag.some((item: PorductInterface) =>
             item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
         );
 
-        if (isAlreadyInBag) return;
+        if (isAlreadyInBag) return; */
 
-        dispatch({ type: '[InventoryBag] - Add Product', payload: product })
+        dispatch({ type: '[InventoryBag] - Add Product', payload: {...product, key: newKey} })
     }
 
-    const removeProduct = (product: PorductInterface) => {
+    const removeProduct = (product: PorductInterfaceBag) => {
         dispatch({ type: '[InventoryBag] - Remove Product', payload: product })
     }
 

@@ -105,5 +105,21 @@ export const productDetailsStyles = StyleSheet.create({
         backgroundColor: colores.color_yellow,
         borderColor: colores.color_border_tertiary,
         display: "flex"
+    },
+
+    //Footer
+    footer: {
+        position: "absolute",
+        bottom: 0,
+        height: 100,
+        width: "100%",
+        backgroundColor: colores.background_color_secondary,
+        borderTopWidth: 1,
+        borderColor: colores.color_border,
+        padding: globalStyles.globalPadding.padding,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
     }
 })
