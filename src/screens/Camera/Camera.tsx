@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Vibration, Text } from 'react-native';
+import { View, TouchableOpacity, Vibration, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
@@ -23,10 +23,12 @@ import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext
 const CustomCamera: React.FC = () => {
 
     const { updateBarCode, user } = useContext(AuthContext);
+    const { vibration, cameraAvailable, handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
+    const { bag } = useContext(InventoryBagContext);
 
-    const { vibration, cameraAvailable, handleCameraAvailable } = useContext(SettingsContext);
     const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
-    const [lightOn, setLightOn] = useState(false)
+    const [lightOn, setLightOn] = useState(false);
+    const onTheLimitProductScanned = limitProductsScanned === bag?.length;
 
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
     const [productSelected, setProductSelected] = useState<PorductInterface>()
@@ -79,7 +81,7 @@ const CustomCamera: React.FC = () => {
             Vibration.vibrate(500);
         }
     };
-    
+
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         setOpenModalFindByCodebarInput(true);
@@ -102,9 +104,7 @@ const CustomCamera: React.FC = () => {
                 console.log(`Scanned code value: ${codeValue}`);
             } catch (error) {
                 console.error('Error fetching product:', error);
-            } /* finally {
-                setTimeout(() => { }, 2000);
-            } */
+            }
         }
     })
 
@@ -119,6 +119,7 @@ const CustomCamera: React.FC = () => {
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
+    const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
 
     useEffect(() => {
         if (!user) return;
@@ -129,11 +130,20 @@ const CustomCamera: React.FC = () => {
         setSelectedDevice(backCamera?.id || null);
     }, []);
 
-    if (!backCamera) return;
+    if (!backCamera) return null;
 
     return (
         <View style={cameraStyles.cameraScreen}>
             <View style={cameraStyles.content}>
+                {
+                    onTheLimitProductScanned &&
+                    <BlurView
+                        style={cameraStyles.blurOverlay}
+                        blurType="dark"
+                        blurAmount={5}
+                    />
+                }
+
                 <Camera
                     style={cameraStyles.camera}
                     device={backCamera}
@@ -141,9 +151,13 @@ const CustomCamera: React.FC = () => {
                     isActive={
                         cameraAvailable || false
                     }
-                    {...cameraProps}
+                    {...dynamicCameraProps}
                 />
-                <CameraHighlights highlights={highlights} color={colores.color_red} />
+
+                {
+                    !onTheLimitProductScanned &&
+                    <CameraHighlights highlights={highlights} color={colores.color_red} />
+                }
 
                 <View style={cameraStyles.flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
@@ -151,8 +165,14 @@ const CustomCamera: React.FC = () => {
                     </TouchableOpacity>
                 </View>
 
+
                 <View style={cameraStyles.message}>
-                    <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                    {
+                        onTheLimitProductScanned ?
+                            <Text style={cameraStyles.textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                            :
+                            <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                    }
                 </View>
 
                 <View style={cameraStyles.scanSvgContainer}>

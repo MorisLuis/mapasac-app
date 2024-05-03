@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 interface CounterInterface {
     counter: number,
-    setCounter: React.Dispatch<React.SetStateAction<number>>
+    setCounter: React.Dispatch<React.SetStateAction<number>> | ((value: number) => void)
 }
 
 export const Counter = ({
@@ -23,20 +23,20 @@ export const Counter = ({
     }
 
     const subtractProduct = () => {
-        if(counter === 0) return;
+        if (counter === 0) return;
         setCounter(counter - 1)
     }
 
     return (
         <View style={styles.counter}>
-            <Icon name="remove-outline" size={24} color="black" onPress={subtractProduct}/>
+            <Icon name="remove-outline" size={24} color="black" onPress={subtractProduct} />
             <TextInput
                 style={styles.input}
                 value={counter.toString()}
                 onChangeText={handleInputChange}
                 keyboardType="numeric"
             />
-            <Icon name="add-outline" size={24} color="black" onPress={addProduct}/>
+            <Icon name="add-outline" size={24} color="black" onPress={addProduct} />
         </View>
     )
 }

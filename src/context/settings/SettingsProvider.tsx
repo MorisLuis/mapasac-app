@@ -5,11 +5,13 @@ import { settingsReducer } from './settingsReducer';
 export interface SettingsInterface {
     vibration: boolean;
     cameraAvailable: boolean;
+    limitProductsScanned: number;
 }
 
 export const SettingsInitialState: SettingsInterface = {
     vibration: true,
-    cameraAvailable: true
+    cameraAvailable: true,
+    limitProductsScanned: 20
 }
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
@@ -24,11 +26,17 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         dispatch({ type: '[Settings] - CameraAvailable state', cameraAvailable: value });
     }
 
+    const handleLimitProductsScanned = (value: number) => {
+        console.log({value})
+        dispatch({ type: '[Settings] - limitProductsScanned state', limitProductsScanned: value });
+    }
+
     return (
         <SettingsContext.Provider value={{
             ...state,
             handleVibrationState,
-            handleCameraAvailable
+            handleCameraAvailable,
+            handleLimitProductsScanned
         }}
         >
             {children}

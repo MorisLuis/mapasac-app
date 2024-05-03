@@ -14,7 +14,7 @@ import PorductInterface, { PorductInterfaceBag } from '../../interface/product'
 export const InventoryBagScreen = () => {
 
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
@@ -61,8 +61,6 @@ export const InventoryBagScreen = () => {
             };
         }, [])
     );
-
-    console.log({bag: JSON.stringify(bag, null, 2)})
 
     return !createInventaryLoading ? (
         <>

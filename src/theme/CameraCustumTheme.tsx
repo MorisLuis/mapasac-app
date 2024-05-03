@@ -7,7 +7,8 @@ export const cameraStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: colores.background_color,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+
     },
     content: {
         flex: 1,
@@ -52,7 +53,8 @@ export const cameraStyles = StyleSheet.create({
         width: "50%",
         display: "flex",
         alignItems: "center",
-        textAlign: 'center'
+        textAlign: 'center',
+        zIndex: 2
     },
     textmessage: {
         color: colores.text_color_secondary,
@@ -64,11 +66,22 @@ export const cameraStyles = StyleSheet.create({
         position: "absolute",
         top: "50%",
         left: "50%",
-        transform: [{ translateX: -150 }, { translateY: -150 }]
+        transform: [{ translateX: -150 }, { translateY: -150 }],
+        zIndex: 2
     },
     flash: {
         position: "absolute",
         right: "7.5%",
         top: 100
-    }
+    },
+    blurOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1
+    },
 })
