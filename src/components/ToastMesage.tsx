@@ -43,28 +43,29 @@ const toastConfig = {
 
 
 export const ShowToastMessage = () => {
-
     return <Toast config={toastConfig} />
 }
 
 
 const styles = StyleSheet.create({
     ToastMessage: {
-        height: 60,
-        width: '80%',
-        backgroundColor: colores.background_color_secondary,
+        minHeight: 50,
+        //width: f,
+        backgroundColor: colores.background_color,
         borderWidth: 1,
         borderColor: colores.color_border,
-        borderRadius: 5,
+        borderRadius: 15,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10
+        padding: 10,
+        maxWidth: "90%"
     },
     icon: {
-        marginRight: 10
+        marginRight: 5
     },
     message: {
-        flex: 1
+        fontSize: globalFont.font_normal
+        //flex: 1
     }
 })

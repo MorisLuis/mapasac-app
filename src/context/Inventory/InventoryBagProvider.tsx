@@ -44,13 +44,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         setKeyNumber(keyNumber + 1)
         const newKey = keyNumber + 1
 
-        // Validate if not already added this product.
-        /* const isAlreadyInBag = state.bag.some((item: PorductInterface) =>
-            item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
-        );
-
-        if (isAlreadyInBag) return; */
-
         dispatch({ type: '[InventoryBag] - Add Product', payload: {...product, key: newKey} })
     }
 
