@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import { api } from "../api/api";
 import CostosInterface from "../interface/costos";
 
@@ -20,7 +21,10 @@ const updateCostos = async ({
 
     try {
         await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
-
+        Toast.show({
+            type: 'tomatoToast',
+            text1: 'Se actualizó el codigo de barras!',
+        })
     } catch (error: any) {
         console.log({ error: error })
     }
