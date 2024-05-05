@@ -2,20 +2,32 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalStyles } from '../../theme/appTheme';
+import PorductInterface from '../../interface/product';
 
 interface CustomHeaderInterface {
     navigation: any;
     title: string;
     backAvailable?: boolean;
     back?: () => void;
+    route?: {
+        params?: {
+            selectedProduct?: PorductInterface
+            fromModal?: boolean;
+        };
+    };
 }
 
-export const CustomHeader = ({ 
-    navigation, 
-    title, 
-    backAvailable = true, 
+export const CustomHeader = ({
+    navigation,
+    title,
+    backAvailable = true,
     back,
+    route
 }: CustomHeaderInterface) => {
+
+    const { fromModal } = route?.params || {}
+
+    console.log({ fromModal })
 
     const handleOnPress = () => {
         if (back && typeof back === 'function') {
@@ -24,22 +36,39 @@ export const CustomHeader = ({
         navigation.goBack();
     }
 
-    
+
     return (
-        <SafeAreaView style={styles.CustomHeader}>
-            {
-                backAvailable &&
-                <TouchableOpacity
-                    style={styles.back}
-                    onPress={handleOnPress}
-                >
-                    <Icon name="chevron-back-outline" size={20} color="black" />
-                    <Text style={styles.backText}>Atrás</Text>
-                </TouchableOpacity>
-            }
-            <Text style={styles.titleHeader}>{title}</Text>
-        </SafeAreaView>
-    )
+        <>
+            {fromModal ? (
+                <View style={[styles.CustomHeader, { paddingTop: 20 }]}>
+                    {backAvailable && (
+                        <TouchableOpacity
+                            style={styles.back}
+                            onPress={handleOnPress}
+                        >
+                            <Icon name="chevron-back-outline" size={20} color="black" />
+                            <Text style={styles.backText}>Atrás</Text>
+                        </TouchableOpacity>
+                    )}
+                    <Text style={styles.titleHeader}>{title}</Text>
+                </View>
+            ) : (
+                <SafeAreaView style={styles.CustomHeader}>
+                    {backAvailable && (
+                        <TouchableOpacity
+                            style={styles.back}
+                            onPress={handleOnPress}
+                        >
+                            <Icon name="chevron-back-outline" size={20} color="black" />
+                            <Text style={styles.backText}>Atrás</Text>
+                        </TouchableOpacity>
+                    )}
+                    <Text style={styles.titleHeader}>{title}</Text>
+                </SafeAreaView>
+            )}
+        </>
+    );
+    
 }
 
 const styles = StyleSheet.create({
@@ -50,7 +79,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: globalStyles.globalPadding.padding,
         position: "relative",
         width: "100%"
     },

@@ -48,7 +48,7 @@ export const ScannerResult = ({
     }
 
     const handleExpandProductDetails = () => {
-        navigate('ProductDetails', { selectedProduct: product });
+        navigate('ProductDetails', { selectedProduct: product, fromModal: true });
     }
 
     const handleSearchByCode = () => {
@@ -69,7 +69,6 @@ export const ScannerResult = ({
         const isAlreadyInBag = bag.some((item: PorductInterface) =>
             item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
         )
-        console.log({ isAlreadyInBag })
     }, [])
 
     return (
@@ -106,7 +105,6 @@ export const ScannerResult = ({
                                 <Counter counter={counterProduct} setCounter={setCounterProduct} />
                             </View>
                         </View>
-
 
                         <TouchableOpacity
                             style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row' }]}

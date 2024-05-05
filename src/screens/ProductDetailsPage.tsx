@@ -9,8 +9,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
 import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { SettingsContext } from '../context/settings/SettingsContext';
-import { colores, globalStyles } from '../theme/appTheme';
-import { Counter } from '../components/Ui/Counter';
 import ModalBottom from '../components/Modals/ModalBottom';
 import { ScannerResult } from '../components/Modals/ModalRenders/ScannerResult';
 import PorductInterface from '../interface/product';
@@ -20,17 +18,16 @@ type ProductDetailsPageInterface = {
         params: {
             productDetails: ProductInterface;
             selectedProduct: { Codigo: string; Marca: string };
+            fromModal?: boolean
         };
     };
 };
 
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
-    const { productDetails, selectedProduct } = route?.params ?? {};
+    const { productDetails, selectedProduct, fromModal } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
     const { handleCameraAvailable } = useContext(SettingsContext);
-    const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
     const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
-
 
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
@@ -130,16 +127,18 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
                 )}
             </ScrollView>
 
-            <View style={productDetailsStyles.footer}>
-
-                <TouchableOpacity
-                    style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
-                    onPress={handleAddToInventory}
-                >
-                    <Icon name="add-circle-outline" size={16} color="black" style={{ marginRight: 10 }} />
-                    <Text style={buttonStyles.buttonTextSecondary}>Agregar a inventario</Text>
-                </TouchableOpacity>
-            </View>
+            {
+                !fromModal &&
+                <View style={productDetailsStyles.footer}>
+                    <TouchableOpacity
+                        style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
+                        onPress={handleAddToInventory}
+                    >
+                        <Icon name="add-circle-outline" size={16} color="black" style={{ marginRight: 10 }} />
+                        <Text style={buttonStyles.buttonTextSecondary}>Agregar a inventario</Text>
+                    </TouchableOpacity>
+                </View>
+            }
 
             <ModalBottom
                 visible={openModalScannerResult}

@@ -21,7 +21,7 @@ export type InventoryNavigationStackParamList = {
     BottomNavigation: undefined;
     BagInventory: undefined;
     InventoryDetails: { selectedProduct: PorductInterface };
-    ProductDetails: { selectedProduct?: PorductInterface };
+    ProductDetails: { selectedProduct?: PorductInterface, productDetails?: PorductInterface, fromModal?: boolean };
     SuccesMessage: undefined;
     TypeOfMovement: undefined;
     SearchProduct: undefined;
@@ -88,16 +88,28 @@ export const AppNavigation = () => {
                 })}
             />
 
+
             <Stack.Screen
                 name="ProductDetails"
                 component={ProductDetailsPage}
-                options={{
+                options={({ navigation }) => ({
                     presentation: "modal",
                     headerTitle: "Detalles de Producto",
                     headerShown: true,
-                    headerBackTitle: "Atrás"
-                }}
+                    headerBackTitle: "Atrás",
+                    header: props =>
+                        <CustomHeader
+                            {...props}
+                            title="Detalles de Producto"
+                            navigation={navigation}
+                            back={() => {
+                                handleCameraAvailable(true)
+                                updateBarCode('')
+                            }}
+                        />
+                })}
             />
+
 
             <Stack.Screen
                 name="SearchProduct"

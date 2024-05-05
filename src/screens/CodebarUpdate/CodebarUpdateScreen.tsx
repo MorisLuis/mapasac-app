@@ -29,7 +29,6 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
     const handleGoToNextStep = () => {
-        console.log({selectedOption})
         if (selectedOption.screen === "updateWithCode") {
             hanldeUpdateCodebarWithCodeFound()
         } else if (selectedOption.screen === "updateWithRandomCode") {
@@ -42,7 +41,6 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     }
 
     const hanldeUpdateCodebarWithCodeFound = async () => {
-        console.log({productDetails})
         if (!productDetails) return;
 
         await updateCostos({

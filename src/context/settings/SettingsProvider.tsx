@@ -27,7 +27,6 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     const handleLimitProductsScanned = (value: number) => {
-        console.log({value})
         dispatch({ type: '[Settings] - limitProductsScanned state', limitProductsScanned: value });
     }
 
