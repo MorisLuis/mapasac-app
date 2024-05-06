@@ -1,12 +1,9 @@
-
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
     "react-native/scripts/react_native_pods.rb",
     {paths: [process.argv[1]]},
   )', __dir__]).strip
-
-
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
 # because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
@@ -25,7 +22,6 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -40,7 +36,6 @@ pre_install do |installer|
     end
   end
 end
-
 
 target 'OleiApp' do
   config = use_native_modules!
@@ -64,16 +59,39 @@ target 'OleiApp' do
   end
 
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
-    react_native_post_install(
-      installer,
-      config[:reactNativePath],
-      :mac_catalyst_enabled => false
-    )
+    # Definición de la función find_and_replace
+    def find_and_replace(dir, findstr, replacestr)
+      Dir[dir].each do |name|
+        text = File.read(name)
+        replace = text.gsub(findstr,replacestr)
+        if text != replace
+          puts "Fix: " + name
+          File.open(name, "w") { |file| file.puts replace }
+          STDOUT.flush
+        end
+      end
+      Dir[dir + '*/'].each(&method(:find_and_replace))
+    end
+
+    # Uso de find_and_replace para reemplazar cadenas en archivos específicos
+    find_and_replace("./node_modules/react-native/React/Base/RCTKeyCommands.m",
+                     "_modifierFlags",
+                     "_modifierEventFlags")
+    find_and_replace("./node_modules/react-native/React/Base/RCTKeyCommands.m",
+                     "_modifiedInput",
+                     "_modifiedEventInput")
+    find_and_replace("./node_modules/react-native/React/Base/RCTKeyCommands.m",
+                     "_isKeyDown",
+                     "_isKeyEventDown")
+    find_and_replace("./node_modules/react-native/React/DevSupport/RCTPackagerClient.h",
+                     "handleNotification",
+                     "handlePackageNotification")
+
+    find_and_replace("./node_modules/react-native/React/DevSupport/RCTPackagerConnection.mm",
+                     "handleNotification",
+                     "handlePackageNotification")
   end
 
   pod 'SVProgressHUD', '~> 2.2.5'
   pod 'SwiftEntryKit', '1.2.3'
-
-
 end
