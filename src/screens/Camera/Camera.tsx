@@ -89,7 +89,7 @@ const CustomCamera: React.FC = () => {
         setOpenModalFindByCodebarInput(true);
     }
 
-    /* const onCodeDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
+    const onCodeDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
 
         if (!productsScanned && codes?.length > 0) {
             handleCameraAvailable(false)
@@ -117,11 +117,11 @@ const CustomCamera: React.FC = () => {
             "worklet";
             onCodeDetected(barcodes);
         },
-    }); */
+    });
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
-    //const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
+    const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
 
     useEffect(() => {
         if (!user) return;
@@ -146,7 +146,7 @@ const CustomCamera: React.FC = () => {
                     />
                 }
 
-                {/* <Camera
+                <Camera
                     style={cameraStyles.camera}
                     device={backCamera}
                     torch={lightOn ? "on" : "off"}
@@ -159,7 +159,7 @@ const CustomCamera: React.FC = () => {
                 {
                     !onTheLimitProductScanned &&
                     <CameraHighlights highlights={highlights} color={colores.color_red} />
-                } */}
+                }
 
                 <View style={cameraStyles.flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
