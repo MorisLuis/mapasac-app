@@ -2,10 +2,7 @@ import axios from 'axios';
 
 export const api = axios.create(
     {
-        baseURL: 'https://seahorse-app-spuvc.ondigitalocean.app/',
-        headers: {
-            'Content-Type': 'application/json',
-        }
+        baseURL: 'https://seahorse-app-spuvc.ondigitalocean.app/'
     }
 )
 
