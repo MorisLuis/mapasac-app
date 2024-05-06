@@ -65,11 +65,11 @@ export const ScannerResult = ({
     }
 
 
-    useEffect(() => {
-        const isAlreadyInBag = bag.some((item: PorductInterface) =>
+    /* useEffect(() => {
+        bag.some((item: PorductInterface) =>
             item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
         )
-    }, [])
+    }, []) */
 
     return (
         <KeyboardAvoidingView>
