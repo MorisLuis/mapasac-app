@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, TouchableOpacity, Vibration, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
 import { BlurView } from '@react-native-community/blur';
 import ModalBottom from '../../components/Modals/ModalBottom';
@@ -89,7 +89,7 @@ const CustomCamera: React.FC = () => {
         setOpenModalFindByCodebarInput(true);
     }
 
-    const onCodeDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
+    /* const onCodeDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
 
         if (!productsScanned && codes?.length > 0) {
             handleCameraAvailable(false)
@@ -117,11 +117,11 @@ const CustomCamera: React.FC = () => {
             "worklet";
             onCodeDetected(barcodes);
         },
-    });
+    }); */
 
     const devices = useCameraDevices();
     const backCamera = devices.find((device) => device.position === 'back');
-    const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
+    //const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
 
     useEffect(() => {
         if (!user) return;
@@ -131,6 +131,32 @@ const CustomCamera: React.FC = () => {
     useEffect(() => {
         setSelectedDevice(backCamera?.id || null);
     }, []);
+
+
+    //temporal
+
+    const codeScanner = useCodeScanner({
+        codeTypes: ['qr', 'ean-13'],
+        onCodeScanned: async (codes) => {
+            if (!productsScanned && codes?.length > 0) {
+                handleCameraAvailable(false)
+                const scannedCode = codes?.[0];
+                const codeValue = scannedCode.value;
+
+                if (!codeValue) return;
+
+                try {
+                    const response = await getProductByCodeBar(codeValue);
+                    handleOpenProductsFoundByCodebar(response);
+                    handleVibrate()
+                    if (response.length < 1) updateBarCode(codeValue)
+                    console.log(`Scanned code value: ${codeValue}`);
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                }
+            }
+        }
+    })
 
     if (!backCamera) return null;
 
@@ -146,7 +172,7 @@ const CustomCamera: React.FC = () => {
                     />
                 }
 
-                <Camera
+                {/* <Camera
                     style={cameraStyles.camera}
                     device={backCamera}
                     torch={lightOn ? "on" : "off"}
@@ -154,12 +180,22 @@ const CustomCamera: React.FC = () => {
                         (selectedDevice && cameraAvailable) || false
                     }
                     {...dynamicCameraProps}
-                />
+                /> */}
 
-                {
+                <Camera
+                    style={cameraStyles.camera}
+                    device={backCamera}
+                    torch={lightOn ? "on" : "off"}
+                    isActive={
+                        (selectedDevice && cameraAvailable) || false
+                    }
+                    codeScanner={codeScanner} 
+                    />
+
+                {/* {
                     !onTheLimitProductScanned &&
                     <CameraHighlights highlights={highlights} color={colores.color_red} />
-                }
+                } */}
 
                 <View style={cameraStyles.flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
