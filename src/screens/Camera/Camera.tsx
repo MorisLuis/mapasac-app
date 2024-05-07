@@ -151,9 +151,9 @@ const CustomCamera: React.FC = () => {
                     device={backCamera}
                     torch={lightOn ? "on" : "off"}
                     isActive={
-                        cameraAvailable || false
+                        (selectedDevice && cameraAvailable) || false
                     }
-                    {...cameraProps}
+                    {...dynamicCameraProps}
                 />
 
                 {
