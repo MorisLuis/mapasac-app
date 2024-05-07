@@ -153,7 +153,7 @@ const CustomCamera: React.FC = () => {
                     isActive={
                         cameraAvailable || false
                     }
-                    {...dynamicCameraProps}
+                    {...cameraProps}
                 />
 
                 {
