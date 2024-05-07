@@ -136,8 +136,10 @@ const CustomCamera: React.FC = () => {
     //temporal
 
     const codeScanner = useCodeScanner({
-        codeTypes: ['qr', 'ean-13'],
+        codeTypes: ["qr", "ean-13", "code-128"],
+
         onCodeScanned: async (codes) => {
+            console.log({codes})
             if (!productsScanned && codes?.length > 0) {
                 handleCameraAvailable(false)
                 const scannedCode = codes?.[0];
@@ -187,10 +189,10 @@ const CustomCamera: React.FC = () => {
                     device={backCamera}
                     torch={lightOn ? "on" : "off"}
                     isActive={
-                        (selectedDevice && cameraAvailable) || false
+                        cameraAvailable || false
                     }
-                    codeScanner={codeScanner} 
-                    />
+                    codeScanner={codeScanner}
+                />
 
                 {/* {
                     !onTheLimitProductScanned &&
