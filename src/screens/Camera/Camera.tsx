@@ -61,9 +61,13 @@ const CustomCamera: React.FC = () => {
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
+
         handleCloseModalFindByBarcodeInput(false);
 
-        if (response.length > 0) {
+        if( response.length === 1) {
+            setProductSelected(response[0])
+            setOpenModalScannerResult(true)
+        } else if (response.length > 0) {
             setOpenModalProductFoundByCodebar(true)
         } else {
             setOpenModalScannerResult(true)
@@ -134,12 +138,10 @@ const CustomCamera: React.FC = () => {
 
 
     //temporal
-
     const codeScanner = useCodeScanner({
         codeTypes: ["qr", "ean-13", "code-128"],
 
         onCodeScanned: async (codes) => {
-            console.log({codes})
             if (!productsScanned && codes?.length > 0) {
                 handleCameraAvailable(false)
                 const scannedCode = codes?.[0];
@@ -160,6 +162,7 @@ const CustomCamera: React.FC = () => {
         }
     })
 
+
     if (!backCamera) return null;
 
     return (
@@ -174,25 +177,28 @@ const CustomCamera: React.FC = () => {
                     />
                 }
 
-                {/* <Camera
-                    style={cameraStyles.camera}
-                    device={backCamera}
-                    torch={lightOn ? "on" : "off"}
-                    isActive={
-                        (selectedDevice && cameraAvailable) || false
-                    }
-                    {...dynamicCameraProps}
-                /> */}
-
                 <Camera
                     style={cameraStyles.camera}
                     device={backCamera}
                     torch={lightOn ? "on" : "off"}
                     isActive={
-                        cameraAvailable || false
+                        (cameraAvailable) || false
                     }
                     codeScanner={codeScanner}
-                />
+                    />
+
+                {/* {
+                    backCamera &&
+                    <Camera
+                        style={cameraStyles.camera}
+                        device={backCamera}
+                        torch={lightOn ? "on" : "off"}
+                        isActive={
+                            (cameraAvailable) || false
+                        }
+                        codeScanner={codeScanner}
+                    />
+                } */}
 
                 {/* {
                     !onTheLimitProductScanned &&

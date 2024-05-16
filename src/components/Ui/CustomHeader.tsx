@@ -27,8 +27,6 @@ export const CustomHeader = ({
 
     const { fromModal } = route?.params || {}
 
-    console.log({ fromModal })
-
     const handleOnPress = () => {
         if (back && typeof back === 'function') {
             back();

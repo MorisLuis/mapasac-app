@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image } from 'react-native';
 import { useForm } from '../hooks/useForm';
-import { AuthContext } from '../context/auth/AuthContext';
-import { LoadingScreen } from './LoadingScreen';
 import useKeyboardStatus from '../hooks/useKeyboardStatus';
+import { LoadingScreen } from './LoadingScreen';
 
 import { loginStyles } from '../theme/loginTheme';
 import { buttonStyles } from '../theme/UI/buttons';
@@ -13,109 +12,81 @@ import { globalStyles } from '../theme/appTheme';
 import { DbAuthContext } from '../context/dbAuth/DbAuthContext';
 
 
-export const LoginScreen = () => {
-
-    const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
-    const {  logOut } = useContext(DbAuthContext);
-
-    const { email, password, onChange } = useForm({
-        email: '',
-        password: ''
-    });
+export const LoginDatabaseScreen = () => {
+    const { signInDB, errorMessage, removeError, loggingIn } = useContext(DbAuthContext);
+    const { servidor, database, onChange } = useForm({ servidor: '', database: '' });
 
     useEffect(() => {
         if (errorMessage.length === 0) return;
 
-        console.log({errorMessage})
-
-        Alert.alert('Login incorrecto LOGIN', errorMessage, [{
+        Alert.alert('Login incorrecto LOGINDB', errorMessage, [{
             text: 'Ok',
             onPress: removeError
         }]);
 
-    }, [errorMessage])
+    }, [errorMessage]);
 
     const onLogin = () => {
         Keyboard.dismiss();
-        signIn({ correo: email, password });
-    }
+        signInDB({ servidor, database });
+    };
 
     const keyboardActive = useKeyboardStatus();
 
-    if (loggingIn) return <LoadingScreen />
+    if (loggingIn) return <LoadingScreen />;
 
     return (
         <KeyboardAvoidingView
-            style={loginStyles.LoginScreen}
+            style={loginStyles.LoginDBScreen}
             behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
         >
             <View style={loginStyles.formContainer}>
-
-                {/* Keyboard avoid view */}
-
                 <View style={loginStyles.imageContainer}>
                     <Image
                         style={[keyboardActive ? loginStyles.imageActived : loginStyles.image]}
                         source={require('../assets/logo01.png')}
                     />
                 </View>
-
-
-                <Text style={[loginStyles.title]}>Bienvenido!</Text>
-                <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>Por favor, inicia sesión abajo.</Text>
-
+                <Text style={[loginStyles.title]}>Ingresa a tu cuenta!</Text>
+                <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>
+                    Iniciemos conectadonos a tu base de datos.
+                </Text>
                 <TextInput
-                    placeholder="Escribe tu e-mail..."
+                    placeholder="Escribe el servidor..."
                     placeholderTextColor="black"
                     keyboardType="email-address"
                     underlineColorAndroid="black"
                     style={[inputStyles.input, globalStyles.globalMarginBottom]}
                     selectionColor="black"
-
-                    onChangeText={(value) => onChange(value, 'email')}
-                    value={email}
+                    onChangeText={(value) => onChange(value, 'servidor')}
+                    value={servidor}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-
                 <TextInput
-                    placeholder="Escribe tu contraseña..."
+                    placeholder="Escribe la base de datos..."
                     placeholderTextColor="black"
                     underlineColorAndroid="black"
                     secureTextEntry
                     style={[inputStyles.input]}
                     selectionColor="black"
-                    onChangeText={(value) => onChange(value, 'password')}
-                    value={password}
+                    onChangeText={(value) => onChange(value, 'database')}
+                    value={database}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-
-
-                {/* Boton login */}
                 <View style={loginStyles.buttonContainer}>
                     <TouchableOpacity
                         activeOpacity={0.8}
-                        style={[buttonStyles.button, buttonStyles.black]}
+                        style={[buttonStyles.button, buttonStyles.yellow]}
                         onPress={onLogin}
                     >
-                        <Text style={buttonStyles.buttonText} >Iniciar sesión</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={loginStyles.buttonContainer}>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        style={[buttonStyles.button, buttonStyles.white]}
-                        onPress={logOut}
-                    >
-                        <Text style={buttonStyles.buttonTextSecondary} >Cerrar DB</Text>
+                        <Text style={buttonStyles.buttonTextSecondary}>Ingresar</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-
         </KeyboardAvoidingView>
-    )
-}
+    );
+};

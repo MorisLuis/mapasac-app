@@ -7,8 +7,7 @@ export const cameraStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: colores.background_color,
         justifyContent: "center",
-        alignItems: "center",
-
+        alignItems: "center"
     },
     content: {
         flex: 1,

@@ -8,6 +8,10 @@ export const loginStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: colores.background_color
     },
+    LoginDBScreen:{
+        flex: 1,
+        backgroundColor: colores.background_color_secondary,
+    },
     formContainer: {
         flex: 1,
         paddingHorizontal: 30,

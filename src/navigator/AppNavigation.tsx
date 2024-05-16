@@ -15,9 +15,12 @@ import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Text, TouchableOpacity } from 'react-native';
+import { LoginDatabaseScreen } from '../screens/LoginDatabaseScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: undefined;
+    LoginDatabaseScreen: undefined;
     BottomNavigation: undefined;
     BagInventory: undefined;
     InventoryDetails: { selectedProduct: PorductInterface };
@@ -37,10 +40,17 @@ export const AppNavigation = () => {
     const { updateBarCode } = useContext(AuthContext);
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator >
+
             <Stack.Screen
                 name="LoginPage"
                 component={LoginScreen}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="LoginDatabaseScreen"
+                component={LoginDatabaseScreen}
                 options={{ headerShown: false }}
             />
 
