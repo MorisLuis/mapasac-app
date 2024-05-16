@@ -57,6 +57,7 @@ export const DbAuthProvider = ({ children }: any) => {
     const checkToken = async () => {
 
         try {
+            console.log({checkToken})
             const token = await AsyncStorage.getItem('tokenDB');
 
             // No token, no autenticado
@@ -87,6 +88,7 @@ export const DbAuthProvider = ({ children }: any) => {
         }
     }
 
+
     const signInDB = async ({ servidor, database }: LoginData) => {
         setLoggingIn(true)
         try {
@@ -104,10 +106,11 @@ export const DbAuthProvider = ({ children }: any) => {
             await AsyncStorage.setItem('tokenDB', data.tokenDB);
 
         } catch (error: any) {
+            console.log({errorinsignin: error})
             setLoggingIn(false)
 
             dispatch({
-                type: 'addError',
+                type: 'addErrorDB',
                 payload: error?.response?.data?.msg || 'Información incorrecta'
             })
         }

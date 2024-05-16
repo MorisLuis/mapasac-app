@@ -8,8 +8,7 @@ import { AuthContext } from './AuthContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-import { RouteProp, useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {useNavigation } from '@react-navigation/native';
 import { DbAuthContext } from '../dbAuth/DbAuthContext';
 
 export interface AuthState {
@@ -63,10 +62,12 @@ export const AuthProvider = ({ children }: any) => {
         return unsubscribe;
     }, [navigation]);
 
+
     useEffect(() => {
         if (status == 'dbChecking') return;
 
         if (status == "dbNot-authenticated") {
+            if(currentScreen == 'LoginDatabaseScreen') return
             return navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginDatabaseScreen' }],

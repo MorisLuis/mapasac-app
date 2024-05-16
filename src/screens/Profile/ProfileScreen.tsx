@@ -1,21 +1,41 @@
 import React, { useContext, useEffect } from 'react'
 
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
+import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
+    const { logOut: logOutDB } = useContext(DbAuthContext);
+
     const { navigate } = useNavigation<any>();
 
     useEffect(() => {
         console.log('Personal Information effect');
     }, [])
+
+    const logOutDataBase = () => {
+
+        Alert.alert(
+            "Cambiar la base de datos", // Título del cuadro de diálogo
+            "¿Estás seguro de que deseas cambiar la base de datos? Se cerrara la actual.", // Mensaje del cuadro de diálogo
+            [
+                {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "Aceptar", onPress: logOutDB }
+            ],
+            { cancelable: false } // Puedes ponerlo en true para permitir cerrar el diálogo tocando fuera de él
+        );
+    }
 
     return (
         <View style={styles.ProfileScreen}>
@@ -46,6 +66,10 @@ export const ProfileScreen = () => {
 
                 <TouchableOpacity onPress={logOut} style={[buttonStyles.button, globalStyles.globalMarginBottom]}>
                     <Text style={buttonStyles.buttonText}>Cerrar sesión</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={logOutDataBase} style={[styles.logOutDB, { marginBottom: globalStyles.globalMarginBottomSmall.marginBottom }]}>
+                    <Text style={styles.logOutDBText}>Cambiar base de datos</Text>
                 </TouchableOpacity>
 
                 <View>
@@ -83,5 +107,11 @@ const styles = StyleSheet.create({
         fontSize: globalFont.font_med,
         fontWeight: "bold",
         paddingTop: globalStyles.globalPadding.padding
+    },
+    logOutDB: {
+
+    },
+    logOutDBText: {
+        textDecorationLine: "underline"
     }
 })

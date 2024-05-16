@@ -19,7 +19,7 @@ const App = () => {
   );
 };
 
-const AppState = ({ children, navigationRef }: any) => {
+const AppState = ({ children }: any) => {
 
   return (
     <DbAuthProvider>

@@ -2,7 +2,7 @@ import { DbAuthState, userDB } from "./DbAuthProvider";
 
 type AuthAction =
     | { type: 'signUp', payload: { tokenDB: string, userDB: userDB } }
-    | { type: 'addError', payload: string }
+    | { type: 'addErrorDB', payload: string }
     | { type: 'removeError' }
     | { type: 'notAuthenticated' }
     | { type: 'logout' }
@@ -11,7 +11,7 @@ type AuthAction =
 export const dbAuthReducer = (state: DbAuthState, action: AuthAction): DbAuthState => {
 
     switch (action.type) {
-        case 'addError':
+        case 'addErrorDB':
             return {
                 ...state,
                 userDB: null,

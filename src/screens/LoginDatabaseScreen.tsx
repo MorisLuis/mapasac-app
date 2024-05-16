@@ -17,6 +17,7 @@ export const LoginDatabaseScreen = () => {
     const { servidor, database, onChange } = useForm({ servidor: '', database: '' });
 
     useEffect(() => {
+        console.log({errorMessage})
         if (errorMessage.length === 0) return;
 
         Alert.alert('Login incorrecto LOGINDB', errorMessage, [{
