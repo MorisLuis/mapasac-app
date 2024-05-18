@@ -26,9 +26,9 @@ export const LoginScreen = () => {
     useEffect(() => {
         if (errorMessage.length === 0) return;
 
-        console.log({errorMessage})
+        console.log(errorMessage)
 
-        Alert.alert('Login incorrecto LOGIN', errorMessage, [{
+        Alert.alert('Login incorrecto', errorMessage, [{
             text: 'Ok',
             onPress: removeError
         }]);
@@ -105,7 +105,7 @@ export const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={loginStyles.buttonContainer}>
+                {/* <View style={loginStyles.buttonContainer}>
                     <TouchableOpacity
                         activeOpacity={0.8}
                         style={[buttonStyles.button, buttonStyles.white]}
@@ -113,7 +113,7 @@ export const LoginScreen = () => {
                     >
                         <Text style={buttonStyles.buttonTextSecondary} >Cerrar DB</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
         </KeyboardAvoidingView>

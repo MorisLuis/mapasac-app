@@ -84,7 +84,6 @@ export const loginDBStyles = StyleSheet.create({
         marginBottom: 50
     },
     logoContainer: {
-        //backgroundColor: colores.color_blue,
         height: "20%",
         width: "100%",
         display: "flex",
@@ -100,7 +99,6 @@ export const loginDBStyles = StyleSheet.create({
         marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     headers: {
-        //backgroundColor: "yellow",
         height: "25%",
         width: "100%"
     },
@@ -141,7 +139,6 @@ export const loginDBStyles = StyleSheet.create({
         width: "80%"
     },
     inputsContainer:{
-        //backgroundColor: "green",
         height: "25%",
         width: "100%"
     },

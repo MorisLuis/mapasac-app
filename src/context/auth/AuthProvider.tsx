@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: any) => {
 
 
     useEffect(() => {
-        console.log("enter effect")
         if (status == 'dbChecking') {
             return
         }
@@ -76,11 +75,6 @@ export const AuthProvider = ({ children }: any) => {
             })
             return;
         } 
-        console.log("pass effect")
-
-
-        console.log({status})
-        console.log({authstatus: state.status})
 
         if (status == "dbNot-authenticated") {
             console.log("dbNot-authenticated")
@@ -92,20 +86,16 @@ export const AuthProvider = ({ children }: any) => {
         };
 
         if (state.status !== 'checking') {
-            console.log("checking")
 
             if (state.status === 'authenticated') {
-                console.log("authenticated")
 
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'TypeOfMovement' }],
                 })
             } else {
-                console.log("LoginPage")
 
                 if(currentScreen == 'LoginPage') return
-                console.log("enter LoginPage")
 
                 navigation.reset({
                     index: 0,
@@ -153,7 +143,6 @@ export const AuthProvider = ({ children }: any) => {
     }
 
     const signIn = async ({ correo, password }: LoginData) => {
-        console.log("auth sign in")
         setLoggingIn(true)
         try {
             state.status = "checking"
@@ -174,7 +163,7 @@ export const AuthProvider = ({ children }: any) => {
 
             dispatch({
                 type: 'addError',
-                payload: error?.response?.data?.msg || 'Información incorrecta'
+                payload: (error.response ? error.response.data.error : error.message )|| 'Información incorrecta'
             })
         }
     };

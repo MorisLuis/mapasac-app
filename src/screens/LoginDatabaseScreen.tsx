@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
 import { useForm } from '../hooks/useForm';
 import useKeyboardStatus from '../hooks/useKeyboardStatus';
 import { LoadingScreen } from './LoadingScreen';
@@ -21,7 +21,7 @@ export const LoginDatabaseScreen = () => {
     useEffect(() => {
         if (errorMessage.length === 0) return;
 
-        Alert.alert('Login incorrecto LOGINDB', errorMessage, [{
+        Alert.alert('Login incorrecto', errorMessage ? errorMessage : errorMessage, [{
             text: 'Ok',
             onPress: removeError
         }]);

@@ -58,10 +58,8 @@ export const DbAuthProvider = ({ children }: any) => {
     const checkToken = async () => {
 
         try {
-            console.log("checkToken")
             const token = await AsyncStorage.getItem('tokenDB');
 
-            console.log({tokenDB: token})
             // No token, no autenticado
             if (!token) return dispatch({ type: 'notAuthenticated' });
     
@@ -98,8 +96,6 @@ export const DbAuthProvider = ({ children }: any) => {
             state.status = "dbChecking"
             const { data } = await api.post('/api/auth/loginDB', { servidor, database });
 
-            console.log({data: JSON.stringify(data, null, 2)})
-
             dispatch({
                 type: 'signUp',
                 payload: {
@@ -108,22 +104,15 @@ export const DbAuthProvider = ({ children }: any) => {
                 }
             });
 
-            console.log("dispatch")
-
             await AsyncStorage.setItem('tokenDB', data.tokenDB);
 
-            /* navigation.reset({
-                index: 0,
-                routes: [{ name: 'LoginPage' }],
-            }) */
 
         } catch (error: any) {
-            console.log({errorinsignin: error})
             setLoggingIn(false)
 
             dispatch({
                 type: 'addErrorDB',
-                payload: error?.response?.data?.msg || 'Información incorrecta'
+                payload: (error.response ? error.response.data.error : error.message )|| 'Información incorrecta'
             })
         }
     };
