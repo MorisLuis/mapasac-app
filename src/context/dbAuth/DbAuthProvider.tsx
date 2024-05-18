@@ -48,6 +48,7 @@ export const DbAuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(dbAuthReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
+    const navigation = useNavigation<any>();
 
 
     useEffect(() => {
@@ -57,9 +58,10 @@ export const DbAuthProvider = ({ children }: any) => {
     const checkToken = async () => {
 
         try {
-            console.log({checkToken})
+            console.log("checkToken")
             const token = await AsyncStorage.getItem('tokenDB');
 
+            console.log({tokenDB: token})
             // No token, no autenticado
             if (!token) return dispatch({ type: 'notAuthenticated' });
     
@@ -83,6 +85,7 @@ export const DbAuthProvider = ({ children }: any) => {
                     userDB: resp.data.userDB
                 }
             });
+
         } catch (error) {
             console.log({errorincheck: error})
         }
@@ -95,6 +98,8 @@ export const DbAuthProvider = ({ children }: any) => {
             state.status = "dbChecking"
             const { data } = await api.post('/api/auth/loginDB', { servidor, database });
 
+            console.log({data: JSON.stringify(data, null, 2)})
+
             dispatch({
                 type: 'signUp',
                 payload: {
@@ -103,7 +108,14 @@ export const DbAuthProvider = ({ children }: any) => {
                 }
             });
 
+            console.log("dispatch")
+
             await AsyncStorage.setItem('tokenDB', data.tokenDB);
+
+            /* navigation.reset({
+                index: 0,
+                routes: [{ name: 'LoginPage' }],
+            }) */
 
         } catch (error: any) {
             console.log({errorinsignin: error})

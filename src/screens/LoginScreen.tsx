@@ -55,7 +55,7 @@ export const LoginScreen = () => {
 
                 <View style={loginStyles.imageContainer}>
                     <Image
-                        style={[keyboardActive ? loginStyles.imageActived : loginStyles.image]}
+                        style={[keyboardActive ? loginStyles.logoActived : loginStyles.logo]}
                         source={require('../assets/logo01.png')}
                     />
                 </View>

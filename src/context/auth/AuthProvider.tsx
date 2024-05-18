@@ -64,9 +64,26 @@ export const AuthProvider = ({ children }: any) => {
 
 
     useEffect(() => {
-        if (status == 'dbChecking') return;
+        console.log("enter effect")
+        if (status == 'dbChecking') {
+            return
+        }
+
+        if(status == 'dbAuthenticated' && state.status != 'authenticated'){
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'LoginPage' }],
+            })
+            return;
+        } 
+        console.log("pass effect")
+
+
+        console.log({status})
+        console.log({authstatus: state.status})
 
         if (status == "dbNot-authenticated") {
+            console.log("dbNot-authenticated")
             if(currentScreen == 'LoginDatabaseScreen') return
             return navigation.reset({
                 index: 0,
@@ -75,13 +92,20 @@ export const AuthProvider = ({ children }: any) => {
         };
 
         if (state.status !== 'checking') {
+            console.log("checking")
+
             if (state.status === 'authenticated') {
+                console.log("authenticated")
+
                 navigation.reset({
                     index: 0,
                     routes: [{ name: 'TypeOfMovement' }],
                 })
             } else {
+                console.log("LoginPage")
+
                 if(currentScreen == 'LoginPage') return
+                console.log("enter LoginPage")
 
                 navigation.reset({
                     index: 0,

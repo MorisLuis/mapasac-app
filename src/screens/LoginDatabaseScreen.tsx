@@ -5,11 +5,13 @@ import { useForm } from '../hooks/useForm';
 import useKeyboardStatus from '../hooks/useKeyboardStatus';
 import { LoadingScreen } from './LoadingScreen';
 
-import { loginStyles } from '../theme/loginTheme';
+import { loginDBStyles } from '../theme/loginTheme';
 import { buttonStyles } from '../theme/UI/buttons';
 import { inputStyles } from '../theme/UI/inputs';
 import { globalStyles } from '../theme/appTheme';
 import { DbAuthContext } from '../context/dbAuth/DbAuthContext';
+import Banner from "../assets/OLEIAPP.svg";
+import Logo from "../assets/Logo.svg";
 
 
 export const LoginDatabaseScreen = () => {
@@ -17,7 +19,6 @@ export const LoginDatabaseScreen = () => {
     const { servidor, database, onChange } = useForm({ servidor: '', database: '' });
 
     useEffect(() => {
-        console.log({errorMessage})
         if (errorMessage.length === 0) return;
 
         Alert.alert('Login incorrecto LOGINDB', errorMessage, [{
@@ -38,20 +39,26 @@ export const LoginDatabaseScreen = () => {
 
     return (
         <KeyboardAvoidingView
-            style={loginStyles.LoginDBScreen}
+            style={loginDBStyles.LoginDBScreen}
             behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
         >
-            <View style={loginStyles.formContainer}>
-                <View style={loginStyles.imageContainer}>
-                    <Image
-                        style={[keyboardActive ? loginStyles.imageActived : loginStyles.image]}
-                        source={require('../assets/logo01.png')}
-                    />
+            <View style={loginDBStyles.formContainer}>
+
+                <View style={loginDBStyles.logoContainer}>
+                    <Logo width={keyboardActive ? "35%" : "60%"} height={200} />
                 </View>
-                <Text style={[loginStyles.title]}>Ingresa a tu cuenta!</Text>
-                <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>
-                    Iniciemos conectadonos a tu base de datos.
-                </Text>
+
+                <View style={loginDBStyles.imageContainer}>
+                    <Banner width={keyboardActive ? "50%" : "90%"} height={200} />
+                </View>
+
+                <View style={loginDBStyles.headers}>
+                    <Text style={[keyboardActive ? loginDBStyles.titleDBActive : loginDBStyles.titleDB]}>Con OLEI APP agilice la captura de sus movimientos</Text>
+                    <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>
+                        Iniciemos conectadonos a tu base de datos.
+                    </Text>
+                </View>
+
                 <TextInput
                     placeholder="Escribe el servidor..."
                     placeholderTextColor="black"
@@ -69,6 +76,7 @@ export const LoginDatabaseScreen = () => {
                     placeholder="Escribe la base de datos..."
                     placeholderTextColor="black"
                     underlineColorAndroid="black"
+                    
                     secureTextEntry
                     style={[inputStyles.input]}
                     selectionColor="black"
@@ -78,7 +86,7 @@ export const LoginDatabaseScreen = () => {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                <View style={loginStyles.buttonContainer}>
+                <View style={loginDBStyles.buttonContainerDB}>
                     <TouchableOpacity
                         activeOpacity={0.8}
                         style={[buttonStyles.button, buttonStyles.yellow]}
@@ -87,6 +95,7 @@ export const LoginDatabaseScreen = () => {
                         <Text style={buttonStyles.buttonTextSecondary}>Ingresar</Text>
                     </TouchableOpacity>
                 </View>
+
             </View>
         </KeyboardAvoidingView>
     );
