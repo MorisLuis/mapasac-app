@@ -14,9 +14,7 @@ import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { AuthContext } from '../context/auth/AuthContext';
-import { Text, TouchableOpacity } from 'react-native';
 import { LoginDatabaseScreen } from '../screens/LoginDatabaseScreen';
-import { NavigationContainer } from '@react-navigation/native';
 
 export type InventoryNavigationStackParamList = {
     LoginPage: undefined;
@@ -85,6 +83,7 @@ export const AppNavigation = () => {
                 name="InventoryDetails"
                 component={ProductDetailsPage}
                 options={({ navigation }) => ({
+                    //headerShown: true,
                     header: props =>
                         <CustomHeader
                             {...props}
@@ -95,7 +94,8 @@ export const AppNavigation = () => {
                                 updateBarCode('')
                             }}
                         />
-                })}
+                })
+            }
             />
 
 

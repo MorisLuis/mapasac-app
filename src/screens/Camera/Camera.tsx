@@ -41,7 +41,6 @@ const CustomCamera: React.FC = () => {
 
     // Close modals.
     const handleCloseProductModalScanned = () => {
-        console.log("handleCloseProductModalScanned")
         setOpenModalScannerResult(false);
         setProductSelected(undefined);
         setProductsScanned(undefined);

@@ -77,7 +77,6 @@ export const AuthProvider = ({ children }: any) => {
         } 
 
         if (status == "dbNot-authenticated") {
-            console.log("dbNot-authenticated")
             if(currentScreen == 'LoginDatabaseScreen') return
             return navigation.reset({
                 index: 0,
@@ -138,7 +137,7 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
         } catch (error) {
-            console.log({ errorincheck: error })
+            console.log({ error })
         }
     }
 

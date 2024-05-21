@@ -16,7 +16,7 @@ import Logo from "../assets/Logo.svg";
 
 export const LoginDatabaseScreen = () => {
     const { signInDB, errorMessage, removeError, loggingIn } = useContext(DbAuthContext);
-    const { servidor, database, onChange } = useForm({ servidor: '', database: '' });
+    const { IdUsuarioOLEI, PasswordOLEI, onChange } = useForm({ IdUsuarioOLEI: '', PasswordOLEI: '' });
 
     useEffect(() => {
         if (errorMessage.length === 0) return;
@@ -30,7 +30,7 @@ export const LoginDatabaseScreen = () => {
 
     const onLogin = () => {
         Keyboard.dismiss();
-        signInDB({ servidor, database });
+        signInDB({ IdUsuarioOLEI, PasswordOLEI });
     };
 
     const keyboardActive = useKeyboardStatus();
@@ -66,8 +66,8 @@ export const LoginDatabaseScreen = () => {
                     underlineColorAndroid="black"
                     style={[inputStyles.input, globalStyles.globalMarginBottom]}
                     selectionColor="black"
-                    onChangeText={(value) => onChange(value, 'servidor')}
-                    value={servidor}
+                    onChangeText={(value) => onChange(value, 'IdUsuarioOLEI')}
+                    value={IdUsuarioOLEI}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -80,8 +80,8 @@ export const LoginDatabaseScreen = () => {
                     secureTextEntry
                     style={[inputStyles.input]}
                     selectionColor="black"
-                    onChangeText={(value) => onChange(value, 'database')}
-                    value={database}
+                    onChangeText={(value) => onChange(value, 'PasswordOLEI')}
+                    value={PasswordOLEI}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}

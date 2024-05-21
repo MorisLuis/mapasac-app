@@ -26,8 +26,8 @@ export interface LoginResponse {
 }
 
 export interface LoginData {
-    servidor: string;
-    database: string;
+    IdUsuarioOLEI: string;
+    PasswordOLEI: string;
 }
 
 export interface RegisterData {
@@ -48,8 +48,6 @@ export const DbAuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(dbAuthReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
-    const navigation = useNavigation<any>();
-
 
     useEffect(() => {
         checkToken();
@@ -85,16 +83,16 @@ export const DbAuthProvider = ({ children }: any) => {
             });
 
         } catch (error) {
-            console.log({errorincheck: error})
+            console.log({error})
         }
     }
 
 
-    const signInDB = async ({ servidor, database }: LoginData) => {
+    const signInDB = async ({ IdUsuarioOLEI, PasswordOLEI }: LoginData) => {
         setLoggingIn(true)
         try {
             state.status = "dbChecking"
-            const { data } = await api.post('/api/auth/loginDB', { servidor, database });
+            const { data } = await api.post('/api/auth/loginDB', { IdUsuarioOLEI, PasswordOLEI });
 
             dispatch({
                 type: 'signUp',

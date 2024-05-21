@@ -10,7 +10,7 @@ const getProductDetails = async (id: string, marca: string) => {
         console.log({ error: error })
     }
 
-    return product
+    return product;
 }
 
 const getProductByCodeBar = async (codeBar?: string, codigo?: string) => {

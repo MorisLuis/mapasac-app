@@ -20,7 +20,7 @@ export const ProductItemSearch = ({
     fromModal
 }: ProductItemSearchInterface) => {
 
-    const {  user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     return (
         <TouchableOpacity style={styles.ProductItemSearch} onPress={onClick}>
@@ -34,7 +34,7 @@ export const ProductItemSearch = ({
                     />
                     :
                     <View style={styles.notImage}>
-                        <Icon name={'camera'} size={20} color="black" /* style={styles.icon}  *//>
+                        <Icon name={'camera'} size={20} color="black" />
                         <Text style={styles.notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
                     </View>
             }
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     information: {
-        alignItems: 'flex-start' 
+        alignItems: 'flex-start'
     },
     description: {
         fontWeight: "bold"
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         marginVertical: 4
     },
     textAvailable: {
-        color: colores.color_border_tertiary ,
+        color: colores.color_border_tertiary,
     },
     codebarNotAvailable: {
         backgroundColor: colores.color_red + '43',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 8,
         textAlign: "center",
-        lineHeight: 8, 
+        lineHeight: 8,
         maxHeight: 40,
         overflow: 'hidden',
         paddingHorizontal: 2

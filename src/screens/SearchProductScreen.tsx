@@ -50,7 +50,9 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     };
 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
-        navigation.goBack()
+        if(modal) {
+            navigation.goBack()
+        }
         navigation.navigate('InventoryDetails', { selectedProduct });
     };
 
@@ -70,7 +72,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             headerLeft: () => <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto por nombre...",
-                placeholderTextColor: colores.color_blue,
+                //placeholderTextColor: colores.color_green,
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },
@@ -140,6 +142,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
 const styles = StyleSheet.create({
     SearchProductScreen: {
+        flex: 1,
         backgroundColor: colores.background_color
     },
     content: {

@@ -51,7 +51,6 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
     // Close modals.
     const handleCloseProductModalScanned = () => {
-        console.log("handleCloseProductModalScanned")
         setOpenModalScannerResult(false);
     }
 

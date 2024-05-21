@@ -29,12 +29,12 @@ export const ProductInventoryCard = ({
                     <Image
                         style={styles.productInventoryCard__Image}
                         source={{
-                            uri: product?.imagen ? product?.imagen[0]?.url : imageDefault,
+                            uri: product?.imagen[0]?.url
                         }}
                     />
                     :
                     <View style={styles.notImage}>
-                        <Icon name={'camera'} size={20} color="black" /* style={styles.icon}  *//>
+                        <Icon name={'camera'} size={20} color="black"/>
                         <Text style={styles.notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
                     </View>
             }
