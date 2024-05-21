@@ -60,7 +60,7 @@ export const LoginDatabaseScreen = () => {
                 </View>
 
                 <TextInput
-                    placeholder="Escribe el servidor..."
+                    placeholder="Escribe el usuario..."
                     placeholderTextColor="black"
                     keyboardType="email-address"
                     underlineColorAndroid="black"
@@ -73,7 +73,7 @@ export const LoginDatabaseScreen = () => {
                     autoCorrect={false}
                 />
                 <TextInput
-                    placeholder="Escribe la base de datos..."
+                    placeholder="Escribe la contraseña..."
                     placeholderTextColor="black"
                     underlineColorAndroid="black"
                     
