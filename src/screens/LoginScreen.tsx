@@ -18,8 +18,8 @@ export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
     const {  logOut } = useContext(DbAuthContext);
 
-    const { email, password, onChange } = useForm({
-        email: '',
+    const { Id_Usuario, password, onChange } = useForm({
+        Id_Usuario: '',
         password: ''
     });
 
@@ -35,7 +35,7 @@ export const LoginScreen = () => {
 
     const onLogin = () => {
         Keyboard.dismiss();
-        signIn({ correo: email, password });
+        signIn({ Id_Usuario, password });
     }
 
     const keyboardActive = useKeyboardStatus();
@@ -60,18 +60,18 @@ export const LoginScreen = () => {
 
 
                 <Text style={[loginStyles.title]}>Bienvenido!</Text>
-                <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>Por favor, inicia sesión abajo.</Text>
+                <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>Ingresar datos de Usuario</Text>
 
                 <TextInput
-                    placeholder="Escribe tu e-mail..."
-                    placeholderTextColor="black"
+                    placeholder="Escribe tu Id Usuario..."
+                    placeholderTextColor="gray"
                     keyboardType="email-address"
                     underlineColorAndroid="black"
                     style={[inputStyles.input, globalStyles.globalMarginBottom]}
                     selectionColor="black"
 
-                    onChangeText={(value) => onChange(value, 'email')}
-                    value={email}
+                    onChangeText={(value) => onChange(value, 'Id_Usuario')}
+                    value={Id_Usuario}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -79,7 +79,7 @@ export const LoginScreen = () => {
 
                 <TextInput
                     placeholder="Escribe tu contraseña..."
-                    placeholderTextColor="black"
+                    placeholderTextColor="gray"
                     underlineColorAndroid="black"
                     secureTextEntry
                     style={[inputStyles.input]}
@@ -103,7 +103,7 @@ export const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={loginStyles.buttonContainer}>
+                {/* <View style={loginStyles.buttonContainer}>
                     <TouchableOpacity
                         activeOpacity={0.8}
                         style={[buttonStyles.button, buttonStyles.white]}
@@ -111,7 +111,7 @@ export const LoginScreen = () => {
                     >
                         <Text style={buttonStyles.buttonTextSecondary} >Cerrar DB</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
         </KeyboardAvoidingView>

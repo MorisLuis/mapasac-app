@@ -60,8 +60,8 @@ export const LoginDatabaseScreen = () => {
                 </View>
 
                 <TextInput
-                    placeholder="Escribe el usuario..."
-                    placeholderTextColor="black"
+                    placeholder="Escribe Id Usuario Olei"
+                    placeholderTextColor="gray"
                     keyboardType="email-address"
                     underlineColorAndroid="black"
                     style={[inputStyles.input, globalStyles.globalMarginBottom]}
@@ -73,8 +73,8 @@ export const LoginDatabaseScreen = () => {
                     autoCorrect={false}
                 />
                 <TextInput
-                    placeholder="Escribe la contraseña..."
-                    placeholderTextColor="black"
+                    placeholder="Escribe Contraseña Olei"
+                    placeholderTextColor="gray"
                     underlineColorAndroid="black"
                     
                     secureTextEntry

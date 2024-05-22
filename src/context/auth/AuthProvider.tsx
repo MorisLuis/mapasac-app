@@ -26,14 +26,8 @@ export interface LoginResponse {
 }
 
 export interface LoginData {
-    correo: string;
+    Id_Usuario: string;
     password: string;
-}
-
-export interface RegisterData {
-    correo: string;
-    password: string;
-    nombre: string;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -141,11 +135,11 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
-    const signIn = async ({ correo, password }: LoginData) => {
+    const signIn = async ({ Id_Usuario, password }: LoginData) => {
         setLoggingIn(true)
         try {
             state.status = "checking"
-            const { data } = await api.post('/api/auth/login', { email: correo, password });
+            const { data } = await api.post('/api/auth/login', { Id_Usuario, password });
 
             dispatch({
                 type: 'signUp',
