@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
@@ -9,12 +9,12 @@ import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
 import ModalDecision from '../../components/Modals/ModalDecision'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { SettingsContext } from '../../context/settings/SettingsContext'
-import PorductInterface, { PorductInterfaceBag } from '../../interface/product'
+import { PorductInterfaceBag } from '../../interface/product'
 
 export const InventoryBagScreen = () => {
 
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
-    const { handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
+    const { handleCameraAvailable } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
@@ -34,7 +34,7 @@ export const InventoryBagScreen = () => {
         setOpenModalDecision(false);
         setCreateInventaryLoading(false);
         navigate('Scanner');
-        navigate('SuccesMessage');
+        navigate('succesMessageScreen');
     }
 
     const closeModalHandler = React.useCallback(() => {
@@ -43,7 +43,7 @@ export const InventoryBagScreen = () => {
 
 
     // Renders
-    const renderItem = ({ item }: { item: PorductInterfaceBag }) => {
+    /* const renderItem = ({ item }: { item: PorductInterfaceBag }) => {
         return (
             <ProductInventoryCard
                 product={item}
@@ -51,7 +51,15 @@ export const InventoryBagScreen = () => {
                 showDelete
             />
         )
-    };
+    }; */
+
+    const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (
+        <ProductInventoryCard
+            product={item}
+            onDelete={() => removeProduct(item)}
+            showDelete
+        />
+    ), [removeProduct])
 
     // Este efecto se ejecutará cuando la pantalla reciba el foco
     useFocusEffect(
@@ -150,6 +158,7 @@ const styles = StyleSheet.create({
         backgroundColor: colores.background_color_tertiary,
         padding: globalStyles.globalPadding.padding,
         height: "25%",
+        maxHeight: 150,
         width: "100%",
         position: "absolute",
         bottom: 0,

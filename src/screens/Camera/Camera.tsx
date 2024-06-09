@@ -1,51 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Vibration, Text, StyleSheet } from 'react-native';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { View, TouchableOpacity, Text, Platform, StyleSheet, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
-import { Barcode, CameraHighlights, useBarcodeScanner } from '@mgcrea/vision-camera-barcode-scanner';
+import { Camera, Point } from 'react-native-vision-camera';
 import { BlurView } from '@react-native-community/blur';
-import ModalBottom from '../../components/Modals/ModalBottom';
-import ModalMiddle from '../../components/Modals/ModalMiddle';
-import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
-import { SearchCodebarWithInput } from '../../components/Modals/ModalRenders/SearchCodebarWithInput';
-import { getProductByCodeBar } from '../../services/products';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SettingsContext } from '../../context/settings/SettingsContext';
-import { colores } from '../../theme/appTheme';
-import { cameraStyles } from '../../theme/CameraCustumTheme';
-import Scan from '../../assets/scan.svg';
 import PorductInterface from '../../interface/product';
-import { ScannerResult } from '../../components/Modals/ModalRenders/ScannerResult';
 import UserInterface from '../../interface/user';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-import Toast from 'react-native-toast-message';
-import { ShowToastMessage } from '../../components/ToastMesage';
 
+import ModalMiddle from '../../components/Modals/ModalMiddle';
+import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
+import { cameraStyles } from '../../theme/CameraCustumTheme';
+import Scan from '../../assets/scan.svg';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { HightlightBox } from '../../components/HightlightBox';
+import { cameraSettings } from './cameraSettings';
+import { CameraPermission } from '../../components/screens/CameraPermission';
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
+
+type PermissionStatus = 'granted' | 'denied' | 'not-determined';
 
 const CustomCamera: React.FC = () => {
 
-    const { updateBarCode, user } = useContext(AuthContext);
-    const { vibration, cameraAvailable, handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
+    const { user } = useContext(AuthContext);
+    const { cameraAvailable, handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
     const { bag } = useContext(InventoryBagContext);
 
-    const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
+
     const [lightOn, setLightOn] = useState(false);
-    const onTheLimitProductScanned = limitProductsScanned === bag?.length;
-
+    const onTheLimitProductScanned = limitProductsScanned < bag?.length;
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
-    const [productSelected, setProductSelected] = useState<PorductInterface>()
-
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
-    const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
-    const [openModalFindByCodebarInput, setOpenModalFindByCodebarInput] = useState(false);
-
-    // Close modals.
-    const handleCloseProductModalScanned = () => {
-        setOpenModalScannerResult(false);
-        setProductSelected(undefined);
-        setProductsScanned(undefined);
-        handleCameraAvailable(true)
-    }
+    const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
+    const { navigate } = useNavigation<any>();
+    const isFocused = useIsFocused();
 
     const handleCloseModalProductsFoundByCodebar = () => {
         setOpenModalProductFoundByCodebar(false);
@@ -54,7 +45,6 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleCloseModalFindByBarcodeInput = (cameraAvailable?: boolean) => {
-        setOpenModalFindByCodebarInput(false);
         handleCameraAvailable(cameraAvailable === false ? cameraAvailable : true);
     }
 
@@ -63,188 +53,201 @@ const CustomCamera: React.FC = () => {
 
         handleCloseModalFindByBarcodeInput(false);
 
-        if( response.length === 1) {
-            setProductSelected(response[0])
-            setOpenModalScannerResult(true)
+        if (response.length === 1) {
+            navigate('scannerResultScreen', { product: response[0] });
+            setCodeScannerHighlights([]);
         } else if (response.length > 0) {
             setOpenModalProductFoundByCodebar(true)
         } else {
-            setOpenModalScannerResult(true)
+            setCodeScannerHighlights([]);
+            navigate('scannerResultScreen', { product: response[0] });
         }
 
         setProductsScanned(response);
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
-        setProductSelected(product);
+        setCodeScannerHighlights([]);
         setOpenModalProductFoundByCodebar(false);
-        setOpenModalScannerResult(true);
+
+        setTimeout(() => {
+            navigate('scannerResultScreen', { product: product });
+        }, 500);
     }
 
-    const handleVibrate = () => {
-        if (vibration) {
-            Vibration.vibrate(500);
-        }
-    };
 
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
-        setOpenModalFindByCodebarInput(true);
+        navigate('findByCodebarInputModal');
     }
 
-    /* const onCodeDetected = Worklets.createRunInJsFn(async (codes: Barcode[]) => {
-
-        if (!productsScanned && codes?.length > 0) {
-            handleCameraAvailable(false)
-            const scannedCode = codes?.[0];
-            const codeValue = scannedCode.value;
-
-            if (!codeValue) return;
-
-            try {
-                const response = await getProductByCodeBar(codeValue);
-                handleOpenProductsFoundByCodebar(response);
-                handleVibrate()
-                if (response.length < 1) updateBarCode(codeValue)
-                console.log(`Scanned code value: ${codeValue}`);
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        }
+    const {
+        codeScanner,
+        setCodeScannerHighlights,
+        backCamera,
+        format,
+        codeScannerHighlights,
+        onLayout,
+        layout,
+        scanFrame,
+        Fps
+    } = cameraSettings({
+        setProductsScanned,
+        productsScanned,
+        handleOpenProductsFoundByCodebar
     })
 
-    const { props: cameraProps, highlights } = useBarcodeScanner({
-        fps: 5,
-        barcodeTypes: ["qr", "ean-13", "code-128"],
-        onBarcodeScanned: (barcodes) => {
-            "worklet";
-            onCodeDetected(barcodes);
-        },
-    }); */
 
-    const devices = useCameraDevices();
-    const backCamera = devices.find((device) => device.position === 'back');
-    //const dynamicCameraProps = onTheLimitProductScanned ? {} : cameraProps;
+    // Solicitar permisos de cámara
+    const requestPermissions = async () => {
+        const cameraStatus = await Camera.requestCameraPermission() as PermissionStatus;
+        setCameraPermission(cameraStatus);
+    };
+
+    useEffect(() => {
+        requestPermissions();
+        return () => {
+            handleCameraAvailable(false);
+        };
+    }, []);
 
     useEffect(() => {
         if (!user) return;
-        getTypeOfMovementsName(user)
-    }, [user])
+        getTypeOfMovementsName(user);
+    }, [user]);
+
+    useFocusEffect(
+        useCallback(() => {
+            handleCameraAvailable(true);
+            return () => {
+                handleCameraAvailable(false);
+            };
+        }, [])
+    );
 
     useEffect(() => {
-        setSelectedDevice(backCamera?.id || null);
-    }, []);
-
-
-    //temporal
-    const codeScanner = useCodeScanner({
-        codeTypes: ["qr", "ean-13", "code-128"],
-
-        onCodeScanned: async (codes) => {
-            if (!productsScanned && codes?.length > 0) {
-                handleCameraAvailable(false)
-                const scannedCode = codes?.[0];
-                const codeValue = scannedCode.value;
-
-                if (!codeValue) return;
-
-                try {
-                    const response = await getProductByCodeBar(codeValue);
-                    handleOpenProductsFoundByCodebar(response);
-                    handleVibrate()
-                    if (response.length < 1) updateBarCode(codeValue)
-                    console.log(`Scanned code value: ${codeValue}`);
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                }
-            }
+        if (!isFocused) {
+            handleCameraAvailable(false);
         }
-    })
+    }, [isFocused]);
 
 
-    if (!backCamera) return null;
+    const camera = useRef<Camera>(null)
+
+    const focus = useCallback((point: Point) => {
+        const c = camera.current
+        if (c == null) return
+        c.focus(point)
+    }, [])
+
+    const gesture = Gesture.Tap().onEnd(({ x, y }: any) => { runOnJS(focus)({ x, y }) })
+
+
+    if (cameraPermission === null) {
+        return <CameraPermission requestPermissions={requestPermissions} message="Cargando..." />
+    }
+
+    if (cameraPermission !== 'granted') {
+        return (
+            <CameraPermission
+                requestPermissions={requestPermissions}
+                message="Permisos de cámara no concedidos."
+                availableAuthorization={true}
+            />
+        )
+    }
+
+    if (!backCamera) {
+        return (
+            <CameraPermission
+                requestPermissions={requestPermissions}
+                message="No hay dispositivos de cámara disponibles."
+                availableAuthorization={true}
+            />
+        )
+    }
 
     return (
         <View style={cameraStyles.cameraScreen}>
-            <View style={cameraStyles.content}>
-                {
-                    onTheLimitProductScanned &&
-                    <BlurView
-                        style={cameraStyles.blurOverlay}
-                        blurType="dark"
-                        blurAmount={5}
-                    />
-                }
+            {
+                onTheLimitProductScanned &&
+                <BlurView
+                    style={cameraStyles.blurOverlay}
+                    blurType="dark"
+                    blurAmount={5}
+                />
+            }
 
-                <Camera
-                    style={cameraStyles.camera}
-                    device={backCamera}
-                    torch={lightOn ? "on" : "off"}
-                    isActive={
-                        (cameraAvailable) || false
-                    }
-                    codeScanner={codeScanner}
-                    />
+            {backCamera && (
+                <GestureHandlerRootView>
+                    <GestureDetector gesture={gesture} >
+                        <Camera
+                            ref={camera}
+                            style={StyleSheet.absoluteFill}
+                            device={backCamera}
+                            torch={lightOn ? "on" : "off"}
+                            isActive={
+                                onTheLimitProductScanned ? false :
+                                    cameraAvailable || false
+                            }
+                            codeScanner={codeScanner}
+                            format={format}
+                            onLayout={onLayout}
 
-                {/* {
-                    backCamera &&
-                    <Camera
-                        style={cameraStyles.camera}
-                        device={backCamera}
-                        torch={lightOn ? "on" : "off"}
-                        isActive={
-                            (cameraAvailable) || false
-                        }
-                        codeScanner={codeScanner}
-                    />
-                } */}
+                            //Testing
+                            videoHdr={false}
+                            enableBufferCompression={false}
+                            fps={Fps}
+                        />
+                    </GestureDetector>
+                </GestureHandlerRootView>
+            )}
 
-                {/* {
-                    !onTheLimitProductScanned &&
-                    <CameraHighlights highlights={highlights} color={colores.color_red} />
-                } */}
+            {codeScannerHighlights.map((hightlight, key) => (
+                <HightlightBox key={key} highlight={hightlight} layout={layout} scanFrame={scanFrame} />
+            ))}
 
-                <View style={cameraStyles.flash}>
-                    <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
-                        <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="white" />
-                    </TouchableOpacity>
-                </View>
-
-
-                <View style={cameraStyles.message}>
-                    {
-                        onTheLimitProductScanned ?
-                            <Text style={cameraStyles.textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
-                            :
-                            <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
-                    }
-                </View>
-
-                <View style={cameraStyles.scanSvgContainer}>
-                    <Scan width={300} height={300} />
-                </View>
-
-                <View style={cameraStyles.scannerOptions}>
-                    <BlurView style={cameraStyles.option} blurType="light" blurAmount={20}>
-                        <View style={cameraStyles.optionContent}>
-                            <TouchableOpacity onPress={handleOpenInputModal}>
-                                <Icon name="barcode-outline" size={24} color="black" />
-                            </TouchableOpacity>
-                        </View>
-                    </BlurView>
-                </View>
+            <View style={cameraStyles.flash}>
+                <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
+                    <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="white" />
+                </TouchableOpacity>
             </View>
 
 
-            {/* SEARCH PRODUCT WITH INPUT */}
-            <ModalMiddle
-                visible={openModalFindByCodebarInput}
-                onClose={handleCloseModalFindByBarcodeInput}
-            >
-                <SearchCodebarWithInput
-                    handleOpenProductsFoundByCodebar={handleOpenProductsFoundByCodebar}
-                />
-            </ModalMiddle>
+            <View style={cameraStyles.message}>
+                {onTheLimitProductScanned ? (
+                    <Text style={cameraStyles.textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                ) : (
+                    <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                )}
+            </View>
+
+            <View style={cameraStyles.scanSvgContainer}>
+                <Scan width={300} height={300} />
+            </View>
+
+            {
+                Platform.OS === 'android' ?
+                    <TouchableOpacity onPress={handleOpenInputModal}>
+                        <View style={cameraStyles.scannerOptions}>
+                            <View style={cameraStyles.option}>
+                                <View style={cameraStyles.optionContent}>
+                                    <Icon name="barcode-outline" size={hp("3%")} color="black" />
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    :
+                    <View style={cameraStyles.scannerOptions}>
+                        <BlurView style={cameraStyles.option} blurType="light" blurAmount={20}>
+                            <View style={cameraStyles.optionContent}>
+                                <TouchableOpacity onPress={handleOpenInputModal}>
+                                    <Icon name="barcode-outline" size={hp("3%")} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                        </BlurView>
+                    </View>
+            }
 
             {/* LIST OF PRODUCTS FOUND BY CODEBAR */}
             <ModalMiddle
@@ -256,20 +259,6 @@ const CustomCamera: React.FC = () => {
                     onClick={handleSelectProduct}
                 />
             </ModalMiddle>
-
-            {/* SCANNER RESULT - MODAL */}
-            <ModalBottom
-                visible={openModalScannerResult}
-                //visible={true}
-                onClose={handleCloseProductModalScanned}
-            >
-                <ScannerResult
-                    onClose={handleCloseProductModalScanned}
-                    product={productSelected as PorductInterface}
-                    handleSelectFindByCode={() => setOpenModalFindByCodebarInput(true)}
-                    fromInput={true}
-                />
-            </ModalBottom>
         </View>
     );
 };

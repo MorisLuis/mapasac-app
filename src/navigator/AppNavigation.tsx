@@ -1,162 +1,196 @@
-import React, { useContext } from 'react';
-
+import React, { useContext, useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PorductInterface from '../interface/product';
+import ProductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
 import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
+import { AuthContext } from '../context/auth/AuthContext';
+import { TESTAPP } from "@env";
 
-import { ProductDetailsPage } from '../screens/productDetailsPage';
+// Screens
 import { LoginScreen } from '../screens/LoginScreen';
 import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
-import { AuthContext } from '../context/auth/AuthContext';
 import { LoginDatabaseScreen } from '../screens/LoginDatabaseScreen';
+import { PersonalInformation } from '../screens/Profile/PersonalInformation';
+import { SearchCodebarWithInput } from '../screens/SearchCodebarWithInput';
+import ScannerResult from '../screens/ScannerResult';
+import { StartupScreen } from '../screens/StartupScreen';
+import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 
 export type InventoryNavigationStackParamList = {
+    //Navigation
+    BottomNavigation: undefined;
+    CodebarUpdateNavigation: { product: ProductInterface, selectedProduct: any },
+
+    //Login
     LoginPage: undefined;
     LoginDatabaseScreen: undefined;
-    BottomNavigation: undefined;
-    BagInventory: undefined;
-    InventoryDetails: { selectedProduct: PorductInterface };
-    ProductDetails: { selectedProduct?: PorductInterface, productDetails?: PorductInterface, fromModal?: boolean };
-    SuccesMessage: undefined;
-    TypeOfMovement: undefined;
-    SearchProduct: undefined;
-    SearchProductModal: { modal: boolean };
-    CodebarUpdateNavigation: { product: PorductInterface, selectedProduct: any },
-    CameraModal: undefined
+    StartupScreen: undefined;
+
+    //Screens
+    bagInventoryScreen: undefined;
+    inventoryDetailsScreen: { selectedProduct: ProductInterface };
+    productDetailsScreen: { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
+    succesMessageScreen: undefined;
+    typeOfMovementScreen: undefined;
+    searchProductScreen: undefined;
+    personalInformationScreen: { fromLogIn?: boolean },
+    scannerResultScreen: undefined,
+
+    //Modal
+    findByCodebarInputModal: undefined;
+    searchProductModal: { modal: boolean };
 };
 
-export const AppNavigation = () => {
+const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
-    const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
+export const AppNavigation = () => {
     const { handleCameraAvailable } = useContext(SettingsContext);
     const { updateBarCode } = useContext(AuthContext);
 
-    return (
-        <Stack.Navigator >
+    const commonOptions: any = {
+        headerBackTitle: 'Atrás',
+        headerTitleAlign: 'center'
+    };
 
+    const authScreens = TESTAPP !== 'FALSE' ? (
+        <>
             <Stack.Screen
-                name="LoginPage"
-                component={LoginScreen}
+                name="StartupScreen"
+                component={StartupScreen}
                 options={{ headerShown: false }}
             />
-
             <Stack.Screen
                 name="LoginDatabaseScreen"
                 component={LoginDatabaseScreen}
                 options={{ headerShown: false }}
             />
-
             <Stack.Screen
-                name="TypeOfMovement"
-                component={TypeOfMovementScreen}
-                options={{
-                    headerShown: false,
-                }}
+                name="LoginPage"
+                component={LoginScreen}
+                options={{ headerShown: false }}
             />
+        </>
+    ) : null;
 
+    const stackScreens = useMemo(() => (
+        <>
+            {authScreens}
             <Stack.Screen
                 name="BottomNavigation"
                 component={BottomNavigation}
                 options={{ headerShown: false }}
             />
-
             <Stack.Screen
-                name="BagInventory"
+                name="personalInformationScreen"
+                component={PersonalInformation}
+                options={({ navigation }) => ({
+                    header: props => <CustomHeader title="Información Personal" navigation={navigation} />
+                })}
+            />
+            <Stack.Screen
+                name="typeOfMovementScreen"
+                component={TypeOfMovementScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="bagInventoryScreen"
                 component={InventoryBagScreen}
                 options={({ navigation }) => ({
                     presentation: "modal",
                     headerShown: true,
                     title: 'Inventario',
+                    headerTitleAlign: 'center',
                     headerLeft: () => (
                         <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />
                     ),
                 })}
             />
-
             <Stack.Screen
-                name="InventoryDetails"
-                component={ProductDetailsPage}
-                options={({ navigation }) => ({
-                    //headerShown: true,
-                    header: props =>
-                        <CustomHeader
-                            {...props}
-                            title="Detalles de Producto"
-                            navigation={navigation}
-                            back={() => {
-                                handleCameraAvailable(true)
-                                updateBarCode('')
-                            }}
-                        />
-                })
-            }
+                name="scannerResultScreen"
+                component={ScannerResult}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
-
-
             <Stack.Screen
-                name="ProductDetails"
+                name="findByCodebarInputModal"
+                component={SearchCodebarWithInput}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="inventoryDetailsScreen"
                 component={ProductDetailsPage}
                 options={({ navigation }) => ({
-                    presentation: "modal",
-                    headerTitle: "Detalles de Producto",
-                    headerShown: true,
-                    headerBackTitle: "Atrás",
-                    header: props =>
+                    header: props => (
                         <CustomHeader
                             {...props}
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                handleCameraAvailable(true)
-                                updateBarCode('')
+                                handleCameraAvailable(true);
+                                updateBarCode('');
                             }}
                         />
+                    )
                 })}
             />
-
-
             <Stack.Screen
-                name="SearchProduct"
+                name="searchProductScreen"
                 component={SearchProductScreen}
-                options={{
-                    headerShown: true,
-                    headerBackTitle: "Atrás"
-                }}
+                options={commonOptions}
             />
-
             <Stack.Screen
-                name="SearchProductModal"
+                name="searchProductModal"
                 component={SearchProductScreen}
                 options={{
                     presentation: "modal",
                     headerTitle: "Buscar Producto",
-                    headerShown: true,
-                    headerBackTitle: "Atrás"
+                    ...commonOptions
                 }}
             />
-
             <Stack.Screen
-                name="SuccesMessage"
-                component={SuccesMessage}
-                options={{
-                    headerShown: false,
-                }}
+                name="productDetailsScreen"
+                component={ProductDetailsPage}
+                options={({ navigation, route }) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title="Detalles de Producto"
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack();
+                                updateBarCode('');
+                                if (route.params?.selectedProduct) {
+                                    setTimeout(() => {
+                                        navigation.navigate('scannerResultScreen', { product: route.params.selectedProduct });
+                                    }, 500);
+                                }
+                            }}
+                        />
+                    )
+                })}
             />
-
+            <Stack.Screen
+                name="succesMessageScreen"
+                component={SuccesMessage}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name="CodebarUpdateNavigation"
                 component={CodebarUpdateNavigation}
-                options={{
-                    presentation: "modal",
-                    headerShown: false
-                }}
+                options={{ presentation: "modal", headerShown: false }}
             />
+        </>
+    ), [authScreens, handleCameraAvailable, updateBarCode]);
+
+    return (
+        <Stack.Navigator>
+            {stackScreens}
         </Stack.Navigator>
-    )
-}
+    );
+};

@@ -18,6 +18,7 @@ type AuthAction =
     | { type: 'typeOfMovement', user: UserInterface }
     | { type: 'codeBar', codeBar: string }
     | { type: 'codeBarStatus', codeBarStatus: boolean }
+    | { type: 'userSetup', user: UserInterface }
 
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -72,6 +73,12 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
             return {
                 ...state,
                 codeBarStatus: action.codeBarStatus
+            }
+        
+        case 'userSetup': 
+            return {
+                ...state,
+                user: action.user
             }
 
         default:

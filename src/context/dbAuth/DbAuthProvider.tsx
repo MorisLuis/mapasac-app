@@ -1,15 +1,16 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState, useContext } from 'react';
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { dbAuthReducer } from './dbAuthReducer';
 import { DbAuthContext } from './DbAuthContext';
+import { AuthContext } from '../auth/AuthContext';
+import UserInterface from '../../interface/user';
 
 export interface userDB {
     servidor: string;
-    database: string
+    database: string;
+    user: UserInterface
 }
 
 export interface DbAuthState {
@@ -17,7 +18,7 @@ export interface DbAuthState {
     tokenDB: string | null;
     errorMessage: string;
     userDB: userDB | null;
-
+    user: UserInterface | null
 }
 
 export interface LoginResponse {
@@ -41,6 +42,7 @@ const AUTH_INITIAL_STATE: DbAuthState = {
     tokenDB: null,
     userDB: null,
     errorMessage: '',
+    user: null
 }
 
 
@@ -54,6 +56,7 @@ export const DbAuthProvider = ({ children }: any) => {
     }, [])
 
     const checkToken = async () => {
+        console.log("checkToken DB")
 
         try {
             const token = await AsyncStorage.getItem('tokenDB');
@@ -78,7 +81,8 @@ export const DbAuthProvider = ({ children }: any) => {
                 type: 'signUp',
                 payload: {
                     tokenDB: resp.data.tokenDB,
-                    userDB: resp.data.userDB
+                    userDB: resp.data.userDB,
+                    user: resp.data.user
                 }
             });
 
@@ -98,7 +102,8 @@ export const DbAuthProvider = ({ children }: any) => {
                 type: 'signUp',
                 payload: {
                     tokenDB: data.tokenDB,
-                    userDB: data.userDB
+                    userDB: data.userDB,
+                    user: data.user
                 }
             });
 

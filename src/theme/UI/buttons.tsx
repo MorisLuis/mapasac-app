@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont } from "../appTheme";
+import { colores, globalFont, globalStyles } from "../appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const buttonStyles = StyleSheet.create({
     // Button size
     button: {
-        height: 36,
+        height: hp("5%"),
         backgroundColor: colores.color_tertiary,
         borderWidth: 1,
         borderColor: "transparent",
-        borderRadius: 8,
-        paddingHorizontal: 10,
+        borderRadius: globalStyles.borderRadius.borderRadius,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         width: "100%",
         color: colores.text_color_secondary,
         display: "flex",
@@ -18,12 +19,12 @@ export const buttonStyles = StyleSheet.create({
     },
 
     button_small: {
-        minHeight: 26,
+        height: hp("5%"),
         backgroundColor: "#c6d1f6",
         borderColor: "transparent",
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        borderRadius: globalStyles.borderRadius.borderRadius,
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingVertical: globalStyles.globalPadding.padding / 2,
         width: "100%",
         color: colores.color_tertiary,
         display: "flex",
@@ -36,8 +37,8 @@ export const buttonStyles = StyleSheet.create({
         backgroundColor: "transparent",
         borderWidth: 0,
         borderColor: "transparent",
-        borderRadius: 8,
-        paddingHorizontal: 10,
+        borderRadius: globalStyles.borderRadius.borderRadius,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         width: "100%",
         color: colores.text_color_secondary,
         display: "flex",

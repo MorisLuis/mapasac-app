@@ -58,11 +58,13 @@ export const AuthProvider = ({ children }: any) => {
 
 
     useEffect(() => {
-        if (status == 'dbChecking') {
+
+        if (status == 'dbChecking' && state.status == 'checking') {
             return
         }
 
         if(status == 'dbAuthenticated' && state.status != 'authenticated'){
+            console.log("go to LoginPage")
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -78,23 +80,17 @@ export const AuthProvider = ({ children }: any) => {
             })
         };
 
-        if (state.status !== 'checking') {
-
-            if (state.status === 'authenticated') {
-
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'TypeOfMovement' }],
-                })
-            } else {
-
-                if(currentScreen == 'LoginPage') return
-
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'LoginPage' }],
-                })
-            }
+        if (state.status === 'authenticated') {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'typeOfMovementScreen' }],
+            });
+        } else {
+            if (currentScreen === 'LoginPage') return;
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'LoginPage' }],
+            });
         }
     }, [state.status, status])
 
@@ -103,6 +99,8 @@ export const AuthProvider = ({ children }: any) => {
     }, [])
 
     const checkToken = async () => {
+
+        console.log("checkToken LOGIN")
 
         try {
             const token = await AsyncStorage.getItem('token');
@@ -199,6 +197,10 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'codeBarStatus', codeBarStatus: value });
     }
 
+    const handleSetupUser = (user: UserInterface) => {
+        dispatch({ type: 'userSetup', user });
+    }
+
     return (
         <AuthContext.Provider value={{
             ...state,
@@ -208,7 +210,8 @@ export const AuthProvider = ({ children }: any) => {
             removeError,
             updateBarCode,
             updateTypeOfMovements,
-            handleCodebarScannedProcces
+            handleCodebarScannedProcces,
+            handleSetupUser
         }}>
             {children}
         </AuthContext.Provider>

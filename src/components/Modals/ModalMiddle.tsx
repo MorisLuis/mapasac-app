@@ -1,8 +1,9 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores } from '../../theme/appTheme';
+import { colores, globalFont } from '../../theme/appTheme';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface ModalMiddleInterface {
     visible: boolean;
@@ -26,26 +27,48 @@ const ModalMiddle = ({
             visible={visible}
             onRequestClose={onClose}
         >
-            <BlurView
-                style={StyleSheet.absoluteFill}
-                blurType="light"
-                blurAmount={5}
-            >
-                <View style={styles.ModalMiddle}>
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity style={styles.header} onPress={onClose}>
-                            {
-                                title ?
-                                    <Text style={styles.title}>{title}</Text> : <Text></Text>
-                            }
-                            <Icon name="close-outline" size={24} color="black" />
-                        </TouchableOpacity>
-                        <View style={styles.modalChildren}>
-                            {children}
+            {
+                Platform.OS === "android" ?
+                    <View style={[StyleSheet.absoluteFill]}>
+                        <View style={styles.ModalMiddle}>
+                            <View style={styles.modalBackground}></View>
+                            <View style={styles.modalContent}>
+                                <TouchableOpacity style={styles.header} onPress={onClose}>
+                                    {
+                                        title ?
+                                            <Text style={styles.title}>{title}</Text> : <Text></Text>
+                                    }
+                                    <Icon name="close-outline" size={hp("4%")} color="black" />
+                                </TouchableOpacity>
+                                <View style={styles.modalChildren}>
+                                    {children}
+                                </View>
+                            </View>
                         </View>
+
                     </View>
-                </View>
-            </BlurView>
+                    :
+                    <BlurView
+                        style={StyleSheet.absoluteFill}
+                        blurType="light"
+                        blurAmount={5}
+                    >
+                        <View style={styles.ModalMiddle}>
+                            <View style={styles.modalContent}>
+                                <TouchableOpacity style={styles.header} onPress={onClose}>
+                                    {
+                                        title ?
+                                            <Text style={styles.title}>{title}</Text> : <Text></Text>
+                                    }
+                                    <Icon name="close-outline" size={hp("4%")} color="black" />
+                                </TouchableOpacity>
+                                <View style={styles.modalChildren}>
+                                    {children}
+                                </View>
+                            </View>
+                        </View>
+                    </BlurView>
+            }
         </Modal>
 
     );
@@ -69,11 +92,18 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        width: "95%",
+        width: wp("95%"),
         height: "auto",
         borderRadius: 10,
         borderWidth: 1,
         borderColor: colores.color_border
+    },
+    modalBackground: {
+        height: "100%",
+        width: "100%",
+        backgroundColor: 'black',
+        opacity: 0.6,
+        position: "absolute",
     },
     modalChildren: {
         paddingTop: 10,
@@ -96,7 +126,8 @@ const styles = StyleSheet.create({
         borderBottomColor: colores.color_border
     },
     title: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontSize: globalFont.font_normal
     }
 });
 

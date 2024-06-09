@@ -1,13 +1,24 @@
 import React, { useContext, useEffect } from 'react'
 
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { AuthContext } from '../../context/auth/AuthContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
+import { buttonStyles } from '../../theme/UI/buttons';
 
+interface PersonalInformationInterface {
+    route: {
+        params: {
+            fromLogIn?: boolean;
+        };
+    };
+}
 
-export const PersonalInformation = () => {
+export const PersonalInformation = ({ route }: PersonalInformationInterface) => {
 
     const { user } = useContext(AuthContext);
+    const { user: userFromDB, logOut } = useContext(DbAuthContext);
+    const { fromLogIn } = route.params || {};
 
     useEffect(() => {
         console.log('Personal Information effect');
@@ -16,15 +27,14 @@ export const PersonalInformation = () => {
     return (
         <View style={styles.PersonalInformation}>
             <View style={styles.profile}>
-
                 <View style={styles.circle}>
                     <View style={styles.circleContent}>
-                        <Text style={styles.circleText}>{user?.Nombre.slice(0, 1)}</Text>
+                        <Text style={styles.circleText}>{user?.Nombre?.slice(0, 1) || userFromDB?.Nombre?.slice(0, 1)}</Text>
                     </View>
                 </View>
 
                 <View>
-                    <Text style={styles.name}>{user?.Nombre}</Text>
+                    <Text style={styles.name}>{user?.Nombre || userFromDB?.Nombre}</Text>
                     <Text>{user?.Company}</Text>
                 </View>
 
@@ -32,28 +42,45 @@ export const PersonalInformation = () => {
 
             <View style={styles.information}>
                 <View style={styles.data}>
-                    <Text style={styles.label}>Nombre:</Text>
-                    <Text>{user?.Nombre}</Text>
-                    <View style={styles.separator} />
-                </View>
-
-                <View style={styles.data}>
-                    <Text style={styles.label}>Compañia:</Text>
-                    <Text>{user?.Company}</Text>
+                    <Text style={styles.label}>Razón Social:</Text>
+                    <Text>{user?.RazonSocial || userFromDB?.RazonSocial}</Text>
                     <View style={styles.separator} />
                 </View>
 
                 <View style={styles.data}>
                     <Text style={styles.label}>Usuario:</Text>
-                    <Text>{user?.Id_UsuarioOOL}</Text>
+                    <Text>{user?.Id_UsuarioOOL || userFromDB?.Id_UsuarioOOL}</Text>
                     <View style={styles.separator} />
                 </View>
 
                 <View style={styles.data}>
                     <Text style={styles.label}>Almacen:</Text>
-                    <Text>{user?.Id_Almacen}</Text>
+                    <Text>{user?.Id_Almacen || userFromDB?.Id_Almacen}</Text>
+                    <View style={styles.separator} />
+                </View>
+
+                <View style={styles.data}>
+                    <Text style={styles.label}>Servidor:</Text>
+                    <Text>{user?.ServidorSQL || userFromDB?.ServidorSQL}</Text>
+                    <View style={styles.separator} />
+                </View>
+
+                <View style={styles.data}>
+                    <Text style={styles.label}>Base de datos:</Text>
+                    <Text>{user?.BaseSQL || userFromDB?.BaseSQL}</Text>
                 </View>
             </View>
+
+            {
+                fromLogIn &&
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={[buttonStyles.button, buttonStyles.black]}
+                    onPress={logOut}
+                >
+                    <Text style={buttonStyles.buttonText} >Cerrar sesión de base de datos</Text>
+                </TouchableOpacity>
+            }
         </View>
     )
 }
@@ -72,7 +99,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         display: "flex",
         flexDirection: "row",
-        alignItems:"center",
+        alignItems: "center",
         gap: 20,
         marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
@@ -91,7 +118,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         display: "flex",
         flexDirection: "column",
-        justifyContent:"center",
+        justifyContent: "center",
         textAlign: "center",
         alignItems: "center",
         height: "100%",

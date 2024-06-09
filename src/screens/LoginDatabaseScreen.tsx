@@ -12,6 +12,7 @@ import { globalStyles } from '../theme/appTheme';
 import { DbAuthContext } from '../context/dbAuth/DbAuthContext';
 import Banner from "../assets/OLEIAPP.svg";
 import Logo from "../assets/Logo.svg";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 export const LoginDatabaseScreen = () => {
@@ -45,16 +46,16 @@ export const LoginDatabaseScreen = () => {
             <View style={loginDBStyles.formContainer}>
 
                 <View style={loginDBStyles.logoContainer}>
-                    <Logo width={keyboardActive ? "35%" : "60%"} height={200} />
+                    <Logo width={keyboardActive ? wp("35%") : wp("60%")} height={"100%"} />
                 </View>
 
-                <View style={loginDBStyles.imageContainer}>
-                    <Banner width={keyboardActive ? "50%" : "90%"} height={200} />
+                <View style={[keyboardActive ? loginDBStyles.imageContainerActive : loginDBStyles.imageContainer]}>
+                    <Banner width={keyboardActive ? "50%" : "90%"} height={"100%"}  />
                 </View>
 
-                <View style={loginDBStyles.headers}>
+                <View style={[keyboardActive ? loginDBStyles.headersActive : loginDBStyles.headers]}>
                     <Text style={[keyboardActive ? loginDBStyles.titleDBActive : loginDBStyles.titleDB]}>Con OLEI APP agilice la captura de sus movimientos</Text>
-                    <Text style={[globalStyles.globalMarginBottom, globalStyles.globalMarginBottom]}>
+                    <Text style={[keyboardActive ? loginDBStyles.textDBActive : loginDBStyles.textDB]}>
                         Iniciemos conectadonos a tu base de datos.
                     </Text>
                 </View>
@@ -63,7 +64,6 @@ export const LoginDatabaseScreen = () => {
                     placeholder="Escribe Id Usuario Olei"
                     placeholderTextColor="gray"
                     keyboardType="email-address"
-                    underlineColorAndroid="black"
                     style={[inputStyles.input, globalStyles.globalMarginBottom]}
                     selectionColor="black"
                     onChangeText={(value) => onChange(value, 'IdUsuarioOLEI')}
@@ -74,9 +74,7 @@ export const LoginDatabaseScreen = () => {
                 />
                 <TextInput
                     placeholder="Escribe Contraseña Olei"
-                    placeholderTextColor="gray"
-                    underlineColorAndroid="black"
-                    
+                    placeholderTextColor="gray"                    
                     secureTextEntry
                     style={[inputStyles.input]}
                     selectionColor="black"

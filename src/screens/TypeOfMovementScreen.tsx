@@ -6,6 +6,7 @@ import { Id_TipoMovInvInterface, getTypeOfMovements } from '../services/typeOfMo
 import { AuthContext } from '../context/auth/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const TypeOfMovementScreen = () => {
 
@@ -54,6 +55,7 @@ export const TypeOfMovementScreen = () => {
     const handleGetTypeOfMovements = async () => {
         setIsLoading(true);
         const types = await getTypeOfMovements();
+        
         setTypeOfMovement(types);
         setIsLoading(false);
     }
@@ -77,7 +79,6 @@ export const TypeOfMovementScreen = () => {
                 onEndReachedThreshold={0}
             />
 
-
             {(typeSelected || typeSelected == 0) && (
                 <View style={styles.footer}>
                     <TouchableOpacity style={[buttonStyles.button]} onPress={onChangetTypeOfMovement}>
@@ -97,16 +98,17 @@ const styles = StyleSheet.create({
     },
     header: {
         marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        width: "80%"
+        width: wp("80%")
     },
     title: {
+        paddingTop: globalStyles.globalPadding.padding,
         fontSize: globalFont.font_med
     },
     optionContainer: {
-        padding: 10,
+        padding: globalStyles.globalPadding.padding / 1.5,
         marginBottom: globalStyles.globalMarginBottom.marginBottom,
         borderWidth: 0.7,
-        borderRadius: 5,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         borderColor: colores.color_border_tertiary,
     },
     optionText: {
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         padding: globalStyles.globalPadding.padding,
-        paddingBottom: 30,
+        paddingBottom: globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color_tertiary,
         position: 'absolute',
         bottom: 0,

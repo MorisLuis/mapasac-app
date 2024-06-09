@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colores } from "../appTheme";
+import { colores, globalFont } from "../appTheme";
 
 
 export const modalRenderstyles = StyleSheet.create({
@@ -8,6 +8,7 @@ export const modalRenderstyles = StyleSheet.create({
     },
     SearchCodebarWithInput_title: {
         marginBottom: 10,
+        fontSize: globalFont.font_normal
     },
     SearchCodebarWithInput_input: {
         borderWidth: 1,
@@ -39,6 +40,9 @@ export const modalRenderstyles = StyleSheet.create({
         borderRadius: 100,
         borderWidth: 1,
         borderColor: colores.color_border
+    },
+    optionText: {
+        fontSize: globalFont.font_normal
     },
     optionActive: {
         backgroundColor: colores.color_yellow,

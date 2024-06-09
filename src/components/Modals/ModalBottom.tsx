@@ -39,22 +39,6 @@ const ModalBottom = ({
                     <KeyboardAvoidingView
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     >
-                        {/* <View
-                            style={{
-                                backgroundColor: "#EDBD42",
-                                width: "100%",
-                                height: 100,
-                                borderTopLeftRadius: 10,
-                                borderTopRightRadius: 10,
-                                position: "absolute",
-                                top: -60,
-                                left: 0,
-                                zIndex: -1,
-                                padding: 20
-                            }}
-                        >
-                            <Text>Ya has agregado 20 piezas a este producto.</Text>
-                        </View> */}
 
                         <View style={styles.modalContent}>
 
@@ -138,4 +122,3 @@ const styles = StyleSheet.create({
         marginBottom: globalStyles.globalMarginBottom.marginBottom
     }
 });
-

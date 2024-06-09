@@ -1,21 +1,12 @@
 
 import { StyleSheet } from "react-native";
-import { colores } from "./appTheme";
+import { colores, globalFont, globalStyles } from "./appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const cameraStyles = StyleSheet.create({
     cameraScreen: {
         flex: 1,
         backgroundColor: colores.background_color,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    content: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-        borderEndEndRadius: 20,
-        borderEndStartRadius: 20,
-        overflow: "hidden"
     },
     camera: {
         flex: 1,
@@ -28,9 +19,9 @@ export const cameraStyles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         position: "absolute",
-        bottom: "10%",
-        right: "7.5%",
-        padding: 5,
+        bottom: hp("10%"),
+        right: wp("7.5%"),
+        padding: globalStyles.globalPadding.padding / 2,
     },
     option: {
         borderRadius: 30,
@@ -40,16 +31,16 @@ export const cameraStyles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: 10,
+        padding: globalStyles.globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
         borderColor: "black"
     },
     message: {
         position: "absolute",
-        top: "25%",
-        left: "25%",
-        width: "50%",
+        top: hp("25%"),
+        left: wp("20%"),
+        width: wp("60%"),
         display: "flex",
         alignItems: "center",
         textAlign: 'center',
@@ -59,12 +50,13 @@ export const cameraStyles = StyleSheet.create({
         color: colores.text_color_secondary,
         display: "flex",
         alignItems: "center",
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: globalFont.font_normal
     },
     scanSvgContainer: {
         position: "absolute",
-        top: "50%",
-        left: "50%",
+        top: hp("50%"),
+        left: wp("50%"),
         transform: [{ translateX: -150 }, { translateY: -150 }],
         zIndex: 2
     },

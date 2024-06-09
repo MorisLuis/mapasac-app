@@ -1,17 +1,29 @@
-import { StyleSheet } from "react-native";
-import { globalFont, globalStyles } from "../appTheme";
+import { Dimensions, StyleSheet } from "react-native";
+import { colores, globalFont, globalStyles } from "../appTheme";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+const { height } = Dimensions.get('window');
 
 
 export const modalRenderstyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    modalContainer: {
+        height: height / 3,
+        backgroundColor: colores.background_color
+    },
     ScannerResult: {
-        paddingBottom: globalStyles.globalMarginBottom.marginBottom
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom,
+        backgroundColor: colores.background_color
     },
     product: {
         display: "flex",
         alignItems: 'center',
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingBottom: globalStyles.globalMarginBottom.marginBottom
+        paddingBottom: globalStyles.globalMarginBottom.marginBottom,
+
     },
     productText: {
         display: "flex",
@@ -71,5 +83,13 @@ export const modalRenderstyles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         paddingBottom: globalStyles.globalMarginBottom.marginBottom
+    },
+    seeProduct: {
+        fontSize: globalFont.font_normal,
+    },
+    counterContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: wp("5%")
     }
 });

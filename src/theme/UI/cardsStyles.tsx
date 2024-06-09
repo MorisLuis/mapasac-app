@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { colores, globalFont, globalStyles } from '../appTheme';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 export const styles = StyleSheet.create({
     title: {
-        fontSize: 30,
-        marginBottom: 20
+        fontSize: globalFont.font_med,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     productInventoryCard: {
         display: "flex",
@@ -13,23 +14,15 @@ export const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: colores.color_border_secondary,
         backgroundColor: colores.background_color_secondary,
-        borderRadius: 8,
-        padding: 10,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        /* shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: -3,
-        },
-        shadowOpacity: 0.06,
-        shadowRadius: 3,
-        elevation: 3, */
+        borderRadius: globalStyles.borderRadius.borderRadius,
+        padding: globalStyles.globalPadding.padding / 2,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     productInventoryCard__Image: {
-        width: 60,
-        minHeight: 70,
-        marginRight: 10,
-        borderRadius: 5
+        width: wp("15%"),
+        minHeight: wp("17.5%"),
+        marginRight: globalStyles.globalMarginBottom.marginBottom,
+        borderRadius: globalStyles.borderRadius.borderRadius / 2,
     },
     productInventoryCard__data: {
         flex: 1,
@@ -42,39 +35,41 @@ export const styles = StyleSheet.create({
         flexDirection: "row"
     },
     dataItemText: {
-        fontSize: 12
+        fontSize: globalFont.font_normal
     },
     label: {
         fontWeight: "bold",
         marginRight: globalStyles.globalMarginBottomSmall.marginBottom,
-        fontSize: 12
+        fontSize: globalFont.font_normal
     },
     information: {
         maxWidth: "80%"
     },
     description: {
         fontWeight: "bold",
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
+        fontSize: globalFont.font_normal,
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom / 2
     },
     stock: {
         backgroundColor: colores.background_color,
         borderColor: colores.color_border,
         borderWidth: 1,
-        borderRadius: 8,
-        padding: 10,
-        minWidth: 40,
-        height: 40,
+        borderRadius: globalStyles.borderRadius.borderRadius,
+        padding: globalStyles.globalPadding.padding / 2,
+        minWidth: hp("6%"),
+        height: hp("6%"),
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        //maxWidth: "20%",
     },
     delete: {
         color: "red",
-        paddingVertical: 10
+        paddingVertical: globalStyles.globalPadding.padding / 2
     },
+
+
+
     notImage: {
-        //flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
@@ -85,9 +80,6 @@ export const styles = StyleSheet.create({
         backgroundColor: colores.background_color_tertiary,
         borderWidth: 1,
         borderColor: colores.color_border
-        /* minHeight: 80,
-        marginRight: 10,
-        borderRadius: 5 */
     },
     notImageText: {
         fontWeight: 'bold',

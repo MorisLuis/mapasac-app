@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalStyles } from '../../theme/appTheme';
 

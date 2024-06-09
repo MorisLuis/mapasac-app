@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
 import PorductInterface, { PorductInterfaceBag } from '../../interface/product';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
@@ -44,7 +44,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         setKeyNumber(keyNumber + 1)
         const newKey = keyNumber + 1
 
-        dispatch({ type: '[InventoryBag] - Add Product', payload: {...product, key: newKey} })
+        dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
     }
 
     const removeProduct = (product: PorductInterfaceBag) => {
@@ -56,38 +56,46 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     }
 
 
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const postInventory = async (descripcion?: string) => {
 
         try {
+            const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
             const inventorybody = {
                 descripcion,
-                Id_TipoMovInv: user?.Id_TipoMovInv?.Id_TipoMovInv
-            }
+                Id_TipoMovInv: tipoMovInvId
+            };
             const inventory = await api.post(`/api/inventory`, inventorybody);
             dispatch({ type: '[InventoryBag] - Post Inventory', payload: inventory.data })
             setInventoryCreated(true)
         } catch (error) {
-            console.log({ error })
+            console.error('Error posting inventory:', error);
             setInventoryCreated(false);
         } finally {
-            setTimeout(() => {
+            timeoutRef.current = setTimeout(() => {
                 setInventoryCreated(false);
             }, 1000);
         }
-
     };
+
+    // Cleanup timeout on component unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
 
     const postInventoryDetails = async (products: PorductInterface[]) => {
-
         try {
             await api.post(`/api/inventory/inventoryDetails`, products);
             dispatch({ type: '[InventoryBag] - Post Inventory Details', payload: products })
             setInventoryCreated(true)
         } catch (error) {
-            console.log({ error })
+            console.error('Error posting inventory details:', error);
         }
-
     }
 
 

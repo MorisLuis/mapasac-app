@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import ProductInterface from '../interface/product';
@@ -9,9 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
 import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { SettingsContext } from '../context/settings/SettingsContext';
-import ModalBottom from '../components/Modals/ModalBottom';
-import { ScannerResult } from '../components/Modals/ModalRenders/ScannerResult';
-import PorductInterface from '../interface/product';
+import { globalStyles } from '../theme/appTheme';
 
 type ProductDetailsPageInterface = {
     route?: {
@@ -26,9 +24,8 @@ type ProductDetailsPageInterface = {
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const { productDetails, selectedProduct, fromModal } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
+    
     const { handleCameraAvailable } = useContext(SettingsContext);
-    const [openModalScannerResult, setOpenModalScannerResult] = useState(false);
-
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
 
@@ -46,22 +43,32 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleAddToInventory = () => {
-        setOpenModalScannerResult(true);
-    }
-
-    // Close modals.
-    const handleCloseProductModalScanned = () => {
-        setOpenModalScannerResult(false);
+        navigation.navigate('scannerResultScreen', { product: selectedProduct });
     }
 
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             handleCameraAvailable(false);
             handleGetProductDetails();
         }, [])
     );
 
+
     return productDetailsData ? (
+        <ProductDetailsContent
+            productDetailsData={productDetailsData}
+            handleOptionsToUpdateCodebar={handleOptionsToUpdateCodebar}
+            handleAddToInventory={handleAddToInventory}
+            fromModal={fromModal}
+        />
+    ) : (
+        <ProductDetailsSkeleton />
+    );
+};
+
+
+const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal } : any) => {
+    return (
         <>
             <ScrollView style={productDetailsStyles.ProductDetailsPage}>
                 <View style={productDetailsStyles.imageContainer}>
@@ -83,51 +90,31 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
                     <Text style={productDetailsStyles.description}>{productDetailsData.Descripcion}</Text>
                     <View>
                         <Text style={productDetailsStyles.price}>Precio</Text>
-                        <Text>{format(productDetailsData.Precio)}</Text>
+                        <Text style={productDetailsStyles.priceValue}>{format(productDetailsData.Precio)}</Text>
                     </View>
                 </View>
 
                 <View style={productDetailsStyles.information}>
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Codigo:</Text>
-                        <Text>{productDetailsData.Codigo}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Existencia:</Text>
-                        <Text>{productDetailsData.Existencia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Familia:</Text>
-                        <Text>{productDetailsData.Familia}</Text>
-                        <View style={productDetailsStyles.separator} />
-                    </View>
-
-                    <View style={productDetailsStyles.data}>
-                        <Text style={productDetailsStyles.label}>Marca:</Text>
-                        <Text>{productDetailsData.Marca}</Text>
-                        {productDetailsData.CodBar && <View style={productDetailsStyles.separator} />}
-                    </View>
+                    <ProductDetailItem label="Codigo:" value={productDetailsData.Codigo} />
+                    <ProductDetailItem label="Existencia:" value={productDetailsData.Existencia} />
+                    <ProductDetailItem label="Familia:" value={productDetailsData.Familia} />
+                    <ProductDetailItem label="Marca:" value={productDetailsData.Marca} />
                     {productDetailsData.CodBar && (
-                        <View style={productDetailsStyles.data}>
-                            <Text style={productDetailsStyles.label}>Codigo de barras: </Text>
-                            <Text>{productDetailsData.CodBar}</Text>
-                        </View>
+                        <ProductDetailItem label="Codigo de barras:" value={productDetailsData.CodBar} />
                     )}
                 </View>
 
-                {!productDetailsData.CodBar && (
-                    <TouchableOpacity style={buttonStyles.button} onPress={handleOptionsToUpdateCodebar}>
+                {(!productDetailsData.CodBar && !fromModal) && (
+                    <TouchableOpacity
+                        style={[buttonStyles.button, { marginBottom: globalStyles.globalMarginBottom.marginBottom * 2 }]}
+                        onPress={handleOptionsToUpdateCodebar}
+                    >
                         <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
                     </TouchableOpacity>
                 )}
             </ScrollView>
 
-            {
-                !fromModal &&
+            {!fromModal && (
                 <View style={productDetailsStyles.footer}>
                     <TouchableOpacity
                         style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
@@ -137,22 +124,16 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
                         <Text style={buttonStyles.buttonTextSecondary}>Agregar a inventario</Text>
                     </TouchableOpacity>
                 </View>
-            }
-
-            <ModalBottom
-                visible={openModalScannerResult}
-                //visible={true}
-                onClose={handleCloseProductModalScanned}
-            >
-                <ScannerResult
-                    onClose={handleCloseProductModalScanned}
-                    product={selectedProduct as PorductInterface}
-                    fromInput={true}
-                    seeProductDetails={false}
-                />
-            </ModalBottom>
+            )}
         </>
-    ) : (
-        <ProductDetailsSkeleton />
     );
-};
+});
+
+const ProductDetailItem = React.memo(({ label, value } : any ) => (
+    <View style={productDetailsStyles.data}>
+        <Text style={productDetailsStyles.label}>{label}</Text>
+        <Text style={productDetailsStyles.dataValue}>{value}</Text>
+        <View style={productDetailsStyles.separator} />
+    </View>
+));
+

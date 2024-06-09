@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
-import { colores, globalStyles } from "./appTheme";
-
-
+import { colores, globalFont, globalStyles } from "./appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const loginStyles = StyleSheet.create({
     LoginScreen: {
@@ -14,55 +13,71 @@ export const loginStyles = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         justifyContent: 'center',
-        height: 600,
-        marginBottom: 50
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     imageContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: 'center',
         width: "100%",
-        height: 120,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        minHeight: hp("10%"),
+        maxHeight: hp("20%"),
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
     },
     logo: {
-        maxWidth: "40%",
-        objectFit: "cover",
+        objectFit: "scale-down",
         height: "100%"
     },
     logoHorizontal: {
-        maxWidth: "60%",
+        maxWidth: hp("60%"),
         objectFit: "cover",
         height: "100%"
     },
     logoActived: {
-        maxWidth: "30%",
-        objectFit: "cover",
-        height: "80%"
+        maxWidth: wp("100%"),
+        objectFit: "contain",
+        height: hp("15%")
     },
     title: {
         color: 'black',
-        fontSize: 30,
+        fontSize: globalFont.font_big,
         fontWeight: 'bold',
-        marginTop: 20,    
+        //marginTop: globalStyles.globalMarginBottom.marginBottom,    
+    },
+    textLogin: {
+        fontSize: globalFont.font_normal,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,    
     },
     titleDB: {
         color: 'black',
-        fontSize: 26,
+        fontSize: globalFont.font_med,
         fontWeight: 'bold',
-        marginTop: 40,
+        marginTop:  globalStyles.globalMarginBottom.marginBottom,
         textTransform: "uppercase",
-        width: "80%"
+        width: hp("80%")
     },
+
     buttonContainer: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: globalStyles.globalMarginBottom.marginBottom
     },
     buttonContainerDB: {
         alignItems: 'center',
-        marginTop: 20
+        marginTop:  globalStyles.globalMarginBottom.marginBottom
+    },
+    footer: {
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingVertical: globalStyles.globalPadding.padding,
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent:'flex-end',
+        alignItems: "center"
+    },
+    footerText: {
+        marginRight: 5,
+        fontSize: globalFont.font_sm
     }
 });
 
@@ -78,29 +93,46 @@ export const loginDBStyles = StyleSheet.create({
     },
     formContainer: {
         flex: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         justifyContent: 'center',
-        height: 600,
-        marginBottom: 50
+        height: "100%",
+        marginBottom: hp("7.5%")
     },
     logoContainer: {
         height: "20%",
         width: "100%",
         display: "flex",
         alignContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        //backgroundColor: "red"
     },
     imageContainer: {
         display: "flex",
         alignItems: "center",
         justifyContent: 'center',
         width: "100%",
-        height: "20%",
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        height: hp("20%"),
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        //backgroundColor: "blue"
+    },
+    imageContainerActive: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: 'center',
+        width: "100%",
+        height: hp("15%"),
+        //backgroundColor: "blue"
     },
     headers: {
-        height: "25%",
-        width: "100%"
+        height: hp("20%"),
+        width: "100%",
+        //backgroundColor: "yellow"
+    },
+    headersActive: {
+        height: hp("15%"),
+        width: "100%",
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom,
+        //backgroundColor: "yellow"
     },
     logo: {
         maxWidth: "40%",
@@ -117,26 +149,29 @@ export const loginDBStyles = StyleSheet.create({
         objectFit: "cover",
         height: "80%"
     },
-    title: {
-        color: 'black',
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 20,    
-    },
     titleDB: {
         color: 'black',
-        fontSize: 26,
+        fontSize:  hp("3%"),
         fontWeight: 'bold',
-        marginTop: 40,
         textTransform: "uppercase",
         width: "85%"
     },
     titleDBActive: {
         color: 'black',
-        fontSize: 20,
+        fontSize:  hp("2.5%"),
         fontWeight: 'bold',
         marginTop: 20,  
-        width: "80%"
+        textTransform: "uppercase",
+        width: "95%"
+    },
+    textDB: {
+        color: 'black',
+        fontSize: hp("2%"),
+    },
+    textDBActive: {
+        color: 'black',
+        fontSize: hp("2%"),
+        width: "100%"
     },
     inputsContainer:{
         height: "25%",

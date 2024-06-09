@@ -1,7 +1,8 @@
+import UserInterface from "../../interface/user";
 import { DbAuthState, userDB } from "./DbAuthProvider";
 
 type AuthAction =
-    | { type: 'signUp', payload: { tokenDB: string, userDB: userDB } }
+    | { type: 'signUp', payload: { tokenDB: string, userDB: userDB, user: UserInterface } }
     | { type: 'addErrorDB', payload: string }
     | { type: 'removeError' }
     | { type: 'notAuthenticated' }
@@ -32,7 +33,8 @@ export const dbAuthReducer = (state: DbAuthState, action: AuthAction): DbAuthSta
                 errorMessage: '',
                 status: 'dbAuthenticated',
                 tokenDB: action.payload.tokenDB,
-                userDB: action.payload.userDB
+                userDB: action.payload.userDB,
+                user: action.payload.user
             }
 
         case 'logout':

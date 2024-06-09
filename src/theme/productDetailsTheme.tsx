@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 import { colores, globalFont, globalStyles } from "./appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const productDetailsStyles = StyleSheet.create({
     ProductDetailsPage: {
+        flex: 1,
         padding: globalStyles.globalPadding.padding,
-        height: "100%",
-        backgroundColor: colores.background_color
+        backgroundColor: colores.background_color,
     },
     imageContainer: {
         minHeight: 300,
@@ -19,9 +20,8 @@ export const productDetailsStyles = StyleSheet.create({
     },
     image: {
         position: 'absolute',
-        minHeight: 200,
-        height: "90%",
-        width: "60%",
+        height: hp("30%"),
+        width: wp("50%"),
         resizeMode: 'contain',
         backgroundColor: colores.background_color_tertiary,
         shadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -35,14 +35,12 @@ export const productDetailsStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold',
-        
     },
     notImageText: {
         fontWeight: 'bold',
         fontSize: globalFont.font_med,
         textAlign: "center",
         lineHeight: globalFont.font_med,
-        //maxHeight: 40,
         overflow: 'hidden',
         paddingHorizontal: globalStyles.globalPadding.padding
     },
@@ -54,26 +52,34 @@ export const productDetailsStyles = StyleSheet.create({
         fontWeight: "bold"
     },
     price: {
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontSize: globalFont.font_normal,
+    },
+    priceValue: {
+        fontSize: globalFont.font_normal,
     },
     information: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: globalStyles.globalPadding.padding / 2,
+        paddingHorizontal:  globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color_secondary,
         borderWidth: 1,
         borderColor: `${colores.color_border}${Math.round(0.3 * 255).toString(16)}`,
         borderRadius: 5,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        marginBottom: globalStyles.globalMarginBottom.marginBottom * 2
     },
     data: {
         display: "flex",
         flexDirection: "row",
-        paddingVertical: 10,
+        paddingVertical:  globalStyles.globalPadding.padding / 2,
         position: "relative"
     },
     label: {
         fontWeight: 'bold',
-        marginRight: 10
+        fontSize: globalFont.font_normal,
+        marginRight: globalStyles.globalMarginBottom.marginBottom / 2
+    },
+    dataValue: {
+        fontSize: globalFont.font_normal,
     },
     separator: {
         position: 'absolute',
@@ -90,7 +96,7 @@ export const productDetailsStyles = StyleSheet.create({
     optionCodebar: {
         backgroundColor: colores.background_color_secondary,
         padding: globalStyles.globalPadding.padding,
-        borderRadius: 5,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         borderWidth: 1,
         borderColor: colores.color_border,
         display: "flex",
@@ -109,7 +115,7 @@ export const productDetailsStyles = StyleSheet.create({
 
     //Footer
     footer: {
-        position: "absolute",
+        //position: "absolute",
         bottom: 0,
         height: 100,
         width: "100%",

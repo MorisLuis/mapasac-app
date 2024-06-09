@@ -57,7 +57,8 @@ export default ModalComplete;
 const styles = StyleSheet.create({
     modalComplete: {
         flex: 1,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        backgroundColor: colores.background_color
     },
     modalContent: {
         backgroundColor: colores.background_color,

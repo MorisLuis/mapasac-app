@@ -1,5 +1,5 @@
 import React from 'react';
-import { View} from 'react-native';
+import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import CustomCamera from '../screens/Camera/Camera';
 import { Inventory } from '../screens/Camera/Inventory';
@@ -7,7 +7,7 @@ import { CustomTabBar } from '../components/Navigation/CustomTabBar';
 
 
 export const ScannerNavigation = () => {
-    
+
     const TopTabs = createMaterialTopTabNavigator();
     return (
         <View style={{ flex: 1 }}>

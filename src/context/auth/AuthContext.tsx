@@ -16,6 +16,7 @@ type ContextProps = {
     updateBarCode: (value: string) => void;
     updateTypeOfMovements: (value: number) => void;
     handleCodebarScannedProcces: (value: boolean) => void;
+    handleSetupUser: (value: UserInterface) => void;
 }
 
 

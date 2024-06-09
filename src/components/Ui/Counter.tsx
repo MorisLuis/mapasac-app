@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 interface CounterInterface {
     counter: number,
@@ -29,14 +31,14 @@ export const Counter = ({
 
     return (
         <View style={styles.counter}>
-            <Icon name="remove-outline" size={24} color="black" onPress={subtractProduct} />
+            <Icon name="remove-outline" size={hp("3.5%")} color="black" onPress={subtractProduct} style={styles.counterButton}/>
             <TextInput
                 style={styles.input}
                 value={counter.toString()}
                 onChangeText={handleInputChange}
                 keyboardType="numeric"
             />
-            <Icon name="add-outline" size={24} color="black" onPress={addProduct} />
+            <Icon name="add-outline" size={hp("3.5%")} color="black" onPress={addProduct} style={styles.counterButton}/>
         </View>
     )
 }
@@ -48,16 +50,22 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 25
+        marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     input: {
         textAlign: 'center',
-        marginHorizontal: 10,
-        backgroundColor: "#F0F3FF",
-        paddingHorizontal: 30,
+        marginHorizontal: globalStyles.globalMarginBottom.marginBottom / 2,
+        backgroundColor: colores.background_color_secondary,
+        paddingHorizontal: wp("7.5%"),
         paddingVertical: 10,
-        borderRadius: 10,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: "#EEEDEB"
+        borderColor: colores.color_border,
+        fontSize: globalFont.font_normal
+    },
+    counterButton: {
+        backgroundColor: colores.background_color_secondary,
+        padding: globalStyles.globalPadding.padding / 5,
+        borderRadius: globalStyles.borderRadius.borderRadius
     }
 });

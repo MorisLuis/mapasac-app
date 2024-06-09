@@ -1,51 +1,48 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont } from "../appTheme";
+import { colores, globalFont, globalStyles } from "../appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const inputStyles = StyleSheet.create({
     input: {
-        height: 40,
+        height: hp("5%"),
         borderWidth: 1,
         borderColor: colores.color_border,
-        borderRadius: 8,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
-        paddingHorizontal: 8,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color_secondary
     },
 
     focusedInput: {
         borderWidth: 1,
         borderColor: 'transparent',
-    },
-
-    validInput: {
-
     }
 });
 
+
 export const selectStyles = StyleSheet.create({
     inputIOS: {
-        fontSize: 16,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
+        fontSize: globalFont.font_normal,
+        paddingVertical: globalStyles.globalPadding.padding,
+        paddingHorizontal: globalStyles.globalPadding.padding,
         borderWidth: 1,
         borderColor: colores.color_border_secondary,
-        borderRadius: 4,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         color: colores.text_color,
-        paddingRight: 30,
+        paddingRight: globalStyles.globalPadding.padding,
         backgroundColor: colores.background_color,
     },
     inputAndroid: {
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 8,
+        fontSize: globalFont.font_normal,
+        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingVertical: globalStyles.globalPadding.padding,
         borderWidth: 0.5,
-        borderColor: 'purple',
-        borderRadius: 8,
+        borderColor: colores.color_border_secondary,
+        borderRadius: globalStyles.borderRadius.borderRadius,
         color: 'black',
-        paddingRight: 30,
+        paddingRight: globalStyles.globalPadding.padding,
         backgroundColor: 'white',
     },
-    // Estilos específicos del modal
     modalViewMiddle: {
         backgroundColor: colores.background_color_tertiary,
     },

@@ -1,78 +1,80 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import PorductInterface from '../../../interface/product';
-import { Counter } from '../../Ui/Counter';
+import { InventoryBagContext } from '../context/Inventory/InventoryBagContext';
+import PorductInterface from '../interface/product';
+import { Counter } from '../components/Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
-import { buttonStyles } from '../../../theme/UI/buttons';
-import { globalStyles } from '../../../theme/appTheme';
-import { AuthContext } from '../../../context/auth/AuthContext';
-import { EmptyMessageCard } from '../../Cards/EmptyMessageCard';
-import { SettingsContext } from '../../../context/settings/SettingsContext';
-import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultTheme';
+import { buttonStyles } from '../theme/UI/buttons';
+import { globalStyles } from '../theme/appTheme';
+import { AuthContext } from '../context/auth/AuthContext';
+import { EmptyMessageCard } from '../components/Cards/EmptyMessageCard';
+import { SettingsContext } from '../context/settings/SettingsContext';
+import { modalRenderstyles } from '../theme/ModalRenders/ScannerResultTheme';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import ModalBottom from '../components/Modals/ModalBottom';
 
 interface ScannerResultInterface {
-    product: PorductInterface;
-    onClose: () => void;
-    handleSelectFindByCode?: () => void;
-    fromInput: boolean;
-    seeProductDetails?: boolean
+    fromInput?: boolean;
+    seeProductDetails?: boolean;
+    route?: {
+        params: {
+            product: PorductInterface;
+        };
+    };
 }
-
-export const ScannerResult = ({
-    product,
-    onClose,
-    handleSelectFindByCode,
+const ScannerResult = ({
     fromInput,
-    seeProductDetails = true
+    seeProductDetails = true,
+    route
 }: ScannerResultInterface) => {
 
-    const { addProduct, bag } = useContext(InventoryBagContext)
+
+    const { product } = route?.params || {}
+
+    const { addProduct } = useContext(InventoryBagContext)
     const { codeBar } = useContext(AuthContext);
     const { handleCameraAvailable } = useContext(SettingsContext);
 
-    const { navigate } = useNavigation<any>();
+    const navigation = useNavigation<any>();
+
     const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
-
         const inventoryBody = {
             ...product,
             Piezas: counterProduct
         }
-
-        addProduct(inventoryBody)
-        onClose()
+        handleCameraAvailable(true)
+        addProduct(inventoryBody as any)
+        navigation.goBack()
     }
 
     const handleExpandProductDetails = () => {
-        navigate('ProductDetails', { selectedProduct: product, fromModal: true });
+        navigation.goBack()
+        navigation.navigate('productDetailsScreen', { selectedProduct: product, fromModal: true });
     }
 
     const handleSearchByCode = () => {
-        onClose()
-        handleSelectFindByCode?.()
+        navigation.navigate('findByCodebarInputModal');
     }
 
     const handleAssignCodeToProduct = () => {
-        onClose()
         handleCameraAvailable(false)
         setTimeout(() => {
-            navigate('SearchProductModal', { modal: true })
+            navigation.navigate('searchProductModal', { modal: true })
         }, 500);
     }
 
-
-    /* useEffect(() => {
-        bag.some((item: PorductInterface) =>
-            item.Codigo === product.Codigo && item.Id_Marca === product.Id_Marca && item.Id_Almacen === product.Id_Almacen && item.Marca === product.Marca
-        )
-    }, []) */
-
     return (
-        <KeyboardAvoidingView>
+        <ModalBottom
+            visible={true}
+            onClose={() => {
+                handleCameraAvailable(true)
+                navigation.goBack()
+            }}
+        >
             {
                 product ?
                     <View style={modalRenderstyles.ScannerResult}>
@@ -90,18 +92,20 @@ export const ScannerResult = ({
                             </View>
                         </View>
 
-                        <View style={{ display: "flex", flexDirection: "row", justifyContent: !seeProductDetails ? "center" : "flex-end" }}>
-                            {
-                                seeProductDetails &&
-                                <TouchableOpacity
-                                    onPress={handleExpandProductDetails}
-                                    style={[buttonStyles.button, buttonStyles.white, { width: "35%", marginRight: "5%" }]}
-                                >
-                                    <Text style={buttonStyles.buttonTextSecondary}>Ver producto</Text>
-                                </TouchableOpacity>
+                        <View style={modalRenderstyles.counterContainer}>
+                            <View style={{ width: wp("42.5%") }}>
+                                {
+                                    seeProductDetails &&
+                                    <TouchableOpacity
+                                        onPress={handleExpandProductDetails}
+                                        style={[buttonStyles.button_small, buttonStyles.white]}
+                                    >
+                                        <Text style={modalRenderstyles.seeProduct}>Ver producto</Text>
+                                    </TouchableOpacity>
 
-                            }
-                            <View style={{ width: "55%", marginLeft: "5%"}}>
+                                }
+                            </View>
+                            <View style={{ width: wp("42.5%") }}>
                                 <Counter counter={counterProduct} setCounter={setCounterProduct} />
                             </View>
                         </View>
@@ -136,7 +140,9 @@ export const ScannerResult = ({
                         }
                     </View>
             }
-        </KeyboardAvoidingView>
+        </ModalBottom>
     )
 }
 
+
+export default ScannerResult;

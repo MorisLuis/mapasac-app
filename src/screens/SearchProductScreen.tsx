@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
 import { SettingsContext } from '../context/settings/SettingsContext';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 type SearchProductScreenInterface = {
@@ -32,7 +33,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
     const [currentPage, setCurrentPage] = useState(1);
-    const [openModalAdvice, setOpenModalAdvice] = useState(modal ? true : false)
+    const [openModalAdvice, setOpenModalAdvice] = useState(false)
 
     const getSearchData = async (searchTerm: string) => {
         const products = await getSearchProductInStock(searchTerm ? searchTerm : "")
@@ -50,10 +51,10 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     };
 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
-        if(modal) {
+        if (modal) {
             navigation.goBack()
         }
-        navigation.navigate('InventoryDetails', { selectedProduct });
+        navigation.navigate('inventoryDetailsScreen', { selectedProduct });
     };
 
     const closeModalHandler = React.useCallback(() => {
@@ -62,6 +63,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
 
     useEffect(() => {
+        setOpenModalAdvice(modal ? true : false)
         getSearchData("")
     }, [])
 
@@ -69,10 +71,16 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
         navigation.setOptions({
             headerLargeTitle: modal ? false : true,
             headerTitle: "Productos",
-            headerLeft: () => <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />,
+            headerTitleAlign: 'center',
+            headerLeft: () =>
+                <CustomBackButton
+                    navigation={navigation}
+                    onClick={() => {
+                        handleCameraAvailable(true)
+                    }}
+                />,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto por nombre...",
-                //placeholderTextColor: colores.color_green,
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },
@@ -88,7 +96,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             };
         }, [])
     );
-
 
     return (productsInInventory && productsInInventory.length > 0) ? (
 
@@ -115,7 +122,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             >
                 <View style={styles.searchAdvice}>
                     <View style={styles.adviceHeader}>
-                        <Icon name="bulb" size={18} color="red" />
+                        <Icon name="bulb" size={hp("3%")} color="red" />
                         <Text style={styles.titleHeader}>Asignar producto</Text>
                     </View>
                     <View style={styles.adviceMessage}>
@@ -155,11 +162,12 @@ const styles = StyleSheet.create({
     adviceHeader: {
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
         gap: 8,
         marginBottom: globalStyles.globalMarginBottom.marginBottom
     },
     titleHeader: {
-        fontSize: globalFont.font_sm,
+        fontSize: globalFont.font_normal,
         color: colores.color_red,
         fontWeight: "bold"
     },
@@ -173,3 +181,4 @@ const styles = StyleSheet.create({
         fontSize: globalFont.font_normal
     }
 })
+

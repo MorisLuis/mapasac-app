@@ -35,7 +35,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                 options={({ navigation }) => ({
                     header: props =>
                         <View style={{ paddingTop: globalStyles.globalPadding.padding, backgroundColor: colores.background_color }}>
-                            <CustomHeader {...props} title="Crear codigo de barras" navigation={navigation} />
+                            <CustomHeader title="Crear codigo de barras" navigation={navigation} />
                         </View>
                 })}
             >

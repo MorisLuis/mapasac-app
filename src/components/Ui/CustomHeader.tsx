@@ -1,14 +1,16 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, globalStyles } from '../../theme/appTheme';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import PorductInterface from '../../interface/product';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 interface CustomHeaderInterface {
     navigation: any;
     title: string;
     backAvailable?: boolean;
     back?: () => void;
+    backCustum?: boolean;
     route?: {
         params?: {
             selectedProduct?: PorductInterface
@@ -21,6 +23,7 @@ export const CustomHeader = ({
     navigation,
     title,
     backAvailable = true,
+    backCustum = false,
     back,
     route
 }: CustomHeaderInterface) => {
@@ -28,29 +31,18 @@ export const CustomHeader = ({
     const { fromModal } = route?.params || {}
 
     const handleOnPress = () => {
-        if (back && typeof back === 'function') {
+        if (typeof back === 'function' && backCustum) {
             back();
+        } else {
+            back?.();
+            navigation.goBack();
         }
-        navigation.goBack();
     }
 
 
     return (
         <>
             {fromModal ? (
-                <View style={[styles.CustomHeader, { paddingTop: 20 }]}>
-                    {backAvailable && (
-                        <TouchableOpacity
-                            style={styles.back}
-                            onPress={handleOnPress}
-                        >
-                            <Icon name="chevron-back-outline" size={20} color="black" />
-                            <Text style={styles.backText}>Atrás</Text>
-                        </TouchableOpacity>
-                    )}
-                    <Text style={styles.titleHeader}>{title}</Text>
-                </View>
-            ) : (
                 <SafeAreaView style={styles.CustomHeader}>
                     {backAvailable && (
                         <TouchableOpacity
@@ -63,46 +55,67 @@ export const CustomHeader = ({
                     )}
                     <Text style={styles.titleHeader}>{title}</Text>
                 </SafeAreaView>
+            ) : (
+                <SafeAreaView style={{ backgroundColor: colores.background_color}}>
+                    <View style={styles.CustomHeader}>
+                        {backAvailable && (
+                            <TouchableOpacity
+                                style={styles.back}
+                                onPress={handleOnPress}
+                            >
+                                <Icon name="chevron-back-outline" size={hp("2.5%")} color="black" />
+                                <Text style={styles.backText}>Atrás</Text>
+                            </TouchableOpacity>
+                        )}
+                        <Text style={styles.titleHeader}>{title}</Text>
+                    </View>
+                </SafeAreaView>
             )}
         </>
     );
     
 }
 
+
 const styles = StyleSheet.create({
     CustomHeader: {
-        backgroundColor: colores.background_color,
-        borderBottomWidth: 1,
-        borderBottomColor: colores.background_color,
+        display: "flex",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        borderBottomColor: colores.background_color,
+        backgroundColor: colores.background_color,
+        borderBottomWidth: 1,
         position: "relative",
-        width: "100%"
+        width: "100%",
+        height: hp("6%"),
     },
     back: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        left: 10,
-        bottom: 0
+        left:  globalStyles.globalMarginBottom.marginBottom / 2,
+        bottom: (hp("6%") * 0.5) - (globalFont.font_normal / 2) - 3
     },
     backText: {
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: globalFont.font_normal,
         marginLeft: 3,
     },
     titleHeader: {
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: globalFont.font_normal,
+        marginBottom: 0,
+        padding: 0,
+        height: globalFont.font_normal + 3
     },
     right: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        right: 20,
+        right: globalStyles.globalMarginBottom.marginBottom,
         bottom: 0,
     },
     rightText: {

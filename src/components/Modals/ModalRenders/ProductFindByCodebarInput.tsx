@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { getProductByCodeBar } from '../../../services/products';
 import { buttonStyles } from '../../../theme/UI/buttons';
-import { colores, globalStyles } from '../../../theme/appTheme';
+import { colores, globalFont, globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import PorductInterface from '../../../interface/product';
 import { AuthContext } from '../../../context/auth/AuthContext';
@@ -53,13 +53,13 @@ export const ProductFindByCodebarInput = ({
                     style={[styles.option, typeOfSearch === 'code' && styles.optionActive]}
                     onPress={() => setTypeOfSearch('code')}
                 >
-                    <Text>Codigo de producto</Text>
+                    <Text style={styles.optionText}>Codigo de producto</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.option, typeOfSearch === 'barcode' && styles.optionActive]}
                     onPress={() => setTypeOfSearch('barcode')}
                 >
-                    <Text>Codigo de barras</Text>
+                    <Text style={styles.optionText}>Codigo de barras</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
         
     },
     ProductFindByCodebarInput_title: {
-        marginBottom: 10,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        fontSize: globalFont.font_normal
     },
     ProductFindByCodebarInput_input: {
         borderWidth: 1,
@@ -95,7 +96,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
-        //marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
     },
     option: {
         backgroundColor: colores.background_color_tertiary,
@@ -103,7 +103,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 100,
         borderWidth: 1,
-        borderColor: colores.color_border
+        borderColor: colores.color_border,
+    },
+    optionText: {
+        fontSize: globalFont.font_normal
     },
     optionActive: {
         backgroundColor: colores.color_yellow,

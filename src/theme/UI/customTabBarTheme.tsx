@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { colores, globalStyles } from "../appTheme";
+import { colores, globalFont, globalStyles } from "../appTheme";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 export const customTabBarStyles = StyleSheet.create({
@@ -10,15 +11,15 @@ export const customTabBarStyles = StyleSheet.create({
         left: 0,
         zIndex: 1,
         width: "100%",
-        height: 35,
+        height: globalFont.font_med,
+        paddingTop: hp("1%"),
     },
     content: {
         display: "flex",
         flexDirection: "row",
         width: "100%",
         justifyContent: "space-between",
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        height: 30
+        paddingHorizontal: globalStyles.globalPadding.padding
     },
     navigation: {
         display: "flex",
@@ -28,33 +29,34 @@ export const customTabBarStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
-        height: 30,
-        minWidth: 100,
-        marginRight: 10,
+        height: hp("5%"),
+        maxHeight: 32,
+        marginRight: wp("2%"),
         borderWidth: 0.7,
         borderColor: "black",
         overflow: "hidden"
     },
-    bagContent: {
-        display: "flex"
-    },
     bag: {
         backgroundColor: colores.color_tertiary,
-        height: 30,
+        height: hp("5%"),
         borderRadius: 100,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 10
+        paddingHorizontal: globalStyles.globalPadding.padding
     },
-    bagNumber: {
+    sectionBag: {
         color: colores.text_color,
-        paddingHorizontal: 5
+        fontSize: globalFont.font_normal
     },
     blurContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         width: "100%",
         height: "100%",
+        paddingHorizontal: wp("2%")
     },
+    sectionTitle: {
+        fontSize: globalFont.font_normal
+    }
 });

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const colores = {
     primary: '#5856D6',
@@ -40,16 +40,15 @@ export const colores = {
 
 export const globalStyles = {
     globalPadding: {
-        padding: 20
+        padding: wp("5%")
     },
     globalMarginBottom: {
-        marginBottom: 20
+        marginBottom:  hp("2.5%")
     },
     globalMarginBottomSmall: {
-        marginBottom: 10
+        marginBottom:  hp("1.75%")
     },
     blur: {
-        //-webkit-backdrop-filter: blur(10px);
         backdropFilter: "blur(10px)",
         backgroundColor: " rgba(255, 255, 255, 0.2)"
     },
@@ -61,14 +60,17 @@ export const globalStyles = {
     },
     disabled: {
         opacity: "50%"
+    },
+    borderRadius: {
+        borderRadius: hp("1%"),
     }
 
 };
 
 export const globalFont = {
     //Font-size
-    font_big: 36,
-    font_med: 22,
-    font_normal: 16,
-    font_sm: 14,
+    font_big: hp("4%"),
+    font_med: hp("2.5%"),
+    font_normal:  hp("1.75%"),
+    font_sm: hp("1.5%"),
 };

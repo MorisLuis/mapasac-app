@@ -17,22 +17,22 @@ export const ProfileNavigation = () => {
             <ProfileTabs.Screen
                 name="profile"
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Perfil" navigation={navigation} backAvailable={false} />,
+                    header: props => (
+                        <CustomHeader
+                        navigation={navigation}
+                        title="Perfil"
+                        backAvailable={false}
+                        />
+                    )
                 })}
                 component={ProfileScreen}
             />
-            <ProfileTabs.Screen
-                name="personalInformation"
-                component={PersonalInformation}
-                options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Información Personal" navigation={navigation} />,
-                })}
-            />
+
             <ProfileTabs.Screen
                 name="settingsSceen"
                 component={SettingsScreen}
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Configuración" navigation={navigation} />,
+                    header: props => <CustomHeader title="Configuración" navigation={navigation} />,
                 })}
             />
 
@@ -40,7 +40,7 @@ export const ProfileNavigation = () => {
                 name="privacyScreen"
                 component={PrivacyScreen}
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Aviso de privacidad" navigation={navigation} />,
+                    header: props => <CustomHeader title="Aviso de privacidad" navigation={navigation} />,
                 })}
             />
 
@@ -48,7 +48,7 @@ export const ProfileNavigation = () => {
                 name="termsOfUseScreen"
                 component={TermsOfUseScreen}
                 options={({ navigation }) => ({
-                    header: props => <CustomHeader {...props} title="Terminos de uso" navigation={navigation} />,
+                    header: props => <CustomHeader title="Terminos de uso" navigation={navigation} />,
                 })}
             />
         </ProfileTabs.Navigator>

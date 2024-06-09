@@ -17,7 +17,7 @@ export const SuccesMessage = () => {
         <SafeAreaView style={{ backgroundColor: colores.background_color }}>
             <View style={[styles.SuccesMessage]}>
                 <TouchableOpacity style={[styles.header]} onPress={() => {
-                    navigate('TypeOfMovement');
+                    navigate('typeOfMovementScreen');
                 }}>
                     <Icon name="close-outline" size={24} color="black" />
                 </TouchableOpacity>

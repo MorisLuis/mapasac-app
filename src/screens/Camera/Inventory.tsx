@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 
 import { getProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import PorductInterface from '../../interface/product';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
@@ -14,7 +13,6 @@ import { ProductInventoryCardSkeleton } from '../../components/Skeletons/Product
 
 export const Inventory = () => {
 
-    const { inventoryCreated } = useContext(InventoryBagContext);
     const { handleCodebarScannedProcces } = useContext(AuthContext);
     const { navigate } = useNavigation<any>();
     
@@ -24,27 +22,23 @@ export const Inventory = () => {
 
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
+
+        console.log({productsInInventory: productsInInventory.length})
+
         const products = await getProductsByStock(currentPage)
         setProductsInInventory(prevProducts =>
-            inventoryCreated ? products :
                 prevProducts ? [...prevProducts, ...products] : products
         );
         setIsLoading(false);
     }
 
     const loadMoreItem = () => {
-        if (inventoryCreated) return;
         setCurrentPage(currentPage + 1);
     };
 
     const handlePressProduct = (selectedProduct: PorductInterface) => {
         handleCodebarScannedProcces(false);
-        navigate('InventoryDetails', { selectedProduct });
-    };
-
-    const resetInventory = () => {
-        setCurrentPage(1);
-        setProductsInInventory([]);
+        navigate('inventoryDetailsScreen', { selectedProduct });
     };
 
     // Renders
@@ -62,20 +56,27 @@ export const Inventory = () => {
         );
     };
 
-    useEffect(() => {
-        if (!inventoryCreated) return;
-        resetInventory();
-        handleGetProductsByStock();
-    }, [inventoryCreated]);
+    const resetInventory = useCallback(() => {
+        setCurrentPage(1);
+        setProductsInInventory([]);
+    }, []);
 
-    useEffect(() => {
-        if (inventoryCreated) return;
-        handleGetProductsByStock()
-    }, [currentPage])
+    useFocusEffect(
+        React.useCallback(() => {
+            if(productsInInventory.length <= 0) return;
+            handleGetProductsByStock()
+        }, [currentPage])
+    )
+
+    useFocusEffect(
+        useCallback(() => {
+            resetInventory();
+            handleGetProductsByStock();
+        }, [])
+    )
 
     return (
         <SafeAreaView style={styles.Inventory}>
-            
             <View style={styles.content}>
                 <View style={styles.header}>
                     <Text style={styles.title}> Inventario </Text>
@@ -84,7 +85,7 @@ export const Inventory = () => {
                             name="search-outline"
                             size={30}
                             style={styles.iconSearch}
-                            onPress={() => navigate('SearchProduct')}
+                            onPress={() => navigate('searchProductScreen')}
                         />
                     </View>
                 </View>
@@ -97,10 +98,7 @@ export const Inventory = () => {
                     onEndReached={loadMoreItem}
                     onEndReachedThreshold={0}
                 />
-
             </View>
-
-
         </SafeAreaView>
     )
 }

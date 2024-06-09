@@ -54,6 +54,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     }
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
+        console.log({productDetails})
         if (!productDetails) return;
 
         await updateCostos({

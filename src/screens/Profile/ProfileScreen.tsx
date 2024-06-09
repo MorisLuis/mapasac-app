@@ -45,7 +45,7 @@ export const ProfileScreen = () => {
             <SafeAreaView style={styles.content}>
                 <Text style={styles.title}>Configuación</Text>
 
-                <TouchableOpacity onPress={() => navigate('personalInformation')} style={styles.section}>
+                <TouchableOpacity onPress={() => navigate('personalInformationScreen')} style={styles.section}>
                     <Text>Información Personal</Text>
                     <Icon name="person-outline" size={22} color="black" />
                 </TouchableOpacity>
