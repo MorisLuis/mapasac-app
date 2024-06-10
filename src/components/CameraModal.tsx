@@ -50,7 +50,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                     if (response.length > 0) {
                         setProductExistent(true)
                     }
-                    console.log(`Scanned code value: ${codeValue}`);
                 } catch (error) {
                     console.error('Error fetching product:', error);
                 } finally {

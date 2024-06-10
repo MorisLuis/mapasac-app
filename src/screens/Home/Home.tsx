@@ -19,7 +19,6 @@ export const Home = () => {
     const { navigate } = useNavigation<any>();
 
     useEffect(() => {
-        console.log('Home effect');
 
         const fetchData = async () => {
             const result = await getBriefProductsStatistics();

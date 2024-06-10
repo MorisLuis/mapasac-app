@@ -56,7 +56,6 @@ export const DbAuthProvider = ({ children }: any) => {
     }, [])
 
     const checkToken = async () => {
-        console.log("checkToken DB")
 
         try {
             const token = await AsyncStorage.getItem('tokenDB');

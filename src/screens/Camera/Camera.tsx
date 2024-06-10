@@ -195,6 +195,7 @@ const CustomCamera: React.FC = () => {
                             onLayout={onLayout}
 
                             //Testing
+                            //videoStabilizationMode='standard'
                             videoHdr={false}
                             enableBufferCompression={false}
                             fps={Fps}

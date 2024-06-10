@@ -23,8 +23,6 @@ export const Inventory = () => {
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
 
-        console.log({productsInInventory: productsInInventory.length})
-
         const products = await getProductsByStock(currentPage)
         setProductsInInventory(prevProducts =>
                 prevProducts ? [...prevProducts, ...products] : products

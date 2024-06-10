@@ -84,7 +84,6 @@ export const cameraSettings = ({
                     handleOpenProductsFoundByCodebar(response);
                     handleVibrate()
                     if (response.length < 1) updateBarCode(codeValue)
-                    console.log(`Scanned code value: ${codeValue}`);
                 } catch (error) {
                     console.error('Error fetching product:', error);
                 }

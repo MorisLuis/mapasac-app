@@ -64,7 +64,6 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if(status == 'dbAuthenticated' && state.status != 'authenticated'){
-            console.log("go to LoginPage")
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -99,8 +98,6 @@ export const AuthProvider = ({ children }: any) => {
     }, [])
 
     const checkToken = async () => {
-
-        console.log("checkToken LOGIN")
 
         try {
             const token = await AsyncStorage.getItem('token');
