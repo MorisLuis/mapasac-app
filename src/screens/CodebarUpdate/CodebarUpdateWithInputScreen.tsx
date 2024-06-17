@@ -5,7 +5,6 @@ import { colores, globalStyles } from '../../theme/appTheme';
 import { inputStyles } from '../../theme/UI/inputs';
 import { updateCostos } from '../../services/costos';
 import { useNavigation } from '@react-navigation/native';
-import { getProductDetails } from '../../services/products';
 
 export const CodebarUpdateWithInputScreen = ({productDetails, selectedProduct} : any) => {
 

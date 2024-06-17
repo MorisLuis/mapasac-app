@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import CustomCamera from '../screens/Camera/Camera';
 import { Inventory } from '../screens/Camera/Inventory';
 import { CustomTabBar } from '../components/Navigation/CustomTabBar';
+import CustomCamera from '../screens/Camera/Camera';
+import CameraTest from '../screens/Camera/CameraTest';
 
 
 export const ScannerNavigation = () => {
@@ -17,7 +18,7 @@ export const ScannerNavigation = () => {
                 <TopTabs.Screen
                     name="camera"
                     options={{ title: "Camara" }}
-                    component={CustomCamera}
+                    component={CameraTest}
                 />
                 <TopTabs.Screen
                     name="Inventario"

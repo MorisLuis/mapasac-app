@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { View, StyleSheet, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Camera, useCameraDevices, useCodeScanner } from 'react-native-vision-camera';
 import { globalFont, globalStyles } from '../theme/appTheme';
 import { AuthContext } from '../context/auth/AuthContext';
 import { SettingsContext } from '../context/settings/SettingsContext';
@@ -9,6 +8,7 @@ import { buttonStyles } from '../theme/UI/buttons';
 import { updateCostos } from '../services/costos';
 import { useNavigation } from '@react-navigation/native';
 import PorductInterface from '../interface/product';
+import { Camera } from 'react-native-camera-kit';
 import { getProductByCodeBar } from '../services/products';
 
 interface CameraModalInterface {
@@ -22,8 +22,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
     const { vibration } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
 
-    const [isScannerActive, setIsScannerActive] = useState(false);
-    const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
     const [productExistent, setProductExistent] = useState(false)
@@ -34,37 +32,32 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
         }
     };
 
-    const codeScanner = useCodeScanner({
-        codeTypes: ['qr', 'ean-13', 'code-128'],
-        onCodeScanned: async (codes) => {
-            setCodeIsScanning(true)
-            if (codes.length > 0 && isScanningAllowed) {
-                setIsScanningAllowed(false);
-                const scannedCode = codes[0];
-                const codeValue = scannedCode.value;
-                if (!codeValue) return;
-                try {
-                    const response = await getProductByCodeBar(codeValue);
-                    handleVibrate()
-                    updateBarCode(codeValue)
-                    if (response.length > 0) {
-                        setProductExistent(true)
-                    }
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                } finally {
-                    setTimeout(() => {
-                        setIsScanningAllowed(true);
-                    }, 2000);
+    const codeScanned = async ({ codes }: any) => {
+
+        setCodeIsScanning(true)
+        if (codes.length > 0 && isScanningAllowed) {
+            setIsScanningAllowed(false);
+            const codeValue = codes;
+            if (!codeValue) return;
+            try {
+                const response = await getProductByCodeBar(codeValue);
+                handleVibrate()
+                updateBarCode(codeValue)
+                if (response.length > 0) {
+                    setProductExistent(true)
                 }
-
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            } finally {
+                setTimeout(() => {
+                    setIsScanningAllowed(true);
+                }, 2000);
             }
-            setCodeIsScanning(false)
-        }
-    });
 
-    const devices = useCameraDevices();
-    const backCamera = devices.find((device) => device.position === 'back');
+        }
+        setCodeIsScanning(false)
+
+    }
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
         if (!productDetails) return;
@@ -85,13 +78,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
         setProductExistent(false)
     }
 
-    useEffect(() => {
-        setIsScannerActive(selectedDevice !== null);
-    }, [selectedDevice]);
-
-    useEffect(() => {
-        setSelectedDevice(backCamera?.id || null);
-    }, []);
 
     return (
         <View style={styles.cameraScreen}>
@@ -114,15 +100,12 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                         {
                             (!codeIsScanning && !codeBar) ?
                                 <View style={styles.content}>
-                                    {
-                                        (backCamera) &&
-                                        <Camera
-                                            style={styles.camera}
-                                            device={backCamera}
-                                            isActive={selectedDevice !== null}
-                                            codeScanner={isScannerActive ? codeScanner : undefined}
-                                        />
-                                    }
+
+                                    <Camera
+                                        scanBarcode={true}
+                                        onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
+                                        style={styles.camera}
+                                    />
                                 </View>
                                 : (codeIsScanning && !codeBar) ?
                                     <ActivityIndicator

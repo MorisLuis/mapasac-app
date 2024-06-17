@@ -33,8 +33,7 @@ export const colores = {
     background_color: "white",
     background_color_secondary: "#f9f9f9",
     background_color_tertiary: "#f1f1f1",
-    background_color_gradient: "linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(237,237,237,1) 47%, rgba(237,237,237,1) 59%, rgba(245,147,212,0.05) 86%, rgba(9,118,223,0.05) 98%)",
-    background_color_gradient_second: "radial-gradient(circle, rgba(6,143,255,1) 0%, rgba(255,0,0,1) 50%, rgba(6,143,255,1) 100%)"
+    background_color_blur: "rgba(0, 0, 0, 0.3)",
 }
 
 

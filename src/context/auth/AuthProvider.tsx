@@ -59,11 +59,14 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
 
-        if (status == 'dbChecking' && state.status == 'checking') {
-            return
+        const statusLogin =  state.status;
+        const statusLoginDatabase = status;
+
+        if (statusLoginDatabase == 'dbChecking' || statusLogin == 'checking') {
+            return;
         }
 
-        if(status == 'dbAuthenticated' && state.status != 'authenticated'){
+        if(statusLoginDatabase == 'dbAuthenticated' && statusLogin != 'authenticated'){
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -71,19 +74,24 @@ export const AuthProvider = ({ children }: any) => {
             return;
         } 
 
-        if (status == "dbNot-authenticated") {
+        if (statusLoginDatabase == "dbNot-authenticated") {
             if(currentScreen == 'LoginDatabaseScreen') return
+
             return navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginDatabaseScreen' }],
             })
         };
 
-        if (state.status === 'authenticated') {
-            navigation.reset({
+        if (statusLogin === 'authenticated') {
+
+            navigation.navigate('typeOfMovementScreen')
+
+            /* navigation.reset({
                 index: 0,
                 routes: [{ name: 'typeOfMovementScreen' }],
-            });
+            }); */
+
         } else {
             if (currentScreen === 'LoginPage') return;
             navigation.reset({
@@ -91,6 +99,7 @@ export const AuthProvider = ({ children }: any) => {
                 routes: [{ name: 'LoginPage' }],
             });
         }
+
     }, [state.status, status])
 
     useEffect(() => {

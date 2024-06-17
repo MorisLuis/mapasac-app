@@ -1,12 +1,26 @@
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
+# Podfile
+
+# Define la función node_require para manejar la resolución de scripts
+def node_require(script)
+  # Resolve script with node to allow for hoisting
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
+
+# Asegúrate de que node_require está definida antes de usarla
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
+
+# ⬇️ Descomenta los permisos que necesites
+setup_permissions([
+  'Camera',
+])
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -38,3 +52,4 @@ target 'OleiApp' do
     )
   end
 end
+

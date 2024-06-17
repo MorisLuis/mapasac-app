@@ -1,9 +1,7 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet, useWindowDimensions } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { View, TouchableOpacity, Text, Platform, Vibration } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Point } from 'react-native-vision-camera';
 import { BlurView } from '@react-native-community/blur';
-import { AuthContext } from '../../context/auth/AuthContext';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import PorductInterface from '../../interface/product';
 import UserInterface from '../../interface/user';
@@ -12,23 +10,22 @@ import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { cameraStyles } from '../../theme/CameraCustumTheme';
-import Scan from '../../assets/scan.svg';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
-import { HightlightBox } from '../../components/HightlightBox';
-import { cameraSettings } from './cameraSettings';
 import { CameraPermission } from '../../components/screens/CameraPermission';
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { runOnJS } from 'react-native-reanimated';
-import { Camera, CameraType } from 'react-native-camera-kit';
+import { Camera } from 'react-native-camera-kit';
+import { PERMISSIONS, check, openSettings } from 'react-native-permissions';
+import { getProductByCodeBar } from '../../services/products';
+import { AuthContext } from '../../context/auth/AuthContext';
 
-type PermissionStatus = 'granted' | 'denied' | 'not-determined';
+type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
-const CustomCamera: React.FC = () => {
+const CameraTest: React.FC = () => {
 
-    const { user } = useContext(AuthContext);
-    const { cameraAvailable, handleCameraAvailable, limitProductsScanned } = useContext(SettingsContext);
+    const { updateBarCode } = useContext(AuthContext);
     const { bag } = useContext(InventoryBagContext);
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, vibration } = useContext(SettingsContext);
+    const isFocused = useIsFocused();
 
 
     const [lightOn, setLightOn] = useState(false);
@@ -37,7 +34,6 @@ const CustomCamera: React.FC = () => {
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
     const { navigate } = useNavigation<any>();
-    const isFocused = useIsFocused();
 
     const handleCloseModalProductsFoundByCodebar = () => {
         setOpenModalProductFoundByCodebar(false);
@@ -52,15 +48,13 @@ const CustomCamera: React.FC = () => {
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
 
-        handleCloseModalFindByBarcodeInput(false);
+       //handleCloseModalFindByBarcodeInput(false);
 
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
-            setCodeScannerHighlights([]);
         } else if (response.length > 0) {
             setOpenModalProductFoundByCodebar(true)
         } else {
-            setCodeScannerHighlights([]);
             navigate('scannerResultScreen', { product: response[0] });
         }
 
@@ -68,7 +62,6 @@ const CustomCamera: React.FC = () => {
     }
 
     const handleSelectProduct = (product: PorductInterface) => {
-        setCodeScannerHighlights([]);
         setOpenModalProductFoundByCodebar(false);
 
         setTimeout(() => {
@@ -76,51 +69,77 @@ const CustomCamera: React.FC = () => {
         }, 500);
     }
 
-
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         navigate('findByCodebarInputModal');
     }
 
-    const {
-        codeScanner,
-        setCodeScannerHighlights,
-        backCamera,
-        format,
-        codeScannerHighlights,
-        onLayout,
-        layout,
-        scanFrame,
-        Fps
-    } = cameraSettings({
-        setProductsScanned,
-        productsScanned,
-        handleOpenProductsFoundByCodebar
-    })
+    const checkCameraPermission = async () => {
+        let permission;
 
+        if (Platform.OS === 'ios') {
+            permission = PERMISSIONS.IOS.CAMERA;
+        } else {
+            permission = PERMISSIONS.ANDROID.CAMERA;
+        }
+
+        const result = await check(permission);
+        setCameraPermission(result);
+    };
 
     // Solicitar permisos de cámara
     const requestPermissions = async () => {
-        const cameraStatus = await Camera.requestCameraPermission() as PermissionStatus;
-        setCameraPermission(cameraStatus);
+        openSettings().catch(() => console.warn('cannot open settings'));
     };
 
+    const handleVibrate = () => {
+        if (vibration) {
+            Vibration.vibrate(500);
+        }
+    };
+
+    const [codeDetected, setCodeDetected] = useState(false)
+
+    const codeScanned = async ({codes} : any) => {
+
+        setProductsScanned(undefined)
+        if (!cameraAvailable) return;
+        if (!productsScanned && codes?.length > 0) {
+
+            setCodeDetected(true)
+            if(codeDetected) return;
+
+            handleCameraAvailable(false)
+
+            const codeValue = codes;
+
+            if (!codeValue) return;
+
+            try {
+                const response = await getProductByCodeBar(codeValue);
+                handleOpenProductsFoundByCodebar(response);
+                handleVibrate()
+                if (response.length < 1) updateBarCode(codeValue)
+            } catch (error) {
+                setCodeDetected(false)
+                console.error('Error fetching product:', error);
+            }
+        }
+    }
+
     useEffect(() => {
-        requestPermissions();
+        checkCameraPermission();
         return () => {
             handleCameraAvailable(false);
         };
     }, []);
 
-    useEffect(() => {
-        if (!user) return;
-        getTypeOfMovementsName(user);
-    }, [user]);
-
     useFocusEffect(
         useCallback(() => {
             handleCameraAvailable(true);
+            
             return () => {
+                setCodeDetected(false)
                 handleCameraAvailable(false);
             };
         }, [])
@@ -131,17 +150,6 @@ const CustomCamera: React.FC = () => {
             handleCameraAvailable(false);
         }
     }, [isFocused]);
-
-
-    const camera = useRef<Camera>(null)
-
-    const focus = useCallback((point: Point) => {
-        const c = camera.current
-        if (c == null) return
-        c.focus(point)
-    }, [])
-
-    const gesture = Gesture.Tap().onEnd(({ x, y }: any) => { runOnJS(focus)({ x, y }) })
 
 
     if (cameraPermission === null) {
@@ -158,18 +166,10 @@ const CustomCamera: React.FC = () => {
         )
     }
 
-    if (!backCamera) {
-        return (
-            <CameraPermission
-                requestPermissions={requestPermissions}
-                message="No hay dispositivos de cámara disponibles."
-                availableAuthorization={true}
-            />
-        )
-    }
 
     return (
         <View style={cameraStyles.cameraScreen}>
+
             {
                 onTheLimitProductScanned &&
                 <BlurView
@@ -185,7 +185,10 @@ const CustomCamera: React.FC = () => {
 
             <Camera
                 scanBarcode={true}
-                onReadCode={(event: any) => console.log(event.nativeEvent.codeStringValue)}
+                onReadCode={(event: any) => {
+                    if(!cameraAvailable) return;
+                    codeScanned({codes: event.nativeEvent.codeStringValue})
+                }}
                 style={cameraStyles.camera}
             />
 
@@ -202,10 +205,6 @@ const CustomCamera: React.FC = () => {
                 ) : (
                     <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
                 )}
-            </View>
-
-            <View style={cameraStyles.scanSvgContainer}>
-                <Scan width={300} height={300} />
             </View>
 
             {
@@ -245,7 +244,7 @@ const CustomCamera: React.FC = () => {
     );
 };
 
-export default CustomCamera;
+export default CameraTest;
 
 
 const getTypeOfMovementsName = (user?: UserInterface) => {

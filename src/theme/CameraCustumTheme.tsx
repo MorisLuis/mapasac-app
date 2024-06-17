@@ -6,14 +6,33 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const cameraStyles = StyleSheet.create({
     cameraScreen: {
         flex: 1,
-        backgroundColor: colores.background_color,
+        backgroundColor: colores.color_black,
+        position: "relative"
     },
     camera: {
         flex: 1,
-        height: "100%",
-        width: "100%",
+        height: hp("100%"),
+        width: wp('100%'),
         position: "absolute",
         top: 0
+    },
+    backgroundBlurTop: {
+        backgroundColor: colores.background_color_blur,
+        width: wp('100%'),
+        height: hp("32.5%"),
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 2
+    },
+    backgroundBlurBottom: {
+        backgroundColor: colores.background_color_blur,
+        width: wp('100%'),
+        height: hp("32.5%"),
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        zIndex: 2
     },
     scannerOptions: {
         display: "flex",
@@ -22,6 +41,7 @@ export const cameraStyles = StyleSheet.create({
         bottom: hp("10%"),
         right: wp("7.5%"),
         padding: globalStyles.globalPadding.padding / 2,
+        zIndex: 2
     },
     option: {
         borderRadius: 30,
@@ -63,7 +83,8 @@ export const cameraStyles = StyleSheet.create({
     flash: {
         position: "absolute",
         right: "7.5%",
-        top: 100
+        top: 100,
+        zIndex: 2
     },
     blurOverlay: {
         position: 'absolute',
