@@ -1,30 +1,33 @@
-import React, { useCallback, useContext, useState } from 'react'
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext'
-import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard'
-import { buttonStyles } from '../../theme/UI/buttons'
-import { colores, globalStyles } from '../../theme/appTheme'
-import { LoadingScreen } from '../LoadingScreen'
-import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard'
-import ModalDecision from '../../components/Modals/ModalDecision'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { SettingsContext } from '../../context/settings/SettingsContext'
-import { PorductInterfaceBag } from '../../interface/product'
+import React, { useCallback, useContext, useState, useEffect } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { colores, globalStyles } from '../../theme/appTheme';
+import { LoadingScreen } from '../LoadingScreen';
+import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
+import ModalDecision from '../../components/Modals/ModalDecision';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { PorductInterfaceBag } from '../../interface/product';
+import { inputStyles } from '../../theme/UI/inputs';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const InventoryBagScreen = () => {
-
-    const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext)
+    const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext);
     const { handleCameraAvailable } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
 
-    const [createInventaryLoading, setCreateInventaryLoading] = useState(false)
-    const [openModalDecision, setOpenModalDecision] = useState(false)
-
+    const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
+    const [openModalDecision, setOpenModalDecision] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [filteredBag, setFilteredBag] = useState<PorductInterfaceBag[]>(bag);
 
     const handleCleanTemporal = () => {
-        setOpenModalDecision(false)
-        cleanBag()
-    }
+        setOpenModalDecision(false);
+        cleanBag();
+    };
 
     const onPostInventary = async () => {
         setCreateInventaryLoading(true);
@@ -35,23 +38,11 @@ export const InventoryBagScreen = () => {
         setCreateInventaryLoading(false);
         navigate('Scanner');
         navigate('succesMessageScreen');
-    }
+    };
 
-    const closeModalHandler = React.useCallback(() => {
-        handleCameraAvailable(true)
+    const closeModalHandler = useCallback(() => {
+        handleCameraAvailable(true);
     }, []);
-
-
-    // Renders
-    /* const renderItem = ({ item }: { item: PorductInterfaceBag }) => {
-        return (
-            <ProductInventoryCard
-                product={item}
-                onDelete={() => removeProduct(item)}
-                showDelete
-            />
-        )
-    }; */
 
     const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (
         <ProductInventoryCard
@@ -59,31 +50,57 @@ export const InventoryBagScreen = () => {
             onDelete={() => removeProduct(item)}
             showDelete
         />
-    ), [removeProduct])
+    ), [removeProduct]);
 
-    // Este efecto se ejecutará cuando la pantalla reciba el foco
     useFocusEffect(
-        React.useCallback(() => {
+        useCallback(() => {
             return () => {
                 closeModalHandler();
             };
         }, [])
     );
 
+    useEffect(() => {
+        if (searchText === '') {
+            setFilteredBag(bag);
+        } else {
+            setFilteredBag(bag.filter(product =>
+                product.Descripcion.toLowerCase().includes(searchText.toLowerCase())
+            ));
+        }
+    }, [searchText, bag]);
+
     return !createInventaryLoading ? (
         <>
             <SafeAreaView style={styles.InventoryBagScreen}>
 
-                {/* PRODUCTS */}
+                {/* SEARCH BAR */}
                 {
                     bag.length > 0 &&
-                    <FlatList
-                        style={styles.content}
-                        data={bag}
-                        renderItem={renderItem}
-                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
-                        onEndReachedThreshold={0}
-                    />
+                    <View style={[styles.searchBar, inputStyles.input]}>
+                        <Icon name={'search'} color="gray" />
+                        <TextInput
+                            style={{width: "100%"}}
+                            placeholder="Buscar producto..."
+                            value={searchText}
+                            onChangeText={setSearchText}
+                        />
+                    </View>
+                }
+
+                {/* PRODUCTS */}
+                {
+                    filteredBag.length > 0 &&
+
+                    <>
+                        <FlatList
+                            style={styles.content}
+                            data={filteredBag}
+                            renderItem={renderItem}
+                            keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
+                            onEndReachedThreshold={0}
+                        />
+                    </>
                 }
 
                 {/* FOOTER */}
@@ -114,7 +131,6 @@ export const InventoryBagScreen = () => {
                 }
             </SafeAreaView>
 
-
             <ModalDecision
                 visible={openModalDecision}
                 message="Seguro de limpiar el inventario actual?"
@@ -133,18 +149,25 @@ export const InventoryBagScreen = () => {
                 </TouchableOpacity>
             </ModalDecision>
         </>
-    )
-        :
+    ) : (
         <LoadingScreen />
-}
-
+    );
+};
 
 const styles = StyleSheet.create({
+
     InventoryBagScreen: {
         backgroundColor: colores.background_color,
         height: "100%",
     },
-
+    searchBar: {
+        marginHorizontal: globalStyles.globalPadding.padding,
+        marginTop: globalStyles.globalMarginBottomSmall.marginBottom,
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "center",
+        alignItems: 'center'
+    },
     content: {
         minHeight: "auto",
         height: "85%",

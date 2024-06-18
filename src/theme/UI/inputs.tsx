@@ -4,13 +4,19 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 export const inputStyles = StyleSheet.create({
     input: {
-        height: hp("5%"),
+        height: hp("4.5%"),
         borderWidth: 1,
         borderColor: colores.color_border,
         borderRadius: globalStyles.borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
         paddingHorizontal: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color_secondary
+        backgroundColor: colores.background_color_secondary,
+        gap: 10
+    },
+
+    inputicon: {
+        marginLeft: 20,
+        backgroundColor: "red"
     },
 
     focusedInput: {
