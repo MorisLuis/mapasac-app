@@ -2,18 +2,18 @@ import React, { useContext, useState } from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { InventoryBagContext } from '../context/Inventory/InventoryBagContext';
-import PorductInterface from '../interface/product';
-import { Counter } from '../components/Ui/Counter';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import PorductInterface from '../../interface/product';
+import { Counter } from '../../components/Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
-import { buttonStyles } from '../theme/UI/buttons';
-import { globalStyles } from '../theme/appTheme';
-import { AuthContext } from '../context/auth/AuthContext';
-import { EmptyMessageCard } from '../components/Cards/EmptyMessageCard';
-import { SettingsContext } from '../context/settings/SettingsContext';
-import { modalRenderstyles } from '../theme/ModalRenders/ScannerResultTheme';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { globalStyles } from '../../theme/appTheme';
+import { AuthContext } from '../../context/auth/AuthContext';
+import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { modalRenderstyles } from '../../theme/ModalRenders/ScannerResultTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import ModalBottom from '../components/Modals/ModalBottom';
+import ModalBottom from '../../components/Modals/ModalBottom';
 
 interface ScannerResultInterface {
     fromInput?: boolean;

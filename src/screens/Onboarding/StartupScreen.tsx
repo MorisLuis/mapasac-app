@@ -1,6 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
-import { colores, globalStyles } from '../theme/appTheme'
+import { colores, globalStyles } from '../../theme/appTheme'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const StartupScreen = () => {
@@ -10,7 +10,7 @@ export const StartupScreen = () => {
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.logo}
-                    source={require('../assets/logo01.png')}
+                    source={require('../../assets/logo01.png')}
                 />
             </View>
         </View>

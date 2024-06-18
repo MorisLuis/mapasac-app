@@ -1,21 +1,21 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
-import { useForm } from '../hooks/useForm';
-import { AuthContext } from '../context/auth/AuthContext';
-import { LoadingScreen } from './LoadingScreen';
-import useKeyboardStatus from '../hooks/useKeyboardStatus';
+import { useForm } from '../../hooks/useForm';
+import { AuthContext } from '../../context/auth/AuthContext';
+import { LoadingScreen } from '../LoadingScreen';
+import useKeyboardStatus from '../../hooks/useKeyboardStatus';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { loginStyles } from '../theme/loginTheme';
-import { buttonStyles } from '../theme/UI/buttons';
-import { inputStyles } from '../theme/UI/inputs';
-import { globalStyles } from '../theme/appTheme';
+import { loginStyles } from '../../theme/loginTheme';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { inputStyles } from '../../theme/UI/inputs';
+import { globalStyles } from '../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
 
 export const LoginScreen = () => {
 
-    const { signIn, errorMessage, removeError, loggingIn, user } = useContext(AuthContext);
+    const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
     const navigation = useNavigation<any>();
 
     const { Id_Usuario, password, onChange } = useForm({
@@ -59,7 +59,7 @@ export const LoginScreen = () => {
                     <View style={loginStyles.imageContainer}>
                         <Image
                             style={[keyboardActive ? loginStyles.logoActived : loginStyles.logo]}
-                            source={require('../assets/logo01.png')}
+                            source={require('../../assets/logo01.png')}
                         />
                     </View>
 

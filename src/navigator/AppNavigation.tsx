@@ -9,16 +9,16 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { TESTAPP } from "@env";
 
 // Screens
-import { LoginScreen } from '../screens/LoginScreen';
+import { LoginScreen } from '../screens/Onboarding/LoginScreen';
 import { SearchProductScreen } from '../screens/SearchProductScreen';
 import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
-import { LoginDatabaseScreen } from '../screens/LoginDatabaseScreen';
+import { LoginDatabaseScreen } from '../screens/Onboarding/LoginDatabaseScreen';
 import { PersonalInformation } from '../screens/Profile/PersonalInformation';
-import { SearchCodebarWithInput } from '../screens/SearchCodebarWithInput';
-import ScannerResult from '../screens/ScannerResult';
-import { StartupScreen } from '../screens/StartupScreen';
+import { SearchCodebarWithInput } from '../screens/Modals/SearchCodebarWithInput';
+import ScannerResult from '../screens/Modals/ScannerResult';
+import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 
 export type InventoryNavigationStackParamList = {

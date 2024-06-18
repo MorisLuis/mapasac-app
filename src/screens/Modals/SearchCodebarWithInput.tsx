@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { getProductByCodeBar } from '../services/products';
-import { buttonStyles } from '../theme/UI/buttons';
-import { colores, globalStyles } from '../theme/appTheme';
-import { inputStyles } from '../theme/UI/inputs';
-import { AuthContext } from '../context/auth/AuthContext';
-import { modalRenderstyles } from '../theme/ModalRenders/SearchCodebarWithInputTheme';
-import ModalMiddle from '../components/Modals/ModalMiddle';
+import { getProductByCodeBar } from '../../services/products';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { colores, globalStyles } from '../../theme/appTheme';
+import { inputStyles } from '../../theme/UI/inputs';
+import { AuthContext } from '../../context/auth/AuthContext';
+import { modalRenderstyles } from '../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
-import { SettingsContext } from '../context/settings/SettingsContext';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 
 

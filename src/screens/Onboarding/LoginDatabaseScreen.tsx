@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity } from 'react-native';
-import { useForm } from '../hooks/useForm';
-import useKeyboardStatus from '../hooks/useKeyboardStatus';
-import { LoadingScreen } from './LoadingScreen';
+import { useForm } from '../../hooks/useForm';
+import useKeyboardStatus from '../../hooks/useKeyboardStatus';
+import { LoadingScreen } from '../LoadingScreen';
 
-import { loginDBStyles } from '../theme/loginTheme';
-import { buttonStyles } from '../theme/UI/buttons';
-import { inputStyles } from '../theme/UI/inputs';
-import { globalStyles } from '../theme/appTheme';
-import { DbAuthContext } from '../context/dbAuth/DbAuthContext';
-import Banner from "../assets/OLEIAPP.svg";
-import Logo from "../assets/Logo.svg";
+import { loginDBStyles } from '../../theme/loginTheme';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { inputStyles } from '../../theme/UI/inputs';
+import { globalStyles } from '../../theme/appTheme';
+import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
+import Banner from "../../assets/OLEIAPP.svg";
+import Logo from "../../assets/Logo.svg";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
