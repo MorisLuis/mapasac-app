@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useState, useEffect } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useContext, useState, useEffect, useRef } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -12,7 +12,6 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { PorductInterfaceBag } from '../../interface/product';
 import { inputStyles } from '../../theme/UI/inputs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const InventoryBagScreen = () => {
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext);
@@ -23,6 +22,7 @@ export const InventoryBagScreen = () => {
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [filteredBag, setFilteredBag] = useState<PorductInterfaceBag[]>(bag);
+    const inputRef = useRef<TextInput>(null);
 
     const handleCleanTemporal = () => {
         setOpenModalDecision(false);
@@ -77,30 +77,41 @@ export const InventoryBagScreen = () => {
                 {/* SEARCH BAR */}
                 {
                     bag.length > 0 &&
-                    <View style={[styles.searchBar, inputStyles.input]}>
-                        <Icon name={'search'} color="gray" />
-                        <TextInput
-                            style={{width: "100%"}}
-                            placeholder="Buscar producto..."
-                            value={searchText}
-                            onChangeText={setSearchText}
-                        />
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
+                        <View style={[styles.searchBar, inputStyles.input]}>
+                            <Icon name={'search'} color="gray" />
+                            <TextInput
+                                ref={inputRef}
+                                style={{ width: "100%"}}
+                                placeholder="Buscar producto..."
+                                value={searchText}
+                                onChangeText={setSearchText}
+                            />
+                        </View>
+                    </TouchableWithoutFeedback>
                 }
 
                 {/* PRODUCTS */}
                 {
                     filteredBag.length > 0 &&
+                    <FlatList
+                        style={styles.content}
+                        data={filteredBag}
+                        renderItem={renderItem}
+                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
+                        onEndReachedThreshold={0}
+                    />
+                }
 
-                    <>
-                        <FlatList
-                            style={styles.content}
-                            data={filteredBag}
-                            renderItem={renderItem}
-                            keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
-                            onEndReachedThreshold={0}
+                {
+                    bag.length > 0 && filteredBag.length < 1 &&
+                    <View style={styles.message}>
+                        <EmptyMessageCard
+                            title="No hay productos con ese nombre."
+                            message='Intenta escribiendo algo diferente.'
+                            icon='sad-outline'
                         />
-                    </>
+                    </View>
                 }
 
                 {/* FOOTER */}
