@@ -42,9 +42,10 @@ const ScannerResult = ({
     const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
+
         const inventoryBody = {
             ...product,
-            Piezas: counterProduct
+            Piezas: counterProduct === 0 ? 1 : counterProduct
         }
         handleCameraAvailable(true)
         addProduct(inventoryBody as any)

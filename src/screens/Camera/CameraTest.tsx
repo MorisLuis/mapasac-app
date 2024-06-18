@@ -184,7 +184,6 @@ const CameraTest: React.FC = () => {
             }
 
             <View style={cameraStyles.backgroundBlurTop}></View>
-
             <View style={cameraStyles.backgroundBlurBottom}></View>
 
             <Camera
