@@ -53,8 +53,11 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
         if (modal) {
             navigation.goBack()
+            navigation.goBack()
+            navigation.navigate('inventoryDetailsScreen', { selectedProduct })
+        } else {
+            navigation.navigate('inventoryDetailsScreen', { selectedProduct });
         }
-        navigation.navigate('inventoryDetailsScreen', { selectedProduct });
     };
 
     const closeModalHandler = React.useCallback(() => {

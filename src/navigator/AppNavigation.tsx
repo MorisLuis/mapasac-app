@@ -163,6 +163,7 @@ export const AppNavigation = () => {
                             navigation={navigation}
                             backCustum={true}
                             back={() => {
+                                console.log("productDetailsScreen")
                                 navigation.goBack();
                                 updateBarCode('');
                                 if (route.params?.selectedProduct) {
