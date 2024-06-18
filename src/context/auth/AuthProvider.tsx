@@ -8,7 +8,7 @@ import { AuthContext } from './AuthContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-import {useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { DbAuthContext } from '../dbAuth/DbAuthContext';
 
 export interface AuthState {
@@ -58,51 +58,32 @@ export const AuthProvider = ({ children }: any) => {
 
 
     useEffect(() => {
-
-        const statusLogin =  state.status;
+        const statusLogin = state.status;
         const statusLoginDatabase = status;
 
-
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
+            console.log("1")
             return;
         }
 
-        if(statusLoginDatabase == 'dbAuthenticated' && statusLogin != 'authenticated'){
-
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'LoginPage' }],
-            })
-            return;
-        } 
-
-        if (statusLoginDatabase == "dbNot-authenticated") {
-
-            if(currentScreen == 'LoginDatabaseScreen') return
-
+        if (statusLoginDatabase == 'dbNot-authenticated' && statusLogin == 'not-authenticated') {
             return navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginDatabaseScreen' }],
             })
-        };
+        }
 
-        if (statusLogin === 'authenticated') {
-
-            navigation.navigate('typeOfMovementScreen')
-
-            /* navigation.reset({
-                index: 0,
-                routes: [{ name: 'typeOfMovementScreen' }],
-            }); */
-
-        } else {
-
-            if (currentScreen === 'LoginPage') return;
-
+        if (statusLoginDatabase == 'dbAuthenticated' && statusLogin == 'not-authenticated') {
+            console.log("2")
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
-            });
+            })
+            return;
+        }
+
+        if (statusLogin === 'authenticated') {
+            navigation.navigate('typeOfMovementScreen')
         }
 
     }, [state.status, status])
@@ -165,7 +146,7 @@ export const AuthProvider = ({ children }: any) => {
 
             dispatch({
                 type: 'addError',
-                payload: (error.response ? error.response.data.error : error.message )|| 'Información incorrecta'
+                payload: (error.response ? error.response.data.error : error.message) || 'Información incorrecta'
             })
         }
     };
