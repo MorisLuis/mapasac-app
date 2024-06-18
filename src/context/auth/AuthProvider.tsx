@@ -62,11 +62,13 @@ export const AuthProvider = ({ children }: any) => {
         const statusLogin =  state.status;
         const statusLoginDatabase = status;
 
-        if (statusLoginDatabase == 'dbChecking' || statusLogin == 'checking') {
+
+        if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
             return;
         }
 
         if(statusLoginDatabase == 'dbAuthenticated' && statusLogin != 'authenticated'){
+
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -75,6 +77,7 @@ export const AuthProvider = ({ children }: any) => {
         } 
 
         if (statusLoginDatabase == "dbNot-authenticated") {
+
             if(currentScreen == 'LoginDatabaseScreen') return
 
             return navigation.reset({
@@ -93,7 +96,9 @@ export const AuthProvider = ({ children }: any) => {
             }); */
 
         } else {
+
             if (currentScreen === 'LoginPage') return;
+
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],

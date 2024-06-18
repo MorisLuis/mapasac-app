@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 export const inputStyles = StyleSheet.create({
     input: {
-        height: hp("4.5%"),
+        height: hp("5%"),
         borderWidth: 1,
         borderColor: colores.color_border,
         borderRadius: globalStyles.borderRadius.borderRadius,

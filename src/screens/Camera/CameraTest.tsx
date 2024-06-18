@@ -34,6 +34,7 @@ const CameraTest: React.FC = () => {
     const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
     const { navigate } = useNavigation<any>();
+    const [cameraKey, setCameraKey] = useState(0);
 
     const handleCloseModalProductsFoundByCodebar = () => {
         setOpenModalProductFoundByCodebar(false);
@@ -48,7 +49,7 @@ const CameraTest: React.FC = () => {
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
 
-       //handleCloseModalFindByBarcodeInput(false);
+        //handleCloseModalFindByBarcodeInput(false);
 
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
@@ -100,14 +101,14 @@ const CameraTest: React.FC = () => {
 
     const [codeDetected, setCodeDetected] = useState(false)
 
-    const codeScanned = async ({codes} : any) => {
+    const codeScanned = async ({ codes }: any) => {
 
         setProductsScanned(undefined)
         if (!cameraAvailable) return;
         if (!productsScanned && codes?.length > 0) {
 
             setCodeDetected(true)
-            if(codeDetected) return;
+            if (codeDetected) return;
 
             handleCameraAvailable(false)
 
@@ -136,8 +137,11 @@ const CameraTest: React.FC = () => {
 
     useFocusEffect(
         useCallback(() => {
+            if (Platform.OS === 'android') {
+                setCameraKey(prevKey => prevKey + 1);
+            }
             handleCameraAvailable(true);
-            
+
             return () => {
                 setCodeDetected(false)
                 handleCameraAvailable(false);
@@ -184,10 +188,11 @@ const CameraTest: React.FC = () => {
             <View style={cameraStyles.backgroundBlurBottom}></View>
 
             <Camera
+                key={cameraKey}
                 scanBarcode={true}
                 onReadCode={(event: any) => {
-                    if(!cameraAvailable) return;
-                    codeScanned({codes: event.nativeEvent.codeStringValue})
+                    if (!cameraAvailable) return;
+                    codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
                 style={cameraStyles.camera}
             />
