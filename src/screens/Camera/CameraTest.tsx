@@ -170,7 +170,6 @@ const CameraTest: React.FC = () => {
         )
     }
 
-
     return (
         <View style={cameraStyles.cameraScreen}>
 
@@ -194,6 +193,7 @@ const CameraTest: React.FC = () => {
                     codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
                 style={cameraStyles.camera}
+                torchMode={lightOn ? "on" : "off"}
             />
 
             <View style={cameraStyles.flash}>

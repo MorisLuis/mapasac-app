@@ -187,6 +187,7 @@ const CustomCamera: React.FC = () => {
                 scanBarcode={true}
                 onReadCode={(event: any) => console.log(event.nativeEvent.codeStringValue)}
                 style={cameraStyles.camera}
+                
             />
 
             <View style={cameraStyles.flash}>

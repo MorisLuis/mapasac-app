@@ -84,6 +84,8 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 />,
             headerSearchBarOptions: {
                 placeholder: "Buscar producto por nombre...",
+                tintColor: "black",
+                textColor: "black",
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },

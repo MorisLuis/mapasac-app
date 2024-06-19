@@ -84,6 +84,8 @@ export const InventoryBagScreen = () => {
                                 ref={inputRef}
                                 style={{ width: "100%"}}
                                 placeholder="Buscar producto..."
+                                placeholderTextColor="gray"
+
                                 value={searchText}
                                 onChangeText={setSearchText}
                             />
