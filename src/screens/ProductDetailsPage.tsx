@@ -88,10 +88,10 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                 </View>
                 <View style={productDetailsStyles.header}>
                     <Text style={productDetailsStyles.description}>{productDetailsData.Descripcion}</Text>
-                    <View>
+                    {/* <View>
                         <Text style={productDetailsStyles.price}>Precio</Text>
                         <Text style={productDetailsStyles.priceValue}>{format(productDetailsData.Precio)}</Text>
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={productDetailsStyles.information}>

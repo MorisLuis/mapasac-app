@@ -87,6 +87,7 @@ export const DbAuthProvider = ({ children }: any) => {
 
         } catch (error) {
             console.log({error})
+            return dispatch({ type: 'notAuthenticated' });
         }
     }
 

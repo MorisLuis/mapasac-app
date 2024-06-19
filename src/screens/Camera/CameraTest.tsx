@@ -48,9 +48,6 @@ const CameraTest: React.FC = () => {
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
-
-        //handleCloseModalFindByBarcodeInput(false);
-
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
         } else if (response.length > 0) {
@@ -167,9 +164,6 @@ const CameraTest: React.FC = () => {
             handleCameraAvailable(false);
         }
     }, [isFocused]);
-
-    console.log({ cameraPermission })
-
 
     if (cameraPermission === null) {
         return <CameraPermission requestPermissions={handleRequestPermission} message="Cargando..." />

@@ -60,6 +60,9 @@ export const AuthProvider = ({ children }: any) => {
     useEffect(() => {
         const statusLogin = state.status;
         const statusLoginDatabase = status;
+        
+        console.log({statusLoginDatabase})
+        console.log({statusLogin})
 
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
             return;
@@ -120,6 +123,7 @@ export const AuthProvider = ({ children }: any) => {
             });
         } catch (error) {
             console.log({ error })
+            return dispatch({ type: 'notAuthenticated' });
         }
     }
 
