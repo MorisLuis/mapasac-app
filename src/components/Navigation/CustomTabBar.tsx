@@ -65,14 +65,14 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 onPress={onPress}
                 style={[
                     customTabBarStyles.navButton,
-                    { backgroundColor: isFocused ? colores.color_yellow : "transparent" }
+                    { backgroundColor: isFocused ? colores.color_yellow : colores.background_color_blur }
                 ]}
             >
                 {
                     Platform.OS === "android" ?
                         <View style={customTabBarStyles.blurContainer} >
                             <Text style={[customTabBarStyles.sectionTitle, {
-                                color: isFocused ? colores.text_color : colores.text_color
+                                color: isFocused ? colores.text_color : colores.text_color_secondary
                             }]}>
                                 {label}
                             </Text>
@@ -106,13 +106,13 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 </View>
                 {
                     Platform.OS === "android" ?
-                        <TouchableOpacity style={[customTabBarStyles.navButton, { marginRight: 0}]} onPress={handleOpenBagInventory}>
-                            <View style={customTabBarStyles.blurContainer}>
+                        <TouchableOpacity style={[customTabBarStyles.navButton, { marginRight: 0 }]} onPress={handleOpenBagInventory}>
+                            <View style={[customTabBarStyles.blurContainer, { backgroundColor: colores.background_color_blur }]}>
                                 <Text style={customTabBarStyles.sectionBag}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
                             </View>
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity style={[customTabBarStyles.navButton, { marginRight: 0}]} onPress={handleOpenBagInventory}>
+                        <TouchableOpacity style={[customTabBarStyles.navButton, { marginRight: 0 }]} onPress={handleOpenBagInventory}>
                             <BlurView
                                 style={customTabBarStyles.blurContainer}
                                 blurType="light"

@@ -62,7 +62,6 @@ export const AuthProvider = ({ children }: any) => {
         const statusLoginDatabase = status;
 
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
-            console.log("1")
             return;
         }
 
@@ -74,7 +73,6 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if (statusLoginDatabase == 'dbAuthenticated' && statusLogin == 'not-authenticated') {
-            console.log("2")
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],

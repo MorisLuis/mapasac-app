@@ -46,7 +46,7 @@ export const customTabBarStyles = StyleSheet.create({
         paddingHorizontal: globalStyles.globalPadding.padding
     },
     sectionBag: {
-        color: colores.text_color,
+        color: colores.text_color_secondary,
         fontSize: globalFont.font_normal
     },
     blurContainer: {
@@ -54,7 +54,8 @@ export const customTabBarStyles = StyleSheet.create({
         alignItems: 'center',
         width: "100%",
         height: "100%",
-        paddingHorizontal: wp("2%")
+        paddingHorizontal: wp("2%"),
+        //backgroundColor: colores.background_color_blur
     },
     sectionTitle: {
         fontSize: globalFont.font_normal

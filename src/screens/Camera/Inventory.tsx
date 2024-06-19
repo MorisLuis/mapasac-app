@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 export const Inventory = () => {
@@ -114,8 +115,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 20,
-        marginTop: 40
+        marginBottom: hp("2.5%"),
+        marginTop: hp("7.5%")
     },
     title: {
         display: "flex",
