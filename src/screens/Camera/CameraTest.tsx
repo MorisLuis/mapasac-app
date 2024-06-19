@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform, Vibration } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, Vibration, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
 import { SettingsContext } from '../../context/settings/SettingsContext';
@@ -14,7 +14,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
-import { PERMISSIONS, check, openSettings } from 'react-native-permissions';
+import { PERMISSIONS, check, openSettings, request } from 'react-native-permissions';
 import { getProductByCodeBar } from '../../services/products';
 import { AuthContext } from '../../context/auth/AuthContext';
 
@@ -75,22 +75,35 @@ const CameraTest: React.FC = () => {
         navigate('findByCodebarInputModal');
     }
 
-    const checkCameraPermission = async () => {
-        let permission;
 
-        if (Platform.OS === 'ios') {
-            permission = PERMISSIONS.IOS.CAMERA;
-        } else {
-            permission = PERMISSIONS.ANDROID.CAMERA;
-        }
-
-        const result = await check(permission);
+    const requestCameraPermission = async () => {
+        const result = await request(
+            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
+        );
         setCameraPermission(result);
     };
 
+
     // Solicitar permisos de cámara
-    const requestPermissions = async () => {
-        openSettings().catch(() => console.warn('cannot open settings'));
+    const handleRequestPermission = async () => {
+        const result = await check(
+            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
+        );
+
+        if (result === 'denied') {
+            requestCameraPermission();
+        } else if (result === 'blocked') {
+            Alert.alert(
+                'Permiso de Cámara Bloqueado',
+                'El permiso de la cámara ha sido bloqueado. Por favor, habilítalo en la configuración de tu dispositivo.',
+                [
+                    { text: 'Cancelar', style: 'cancel' },
+                    { text: 'Abrir Configuración', onPress: openSettings }
+                ]
+            );
+        } else {
+            setCameraPermission(result);
+        }
     };
 
     const handleVibrate = () => {
@@ -129,7 +142,7 @@ const CameraTest: React.FC = () => {
     }
 
     useEffect(() => {
-        checkCameraPermission();
+        requestCameraPermission();
         return () => {
             handleCameraAvailable(false);
         };
@@ -155,15 +168,17 @@ const CameraTest: React.FC = () => {
         }
     }, [isFocused]);
 
+    console.log({ cameraPermission })
+
 
     if (cameraPermission === null) {
-        return <CameraPermission requestPermissions={requestPermissions} message="Cargando..." />
+        return <CameraPermission requestPermissions={handleRequestPermission} message="Cargando..." />
     }
 
     if (cameraPermission !== 'granted') {
         return (
             <CameraPermission
-                requestPermissions={requestPermissions}
+                requestPermissions={handleRequestPermission}
                 message="Permisos de cámara no concedidos."
                 availableAuthorization={true}
             />

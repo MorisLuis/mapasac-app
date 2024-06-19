@@ -84,7 +84,8 @@ export const cameraStyles = StyleSheet.create({
         position: "absolute",
         right: "7.5%",
         top: 100,
-        zIndex: 2
+        zIndex: 2,
+        backgroundColor: "red"
     },
     blurOverlay: {
         position: 'absolute',
