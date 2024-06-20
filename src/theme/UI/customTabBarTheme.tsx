@@ -46,7 +46,7 @@ export const customTabBarStyles = StyleSheet.create({
         paddingHorizontal: globalStyles.globalPadding.padding
     },
     sectionBag: {
-        color: colores.text_color_secondary,
+        //color: colores.text_color_secondary,
         fontSize: globalFont.font_normal
     },
     blurContainer: {

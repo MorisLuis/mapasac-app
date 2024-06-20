@@ -65,7 +65,9 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 onPress={onPress}
                 style={[
                     customTabBarStyles.navButton,
-                    { backgroundColor: isFocused ? colores.color_yellow : colores.background_color_blur }
+                    { 
+                        backgroundColor: isFocused ? colores.color_yellow : ( Platform.OS === "android" ? colores.background_color_blur : "transparent" )
+                    }
                 ]}
             >
                 {
@@ -108,7 +110,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                     Platform.OS === "android" ?
                         <TouchableOpacity style={[customTabBarStyles.navButton, { marginRight: 0 }]} onPress={handleOpenBagInventory}>
                             <View style={[customTabBarStyles.blurContainer, { backgroundColor: colores.background_color_blur }]}>
-                                <Text style={customTabBarStyles.sectionBag}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
+                                <Text style={[customTabBarStyles.sectionBag, {color: colores.text_color_secondary}]}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -118,7 +120,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                                 blurType="light"
                                 blurAmount={10}
                             >
-                                <Text style={customTabBarStyles.sectionBag}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
+                                <Text style={[customTabBarStyles.sectionBag, {color: colores.text_color}]}>{getTypeOfMovementsName()} ( {numberOfItems} )</Text>
                             </BlurView>
                         </TouchableOpacity>
                 }

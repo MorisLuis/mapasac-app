@@ -35,26 +35,30 @@ export const cameraStyles = StyleSheet.create({
         zIndex: 2
     },
     scannerOptions: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         position: "absolute",
         bottom: hp("10%"),
-        right: wp("7.5%"),
+        right: wp("6%"),
         padding: globalStyles.globalPadding.padding / 2,
-        zIndex: 2
+        zIndex: 2,
+        width: wp("20%"),
+        height: wp("20%")
     },
     option: {
+        flex: 1,
         borderRadius: 30,
         padding: 5,
+        backgroundColor: colores.background_color_blur,
     },
     optionContent: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
         padding: globalStyles.globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: "black"
+        borderColor: colores.color_black
     },
     message: {
         position: "absolute",
@@ -84,8 +88,7 @@ export const cameraStyles = StyleSheet.create({
         position: "absolute",
         right: "7.5%",
         top: 100,
-        zIndex: 2,
-        backgroundColor: "red"
+        zIndex: 2
     },
     blurOverlay: {
         position: 'absolute',

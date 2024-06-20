@@ -222,14 +222,12 @@ const CameraTest: React.FC = () => {
 
             {
                 Platform.OS === 'android' ?
-                    <TouchableOpacity onPress={handleOpenInputModal}>
-                        <View style={cameraStyles.scannerOptions}>
+                    <TouchableOpacity style={cameraStyles.scannerOptions} onPress={handleOpenInputModal}>
                             <View style={cameraStyles.option}>
                                 <View style={cameraStyles.optionContent}>
-                                    <Icon name="barcode-outline" size={hp("3%")} color="black" />
+                                    <Icon name="barcode-outline" size={hp("3%")} color="white" />
                                 </View>
                             </View>
-                        </View>
                     </TouchableOpacity>
                     :
                     <View style={cameraStyles.scannerOptions}>

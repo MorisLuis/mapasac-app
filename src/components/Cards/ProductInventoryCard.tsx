@@ -23,7 +23,7 @@ export const ProductInventoryCard = ({
 
     return (
         <TouchableOpacity style={styles.productInventoryCard} onPress={onClick}>
-            {
+            {/* {
                 product?.imagen ?
                     <Image
                         style={styles.productInventoryCard__Image}
@@ -36,7 +36,7 @@ export const ProductInventoryCard = ({
                         <Icon name={'camera'} size={20} color="black"/>
                         <Text style={styles.notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
                     </View>
-            }
+            } */}
             <View style={styles.productInventoryCard__data}>
                 <View style={styles.information}>
                     <View>
