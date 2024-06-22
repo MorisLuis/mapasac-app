@@ -24,13 +24,13 @@ export const SearchCodebarWithInput = () => {
         updateBarCode('')
 
         let response;
-        if(typeOfSearch === 'code') {
-            response = await getProductByCodeBar(undefined, Barcode);
+        if (typeOfSearch === 'code') {
+            response = await getProductByCodeBar({ codigo: Barcode });
             navigation.goBack()
             navigation.navigate('scannerResultScreen', { product: response[0] });
         } else {
             updateBarCode(Barcode)
-            response = await getProductByCodeBar(Barcode, undefined);
+            response = await getProductByCodeBar({ codeBar: Barcode });
             navigation.goBack()
             navigation.navigate('scannerResultScreen', { product: response[0] });
         }
@@ -47,7 +47,7 @@ export const SearchCodebarWithInput = () => {
             onClose={handleCloseModal}
         >
             <View style={modalRenderstyles.SearchCodebarWithInput}>
-                <Text style={modalRenderstyles.SearchCodebarWithInput_title}>Escribe el { typeOfSearch === 'code' ? 'Codigo' : 'Codigo de barras'}:</Text>
+                <Text style={modalRenderstyles.SearchCodebarWithInput_title}>Escribe el {typeOfSearch === 'code' ? 'Codigo' : 'Codigo de barras'}:</Text>
                 <TextInput
                     style={[inputStyles.input, globalStyles.globalMarginBottomSmall]}
                     onChangeText={onChangeBarcode}

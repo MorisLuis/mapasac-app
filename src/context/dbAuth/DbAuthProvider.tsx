@@ -1,10 +1,9 @@
-import React, { useReducer, useEffect, useState, useContext } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { dbAuthReducer } from './dbAuthReducer';
 import { DbAuthContext } from './DbAuthContext';
-import { AuthContext } from '../auth/AuthContext';
 import UserInterface from '../../interface/user';
 
 export interface userDB {
@@ -45,7 +44,6 @@ const AUTH_INITIAL_STATE: DbAuthState = {
     user: null
 }
 
-
 export const DbAuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(dbAuthReducer, AUTH_INITIAL_STATE);
@@ -62,6 +60,7 @@ export const DbAuthProvider = ({ children }: any) => {
 
             // No token, no autenticado
             if (!token) return dispatch({ type: 'notAuthenticated' });
+
     
             // Hay token
             const resp = await api.get('/api/auth/renew', {

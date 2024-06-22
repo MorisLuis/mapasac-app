@@ -40,7 +40,7 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
             const codeValue = codes;
             if (!codeValue) return;
             try {
-                const response = await getProductByCodeBar(codeValue);
+                const response = await getProductByCodeBar({codeBar: codeValue});
                 handleVibrate()
                 updateBarCode(codeValue)
                 if (response.length > 0) {

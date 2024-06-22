@@ -1,47 +1,59 @@
 import { useContext, useState } from "react";
-import { LayoutChangeEvent, Vibration } from "react-native";
-import { CodeScannerFrame, useCameraDevice, useCameraDevices, useCameraFormat, useCodeScanner } from "react-native-vision-camera";
-import { SettingsContext } from "../../context/settings/SettingsContext";
+import { Platform, Vibration, Alert } from "react-native";
 import { getProductByCodeBar } from "../../services/products";
 import { AuthContext } from "../../context/auth/AuthContext";
+import { PERMISSIONS, check, openSettings, request } from "react-native-permissions";
+import { SettingsContext } from "../../context/settings/SettingsContext";
+import PorductInterface from "../../interface/product";
+import UserInterface from "../../interface/user";
+
+type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
 interface cameraSettingsInterface {
-    setProductsScanned: any;
-    productsScanned: any;
-    handleOpenProductsFoundByCodebar: any
+    handleOpenProductsFoundByCodebar: (response: PorductInterface[]) => void;
+    setProductsScanned: React.Dispatch<React.SetStateAction<PorductInterface[] | undefined>>;
+    productsScanned?: PorductInterface[];
+    setCameraPermission: React.Dispatch<React.SetStateAction<PermissionStatus | null>>
 }
 
 export const cameraSettings = ({
+    handleOpenProductsFoundByCodebar,
     setProductsScanned,
     productsScanned,
-    handleOpenProductsFoundByCodebar
+    setCameraPermission
 } : cameraSettingsInterface) => {
 
-
-    const { vibration, cameraAvailable, handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, cameraAvailable, vibration } = useContext(SettingsContext);
     const { updateBarCode } = useContext(AuthContext);
+    const [codeDetected, setCodeDetected] = useState(false)
 
-    /* const devices = useCameraDevices();
-    const backCamera = devices.find((device) => device.position === 'back'); */
-
-    const backCamera = useCameraDevice('back', {
-        physicalDevices: ['wide-angle-camera']
-    });
-
-    const [scanFrame, setScanFrame] = useState<CodeScannerFrame>({ height: 1, width: 1 });
-    const [codeScannerHighlights, setCodeScannerHighlights] = useState<any[]>([]);
-    const [layout, setLayout] = useState<LayoutChangeEvent['nativeEvent']['layout']>({ x: 0, y: 0, width: 0, height: 0 });
     
+    const requestCameraPermission = async () => {
+        const result = await request(
+            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
+        );
+        setCameraPermission(result);
+    };
 
-    const Fps = 30
-    
-    const format = useCameraFormat(backCamera, [
-        { videoResolution: { width: 1280, height: 720 } }
-    ]);
+    // Solicitar permisos de cámara
+    const handleRequestPermission = async () => {
+        const result = await check(
+            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
+        );
 
-    const onLayout = (evt: LayoutChangeEvent) => {
-        if (evt.nativeEvent.layout) {
-            setLayout(evt.nativeEvent.layout);
+        if (result === 'denied') {
+            requestCameraPermission();
+        } else if (result === 'blocked') {
+            Alert.alert(
+                'Permiso de Cámara Bloqueado',
+                'El permiso de la cámara ha sido bloqueado. Por favor, habilítalo en la configuración de tu dispositivo.',
+                [
+                    { text: 'Cancelar', style: 'cancel' },
+                    { text: 'Abrir Configuración', onPress: openSettings }
+                ]
+            );
+        } else {
+            setCameraPermission(result);
         }
     };
 
@@ -51,56 +63,55 @@ export const cameraSettings = ({
         }
     };
 
-    const codeScanner = useCodeScanner({
+    const codeScanned = async ({ codes }: any) => {
 
-        codeTypes: ["qr", "ean-13", "code-128"],
+        setProductsScanned(undefined)
+        if (!cameraAvailable) return;
+        if (!productsScanned && codes?.length > 0) {
 
-        onCodeScanned: async (codes, frame: CodeScannerFrame) => {
+            setCodeDetected(true)
+            if (codeDetected) return;
 
-            // Code to do the frame
-            setScanFrame(frame);
-            setCodeScannerHighlights(
-                codes.map(code => ({
-                    height: code.frame?.width ?? 0,
-                    width: code.frame?.height ?? 0,
-                    x: code.frame?.y ?? 0,
-                    y: code.frame?.x ?? 0,
-                })),
-            );
+            handleCameraAvailable(false)
 
-            // Code to get product
-            //setProductSelected(undefined);
-            setProductsScanned(undefined)
-            if (!cameraAvailable) return;
-            if (!productsScanned && codes?.length > 0) {
-                handleCameraAvailable(false)
-                const scannedCode = codes?.[0];
-                const codeValue = scannedCode.value;
+            const codeValue = codes;
 
-                if (!codeValue) return;
+            if (!codeValue) return;
 
-                try {
-                    const response = await getProductByCodeBar(codeValue);
-                    handleOpenProductsFoundByCodebar(response);
-                    handleVibrate()
-                    if (response.length < 1) updateBarCode(codeValue)
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                }
+            try {
+                const response = await getProductByCodeBar({ codeBar: codeValue });
+                handleOpenProductsFoundByCodebar(response);
+                handleVibrate()
+                if (response.length < 1) updateBarCode(codeValue)
+            } catch (error) {
+                setCodeDetected(false)
+                console.error('Error fetching product:', error);
             }
         }
-    })
+    }
+
 
     return {
-        codeScanner,
-        setCodeScannerHighlights,
-        backCamera,
-        format,
-        codeScannerHighlights,
-        onLayout,
-        layout,
-        scanFrame,
-        Fps
+        requestCameraPermission,
+        handleRequestPermission,
+        codeScanned,
+        setCodeDetected
     }
 
 }
+
+export const getTypeOfMovementsName = (user?: UserInterface) => {
+    if (user) {
+        const { Id_TipoMovInv } = user;
+        if (Id_TipoMovInv?.Accion === 1 && Id_TipoMovInv?.Id_TipoMovInv === 0) {
+            return "al Inventario";
+        } else if (Id_TipoMovInv?.Accion === 1) {
+            return "a la Entrada";
+        } else if (Id_TipoMovInv?.Accion === 2) {
+            return "a la Salida";
+        } else {
+            return "Traspaso";
+        }
+    }
+    return "";
+};

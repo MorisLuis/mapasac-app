@@ -47,22 +47,19 @@ export const AuthProvider = ({ children }: any) => {
     const navigation = useNavigation<any>();
     const { status } = useContext(DbAuthContext);
 
-    const [currentScreen, setCurrentScreen] = React.useState('');
+    /* const [currentScreen, setCurrentScreen] = React.useState('');
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('state', () => {
             setCurrentScreen(navigation.getCurrentRoute().name);
         });
 
         return unsubscribe;
-    }, [navigation]);
+    }, [navigation]); */
 
 
     useEffect(() => {
         const statusLogin = state.status;
         const statusLoginDatabase = status;
-        
-        console.log({statusLoginDatabase})
-        console.log({statusLogin})
 
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
             return;

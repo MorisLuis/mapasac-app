@@ -23,10 +23,10 @@ export const ProductFindByCodebarInput = ({
         updateBarCode('')
         let response;
         if(typeOfSearch === 'code') {
-            response = await getProductByCodeBar(undefined, Barcode);
+            response = await getProductByCodeBar({codigo: Barcode});
         } else {
             updateBarCode(Barcode)
-            response = await getProductByCodeBar(Barcode, undefined);
+            response = await getProductByCodeBar({codeBar: Barcode});
         }
         handleOpenProductsFoundByCodebar(response)
     }

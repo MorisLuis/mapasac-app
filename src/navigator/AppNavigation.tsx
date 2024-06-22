@@ -20,6 +20,7 @@ import { SearchCodebarWithInput } from '../screens/Modals/SearchCodebarWithInput
 import ScannerResult from '../screens/Modals/ScannerResult';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
+import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
 
 export type InventoryNavigationStackParamList = {
     //Navigation
@@ -44,6 +45,7 @@ export type InventoryNavigationStackParamList = {
     //Modal
     findByCodebarInputModal: undefined;
     searchProductModal: { modal: boolean };
+    productsFindByCodeBarModal: undefined;
 };
 
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
@@ -110,16 +112,7 @@ export const AppNavigation = () => {
                     ),
                 })}
             />
-            <Stack.Screen
-                name="scannerResultScreen"
-                component={ScannerResult}
-                options={{ presentation: 'transparentModal', headerShown: false }}
-            />
-            <Stack.Screen
-                name="findByCodebarInputModal"
-                component={SearchCodebarWithInput}
-                options={{ presentation: 'transparentModal', headerShown: false }}
-            />
+
             <Stack.Screen
                 name="inventoryDetailsScreen"
                 component={ProductDetailsPage}
@@ -185,6 +178,24 @@ export const AppNavigation = () => {
                 name="CodebarUpdateNavigation"
                 component={CodebarUpdateNavigation}
                 options={{ presentation: "modal", headerShown: false }}
+            />
+
+
+            {/* modals */}
+            <Stack.Screen
+                name="scannerResultScreen"
+                component={ScannerResult}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="findByCodebarInputModal"
+                component={SearchCodebarWithInput}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="productsFindByCodeBarModal"
+                component={ProductsFindByCodeBar}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
         </>
     ), [authScreens, handleCameraAvailable, updateBarCode]);

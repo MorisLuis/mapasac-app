@@ -16,11 +16,12 @@ export const CodebarUpdateWithInputScreen = ({productDetails, selectedProduct} :
     };
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-        if (!productDetails) return;
+        console.log({selectedProduct})
+        if (!selectedProduct) return;
 
         await updateCostos({
-            codigo: productDetails?.Codigo,
-            Id_Marca: productDetails?.Id_Marca,
+            codigo: selectedProduct?.Codigo,
+            Id_Marca: selectedProduct?.Id_Marca,
             body: {
                 CodBar: text
             }

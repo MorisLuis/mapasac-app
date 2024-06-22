@@ -1,5 +1,6 @@
 import { api } from "../api/api";
 
+
 const getProductDetails = async (id: string, marca: string) => {
     let product;
     try {
@@ -13,7 +14,11 @@ const getProductDetails = async (id: string, marca: string) => {
     return product;
 }
 
-const getProductByCodeBar = async (codeBar?: string, codigo?: string) => {
+interface getProductByCodeBarInterface {
+    codeBar?: string, codigo?: string
+}
+
+const getProductByCodeBar = async ({ codeBar, codigo }: getProductByCodeBarInterface) => {
 
     let product;
     try {

@@ -7,8 +7,6 @@ import PorductInterface from '../../interface/product';
 import UserInterface from '../../interface/user';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
-import ModalMiddle from '../../components/Modals/ModalMiddle';
-import { ProductFindByCodeBar } from '../../components/Modals/ModalRenders/ProductFindByCodeBar';
 import { cameraStyles } from '../../theme/CameraCustumTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
@@ -17,41 +15,41 @@ import { Camera } from 'react-native-camera-kit';
 import { PERMISSIONS, check, openSettings, request } from 'react-native-permissions';
 import { getProductByCodeBar } from '../../services/products';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
+
+export type OnReadCodeData = {
+    nativeEvent: {
+        codeStringValue: string;
+    };
+};
 
 const CameraTest: React.FC = () => {
 
     const { updateBarCode } = useContext(AuthContext);
     const { bag } = useContext(InventoryBagContext);
     const { handleCameraAvailable, limitProductsScanned, cameraAvailable, vibration } = useContext(SettingsContext);
-    const isFocused = useIsFocused();
 
+    const isFocused = useIsFocused();
+    const onTheLimitProductScanned = limitProductsScanned < bag?.length;
+    const { navigate } = useNavigation<any>();
 
     const [lightOn, setLightOn] = useState(false);
-    const onTheLimitProductScanned = limitProductsScanned < bag?.length;
-    const [productsScanned, setProductsScanned] = useState<PorductInterface[]>()
-    const [openModalProductFoundByCodebar, setOpenModalProductFoundByCodebar] = useState(false);
-    const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
-    const { navigate } = useNavigation<any>();
     const [cameraKey, setCameraKey] = useState(0);
+    const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
+    const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
 
-    const handleCloseModalProductsFoundByCodebar = () => {
-        setOpenModalProductFoundByCodebar(false);
-        setProductsScanned(undefined)
-        handleCameraAvailable(true)
-    }
+    /* const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
+    const [codeDetected, setCodeDetected] = useState(false) */
 
-    const handleCloseModalFindByBarcodeInput = (cameraAvailable?: boolean) => {
-        handleCameraAvailable(cameraAvailable === false ? cameraAvailable : true);
-    }
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
         } else if (response.length > 0) {
-            setOpenModalProductFoundByCodebar(true)
+            navigate('productsFindByCodeBarModal', { products: response });
         } else {
             navigate('scannerResultScreen', { product: response[0] });
         }
@@ -59,84 +57,22 @@ const CameraTest: React.FC = () => {
         setProductsScanned(response);
     }
 
-    const handleSelectProduct = (product: PorductInterface) => {
-        setOpenModalProductFoundByCodebar(false);
-
-        setTimeout(() => {
-            navigate('scannerResultScreen', { product: product });
-        }, 500);
-    }
-
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         navigate('findByCodebarInputModal');
     }
 
-
-    const requestCameraPermission = async () => {
-        const result = await request(
-            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
-        );
-        setCameraPermission(result);
-    };
-
-
-    // Solicitar permisos de cámara
-    const handleRequestPermission = async () => {
-        const result = await check(
-            Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
-        );
-
-        if (result === 'denied') {
-            requestCameraPermission();
-        } else if (result === 'blocked') {
-            Alert.alert(
-                'Permiso de Cámara Bloqueado',
-                'El permiso de la cámara ha sido bloqueado. Por favor, habilítalo en la configuración de tu dispositivo.',
-                [
-                    { text: 'Cancelar', style: 'cancel' },
-                    { text: 'Abrir Configuración', onPress: openSettings }
-                ]
-            );
-        } else {
-            setCameraPermission(result);
-        }
-    };
-
-    const handleVibrate = () => {
-        if (vibration) {
-            Vibration.vibrate(500);
-        }
-    };
-
-    const [codeDetected, setCodeDetected] = useState(false)
-
-    const codeScanned = async ({ codes }: any) => {
-
-        setProductsScanned(undefined)
-        if (!cameraAvailable) return;
-        if (!productsScanned && codes?.length > 0) {
-
-            setCodeDetected(true)
-            if (codeDetected) return;
-
-            handleCameraAvailable(false)
-
-            const codeValue = codes;
-
-            if (!codeValue) return;
-
-            try {
-                const response = await getProductByCodeBar(codeValue);
-                handleOpenProductsFoundByCodebar(response);
-                handleVibrate()
-                if (response.length < 1) updateBarCode(codeValue)
-            } catch (error) {
-                setCodeDetected(false)
-                console.error('Error fetching product:', error);
-            }
-        }
-    }
+    const {
+        requestCameraPermission,
+        handleRequestPermission,
+        codeScanned,
+        setCodeDetected
+    } = cameraSettings({
+        handleOpenProductsFoundByCodebar,
+        setProductsScanned,
+        productsScanned,
+        setCameraPermission
+    })
 
     useEffect(() => {
         requestCameraPermission();
@@ -197,12 +133,13 @@ const CameraTest: React.FC = () => {
             <Camera
                 key={cameraKey}
                 scanBarcode={true}
-                onReadCode={(event: any) => {
+                onReadCode={(event: OnReadCodeData) => {
                     if (!cameraAvailable) return;
                     codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
                 style={cameraStyles.camera}
                 torchMode={lightOn ? "on" : "off"}
+
             />
 
             <View style={cameraStyles.flash}>
@@ -223,11 +160,11 @@ const CameraTest: React.FC = () => {
             {
                 Platform.OS === 'android' ?
                     <TouchableOpacity style={cameraStyles.scannerOptions} onPress={handleOpenInputModal}>
-                            <View style={cameraStyles.option}>
-                                <View style={cameraStyles.optionContent}>
-                                    <Icon name="barcode-outline" size={hp("3%")} color="white" />
-                                </View>
+                        <View style={cameraStyles.option}>
+                            <View style={cameraStyles.optionContent}>
+                                <Icon name="barcode-outline" size={hp("3%")} color="white" />
                             </View>
+                        </View>
                     </TouchableOpacity>
                     :
                     <View style={cameraStyles.scannerOptions}>
@@ -240,36 +177,8 @@ const CameraTest: React.FC = () => {
                         </BlurView>
                     </View>
             }
-
-            {/* LIST OF PRODUCTS FOUND BY CODEBAR */}
-            <ModalMiddle
-                visible={openModalProductFoundByCodebar}
-                onClose={handleCloseModalProductsFoundByCodebar}
-            >
-                <ProductFindByCodeBar
-                    products={productsScanned as PorductInterface[]}
-                    onClick={handleSelectProduct}
-                />
-            </ModalMiddle>
         </View>
     );
 };
 
 export default CameraTest;
-
-
-const getTypeOfMovementsName = (user?: UserInterface) => {
-    if (user) {
-        const { Id_TipoMovInv } = user;
-        if (Id_TipoMovInv?.Accion === 1 && Id_TipoMovInv?.Id_TipoMovInv === 0) {
-            return "al Inventario";
-        } else if (Id_TipoMovInv?.Accion === 1) {
-            return "a la Entrada";
-        } else if (Id_TipoMovInv?.Accion === 2) {
-            return "a la Salida";
-        } else {
-            return "Traspaso";
-        }
-    }
-    return "";
-};
