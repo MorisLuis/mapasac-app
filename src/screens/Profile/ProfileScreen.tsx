@@ -31,10 +31,12 @@ export const ProfileScreen = () => {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
-                { text: "Aceptar", onPress: () => {
-                    logOutDB()
-                    logOut()
-                } }
+                {
+                    text: "Aceptar", onPress: async () => {
+                        await logOut();
+                        await logOutDB();
+                    }
+                }
             ],
             { cancelable: false } // Puedes ponerlo en true para permitir cerrar el diálogo tocando fuera de él
         );

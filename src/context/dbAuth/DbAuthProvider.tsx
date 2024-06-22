@@ -1,10 +1,11 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState, useContext } from 'react';
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { dbAuthReducer } from './dbAuthReducer';
 import { DbAuthContext } from './DbAuthContext';
 import UserInterface from '../../interface/user';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface userDB {
     servidor: string;
@@ -107,7 +108,6 @@ export const DbAuthProvider = ({ children }: any) => {
             });
 
             await AsyncStorage.setItem('tokenDB', data.tokenDB);
-
 
         } catch (error: any) {
             setLoggingIn(false)

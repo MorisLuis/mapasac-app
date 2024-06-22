@@ -47,25 +47,29 @@ export const AuthProvider = ({ children }: any) => {
     const navigation = useNavigation<any>();
     const { status } = useContext(DbAuthContext);
 
-    /* const [currentScreen, setCurrentScreen] = React.useState('');
+    const [currentScreen, setCurrentScreen] = React.useState('');
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('state', () => {
             setCurrentScreen(navigation.getCurrentRoute().name);
         });
 
         return unsubscribe;
-    }, [navigation]); */
-
+    }, [navigation]);
 
     useEffect(() => {
         const statusLogin = state.status;
         const statusLoginDatabase = status;
 
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
+            console.log("1")
             return;
         }
 
         if (statusLoginDatabase == 'dbNot-authenticated' && statusLogin == 'not-authenticated') {
+            console.log("2")
+
+            if(currentScreen === 'LoginDatabaseScreen') return;
+            
             return navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginDatabaseScreen' }],
@@ -73,6 +77,8 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if (statusLoginDatabase == 'dbAuthenticated' && statusLogin == 'not-authenticated') {
+            console.log("3")
+
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -81,6 +87,8 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if (statusLogin === 'authenticated') {
+            console.log("4")
+
             navigation.navigate('typeOfMovementScreen')
         }
 
@@ -141,6 +149,7 @@ export const AuthProvider = ({ children }: any) => {
             await AsyncStorage.setItem('token', data.token);
 
         } catch (error: any) {
+            console.log({error})
             setLoggingIn(false)
 
             dispatch({
