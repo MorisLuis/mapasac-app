@@ -23,7 +23,9 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
     return (
         <ModalMiddle
             visible={true}
-            onClose={() => navigation.goBack()}
+            onClose={() => {
+                navigation.goBack()
+            }}
         >
 
             <View style={styles.ProductFindByCodeBar}>

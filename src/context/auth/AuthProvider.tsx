@@ -61,12 +61,10 @@ export const AuthProvider = ({ children }: any) => {
         const statusLoginDatabase = status;
 
         if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
-            console.log("1")
             return;
         }
 
         if (statusLoginDatabase == 'dbNot-authenticated' && statusLogin == 'not-authenticated') {
-            console.log("2")
 
             if(currentScreen === 'LoginDatabaseScreen') return;
             
@@ -77,7 +75,6 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if (statusLoginDatabase == 'dbAuthenticated' && statusLogin == 'not-authenticated') {
-            console.log("3")
 
             navigation.reset({
                 index: 0,
@@ -87,8 +84,6 @@ export const AuthProvider = ({ children }: any) => {
         }
 
         if (statusLogin === 'authenticated') {
-            console.log("4")
-
             navigation.navigate('typeOfMovementScreen')
         }
 

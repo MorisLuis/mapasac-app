@@ -1,10 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform, Vibration, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import PorductInterface from '../../interface/product';
-import UserInterface from '../../interface/user';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 import { cameraStyles } from '../../theme/CameraCustumTheme';
@@ -12,9 +11,6 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
-import { PERMISSIONS, check, openSettings, request } from 'react-native-permissions';
-import { getProductByCodeBar } from '../../services/products';
-import { AuthContext } from '../../context/auth/AuthContext';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
@@ -27,21 +23,17 @@ export type OnReadCodeData = {
 
 const CameraTest: React.FC = () => {
 
-    const { updateBarCode } = useContext(AuthContext);
     const { bag } = useContext(InventoryBagContext);
-    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, vibration } = useContext(SettingsContext);
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
 
     const isFocused = useIsFocused();
     const onTheLimitProductScanned = limitProductsScanned < bag?.length;
-    const { navigate } = useNavigation<any>();
+    const { navigate, push } = useNavigation<any>();
 
     const [lightOn, setLightOn] = useState(false);
     const [cameraKey, setCameraKey] = useState(0);
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
-
-    /* const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
-    const [codeDetected, setCodeDetected] = useState(false) */
 
 
     // Other functions.
@@ -49,7 +41,9 @@ const CameraTest: React.FC = () => {
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
         } else if (response.length > 0) {
+            console.log("productsFindByCodeBarModal")
             navigate('productsFindByCodeBarModal', { products: response });
+
         } else {
             navigate('scannerResultScreen', { product: response[0] });
         }
@@ -83,6 +77,7 @@ const CameraTest: React.FC = () => {
 
     useFocusEffect(
         useCallback(() => {
+            console.log("focus!")
             if (Platform.OS === 'android') {
                 setCameraKey(prevKey => prevKey + 1);
             }
@@ -97,6 +92,7 @@ const CameraTest: React.FC = () => {
 
     useEffect(() => {
         if (!isFocused) {
+            console.log("hello")
             handleCameraAvailable(false);
         }
     }, [isFocused]);
@@ -115,6 +111,8 @@ const CameraTest: React.FC = () => {
         )
     }
 
+    console.log({cameraAvailable})
+
     return (
         <View style={cameraStyles.cameraScreen}>
 
@@ -132,14 +130,13 @@ const CameraTest: React.FC = () => {
 
             <Camera
                 key={cameraKey}
-                scanBarcode={true}
+                scanBarcode={false}
                 onReadCode={(event: OnReadCodeData) => {
                     if (!cameraAvailable) return;
                     codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
                 style={cameraStyles.camera}
                 torchMode={lightOn ? "on" : "off"}
-
             />
 
             <View style={cameraStyles.flash}>

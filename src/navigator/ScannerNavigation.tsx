@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Inventory } from '../screens/Camera/Inventory';
 import { CustomTabBar } from '../components/Navigation/CustomTabBar';
-import CustomCamera from '../screens/Camera/Camera';
 import CameraTest from '../screens/Camera/CameraTest';
 
 

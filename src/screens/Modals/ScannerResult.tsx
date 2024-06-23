@@ -47,8 +47,8 @@ const ScannerResult = ({
             ...product,
             Piezas: counterProduct === 0 ? 1 : counterProduct
         }
-        handleCameraAvailable(true)
         addProduct(inventoryBody as any)
+        handleCameraAvailable(true)
         navigation.goBack()
     }
 
@@ -72,8 +72,8 @@ const ScannerResult = ({
         <ModalBottom
             visible={true}
             onClose={() => {
-                handleCameraAvailable(true)
-                navigation.goBack()
+                //handleCameraAvailable(true)
+                navigation.navigate('BottomNavigation')
             }}
         >
             {

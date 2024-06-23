@@ -18,7 +18,6 @@ export const SearchCodebarWithInput = () => {
     const [typeOfSearch, setTypeOfSearch] = useState('code')
     const { updateBarCode } = useContext(AuthContext);
     const navigation = useNavigation<any>();
-    const { handleCameraAvailable } = useContext(SettingsContext);
 
     const handleSearchProductByCodebarInput = async () => {
         updateBarCode('')
@@ -37,8 +36,7 @@ export const SearchCodebarWithInput = () => {
     }
 
     const handleCloseModal = () => {
-        handleCameraAvailable(true)
-        navigation.goBack()
+        navigation.goBack()              
     }
 
     return (
