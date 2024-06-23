@@ -130,7 +130,7 @@ const CameraTest: React.FC = () => {
 
             <Camera
                 key={cameraKey}
-                scanBarcode={false}
+                scanBarcode={true}
                 onReadCode={(event: OnReadCodeData) => {
                     if (!cameraAvailable) return;
                     codeScanned({ codes: event.nativeEvent.codeStringValue })

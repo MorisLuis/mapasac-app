@@ -1,8 +1,10 @@
+import UserInterface from "../../interface/user"
 
 export interface SettingsState {
     vibration?: boolean,
     cameraAvailable?: boolean,
-    limitProductsScanned: number
+    limitProductsScanned: number,
+    user?: UserInterface | null;
 }
 
 
@@ -10,6 +12,7 @@ type SettingsActionType =
     | { type: '[Settings] - Vibration state', vibration: boolean }
     | { type: '[Settings] - CameraAvailable state', cameraAvailable: boolean }
     | { type: '[Settings] - limitProductsScanned state', limitProductsScanned: number }
+    | { type: 'userSetup', user: UserInterface }
 
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
 
@@ -31,6 +34,12 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
             return {
                 ...state,
                 limitProductsScanned: action.limitProductsScanned
+            }
+
+            case 'userSetup': 
+            return {
+                ...state,
+                user: action.user
             }
 
         default:

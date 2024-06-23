@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { SettingsContext } from './SettingsContext';
 import { settingsReducer } from './settingsReducer';
+import UserInterface from '../../interface/user';
 
 export interface SettingsInterface {
     vibration: boolean;
     cameraAvailable: boolean;
     limitProductsScanned: number;
+    codeBarStatus?: boolean
+
 }
 
 export const SettingsInitialState: SettingsInterface = {
     vibration: true,
     cameraAvailable: true,
-    limitProductsScanned: 20
+    limitProductsScanned: 20,
+    codeBarStatus: false
 }
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
@@ -30,12 +34,17 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         dispatch({ type: '[Settings] - limitProductsScanned state', limitProductsScanned: value });
     }
 
+    const handleSetupUser = (user: UserInterface) => {
+        dispatch({ type: 'userSetup', user });
+    }
+
     return (
         <SettingsContext.Provider value={{
             ...state,
             handleVibrationState,
             handleCameraAvailable,
-            handleLimitProductsScanned
+            handleLimitProductsScanned,
+            handleSetupUser
         }}
         >
             {children}

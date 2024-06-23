@@ -34,7 +34,7 @@ export const CustomHeader = ({
         if (typeof back === 'function' && backCustum) {
             back();
         } else {
-            back?.();
+            //back?.();
             navigation.goBack();
         }
     }

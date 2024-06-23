@@ -18,6 +18,11 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
     const { products } = route?.params || {}
     const navigation = useNavigation<any>();
 
+    const onSelectProduct = (product: PorductInterface) => {
+        navigation.goBack()
+        navigation.navigate('scannerResultScreen', { product: product })
+    }
+
     if (!products) return;
 
     return (
@@ -35,7 +40,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
                         <ProductInventoryCard
                             key={`${product.Codigo}-${product.Id_Marca}-${product.Id_Almacen}`}
                             product={product}
-                            onClick={() => navigation.navigate('scannerResultScreen', { product: product })}
+                            onClick={() => onSelectProduct(product)}
                         />
                     )
                 }

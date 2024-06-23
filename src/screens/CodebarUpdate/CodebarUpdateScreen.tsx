@@ -9,6 +9,8 @@ import { AuthContext } from '../../context/auth/AuthContext';
 import { updateCostos } from '../../services/costos';
 import ModalBottom from '../../components/Modals/ModalBottom';
 import CameraModal from '../../components/CameraModal';
+import { Selector } from '../../components/Ui/Selector';
+import codebartypes from '../../utils/codebarTypes.json';
 
 type optionSelectedInterface = {
     screen: string,
@@ -22,6 +24,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     const { codeBar, codeBarStatus, updateBarCode, handleCodebarScannedProcces } = useContext(AuthContext);
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
     const [openModalCamera, setOpenModalCamera] = useState(false)
+    const [codebartype, setcodebartype] = useState(1)
 
     const handleOptionSelect = (option: optionSelectedInterface) => {
         setSelectedOption(option);
@@ -70,6 +73,18 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
         <>
             <View style={styles.CodebarUpdateScreen}>
                 <View style={productDetailsStyles.optionsContent}>
+
+                <Selector
+                        label={"Tipo de codigo de barras: "}
+                        items={codebartypes.barcodes.map((item: any) => {
+                            return { label: item?.type, value: item?.id }
+                        })}
+                        value={codebartypes?.barcodes.find((code) => code?.id === codebartype)?.type || "Code 128"}
+
+                        //Methods
+                        onDone={() => console.log("ola")}
+                        onValueChange={(value) => setcodebartype(value)}
+                    />
 
                     {
                         (codeBarStatus) ?

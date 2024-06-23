@@ -192,9 +192,6 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'codeBarStatus', codeBarStatus: value });
     }
 
-    const handleSetupUser = (user: UserInterface) => {
-        dispatch({ type: 'userSetup', user });
-    }
 
     return (
         <AuthContext.Provider value={{
@@ -206,7 +203,7 @@ export const AuthProvider = ({ children }: any) => {
             updateBarCode,
             updateTypeOfMovements,
             handleCodebarScannedProcces,
-            handleSetupUser
+            
         }}>
             {children}
         </AuthContext.Provider>

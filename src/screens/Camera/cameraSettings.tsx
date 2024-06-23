@@ -65,6 +65,7 @@ export const cameraSettings = ({
 
     const codeScanned = async ({ codes }: any) => {
 
+        console.log({codes})
         setProductsScanned(undefined)
         if (!cameraAvailable) return;
         if (!productsScanned && codes?.length > 0) {

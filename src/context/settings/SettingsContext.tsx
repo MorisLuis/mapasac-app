@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import UserInterface from "../../interface/user";
 
 
 interface ContextProps {
@@ -8,7 +9,9 @@ interface ContextProps {
 
     vibration?: boolean;
     cameraAvailable?: boolean;
-    limitProductsScanned: number
+    limitProductsScanned: number;
+
+    handleSetupUser: (value: UserInterface) => void;
 }
 
 export const SettingsContext = createContext({} as ContextProps)
