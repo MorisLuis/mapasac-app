@@ -13,11 +13,11 @@ import Toast from 'react-native-toast-message';
 
 export const SettingsScreen = () => {
 
-    const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned } = useContext(SettingsContext);
+    const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned, updateTypeOfMovements} = useContext(SettingsContext);
     const [typeSelected, setTypeSelected] = useState<number>()
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
-    const { user, updateTypeOfMovements } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const [editingLimitProducts, setEditingLimitProducts] = useState(false);
     const [limitProductValue, setLimitProductValue] = useState(limitProductsScanned)

@@ -10,11 +10,12 @@ import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 
 export const Inventory = () => {
 
-    const { handleCodebarScannedProcces } = useContext(AuthContext);
+    const { handleCodebarScannedProcces } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
     
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);

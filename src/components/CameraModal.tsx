@@ -18,8 +18,8 @@ interface CameraModalInterface {
 
 const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 
-    const { updateBarCode, codeBar } = useContext(AuthContext);
-    const { vibration } = useContext(SettingsContext);
+    const { codeBar } = useContext(AuthContext);
+    const { vibration, updateBarCode} = useContext(SettingsContext);
     const navigation = useNavigation<any>();
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);

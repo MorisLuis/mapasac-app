@@ -11,6 +11,7 @@ import ModalBottom from '../../components/Modals/ModalBottom';
 import CameraModal from '../../components/CameraModal';
 import { Selector } from '../../components/Ui/Selector';
 import codebartypes from '../../utils/codebarTypes.json';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 type optionSelectedInterface = {
     screen: string,
@@ -21,7 +22,9 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
     const navigation = useNavigation<any>();
-    const { codeBar, codeBarStatus, updateBarCode, handleCodebarScannedProcces } = useContext(AuthContext);
+    const { codeBar, codeBarStatus } = useContext(AuthContext);
+    const { updateBarCode, handleCodebarScannedProcces } = useContext(SettingsContext);
+
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
     const [openModalCamera, setOpenModalCamera] = useState(false)
     const [codebartype, setcodebartype] = useState(1)
@@ -74,7 +77,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
             <View style={styles.CodebarUpdateScreen}>
                 <View style={productDetailsStyles.optionsContent}>
 
-                <Selector
+                    <Selector
                         label={"Tipo de codigo de barras: "}
                         items={codebartypes.barcodes.map((item: any) => {
                             return { label: item?.type, value: item?.id }

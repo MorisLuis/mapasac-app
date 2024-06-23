@@ -23,8 +23,7 @@ export const cameraSettings = ({
     setCameraPermission
 } : cameraSettingsInterface) => {
 
-    const { handleCameraAvailable, cameraAvailable, vibration } = useContext(SettingsContext);
-    const { updateBarCode } = useContext(AuthContext);
+    const { handleCameraAvailable, cameraAvailable, vibration, updateBarCode } = useContext(SettingsContext);
     const [codeDetected, setCodeDetected] = useState(false)
 
     

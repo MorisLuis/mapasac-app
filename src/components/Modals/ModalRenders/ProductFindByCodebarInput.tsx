@@ -6,6 +6,7 @@ import { colores, globalFont, globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import PorductInterface from '../../../interface/product';
 import { AuthContext } from '../../../context/auth/AuthContext';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
 
 interface ProductFindByCodebarInputInterface {
     handleOpenProductsFoundByCodebar: (response: PorductInterface[]) => void
@@ -17,7 +18,7 @@ export const ProductFindByCodebarInput = ({
 
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
-    const { updateBarCode } = useContext(AuthContext);
+    const { updateBarCode } = useContext(SettingsContext);
 
     const handleSearchProductByCodebarInput = async () => {
         updateBarCode('')

@@ -6,7 +6,6 @@ export interface AuthState {
     errorMessage: string;
     user: UserInterface | null;
     codeBar?: string;
-    codeBarStatus?: boolean
 }
 
 type AuthAction =
@@ -15,9 +14,6 @@ type AuthAction =
     | { type: 'removeError' }
     | { type: 'notAuthenticated' }
     | { type: 'logout' }
-    | { type: 'typeOfMovement', user: UserInterface }
-    | { type: 'codeBar', codeBar: string }
-    | { type: 'codeBarStatus', codeBarStatus: boolean }
 
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -55,26 +51,6 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 token: null,
                 user: null
             }
-
-        case 'typeOfMovement':
-            return {
-                ...state,
-                user: { ...action.user }
-            }
-
-        case 'codeBar':
-            return {
-                ...state,
-                codeBar: action.codeBar
-            }
-
-        case 'codeBarStatus': 
-            return {
-                ...state,
-                codeBarStatus: action.codeBarStatus
-            }
-        
-
 
         default:
             return state;

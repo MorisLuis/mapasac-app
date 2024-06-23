@@ -51,8 +51,7 @@ export type InventoryNavigationStackParamList = {
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
 export const AppNavigation = () => {
-    const { handleCameraAvailable } = useContext(SettingsContext);
-    const { updateBarCode } = useContext(AuthContext);
+    const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
 
     const commonOptions: any = {
         headerBackTitle: 'Atrás',

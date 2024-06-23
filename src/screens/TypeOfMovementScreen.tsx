@@ -3,16 +3,16 @@ import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Dimensions, Fla
 import { colores, globalFont, globalStyles } from '../theme/appTheme';
 import { buttonStyles } from '../theme/UI/buttons';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../services/typeOfMovement';
-import { AuthContext } from '../context/auth/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { SettingsContext } from '../context/settings/SettingsContext';
 
 export const TypeOfMovementScreen = () => {
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
-    const { updateTypeOfMovements } = useContext(AuthContext);
+    const { updateTypeOfMovements } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
     const [isLoading, setIsLoading] = useState(false);
 

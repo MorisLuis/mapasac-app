@@ -164,33 +164,10 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'removeError' });
     };
 
-    const updateTypeOfMovements = async (value: number) => {
-        try {
-            const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
-            const typeOfMov = getTypeOfMovements.data;
-            dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se cambio el tipo de movimiento!',
-            })
-        } catch (error: any) {
-            console.log({ error: error })
-        }
-    }
 
-    const updateBarCode = async (value: string) => {
-        try {
-            handleCodebarScannedProcces(true)
-            dispatch({ type: 'codeBar', codeBar: value });
-        } catch (error: any) {
-            handleCodebarScannedProcces(false)
-            console.log({ error: error })
-        }
-    }
+    
 
-    const handleCodebarScannedProcces = (value: boolean) => {
-        dispatch({ type: 'codeBarStatus', codeBarStatus: value });
-    }
+
 
 
     return (
@@ -199,11 +176,7 @@ export const AuthProvider = ({ children }: any) => {
             signIn,
             loggingIn,
             logOut,
-            removeError,
-            updateBarCode,
-            updateTypeOfMovements,
-            handleCodebarScannedProcces,
-            
+            removeError,            
         }}>
             {children}
         </AuthContext.Provider>

@@ -12,6 +12,9 @@ interface ContextProps {
     limitProductsScanned: number;
 
     handleSetupUser: (value: UserInterface) => void;
+    handleCodebarScannedProcces: (value: boolean) => void;
+    updateBarCode: (value: string) => void;
+    updateTypeOfMovements: (value: number) => void;
 }
 
 export const SettingsContext = createContext({} as ContextProps)

@@ -4,7 +4,6 @@ import { getProductByCodeBar } from '../../services/products';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { colores, globalStyles } from '../../theme/appTheme';
 import { inputStyles } from '../../theme/UI/inputs';
-import { AuthContext } from '../../context/auth/AuthContext';
 import { modalRenderstyles } from '../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +15,7 @@ export const SearchCodebarWithInput = () => {
 
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
-    const { updateBarCode } = useContext(AuthContext);
+    const { updateBarCode } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
 
     const handleSearchProductByCodebarInput = async () => {

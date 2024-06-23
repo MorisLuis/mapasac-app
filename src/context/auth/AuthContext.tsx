@@ -13,9 +13,7 @@ type ContextProps = {
     signIn: (loginData: LoginData) => void;
     logOut: () => void;
     removeError: () => void;
-    updateBarCode: (value: string) => void;
-    updateTypeOfMovements: (value: number) => void;
-    handleCodebarScannedProcces: (value: boolean) => void;
+
 }
 
 

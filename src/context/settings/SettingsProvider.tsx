@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { SettingsContext } from './SettingsContext';
 import { settingsReducer } from './settingsReducer';
 import UserInterface from '../../interface/user';
+import { api } from '../../api/api';
+import Toast from 'react-native-toast-message';
 
 export interface SettingsInterface {
     vibration: boolean;
@@ -38,13 +40,44 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         dispatch({ type: 'userSetup', user });
     }
 
+    const handleCodebarScannedProcces = (value: boolean) => {
+        dispatch({ type: 'codeBarStatus', codeBarStatus: value });
+    }
+
+    const updateBarCode = async (value: string) => {
+        try {
+            handleCodebarScannedProcces(true)
+            dispatch({ type: 'codeBar', codeBar: value });
+        } catch (error: any) {
+            handleCodebarScannedProcces(false)
+            console.log({ error: error })
+        }
+    }
+
+    const updateTypeOfMovements = async (value: number) => {
+        try {
+            const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
+            const typeOfMov = getTypeOfMovements.data;
+            dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se cambio el tipo de movimiento!',
+            })
+        } catch (error: any) {
+            console.log({ error: error })
+        }
+    }
+
     return (
         <SettingsContext.Provider value={{
             ...state,
             handleVibrationState,
             handleCameraAvailable,
             handleLimitProductsScanned,
-            handleSetupUser
+            handleSetupUser,
+            handleCodebarScannedProcces,
+            updateBarCode,
+            updateTypeOfMovements
         }}
         >
             {children}

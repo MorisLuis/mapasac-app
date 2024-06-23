@@ -5,6 +5,7 @@ export interface SettingsState {
     cameraAvailable?: boolean,
     limitProductsScanned: number,
     user?: UserInterface | null;
+    codeBarStatus?: boolean
 }
 
 
@@ -13,6 +14,9 @@ type SettingsActionType =
     | { type: '[Settings] - CameraAvailable state', cameraAvailable: boolean }
     | { type: '[Settings] - limitProductsScanned state', limitProductsScanned: number }
     | { type: 'userSetup', user: UserInterface }
+    | { type: 'codeBarStatus', codeBarStatus: boolean }
+    | { type: 'codeBar', codeBar: string }
+    | { type: 'typeOfMovement', user: UserInterface }
 
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
 
@@ -36,11 +40,24 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
                 limitProductsScanned: action.limitProductsScanned
             }
 
-            case 'userSetup': 
+        case 'userSetup':
             return {
                 ...state,
                 user: action.user
             }
+
+        case 'codeBarStatus':
+            return {
+                ...state,
+                codeBarStatus: action.codeBarStatus
+            }
+
+        case 'typeOfMovement':
+            return {
+                ...state,
+                user: { ...action.user }
+            }
+
 
         default:
             return state
