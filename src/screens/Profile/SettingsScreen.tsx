@@ -13,7 +13,9 @@ import Toast from 'react-native-toast-message';
 
 export const SettingsScreen = () => {
 
-    const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned, updateTypeOfMovements} = useContext(SettingsContext);
+    const { updateTypeOfMovements } = useContext(AuthContext);
+
+    const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned} = useContext(SettingsContext);
     const [typeSelected, setTypeSelected] = useState<number>()
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
@@ -23,9 +25,10 @@ export const SettingsScreen = () => {
     const [limitProductValue, setLimitProductValue] = useState(limitProductsScanned)
 
 
-    const onChangetTypeOfMovement = () => {
-        if (typeSelected === undefined || typeSelected === null) return
-        updateTypeOfMovements(typeSelected)
+    const onChangetTypeOfMovement = (value: number) => {
+        if (value === undefined || value === null) return
+        setTypeSelected(value)
+        updateTypeOfMovements(value)
     }
 
     const onChangeLimitProducts = () => {
@@ -67,8 +70,8 @@ export const SettingsScreen = () => {
                                 }
 
                                 //Methods
-                                onDone={onChangetTypeOfMovement}
-                                onValueChange={(value) => setTypeSelected(value)}
+                                //onDone={onChangetTypeOfMovement}
+                                onValueChange={(value) => onChangetTypeOfMovement(value)}
                             />
 
                             <View style={styles.divider}></View>

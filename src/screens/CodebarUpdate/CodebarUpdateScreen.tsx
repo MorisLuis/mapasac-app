@@ -36,13 +36,8 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     };
 
     const hanldeCodebarTypeSelected = (value: number) => {
-        console.log("ola")
-        console.log({value})
         handleGetCodebarType(value)
     }
-
-    console.log({codebarType})
-
 
     const handleGoToNextStep = () => {
         if (selectedOption.screen === "updateWithCode") {
@@ -117,7 +112,6 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                                     value={codebartypes?.barcodes.find((code) => code?.id === codebartypeSelected)?.type || "Code 128"}
 
                                     //Methods
-                                    //onDone={hanldeCodebarTypeSelected}
                                     onValueChange={(value) => hanldeCodebarTypeSelected(value)}
                                 />
                                 <TouchableOpacity

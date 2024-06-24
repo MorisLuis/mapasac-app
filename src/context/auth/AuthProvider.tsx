@@ -165,7 +165,19 @@ export const AuthProvider = ({ children }: any) => {
     };
 
 
-    
+    const updateTypeOfMovements = async (value: number) => {
+        try {
+            const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
+            const typeOfMov = getTypeOfMovements.data;
+            dispatch({ type: '[Settings] - typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv} });
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se cambio el tipo de movimiento!',
+            })
+        } catch (error: any) {
+            console.log({ error: error })
+        }
+    }
 
 
 
@@ -176,7 +188,8 @@ export const AuthProvider = ({ children }: any) => {
             signIn,
             loggingIn,
             logOut,
-            removeError,            
+            removeError,  
+            updateTypeOfMovements          
         }}>
             {children}
         </AuthContext.Provider>

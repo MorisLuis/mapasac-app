@@ -11,7 +11,6 @@ interface ContextProps {
     handleGetCodebarType: (value?: number) => void;
 
     updateBarCode: (value: string) => void;
-    updateTypeOfMovements: (value: number) => void;
 
     vibration?: boolean;
     cameraAvailable?: boolean;

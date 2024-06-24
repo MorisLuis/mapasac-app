@@ -14,6 +14,7 @@ type AuthAction =
     | { type: 'removeError' }
     | { type: 'notAuthenticated' }
     | { type: 'logout' }
+    | { type: '[Settings] - typeOfMovement', user: UserInterface }
 
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -50,6 +51,12 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 status: 'not-authenticated',
                 token: null,
                 user: null
+            }
+
+        case '[Settings] - typeOfMovement':
+            return {
+                ...state,
+                user: { ...action.user }
             }
 
         default:

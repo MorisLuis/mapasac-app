@@ -11,8 +11,10 @@ import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 
 export const ProfileScreen = () => {
 
-    const { logOut } = useContext(AuthContext);
+    const { logOut,user } = useContext(AuthContext);
     const { logOut: logOutDB } = useContext(DbAuthContext);
+
+    console.log({user: JSON.stringify(user, null, 2)})
 
     const { navigate } = useNavigation<any>();
 

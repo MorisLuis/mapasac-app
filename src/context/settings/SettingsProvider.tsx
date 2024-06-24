@@ -4,6 +4,7 @@ import { settingsReducer } from './settingsReducer';
 import UserInterface from '../../interface/user';
 import { api } from '../../api/api';
 import Toast from 'react-native-toast-message';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface SettingsInterface {
     vibration: boolean;
@@ -22,6 +23,7 @@ export const SettingsInitialState: SettingsInterface = {
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
 
+    const { user } = useContext(AuthContext);
     const [state, dispatch] = useReducer(settingsReducer, SettingsInitialState);
 
     const handleVibrationState = (value: boolean) => {
@@ -60,19 +62,6 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         }
     }
 
-    const updateTypeOfMovements = async (value: number) => {
-        try {
-            const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
-            const typeOfMov = getTypeOfMovements.data;
-            dispatch({ type: '[Settings] - typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se cambio el tipo de movimiento!',
-            })
-        } catch (error: any) {
-            console.log({ error: error })
-        }
-    }
 
     return (
         <SettingsContext.Provider value={{
@@ -83,8 +72,8 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
             handleSetupUser,
             handleCodebarScannedProcces,
             handleGetCodebarType,
-            updateBarCode,
-            updateTypeOfMovements
+            updateBarCode
+            
         }}
         >
             {children}

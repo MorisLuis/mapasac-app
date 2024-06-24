@@ -18,7 +18,6 @@ type SettingsActionType =
     | { type: '[Settings] - userSetup', user: UserInterface }
     | { type: '[Settings] - codeBarStatus', codeBarStatus: boolean }
     | { type: '[Settings] - codeBar', codeBar: string }
-    | { type: '[Settings] - typeOfMovement', user: UserInterface }
     | { type: '[Settings] - codebarType', codebarType: number }
 
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
@@ -55,11 +54,7 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
                 codeBarStatus: action.codeBarStatus
             }
 
-        case '[Settings] - typeOfMovement':
-            return {
-                ...state,
-                user: { ...action.user }
-            }
+
 
         case '[Settings] - codeBar':
             return {

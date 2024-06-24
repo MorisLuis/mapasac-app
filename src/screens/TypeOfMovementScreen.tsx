@@ -7,12 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { SettingsContext } from '../context/settings/SettingsContext';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export const TypeOfMovementScreen = () => {
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
     const [typeSelected, setTypeSelected] = useState<number>()
-    const { updateTypeOfMovements } = useContext(SettingsContext);
+    const { updateTypeOfMovements } = useContext(AuthContext);
     const { navigate } = useNavigation<any>();
     const [isLoading, setIsLoading] = useState(false);
 
