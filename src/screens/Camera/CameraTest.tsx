@@ -77,7 +77,6 @@ const CameraTest: React.FC = () => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log("focus!")
             if (Platform.OS === 'android') {
                 setCameraKey(prevKey => prevKey + 1);
             }
@@ -92,7 +91,6 @@ const CameraTest: React.FC = () => {
 
     useEffect(() => {
         if (!isFocused) {
-            console.log("hello")
             handleCameraAvailable(false);
         }
     }, [isFocused]);
@@ -110,8 +108,6 @@ const CameraTest: React.FC = () => {
             />
         )
     }
-
-    console.log({cameraAvailable})
 
     return (
         <View style={cameraStyles.cameraScreen}>

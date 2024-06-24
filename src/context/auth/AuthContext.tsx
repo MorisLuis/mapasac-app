@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { LoginData } from './AuthProvider';
 import UserInterface from '../../interface/user';
 
-type ContextProps = {
+interface ContextProps {
     errorMessage: string;
     token: string | null;
     user: UserInterface | null;
@@ -13,7 +13,6 @@ type ContextProps = {
     signIn: (loginData: LoginData) => void;
     logOut: () => void;
     removeError: () => void;
-
 }
 
 

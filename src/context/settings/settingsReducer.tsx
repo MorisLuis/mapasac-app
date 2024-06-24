@@ -1,11 +1,13 @@
 import UserInterface from "../../interface/user"
 
 export interface SettingsState {
-    vibration?: boolean,
-    cameraAvailable?: boolean,
-    limitProductsScanned: number,
+    vibration?: boolean;
+    cameraAvailable?: boolean;
+    limitProductsScanned: number;
     user?: UserInterface | null;
-    codeBarStatus?: boolean
+    codeBarStatus?: boolean;
+    codeBar?: string;
+    codebarType?: number
 }
 
 
@@ -13,10 +15,11 @@ type SettingsActionType =
     | { type: '[Settings] - Vibration state', vibration: boolean }
     | { type: '[Settings] - CameraAvailable state', cameraAvailable: boolean }
     | { type: '[Settings] - limitProductsScanned state', limitProductsScanned: number }
-    | { type: 'userSetup', user: UserInterface }
-    | { type: 'codeBarStatus', codeBarStatus: boolean }
-    | { type: 'codeBar', codeBar: string }
-    | { type: 'typeOfMovement', user: UserInterface }
+    | { type: '[Settings] - userSetup', user: UserInterface }
+    | { type: '[Settings] - codeBarStatus', codeBarStatus: boolean }
+    | { type: '[Settings] - codeBar', codeBar: string }
+    | { type: '[Settings] - typeOfMovement', user: UserInterface }
+    | { type: '[Settings] - codebarType', codebarType: number }
 
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
 
@@ -40,24 +43,35 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
                 limitProductsScanned: action.limitProductsScanned
             }
 
-        case 'userSetup':
+        case '[Settings] - userSetup':
             return {
                 ...state,
                 user: action.user
             }
 
-        case 'codeBarStatus':
+        case '[Settings] - codeBarStatus':
             return {
                 ...state,
                 codeBarStatus: action.codeBarStatus
             }
 
-        case 'typeOfMovement':
+        case '[Settings] - typeOfMovement':
             return {
                 ...state,
                 user: { ...action.user }
             }
 
+        case '[Settings] - codeBar':
+            return {
+                ...state,
+                codeBar: action.codeBar
+            }
+
+        case '[Settings] - codebarType':
+            return {
+                ...state,
+                codebarType: action.codebarType
+            }
 
         default:
             return state

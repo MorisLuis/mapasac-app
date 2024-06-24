@@ -37,17 +37,23 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     const handleSetupUser = (user: UserInterface) => {
-        dispatch({ type: 'userSetup', user });
+        dispatch({ type: '[Settings] - userSetup', user });
     }
 
     const handleCodebarScannedProcces = (value: boolean) => {
-        dispatch({ type: 'codeBarStatus', codeBarStatus: value });
+        dispatch({ type: '[Settings] - codeBarStatus', codeBarStatus: value });
+    }
+
+    const handleGetCodebarType = (codebarType?: number) => {
+        console.log({codebarType})
+        if(!codebarType) return;
+        dispatch({ type: '[Settings] - codebarType', codebarType: codebarType });
     }
 
     const updateBarCode = async (value: string) => {
         try {
             handleCodebarScannedProcces(true)
-            dispatch({ type: 'codeBar', codeBar: value });
+            dispatch({ type: '[Settings] - codeBar', codeBar: value });
         } catch (error: any) {
             handleCodebarScannedProcces(false)
             console.log({ error: error })
@@ -58,7 +64,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
             const typeOfMov = getTypeOfMovements.data;
-            dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
+            dispatch({ type: '[Settings] - typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
             Toast.show({
                 type: 'tomatoToast',
                 text1: 'Se cambio el tipo de movimiento!',
@@ -76,6 +82,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
             handleLimitProductsScanned,
             handleSetupUser,
             handleCodebarScannedProcces,
+            handleGetCodebarType,
             updateBarCode,
             updateTypeOfMovements
         }}

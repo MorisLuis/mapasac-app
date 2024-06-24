@@ -7,7 +7,7 @@ import { globalFont, globalStyles } from '../../theme/appTheme';
 
 interface SelectorInterface {
     items: any[];
-    onDone: () => void;
+    onDone?: () => void;
     onValueChange: (value: number) => void;
     value: string;
     label: string
@@ -23,12 +23,14 @@ export const Selector = ({
 
     const handleValueChange = (value: string) => {
         if (value == null) return;
-        onValueChange(parseInt(value))
+        onValueChange(parseInt(value));
     }
+
     return (
         <View>
             <Text style={styles.label}>{label}</Text>
             <RNPickerSelect
+                style={selectStyles}
                 onValueChange={handleValueChange}
                 placeholder={{
                     label: 'Selecciona una opción...',
@@ -36,7 +38,8 @@ export const Selector = ({
                 }}
                 items={items}
                 onDonePress={onDone}
-                style={selectStyles}
+                //fixAndroidTouchableBug
+                //touchableWrapperProps={{ onAccessibilityAction: onDone }}
             >
                 <View style={selectStyles.inputIOS}>
                     <Text>

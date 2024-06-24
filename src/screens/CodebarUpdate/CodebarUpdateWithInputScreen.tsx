@@ -1,27 +1,34 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { KeyboardType, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { buttonStyles } from '../../theme/UI/buttons';
-import { colores, globalStyles } from '../../theme/appTheme';
+import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { inputStyles } from '../../theme/UI/inputs';
 import { updateCostos } from '../../services/costos';
 import { useNavigation } from '@react-navigation/native';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import codebartypes from '../../utils/codebarTypes.json';
+import PorductInterface from '../../interface/product';
 
-export const CodebarUpdateWithInputScreen = ({productDetails, selectedProduct} : any) => {
+interface CodebarUpdateWithInputScreenInterface {
+    productDetails?: PorductInterface
+}
+
+export const CodebarUpdateWithInputScreen = ({ productDetails }: CodebarUpdateWithInputScreenInterface) => {
 
     const [text, setText] = useState('');
     const navigation = useNavigation<any>();
+    const { codebarType } = useContext(SettingsContext);
+    const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
+    const regex = new RegExp(currentType?.regex as string);
 
-    const handleTextChange = (inputText: string) => {
-        setText(inputText);
-    };
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-        console.log({selectedProduct})
-        if (!selectedProduct) return;
+        if (!productDetails) return;
+        if(!regex.test(text)) return;
 
         await updateCostos({
-            codigo: selectedProduct?.Codigo,
-            Id_Marca: selectedProduct?.Id_Marca,
+            codigo: productDetails?.Codigo,
+            Id_Marca: productDetails?.Id_Marca,
             body: {
                 CodBar: text
             }
@@ -30,19 +37,28 @@ export const CodebarUpdateWithInputScreen = ({productDetails, selectedProduct} :
         navigation.goBack()
     }
 
+    const handleTextChange = (value: string) => {
+        setText(value);
+    };
+
+    console.log({ value: regex.test(text) })
 
     return (
         <View style={styles.CodebarUpdateWithInputScreen}>
 
-            <Text style={styles.inputLabel}>Escribe el codigo que quieras</Text>
+            <Text style={styles.inputLabel}>Escribe el codigo que quieras.</Text>
 
             <TextInput
                 style={[inputStyles.input, globalStyles.globalMarginBottomSmall]}
                 placeholder="Ej: 654s1q"
                 onChangeText={handleTextChange}
+                keyboardType={currentType?.keyboardType as KeyboardType}
+                maxLength={currentType?.maxLength}
             />
 
-            {text.length >= 5 && (
+            <Text style={styles.warningMessage}>{currentType?.errorMessage}</Text>
+
+            {regex.test(text) && (
                 <TouchableOpacity style={buttonStyles.button} onPress={hanldeUpdateCodebarWithCodeRandom}>
                     <Text style={buttonStyles.buttonText}>Actualizar</Text>
                 </TouchableOpacity>
@@ -58,7 +74,13 @@ const styles = StyleSheet.create({
         height: "100%"
     },
     inputLabel: {
-        marginBottom: 10,
-        fontWeight: "bold"
+        fontSize: globalFont.font_normal,
+        fontWeight: "bold",
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
     },
+    warningMessage: {
+        fontSize: globalFont.font_normal,
+        marginBottom: globalStyles.globalMarginBottom.marginBottom,
+        color: colores.color_red
+    }
 })

@@ -41,7 +41,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
             >
                 {props => <CodebarUpdateScreen {...props} productDetails={selectedProduct} /* selectedProduct={selectedProduct} */ />}
             </Stack.Screen>
-            
+
             <Stack.Screen
                 name="UpdateCodeBarWithInput"
                 options={({ navigation }) => ({
@@ -51,7 +51,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                         </View>
                 })}
             >
-                {props => <CodebarUpdateWithInputScreen {...props} productDetails={productDetails} selectedProduct={selectedProduct} />}
+                {props => <CodebarUpdateWithInputScreen {...props} productDetails={productDetails} />}
             </Stack.Screen>
         </Stack.Navigator>
     );

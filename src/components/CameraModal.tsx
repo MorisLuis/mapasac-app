@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { globalFont, globalStyles } from '../theme/appTheme';
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import PorductInterface from '../interface/product';
 import { Camera } from 'react-native-camera-kit';
 import { getProductByCodeBar } from '../services/products';
+import codebartypes from '../utils/codebarTypes.json';
 
 interface CameraModalInterface {
     productDetails: PorductInterface;
@@ -19,12 +20,14 @@ interface CameraModalInterface {
 const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 
     const { codeBar } = useContext(AuthContext);
-    const { vibration, updateBarCode} = useContext(SettingsContext);
+    const { vibration, updateBarCode, codebarType} = useContext(SettingsContext);
     const navigation = useNavigation<any>();
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
     const [productExistent, setProductExistent] = useState(false)
+    const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
+    const regex = new RegExp(currentType?.regex as string);
 
     const handleVibrate = () => {
         if (vibration) {
@@ -33,6 +36,16 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
     };
 
     const codeScanned = async ({ codes }: any) => {
+
+        console.log(("_________________________________________________________________"))
+        console.log({codeBar})
+        console.log({
+            rule: currentType?.regex
+        })
+        console.log({codes})
+        console.log({
+            codePass:  regex.test(codes)
+        })
 
         setCodeIsScanning(true)
         if (codes.length > 0 && isScanningAllowed) {
@@ -53,9 +66,8 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                     setIsScanningAllowed(true);
                 }, 2000);
             }
-
         }
-        setCodeIsScanning(false)
+        setCodeIsScanning(false);
 
     }
 
@@ -78,10 +90,10 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
         setProductExistent(false)
     }
 
+    console.log({codebarType})
 
     return (
         <View style={styles.cameraScreen}>
-
             {
                 !productExistent ?
                     <>
@@ -92,7 +104,10 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                                     !codeIsScanning && codeBar ?
                                         "Asegurate que es el codigo que deseas asignarle a este producto."
                                         :
-                                        "Escanea el codigo que le pondras a este producto."
+                                        <View >
+                                            <Text>Escanea el codigo que le pondras a este producto.</Text>
+                                            <Text style={styles.header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</Text>
+                                        </View>
                                 }
                             </Text>
                         </View>
@@ -100,7 +115,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                         {
                             (!codeIsScanning && !codeBar) ?
                                 <View style={styles.content}>
-
                                     <Camera
                                         scanBarcode={true}
                                         onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
@@ -168,10 +182,14 @@ const styles = StyleSheet.create({
     },
     header_title: {
         fontSize: globalFont.font_med,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
     },
     header_message: {
         fontSize: globalFont.font_normal
+    },
+    header_message_scanner: {
+        fontSize: globalFont.font_sm
     },
     codebarFound: {
         marginBottom: globalStyles.globalMarginBottom.marginBottom,
