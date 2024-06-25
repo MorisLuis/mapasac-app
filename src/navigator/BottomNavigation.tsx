@@ -13,9 +13,16 @@ export type BottomNavigationStackParamList = {
     Profile: undefined;
 };
 
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+
 export const BottomNavigation = () => {
 
     const BottomTabIOS = createBottomTabNavigator<BottomNavigationStackParamList>();
+
+    const getTabBarVisibility = (route: any) => {
+        const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+        return routeName.startsWith('[ProfileNavigation]') ? 'none' : 'flex';
+    };
 
     return (
         <SafeAreaProvider>
@@ -42,6 +49,7 @@ export const BottomNavigation = () => {
                             )
                         },
                         tabBarStyle: {
+                            display: getTabBarVisibility(route),
                             backgroundColor: colores.background_color,
                             borderTopColor: colores.color_border_secondary,
                             height: hp("7.5%"),
@@ -57,8 +65,16 @@ export const BottomNavigation = () => {
                         }
                     })}
                 >
-                    <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
-                    <BottomTabIOS.Screen name="Profile" options={{ headerShown: false, title: 'Perfil' }} component={ProfileNavigation} />
+                    <BottomTabIOS.Screen
+                        name="Scanner"
+                        options={{ headerShown: false, title: "Escaner" }}
+                        component={ScannerNavigation}
+                    />
+                    <BottomTabIOS.Screen
+                        name="Profile"
+                        options={{ headerShown: false, title: 'Perfil' }}
+                        component={ProfileNavigation}
+                    />
                 </BottomTabIOS.Navigator>
             </SafeAreaView>
         </SafeAreaProvider>

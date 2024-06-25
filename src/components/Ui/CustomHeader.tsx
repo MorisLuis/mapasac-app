@@ -30,27 +30,12 @@ export const CustomHeader = ({
 
     const { fromModal } = route?.params || {}
 
-    /*     const handleOnPress = () => {
-            if (typeof back === 'function' && backCustum) {
-                console.log("1")
-                back();
-            } else {
-                console.log("2")
-                //back?.();
-                navigation.goBack();
-            }
-        } */
-
-
     const handleOnPress = () => {
         if (typeof back === 'function' && backCustum) {
-            console.log("1")
             back();
         } else if (typeof back === 'function') {
-            console.log("2")
             back?.();
         } else {
-            console.log("3")
             navigation.goBack();
         }
     }

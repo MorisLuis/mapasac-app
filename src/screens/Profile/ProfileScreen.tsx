@@ -47,24 +47,24 @@ export const ProfileScreen = () => {
             <SafeAreaView style={styles.content}>
                 <Text style={styles.title}>Configuación</Text>
 
-                <TouchableOpacity onPress={() => navigate('personalInformationScreen')} style={styles.section}>
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - personalInformationScreen')} style={styles.section}>
                     <Text>Información Personal</Text>
                     <Icon name="person-outline" size={22} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('settingsSceen')} style={[styles.section, globalStyles.globalMarginBottom]}>
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - settingsSceen')} style={[styles.section, globalStyles.globalMarginBottom]}>
                     <Text>Configuración General</Text>
                     <Icon name="settings-outline" size={22} color="black" />
                 </TouchableOpacity>
 
                 <Text style={styles.title}>Legal</Text>
 
-                <TouchableOpacity onPress={() => navigate('privacyScreen')} style={[styles.section]}>
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - privacyScreen')} style={[styles.section]}>
                     <Text>Aviso de privacidad</Text>
                     <Icon name="book-outline" size={22} color="black" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('termsOfUseScreen')} style={[styles.section, globalStyles.globalMarginBottom, { marginBottom: 40 }]}>
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - termsOfUseScreen')} style={[styles.section, globalStyles.globalMarginBottom, { marginBottom: 40 }]}>
                     <Text>Terminos de uso</Text>
                     <Icon name="book-outline" size={22} color="black" />
                 </TouchableOpacity>

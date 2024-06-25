@@ -14,7 +14,6 @@ import { InventoryBagScreen } from '../screens/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { TypeOfMovementScreen } from '../screens/TypeOfMovementScreen';
 import { LoginDatabaseScreen } from '../screens/Onboarding/LoginDatabaseScreen';
-import { PersonalInformation } from '../screens/Profile/PersonalInformation';
 import { SearchCodebarWithInput } from '../screens/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Modals/ScannerResult';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
@@ -38,7 +37,7 @@ export type InventoryNavigationStackParamList = {
     succesMessageScreen: undefined;
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
-    personalInformationScreen: { fromLogIn?: boolean },
+    //personalInformationScreen: { fromLogIn?: boolean },
     scannerResultScreen: undefined,
 
     //Modal
@@ -85,13 +84,13 @@ export const AppNavigation = () => {
                 component={BottomNavigation}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="personalInformationScreen"
                 component={PersonalInformation}
                 options={({ navigation }) => ({
                     header: props => <CustomHeader title="Información Personal" navigation={navigation} />
                 })}
-            />
+            /> */}
             <Stack.Screen
                 name="typeOfMovementScreen"
                 component={TypeOfMovementScreen}
