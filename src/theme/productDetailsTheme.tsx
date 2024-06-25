@@ -67,6 +67,9 @@ export const productDetailsStyles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: globalStyles.globalMarginBottom.marginBottom * 2
     },
+    codebarIdentify: {
+        paddingBottom: globalStyles.globalPadding.padding / 2
+    },
     data: {
         display: "flex",
         flexDirection: "row",

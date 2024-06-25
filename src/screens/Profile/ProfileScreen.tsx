@@ -14,8 +14,6 @@ export const ProfileScreen = () => {
     const { logOut,user } = useContext(AuthContext);
     const { logOut: logOutDB } = useContext(DbAuthContext);
 
-    console.log({user: JSON.stringify(user, null, 2)})
-
     const { navigate } = useNavigation<any>();
 
     useEffect(() => {

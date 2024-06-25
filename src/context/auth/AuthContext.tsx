@@ -6,8 +6,6 @@ interface ContextProps {
     errorMessage: string;
     token: string | null;
     user: UserInterface | null;
-    codeBar?: string; 
-    codeBarStatus?: boolean;
     status: 'checking' | 'authenticated' | 'not-authenticated';
     loggingIn: boolean;
     signIn: (loginData: LoginData) => void;

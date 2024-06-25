@@ -64,7 +64,6 @@ export const cameraSettings = ({
 
     const codeScanned = async ({ codes }: any) => {
 
-        console.log({codes})
         setProductsScanned(undefined)
         if (!cameraAvailable) return;
         if (!productsScanned && codes?.length > 0) {
@@ -82,7 +81,7 @@ export const cameraSettings = ({
                 const response = await getProductByCodeBar({ codeBar: codeValue });
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
-                if (response.length < 1) updateBarCode(codeValue)
+                updateBarCode(codeValue)
             } catch (error) {
                 setCodeDetected(false)
                 console.error('Error fetching product:', error);

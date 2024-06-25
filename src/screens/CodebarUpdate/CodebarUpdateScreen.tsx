@@ -5,7 +5,6 @@ import { productDetailsStyles } from '../../theme/productDetailsTheme';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../context/auth/AuthContext';
 import { updateCostos } from '../../services/costos';
 import ModalBottom from '../../components/Modals/ModalBottom';
 import CameraModal from '../../components/CameraModal';
@@ -22,8 +21,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
     const navigation = useNavigation<any>();
-    const { codeBar, codeBarStatus } = useContext(AuthContext);
-    const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType } = useContext(SettingsContext);
+    const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
 
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
     const [openModalCamera, setOpenModalCamera] = useState(false)
@@ -79,7 +77,6 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
     useEffect(() => {
-        console.log("ola")
         const handleGetTypeOfCodebar = async () => {
             setCodebartypeSelected(codebarType || 1)
         }

@@ -5,7 +5,6 @@ import { BottomNavigation } from './BottomNavigation';
 import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
-import { AuthContext } from '../context/auth/AuthContext';
 import { TESTAPP } from "@env";
 
 // Screens
@@ -34,8 +33,8 @@ export type InventoryNavigationStackParamList = {
 
     //Screens
     bagInventoryScreen: undefined;
-    inventoryDetailsScreen: { selectedProduct: ProductInterface };
-    productDetailsScreen: { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
+    "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
+    "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
     succesMessageScreen: undefined;
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
@@ -113,38 +112,30 @@ export const AppNavigation = () => {
             />
 
             <Stack.Screen
-                name="inventoryDetailsScreen"
+                name="[ProductDetailsPage] - inventoryDetailsScreen"
                 component={ProductDetailsPage}
-                options={({ navigation }) => ({
+                options={({ navigation, route }: any) => ({
                     header: props => (
                         <CustomHeader
                             {...props}
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                handleCameraAvailable(true);
+                                if (route?.params?.fromUpdateCodebar) {
+                                    navigation.navigate('BottomNavigation');
+                                } else {
+                                    navigation.goBack();
+                                }
                                 updateBarCode('');
+                                handleCameraAvailable(true);
                             }}
                         />
                     )
                 })}
             />
+
             <Stack.Screen
-                name="searchProductScreen"
-                component={SearchProductScreen}
-                options={commonOptions}
-            />
-            <Stack.Screen
-                name="searchProductModal"
-                component={SearchProductScreen}
-                options={{
-                    presentation: "modal",
-                    headerTitle: "Buscar Producto",
-                    ...commonOptions
-                }}
-            />
-            <Stack.Screen
-                name="productDetailsScreen"
+                name="[ProductDetailsPage] - productDetailsScreen"
                 component={ProductDetailsPage}
                 options={({ navigation, route }) => ({
                     presentation: "modal",
@@ -176,6 +167,21 @@ export const AppNavigation = () => {
                 name="CodebarUpdateNavigation"
                 component={CodebarUpdateNavigation}
                 options={{ presentation: "modal", headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="searchProductScreen"
+                component={SearchProductScreen}
+                options={commonOptions}
+            />
+            <Stack.Screen
+                name="searchProductModal"
+                component={SearchProductScreen}
+                options={{
+                    presentation: "modal",
+                    headerTitle: "Buscar Producto",
+                    ...commonOptions
+                }}
             />
 
 

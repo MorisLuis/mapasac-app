@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native'
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
@@ -9,7 +9,6 @@ import { colores, globalFont, globalStyles } from '../theme/appTheme';
 import { CustomBackButton } from '../components/Ui/CustomHeader';
 import ModalBottom from '../components/Modals/ModalBottom';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -27,8 +26,7 @@ type SearchProductScreenInterface = {
 export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
 
     const { modal } = route?.params ?? {};
-    const { codeBar } = useContext(AuthContext);
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, codeBar } = useContext(SettingsContext,);
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
@@ -54,9 +52,9 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
         if (modal) {
             navigation.goBack()
             navigation.goBack()
-            navigation.navigate('inventoryDetailsScreen', { selectedProduct })
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
         } else {
-            navigation.navigate('inventoryDetailsScreen', { selectedProduct });
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
         }
     };
 

@@ -41,8 +41,6 @@ export const CodebarUpdateWithInputScreen = ({ productDetails }: CodebarUpdateWi
         setText(value);
     };
 
-    console.log({ value: regex.test(text) })
-
     return (
         <View style={styles.CodebarUpdateWithInputScreen}>
 

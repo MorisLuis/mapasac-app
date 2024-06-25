@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { globalFont, globalStyles } from '../theme/appTheme';
-import { AuthContext } from '../context/auth/AuthContext';
+import { colores, globalFont, globalStyles } from '../theme/appTheme';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { buttonStyles } from '../theme/UI/buttons';
 import { updateCostos } from '../services/costos';
@@ -19,13 +18,13 @@ interface CameraModalInterface {
 
 const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 
-    const { codeBar } = useContext(AuthContext);
-    const { vibration, updateBarCode, codebarType} = useContext(SettingsContext);
+    const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
-    const [productExistent, setProductExistent] = useState(false)
+    const [productExistent, setProductExistent] = useState(false);
+    const [codebarTest, setCodebarTest] = useState(true);
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
@@ -37,15 +36,10 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 
     const codeScanned = async ({ codes }: any) => {
 
-        console.log(("_________________________________________________________________"))
-        console.log({codeBar})
-        console.log({
-            rule: currentType?.regex
-        })
-        console.log({codes})
-        console.log({
-            codePass:  regex.test(codes)
-        })
+        if (!regex.test(codes)) {
+            setCodebarTest(false)
+        }
+
 
         setCodeIsScanning(true)
         if (codes.length > 0 && isScanningAllowed) {
@@ -53,13 +47,14 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
             const codeValue = codes;
             if (!codeValue) return;
             try {
-                const response = await getProductByCodeBar({codeBar: codeValue});
+                const response = await getProductByCodeBar({ codeBar: codeValue });
                 handleVibrate()
                 updateBarCode(codeValue)
                 if (response.length > 0) {
                     setProductExistent(true)
                 }
             } catch (error) {
+                setCodebarTest(true)
                 console.error('Error fetching product:', error);
             } finally {
                 setTimeout(() => {
@@ -68,7 +63,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
             }
         }
         setCodeIsScanning(false);
-
     }
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
@@ -90,8 +84,6 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
         setProductExistent(false)
     }
 
-    console.log({codebarType})
-
     return (
         <View style={styles.cameraScreen}>
             {
@@ -99,43 +91,56 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                     <>
                         <View style={styles.header}>
                             <Text style={styles.header_title}>Escanea el codigo</Text>
-                            <Text style={styles.header_message}>
-                                {
-                                    !codeIsScanning && codeBar ?
-                                        "Asegurate que es el codigo que deseas asignarle a este producto."
+                            {
+                                (codeBar && !codebarTest) ?
+                                    <Text style={styles.header_message}>
+                                        Revisa el tipo de codigo de barras requerido, cambiar si asi lo deseas.
+                                    </Text>
+                                    : (codeBar && !codeIsScanning) ?
+                                        <Text style={styles.header_message}>
+                                            Asegurate que es el codigo que deseas asignarle a este producto.
+                                        </Text>
                                         :
                                         <View >
                                             <Text>Escanea el codigo que le pondras a este producto.</Text>
                                             <Text style={styles.header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</Text>
                                         </View>
-                                }
-                            </Text>
+                            }
                         </View>
 
                         {
-                            (!codeIsScanning && !codeBar) ?
-                                <View style={styles.content}>
-                                    <Camera
-                                        scanBarcode={true}
-                                        onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
-                                        style={styles.camera}
-                                    />
-                                </View>
-                                : (codeIsScanning && !codeBar) ?
-                                    <ActivityIndicator
-                                        size={50}
-                                        color="black"
-                                    />
+                            (!codeBar && codeIsScanning) ?
+                                <ActivityIndicator
+                                    size={50}
+                                    color="black"
+                                />
+                                :
+                                (!codeBar && !codeIsScanning) ?
+                                    <View style={styles.content}>
+                                        <Camera
+                                            scanBarcode={true}
+                                            onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
+                                            style={styles.camera}
+                                        />
+                                    </View>
                                     :
-                                    <>
-                                        <View style={styles.codebarFound}>
-                                            <Text style={styles.textcodebarFound}>{codeBar}</Text>
+                                    (codeBar && !codeIsScanning && !codebarTest) ?
+                                        <View>
+                                            <Text style={styles.warningMessage}>{currentType?.errorMessage}</Text>
+                                            <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
+                                                <Text style={buttonStyles.buttonTextSecondary}>Intentar de nuevo</Text>
+                                            </TouchableOpacity>
                                         </View>
+                                        :
+                                        <>
+                                            <View style={styles.codebarFound}>
+                                                <Text style={styles.textcodebarFound}>{codeBar}</Text>
+                                            </View>
 
-                                        <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={hanldeUpdateCodebarWithCodeRandom}>
-                                            <Text style={buttonStyles.buttonTextSecondary}>Asignar codigo de barras</Text>
-                                        </TouchableOpacity>
-                                    </>
+                                            <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={hanldeUpdateCodebarWithCodeRandom}>
+                                                <Text style={buttonStyles.buttonTextSecondary}>Asignar codigo de barras</Text>
+                                            </TouchableOpacity>
+                                        </>
                         }
                     </>
                     :
@@ -200,6 +205,11 @@ const styles = StyleSheet.create({
     textcodebarFound: {
         fontWeight: 'bold',
         fontSize: globalFont.font_normal
+    },
+    warningMessage: {
+        paddingBottom: globalStyles.globalPadding.padding,
+        fontSize: globalFont.font_normal,
+        color: colores.color_red
     }
 })
 

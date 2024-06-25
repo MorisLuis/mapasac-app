@@ -24,11 +24,11 @@ export type OnReadCodeData = {
 const CameraTest: React.FC = () => {
 
     const { bag } = useContext(InventoryBagContext);
-    const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
-
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, codeBar} = useContext(SettingsContext);
+    
+    const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
     const onTheLimitProductScanned = limitProductsScanned < bag?.length;
-    const { navigate, push } = useNavigation<any>();
 
     const [lightOn, setLightOn] = useState(false);
     const [cameraKey, setCameraKey] = useState(0);
@@ -38,12 +38,11 @@ const CameraTest: React.FC = () => {
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
+
         if (response.length === 1) {
             navigate('scannerResultScreen', { product: response[0] });
         } else if (response.length > 0) {
-            console.log("productsFindByCodeBarModal")
             navigate('productsFindByCodeBarModal', { products: response });
-
         } else {
             navigate('scannerResultScreen', { product: response[0] });
         }

@@ -38,7 +38,7 @@ export const Inventory = () => {
 
     const handlePressProduct = (selectedProduct: PorductInterface) => {
         handleCodebarScannedProcces(false);
-        navigate('inventoryDetailsScreen', { selectedProduct });
+        navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
     };
 
     // Renders

@@ -1,6 +1,14 @@
 {
     "barcodes": [
         {
+            "type": "Libre",
+            "id": 3,
+            "regex": "^[A-Z0-9\\-.$/+% ]*$",
+            "errorMessage": "Libre, no es el codigo de barras mas recomendado.",
+            "keyboardType": "default",
+            "maxLength": 100
+        },
+        {
             "type": "Code 128",
             "id": 1,
             "regex": "^[\\x00-\\x7F]*$",
@@ -13,14 +21,6 @@
             "id": 2,
             "regex": "^[A-Z0-9\\-.$/+% ]*$",
             "errorMessage": "Code 39 debe ser alfanumérico con caracteres especiales permitidos (- . $ / + % ESPACIO).",
-            "keyboardType": "default",
-            "maxLength": 100
-        },
-        {
-            "type": "Libre",
-            "id": 3,
-            "regex": "^[A-Z0-9\\-.$/+% ]*$",
-            "errorMessage": "Libre, no es el codigo de barras mas recomendado.",
             "keyboardType": "default",
             "maxLength": 100
         },

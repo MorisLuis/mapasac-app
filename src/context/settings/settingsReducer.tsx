@@ -54,8 +54,6 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
                 codeBarStatus: action.codeBarStatus
             }
 
-
-
         case '[Settings] - codeBar':
             return {
                 ...state,

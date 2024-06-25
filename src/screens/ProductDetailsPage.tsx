@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import ProductInterface from '../interface/product';
-import { format } from '../utils/currency';
 import { buttonStyles } from '../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,22 +9,25 @@ import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSk
 import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { globalStyles } from '../theme/appTheme';
+import { identifyBarcodeType } from '../utils/identifyBarcodeType';
 
 type ProductDetailsPageInterface = {
     route?: {
         params: {
             productDetails: ProductInterface;
             selectedProduct: { Codigo: string; Marca: string };
-            fromModal?: boolean
+            fromModal?: boolean;
+            fromUpdateCodebar: boolean
         };
     };
 };
 
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
-    const { productDetails, selectedProduct, fromModal } = route?.params ?? {};
+    const { productDetails, selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
     
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
+
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
 
@@ -53,13 +55,14 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
         }, [])
     );
 
-
     return productDetailsData ? (
         <ProductDetailsContent
             productDetailsData={productDetailsData}
             handleOptionsToUpdateCodebar={handleOptionsToUpdateCodebar}
             handleAddToInventory={handleAddToInventory}
             fromModal={fromModal}
+            codeBar={codeBar}
+            fromUpdateCodebar={fromUpdateCodebar}
         />
     ) : (
         <ProductDetailsSkeleton />
@@ -67,7 +70,18 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 };
 
 
-const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal } : any) => {
+interface ProductDetailsContentInterface {
+    productDetailsData: ProductInterface, 
+    handleOptionsToUpdateCodebar: any, 
+    handleAddToInventory: any, 
+    fromModal?: boolean, 
+    codeBar?: string,
+    fromUpdateCodebar?: boolean
+}
+
+const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar, fromUpdateCodebar } : ProductDetailsContentInterface) => {
+    const codebarTypeIndetify = identifyBarcodeType(codeBar as string)
+
     return (
         <>
             <ScrollView style={productDetailsStyles.ProductDetailsPage}>
@@ -103,6 +117,13 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                         <ProductDetailItem label="Codigo de barras:" value={productDetailsData.CodBar} />
                     )}
                 </View>
+
+                {
+                    (codeBar && fromUpdateCodebar) &&
+                    <View style={productDetailsStyles.codebarIdentify}>
+                        <Text>El codigo de barras identificado es: {codebarTypeIndetify?.type}</Text>
+                    </View>
+                }
 
                 {(!productDetailsData.CodBar && !fromModal) && (
                     <TouchableOpacity

@@ -15,7 +15,9 @@ interface ContextProps {
     vibration?: boolean;
     cameraAvailable?: boolean;
     limitProductsScanned: number;
-    codebarType?: number
+    codebarType?: number;
+    codeBar?: string; 
+    codeBarStatus?: boolean;
 }
 
 export const SettingsContext = createContext({} as ContextProps)

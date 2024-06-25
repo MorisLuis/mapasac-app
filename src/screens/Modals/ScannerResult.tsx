@@ -34,8 +34,7 @@ const ScannerResult = ({
     const { product } = route?.params || {}
 
     const { addProduct } = useContext(InventoryBagContext)
-    const { codeBar } = useContext(AuthContext);
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, codeBar} = useContext(SettingsContext);
 
     const navigation = useNavigation<any>();
 
@@ -54,16 +53,18 @@ const ScannerResult = ({
 
     const handleExpandProductDetails = () => {
         navigation.goBack()
-        navigation.navigate('productDetailsScreen', { selectedProduct: product, fromModal: true });
+        navigation.navigate('[ProductDetailsPage] - productDetailsScreen', { selectedProduct: product, fromModal: true });
     }
 
     const handleSearchByCode = () => {
+        navigation.goBack()
         navigation.navigate('findByCodebarInputModal');
     }
 
     const handleAssignCodeToProduct = () => {
         handleCameraAvailable(false)
         setTimeout(() => {
+            navigation.goBack()
             navigation.navigate('searchProductModal', { modal: true })
         }, 500);
     }
@@ -71,13 +72,10 @@ const ScannerResult = ({
     return (
         <ModalBottom
             visible={true}
-            onClose={() => {
-                //handleCameraAvailable(true)
-                navigation.navigate('BottomNavigation')
-            }}
+            onClose={() => navigation.navigate('BottomNavigation')}
         >
             {
-                product ?
+                (product) ?
                     <View style={modalRenderstyles.ScannerResult}>
                         <View style={modalRenderstyles.product}>
                             <View style={modalRenderstyles.productText}>

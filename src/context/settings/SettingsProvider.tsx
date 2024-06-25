@@ -7,23 +7,26 @@ import Toast from 'react-native-toast-message';
 import { AuthContext } from '../auth/AuthContext';
 
 export interface SettingsInterface {
-    vibration: boolean;
-    cameraAvailable: boolean;
+    vibration?: boolean;
+    cameraAvailable?: boolean;
     limitProductsScanned: number;
-    codeBarStatus?: boolean
-
+    user?: UserInterface | null;
+    codeBarStatus?: boolean;
+    codeBar?: string;
+    codebarType?: number
 }
 
 export const SettingsInitialState: SettingsInterface = {
     vibration: true,
     cameraAvailable: true,
     limitProductsScanned: 20,
-    codeBarStatus: false
+    codeBarStatus: false,
+    codeBar: "",
+    codebarType: 1
 }
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
 
-    const { user } = useContext(AuthContext);
     const [state, dispatch] = useReducer(settingsReducer, SettingsInitialState);
 
     const handleVibrationState = (value: boolean) => {
@@ -47,7 +50,6 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     const handleGetCodebarType = (codebarType?: number) => {
-        console.log({codebarType})
         if(!codebarType) return;
         dispatch({ type: '[Settings] - codebarType', codebarType: codebarType });
     }

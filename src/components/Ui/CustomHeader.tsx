@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
 import PorductInterface from '../../interface/product';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface CustomHeaderInterface {
     navigation: any;
@@ -30,11 +30,27 @@ export const CustomHeader = ({
 
     const { fromModal } = route?.params || {}
 
+    /*     const handleOnPress = () => {
+            if (typeof back === 'function' && backCustum) {
+                console.log("1")
+                back();
+            } else {
+                console.log("2")
+                //back?.();
+                navigation.goBack();
+            }
+        } */
+
+
     const handleOnPress = () => {
         if (typeof back === 'function' && backCustum) {
+            console.log("1")
             back();
+        } else if (typeof back === 'function') {
+            console.log("2")
+            back?.();
         } else {
-            //back?.();
+            console.log("3")
             navigation.goBack();
         }
     }
@@ -56,7 +72,7 @@ export const CustomHeader = ({
                     <Text style={styles.titleHeader}>{title}</Text>
                 </SafeAreaView>
             ) : (
-                <SafeAreaView style={{ backgroundColor: colores.background_color}}>
+                <SafeAreaView style={{ backgroundColor: colores.background_color }}>
                     <View style={styles.CustomHeader}>
                         {backAvailable && (
                             <TouchableOpacity
@@ -73,7 +89,7 @@ export const CustomHeader = ({
             )}
         </>
     );
-    
+
 }
 
 
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        left:  globalStyles.globalMarginBottom.marginBottom / 2,
+        left: globalStyles.globalMarginBottom.marginBottom / 2,
         bottom: (hp("6%") * 0.5) - (globalFont.font_normal / 2) - 3
     },
     backText: {
