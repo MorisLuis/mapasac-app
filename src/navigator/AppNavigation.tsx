@@ -105,7 +105,9 @@ export const AppNavigation = () => {
                     title: 'Inventario',
                     headerTitleAlign: 'center',
                     headerLeft: () => (
-                        <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />
+                        <CustomBackButton
+                            navigation={navigation}
+                        />
                     ),
                 })}
             />

@@ -21,12 +21,12 @@ export const cameraSettings = ({
     setProductsScanned,
     productsScanned,
     setCameraPermission
-} : cameraSettingsInterface) => {
+}: cameraSettingsInterface) => {
 
     const { handleCameraAvailable, cameraAvailable, vibration, updateBarCode } = useContext(SettingsContext);
     const [codeDetected, setCodeDetected] = useState(false)
 
-    
+
     const requestCameraPermission = async () => {
         const result = await request(
             Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA
@@ -63,19 +63,28 @@ export const cameraSettings = ({
     };
 
     const codeScanned = async ({ codes }: any) => {
+        handleCameraAvailable(false)
 
         setProductsScanned(undefined)
-        if (!cameraAvailable) return;
+        if (!cameraAvailable) {
+            handleCameraAvailable(true)
+            return;
+        };
+
         if (!productsScanned && codes?.length > 0) {
 
             setCodeDetected(true)
-            if (codeDetected) return;
-
-            handleCameraAvailable(false)
+            if (codeDetected) {
+                handleCameraAvailable(true)
+                return;
+            };
 
             const codeValue = codes;
 
-            if (!codeValue) return;
+            if (!codeValue) {
+                handleCameraAvailable(true)
+                return;
+            };
 
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue });
@@ -84,8 +93,11 @@ export const cameraSettings = ({
                 updateBarCode(codeValue)
             } catch (error) {
                 setCodeDetected(false)
+                handleCameraAvailable(true)
                 console.error('Error fetching product:', error);
             }
+        } else {
+            handleCameraAvailable(true)
         }
     }
 

@@ -21,6 +21,9 @@ export const BottomNavigation = () => {
 
     const getTabBarVisibility = (route: any) => {
         const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+        if (routeName === '[ProfileNavigation] - profile') {
+            return 'flex';
+        }
         return routeName.startsWith('[ProfileNavigation]') ? 'none' : 'flex';
     };
 

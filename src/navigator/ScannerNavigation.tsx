@@ -25,6 +25,7 @@ export const ScannerNavigation = () => {
                 />
                 <TopTabs.Screen
                     name="[ScannerNavigation] - inventory"
+                    options={{ title: "Inventario" }}
                     component={Inventory}
                 />
             </TopTabs.Navigator>
