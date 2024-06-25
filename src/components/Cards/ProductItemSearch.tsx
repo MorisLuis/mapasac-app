@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PorductInterface from '../../interface/product';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../../context/auth/AuthContext';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 interface ProductItemSearchInterface {
@@ -21,11 +19,9 @@ export const ProductItemSearch = ({
     fromModal
 }: ProductItemSearchInterface) => {
 
-    const { user } = useContext(AuthContext);
-
     return (
         <TouchableOpacity style={styles.ProductItemSearch} onPress={onClick}>
-            {
+            {/* {
                 product?.imagen ?
                     <Image
                         style={styles.productInventoryCard__Image}
@@ -38,7 +34,7 @@ export const ProductItemSearch = ({
                         <Icon name={'camera'} size={hp("3%")} color="black" />
                         <Text style={styles.notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
                     </View>
-            }
+            } */}
             <View style={styles.information}>
                 <Text style={styles.description}>{product.Descripcion}</Text>
                 <View style={styles.otherInformation}>

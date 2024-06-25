@@ -59,7 +59,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     };
 
     const closeModalHandler = React.useCallback(() => {
-        handleCameraAvailable(true)
+        //handleCameraAvailable(true)
     }, []);
 
 
@@ -77,7 +77,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 <CustomBackButton
                     navigation={navigation}
                     onClick={() => {
-                        handleCameraAvailable(true)
+                        //handleCameraAvailable(true)
                     }}
                 />,
             headerSearchBarOptions: {

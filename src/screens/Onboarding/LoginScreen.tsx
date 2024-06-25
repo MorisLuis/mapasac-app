@@ -40,7 +40,7 @@ export const LoginScreen = () => {
 
     const handleNavigateToProfile = () => {
         navigation.navigate('BottomNavigation', {
-            screen: 'Profile', params: {
+            screen: 'BottomNavigation - Profile', params: {
                 screen: '[ProfileNavigation] - personalInformationScreen',
                 params: {
                     fromLogIn: true 

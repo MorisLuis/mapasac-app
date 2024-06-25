@@ -41,7 +41,7 @@ export const InventoryBagScreen = () => {
     };
 
     const closeModalHandler = useCallback(() => {
-        handleCameraAvailable(true);
+        //handleCameraAvailable(true);
     }, []);
 
     const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (

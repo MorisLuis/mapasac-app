@@ -140,7 +140,7 @@ export const AppNavigation = () => {
                                     navigation.goBack();
                                 }
                                 updateBarCode('');
-                                handleCameraAvailable(true);
+                                //handleCameraAvailable(true);
                             }}
                         />
                     )
@@ -163,7 +163,7 @@ export const AppNavigation = () => {
                                 updateBarCode('');
                                 if (route.params?.selectedProduct) {
                                     setTimeout(() => {
-                                        navigation.navigate('scannerResultScreen', { product: route.params.selectedProduct });
+                                        navigation.navigate('[Modal] - scannerResultScreen', { product: route.params.selectedProduct });
                                     }, 500);
                                 }
                             }}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Platform, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { colores, globalFont, globalStyles } from '../../theme/appTheme';
@@ -78,7 +78,7 @@ export const ProfileScreen = () => {
                 </TouchableOpacity>
 
                 <View>
-                    <Text>Version: v56.6</Text>
+                    <Text>Version: {Platform.Version}</Text>
                 </View>
             </SafeAreaView>
         </View>

@@ -24,8 +24,8 @@ export type OnReadCodeData = {
 const CameraTest: React.FC = () => {
 
     const { bag } = useContext(InventoryBagContext);
-    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, codeBar} = useContext(SettingsContext);
-    
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
+
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
     const onTheLimitProductScanned = limitProductsScanned < bag?.length;
@@ -35,6 +35,7 @@ const CameraTest: React.FC = () => {
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
 
+    console.log({ cameraAvailable })
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
