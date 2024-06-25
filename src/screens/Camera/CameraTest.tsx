@@ -40,11 +40,11 @@ const CameraTest: React.FC = () => {
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
 
         if (response.length === 1) {
-            navigate('scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0] });
         } else if (response.length > 0) {
-            navigate('productsFindByCodeBarModal', { products: response });
+            navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
-            navigate('scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0] });
         }
 
         setProductsScanned(response);
@@ -52,7 +52,7 @@ const CameraTest: React.FC = () => {
 
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
-        navigate('findByCodebarInputModal');
+        navigate('[Modal] - findByCodebarInputModal');
     }
 
     const {

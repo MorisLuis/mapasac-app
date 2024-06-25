@@ -36,7 +36,7 @@ export const InventoryBagScreen = () => {
         cleanBag();
         setOpenModalDecision(false);
         setCreateInventaryLoading(false);
-        navigate('Scanner');
+        navigate('BottomNavigation - Scanner');
         navigate('succesMessageScreen');
     };
 

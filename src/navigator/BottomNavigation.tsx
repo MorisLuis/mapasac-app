@@ -9,8 +9,8 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export type BottomNavigationStackParamList = {
-    Scanner: undefined;
-    Profile: undefined;
+    "BottomNavigation - Scanner": undefined;
+    "BottomNavigation - Profile": undefined;
 };
 
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
@@ -34,10 +34,10 @@ export const BottomNavigation = () => {
                             let iconColor: string = focused ? colores.color_yellow : colores.text_color_light;
 
                             switch (route.name) {
-                                case 'Scanner':
+                                case 'BottomNavigation - Scanner':
                                     iconName = focused ? 'scan' : 'scan-outline';
                                     break;
-                                case 'Profile':
+                                case 'BottomNavigation - Profile':
                                     iconName = focused ? 'person' : 'person-outline';
                                     break;
                             }
@@ -66,12 +66,12 @@ export const BottomNavigation = () => {
                     })}
                 >
                     <BottomTabIOS.Screen
-                        name="Scanner"
+                        name="BottomNavigation - Scanner"
                         options={{ headerShown: false, title: "Escaner" }}
                         component={ScannerNavigation}
                     />
                     <BottomTabIOS.Screen
-                        name="Profile"
+                        name="BottomNavigation - Profile"
                         options={{ headerShown: false, title: 'Perfil' }}
                         component={ProfileNavigation}
                     />

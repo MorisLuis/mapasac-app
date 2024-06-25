@@ -25,12 +25,12 @@ export const SearchCodebarWithInput = () => {
         if (typeOfSearch === 'code') {
             response = await getProductByCodeBar({ codigo: Barcode });
             navigation.goBack()
-            navigation.navigate('scannerResultScreen', { product: response[0] });
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
         } else {
             updateBarCode(Barcode)
             response = await getProductByCodeBar({ codeBar: Barcode });
             navigation.goBack()
-            navigation.navigate('scannerResultScreen', { product: response[0] });
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
         }
     }
 

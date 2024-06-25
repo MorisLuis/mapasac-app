@@ -20,7 +20,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
 
     const onSelectProduct = (product: PorductInterface) => {
         navigation.goBack()
-        navigation.navigate('scannerResultScreen', { product: product })
+        navigation.navigate('[Modal] - scannerResultScreen', { product: product })
     }
 
     if (!products) return;

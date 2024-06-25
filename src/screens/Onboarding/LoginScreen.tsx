@@ -39,14 +39,6 @@ export const LoginScreen = () => {
     }
 
     const handleNavigateToProfile = () => {
-        //navigation.navigate('[ProfileNavigation] - profile', { fromLogIn: true });
-
-       /*  navigation.navigate('Profile', {
-            screen: '[ProfileNavigation] - profile',
-            params: { fromLogIn: true }
-        }); */
-
-
         navigation.navigate('BottomNavigation', {
             screen: 'Profile', params: {
                 screen: '[ProfileNavigation] - personalInformationScreen',

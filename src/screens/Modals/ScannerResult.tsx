@@ -58,14 +58,14 @@ const ScannerResult = ({
 
     const handleSearchByCode = () => {
         navigation.goBack()
-        navigation.navigate('findByCodebarInputModal');
+        navigation.navigate('[Modal] - findByCodebarInputModal');
     }
 
     const handleAssignCodeToProduct = () => {
         handleCameraAvailable(false)
         setTimeout(() => {
             navigation.goBack()
-            navigation.navigate('searchProductModal', { modal: true })
+            navigation.navigate('[Modal] - searchProductModal', { modal: true })
         }, 500);
     }
 

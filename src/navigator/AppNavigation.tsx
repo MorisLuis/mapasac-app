@@ -31,19 +31,18 @@ export type InventoryNavigationStackParamList = {
     StartupScreen: undefined;
 
     //Screens
-    bagInventoryScreen: undefined;
     "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
     "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
+    bagInventoryScreen: undefined;
     succesMessageScreen: undefined;
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
-    //personalInformationScreen: { fromLogIn?: boolean },
-    scannerResultScreen: undefined,
 
     //Modal
-    findByCodebarInputModal: undefined;
-    searchProductModal: { modal: boolean };
-    productsFindByCodeBarModal: undefined;
+    "[Modal] - scannerResultScreen": undefined,
+    "[Modal] - findByCodebarInputModal": undefined;
+    "[Modal] - searchProductModal": { modal: boolean };
+    "[Modal] - productsFindByCodeBarModal": undefined;
 };
 
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
@@ -84,18 +83,19 @@ export const AppNavigation = () => {
                 component={BottomNavigation}
                 options={{ headerShown: false }}
             />
-            {/* <Stack.Screen
-                name="personalInformationScreen"
-                component={PersonalInformation}
-                options={({ navigation }) => ({
-                    header: props => <CustomHeader title="Información Personal" navigation={navigation} />
-                })}
-            /> */}
+
+            <Stack.Screen
+                name="CodebarUpdateNavigation"
+                component={CodebarUpdateNavigation}
+                options={{ presentation: "modal", headerShown: false }}
+            />
+
             <Stack.Screen
                 name="typeOfMovementScreen"
                 component={TypeOfMovementScreen}
                 options={{ headerShown: false }}
             />
+
             <Stack.Screen
                 name="bagInventoryScreen"
                 component={InventoryBagScreen}
@@ -108,6 +108,18 @@ export const AppNavigation = () => {
                         <CustomBackButton navigation={navigation} onClick={() => handleCameraAvailable(true)} />
                     ),
                 })}
+            />
+
+            <Stack.Screen
+                name="succesMessageScreen"
+                component={SuccesMessage}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="searchProductScreen"
+                component={SearchProductScreen}
+                options={commonOptions}
             />
 
             <Stack.Screen
@@ -157,24 +169,20 @@ export const AppNavigation = () => {
                     )
                 })}
             />
-            <Stack.Screen
-                name="succesMessageScreen"
-                component={SuccesMessage}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="CodebarUpdateNavigation"
-                component={CodebarUpdateNavigation}
-                options={{ presentation: "modal", headerShown: false }}
-            />
 
+            {/* modals */}
             <Stack.Screen
-                name="searchProductScreen"
-                component={SearchProductScreen}
-                options={commonOptions}
+                name="[Modal] - scannerResultScreen"
+                component={ScannerResult}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
             <Stack.Screen
-                name="searchProductModal"
+                name="[Modal] - findByCodebarInputModal"
+                component={SearchCodebarWithInput}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="[Modal] - searchProductModal"
                 component={SearchProductScreen}
                 options={{
                     presentation: "modal",
@@ -182,21 +190,8 @@ export const AppNavigation = () => {
                     ...commonOptions
                 }}
             />
-
-
-            {/* modals */}
             <Stack.Screen
-                name="scannerResultScreen"
-                component={ScannerResult}
-                options={{ presentation: 'transparentModal', headerShown: false }}
-            />
-            <Stack.Screen
-                name="findByCodebarInputModal"
-                component={SearchCodebarWithInput}
-                options={{ presentation: 'transparentModal', headerShown: false }}
-            />
-            <Stack.Screen
-                name="productsFindByCodeBarModal"
+                name="[Modal] - productsFindByCodeBarModal"
                 component={ProductsFindByCodeBar}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />

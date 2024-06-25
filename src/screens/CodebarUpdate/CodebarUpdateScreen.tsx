@@ -151,8 +151,8 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
 
 
                     <TouchableOpacity
-                        style={[productDetailsStyles.optionCodebar, selectedOption.screen === 'UpdateCodeBarWithInput' && productDetailsStyles.selectedOption]}
-                        onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'UpdateCodeBarWithInput', title: 'Actualizar Manualmente' })}
+                        style={[productDetailsStyles.optionCodebar, selectedOption.screen === '[CodebarUpdateNavigation] - UpdateCodeBarWithInput' && productDetailsStyles.selectedOption]}
+                        onPress={() => handleOptionOfUpdateCodeSelect({ screen: '[CodebarUpdateNavigation] - UpdateCodeBarWithInput', title: 'Actualizar Manualmente' })}
                     >
                         <Icon name="text-outline" size={24} color="black" style={productDetailsStyles.optionCodebar_icon} />
                         <Text>Escribir manualmente</Text>

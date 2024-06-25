@@ -18,8 +18,8 @@ type CodebarUpdateNavigationInterface = {
 
 
 export type InventoryNavigationStackParamList = {
-    UpdateCodeBarScreen: { product: PorductInterface };
-    UpdateCodeBarWithInput: any
+    "[CodebarUpdateNavigation] - UpdateCodeBarScreen": { product: PorductInterface };
+    "[CodebarUpdateNavigation] - UpdateCodeBarWithInput": undefined
 };
 
 export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterface) => {
@@ -28,10 +28,10 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
     const { productDetails, selectedProduct } = route?.params ?? {};
 
     return (
-        <Stack.Navigator initialRouteName="UpdateCodeBarScreen">
+        <Stack.Navigator initialRouteName="[CodebarUpdateNavigation] - UpdateCodeBarScreen">
 
             <Stack.Screen
-                name="UpdateCodeBarScreen"
+                name="[CodebarUpdateNavigation] - UpdateCodeBarScreen"
                 options={({ navigation }) => ({
                     header: props =>
                         <View style={{ paddingTop: globalStyles.globalPadding.padding, backgroundColor: colores.background_color }}>
@@ -43,7 +43,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
             </Stack.Screen>
 
             <Stack.Screen
-                name="UpdateCodeBarWithInput"
+                name="[CodebarUpdateNavigation] - UpdateCodeBarWithInput"
                 options={({ navigation }) => ({
                     header: (props: any) =>
                         <View style={{ paddingTop: globalStyles.globalPadding.padding, backgroundColor: colores.background_color }}>

@@ -42,7 +42,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
         const onPress = () => {
 
-            if (route?.name === "camera") {
+            if (route?.name === "[ScannerNavigation] - camera") {
                 handleCameraAvailable(true)
             } else {
                 handleCameraAvailable(false)

@@ -45,7 +45,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleAddToInventory = () => {
-        navigation.navigate('scannerResultScreen', { product: selectedProduct });
+        navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct });
     }
 
     useFocusEffect(
