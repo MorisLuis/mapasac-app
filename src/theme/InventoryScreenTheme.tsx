@@ -1,0 +1,33 @@
+import { StyleSheet } from "react-native";
+import { Theme, globalFont, globalStyles } from "./appTheme";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
+    Inventory: {
+        backgroundColor: theme.background_color
+    },
+    content: {
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        backgroundColor: theme.background_color,
+        height: "100%"
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: hp("2.5%"),
+        marginTop: hp("7.5%")
+    },
+    title: {
+        display: "flex",
+        fontSize: globalFont.font_med,
+        color: theme.text_color
+    },
+    actions: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    iconSearch: {
+        marginLeft: 15
+    }
+})

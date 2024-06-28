@@ -4,6 +4,8 @@ import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
 import { AuthContext } from '../auth/AuthContext';
+import { SettingsContext } from '../settings/SettingsContext';
+import { Vibration } from 'react-native';
 
 export interface inventoryDataInterface {
     result: undefined,
@@ -36,13 +38,19 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [inventoryCreated, setInventoryCreated] = useState(false);
+    const { vibration } = useContext(SettingsContext);
+
     const [keyNumber, setKeyNumber] = useState(0)
     const { user } = useContext(AuthContext);
 
     const addProduct = (product: PorductInterface) => {
 
         setKeyNumber(keyNumber + 1)
-        const newKey = keyNumber + 1
+        const newKey = keyNumber + 1;
+
+        if (vibration) {
+            Vibration.vibrate(100);
+        }
 
         dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
     }
@@ -58,7 +66,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const postInventory = async (descripcion?: string) => {
-
         try {
             const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
             const inventorybody = {

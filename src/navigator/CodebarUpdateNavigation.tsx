@@ -4,8 +4,9 @@ import { CodebarUpdateScreen } from '../screens/CodebarUpdate/CodebarUpdateScree
 import { CodebarUpdateWithInputScreen } from '../screens/CodebarUpdate/CodebarUpdateWithInputScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { CustomHeader } from '../components/Ui/CustomHeader';
-import { colores, globalStyles } from '../theme/appTheme';
+import { globalStyles } from '../theme/appTheme';
 import PorductInterface from '../interface/product';
+import { useTheme } from '../context/ThemeContext';
 
 type CodebarUpdateNavigationInterface = {
     route?: {
@@ -26,6 +27,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
 
     const Stack = createStackNavigator<InventoryNavigationStackParamList>();
     const { productDetails, selectedProduct } = route?.params ?? {};
+    const { theme } = useTheme();
 
     return (
         <Stack.Navigator initialRouteName="[CodebarUpdateNavigation] - UpdateCodeBarScreen">
@@ -34,7 +36,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                 name="[CodebarUpdateNavigation] - UpdateCodeBarScreen"
                 options={({ navigation }) => ({
                     header: props =>
-                        <View style={{ paddingTop: globalStyles.globalPadding.padding, backgroundColor: colores.background_color }}>
+                        <View style={{ paddingTop: globalStyles(theme).globalPadding.padding, backgroundColor: theme.background_color }}>
                             <CustomHeader title="Crear codigo de barras" navigation={navigation} />
                         </View>
                 })}
@@ -46,7 +48,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                 name="[CodebarUpdateNavigation] - UpdateCodeBarWithInput"
                 options={({ navigation }) => ({
                     header: (props: any) =>
-                        <View style={{ paddingTop: globalStyles.globalPadding.padding, backgroundColor: colores.background_color }}>
+                        <View style={{ paddingTop: globalStyles(theme).globalPadding.padding, backgroundColor: theme.background_color }}>
                             <CustomHeader {...props} title={props.route.params.title} navigation={navigation} />
                         </View>
                 })}

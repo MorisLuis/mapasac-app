@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react';
 
-import { View, StyleSheet, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { colores, globalFont, globalStyles } from '../theme/appTheme';
-import { SettingsContext } from '../context/settings/SettingsContext';
-import { buttonStyles } from '../theme/UI/buttons';
-import { updateCostos } from '../services/costos';
+import { View, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {  globalStyles } from '../../../theme/appTheme';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { updateCostos } from '../../../services/costos';
 import { useNavigation } from '@react-navigation/native';
-import PorductInterface from '../interface/product';
+import PorductInterface from '../../../interface/product';
 import { Camera } from 'react-native-camera-kit';
-import { getProductByCodeBar } from '../services/products';
-import codebartypes from '../utils/codebarTypes.json';
+import { getProductByCodeBar } from '../../../services/products';
+import codebartypes from '../../../utils/codebarTypes.json';
+import { CameraModalStyles } from '../../../theme/ModalRenders/CameraModalTheme';
+import { useTheme } from '../../../context/ThemeContext';
 
 interface CameraModalInterface {
     productDetails: PorductInterface;
@@ -20,6 +22,8 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 
     const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
@@ -85,25 +89,25 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
     }
 
     return (
-        <View style={styles.cameraScreen}>
+        <View style={CameraModalStyles(theme).cameraScreen}>
             {
                 !productExistent ?
                     <>
-                        <View style={styles.header}>
-                            <Text style={styles.header_title}>Escanea el codigo</Text>
+                        <View style={CameraModalStyles(theme).header}>
+                            <Text style={CameraModalStyles(theme).header_title}>Escanea el codigo</Text>
                             {
                                 (codeBar && !codebarTest) ?
-                                    <Text style={styles.header_message}>
+                                    <Text style={CameraModalStyles(theme).header_message}>
                                         Revisa el tipo de codigo de barras requerido, cambiar si asi lo deseas.
                                     </Text>
                                     : (codeBar && !codeIsScanning) ?
-                                        <Text style={styles.header_message}>
+                                        <Text style={CameraModalStyles(theme).header_message}>
                                             Asegurate que es el codigo que deseas asignarle a este producto.
                                         </Text>
                                         :
                                         <View >
-                                            <Text>Escanea el codigo que le pondras a este producto.</Text>
-                                            <Text style={styles.header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</Text>
+                                            <Text style={{ color: theme.text_color }}>Escanea el codigo que le pondras a este producto.</Text>
+                                            <Text style={CameraModalStyles(theme).header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</Text>
                                         </View>
                             }
                         </View>
@@ -112,48 +116,48 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                             (!codeBar && codeIsScanning) ?
                                 <ActivityIndicator
                                     size={50}
-                                    color="black"
+                                    color={iconColor}
                                 />
                                 :
                                 (!codeBar && !codeIsScanning) ?
-                                    <View style={styles.content}>
+                                    <View style={CameraModalStyles(theme).content}>
                                         <Camera
                                             scanBarcode={true}
                                             onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
-                                            style={styles.camera}
+                                            style={CameraModalStyles(theme).camera}
                                         />
                                     </View>
                                     :
                                     (codeBar && !codeIsScanning && !codebarTest) ?
                                         <View>
-                                            <Text style={styles.warningMessage}>{currentType?.errorMessage}</Text>
-                                            <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                                                <Text style={buttonStyles.buttonTextSecondary}>Intentar de nuevo</Text>
+                                            <Text style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
+                                            <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
+                                                <Text style={buttonStyles(theme).buttonTextSecondary}>Intentar de nuevo</Text>
                                             </TouchableOpacity>
                                         </View>
                                         :
                                         <>
-                                            <View style={styles.codebarFound}>
-                                                <Text style={styles.textcodebarFound}>{codeBar}</Text>
+                                            <View style={CameraModalStyles(theme).codebarFound}>
+                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</Text>
                                             </View>
 
-                                            <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={hanldeUpdateCodebarWithCodeRandom}>
-                                                <Text style={buttonStyles.buttonTextSecondary}>Asignar codigo de barras</Text>
+                                            <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={hanldeUpdateCodebarWithCodeRandom}>
+                                                <Text style={buttonStyles(theme).buttonTextSecondary}>Asignar codigo de barras</Text>
                                             </TouchableOpacity>
                                         </>
                         }
                     </>
                     :
                     <>
-                        <View style={styles.header}>
-                            <Text style={styles.header_title}>Producto encontrado</Text>
-                            <Text style={styles.header_message}>
+                        <View style={CameraModalStyles(theme).header}>
+                            <Text style={CameraModalStyles(theme).header_title}>Producto encontrado</Text>
+                            <Text style={CameraModalStyles(theme).header_message}>
                                 Se encontro un producto con el codigo de barras: {codeBar}
                             </Text>
                         </View>
 
-                        <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                            <Text style={buttonStyles.buttonTextSecondary}>Intentar de nuevo</Text>
+                        <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
+                            <Text style={buttonStyles(theme).buttonTextSecondary}>Intentar de nuevo</Text>
                         </TouchableOpacity>
                     </>
             }
@@ -163,54 +167,4 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
 };
 
 export default CameraModal;
-
-
-const styles = StyleSheet.create({
-    cameraScreen: {
-        //backgroundColor: "red"
-    },
-    content: {
-        display: "flex",
-        flexDirection: "row",
-        height: 200,
-        width: "100%",
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        borderRadius: 10,
-        overflow: "hidden"
-    },
-    camera: {
-        width: "100%",
-        backgroundColor: "black"
-    },
-    header: {
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-    header_title: {
-        fontSize: globalFont.font_med,
-        fontWeight: "bold",
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
-    },
-    header_message: {
-        fontSize: globalFont.font_normal
-    },
-    header_message_scanner: {
-        fontSize: globalFont.font_sm
-    },
-    codebarFound: {
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    textcodebarFound: {
-        fontWeight: 'bold',
-        fontSize: globalFont.font_normal
-    },
-    warningMessage: {
-        paddingBottom: globalStyles.globalPadding.padding,
-        fontSize: globalFont.font_normal,
-        color: colores.color_red
-    }
-})
-
 

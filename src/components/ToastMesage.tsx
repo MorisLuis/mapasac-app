@@ -1,7 +1,6 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { colores, globalFont, globalStyles } from '../theme/appTheme'
-import { buttonStyles } from '../theme/UI/buttons'
+import { StyleSheet, Text, View } from 'react-native'
+import { globalFont } from '../theme/appTheme'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 
@@ -51,9 +50,9 @@ const styles = StyleSheet.create({
     ToastMessage: {
         minHeight: 50,
         //width: f,
-        backgroundColor: colores.background_color,
+        backgroundColor: "white",
         borderWidth: 1,
-        borderColor: colores.color_border,
+        borderColor: "white",
         borderRadius: 15,
         display: 'flex',
         flexDirection: 'row',

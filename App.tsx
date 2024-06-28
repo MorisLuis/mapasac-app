@@ -6,7 +6,7 @@ import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider'
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigation } from './src/navigator/AppNavigation';
 import { ShowToastMessage } from './src/components/ToastMesage';
-
+import { ThemeProvider } from './src/context/ThemeContext';
 
 const App = () => {
   return (
@@ -20,19 +20,19 @@ const App = () => {
 };
 
 const AppState = ({ children }: any) => {
-
   return (
     <DbAuthProvider>
       <AuthProvider>
-        <SettingsProvider>
-          <InventoryProvider>
-            {children}
-          </InventoryProvider>
-        </SettingsProvider>
+        <ThemeProvider>
+          <SettingsProvider>
+            <InventoryProvider>
+              {children}
+            </InventoryProvider>
+          </SettingsProvider>
+        </ThemeProvider>
       </AuthProvider>
     </DbAuthProvider>
   )
 }
-
 
 export default App;

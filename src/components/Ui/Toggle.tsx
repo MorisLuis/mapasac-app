@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Switch, Text, StyleSheet } from 'react-native';
-import { colores, globalFont } from '../../theme/appTheme';
+import { View, Switch, Text } from 'react-native';
+import { toggleStyles } from '../../theme/UI/inputs';
+import { useTheme } from '../../context/ThemeContext';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ToggleInterface {
     label: string;
@@ -18,48 +20,55 @@ const Toggle = ({
     onChange
 }: ToggleInterface) => {
 
+    const { theme, typeTheme } = useTheme();
     const [isEnabled, setIsEnabled] = useState(value ? value : false);
+    console.log({typeTheme})
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
+
     const toggleSwitch = () => {
         onChange(!isEnabled)
         setIsEnabled(previousState => !isEnabled);
     };
 
     return (
-        <View style={[styles.Toggle, extraStyles]}>
-            <View style={styles.toggleText}>
-                <Text style={styles.togglelabel}>{label}</Text>
-                <Text style={styles.togglemessage}>{message}</Text>
+        <View style={[toggleStyles(theme).Toggle, extraStyles]}>
+            <View style={toggleStyles(theme).toggleText}>
+                <Text style={toggleStyles(theme).togglelabel}>{label}</Text>
+                <Text style={toggleStyles(theme).togglemessage}>{message}</Text>
             </View>
 
-            <Switch
-                trackColor={{ false: colores.color_black, true: colores.color_green }}
-                thumbColor={isEnabled ? colores.background_color : colores.background_color}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-            />
+            <View
+                style={{
+                    display: "flex",
+                    position: "relative",
+                    justifyContent: "center"
+                }}
+            >
+                {
+                    isEnabled &&
+                    <Icon
+                        name="checkmark-outline"
+                        size={18}
+                        color={iconColor}
+                        
+                        style={{
+                            position: 'absolute',
+                            zIndex: 2,
+                            left: isEnabled ? "52.5%" : "12.5%"
+                        }}
+                    />
+                }
+                <Switch
+                    trackColor={{ false: theme.color_black, true: theme.color_green }}
+                    thumbColor={isEnabled ? theme.background_color : theme.background_color}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                />
+            </View>
         </View>
     );
 };
 
 export default Toggle;
-
-
-const styles = StyleSheet.create({
-    Toggle: {
-        display: "flex",
-        alignItems: 'center',
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    toggleText: {
-
-    },
-    togglelabel: {
-        fontSize: globalFont.font_normal,
-        fontWeight: "bold"
-    },
-    togglemessage: {
-        fontSize: globalFont.font_sm
-    }
-})

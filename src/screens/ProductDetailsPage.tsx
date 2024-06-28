@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import ProductInterface from '../interface/product';
 import { buttonStyles } from '../theme/UI/buttons';
@@ -10,6 +10,7 @@ import { productDetailsStyles } from '../theme/productDetailsTheme';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { globalStyles } from '../theme/appTheme';
 import { identifyBarcodeType } from '../utils/identifyBarcodeType';
+import { useTheme } from '../context/ThemeContext';
 
 type ProductDetailsPageInterface = {
     route?: {
@@ -25,7 +26,6 @@ type ProductDetailsPageInterface = {
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const { productDetails, selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
-    
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
 
     const navigation = useNavigation<any>();
@@ -71,78 +71,82 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
 
 interface ProductDetailsContentInterface {
-    productDetailsData: ProductInterface, 
-    handleOptionsToUpdateCodebar: any, 
-    handleAddToInventory: any, 
-    fromModal?: boolean, 
+    productDetailsData: ProductInterface,
+    handleOptionsToUpdateCodebar: any,
+    handleAddToInventory: any,
+    fromModal?: boolean,
     codeBar?: string,
     fromUpdateCodebar?: boolean
 }
 
-const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar, fromUpdateCodebar } : ProductDetailsContentInterface) => {
+const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar, fromUpdateCodebar }: ProductDetailsContentInterface) => {
     const codebarTypeIndetify = identifyBarcodeType(codeBar as string)
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     return (
         <>
-            <ScrollView style={productDetailsStyles.ProductDetailsPage}>
-                <View style={productDetailsStyles.imageContainer}>
+            <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
+                <View style={productDetailsStyles(theme, typeTheme).imageContainer}>
                     {productDetailsData.imagen ? (
                         <Image
-                            style={productDetailsStyles.image}
+                            style={productDetailsStyles(theme).image}
                             source={{
                                 uri: productDetailsData.imagen[0]?.url
                             }}
                         />
                     ) : (
-                        <View style={productDetailsStyles.notImage}>
-                            <Icon name={'camera'} size={24} color="black" />
-                            <Text style={productDetailsStyles.notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
+                        <View style={productDetailsStyles(theme).notImage}>
+                            <Icon name={'camera'} size={24} color={iconColor} />
+                            <Text style={productDetailsStyles(theme).notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
                         </View>
                     )}
                 </View>
-                <View style={productDetailsStyles.header}>
-                    <Text style={productDetailsStyles.description}>{productDetailsData.Descripcion}</Text>
+                <View style={productDetailsStyles(theme).header}>
+                    <Text style={productDetailsStyles(theme).description}>{productDetailsData.Descripcion}</Text>
                     {/* <View>
-                        <Text style={productDetailsStyles.price}>Precio</Text>
-                        <Text style={productDetailsStyles.priceValue}>{format(productDetailsData.Precio)}</Text>
+                        <Text style={productDetailsStyles(theme).price}>Precio</Text>
+                        <Text style={productDetailsStyles(theme).priceValue}>{format(productDetailsData.Precio)}</Text>
                     </View> */}
                 </View>
 
-                <View style={productDetailsStyles.information}>
-                    <ProductDetailItem label="Codigo:" value={productDetailsData.Codigo} />
-                    <ProductDetailItem label="Existencia:" value={productDetailsData.Existencia} />
-                    <ProductDetailItem label="Familia:" value={productDetailsData.Familia} />
-                    <ProductDetailItem label="Marca:" value={productDetailsData.Marca} />
+                <View style={productDetailsStyles(theme, typeTheme).information}>
+                    <ProductDetailItem theme={theme} label="Codigo:" value={productDetailsData.Codigo} />
+                    <ProductDetailItem theme={theme} label="Existencia:" value={productDetailsData.Existencia} />
+                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.Familia} />
+                    <ProductDetailItem theme={theme} label="Marca:" value={productDetailsData.Marca} />
                     {productDetailsData.CodBar && (
-                        <ProductDetailItem label="Codigo de barras:" value={productDetailsData.CodBar} />
+                        <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.CodBar} isLastChild />
                     )}
                 </View>
 
                 {
                     (codeBar && fromUpdateCodebar) &&
-                    <View style={productDetailsStyles.codebarIdentify}>
-                        <Text>El codigo de barras identificado es: {codebarTypeIndetify?.type}</Text>
+                    <View style={productDetailsStyles(theme).codebarIdentify}>
+                        <Text style={{ color: theme.text_color }}>El codigo de barras identificado es: {codebarTypeIndetify?.type}</Text>
                     </View>
                 }
 
                 {(!productDetailsData.CodBar && !fromModal) && (
                     <TouchableOpacity
-                        style={[buttonStyles.button, { marginBottom: globalStyles.globalMarginBottom.marginBottom * 2 }]}
+                        style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
                         onPress={handleOptionsToUpdateCodebar}
                     >
-                        <Text style={buttonStyles.buttonText}>Crear codigo de barras</Text>
+                        <Text style={buttonStyles(theme).buttonText}>Crear codigo de barras</Text>
                     </TouchableOpacity>
                 )}
+
+
             </ScrollView>
 
             {!fromModal && (
-                <View style={productDetailsStyles.footer}>
+                <View style={productDetailsStyles(theme, typeTheme).footer}>
                     <TouchableOpacity
-                        style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
+                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
                         onPress={handleAddToInventory}
                     >
-                        <Icon name="add-circle-outline" size={16} color="black" style={{ marginRight: 10 }} />
-                        <Text style={buttonStyles.buttonTextSecondary}>Agregar a inventario</Text>
+                        <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
+                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar a inventario</Text>
                     </TouchableOpacity>
                 </View>
             )}
@@ -150,11 +154,23 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
     );
 });
 
-const ProductDetailItem = React.memo(({ label, value } : any ) => (
-    <View style={productDetailsStyles.data}>
-        <Text style={productDetailsStyles.label}>{label}</Text>
-        <Text style={productDetailsStyles.dataValue}>{value}</Text>
-        <View style={productDetailsStyles.separator} />
+
+interface ProductDetailItem {
+    label: string,
+    value: string | number,
+    theme: any,
+    isLastChild?: boolean
+}
+
+const ProductDetailItem = React.memo(({ label, value, theme, isLastChild = false }: ProductDetailItem) => (
+
+    <View style={productDetailsStyles(theme).data}>
+        <Text style={productDetailsStyles(theme).label}>{label}</Text>
+        <Text style={productDetailsStyles(theme).dataValue}>{value}</Text>
+        {
+            !isLastChild &&
+            <View style={productDetailsStyles(theme).separator} />
+        }
     </View>
 ));
 

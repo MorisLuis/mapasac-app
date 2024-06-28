@@ -1,22 +1,23 @@
 import React, { useCallback, useContext, useState, useEffect, useRef } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Button, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { colores, globalStyles } from '../../theme/appTheme';
+import { globalStyles } from '../../theme/appTheme';
 import { LoadingScreen } from '../LoadingScreen';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import ModalDecision from '../../components/Modals/ModalDecision';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { SettingsContext } from '../../context/settings/SettingsContext';
+import { useNavigation } from '@react-navigation/native';
 import { PorductInterfaceBag } from '../../interface/product';
 import { inputStyles } from '../../theme/UI/inputs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '../../context/ThemeContext';
+import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 
 export const InventoryBagScreen = () => {
     const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext);
-    const { handleCameraAvailable } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
+    const { theme, toggleTheme, typeTheme } = useTheme();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [openModalDecision, setOpenModalDecision] = useState(false);
@@ -40,10 +41,6 @@ export const InventoryBagScreen = () => {
         navigate('succesMessageScreen');
     };
 
-    const closeModalHandler = useCallback(() => {
-        //handleCameraAvailable(true);
-    }, []);
-
     const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (
         <ProductInventoryCard
             product={item}
@@ -51,14 +48,6 @@ export const InventoryBagScreen = () => {
             showDelete
         />
     ), [removeProduct]);
-
-    useFocusEffect(
-        useCallback(() => {
-            return () => {
-                closeModalHandler();
-            };
-        }, [])
-    );
 
     useEffect(() => {
         if (searchText === '') {
@@ -72,17 +61,16 @@ export const InventoryBagScreen = () => {
 
     return !createInventaryLoading ? (
         <>
-            <SafeAreaView style={styles.InventoryBagScreen}>
-
+            <SafeAreaView style={InventoryBagScreenStyles(theme).InventoryBagScreen}>
                 {/* SEARCH BAR */}
                 {
                     bag.length > 0 &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-                        <View style={[styles.searchBar, inputStyles.input]}>
+                        <View style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
                             <TextInput
                                 ref={inputRef}
-                                style={{ width: "100%"}}
+                                //style={{ width: "100%", color: theme.text_color}}
                                 placeholder="Buscar producto..."
                                 placeholderTextColor="gray"
 
@@ -97,7 +85,7 @@ export const InventoryBagScreen = () => {
                 {
                     filteredBag.length > 0 &&
                     <FlatList
-                        style={styles.content}
+                        style={InventoryBagScreenStyles(theme).content}
                         data={filteredBag}
                         renderItem={renderItem}
                         keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
@@ -107,7 +95,7 @@ export const InventoryBagScreen = () => {
 
                 {
                     bag.length > 0 && filteredBag.length < 1 &&
-                    <View style={styles.message}>
+                    <View style={InventoryBagScreenStyles(theme).message}>
                         <EmptyMessageCard
                             title="No hay productos con ese nombre."
                             message='Intenta escribiendo algo diferente.'
@@ -119,22 +107,22 @@ export const InventoryBagScreen = () => {
                 {/* FOOTER */}
                 {
                     numberOfItems > 0 ?
-                        <View style={styles.footer}>
+                        <View style={InventoryBagScreenStyles(theme).footer}>
                             <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.white, globalStyles.globalMarginBottomSmall]}
+                                style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
                                 onPress={() => setOpenModalDecision(true)}
                             >
-                                <Text style={buttonStyles.buttonTextSecondary}>Limpiar carrito</Text>
+                                <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[buttonStyles.button, buttonStyles.black]}
+                                style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                                 onPress={onPostInventary}
                             >
-                                <Text style={buttonStyles.buttonText}>Crear Inventario</Text>
+                                <Text style={buttonStyles(theme).buttonText}>Crear Inventario</Text>
                             </TouchableOpacity>
                         </View>
                         :
-                        <View style={styles.message}>
+                        <View style={InventoryBagScreenStyles(theme).message}>
                             <EmptyMessageCard
                                 title="No tienes productos en inventario"
                                 message='Agrega productos al inventario'
@@ -149,16 +137,16 @@ export const InventoryBagScreen = () => {
                 message="Seguro de limpiar el inventario actual?"
             >
                 <TouchableOpacity
-                    style={[buttonStyles.button, buttonStyles.red, globalStyles.globalMarginBottomSmall]}
+                    style={[buttonStyles(theme).button, buttonStyles(theme).red, globalStyles(theme).globalMarginBottomSmall]}
                     onPress={handleCleanTemporal}
                 >
-                    <Text style={buttonStyles.buttonTextRed}>Limpiar carrito</Text>
+                    <Text style={buttonStyles(theme).buttonTextRed}>Limpiar carrito</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[buttonStyles.button, buttonStyles.white]}
+                    style={[buttonStyles(theme).button, buttonStyles(theme).white]}
                     onPress={() => setOpenModalDecision(false)}
                 >
-                    <Text style={buttonStyles.buttonTextSecondary}>Cancelar</Text>
+                    <Text style={buttonStyles(theme).buttonTextSecondary}>Cancelar</Text>
                 </TouchableOpacity>
             </ModalDecision>
         </>
@@ -166,40 +154,3 @@ export const InventoryBagScreen = () => {
         <LoadingScreen />
     );
 };
-
-const styles = StyleSheet.create({
-
-    InventoryBagScreen: {
-        backgroundColor: colores.background_color,
-        height: "100%",
-    },
-    searchBar: {
-        marginHorizontal: globalStyles.globalPadding.padding,
-        marginTop: globalStyles.globalMarginBottomSmall.marginBottom,
-        display: "flex",
-        flexDirection: "row",
-        alignContent: "center",
-        alignItems: 'center'
-    },
-    content: {
-        minHeight: "auto",
-        height: "85%",
-        padding: globalStyles.globalPadding.padding,
-        marginBottom: "37.5%"
-    },
-    message: {
-        padding: globalStyles.globalPadding.padding
-    },
-    footer: {
-        backgroundColor: colores.background_color_tertiary,
-        padding: globalStyles.globalPadding.padding,
-        height: "25%",
-        maxHeight: 150,
-        width: "100%",
-        position: "absolute",
-        bottom: 0,
-        display: "flex",
-        borderTopWidth: 1,
-        borderColor: colores.color_border
-    }
-});

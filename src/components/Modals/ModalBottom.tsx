@@ -2,7 +2,8 @@ import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, globalStyles } from '../../theme/appTheme';
+import { ModalBottomStyles } from '../../theme/ModalRenders/ModalBottomTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ModalBottomInterface {
     visible: boolean;
@@ -24,6 +25,9 @@ const ModalBottom = ({
     blurAmount = 5
 }: ModalBottomInterface) => {
 
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
     const handleDismissKeyboard = () => {
         Keyboard.dismiss();
     };
@@ -32,22 +36,15 @@ const ModalBottom = ({
     const render = () => {
         return (
             <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-
-
-                <View style={styles.modalBottom}>
-
-                    <KeyboardAvoidingView
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    >
-
-                        <View style={styles.modalContent}>
-
+                <View style={ModalBottomStyles(theme).modalBottom}>
+                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                        <View style={ModalBottomStyles(theme, typeTheme).modalContent}>
                             <TouchableWithoutFeedback onPress={onClose}>
-                                <TouchableOpacity style={styles.header} onPress={onClose}>
-                                    <Icon name="close-outline" size={24} color="black" />
+                                <TouchableOpacity style={ModalBottomStyles(theme, typeTheme).header} onPress={onClose}>
+                                    <Icon name="close-outline" size={24} color={iconColor} />
                                 </TouchableOpacity>
                             </TouchableWithoutFeedback>
-                            <View style={styles.modalChildren}>
+                            <View style={ModalBottomStyles(theme).modalChildren}>
                                 {children}
                             </View>
                         </View>
@@ -63,7 +60,6 @@ const ModalBottom = ({
             animationType="slide"
             transparent={true}
             visible={visible}
-
         >
             {
                 blurNotAvailable ?
@@ -81,44 +77,3 @@ const ModalBottom = ({
 
 export default ModalBottom;
 
-const styles = StyleSheet.create({
-    modalBottom: {
-        flex: 1,
-        justifyContent: "flex-end",
-        position: 'relative',
-    },
-    modalContent: {
-        backgroundColor: colores.background_color,
-        shadowColor: colores.background_color_tertiary,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-        width: "100%",
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: colores.color_border
-    },
-    modalChildren: {
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 20,
-        paddingLeft: 20,
-    },
-    header: {
-        width: "100%",
-        top: 0,
-        right: 0,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        display: "flex",
-        alignItems: "flex-end",
-        borderWidth: 1,
-        borderColor: "transparent",
-        borderBottomColor: colores.color_border,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    }
-});

@@ -1,0 +1,25 @@
+import { StyleSheet } from "react-native";
+import { Theme, globalFont, globalStyles } from "./appTheme";
+
+
+export const CodebarUpdateScreenStyles = (theme: Theme) => StyleSheet.create({
+    CodebarUpdateScreen: {
+        backgroundColor: theme.background_color,
+        padding: globalStyles(theme).globalPadding.padding,
+        height: "100%"
+    },
+    selectorCodebarType: {
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    actualCodebarType: {
+        display: "flex",
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    actualCodebarTypeText: {
+        fontSize: globalFont.font_sm
+    },
+    actualCodebarTypeChange: {
+        fontSize: globalFont.font_sm,
+        color: theme.color_blue
+    }
+})

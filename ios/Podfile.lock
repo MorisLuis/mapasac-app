@@ -1071,7 +1071,7 @@ PODS:
     - React-Core
   - RNCPicker (2.7.7):
     - React-Core
-  - RNGestureHandler (2.17.0):
+  - RNGestureHandler (2.17.1):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
@@ -1357,7 +1357,7 @@ SPEC CHECKSUMS:
   ReactNativeCameraKit: 9d46a5d7dd544ca64aa9c03c150d2348faf437eb
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
-  RNGestureHandler: 7386b219dadbb34d03c866509d1aa865ef3e3a78
+  RNGestureHandler: 67d3f1f69d4d0c98d6e83f4229e3bbf997d1dc72
   RNPermissions: 5a2dafe37c8e0a3fa1d6e0783a1490b1b7fd92d6
   RNReanimated: 5307ba390921b76ddf9c0aa69876916ad427a61f
   RNScreens: e842cdccb23c0a084bd6307f6fa83fd1c1738029

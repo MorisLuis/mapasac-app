@@ -1,28 +1,29 @@
 import { StyleSheet } from 'react-native';
-import { colores, globalFont, globalStyles } from '../appTheme';
+import { Theme, globalFont, globalStyles } from '../appTheme';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
-export const styles = StyleSheet.create({
+export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     title: {
         fontSize: globalFont.font_med,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     productInventoryCard: {
         display: "flex",
         flexDirection: "row",
         borderWidth: 0.5,
-        borderColor: colores.color_border_secondary,
-        backgroundColor: colores.background_color_secondary,
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        padding: globalStyles.globalPadding.padding / 2,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        backgroundColor: theme.background_color_secondary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        
     },
     productInventoryCard__Image: {
         width: wp("15%"),
         minHeight: wp("17.5%"),
-        marginRight: globalStyles.globalMarginBottom.marginBottom,
-        borderRadius: globalStyles.borderRadius.borderRadius / 2,
+        marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius / 2,
     },
     productInventoryCard__data: {
         flex: 1,
@@ -35,12 +36,14 @@ export const styles = StyleSheet.create({
         flexDirection: "row"
     },
     dataItemText: {
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     label: {
         fontWeight: "bold",
-        marginRight: globalStyles.globalMarginBottomSmall.marginBottom,
-        fontSize: globalFont.font_normal
+        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     information: {
         maxWidth: "80%"
@@ -48,14 +51,15 @@ export const styles = StyleSheet.create({
     description: {
         fontWeight: "bold",
         fontSize: globalFont.font_normal,
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom / 2
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        color: theme.text_color
     },
     stock: {
-        backgroundColor: colores.background_color,
-        borderColor: colores.color_border,
+        backgroundColor: theme.background_color,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color,
         borderWidth: 1,
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        padding: globalStyles.globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        padding: globalStyles(theme).globalPadding.padding / 2,
         minWidth: hp("6%"),
         height: hp("6%"),
         display: "flex",
@@ -64,7 +68,7 @@ export const styles = StyleSheet.create({
     },
     delete: {
         color: "red",
-        paddingVertical: globalStyles.globalPadding.padding / 2
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2
     },
 
 
@@ -77,9 +81,9 @@ export const styles = StyleSheet.create({
         minHeight: 70,
         marginRight: 10,
         borderRadius: 5,
-        backgroundColor: colores.background_color_tertiary,
+        backgroundColor: theme.background_color_tertiary,
         borderWidth: 1,
-        borderColor: colores.color_border
+        borderColor: theme.color_border
     },
     notImageText: {
         fontWeight: 'bold',
@@ -91,3 +95,121 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 2
     },
 });
+
+
+export const EmptyMessageCardStyles = (theme: Theme) => StyleSheet.create({
+    EmptyMessageCard: {
+        backgroundColor: theme.background_color,
+        borderWidth: 1,
+        borderColor: theme.color_border,
+        width: "100%",
+        padding: globalStyles(theme).globalPadding.padding,
+        borderRadius: 10,
+        display: "flex",
+        justifyContent: "center",
+    },
+    title: {
+        fontWeight: "bold",
+        fontSize: globalFont.font_med,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        color: theme.text_color
+    },
+    iconContainer: {
+        backgroundColor: theme.background_color_secondary,
+        borderWidth: 1,
+        borderColor: theme.color_border,
+        width: 40, 
+        height: 40,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    icon: {
+        textAlign: "center"
+    },
+    message: {
+        color: theme.text_color
+    }
+})
+
+export const ProductItemSearchStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+    ProductItemSearch: {
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        borderWidth: 0,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: theme.background_color_secondary
+    },
+    productInventoryCard__Image: {
+        width: wp("17.5%"),
+        minHeight:  wp("17.5%"),
+        marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
+    },
+    information: {
+        alignItems: 'flex-start'
+    },
+    description: {
+        fontWeight: "bold",
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    otherInformation: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 5
+    },
+    otherInformationText:{
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
+    },
+    codebarAvailable: {
+        backgroundColor: theme.color_border_tertiary + '23',
+        padding: globalStyles(theme).globalPadding.padding / 5,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom
+    },
+    textAvailable: {
+        color: theme.color_border_tertiary,
+        fontSize: globalFont.font_normal
+    },
+    codebarNotAvailable: {
+        backgroundColor: theme.color_red + '43',
+        padding: globalStyles(theme).globalPadding.padding / 3,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
+    },
+    textNotAvailable: {
+        color: theme.color_red,
+        fontSize: globalFont.font_normal
+    },
+    notImage: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: wp("17.5%"),
+        minHeight:  wp("17.5%"),
+        marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        backgroundColor: theme.background_color_tertiary,
+        borderWidth: 1,
+        borderColor: theme.color_border
+    },
+    notImageText: {
+        fontWeight: 'bold',
+        fontSize: globalFont.font_normal / 2,
+        textAlign: "center",
+        lineHeight: 8,
+        maxHeight: 40,
+        overflow: 'hidden',
+        paddingHorizontal: 2
+    },
+})

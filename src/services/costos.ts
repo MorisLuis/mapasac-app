@@ -24,7 +24,7 @@ const updateCostos = async ({
         await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
         Toast.show({
             type: 'tomatoToast',
-            text1: 'Se actualizó el codigo de barras!',
+            text1: 'Se actualizó el codigo de barras!'
         })
     } catch (error: any) {
         console.log({ error: error })

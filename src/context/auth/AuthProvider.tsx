@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import { DbAuthContext } from '../dbAuth/DbAuthContext';
+import { useTheme } from '../ThemeContext';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }: any) => {
     const [loggingIn, setLoggingIn] = useState(false);
     const navigation = useNavigation<any>();
     const { status } = useContext(DbAuthContext);
+    const { theme } = useTheme();
 
     const [currentScreen, setCurrentScreen] = React.useState('');
     React.useEffect(() => {
@@ -172,7 +174,7 @@ export const AuthProvider = ({ children }: any) => {
             dispatch({ type: '[Settings] - typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv} });
             Toast.show({
                 type: 'tomatoToast',
-                text1: 'Se cambio el tipo de movimiento!',
+                text1: 'Se cambio el tipo de movimiento!'
             })
         } catch (error: any) {
             console.log({ error: error })

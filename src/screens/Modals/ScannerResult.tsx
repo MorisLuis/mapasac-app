@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../interface/product';
@@ -8,12 +8,12 @@ import { Counter } from '../../components/Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalStyles } from '../../theme/appTheme';
-import { AuthContext } from '../../context/auth/AuthContext';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { modalRenderstyles } from '../../theme/ModalRenders/ScannerResultTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ModalBottom from '../../components/Modals/ModalBottom';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ScannerResultInterface {
     fromInput?: boolean;
@@ -32,6 +32,8 @@ const ScannerResult = ({
 
 
     const { product } = route?.params || {}
+    const { theme, typeTheme, toggleTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { addProduct } = useContext(InventoryBagContext)
     const { handleCameraAvailable, codeBar} = useContext(SettingsContext);
@@ -41,7 +43,6 @@ const ScannerResult = ({
     const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
-
         const inventoryBody = {
             ...product,
             Piezas: counterProduct === 0 ? 1 : counterProduct
@@ -69,37 +70,38 @@ const ScannerResult = ({
         }, 500);
     }
 
+    /* navigation.navigate('BottomNavigation') */
     return (
         <ModalBottom
             visible={true}
-            onClose={() => navigation.navigate('BottomNavigation')}
+            onClose={() => navigation.goBack()}
         >
             {
                 (product) ?
-                    <View style={modalRenderstyles.ScannerResult}>
-                        <View style={modalRenderstyles.product}>
-                            <View style={modalRenderstyles.productText}>
-                                <View style={modalRenderstyles.productMessage}>
-                                    <Text style={modalRenderstyles.codeLabel}>Codigo: </Text>
-                                    <Text style={modalRenderstyles.codeValue}>{product?.Codigo}</Text>
-                                    <View style={modalRenderstyles.otherInfo}>
-                                        <Text>{product?.CodBar}</Text>
-                                        <Text>/</Text>
-                                        <Text>{product?.Marca}</Text>
+                    <View style={modalRenderstyles(theme).ScannerResult}>
+                        <View style={modalRenderstyles(theme).product}>
+                            <View style={modalRenderstyles(theme).productText}>
+                                <View style={modalRenderstyles(theme).productMessage}>
+                                    <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
+                                    <Text style={modalRenderstyles(theme).codeValue}>{product?.Codigo}</Text>
+                                    <View style={modalRenderstyles(theme).otherInfo}>
+                                        <Text style={{ color: theme.text_color }}>{product?.CodBar}</Text>
+                                        <Text style={{ color: theme.text_color }}>/</Text>
+                                        <Text style={{ color: theme.text_color }}>{product?.Marca}</Text>
                                     </View>
                                 </View>
                             </View>
                         </View>
 
-                        <View style={modalRenderstyles.counterContainer}>
+                        <View style={modalRenderstyles(theme).counterContainer}>
                             <View style={{ width: wp("42.5%") }}>
                                 {
                                     seeProductDetails &&
                                     <TouchableOpacity
                                         onPress={handleExpandProductDetails}
-                                        style={[buttonStyles.button_small, buttonStyles.white]}
+                                        style={[buttonStyles(theme).button_small, buttonStyles(theme).white]}
                                     >
-                                        <Text style={modalRenderstyles.seeProduct}>Ver producto</Text>
+                                        <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Ver producto</Text>
                                     </TouchableOpacity>
 
                                 }
@@ -110,11 +112,11 @@ const ScannerResult = ({
                         </View>
 
                         <TouchableOpacity
-                            style={[buttonStyles.button, buttonStyles.yellow, { display: 'flex', flexDirection: 'row' }]}
+                            style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }]}
                             onPress={handleAddToInventory}
                         >
-                            <Icon name="add-circle-outline" size={16} color="black" style={{ marginRight: 10 }} />
-                            <Text style={buttonStyles.buttonTextSecondary}>Agregar al inventario</Text>
+                            <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
+                            <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</Text>
                         </TouchableOpacity>
                     </View>
                     :
@@ -123,18 +125,18 @@ const ScannerResult = ({
 
                         <TouchableOpacity
                             onPress={handleSearchByCode}
-                            style={[buttonStyles.button, buttonStyles.white, { marginVertical: globalStyles.globalMarginBottomSmall.marginBottom }]}
+                            style={[buttonStyles(theme).button, buttonStyles(theme).white, { marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}
                         >
-                            <Text style={buttonStyles.buttonTextSecondary}>Buscar producto</Text>
+                            <Text style={buttonStyles(theme).buttonTextSecondary}>Buscar producto</Text>
                         </TouchableOpacity>
 
                         {
                             (codeBar && codeBar !== "") &&
                             <TouchableOpacity
                                 onPress={handleAssignCodeToProduct}
-                                style={[buttonStyles.button, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]}
+                                style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
                             >
-                                <Text style={buttonStyles.buttonText}>Asignar a un producto</Text>
+                                <Text style={buttonStyles(theme).buttonText}>Asignar a un producto</Text>
                             </TouchableOpacity>
                         }
                     </View>

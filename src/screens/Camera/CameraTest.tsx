@@ -12,6 +12,7 @@ import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/n
 import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
+import { useTheme } from '../../context/ThemeContext';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -25,6 +26,8 @@ const CameraTest: React.FC = () => {
 
     const { bag } = useContext(InventoryBagContext);
     const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
+    const { theme, typeTheme } = useTheme();
+    //const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
@@ -34,8 +37,6 @@ const CameraTest: React.FC = () => {
     const [cameraKey, setCameraKey] = useState(0);
     const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
-
-    console.log({ cameraAvailable })
 
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
@@ -110,19 +111,19 @@ const CameraTest: React.FC = () => {
     }
 
     return (
-        <View style={cameraStyles.cameraScreen}>
+        <View style={cameraStyles(theme).cameraScreen}>
 
             {
                 onTheLimitProductScanned &&
                 <BlurView
-                    style={cameraStyles.blurOverlay}
+                    style={cameraStyles(theme).blurOverlay}
                     blurType="dark"
                     blurAmount={5}
                 />
             }
 
-            <View style={cameraStyles.backgroundBlurTop}></View>
-            <View style={cameraStyles.backgroundBlurBottom}></View>
+            <View style={cameraStyles(theme).backgroundBlurTop}></View>
+            <View style={cameraStyles(theme).backgroundBlurBottom}></View>
 
             <Camera
                 key={cameraKey}
@@ -131,43 +132,43 @@ const CameraTest: React.FC = () => {
                     if (!cameraAvailable) return;
                     codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
-                style={cameraStyles.camera}
+                style={cameraStyles(theme).camera}
                 torchMode={lightOn ? "on" : "off"}
             />
 
-            <View style={cameraStyles.flash}>
+            <View style={cameraStyles(theme).flash}>
                 <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
-                    <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="white" />
+                    <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="black" />
                 </TouchableOpacity>
             </View>
 
 
-            <View style={cameraStyles.message}>
+            <View style={cameraStyles(theme).message}>
                 {onTheLimitProductScanned ? (
-                    <Text style={cameraStyles.textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
                 ) : (
-                    <Text style={cameraStyles.textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
                 )}
             </View>
 
             {
                 Platform.OS === 'android' ?
-                    <TouchableOpacity style={cameraStyles.scannerOptions} onPress={handleOpenInputModal}>
-                        <View style={cameraStyles.option}>
-                            <View style={cameraStyles.optionContent}>
-                                <Icon name="barcode-outline" size={hp("3%")} color="white" />
+                    <TouchableOpacity style={cameraStyles(theme).scannerOptions} onPress={handleOpenInputModal}>
+                        <View style={cameraStyles(theme).option}>
+                            <View style={cameraStyles(theme).optionContent}>
+                                <Icon name="barcode-outline" size={hp("3%")} color="black" />
                             </View>
                         </View>
                     </TouchableOpacity>
                     :
-                    <View style={cameraStyles.scannerOptions}>
-                        <BlurView style={cameraStyles.option} blurType="light" blurAmount={20}>
-                            <View style={cameraStyles.optionContent}>
-                                <TouchableOpacity onPress={handleOpenInputModal}>
-                                    <Icon name="barcode-outline" size={hp("3%")} color="black" />
-                                </TouchableOpacity>
-                            </View>
-                        </BlurView>
+                    <View style={cameraStyles(theme).scannerOptions}>
+                        <TouchableOpacity onPress={handleOpenInputModal}>
+                            <BlurView style={cameraStyles(theme).option} blurType="light" blurAmount={20}>
+                                <View style={cameraStyles(theme).optionContent}>
+                                    <Icon name="barcode-outline" size={hp("3%")} color={"black"} />
+                                </View>
+                            </BlurView>
+                        </TouchableOpacity>
                     </View>
             }
         </View>

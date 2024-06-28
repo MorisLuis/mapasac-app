@@ -1,18 +1,18 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont, globalStyles } from "../appTheme";
+import { Theme, globalFont, globalStyles } from "../appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const buttonStyles = StyleSheet.create({
+export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.create({
     // Button size
     button: {
         height: hp("5%"),
-        backgroundColor: colores.color_tertiary,
+        backgroundColor: theme.color_tertiary,
         borderWidth: 1,
         borderColor: "transparent",
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        paddingHorizontal: globalStyles.globalPadding.padding,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         width: "100%",
-        color: colores.text_color_secondary,
+        color: theme.text_color_secondary,
         display: "flex",
         justifyContent:"center",
         alignItems:"center"
@@ -20,13 +20,14 @@ export const buttonStyles = StyleSheet.create({
 
     button_small: {
         height: hp("5%"),
-        backgroundColor: "#c6d1f6",
-        borderColor: "transparent",
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        paddingVertical: globalStyles.globalPadding.padding / 2,
+        backgroundColor: theme.background_color_secondary,
+        borderWidth: 1,
+        borderColor: theme.color_border_tertiary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
         width: "100%",
-        color: colores.color_tertiary,
+        color: theme.color_tertiary,
         display: "flex",
         justifyContent:"center",
         alignItems:"center"
@@ -37,10 +38,10 @@ export const buttonStyles = StyleSheet.create({
         backgroundColor: "transparent",
         borderWidth: 0,
         borderColor: "transparent",
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        paddingHorizontal: globalStyles.globalPadding.padding,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         width: "100%",
-        color: colores.text_color_secondary,
+        color: theme.text_color_secondary,
         display: "flex",
         justifyContent:"center",
         alignItems:"center"
@@ -48,17 +49,22 @@ export const buttonStyles = StyleSheet.create({
 
     // Button text
     buttonText: {
-        color: colores.text_color_secondary,
+        color: theme.text_color_secondary,
         fontSize: globalFont.font_normal
     },
 
     buttonTextSecondary: {
-        color: colores.text_color,
+        color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
+        fontSize: globalFont.font_normal
+    },
+
+    buttonTextTertiary: {
+        color: typeTheme === 'light' ? theme.text_color : theme.text_color,
         fontSize: globalFont.font_normal
     },
 
     buttonTextRed: {
-        color: colores.color_red,
+        color: theme.color_red,
         fontSize: globalFont.font_normal
     },
 
@@ -71,34 +77,34 @@ export const buttonStyles = StyleSheet.create({
     },
 
     white: {
-        backgroundColor: colores.color_primary,
-        color: colores.text_color,
+        backgroundColor: typeTheme === 'light' ? theme.color_primary : "transparent",
+        color: theme.text_color,
         borderWidth: 1,
-        borderColor: colores.color_border_secondary,
+        borderColor: theme.color_border_tertiary,
     },
 
     search: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: colores.color_border_tertiary,
-        color: colores.text_color
+        borderColor: theme.color_border_tertiary,
+        color: theme.text_color
     },
 
     black: {
-        backgroundColor: colores.color_tertiary,
-        color: colores.text_color_secondary
+        backgroundColor: theme.color_tertiary,
+        color: theme.text_color_secondary
     },
 
 
     yellow: {
-        backgroundColor: colores.color_yellow,
-        color: colores.text_color_secondary
+        backgroundColor: theme.color_yellow,
+        color: theme.text_color_secondary
     },
 
 
     red: {
-        backgroundColor: colores.color_red_light,
-        color: colores.color_red_light,
+        backgroundColor: theme.color_red_light,
+        color: theme.color_red_light,
     },
 
     transparent: {

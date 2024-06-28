@@ -4,6 +4,8 @@ import PorductInterface from '../../interface/product';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
+import { ProductFindByCodebarInputStyles } from '../../theme/ModalRenders/ProductFindByCodebarInputTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ProductFindByCodeBarInterface {
     route?: {
@@ -17,6 +19,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
 
     const { products } = route?.params || {}
     const navigation = useNavigation<any>();
+    const { theme, typeTheme } = useTheme();
 
     const onSelectProduct = (product: PorductInterface) => {
         navigation.goBack()
@@ -28,13 +31,10 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
     return (
         <ModalMiddle
             visible={true}
-            onClose={() => {
-                navigation.goBack()
-            }}
+            onClose={() => navigation.goBack()}
         >
-
-            <View style={styles.ProductFindByCodeBar}>
-                <Text style={styles.title}>Productos</Text>
+            <View style={ProductFindByCodebarInputStyles(theme).ProductFindByCodeBar}>
+                <Text style={ProductFindByCodebarInputStyles(theme).title}>Productos</Text>
                 {
                     products.map((product) =>
                         <ProductInventoryCard
@@ -48,20 +48,3 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
         </ModalMiddle>
     )
 }
-
-const styles = StyleSheet.create({
-
-    ProductFindByCodeBar: {
-        width: "auto",
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 20,
-        fontWeight: "bold"
-    },
-    productStyles: {
-        backgroundColor: 'beige',
-        height: 30,
-        color: "black"
-    }
-})

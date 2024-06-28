@@ -5,7 +5,6 @@ import { useForm } from '../../hooks/useForm';
 import useKeyboardStatus from '../../hooks/useKeyboardStatus';
 import { LoadingScreen } from '../LoadingScreen';
 
-import { loginDBStyles } from '../../theme/loginTheme';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { inputStyles } from '../../theme/UI/inputs';
 import { globalStyles } from '../../theme/appTheme';
@@ -13,11 +12,14 @@ import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import Banner from "../../assets/OLEIAPP.svg";
 import Logo from "../../assets/Logo.svg";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { loginDBStyles } from '../../theme/loginTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 
 export const LoginDatabaseScreen = () => {
     const { signInDB, errorMessage, removeError, loggingIn } = useContext(DbAuthContext);
     const { IdUsuarioOLEI, PasswordOLEI, onChange } = useForm({ IdUsuarioOLEI: '', PasswordOLEI: '' });
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (errorMessage.length === 0) return;
@@ -40,32 +42,32 @@ export const LoginDatabaseScreen = () => {
 
     return (
         <KeyboardAvoidingView
-            style={loginDBStyles.LoginDBScreen}
+            style={loginDBStyles(theme).LoginDBScreen}
             behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
         >
-            <View style={loginDBStyles.formContainer}>
+            <View style={loginDBStyles(theme).formContainer}>
 
-                <View style={loginDBStyles.logoContainer}>
+                <View style={loginDBStyles(theme).logoContainer}>
                     <Logo width={keyboardActive ? wp("35%") : wp("60%")} height={"100%"} />
                 </View>
 
-                <View style={[keyboardActive ? loginDBStyles.imageContainerActive : loginDBStyles.imageContainer]}>
+                <View style={[keyboardActive ? loginDBStyles(theme).imageContainerActive : loginDBStyles(theme).imageContainer]}>
                     <Banner width={keyboardActive ? "50%" : "90%"} height={"100%"}  />
                 </View>
 
-                <View style={[keyboardActive ? loginDBStyles.headersActive : loginDBStyles.headers]}>
-                    <Text style={[keyboardActive ? loginDBStyles.titleDBActive : loginDBStyles.titleDB]}>Con OLEI APP agilice la captura de sus movimientos</Text>
-                    <Text style={[keyboardActive ? loginDBStyles.textDBActive : loginDBStyles.textDB]}>
+                <View style={[keyboardActive ? loginDBStyles(theme).headersActive : loginDBStyles(theme).headers]}>
+                    <Text style={[keyboardActive ? loginDBStyles(theme).titleDBActive : loginDBStyles(theme).titleDB]}>Con OLEI APP agilice la captura de sus movimientos</Text>
+                    <Text style={[keyboardActive ? loginDBStyles(theme).textDBActive : loginDBStyles(theme).textDB]}>
                         Iniciemos conectadonos a tu base de datos.
                     </Text>
                 </View>
 
                 <TextInput
                     placeholder="Escribe Id Usuario Olei"
-                    placeholderTextColor="gray"
+                    placeholderTextColor={theme.text_color}          
                     keyboardType="email-address"
-                    style={[inputStyles.input, globalStyles.globalMarginBottom]}
-                    selectionColor="black"
+                    style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottom]}
+                    selectionColor={theme.text_color}
                     onChangeText={(value) => onChange(value, 'IdUsuarioOLEI')}
                     value={IdUsuarioOLEI}
                     onSubmitEditing={onLogin}
@@ -74,23 +76,23 @@ export const LoginDatabaseScreen = () => {
                 />
                 <TextInput
                     placeholder="Escribe Contraseña Olei"
-                    placeholderTextColor="gray"                    
+                    placeholderTextColor={theme.text_color}                
                     secureTextEntry
-                    style={[inputStyles.input]}
-                    selectionColor="black"
+                    style={[inputStyles(theme).input]}
+                    selectionColor={theme.text_color}
                     onChangeText={(value) => onChange(value, 'PasswordOLEI')}
                     value={PasswordOLEI}
                     onSubmitEditing={onLogin}
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                <View style={loginDBStyles.buttonContainerDB}>
+                <View style={loginDBStyles(theme).buttonContainerDB}>
                     <TouchableOpacity
                         activeOpacity={0.8}
-                        style={[buttonStyles.button, buttonStyles.yellow]}
+                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow]}
                         onPress={onLogin}
                     >
-                        <Text style={buttonStyles.buttonTextSecondary}>Ingresar</Text>
+                        <Text style={buttonStyles(theme).buttonTextSecondary}>Ingresar</Text>
                     </TouchableOpacity>
                 </View>
 

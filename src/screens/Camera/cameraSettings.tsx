@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Platform, Vibration, Alert } from "react-native";
 import { getProductByCodeBar } from "../../services/products";
-import { AuthContext } from "../../context/auth/AuthContext";
 import { PERMISSIONS, check, openSettings, request } from "react-native-permissions";
 import { SettingsContext } from "../../context/settings/SettingsContext";
 import PorductInterface from "../../interface/product";

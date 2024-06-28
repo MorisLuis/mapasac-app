@@ -1,19 +1,20 @@
 import React from 'react'
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import { useTheme } from '../../context/ThemeContext';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 export const ProductInventoryCardSkeleton = () => {
-    const shimmerColors = ["#f0f0f0", "#eaeaea", "#f0f0f0"]
+    const { theme } = useTheme();
+    const shimmerColors = [theme.color_primary, theme.color_secondary, theme.color_primary]
 
     return (
         <View
             style={{
                 width: "100%",
                 flexDirection: "row",
-                //alignItems: "center"
             }}
         >
             <ShimmerPlaceHolder

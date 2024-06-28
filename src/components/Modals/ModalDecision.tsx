@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { ModalDecisionStyles } from '../../theme/ModalRenders/ModalDecisionTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ModalDecisionInterface {
     visible: boolean;
@@ -15,6 +15,8 @@ const ModalDecision = ({
     children,
     message
 }: ModalDecisionInterface) => {
+
+    const { theme } = useTheme();
 
     const handleDismissKeyboard = () => {
         Keyboard.dismiss();
@@ -29,13 +31,13 @@ const ModalDecision = ({
         >
             <BlurView style={StyleSheet.absoluteFill} blurType="dark" blurAmount={1}>
                 <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-                    <View style={styles.ModalDecision}>
+                    <View style={ModalDecisionStyles(theme).ModalDecision}>
                         <KeyboardAvoidingView
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         >
-                            <View style={styles.modalContent}>
-                                <Text style={styles.message}>{message}</Text>
-                                <View style={styles.modalChildren}>
+                            <View style={ModalDecisionStyles(theme).modalContent}>
+                                <Text style={ModalDecisionStyles(theme).message}>{message}</Text>
+                                <View style={ModalDecisionStyles(theme).modalChildren}>
                                     {children}
                                 </View>
                             </View>
@@ -48,36 +50,3 @@ const ModalDecision = ({
 };
 
 export default ModalDecision;
-
-const styles = StyleSheet.create({
-    ModalDecision: {
-        flex: 1,
-        justifyContent: "flex-end"
-    },
-    modalContent: {
-        backgroundColor: colores.background_color,
-        shadowColor: colores.background_color_tertiary,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-        width: "100%",
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: colores.color_border
-    },
-    modalChildren: {
-        padding: globalStyles.globalPadding.padding,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-    message:{
-        fontSize: globalFont.font_med,
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        paddingTop:  globalStyles.globalPadding.padding,
-        width: "85%",
-    }
-});
-

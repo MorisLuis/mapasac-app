@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont, globalStyles } from "../appTheme";
+import {Theme, globalFont, globalStyles } from "../appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
-export const customTabBarStyles = StyleSheet.create({
+export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     customTabBar: {
         position: 'absolute',
         flexDirection: 'row',
@@ -19,7 +19,7 @@ export const customTabBarStyles = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         justifyContent: "space-between",
-        paddingHorizontal: globalStyles.globalPadding.padding
+        paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     navigation: {
         display: "flex",
@@ -33,21 +33,21 @@ export const customTabBarStyles = StyleSheet.create({
         maxHeight: 32,
         marginRight: wp("2%"),
         borderWidth: 0.7,
-        borderColor: "black",
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
         overflow: "hidden"
     },
     bag: {
-        backgroundColor: colores.color_tertiary,
+        backgroundColor: theme.color_tertiary,
         height: hp("5%"),
         borderRadius: 100,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: globalStyles.globalPadding.padding
+        paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     sectionBag: {
-        //color: colores.text_color_secondary,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     blurContainer: {
         justifyContent: 'center',
@@ -55,7 +55,6 @@ export const customTabBarStyles = StyleSheet.create({
         width: "100%",
         height: "100%",
         paddingHorizontal: wp("2%"),
-        //backgroundColor: colores.background_color_blur
     },
     sectionTitle: {
         fontSize: globalFont.font_normal

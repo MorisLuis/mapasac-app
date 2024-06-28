@@ -99,16 +99,19 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="bagInventoryScreen"
                 component={InventoryBagScreen}
-                options={({ navigation }) => ({
+                options={({ navigation } : any) => ({
                     presentation: "modal",
-                    headerShown: true,
-                    title: 'Inventario',
-                    headerTitleAlign: 'center',
-                    headerLeft: () => (
-                        <CustomBackButton
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title="Inventario"
                             navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
                         />
-                    ),
+                    )
                 })}
             />
 

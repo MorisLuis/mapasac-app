@@ -1,37 +1,34 @@
 import React from 'react'
 
-import { StyleSheet, Text, View } from 'react-native'
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { Text, View } from 'react-native'
+import { globalFont, globalStyles } from '../../theme/appTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 
 export const PrivacyScreen = () => {
 
+    const { theme } = useTheme();
+
     return (
-        <View style={styles.PrivacyScreen}>
-            <Text style={styles.header}>Terminos de uso</Text>
-            <Text>
+        <View style={{
+            padding: globalStyles(theme).globalPadding.padding,
+            backgroundColor: theme.background_color,
+            height: '100%'
+        }}>
+            <Text style={{
+                fontSize: globalFont.font_big,
+                fontWeight: "bold",
+                marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+                color: theme.text_color
+            }}>Aviso de privacidad</Text>
+            <Text style={{ color: theme.text_color }}>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias quo, cum rerum molestias blanditiis neque repellat dicta modi aut at totam quis quidem fugit animi, ratione nihil est. Nostrum, optio!
-            </Text>        
-            </View>
+            </Text>
+        </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-
-    PrivacyScreen: {
-        padding: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color,
-        height: '100%'
-    },
-    header: {
-        fontSize: globalFont.font_big,
-        fontWeight: "bold",
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    }
-})

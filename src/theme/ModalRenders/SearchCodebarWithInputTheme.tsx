@@ -1,14 +1,15 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont } from "../appTheme";
+import { Theme, globalFont } from "../appTheme";
 
 
-export const modalRenderstyles = StyleSheet.create({
+export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSheet.create({
     SearchCodebarWithInput: {
         
     },
     SearchCodebarWithInput_title: {
         marginBottom: 10,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     SearchCodebarWithInput_input: {
         borderWidth: 1,
@@ -34,18 +35,23 @@ export const modalRenderstyles = StyleSheet.create({
         gap: 10
     },
     option: {
-        backgroundColor: colores.background_color_tertiary,
+        backgroundColor: theme.background_color_tertiary,
         padding: 5,
         paddingHorizontal: 10,
         borderRadius: 100,
         borderWidth: 1,
-        borderColor: colores.color_border
+        borderColor: theme.color_border_tertiary
     },
     optionText: {
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: typeTheme === 'light' ? theme.text_color_secondary :  theme.text_color
+    },
+    optionTextActive: {
+        fontSize: globalFont.font_normal,
+        color: typeTheme === 'light' ? theme.text_color :  theme.text_color_secondary
     },
     optionActive: {
-        backgroundColor: colores.color_yellow,
-        borderColor: colores.color_border_tertiary
+        backgroundColor: theme.color_yellow,
+        borderColor: theme.color_border_tertiary
     }
 });
