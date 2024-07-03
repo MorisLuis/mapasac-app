@@ -13,30 +13,31 @@ import { useTheme } from '../../context/ThemeContext';
 export const SearchCodebarWithInput = () => {
 
     const { updateBarCode } = useContext(SettingsContext);
+    const navigation = useNavigation<any>();
+    const { theme, typeTheme } = useTheme();
+
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
-    const { theme, typeTheme } = useTheme();
-    const navigation = useNavigation<any>();
-    const disabled = Barcode.length < 1;
+    const [loadingSearch, setLoadingSearch] = useState(false)
+    const buttondisabled = Barcode.length < 1 || loadingSearch;
+    
 
 
 
     const handleSearchProductByCodebarInput = async () => {
         updateBarCode('')
+        setLoadingSearch(true)
 
         let response;
         if (typeOfSearch === 'code') {
             response = await getProductByCodeBar({ codigo: Barcode });
-            handleNavigatoToProduct(response)
-            /* navigation.goBack()
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] }); */
+            handleNavigatoToProduct(response);
+            setLoadingSearch(false);
         } else {
             updateBarCode(Barcode)
             response = await getProductByCodeBar({ codeBar: Barcode });
-            handleNavigatoToProduct(response)
-
-            /* navigation.goBack()
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] }); */
+            handleNavigatoToProduct(response);
+            setLoadingSearch(false);
         }
     }
 
@@ -72,12 +73,12 @@ export const SearchCodebarWithInput = () => {
                 />
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                    ...(disabled ? [buttonStyles(theme).disabled] : [])
+                    ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
                     ]}
                     onPress={handleSearchProductByCodebarInput}
-                    disabled={disabled}
+                    disabled={buttondisabled}
                 >
-                    <Text style={buttonStyles(theme).buttonText}>Buscar producto</Text>
+                    <Text style={buttonStyles(theme).buttonText}>{loadingSearch ?  "Buscando..." : "Buscar producto"}</Text>
                 </TouchableOpacity>
 
                 <View style={modalRenderstyles(theme).optionsContainer}>

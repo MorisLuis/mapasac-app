@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, Platform } from 'react-native';
+import React, { useContext, useEffect, useRef } from 'react';
+import { SafeAreaView, Text, TouchableOpacity, View, Platform, Animated } from 'react-native';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
@@ -8,10 +8,11 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
 import { useTheme } from '../../context/ThemeContext';
 
+
 export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
-    const { numberOfItems } = useContext(InventoryBagContext);
+    const { numberOfItems, productAdded } = useContext(InventoryBagContext);
     const { user } = useContext(AuthContext);
     const { handleCameraAvailable } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
@@ -125,7 +126,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                             </View>
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity style={[customTabBarStyles(theme).navButton, { marginRight: 0 }]} onPress={handleOpenBagInventory}>
+                        <AnimatedButton isScaled={productAdded} >
                             <BlurView
                                 style={customTabBarStyles(theme).blurContainer}
                                 blurType="light"
@@ -136,9 +137,43 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                                     {getTypeOfMovementsName()} ( {numberOfItems} )
                                 </Text>
                             </BlurView>
-                        </TouchableOpacity>
+                        </AnimatedButton>
                 }
             </View>
         </SafeAreaView>
+    );
+};
+
+// Bag Inventory animation
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+
+const AnimatedButton = ({ isScaled, children }: any) => {
+
+    const scaleAnim = useRef(new Animated.Value(1)).current;
+    const { theme } = useTheme();
+    const { navigate } = useNavigation<any>();
+
+    useEffect(() => {
+        Animated.spring(scaleAnim, {
+            toValue: isScaled ? 1.2 : 1, // Ajusta el valor de escala según el estado isScaled
+            useNativeDriver: true,
+        }).start();
+    }, [isScaled]);
+
+    const handleOpenBagInventory = () => {
+        //handleCameraAvailable(false)
+        navigate('bagInventoryScreen')
+    }
+
+    return (
+        <AnimatedTouchableOpacity
+            style={[
+                customTabBarStyles(theme).navButton,
+                { transform: [{ scale: scaleAnim }], marginRight: 0 }
+            ]}
+            onPress={handleOpenBagInventory}
+        >
+            {children}
+        </AnimatedTouchableOpacity>
     );
 };

@@ -37,11 +37,12 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
-    const [inventoryCreated, setInventoryCreated] = useState(false);
     const { vibration } = useContext(SettingsContext);
-
-    const [keyNumber, setKeyNumber] = useState(0)
     const { user } = useContext(AuthContext);
+
+    const [inventoryCreated, setInventoryCreated] = useState(false);
+    const [productAdded, setProductAdded] = useState(false);
+    const [keyNumber, setKeyNumber] = useState(0);
 
     const productTemplate: PorductInterface = {
         Descripcion: "Producto ejemplo",
@@ -89,14 +90,25 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const addProduct = (product: PorductInterface) => {
 
-        setKeyNumber(keyNumber + 1)
-        const newKey = keyNumber + 1;
-
-        if (vibration) {
-            Vibration.vibrate(100);
+        try {
+            setKeyNumber(keyNumber + 1)
+            const newKey = keyNumber + 1;
+    
+            if (vibration) {
+                Vibration.vibrate(100);
+            }
+    
+            dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
+            setProductAdded(true);
+        } catch (error) {
+            console.log({error})
+            setProductAdded(false);
+        } finally {
+            timeoutRef.current = setTimeout(() => {
+                setProductAdded(false);
+            }, 1000);
         }
 
-        dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
     }
 
     const removeProduct = (product: PorductInterfaceBag) => {
@@ -175,6 +187,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             postInventory,
             postInventoryDetails,
             inventoryCreated,
+            productAdded,
             cleanBag,
             addMultipleProducts
         }}
