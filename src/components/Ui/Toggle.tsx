@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Switch, Text } from 'react-native';
+import { View, Switch, Text, Platform } from 'react-native';
 import { toggleStyles } from '../../theme/UI/inputs';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -31,10 +31,10 @@ const Toggle = ({
     };
 
     return (
-        <View style={[toggleStyles(theme).Toggle, extraStyles]}>
-            <View style={toggleStyles(theme).toggleText}>
-                <Text style={toggleStyles(theme).togglelabel}>{label}</Text>
-                <Text style={toggleStyles(theme).togglemessage}>{message}</Text>
+        <View style={[toggleStyles(theme, typeTheme).Toggle, extraStyles]}>
+            <View style={toggleStyles(theme, typeTheme).toggleText}>
+                <Text style={toggleStyles(theme, typeTheme).togglelabel}>{label}</Text>
+                <Text style={toggleStyles(theme, typeTheme).togglemessage}>{message}</Text>
             </View>
 
             <View
@@ -50,7 +50,7 @@ const Toggle = ({
                         name="checkmark-outline"
                         size={18}
                         color={iconColor}
-                        
+
                         style={{
                             position: 'absolute',
                             zIndex: 2,
@@ -59,9 +59,13 @@ const Toggle = ({
                     />
                 }
                 <Switch
-                    trackColor={{ false: theme.color_black, true: theme.color_green }}
-                    thumbColor={isEnabled ? theme.background_color : theme.background_color}
-                    ios_backgroundColor="#3e3e3e"
+                    trackColor={{ false: toggleStyles(theme, typeTheme).SwitchTrackColorFalse.backgroundColor, true: toggleStyles(theme, typeTheme).SwitchTrackColorTrue.backgroundColor }}
+                    thumbColor={
+                        Platform.OS === 'android' && isEnabled ? toggleStyles(theme, typeTheme).SwitchThumbColorAndroidEnabled.backgroundColor :
+                            Platform.OS === 'android' && !isEnabled ? toggleStyles(theme, typeTheme).SwitchThumbColorAndroidNotEnabled.backgroundColor :
+                                Platform.OS === 'ios' && isEnabled ? toggleStyles(theme, typeTheme).SwitchThumbColorIOSdEnabled.backgroundColor : toggleStyles(theme, typeTheme).SwitchThumbColorIOSdNotEnabled.backgroundColor
+                    }
+                    //ios_backgroundColor={theme.background_color_tertiary}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                 />

@@ -9,6 +9,7 @@ export interface Theme {
     color_secondary: string;
     color_tertiary: string;
     color_cuaternary: string;
+    color_white: string;
     color_red: string;
     color_blue: string;
     color_green: string;
@@ -38,6 +39,7 @@ export const lightTheme = {
     color_tertiary: "#0E1727",
     color_cuaternary: "#F9FAFA",
     color_red: "#ff0000",
+    color_white: "white",
     color_blue: "#068FFF",
     color_green: "#1F8A70",
     color_gray: "gray",
@@ -53,7 +55,7 @@ export const lightTheme = {
     background_color: "#f1f1f1",
     background_color_secondary: "#eaeaea",
     background_color_tertiary: "#f1f1f1",
-    background_color_blur: "rgba(0, 0, 0, 0.3)",
+    background_color_blur: "rgba(0, 0, 0, 0.1)",
 };
 
 export const darkTheme = {
@@ -63,6 +65,7 @@ export const darkTheme = {
     color_tertiary: "#f1f1f1",
     color_cuaternary: "#444444",
     color_red: "#ff0000",
+    color_white: "white",
     color_blue: "#068FFF",
     color_green: "#1F8A70",
     color_gray: "gray",
@@ -78,7 +81,7 @@ export const darkTheme = {
     background_color: "#111111",
     background_color_secondary: "#222222",
     background_color_tertiary: "#26282C",
-    background_color_blur: "rgba(0, 0, 0, 0.3)",
+    background_color_blur: "rgba(0, 0, 0, 0.1)",
 };
 
 

@@ -19,7 +19,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
 
     const { products } = route?.params || {}
     const navigation = useNavigation<any>();
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
 
     const onSelectProduct = (product: PorductInterface) => {
         navigation.goBack()

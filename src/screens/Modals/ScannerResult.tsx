@@ -32,17 +32,18 @@ const ScannerResult = ({
 
 
     const { product } = route?.params || {}
-    const { theme, typeTheme, toggleTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const { theme, typeTheme } = useTheme();
+    const [loadingAddProduct, setLoadingAddProduct] = useState(false)
 
     const { addProduct } = useContext(InventoryBagContext)
-    const { handleCameraAvailable, codeBar} = useContext(SettingsContext);
+    const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
 
     const navigation = useNavigation<any>();
 
     const [counterProduct, setCounterProduct] = useState<number>(0);
 
     const handleAddToInventory = () => {
+        setLoadingAddProduct(true)
         const inventoryBody = {
             ...product,
             Piezas: counterProduct === 0 ? 1 : counterProduct
@@ -50,6 +51,7 @@ const ScannerResult = ({
         addProduct(inventoryBody as any)
         handleCameraAvailable(true)
         navigation.goBack()
+        setLoadingAddProduct(false)
     }
 
     const handleExpandProductDetails = () => {
@@ -112,8 +114,13 @@ const ScannerResult = ({
                         </View>
 
                         <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }]}
+                            //style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }]}
+
+                            style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' },
+                            ...(loadingAddProduct ? [buttonStyles(theme).disabled] : [])
+                            ]}
                             onPress={handleAddToInventory}
+                            disabled={loadingAddProduct}
                         >
                             <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
                             <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</Text>

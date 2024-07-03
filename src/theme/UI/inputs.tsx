@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "../appTheme";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
@@ -58,7 +58,7 @@ export const selectStyles = (theme: Theme) => StyleSheet.create({
 });
 
 
-export const toggleStyles = (theme: Theme) => StyleSheet.create({
+export const toggleStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     Toggle: {
         display: "flex",
         alignItems: 'center',
@@ -76,5 +76,25 @@ export const toggleStyles = (theme: Theme) => StyleSheet.create({
     togglemessage: {
         fontSize: globalFont.font_sm,
         color: theme.text_color
-    }
+    },
+
+    //Switch styles
+    SwitchTrackColorTrue: {
+        backgroundColor: typeTheme === 'light' ? theme.color_green : theme.color_white
+    },
+    SwitchTrackColorFalse: {
+        backgroundColor: typeTheme === 'light' ? theme.color_gray : theme.color_gray
+    },
+    SwitchThumbColorAndroidEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.color_white : theme.color_green
+    },
+    SwitchThumbColorAndroidNotEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.background_color_tertiary : theme.background_color_tertiary
+    },
+    SwitchThumbColorIOSdEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.color_white : theme.color_green
+    },
+    SwitchThumbColorIOSdNotEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.background_color_tertiary : theme.background_color_tertiary
+    },
 })

@@ -29,6 +29,7 @@ const CameraTest: React.FC = () => {
 
     const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
@@ -152,12 +153,13 @@ const CameraTest: React.FC = () => {
                 )}
             </View>
 
+
             {
                 Platform.OS === 'android' ?
                     <TouchableOpacity style={cameraStyles(theme).scannerOptions} onPress={handleOpenInputModal}>
-                        <View style={cameraStyles(theme).option}>
+                        <View style={cameraStyles(theme).optionAndroid}>
                             <View style={cameraStyles(theme).optionContent}>
-                                <Icon name="barcode-outline" size={hp("3%")} color="black" />
+                                <Icon name="barcode-outline" size={hp("3%")} color={iconColor} />
                             </View>
                         </View>
                     </TouchableOpacity>

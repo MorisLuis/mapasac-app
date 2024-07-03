@@ -44,12 +44,19 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         zIndex: 2,
         width: wp("20%"),
         height: wp("20%"),
+        
     },
     option: {
         flex: 1,
         borderRadius: 30,
         padding: 5,
         backgroundColor: theme.background_color_blur,
+    },
+    optionAndroid: {
+        flex: 1,
+        borderRadius: 30,
+        padding: 5,
+        backgroundColor: theme.background_color,
     },
     optionContent: {
         flex: 1,
@@ -58,7 +65,7 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: theme.color_black
+        borderColor: theme.color_border
     },
     message: {
         position: "absolute",
@@ -69,7 +76,6 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         alignItems: "center",
         textAlign: 'center',
         zIndex: 2,
-        
     },
     textmessage: {
         color: typeTheme === 'light' ? theme.text_color_secondary : theme.text_color,
