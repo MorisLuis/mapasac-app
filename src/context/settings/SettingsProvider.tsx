@@ -13,7 +13,8 @@ export interface SettingsInterface {
     user?: UserInterface | null;
     codeBarStatus?: boolean;
     codeBar?: string;
-    codebarType?: number
+    codebarType?: number;
+    startScanning?: boolean
 }
 
 export const SettingsInitialState: SettingsInterface = {
@@ -22,7 +23,8 @@ export const SettingsInitialState: SettingsInterface = {
     limitProductsScanned: 20,
     codeBarStatus: false,
     codeBar: "",
-    codebarType: 1
+    codebarType: 1,
+    startScanning: false
 }
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
@@ -65,6 +67,11 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     }
 
 
+    const handleStartScanning = (value: boolean) => {
+        dispatch({ type: '[Settings] - startScanning', startScanning: value });
+    }
+
+
     return (
         <SettingsContext.Provider value={{
             ...state,
@@ -74,6 +81,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
             handleSetupUser,
             handleCodebarScannedProcces,
             handleGetCodebarType,
+            handleStartScanning,
             updateBarCode
             
         }}

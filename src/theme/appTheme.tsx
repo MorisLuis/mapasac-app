@@ -55,7 +55,7 @@ export const lightTheme = {
     background_color: "#f1f1f1",
     background_color_secondary: "#eaeaea",
     background_color_tertiary: "#f1f1f1",
-    background_color_blur: "rgba(0, 0, 0, 0.1)",
+    background_color_blur: "rgba(0, 0, 0, 0.2)",
 };
 
 export const darkTheme = {
@@ -81,7 +81,7 @@ export const darkTheme = {
     background_color: "#111111",
     background_color_secondary: "#222222",
     background_color_tertiary: "#26282C",
-    background_color_blur: "rgba(0, 0, 0, 0.1)",
+    background_color_blur: "rgba(0, 0, 0, 0.2)",
 };
 
 

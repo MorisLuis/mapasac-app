@@ -28,7 +28,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
     const { modal } = route?.params ?? {};
     const { codeBar } = useContext(SettingsContext,);
-    const { theme } = useTheme();
+    const { theme, typeTheme} = useTheme();
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
@@ -132,17 +132,17 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 blurType="dark"
                 blurAmount={0}
             >
-                <View style={SearchProductScreenStyles(theme).searchAdvice}>
-                    <View style={SearchProductScreenStyles(theme).adviceHeader}>
-                        <Icon name="bulb" size={hp("3%")} color="red" />
-                        <Text style={SearchProductScreenStyles(theme).titleHeader}>Asignar producto</Text>
+                <View style={SearchProductScreenStyles(theme, typeTheme).searchAdvice}>
+                    <View style={SearchProductScreenStyles(theme, typeTheme).adviceHeader}>
+                        <Icon name="bulb" size={hp("3%")} color={typeTheme === 'light' ? "red" : "white"} />
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).titleHeader}>Asignar producto</Text>
                     </View>
-                    <View style={SearchProductScreenStyles(theme).adviceMessage}>
-                        <Text style={SearchProductScreenStyles(theme).adviceMessage1}>
+                    <View style={SearchProductScreenStyles(theme, typeTheme).adviceMessage}>
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage1}>
                             Selecciona un producto al cual podrás asignarle el código de barras: <Text style={{ fontWeight: 'bold' }}>{codeBar}</Text>
                         </Text>
 
-                        <Text style={SearchProductScreenStyles(theme).adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
                     </View>
                 </View>
             </ModalBottom>

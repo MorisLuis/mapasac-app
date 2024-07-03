@@ -84,7 +84,7 @@ export const CustomHeader = ({
 export const CustomBackButton = ({ navigation, onClick }: any) => {
 
 
-    const { typeTheme } = useTheme();
+    const { typeTheme, theme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const handlePress = () => {
@@ -98,7 +98,12 @@ export const CustomBackButton = ({ navigation, onClick }: any) => {
             onPress={handlePress}
         >
             <Icon name="chevron-back-outline" size={20} color={iconColor} />
-            <Text style={stylesHeaderBack.backText}>Atrás</Text>
+            <Text style={{
+                fontWeight: 'bold',
+                fontSize: 14,
+                marginLeft: 3,
+                color: theme.text_color
+            }}>Atrás</Text>
         </TouchableOpacity>
     );
 };
@@ -112,11 +117,6 @@ const stylesHeaderBack = StyleSheet.create({
         alignItems: 'center',
         left: 0,
         bottom: 0
-        },
-    backText: {
-        fontWeight: 'bold',
-        fontSize: 14,
-        marginLeft: 3,
     },
     titleHeader: {
         fontWeight: 'bold',

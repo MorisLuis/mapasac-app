@@ -65,7 +65,7 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: theme.color_border
+        borderColor: typeTheme === 'light' ?  theme.color_black : theme.color_black
     },
     message: {
         position: "absolute",

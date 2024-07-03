@@ -10,12 +10,14 @@ import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import DeviceInfo from 'react-native-device-info';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
     const { addMultipleProducts } = useContext(InventoryBagContext);
+    const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
     const { logOut: logOutDB } = useContext(DbAuthContext);
     const { theme, typeTheme } = useTheme();
@@ -99,7 +101,7 @@ export const ProfileScreen = () => {
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={{ color: theme.text_color }}>Version: {Platform.Version}</Text>
+                    <Text style={{ color: theme.text_color }}>Version: {version}</Text>
                 </View>
             </SafeAreaView>
         </View>

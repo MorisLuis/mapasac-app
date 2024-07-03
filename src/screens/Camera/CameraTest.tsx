@@ -13,7 +13,6 @@ import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
 import { useTheme } from '../../context/ThemeContext';
-import { AuthContext } from '../../context/auth/AuthContext';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -27,7 +26,7 @@ const CameraTest: React.FC = () => {
 
     const { bag } = useContext(InventoryBagContext);
 
-    const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, startScanning } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
@@ -144,14 +143,23 @@ const CameraTest: React.FC = () => {
                 </TouchableOpacity>
             </View>
 
+            
 
-            <View style={cameraStyles(theme).message}>
-                {onTheLimitProductScanned ? (
-                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
-                ) : (
-                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
-                )}
-            </View>
+            {
+                !startScanning ?
+                <View style={cameraStyles(theme).message}>
+                    {onTheLimitProductScanned ? (
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                    ) : (
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                    )}
+                </View>
+                :
+                <View style={cameraStyles(theme).message}>
+                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
+                </View>
+            }
+
 
 
             {
@@ -164,10 +172,10 @@ const CameraTest: React.FC = () => {
                         </View>
                     </TouchableOpacity>
                     :
-                    <View style={cameraStyles(theme).scannerOptions}>
+                    <View style={cameraStyles(theme, typeTheme).scannerOptions}>
                         <TouchableOpacity onPress={handleOpenInputModal}>
-                            <BlurView style={cameraStyles(theme).option} blurType="light" blurAmount={20}>
-                                <View style={cameraStyles(theme).optionContent}>
+                            <BlurView style={cameraStyles(theme, typeTheme).option} blurType="light" blurAmount={20}>
+                                <View style={cameraStyles(theme, typeTheme).optionContent}>
                                     <Icon name="barcode-outline" size={hp("3%")} color={"black"} />
                                 </View>
                             </BlurView>

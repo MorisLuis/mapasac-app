@@ -14,7 +14,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     if (!state) return null;
     const { numberOfItems, productAdded } = useContext(InventoryBagContext);
     const { user } = useContext(AuthContext);
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
 
@@ -65,6 +65,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
             <TouchableOpacity
                 key={index}
                 onPress={onPress}
+                disabled={startScanning}
                 style={[
                     customTabBarStyles(theme, typeTheme).navButton,
                     {
@@ -116,7 +117,11 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 </View>
                 {
                     Platform.OS === "android" ?
-                        <TouchableOpacity style={[customTabBarStyles(theme).navButton, { marginRight: 0 }]} onPress={handleOpenBagInventory}>
+                        <TouchableOpacity
+                            style={[customTabBarStyles(theme).navButton, { marginRight: 0 }]}
+                            onPress={handleOpenBagInventory}
+                            disabled={startScanning}
+                        >
                             <View style={[customTabBarStyles(theme).blurContainer, { backgroundColor: theme.background_color_blur }]}>
                                 <Text
                                     style={[customTabBarStyles(theme).sectionBag, { color: typeTheme === 'dark' ? theme.text_color : theme.text_color_secondary }]}
@@ -152,6 +157,7 @@ const AnimatedButton = ({ isScaled, children }: any) => {
     const scaleAnim = useRef(new Animated.Value(1)).current;
     const { theme } = useTheme();
     const { navigate } = useNavigation<any>();
+    const { startScanning } = useContext(SettingsContext);
 
     useEffect(() => {
         Animated.spring(scaleAnim, {
@@ -161,7 +167,6 @@ const AnimatedButton = ({ isScaled, children }: any) => {
     }, [isScaled]);
 
     const handleOpenBagInventory = () => {
-        //handleCameraAvailable(false)
         navigate('bagInventoryScreen')
     }
 
@@ -172,6 +177,7 @@ const AnimatedButton = ({ isScaled, children }: any) => {
                 { transform: [{ scale: scaleAnim }], marginRight: 0 }
             ]}
             onPress={handleOpenBagInventory}
+            disabled={startScanning}
         >
             {children}
         </AnimatedTouchableOpacity>

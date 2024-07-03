@@ -171,18 +171,18 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         color: theme.text_color
     },
     codebarAvailable: {
-        backgroundColor: theme.color_border_tertiary + '23',
+        backgroundColor: typeTheme === 'light' ? theme.color_border_tertiary + '23' :  theme.color_border_secondary + '23',
         padding: globalStyles(theme).globalPadding.padding / 5,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     textAvailable: {
-        color: theme.color_border_tertiary,
+        color: typeTheme === 'light' ? theme.color_border_tertiary :  theme.color_border_secondary,
         fontSize: globalFont.font_normal
     },
     codebarNotAvailable: {
-        backgroundColor: theme.color_red + '43',
+        backgroundColor: theme.color_red + '13',
         padding: globalStyles(theme).globalPadding.padding / 3,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

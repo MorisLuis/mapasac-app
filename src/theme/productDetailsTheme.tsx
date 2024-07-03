@@ -105,7 +105,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border,
+        borderColor: theme.color_border_tertiary,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -119,7 +119,6 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         borderColor: theme.color_border_tertiary,
         display: "flex"
     },
-
     //Footer
     footer: {
         //position: "absolute",

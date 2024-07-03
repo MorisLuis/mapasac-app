@@ -134,7 +134,7 @@ const ScannerResult = ({
                             onPress={handleSearchByCode}
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, { marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Buscar producto</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Buscar producto</Text>
                         </TouchableOpacity>
 
                         {

@@ -88,6 +88,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     }, [codebarType]);
 
 
+    console.log({selectedOption})
     return (
         <>
             <View style={CodebarUpdateScreenStyles(theme).CodebarUpdateScreen}>
@@ -130,7 +131,11 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                                 onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'updateWithCode', title: 'updateWithCode' })}
                             >
                                 <Icon name="barcode-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
-                                <Text style={{ color: theme.text_color }}>Actualizar código con: {codeBar}</Text>
+                                <Text
+                                    style={[selectedOption.screen === 'updateWithCode' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
+                                >
+                                    Actualizar código con: {codeBar}
+                                </Text>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity
@@ -138,7 +143,11 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                                 onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'CameraModal', title: 'CameraModal' })}
                             >
                                 <Icon name="camera-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
-                                <Text style={{ color: theme.text_color }}>Usar camara para escanear codigo</Text>
+                                <Text
+                                    style={[selectedOption.screen === 'CameraModal' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
+                                >
+                                    Usar camara para escanear codigo
+                                </Text>
                             </TouchableOpacity>
                     }
 
@@ -149,7 +158,11 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                             onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'updateWithRandomCode', title: 'updateWithRandomCode' })}
                         >
                             <Icon name="shuffle-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
-                            <Text style={{ color: theme.text_color }}>Actualizar con código aleatorio</Text>
+                            <Text
+                                style={[selectedOption.screen === 'updateWithRandomCode' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
+                            >
+                                Actualizar con código aleatorio
+                            </Text>
                         </TouchableOpacity>
                     }
 
@@ -159,11 +172,15 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                         onPress={() => handleOptionOfUpdateCodeSelect({ screen: '[CodebarUpdateNavigation] - UpdateCodeBarWithInput', title: 'Actualizar Manualmente' })}
                     >
                         <Icon name="text-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
-                        <Text style={{ color: theme.text_color }}>Escribir manualmente</Text>
+                        <Text
+                            style={[selectedOption.screen === '[CodebarUpdateNavigation] - UpdateCodeBarWithInput' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
+                        >
+                            Escribir manualmente
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
-                {selectedOption && (
+                {selectedOption.screen !== "" && (
                     <TouchableOpacity style={buttonStyles(theme).button} onPress={handleGoToNextStep}>
                         <Text style={buttonStyles(theme).buttonText}>Avanzar</Text>
                     </TouchableOpacity>

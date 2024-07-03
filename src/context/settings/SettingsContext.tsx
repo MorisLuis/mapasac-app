@@ -9,7 +9,7 @@ interface ContextProps {
     handleSetupUser: (value: UserInterface) => void;
     handleCodebarScannedProcces: (value: boolean) => void;
     handleGetCodebarType: (value?: number) => void;
-
+    handleStartScanning: (value: boolean) => void;
     updateBarCode: (value: string) => void;
 
     vibration?: boolean;
@@ -18,6 +18,7 @@ interface ContextProps {
     codebarType?: number;
     codeBar?: string; 
     codeBarStatus?: boolean;
+    startScanning?: boolean
 }
 
 export const SettingsContext = createContext({} as ContextProps)

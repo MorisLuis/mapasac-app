@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import {Theme, globalFont, globalStyles } from "./appTheme";
 
 
-export const SearchProductScreenStyles = (theme: Theme) => StyleSheet.create({
+export const SearchProductScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SearchProductScreen: {
         flex: 1,
         backgroundColor: theme.background_color
@@ -23,16 +23,18 @@ export const SearchProductScreenStyles = (theme: Theme) => StyleSheet.create({
     },
     titleHeader: {
         fontSize: globalFont.font_normal,
-        color: theme.color_red,
+        color: typeTheme === 'light' ? theme.color_red : theme.text_color,
         fontWeight: "bold"
     },
     adviceMessage: {},
     adviceMessage1: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     adviceMessage2: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     }
 })

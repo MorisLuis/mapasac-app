@@ -3,7 +3,7 @@ import { FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWit
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
+import { globalFont, globalStyles } from '../../theme/appTheme';
 import { LoadingScreen } from '../LoadingScreen';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import ModalDecision from '../../components/Modals/ModalDecision';
@@ -85,7 +85,13 @@ export const InventoryBagScreen = () => {
                                 ref={inputRef}
                                 placeholder="Buscar producto..."
                                 placeholderTextColor="gray"
+                                style={{
+                                    fontSize: globalFont.font_normal,
+                                    color: theme.text_color
+                                }}
+
                                 value={searchText}
+                                selectionColor={theme.text_color}
                                 onChangeText={(text) => {
                                     setSearchText(text);
                                     setPage(1);

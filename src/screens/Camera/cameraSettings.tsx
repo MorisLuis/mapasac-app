@@ -22,7 +22,7 @@ export const cameraSettings = ({
     setCameraPermission
 }: cameraSettingsInterface) => {
 
-    const { handleCameraAvailable, cameraAvailable, vibration, updateBarCode } = useContext(SettingsContext);
+    const { handleCameraAvailable, cameraAvailable, vibration, updateBarCode, handleStartScanning } = useContext(SettingsContext);
     const [codeDetected, setCodeDetected] = useState(false)
 
 
@@ -62,9 +62,8 @@ export const cameraSettings = ({
     };
 
     const codeScanned = async ({ codes }: any) => {
-        console.log({codes})
+        handleStartScanning(true)
         handleCameraAvailable(false)
-
         setProductsScanned(undefined)
         if (!cameraAvailable) {
             handleCameraAvailable(true)
@@ -91,7 +90,9 @@ export const cameraSettings = ({
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
                 updateBarCode(codeValue)
+                handleStartScanning(false)
             } catch (error) {
+                handleStartScanning(false)
                 setCodeDetected(false)
                 handleCameraAvailable(true)
                 console.error('Error fetching product:', error);

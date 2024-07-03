@@ -7,7 +7,8 @@ export interface SettingsState {
     user?: UserInterface | null;
     codeBarStatus?: boolean;
     codeBar?: string;
-    codebarType?: number
+    codebarType?: number;
+    startScanning?: boolean;
 }
 
 
@@ -19,6 +20,7 @@ type SettingsActionType =
     | { type: '[Settings] - codeBarStatus', codeBarStatus: boolean }
     | { type: '[Settings] - codeBar', codeBar: string }
     | { type: '[Settings] - codebarType', codebarType: number }
+    | { type: '[Settings] - startScanning', startScanning: boolean }
 
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
 
@@ -64,6 +66,12 @@ export const settingsReducer = (state: SettingsState, action: SettingsActionType
             return {
                 ...state,
                 codebarType: action.codebarType
+            }
+
+        case '[Settings] - startScanning':
+            return {
+                ...state,
+                startScanning: action.startScanning
             }
 
         default:
