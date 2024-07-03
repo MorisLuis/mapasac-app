@@ -4,7 +4,7 @@ import { Theme, globalStyles } from "./appTheme";
 
 
 
-export const InventoryBagScreenStyles = (theme: Theme) => StyleSheet.create({
+export const InventoryBagScreenStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     InventoryBagScreen: {
         backgroundColor: theme.background_color,
         height: "100%",
@@ -37,6 +37,6 @@ export const InventoryBagScreenStyles = (theme: Theme) => StyleSheet.create({
         bottom: 0,
         display: "flex",
         borderTopWidth: 1,
-        borderColor: theme.color_border_tertiary
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_secondary,
     }
 })

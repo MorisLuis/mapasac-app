@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
@@ -9,11 +9,14 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
+    const { addMultipleProducts } = useContext(InventoryBagContext);
+
     const { logOut: logOutDB } = useContext(DbAuthContext);
     const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
@@ -50,6 +53,8 @@ export const ProfileScreen = () => {
     return (
         <View style={ProfileScreenStyles(theme).ProfileScreen}>
             <SafeAreaView style={ProfileScreenStyles(theme).content}>
+
+                <Button onPress={addMultipleProducts} title='add productos'/>
 
                 <Text style={ProfileScreenStyles(theme).title}>Configuación</Text>
 
