@@ -10,15 +10,16 @@ import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 
-
-
 export const SearchCodebarWithInput = () => {
 
+    const { updateBarCode } = useContext(SettingsContext);
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
-    const { updateBarCode } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<any>();
+    const disabled = Barcode.length < 1;
+
+
 
     const handleSearchProductByCodebarInput = async () => {
         updateBarCode('')
@@ -70,8 +71,11 @@ export const SearchCodebarWithInput = () => {
                     placeholderTextColor={theme.color_gray}
                 />
                 <TouchableOpacity
-                    style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall]}
+                    style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
+                    ...(disabled ? [buttonStyles(theme).disabled] : [])
+                    ]}
                     onPress={handleSearchProductByCodebarInput}
+                    disabled={disabled}
                 >
                     <Text style={buttonStyles(theme).buttonText}>Buscar producto</Text>
                 </TouchableOpacity>

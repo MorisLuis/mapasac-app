@@ -10,7 +10,7 @@ import { useTheme } from '../context/ThemeContext';
 
 export const TypeOfMovementScreen = () => {
 
-    const { updateTypeOfMovements } = useContext(AuthContext);
+    const { updateTypeOfMovements, logOut } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
@@ -63,6 +63,7 @@ export const TypeOfMovementScreen = () => {
 
     const handleGetTypeOfMovements = async () => {
         setIsLoading(true);
+        console.log("hello!!")
         const types = await getTypeOfMovements();
 
         setTypeOfMovement(types);
@@ -87,6 +88,7 @@ export const TypeOfMovementScreen = () => {
                 ListFooterComponent={renderLoader}
                 onEndReachedThreshold={0}
             />
+
 
             {(typeSelected || typeSelected == 0) && (
                 <View style={TypeOfMovementScreenStyles(theme, typeTheme).footer}>

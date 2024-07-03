@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "../appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const inputStyles = (theme: Theme) => StyleSheet.create({
+export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
         height: hp("5%"),
         minHeight: 45,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
@@ -23,7 +23,23 @@ export const inputStyles = (theme: Theme) => StyleSheet.create({
     focusedInput: {
         borderWidth: 1,
         borderColor: 'transparent'
-    }
+    },
+
+    //Input password
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: theme.text_color,
+        //borderBottomWidth: 1,
+    },
+    passwordInput: {
+        flex: 1,
+    },
+    passwordToggle: {
+        padding: 10,
+        position: 'absolute',
+        right: 0
+    },
 });
 
 

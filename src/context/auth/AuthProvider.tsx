@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }: any) => {
     const [loggingIn, setLoggingIn] = useState(false);
     const navigation = useNavigation<any>();
     const { status } = useContext(DbAuthContext);
-    const { theme } = useTheme();
 
     const [currentScreen, setCurrentScreen] = React.useState('');
     React.useEffect(() => {
@@ -104,7 +103,7 @@ export const AuthProvider = ({ children }: any) => {
             if (!token) return dispatch({ type: 'notAuthenticated' });
 
             // Hay token
-            const resp = await api.get('/api/auth/renewWeb', {
+            const resp = await api.get('/api/auth/renewLogin', {
                 headers: {
                     'Content-type': 'application/json',
                     'x-token': token || ''
@@ -123,14 +122,16 @@ export const AuthProvider = ({ children }: any) => {
                     user: resp.data.user
                 }
             });
+
         } catch (error) {
-            console.log({ error })
+            console.log({ errorAuthToken: error })
             return dispatch({ type: 'notAuthenticated' });
         }
     }
 
     const signIn = async ({ Id_Usuario, password }: LoginData) => {
         setLoggingIn(true)
+
         try {
             state.status = "checking"
             const { data } = await api.post('/api/auth/login', { Id_Usuario, password });
@@ -180,8 +181,6 @@ export const AuthProvider = ({ children }: any) => {
             console.log({ error: error })
         }
     }
-
-
 
 
     return (

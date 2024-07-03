@@ -8,7 +8,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         height: hp("5%"),
         backgroundColor: theme.color_tertiary,
         borderWidth: 1,
-        borderColor: "transparent",
+        borderColor: theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         width: "100%",
@@ -110,6 +110,11 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
     transparent: {
         backgroundColor: "transparent",
         textDecorationLine: "underline"
+    },
+
+
+    disabled: {
+        opacity: 0.5,
     }
 
 })

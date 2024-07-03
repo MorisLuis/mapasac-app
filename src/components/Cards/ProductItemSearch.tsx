@@ -22,32 +22,32 @@ export const ProductItemSearch = ({
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     return (
-        <TouchableOpacity style={ProductItemSearchStyles(theme).ProductItemSearch} onPress={onClick}>
+        <TouchableOpacity style={ProductItemSearchStyles(theme, typeTheme).ProductItemSearch} onPress={onClick}>
             {/* {
                 product?.imagen ?
                     <Image
-                        style={ProductItemSearchStyles(theme).productInventoryCard__Image}
+                        style={ProductItemSearchStyles(theme, typeTheme).productInventoryCard__Image}
                         source={{
                             uri: product?.imagen[0]?.url
                         }}
                     />
                     :
-                    <View style={ProductItemSearchStyles(theme).notImage}>
-                        <Icon name={'camera'} size={hp("3%")} color={typeTheme} />
-                        <Text style={ProductItemSearchStyles(theme).notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
+                    <View style={ProductItemSearchStyles(theme, typeTheme).notImage}>
+                        <Icon name={'camera'} size={hp("3%")} color={typeTheme, typeTheme} />
+                        <Text style={ProductItemSearchStyles(theme, typeTheme).notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
                     </View>
             } */}
-            <View style={ProductItemSearchStyles(theme).information}>
-                <Text style={ProductItemSearchStyles(theme).description}>{product.Descripcion}</Text>
-                <View style={ProductItemSearchStyles(theme).otherInformation}>
-                    <Text style={ProductItemSearchStyles(theme).otherInformationText}>Codigo: {product.Codigo}</Text>
-                    <Text style={ProductItemSearchStyles(theme).otherInformationText}>-</Text>
-                    <Text style={ProductItemSearchStyles(theme).otherInformationText}>Marca: {product.Marca}</Text>
+            <View style={ProductItemSearchStyles(theme, typeTheme).information}>
+                <Text style={ProductItemSearchStyles(theme, typeTheme).description}>{product.Descripcion}</Text>
+                <View style={ProductItemSearchStyles(theme, typeTheme).otherInformation}>
+                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Codigo: {product.Codigo}</Text>
+                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>-</Text>
+                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Marca: {product.Marca}</Text>
                 </View>
                 {
                     fromModal &&
-                    <View style={[product.CodBar ? ProductItemSearchStyles(theme).codebarAvailable : ProductItemSearchStyles(theme).codebarNotAvailable]}>
-                        <Text style={product.CodBar ? ProductItemSearchStyles(theme).textAvailable : ProductItemSearchStyles(theme).textNotAvailable}>
+                    <View style={[product.CodBar ? ProductItemSearchStyles(theme, typeTheme).codebarAvailable : ProductItemSearchStyles(theme, typeTheme).codebarNotAvailable]}>
+                        <Text style={product.CodBar ? ProductItemSearchStyles(theme, typeTheme).textAvailable : ProductItemSearchStyles(theme, typeTheme).textNotAvailable}>
                             {product.CodBar ? "Tiene código" : "No tiene código"}
                         </Text>
                     </View>

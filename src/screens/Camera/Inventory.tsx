@@ -10,13 +10,16 @@ import { ProductInventoryCardSkeleton } from '../../components/Skeletons/Product
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../theme/InventoryScreenTheme';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 
 export const Inventory = () => {
 
     const { handleCodebarScannedProcces } = useContext(SettingsContext);
+    const { user } = useContext(AuthContext);
+
     const { navigate } = useNavigation<any>();
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);
@@ -26,7 +29,7 @@ export const Inventory = () => {
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
 
-        const products = await getProductsByStock(currentPage)
+        const products = await getProductsByStock(currentPage, user)
         setProductsInInventory(prevProducts =>
             prevProducts ? [...prevProducts, ...products] : products
         );

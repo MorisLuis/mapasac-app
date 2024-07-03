@@ -20,13 +20,13 @@ export const EmptyMessageCard = ({
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     return (
-        <View style={EmptyMessageCardStyles(theme).EmptyMessageCard}>
-            <View style={EmptyMessageCardStyles(theme).iconContainer}>
-                <Icon name={icon} size={24} color={iconColor} style={EmptyMessageCardStyles(theme).icon} />
+        <View style={EmptyMessageCardStyles(theme, typeTheme).EmptyMessageCard}>
+            <View style={EmptyMessageCardStyles(theme, typeTheme).iconContainer}>
+                <Icon name={icon} size={24} color={iconColor} style={EmptyMessageCardStyles(theme, typeTheme).icon} />
             </View>
 
-            <Text style={EmptyMessageCardStyles(theme).title}>{title}</Text>
-            <Text style={EmptyMessageCardStyles(theme).message}>{message}</Text>
+            <Text style={EmptyMessageCardStyles(theme, typeTheme).title}>{title}</Text>
+            <Text style={EmptyMessageCardStyles(theme, typeTheme).message}>{message}</Text>
         </View>
     );
 };

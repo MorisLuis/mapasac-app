@@ -1,20 +1,24 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView, Button } from 'react-native';
-import { useForm } from '../../hooks/useForm';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { LoadingScreen } from '../LoadingScreen';
-import useKeyboardStatus from '../../hooks/useKeyboardStatus';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { globalStyles } from '../../theme/appTheme';
-import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../context/ThemeContext';
+
+import { globalStyles } from '../../theme/appTheme';
 import { loginStyles } from '../../theme/loginTheme';
 import { inputStyles } from '../../theme/UI/inputs';
 import { buttonStyles } from '../../theme/UI/buttons';
 
+import { LoadingScreen } from '../LoadingScreen';
+import useKeyboardStatus from '../../hooks/useKeyboardStatus';
+import { useForm } from '../../hooks/useForm';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { InputPassword } from '../../components/Ui/InputPassword';
+
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
-    const { theme, toggleTheme, typeTheme } = useTheme();
+
+    const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const navigation = useNavigation<any>();
@@ -26,7 +30,7 @@ export const LoginScreen = () => {
     useEffect(() => {
         if (errorMessage.length === 0) return;
         Alert.alert('Login incorrecto', errorMessage, [{ text: 'Ok', onPress: removeError }]);
-    }, [errorMessage]);
+    }, []);
 
     const onLogin = () => {
         Keyboard.dismiss();
@@ -63,9 +67,9 @@ export const LoginScreen = () => {
 
                     <TextInput
                         placeholder="Escribe tu Id Usuario..."
-                        placeholderTextColor={theme.text_color}          
+                        placeholderTextColor={theme.text_color}
                         keyboardType="email-address"
-                        style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottom]}
+                        style={[inputStyles(theme, typeTheme).input, globalStyles(theme).globalMarginBottom]}
                         selectionColor={theme.text_color}
                         onChangeText={(value) => onChange(value, 'Id_Usuario')}
                         value={Id_Usuario}
@@ -74,17 +78,12 @@ export const LoginScreen = () => {
                         autoCorrect={false}
                     />
 
-                    <TextInput
-                        placeholder="Escribe tu contraseña..."
-                        placeholderTextColor={theme.text_color}          
-                        secureTextEntry
-                        style={[inputStyles(theme).input]}
-                        selectionColor={theme.text_color}
-                        onChangeText={(value) => onChange(value, 'password')}
-                        value={password}
-                        onSubmitEditing={onLogin}
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                    <InputPassword
+                        password={password}
+                        onChange={onChange}
+                        onLogin={onLogin}
+                        placeholder={"Escribe tu contraseña..."}
+                        inputName="password"
                     />
 
                     <View style={loginStyles(theme).buttonContainer}>

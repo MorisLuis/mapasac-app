@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-
-import { Button, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useEffect } from 'react';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -16,22 +15,23 @@ interface PersonalInformationInterface {
 }
 
 export const PersonalInformation = ({ route }: PersonalInformationInterface) => {
-
     const { user } = useContext(AuthContext);
     const { user: userFromDB, logOut } = useContext(DbAuthContext);
     const { fromLogIn } = route.params || {};
-    const { theme, toggleTheme, typeTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     useEffect(() => {
         console.log('Personal Information effect');
-    }, [])
+    }, []);
 
     return (
         <View style={PersonalInformationStyles(theme).PersonalInformation}>
             <View style={PersonalInformationStyles(theme).profile}>
                 <View style={PersonalInformationStyles(theme).circle}>
                     <View style={PersonalInformationStyles(theme).circleContent}>
-                        <Text style={PersonalInformationStyles(theme).circleText}>{user?.Nombre?.slice(0, 1) || userFromDB?.Nombre?.slice(0, 1)}</Text>
+                        <Text style={PersonalInformationStyles(theme).circleText}>
+                            {user?.Nombre?.slice(0, 1) || userFromDB?.Nombre?.slice(0, 1)}
+                        </Text>
                     </View>
                 </View>
 
@@ -39,7 +39,6 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
                     <Text style={PersonalInformationStyles(theme).name}>{user?.Nombre || userFromDB?.Nombre}</Text>
                     <Text style={{ color: theme.text_color }}>{user?.Company}</Text>
                 </View>
-
             </View>
 
             <View style={PersonalInformationStyles(theme, typeTheme).information}>
@@ -49,17 +48,21 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
                     <View style={PersonalInformationStyles(theme).separator} />
                 </View>
 
-                <View style={PersonalInformationStyles(theme).data}>
-                    <Text style={PersonalInformationStyles(theme).label}>Usuario:</Text>
-                    <Text style={{ color: theme.text_color }}>{user?.Id_UsuarioOOL || userFromDB?.Id_UsuarioOOL}</Text>
-                    <View style={PersonalInformationStyles(theme).separator} />
-                </View>
+                {(user?.Id_Usuario || userFromDB?.Id_Usuario) && (
+                    <View style={PersonalInformationStyles(theme).data}>
+                        <Text style={PersonalInformationStyles(theme).label}>Usuario:</Text>
+                        <Text style={{ color: theme.text_color }}>{user?.Id_Usuario || userFromDB?.Id_Usuario}</Text>
+                        <View style={PersonalInformationStyles(theme).separator} />
+                    </View>
+                )}
 
-                <View style={PersonalInformationStyles(theme).data}>
-                    <Text style={PersonalInformationStyles(theme).label}>Almacen:</Text>
-                    <Text style={{ color: theme.text_color }}>{user?.Id_Almacen || userFromDB?.Id_Almacen}</Text>
-                    <View style={PersonalInformationStyles(theme).separator} />
-                </View>
+                {(user?.Id_Almacen || userFromDB?.Id_Almacen) && (
+                    <View style={PersonalInformationStyles(theme).data}>
+                        <Text style={PersonalInformationStyles(theme).label}>Almacen:</Text>
+                        <Text style={{ color: theme.text_color }}>{user?.Id_Almacen || userFromDB?.Id_Almacen}</Text>
+                        <View style={PersonalInformationStyles(theme).separator} />
+                    </View>
+                )}
 
                 <View style={PersonalInformationStyles(theme).data}>
                     <Text style={PersonalInformationStyles(theme).label}>Servidor:</Text>
@@ -73,16 +76,15 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
                 </View>
             </View>
 
-            {
-                fromLogIn &&
+            {fromLogIn && (
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                     onPress={logOut}
                 >
-                    <Text style={buttonStyles(theme).buttonText} >Cerrar sesión de base de datos</Text>
+                    <Text style={buttonStyles(theme).buttonText}>Cerrar sesión de base de datos</Text>
                 </TouchableOpacity>
-            }
+            )}
         </View>
-    )
-}
+    );
+};

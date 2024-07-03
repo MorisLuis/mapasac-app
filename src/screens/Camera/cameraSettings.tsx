@@ -62,6 +62,7 @@ export const cameraSettings = ({
     };
 
     const codeScanned = async ({ codes }: any) => {
+        console.log({codes})
         handleCameraAvailable(false)
 
         setProductsScanned(undefined)
@@ -86,7 +87,7 @@ export const cameraSettings = ({
             };
 
             try {
-                const response = await getProductByCodeBar({ codeBar: codeValue });
+                const response = await getProductByCodeBar({ codeBar: codeValue.trim() });
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
                 updateBarCode(codeValue)

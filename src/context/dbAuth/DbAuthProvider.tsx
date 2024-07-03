@@ -1,11 +1,10 @@
-import React, { useReducer, useEffect, useState, useContext } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { dbAuthReducer } from './dbAuthReducer';
 import { DbAuthContext } from './DbAuthContext';
 import UserInterface from '../../interface/user';
-import { AuthContext } from '../auth/AuthContext';
 
 export interface userDB {
     servidor: string;
@@ -62,7 +61,6 @@ export const DbAuthProvider = ({ children }: any) => {
             // No token, no autenticado
             if (!token) return dispatch({ type: 'notAuthenticated' });
 
-    
             // Hay token
             const resp = await api.get('/api/auth/renew', {
                 headers: {
@@ -86,7 +84,7 @@ export const DbAuthProvider = ({ children }: any) => {
             });
 
         } catch (error) {
-            console.log({error})
+            console.log({ errorDBToken: error })
             return dispatch({ type: 'notAuthenticated' });
         }
     }

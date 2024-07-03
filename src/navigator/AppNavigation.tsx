@@ -19,6 +19,7 @@ import ScannerResult from '../screens/Modals/ScannerResult';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
+import { useNavigationState } from '@react-navigation/native';
 
 export type InventoryNavigationStackParamList = {
     //Navigation
@@ -49,6 +50,7 @@ const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
 export const AppNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
+    const currentRoute = useNavigationState(state => state?.routes[state?.index]);
 
     const commonOptions: any = {
         headerBackTitle: 'Atrás',
@@ -137,13 +139,18 @@ export const AppNavigation = () => {
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                if (route?.params?.fromUpdateCodebar) {
-                                    navigation.navigate('BottomNavigation');
-                                } else {
+                                if(navigation.canGoBack()){
                                     navigation.goBack();
+                                } else if ( route?.params?.fromUpdateCodebar) {
+                                    navigation.reset({
+                                        index: 1,
+                                        routes: [{ name: 'BottomNavigation' }],
+                                    })
+                                } else {
+                                    console.log("i can go back!")
+                                    navigation.navigate("BottomNavigation")
                                 }
                                 updateBarCode('');
-                                //handleCameraAvailable(true);
                             }}
                         />
                     )

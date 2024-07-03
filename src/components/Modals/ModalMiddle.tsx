@@ -33,17 +33,17 @@ const ModalMiddle = ({
             {
                 Platform.OS === "android" ?
                     <View style={[StyleSheet.absoluteFill]}>
-                        <View style={ModalMiddlenStyles(theme).ModalMiddle}>
-                            <View style={ModalMiddlenStyles(theme).modalBackground}></View>
-                            <View style={ModalMiddlenStyles(theme).modalContent}>
-                                <TouchableOpacity style={ModalMiddlenStyles(theme).header} onPress={onClose}>
+                        <View style={ModalMiddlenStyles(theme, typeTheme).ModalMiddle}>
+                            <View style={ModalMiddlenStyles(theme, typeTheme).modalBackground}></View>
+                            <View style={ModalMiddlenStyles(theme, typeTheme).modalContent}>
+                                <TouchableOpacity style={ModalMiddlenStyles(theme, typeTheme).header} onPress={onClose}>
                                     {
                                         title ?
-                                            <Text style={ModalMiddlenStyles(theme).title}>{title}</Text> : <Text></Text>
+                                            <Text style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</Text> : <Text></Text>
                                     }
                                     <Icon name="close-outline" size={hp("4%")} color={iconColor} />
                                 </TouchableOpacity>
-                                <View style={ModalMiddlenStyles(theme).modalChildren}>
+                                <View style={ModalMiddlenStyles(theme, typeTheme).modalChildren}>
                                     {children}
                                 </View>
                             </View>
@@ -56,16 +56,16 @@ const ModalMiddle = ({
                         blurType="light"
                         blurAmount={5}
                     >
-                        <View style={ModalMiddlenStyles(theme).ModalMiddle}>
-                            <View style={ModalMiddlenStyles(theme).modalContent}>
-                                <TouchableOpacity style={ModalMiddlenStyles(theme).header} onPress={onClose}>
+                        <View style={ModalMiddlenStyles(theme, typeTheme).ModalMiddle}>
+                            <View style={ModalMiddlenStyles(theme, typeTheme).modalContent}>
+                                <TouchableOpacity style={ModalMiddlenStyles(theme, typeTheme).header} onPress={onClose}>
                                     {
                                         title ?
-                                            <Text style={ModalMiddlenStyles(theme).title}>{title}</Text> : <Text></Text>
+                                            <Text style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</Text> : <Text></Text>
                                     }
                                     <Icon name="close-outline" size={hp("4%")} color={iconColor} />
                                 </TouchableOpacity>
-                                <View style={ModalMiddlenStyles(theme).modalChildren}>
+                                <View style={ModalMiddlenStyles(theme, typeTheme).modalChildren}>
                                     {children}
                                 </View>
                             </View>

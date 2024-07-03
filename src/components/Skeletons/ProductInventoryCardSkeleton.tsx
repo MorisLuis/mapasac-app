@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { useTheme } from '../../context/ThemeContext';
+import { globalStyles } from '../../theme/appTheme';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
@@ -22,7 +23,7 @@ export const ProductInventoryCardSkeleton = () => {
                     height: 70,
                     width: "100%",
                     borderRadius: 10,
-                    marginBottom: 20
+                    marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
                 }}
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}

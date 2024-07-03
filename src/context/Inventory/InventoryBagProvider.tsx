@@ -97,7 +97,13 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const postInventoryDetails = async (products: PorductInterface[]) => {
         try {
-            await api.post(`/api/inventory/inventoryDetails`, products);
+            const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
+            const inventoryDetailsbody = {
+                products,
+                Id_TipoMovInv: tipoMovInvId
+            };
+
+            await api.post(`/api/inventory/inventoryDetails`, inventoryDetailsbody);
             dispatch({ type: '[InventoryBag] - Post Inventory Details', payload: products })
             setInventoryCreated(true)
         } catch (error) {

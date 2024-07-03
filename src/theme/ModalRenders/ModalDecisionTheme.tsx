@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import {Theme, globalFont, globalStyles } from "../appTheme";
 
-export const ModalDecisionStyles = (theme: Theme) => StyleSheet.create({
+export const ModalDecisionStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ModalDecision: {
         flex: 1,
         justifyContent: "flex-end"
@@ -19,7 +19,7 @@ export const ModalDecisionStyles = (theme: Theme) => StyleSheet.create({
         width: "100%",
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: theme.color_border
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color
     },
     modalChildren: {
         padding: globalStyles(theme).globalPadding.padding,

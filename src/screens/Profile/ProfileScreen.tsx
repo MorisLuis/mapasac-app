@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, Button, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
@@ -15,7 +15,7 @@ export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
     const { logOut: logOutDB } = useContext(DbAuthContext);
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
     const iconColor = typeTheme === 'dark' ? "white" : "black"

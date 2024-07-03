@@ -22,7 +22,6 @@ const Toggle = ({
 
     const { theme, typeTheme } = useTheme();
     const [isEnabled, setIsEnabled] = useState(value ? value : false);
-    console.log({typeTheme})
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
+import { Modal, StyleSheet, View, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { ModalDecisionStyles } from '../../theme/ModalRenders/ModalDecisionTheme';
 import { useTheme } from '../../context/ThemeContext';
@@ -16,7 +16,7 @@ const ModalDecision = ({
     message
 }: ModalDecisionInterface) => {
 
-    const { theme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     const handleDismissKeyboard = () => {
         Keyboard.dismiss();
@@ -31,13 +31,13 @@ const ModalDecision = ({
         >
             <BlurView style={StyleSheet.absoluteFill} blurType="dark" blurAmount={1}>
                 <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
-                    <View style={ModalDecisionStyles(theme).ModalDecision}>
+                    <View style={ModalDecisionStyles(theme, typeTheme).ModalDecision}>
                         <KeyboardAvoidingView
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         >
-                            <View style={ModalDecisionStyles(theme).modalContent}>
-                                <Text style={ModalDecisionStyles(theme).message}>{message}</Text>
-                                <View style={ModalDecisionStyles(theme).modalChildren}>
+                            <View style={ModalDecisionStyles(theme, typeTheme).modalContent}>
+                                <Text style={ModalDecisionStyles(theme, typeTheme).message}>{message}</Text>
+                                <View style={ModalDecisionStyles(theme, typeTheme).modalChildren}>
                                     {children}
                                 </View>
                             </View>

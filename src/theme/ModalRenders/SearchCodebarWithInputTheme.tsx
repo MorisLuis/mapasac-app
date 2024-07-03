@@ -44,7 +44,7 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
     },
     optionText: {
         fontSize: globalFont.font_normal,
-        color: typeTheme === 'light' ? theme.text_color_secondary :  theme.text_color
+        color: typeTheme === 'light' ? theme.text_color :  theme.text_color
     },
     optionTextActive: {
         fontSize: globalFont.font_normal,

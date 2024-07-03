@@ -127,7 +127,7 @@ const ScannerResult = ({
                             onPress={handleSearchByCode}
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, { marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}
                         >
-                            <Text style={buttonStyles(theme).buttonTextSecondary}>Buscar producto</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Buscar producto</Text>
                         </TouchableOpacity>
 
                         {
@@ -136,7 +136,7 @@ const ScannerResult = ({
                                 onPress={handleAssignCodeToProduct}
                                 style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
                             >
-                                <Text style={buttonStyles(theme).buttonText}>Asignar a un producto</Text>
+                                <Text style={buttonStyles(theme, typeTheme).buttonText}>Asignar a un producto</Text>
                             </TouchableOpacity>
                         }
                     </View>

@@ -97,11 +97,11 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
 });
 
 
-export const EmptyMessageCardStyles = (theme: Theme) => StyleSheet.create({
+export const EmptyMessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     EmptyMessageCard: {
         backgroundColor: theme.background_color,
         borderWidth: 1,
-        borderColor: theme.color_border,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: 10,
@@ -133,10 +133,10 @@ export const EmptyMessageCardStyles = (theme: Theme) => StyleSheet.create({
     }
 })
 
-export const ProductItemSearchStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ProductItemSearch: {
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-        borderWidth: 0,
+        borderWidth: 1,
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
 
@@ -144,7 +144,8 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme?: string) => Sty
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: theme.background_color_secondary
+        backgroundColor: theme.background_color_secondary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
     },
     productInventoryCard__Image: {
         width: wp("17.5%"),

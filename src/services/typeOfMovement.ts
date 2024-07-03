@@ -15,7 +15,7 @@ const getTypeOfMovements = async () => {
         typeOfMov = getTypeOfMovements.data;
 
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ errorTP: error })
     }
 
     return typeOfMov

@@ -13,6 +13,7 @@ import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
 import { useTheme } from '../../context/ThemeContext';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -25,9 +26,9 @@ export type OnReadCodeData = {
 const CameraTest: React.FC = () => {
 
     const { bag } = useContext(InventoryBagContext);
+
     const { handleCameraAvailable, limitProductsScanned, cameraAvailable } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
-    //const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();

@@ -11,10 +11,6 @@ export const ProductDetailsSkeletonStyles = (theme: Theme) => StyleSheet.create(
     imageContainer: {
         minHeight: 300,
         width: "100%",
-        backgroundColor: theme.background_color_tertiary,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
 
