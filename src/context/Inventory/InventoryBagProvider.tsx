@@ -94,10 +94,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             setKeyNumber(keyNumber + 1)
             const newKey = keyNumber + 1;
     
-            if (vibration) {
-                Vibration.vibrate(100);
-            }
-    
             dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
             setProductAdded(true);
         } catch (error) {
