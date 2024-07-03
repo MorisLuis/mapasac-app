@@ -56,8 +56,6 @@ export const ProfileScreen = () => {
         <View style={ProfileScreenStyles(theme).ProfileScreen}>
             <SafeAreaView style={ProfileScreenStyles(theme).content}>
 
-                <Button onPress={addMultipleProducts} title='add productos'/>
-
                 <Text style={ProfileScreenStyles(theme).title}>Configuación</Text>
 
                 <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - personalInformationScreen')} style={ProfileScreenStyles(theme).section}>

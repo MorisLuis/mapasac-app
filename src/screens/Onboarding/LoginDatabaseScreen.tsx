@@ -44,7 +44,6 @@ export const LoginDatabaseScreen = () => {
             behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
         >
             <View style={loginDBStyles(theme).formContainer}>
-                <Button onPress={toggleTheme} title='change' />
 
                 <View style={loginDBStyles(theme).logoContainer}>
                     <Logo width={keyboardActive ? wp("35%") : wp("60%")} height={"100%"} />
@@ -82,18 +81,6 @@ export const LoginDatabaseScreen = () => {
                     inputName="PasswordOLEI"
                 />
 
-                {/* <TextInput
-                    placeholder="Escribe Contraseña Olei"
-                    placeholderTextColor={theme.text_color}
-                    secureTextEntry
-                    style={[inputStyles(theme, typeTheme).input]}
-                    selectionColor={theme.text_color}
-                    onChangeText={(value) => onChange(value, 'PasswordOLEI')}
-                    value={PasswordOLEI}
-                    onSubmitEditing={onLogin}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                /> */}
                 <View style={loginDBStyles(theme).buttonContainerDB}>
                     <TouchableOpacity
                         activeOpacity={0.8}
