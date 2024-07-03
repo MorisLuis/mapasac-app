@@ -18,7 +18,6 @@ const updateCostos = async ({
     Id_Marca,
     body = {}
 }: updateCostosInterface) => {
-
     
     try {
         await api.put(`/api/costos?codigo=${codigo}&Id_Marca=${Id_Marca}`, body);
@@ -27,7 +26,7 @@ const updateCostos = async ({
             text1: 'Se actualizó el codigo de barras!'
         })
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ errorupdateCostos: error })
     }
 }
 

@@ -23,13 +23,16 @@ export const CameraModalStyles = (theme: Theme ) =>  StyleSheet.create({
     header_title: {
         fontSize: globalFont.font_med,
         fontWeight: "bold",
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        color: theme.text_color
     },
     header_message: {
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     header_message_scanner: {
-        fontSize: globalFont.font_sm
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
     },
     codebarFound: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
@@ -39,7 +42,8 @@ export const CameraModalStyles = (theme: Theme ) =>  StyleSheet.create({
     },
     textcodebarFound: {
         fontWeight: 'bold',
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     warningMessage: {
         paddingBottom: globalStyles(theme).globalPadding.padding,

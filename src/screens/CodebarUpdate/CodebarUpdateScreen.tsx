@@ -88,7 +88,6 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     }, [codebarType]);
 
 
-    console.log({selectedOption})
     return (
         <>
             <View style={CodebarUpdateScreenStyles(theme).CodebarUpdateScreen}>

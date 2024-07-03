@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { View, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import {  globalStyles } from '../../../theme/appTheme';
+import { globalStyles } from '../../../theme/appTheme';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { updateCostos } from '../../../services/costos';
@@ -23,12 +23,13 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
     const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
     const [productExistent, setProductExistent] = useState(false);
     const [codebarTest, setCodebarTest] = useState(true);
+
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
@@ -69,7 +70,7 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
         setCodeIsScanning(false);
     }
 
-    const hanldeUpdateCodebarWithCodeRandom = async () => {
+    const hanldeUpdateCodebar = async () => {
         if (!productDetails) return;
 
         await updateCostos({
@@ -93,6 +94,7 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
             {
                 !productExistent ?
                     <>
+
                         <View style={CameraModalStyles(theme).header}>
                             <Text style={CameraModalStyles(theme).header_title}>Escanea el codigo</Text>
                             {
@@ -131,8 +133,11 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                                     (codeBar && !codeIsScanning && !codebarTest) ?
                                         <View>
                                             <Text style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
-                                            <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                                                <Text style={buttonStyles(theme).buttonTextSecondary}>Intentar de nuevo</Text>
+                                            <TouchableOpacity
+                                                style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                                                onPress={handleTryAgain}
+                                            >
+                                                <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</Text>
                                             </TouchableOpacity>
                                         </View>
                                         :
@@ -141,9 +146,19 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                                                 <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</Text>
                                             </View>
 
-                                            <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={hanldeUpdateCodebarWithCodeRandom}>
-                                                <Text style={buttonStyles(theme).buttonTextSecondary}>Asignar codigo de barras</Text>
-                                            </TouchableOpacity>
+                                            {
+                                                codeBar && codeBar?.length < 20 ?
+                                                <TouchableOpacity
+                                                    style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                                                    onPress={hanldeUpdateCodebar}
+                                                >
+                                                    <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
+                                                </TouchableOpacity>
+                                                :
+                                                <View>
+                                                    <Text>El codigo de barras es maximo de 20 caracteres</Text>
+                                                </View>
+                                            }
                                         </>
                         }
                     </>
@@ -157,7 +172,7 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                         </View>
 
                         <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                            <Text style={buttonStyles(theme).buttonTextSecondary}>Intentar de nuevo</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</Text>
                         </TouchableOpacity>
                     </>
             }
