@@ -1,39 +1,41 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { ProductDetailsSkeletonStyles } from '../../theme/UI/skeletons';
+import { useTheme } from '../../context/ThemeContext';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 export const ProductDetailsSkeleton = () => {
-    const shimmerColors = ["#f0f0f0", "#eaeaea", "#f0f0f0"]
-
+    const { theme } = useTheme();
+    const shimmerColors = [theme.color_primary, theme.color_secondary, theme.color_primary]
+    
     return (
-        <View style={styles.ProductDetailsPage}>
+        <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>
             <ShimmerPlaceHolder
-                style={styles.imageContainer}
+                style={ProductDetailsSkeletonStyles(theme).imageContainer}
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
             >
             </ShimmerPlaceHolder>
 
-            <View style={styles.header}>
+            <View style={ProductDetailsSkeletonStyles(theme).header}>
                 <ShimmerPlaceHolder
-                    style={styles.description}
+                    style={ProductDetailsSkeletonStyles(theme).description}
                     shimmerColors={shimmerColors}
                     LinearGradient={LinearGradient}
                 >
                 </ShimmerPlaceHolder>
                 <View>
                     <ShimmerPlaceHolder
-                        style={styles.price}
+                        style={ProductDetailsSkeletonStyles(theme).price}
                         shimmerColors={shimmerColors}
                         LinearGradient={LinearGradient}
                     >
                     </ShimmerPlaceHolder>
                     <ShimmerPlaceHolder
-                        style={styles.priceSecond}
+                        style={ProductDetailsSkeletonStyles(theme).priceSecond}
                         shimmerColors={shimmerColors}
                         LinearGradient={LinearGradient}
                     >
@@ -42,7 +44,7 @@ export const ProductDetailsSkeleton = () => {
             </View>
 
             <ShimmerPlaceHolder
-                        style={styles.information}
+                        style={ProductDetailsSkeletonStyles(theme).information}
                         shimmerColors={shimmerColors}
                         LinearGradient={LinearGradient}
                     >
@@ -54,42 +56,3 @@ export const ProductDetailsSkeleton = () => {
 
 
 }
-
-export const styles = StyleSheet.create({
-    ProductDetailsPage: {
-        padding: globalStyles.globalPadding.padding,
-        height: "100%",
-        backgroundColor: colores.background_color
-    },
-    imageContainer: {
-        minHeight: 300,
-        width: "100%",
-        backgroundColor: colores.background_color_tertiary,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-
-    header: {
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-    },
-    description: {
-        height: globalFont.font_med,
-        fontWeight: "bold",
-        marginBottom: 5
-    },
-    price: {
-        marginBottom: 5,
-        width: 50,
-        height: 12
-    },
-    priceSecond: {
-        width: 100
-    },
-    information: {
-        borderRadius: 5,
-        width: "100%",
-        height: 200
-    }
-})

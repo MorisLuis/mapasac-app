@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '../../context/ThemeContext';
+import { EmptyMessageCardStyles } from '../../theme/UI/cardsStyles';
 
 interface EmptyMessageCardInterface {
     title: string;
@@ -15,49 +16,17 @@ export const EmptyMessageCard = ({
     icon = 'close-outline'
 }: EmptyMessageCardInterface) => {
 
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
     return (
-        <View style={styles.EmptyMessageCard}>
-            <View style={styles.iconContainer}>
-                <Icon name={icon} size={24} color="black" style={styles.icon} />
+        <View style={EmptyMessageCardStyles(theme, typeTheme).EmptyMessageCard}>
+            <View style={EmptyMessageCardStyles(theme, typeTheme).iconContainer}>
+                <Icon name={icon} size={24} color={iconColor} style={EmptyMessageCardStyles(theme, typeTheme).icon} />
             </View>
 
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.message}>{message}</Text>
+            <Text style={EmptyMessageCardStyles(theme, typeTheme).title}>{title}</Text>
+            <Text style={EmptyMessageCardStyles(theme, typeTheme).message}>{message}</Text>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    EmptyMessageCard: {
-        backgroundColor: colores.background_color,
-        borderWidth: 1,
-        borderColor: colores.color_border,
-        width: "100%",
-        padding: globalStyles.globalPadding.padding,
-        //minHeight: "40%",
-        borderRadius: 10,
-        display: "flex",
-        justifyContent: "center",
-    },
-    title: {
-        fontWeight: "bold",
-        fontSize: globalFont.font_med,
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
-    },
-    iconContainer: {
-        backgroundColor: colores.background_color_secondary,
-        borderWidth: 1,
-        borderColor: colores.color_border,
-        width: 40, 
-        height: 40,
-        borderRadius: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-    icon: {
-        textAlign: "center"
-    },
-    message: {
-    }
-});

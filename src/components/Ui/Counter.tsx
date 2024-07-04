@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { counterStyles } from '../../theme/UI/counterStyles';
+import { useTheme } from '../../context/ThemeContext';
 
 interface CounterInterface {
     counter: number,
@@ -14,12 +15,14 @@ export const Counter = ({
     setCounter
 }: CounterInterface) => {
 
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
     const addProduct = () => {
         setCounter(counter + 1)
     }
 
     const handleInputChange = (value: string) => {
-        // Validación para asegurar que el valor sea un número positivo
         const numericValue = parseInt(value) || 0;
         setCounter(numericValue);
     }
@@ -30,42 +33,21 @@ export const Counter = ({
     }
 
     return (
-        <View style={styles.counter}>
-            <Icon name="remove-outline" size={hp("3.5%")} color="black" onPress={subtractProduct} style={styles.counterButton}/>
+        <View style={counterStyles(theme).counter}>
+
+            <TouchableOpacity onPress={subtractProduct} style={counterStyles(theme).counterButton}>
+                <Icon name="remove-outline" size={hp("3.5%")} color={iconColor} />
+            </TouchableOpacity>
+
             <TextInput
-                style={styles.input}
+                style={counterStyles(theme).input}
                 value={counter.toString()}
                 onChangeText={handleInputChange}
                 keyboardType="numeric"
             />
-            <Icon name="add-outline" size={hp("3.5%")} color="black" onPress={addProduct} style={styles.counterButton}/>
+            <TouchableOpacity onPress={addProduct} style={counterStyles(theme).counterButton}>
+                <Icon name="add-outline" size={hp("3.5%")} color={iconColor} />
+            </TouchableOpacity>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-
-    counter: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-    input: {
-        textAlign: 'center',
-        marginHorizontal: globalStyles.globalMarginBottom.marginBottom / 2,
-        backgroundColor: colores.background_color_secondary,
-        paddingHorizontal: wp("7.5%"),
-        paddingVertical: 10,
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        borderWidth: 1,
-        borderColor: colores.color_border,
-        fontSize: globalFont.font_normal
-    },
-    counterButton: {
-        backgroundColor: colores.background_color_secondary,
-        padding: globalStyles.globalPadding.padding / 5,
-        borderRadius: globalStyles.borderRadius.borderRadius
-    }
-});

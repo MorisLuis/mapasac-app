@@ -1,21 +1,21 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont, globalStyles } from "./appTheme";
+import { Theme, globalFont, globalStyles } from "./appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const loginStyles = StyleSheet.create({
+export const loginStyles = (theme: Theme, typeTheme?:string) => StyleSheet.create({
     LoginScreen: {
         flex: 1,
-        backgroundColor: colores.background_color
+        backgroundColor: theme.background_color
     },
     LoginDBScreen: {
         flex: 1,
-        backgroundColor: colores.background_color_secondary,
+        backgroundColor: theme.background_color_secondary,
     },
     formContainer: {
         flex: 1,
-        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         justifyContent: 'center',
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     imageContainer: {
         display: "flex",
@@ -24,7 +24,7 @@ export const loginStyles = StyleSheet.create({
         width: "100%",
         minHeight: hp("10%"),
         maxHeight: hp("20%"),
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     logo: {
         objectFit: "scale-down",
@@ -41,35 +41,35 @@ export const loginStyles = StyleSheet.create({
         height: hp("15%")
     },
     title: {
-        color: 'black',
+        color: theme.text_color,
         fontSize: globalFont.font_big,
-        fontWeight: 'bold',
-        //marginTop: globalStyles.globalMarginBottom.marginBottom,    
+        fontWeight: 'bold'
     },
     textLogin: {
         fontSize: globalFont.font_normal,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,    
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom, 
+        color: theme.text_color   
     },
     titleDB: {
-        color: 'black',
+        color: theme.text_color,
         fontSize: globalFont.font_med,
         fontWeight: 'bold',
-        marginTop:  globalStyles.globalMarginBottom.marginBottom,
+        marginTop:  globalStyles(theme).globalMarginBottom.marginBottom,
         textTransform: "uppercase",
         width: hp("80%")
     },
 
     buttonContainer: {
         alignItems: 'center',
-        marginTop: globalStyles.globalMarginBottom.marginBottom
+        marginTop: globalStyles(theme).globalMarginBottom.marginBottom
     },
     buttonContainerDB: {
         alignItems: 'center',
-        marginTop:  globalStyles.globalMarginBottom.marginBottom
+        marginTop:  globalStyles(theme).globalMarginBottom.marginBottom
     },
     footer: {
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        paddingVertical: globalStyles.globalPadding.padding,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        paddingVertical: globalStyles(theme).globalPadding.padding,
         display: "flex",
         flexDirection: 'row',
         justifyContent:'flex-end',
@@ -77,23 +77,24 @@ export const loginStyles = StyleSheet.create({
     },
     footerText: {
         marginRight: 5,
-        fontSize: globalFont.font_sm
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
     }
 });
 
 
-export const loginDBStyles = StyleSheet.create({
+export const loginDBStyles = (theme: Theme) => StyleSheet.create({
     LoginScreen: {
         flex: 1,
-        backgroundColor: colores.background_color
+        backgroundColor: theme.background_color
     },
     LoginDBScreen: {
         flex: 1,
-        backgroundColor: colores.background_color_secondary,
+        backgroundColor: theme.background_color,
     },
     formContainer: {
         flex: 1,
-        paddingHorizontal: globalStyles.globalPadding.padding,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         justifyContent: 'center',
         height: "100%",
         marginBottom: hp("7.5%")
@@ -104,7 +105,6 @@ export const loginDBStyles = StyleSheet.create({
         display: "flex",
         alignContent: 'center',
         alignItems: 'center',
-        //backgroundColor: "red"
     },
     imageContainer: {
         display: "flex",
@@ -112,8 +112,7 @@ export const loginDBStyles = StyleSheet.create({
         justifyContent: 'center',
         width: "100%",
         height: hp("20%"),
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        //backgroundColor: "blue"
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
     },
     imageContainerActive: {
         display: "flex",
@@ -121,18 +120,15 @@ export const loginDBStyles = StyleSheet.create({
         justifyContent: 'center',
         width: "100%",
         height: hp("15%"),
-        //backgroundColor: "blue"
     },
     headers: {
         height: hp("20%"),
         width: "100%",
-        //backgroundColor: "yellow"
     },
     headersActive: {
         height: hp("15%"),
         width: "100%",
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom,
-        //backgroundColor: "yellow"
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
     },
     logo: {
         maxWidth: "40%",
@@ -150,14 +146,14 @@ export const loginDBStyles = StyleSheet.create({
         height: "80%"
     },
     titleDB: {
-        color: 'black',
+        color: theme.text_color,
         fontSize:  hp("3%"),
         fontWeight: 'bold',
         textTransform: "uppercase",
         width: "85%"
     },
     titleDBActive: {
-        color: 'black',
+        color: theme.text_color,
         fontSize:  hp("2.5%"),
         fontWeight: 'bold',
         marginTop: 20,  
@@ -165,11 +161,11 @@ export const loginDBStyles = StyleSheet.create({
         width: "95%"
     },
     textDB: {
-        color: 'black',
+        color: theme.text_color,
         fontSize: hp("2%"),
     },
     textDBActive: {
-        color: 'black',
+        color: theme.text_color,
         fontSize: hp("2%"),
         width: "100%"
     },

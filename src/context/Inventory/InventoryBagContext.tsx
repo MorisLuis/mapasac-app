@@ -12,7 +12,9 @@ interface ContextProps {
     bag: PorductInterfaceBag[];
     inventoryCreated: boolean;
     numberOfItems: number;
-    inventoryData: inventoryDataInterface
+    inventoryData: inventoryDataInterface;
+    addMultipleProducts: any
+    productAdded: boolean;
 }
 
 export const InventoryBagContext = createContext({} as ContextProps)

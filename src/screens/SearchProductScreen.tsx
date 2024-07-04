@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native'
+import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
-import { colores, globalFont, globalStyles } from '../theme/appTheme';
 import { CustomBackButton } from '../components/Ui/CustomHeader';
 import ModalBottom from '../components/Modals/ModalBottom';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../context/auth/AuthContext';
 import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { SearchProductScreenStyles } from '../theme/SearchProductScreenTheme';
+import { useTheme } from '../context/ThemeContext';
 
 
 type SearchProductScreenInterface = {
@@ -27,8 +27,8 @@ type SearchProductScreenInterface = {
 export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
 
     const { modal } = route?.params ?? {};
-    const { codeBar } = useContext(AuthContext);
-    const { handleCameraAvailable } = useContext(SettingsContext);
+    const { codeBar } = useContext(SettingsContext,);
+    const { theme, typeTheme} = useTheme();
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
@@ -53,12 +53,15 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
         if (modal) {
             navigation.goBack()
+            navigation.goBack()
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+        } else {
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
         }
-        navigation.navigate('inventoryDetailsScreen', { selectedProduct });
     };
 
     const closeModalHandler = React.useCallback(() => {
-        handleCameraAvailable(true)
+        //handleCameraAvailable(true)
     }, []);
 
 
@@ -72,21 +75,30 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             headerLargeTitle: modal ? false : true,
             headerTitle: "Productos",
             headerTitleAlign: 'center',
+            headerTitleStyle: {
+                color: theme.text_color
+            },
+            headerStyle: {
+                backgroundColor: theme.background_color
+            },
             headerLeft: () =>
                 <CustomBackButton
                     navigation={navigation}
                     onClick={() => {
-                        handleCameraAvailable(true)
+                        //handleCameraAvailable(true)
                     }}
                 />,
             headerSearchBarOptions: {
+                placeholderTextColor: theme.color_green,
                 placeholder: "Buscar producto por nombre...",
+                tintColor: theme.text_color,
+                textColor: theme.text_color,
                 onChangeText: (event: any) => {
                     getSearchData(event.nativeEvent.text);
                 },
             }
         });
-    }, [navigation]);
+    }, [navigation, theme]);
 
     // Este efecto se ejecutará cuando la pantalla reciba el foco
     useFocusEffect(
@@ -100,8 +112,8 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     return (productsInInventory && productsInInventory.length > 0) ? (
 
         <>
-            <SafeAreaView style={styles.SearchProductScreen}>
-                <View style={styles.content}>
+            <SafeAreaView style={SearchProductScreenStyles(theme).SearchProductScreen}>
+                <View style={SearchProductScreenStyles(theme).content}>
                     <FlatList
                         data={productsInInventory}
                         renderItem={renderItem}
@@ -120,25 +132,25 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 blurType="dark"
                 blurAmount={0}
             >
-                <View style={styles.searchAdvice}>
-                    <View style={styles.adviceHeader}>
-                        <Icon name="bulb" size={hp("3%")} color="red" />
-                        <Text style={styles.titleHeader}>Asignar producto</Text>
+                <View style={SearchProductScreenStyles(theme, typeTheme).searchAdvice}>
+                    <View style={SearchProductScreenStyles(theme, typeTheme).adviceHeader}>
+                        <Icon name="bulb" size={hp("3%")} color={typeTheme === 'light' ? "red" : "white"} />
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).titleHeader}>Asignar producto</Text>
                     </View>
-                    <View style={styles.adviceMessage}>
-                        <Text style={styles.adviceMessage1}>
+                    <View style={SearchProductScreenStyles(theme, typeTheme).adviceMessage}>
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage1}>
                             Selecciona un producto al cual podrás asignarle el código de barras: <Text style={{ fontWeight: 'bold' }}>{codeBar}</Text>
                         </Text>
 
-                        <Text style={styles.adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
+                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
                     </View>
                 </View>
             </ModalBottom>
         </>
     )
         :
-        <SafeAreaView style={styles.SearchProductScreen}>
-            <View style={styles.content}>
+        <SafeAreaView style={SearchProductScreenStyles(theme).SearchProductScreen}>
+            <View style={SearchProductScreenStyles(theme).content}>
                 {Array.from({ length: 10 }).map((_, index) => (
                     <ProductInventoryCardSkeleton key={index} />
                 ))}
@@ -147,38 +159,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 }
 
 
-const styles = StyleSheet.create({
-    SearchProductScreen: {
-        flex: 1,
-        backgroundColor: colores.background_color
-    },
-    content: {
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        marginTop: globalStyles.globalPadding.padding,
-    },
-    searchAdvice: {
 
-    },
-    adviceHeader: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-        marginBottom: globalStyles.globalMarginBottom.marginBottom
-    },
-    titleHeader: {
-        fontSize: globalFont.font_normal,
-        color: colores.color_red,
-        fontWeight: "bold"
-    },
-    adviceMessage: {},
-    adviceMessage1: {
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        fontSize: globalFont.font_normal
-    },
-    adviceMessage2: {
-        marginBottom: globalStyles.globalMarginBottom.marginBottom,
-        fontSize: globalFont.font_normal
-    }
-})
+
+
 

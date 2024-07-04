@@ -1,20 +1,30 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { globalStyles } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
+import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
+import { useTheme } from '../../context/ThemeContext';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import DeviceInfo from 'react-native-device-info';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
-    const { logOut: logOutDB } = useContext(DbAuthContext);
+    const { addMultipleProducts } = useContext(InventoryBagContext);
+    const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
+    const { logOut: logOutDB } = useContext(DbAuthContext);
+    const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
+
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
 
     useEffect(() => {
         console.log('Personal Information effect');
@@ -31,90 +41,67 @@ export const ProfileScreen = () => {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
-                { text: "Aceptar", onPress: () => {
-                    logOutDB()
-                    logOut()
-                } }
+                {
+                    text: "Aceptar", onPress: async () => {
+                        await logOut();
+                        await logOutDB();
+                    }
+                }
             ],
             { cancelable: false } // Puedes ponerlo en true para permitir cerrar el diálogo tocando fuera de él
         );
     }
 
     return (
-        <View style={styles.ProfileScreen}>
-            <SafeAreaView style={styles.content}>
-                <Text style={styles.title}>Configuación</Text>
+        <View style={ProfileScreenStyles(theme).ProfileScreen}>
+            <SafeAreaView style={ProfileScreenStyles(theme).content}>
 
-                <TouchableOpacity onPress={() => navigate('personalInformationScreen')} style={styles.section}>
-                    <Text>Información Personal</Text>
-                    <Icon name="person-outline" size={22} color="black" />
+                <Text style={ProfileScreenStyles(theme).title}>Configuación</Text>
+
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - personalInformationScreen')} style={ProfileScreenStyles(theme).section}>
+                    <Text style={{ color: theme.text_color }}>Información Personal</Text>
+                    <Icon name="person-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('settingsSceen')} style={[styles.section, globalStyles.globalMarginBottom]}>
-                    <Text>Configuración General</Text>
-                    <Icon name="settings-outline" size={22} color="black" />
+                <View style={ProfileScreenStyles(theme).divider}></View>
+
+
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - settingsSceen')} style={[ProfileScreenStyles(theme).section]}>
+                    <Text style={{ color: theme.text_color }}>Configuración General</Text>
+                    <Icon name="settings-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
-                <Text style={styles.title}>Legal</Text>
+                <View style={ProfileScreenStyles(theme).divider}></View>
 
-                <TouchableOpacity onPress={() => navigate('privacyScreen')} style={[styles.section]}>
-                    <Text>Aviso de privacidad</Text>
-                    <Icon name="book-outline" size={22} color="black" />
+
+                <Text style={ProfileScreenStyles(theme).title}>Legal</Text>
+
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - privacyScreen')} style={[ProfileScreenStyles(theme).section]}>
+                    <Text style={{ color: theme.text_color }}>Aviso de privacidad</Text>
+                    <Icon name="book-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigate('termsOfUseScreen')} style={[styles.section, globalStyles.globalMarginBottom, { marginBottom: 40 }]}>
-                    <Text>Terminos de uso</Text>
-                    <Icon name="book-outline" size={22} color="black" />
+                <View style={ProfileScreenStyles(theme).divider}></View>
+
+                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - termsOfUseScreen')} style={[ProfileScreenStyles(theme).section]}>
+                    <Text style={{ color: theme.text_color }}>Terminos de uso</Text>
+                    <Icon name="book-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={logOut} style={[buttonStyles.button, globalStyles.globalMarginBottom]}>
-                    <Text style={buttonStyles.buttonText}>Cerrar sesión</Text>
+                <View style={ProfileScreenStyles(theme).divider}></View>
+
+                <TouchableOpacity onPress={logOut} style={[buttonStyles(theme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
+                    <Text style={buttonStyles(theme).buttonText}>Cerrar sesión</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={logOutDataBase} style={[styles.logOutDB, { marginBottom: globalStyles.globalMarginBottomSmall.marginBottom }]}>
-                    <Text style={styles.logOutDBText}>Cambiar base de datos</Text>
+                <TouchableOpacity onPress={logOutDataBase} style={[ProfileScreenStyles(theme).logOutDB, { marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}>
+                    <Text style={ProfileScreenStyles(theme).logOutDBText}>Cambiar base de datos</Text>
                 </TouchableOpacity>
 
                 <View>
-                    <Text>Version: v56.6</Text>
+                    <Text style={{ color: theme.text_color }}>Version: {version}</Text>
                 </View>
             </SafeAreaView>
         </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-    ProfileScreen: {
-        flex: 1,
-        padding: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color
-    },
-    content: {
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
-    },
-    section: {
-        paddingVertical: 10,
-        borderWidth: 1,
-        borderColor: "transparent",
-        borderBottomColor: 'black',
-        display: "flex",
-        flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderBottomWidth: 0.7
-    },
-    title: {
-        fontSize: globalFont.font_med,
-        fontWeight: "bold",
-        paddingTop: globalStyles.globalPadding.padding
-    },
-    logOutDB: {
-
-    },
-    logOutDBText: {
-        textDecorationLine: "underline"
-    }
-})

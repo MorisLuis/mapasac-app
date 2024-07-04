@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalStyles } from '../../theme/appTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 // Not using in this moment
 interface InventoryFooterInterface {
@@ -16,13 +17,21 @@ export const InventoryFooter = ({
 }: InventoryFooterInterface) => {
 
     const { navigate } = useNavigation<any>();
+    const { theme } = useTheme();
 
     return (
-        <View style={styles.InventoryFooter}>
+        <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: "space-between",
+            //backgroundColor: "white",
+            height: "10%",
+            padding: globalStyles(theme).globalPadding.padding,
+        }}>
             {
                 buttonBackAvailable ?
-                    <TouchableOpacity style={[buttonStyles.button_line]} onPress={() => navigate('InventoryBag')}>
-                        <Text style={buttonStyles.button_line_text}>Atrás</Text>
+                    <TouchableOpacity style={[buttonStyles(theme).button_line]} onPress={() => navigate('InventoryBag')}>
+                        <Text style={buttonStyles(theme).button_line_text}>Atrás</Text>
                     </TouchableOpacity>
                     :
                     <View></View>
@@ -30,31 +39,10 @@ export const InventoryFooter = ({
 
             {
                 buttonNextAvailable &&
-                <TouchableOpacity style={[buttonStyles.button, buttonStyles.white]} onPress={() => navigate('TypeMovement')}>
-                    <Text>Siguiente</Text>
+                <TouchableOpacity style={[buttonStyles(theme).button, buttonStyles(theme).white]} onPress={() => navigate('TypeMovement')}>
+                    <Text style={{ color: theme.text_color }}>Siguiente</Text>
                 </TouchableOpacity>
             }
         </View>
     )
-}
-
-
-const styles = StyleSheet.create({
-
-    InventoryFooter: {
-        //backgroundColor: ,
-        //flex: 1,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: "space-between",
-        backgroundColor: "white",
-        height: "10%",
-        padding: globalStyles.globalPadding.padding,
-    },
-    button_next: {
-
-    },
-    button_back: {
-
-    }
-})
+};

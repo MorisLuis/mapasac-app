@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { colores, globalFont, globalStyles } from '../../theme/appTheme';
+import { Button, Text, TouchableOpacity, View } from 'react-native'
+import { globalStyles } from '../../theme/appTheme';
 import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { Selector } from '../../components/Ui/Selector';
@@ -10,22 +10,28 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { Counter } from '../../components/Ui/Counter';
 import { buttonStyles } from '../../theme/UI/buttons';
 import Toast from 'react-native-toast-message';
+import { SettingsScreenStyles } from '../../theme/SettingsScreenTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 export const SettingsScreen = () => {
+
+    const { updateTypeOfMovements } = useContext(AuthContext);
+    const { theme, toggleTheme, typeTheme } = useTheme();
 
     const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned } = useContext(SettingsContext);
     const [typeSelected, setTypeSelected] = useState<number>()
 
     const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
-    const { user, updateTypeOfMovements } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const [editingLimitProducts, setEditingLimitProducts] = useState(false);
     const [limitProductValue, setLimitProductValue] = useState(limitProductsScanned)
 
 
-    const onChangetTypeOfMovement = () => {
-        if (typeSelected === undefined || typeSelected === null) return
-        updateTypeOfMovements(typeSelected)
+    const onChangetTypeOfMovement = (value: number) => {
+        if (value === undefined || value === null) return
+        setTypeSelected(value)
+        updateTypeOfMovements(value)
     }
 
     const onChangeLimitProducts = () => {
@@ -33,7 +39,7 @@ export const SettingsScreen = () => {
         setEditingLimitProducts(!editingLimitProducts);
         Toast.show({
             type: 'tomatoToast',
-            text1: 'Se cambio el limite de productos!',
+            text1: 'Se cambio el limite de productos!'
         })
     }
 
@@ -51,7 +57,7 @@ export const SettingsScreen = () => {
 
     return (
         <>
-            <View style={styles.SettingsScreen}>
+            <View style={SettingsScreenStyles(theme).SettingsScreen}>
                 {
                     visible ?
                         <>
@@ -65,13 +71,11 @@ export const SettingsScreen = () => {
                                         typeOfMovement.find(item => item.Id_TipoMovInv === typeSelected)?.Descripcion.trim() as string :
                                         'Selecciona una opción...'
                                 }
-
                                 //Methods
-                                onDone={onChangetTypeOfMovement}
-                                onValueChange={(value) => setTypeSelected(value)}
+                                onValueChange={(value) => onChangetTypeOfMovement(value)}
                             />
 
-                            <View style={styles.divider}></View>
+                            <View style={SettingsScreenStyles(theme).divider}></View>
 
                             <Toggle
                                 label='Vibracion en escaneo'
@@ -81,19 +85,19 @@ export const SettingsScreen = () => {
                                 onChange={(value: boolean) => handleVibrationState(value)}
                             />
 
-                            <View style={styles.divider}></View>
+                            <View style={SettingsScreenStyles(theme).divider}></View>
 
-                            <View style={styles.section}>
-                                <View style={styles.sectionContent}>
+                            <View style={SettingsScreenStyles(theme).section}>
+                                <View style={SettingsScreenStyles(theme).sectionContent}>
                                     <View>
-                                        <Text style={styles.label}>Limite de productos a escanear</Text>
+                                        <Text style={SettingsScreenStyles(theme).label}>Limite de productos a escanear</Text>
                                         {
                                             !editingLimitProducts &&
-                                            <Text>{limitProductValue}</Text>
+                                            <Text style={{ color: theme.text_color }}>{limitProductValue}</Text>
                                         }
                                     </View>
                                     <TouchableOpacity onPress={() => setEditingLimitProducts(!editingLimitProducts)}>
-                                        <Text style={styles.edit}>
+                                        <Text style={SettingsScreenStyles(theme).edit}>
                                             {!editingLimitProducts ? "Editar" : "Cancelar"}
                                         </Text>
                                     </TouchableOpacity>
@@ -101,22 +105,32 @@ export const SettingsScreen = () => {
                                 {
                                     editingLimitProducts &&
                                     <>
-                                        <View style={styles.sectionClosed}>
+                                        <View style={SettingsScreenStyles(theme).sectionClosed}>
                                             <Counter counter={limitProductValue} setCounter={setLimitProductValue} />
                                         </View>
-                                        <TouchableOpacity style={[buttonStyles.button_small, { marginBottom: globalStyles.globalMarginBottom.marginBottom }]} onPress={onChangeLimitProducts}>
-                                            <Text style={buttonStyles.buttonTextSecondary}>Guardar</Text>
+                                        <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={onChangeLimitProducts}>
+                                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Guardar</Text>
                                         </TouchableOpacity>
                                     </>
                                 }
                             </View>
 
-                            <View style={styles.divider}></View>
+                            <View style={SettingsScreenStyles(theme).divider}></View>
 
+                            <Toggle
+                                label='Apariencia'
+                                message="Personaliza el aspecto de Olei en tu dispositivo."
+                                extraStyles={{}}
+                                value={typeTheme === 'light' ? true : false}
+                                onChange={(value: boolean) => toggleTheme()}
+                            />
+
+                            <View style={SettingsScreenStyles(theme).divider}></View>
                         </>
+
                         :
                         <View>
-                            <Text>
+                            <Text style={{ color: theme.text_color }}>
                                 Cargando...
                             </Text>
                         </View>
@@ -126,38 +140,3 @@ export const SettingsScreen = () => {
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    SettingsScreen: {
-        flex: 1,
-        padding: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color,
-        paddingVertical: globalStyles.globalPadding.padding * 2
-    },
-    section: {
-        display: "flex",
-        ///backgroundColor: 'red'
-        //paddingTop: globalStyles.globalPadding.padding * 1.5
-    },
-    sectionContent: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    sectionClosed: {
-        paddingTop: globalStyles.globalPadding.padding
-    },
-    label: {
-        fontSize: globalFont.font_normal,
-        fontWeight: "bold"
-    },
-    divider: {
-        borderBottomWidth: 0.75,
-        marginVertical: globalStyles.globalMarginBottom.marginBottom * 1.5,
-        color: colores.color_border_secondary
-    },
-    edit: {
-        fontWeight: 'bold',
-        textDecorationLine: "underline"
-    }
-})

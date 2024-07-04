@@ -1,13 +1,14 @@
-
 import React from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import { selectStyles } from '../../theme/UI/inputs';
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { globalFont, globalStyles } from '../../theme/appTheme';
+import { useTheme } from '../../context/ThemeContext';
+
 
 interface SelectorInterface {
     items: any[];
-    onDone: () => void;
+    onDone?: () => void;
     onValueChange: (value: number) => void;
     value: string;
     label: string
@@ -21,13 +22,23 @@ export const Selector = ({
     label
 }: SelectorInterface) => {
 
+    const { theme } = useTheme();
+
     const handleValueChange = (value: string) => {
         if (value == null) return;
-        onValueChange(parseInt(value))
+        onValueChange(parseInt(value));
     }
+
     return (
         <View>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={{
+                fontWeight: 'bold',
+                fontSize: globalFont.font_normal,
+                marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+                color: theme.text_color
+            }}
+            >{label}</Text>
+
             <RNPickerSelect
                 onValueChange={handleValueChange}
                 placeholder={{
@@ -36,22 +47,13 @@ export const Selector = ({
                 }}
                 items={items}
                 onDonePress={onDone}
-                style={selectStyles}
             >
-                <View style={selectStyles.inputIOS}>
-                    <Text>
+                <View style={selectStyles(theme).input}>
+                    <Text style={{ color: theme.text_color }}>
                         {value}
                     </Text>
                 </View>
             </RNPickerSelect>
         </View>
     )
-}
-
-const styles = StyleSheet.create({
-    label:{
-        fontWeight: 'bold',
-        fontSize: globalFont.font_normal,
-        marginBottom: globalStyles.globalMarginBottomSmall.marginBottom
-    }
-})
+};

@@ -1,52 +1,100 @@
 import { StyleSheet } from "react-native";
-import { colores, globalFont, globalStyles } from "../appTheme";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Theme, globalFont, globalStyles } from "../appTheme";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export const inputStyles = StyleSheet.create({
+export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
         height: hp("5%"),
+        minHeight: 45,
         borderWidth: 1,
-        borderColor: colores.color_border,
-        borderRadius: globalStyles.borderRadius.borderRadius,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color_secondary
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        backgroundColor: theme.background_color_secondary,
+        gap: 10,
+        color: theme.text_color
+    },
+
+    inputicon: {
+        marginLeft: 20
     },
 
     focusedInput: {
         borderWidth: 1,
-        borderColor: 'transparent',
+        borderColor: 'transparent'
+    },
+
+    //Input password
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: theme.text_color,
+        //borderBottomWidth: 1,
+    },
+    passwordInput: {
+        flex: 1,
+    },
+    passwordToggle: {
+        padding: 10,
+        position: 'absolute',
+        right: 0
+    },
+});
+
+
+export const selectStyles = (theme: Theme) => StyleSheet.create({
+    input: {
+        fontSize: globalFont.font_normal,
+        paddingVertical: globalStyles(theme).globalPadding.padding,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        borderWidth: 1,
+        borderColor: theme.color_border,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        color: theme.text_color,
+        paddingRight: globalStyles(theme).globalPadding.padding,
+        backgroundColor: theme.background_color,
     }
 });
 
 
-export const selectStyles = StyleSheet.create({
-    inputIOS: {
+export const toggleStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
+    Toggle: {
+        display: "flex",
+        alignItems: 'center',
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    toggleText: {
+
+    },
+    togglelabel: {
         fontSize: globalFont.font_normal,
-        paddingVertical: globalStyles.globalPadding.padding,
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        borderWidth: 1,
-        borderColor: colores.color_border_secondary,
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        color: colores.text_color,
-        paddingRight: globalStyles.globalPadding.padding,
-        backgroundColor: colores.background_color,
+        fontWeight: "bold",
+        color: theme.text_color
     },
-    inputAndroid: {
-        fontSize: globalFont.font_normal,
-        paddingHorizontal: globalStyles.globalPadding.padding,
-        paddingVertical: globalStyles.globalPadding.padding,
-        borderWidth: 0.5,
-        borderColor: colores.color_border_secondary,
-        borderRadius: globalStyles.borderRadius.borderRadius,
-        color: 'black',
-        paddingRight: globalStyles.globalPadding.padding,
-        backgroundColor: 'white',
+    togglemessage: {
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
     },
-    modalViewMiddle: {
-        backgroundColor: colores.background_color_tertiary,
+
+    //Switch styles
+    SwitchTrackColorTrue: {
+        backgroundColor: typeTheme === 'light' ? theme.color_green : theme.color_white
     },
-    modalViewBottom: {
-        backgroundColor: colores.background_color,
-    }
+    SwitchTrackColorFalse: {
+        backgroundColor: typeTheme === 'light' ? theme.color_gray : theme.color_gray
+    },
+    SwitchThumbColorAndroidEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.color_white : theme.color_green
+    },
+    SwitchThumbColorAndroidNotEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.background_color_tertiary : theme.background_color_tertiary
+    },
+    SwitchThumbColorIOSdEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.color_white : theme.color_green
+    },
+    SwitchThumbColorIOSdNotEnabled: {
+        backgroundColor: typeTheme === 'light' ? theme.background_color_tertiary : theme.background_color_tertiary
+    },
 })

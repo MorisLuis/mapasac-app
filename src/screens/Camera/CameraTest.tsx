@@ -1,0 +1,189 @@
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { BlurView } from '@react-native-community/blur';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import PorductInterface from '../../interface/product';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+
+import { cameraStyles } from '../../theme/CameraCustumTheme';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { CameraPermission } from '../../components/screens/CameraPermission';
+import { Camera } from 'react-native-camera-kit';
+import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
+import { useTheme } from '../../context/ThemeContext';
+
+type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
+
+export type OnReadCodeData = {
+    nativeEvent: {
+        codeStringValue: string;
+    };
+};
+
+const CameraTest: React.FC = () => {
+
+    const { bag } = useContext(InventoryBagContext);
+
+    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, startScanning } = useContext(SettingsContext);
+    const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
+
+    const { navigate } = useNavigation<any>();
+    const isFocused = useIsFocused();
+    const onTheLimitProductScanned = limitProductsScanned < bag?.length;
+
+    const [lightOn, setLightOn] = useState(false);
+    const [cameraKey, setCameraKey] = useState(0);
+    const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
+    const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
+
+    // Other functions.
+    const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
+
+        if (response.length === 1) {
+            navigate('[Modal] - scannerResultScreen', { product: response[0] });
+        } else if (response.length > 0) {
+            navigate('[Modal] - productsFindByCodeBarModal', { products: response });
+        } else {
+            navigate('[Modal] - scannerResultScreen', { product: response[0] });
+        }
+
+        setProductsScanned(response);
+    }
+
+    const handleOpenInputModal = () => {
+        handleCameraAvailable(false);
+        navigate('[Modal] - findByCodebarInputModal');
+    }
+
+    const {
+        requestCameraPermission,
+        handleRequestPermission,
+        codeScanned,
+        setCodeDetected
+    } = cameraSettings({
+        handleOpenProductsFoundByCodebar,
+        setProductsScanned,
+        productsScanned,
+        setCameraPermission
+    })
+
+    useEffect(() => {
+        requestCameraPermission();
+        return () => {
+            handleCameraAvailable(false);
+        };
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (Platform.OS === 'android') {
+                setCameraKey(prevKey => prevKey + 1);
+            }
+            handleCameraAvailable(true);
+
+            return () => {
+                setCodeDetected(false)
+                handleCameraAvailable(false);
+            };
+        }, [])
+    );
+
+    useEffect(() => {
+        if (!isFocused) {
+            handleCameraAvailable(false);
+        }
+    }, [isFocused]);
+
+    if (cameraPermission === null) {
+        return <CameraPermission requestPermissions={handleRequestPermission} message="Cargando..." />
+    }
+
+    if (cameraPermission !== 'granted') {
+        return (
+            <CameraPermission
+                requestPermissions={handleRequestPermission}
+                message="Permisos de cámara no concedidos."
+                availableAuthorization={true}
+            />
+        )
+    }
+
+    return (
+        <View style={cameraStyles(theme).cameraScreen}>
+
+            {
+                onTheLimitProductScanned &&
+                <BlurView
+                    style={cameraStyles(theme).blurOverlay}
+                    blurType="dark"
+                    blurAmount={5}
+                />
+            }
+
+            <View style={cameraStyles(theme).backgroundBlurTop}></View>
+            <View style={cameraStyles(theme).backgroundBlurBottom}></View>
+
+            <Camera
+                key={cameraKey}
+                scanBarcode={true}
+                onReadCode={(event: OnReadCodeData) => {
+                    if (!cameraAvailable) return;
+                    codeScanned({ codes: event.nativeEvent.codeStringValue })
+                }}
+                style={cameraStyles(theme).camera}
+                torchMode={lightOn ? "on" : "off"}
+            />
+
+            <View style={cameraStyles(theme).flash}>
+                <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
+                    <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="black" />
+                </TouchableOpacity>
+            </View>
+
+            
+
+            {
+                !startScanning ?
+                <View style={cameraStyles(theme).message}>
+                    {onTheLimitProductScanned ? (
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                    ) : (
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                    )}
+                </View>
+                :
+                <View style={cameraStyles(theme).message}>
+                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
+                </View>
+            }
+
+
+
+            {
+                Platform.OS === 'android' ?
+                    <TouchableOpacity style={cameraStyles(theme).scannerOptions} onPress={handleOpenInputModal}>
+                        <View style={cameraStyles(theme).optionAndroid}>
+                            <View style={cameraStyles(theme).optionContent}>
+                                <Icon name="barcode-outline" size={hp("3%")} color={iconColor} />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    :
+                    <View style={cameraStyles(theme, typeTheme).scannerOptions}>
+                        <TouchableOpacity onPress={handleOpenInputModal}>
+                            <BlurView style={cameraStyles(theme, typeTheme).option} blurType="light" blurAmount={20}>
+                                <View style={cameraStyles(theme, typeTheme).optionContent}>
+                                    <Icon name="barcode-outline" size={hp("3%")} color={"black"} />
+                                </View>
+                            </BlurView>
+                        </TouchableOpacity>
+                    </View>
+            }
+        </View>
+    );
+};
+
+export default CameraTest;

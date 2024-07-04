@@ -55,6 +55,8 @@ export default interface UserInterface {
     PasswordOLEI: number | null;
     Id_ClienteDBCLIENTES: number | null;
 
+    Id_Usuario: String | null;
+
     Id_TipoMovInv?: {
         Id_TipoMovInv: number,
         Accion: number,

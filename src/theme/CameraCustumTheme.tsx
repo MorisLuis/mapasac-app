@@ -1,40 +1,71 @@
 
 import { StyleSheet } from "react-native";
-import { colores, globalFont, globalStyles } from "./appTheme";
+import { Theme,  globalFont, globalStyles } from "./appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const cameraStyles = StyleSheet.create({
+export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     cameraScreen: {
         flex: 1,
-        backgroundColor: colores.background_color,
+        backgroundColor: theme.color_black,
+        position: "relative"
     },
     camera: {
         flex: 1,
-        height: "100%",
-        width: "100%",
+        height: hp("100%"),
+        width: wp('100%'),
         position: "absolute",
         top: 0
     },
+    backgroundBlurTop: {
+        backgroundColor: theme.background_color_blur,
+        width: wp('100%'),
+        height: hp("32.5%"),
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 2
+    },
+    backgroundBlurBottom: {
+        backgroundColor: theme.background_color_blur,
+        width: wp('100%'),
+        height: hp("32.5%"),
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        zIndex: 2
+    },
     scannerOptions: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         position: "absolute",
         bottom: hp("10%"),
-        right: wp("7.5%"),
-        padding: globalStyles.globalPadding.padding / 2,
+        right: wp("6%"),
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        zIndex: 2,
+        width: wp("20%"),
+        height: wp("20%"),
+        
     },
     option: {
+        flex: 1,
         borderRadius: 30,
         padding: 5,
+        backgroundColor: theme.background_color_blur,
+    },
+    optionAndroid: {
+        flex: 1,
+        borderRadius: 30,
+        padding: 5,
+        backgroundColor: theme.background_color,
     },
     optionContent: {
-        display: "flex",
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        padding: globalStyles.globalPadding.padding / 2,
+        padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: "black"
+        borderColor: typeTheme === 'light' ?  theme.color_black : theme.color_black
     },
     message: {
         position: "absolute",
@@ -44,10 +75,10 @@ export const cameraStyles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         textAlign: 'center',
-        zIndex: 2
+        zIndex: 2,
     },
     textmessage: {
-        color: colores.text_color_secondary,
+        color: typeTheme === 'light' ? theme.text_color_secondary : theme.text_color,
         display: "flex",
         alignItems: "center",
         textAlign: 'center',
@@ -63,7 +94,8 @@ export const cameraStyles = StyleSheet.create({
     flash: {
         position: "absolute",
         right: "7.5%",
-        top: 100
+        top: 100,
+        zIndex: 2
     },
     blurOverlay: {
         position: 'absolute',

@@ -8,8 +8,9 @@ import { AuthContext } from './AuthContext';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-import {useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { DbAuthContext } from '../dbAuth/DbAuthContext';
+import { useTheme } from '../ThemeContext';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -56,41 +57,37 @@ export const AuthProvider = ({ children }: any) => {
         return unsubscribe;
     }, [navigation]);
 
-
     useEffect(() => {
+        const statusLogin = state.status;
+        const statusLoginDatabase = status;
 
-        if (status == 'dbChecking' && state.status == 'checking') {
-            return
+        if (statusLoginDatabase == 'dbChecking' && statusLogin == 'checking') {
+            return;
         }
 
-        if(status == 'dbAuthenticated' && state.status != 'authenticated'){
+        if (statusLoginDatabase == 'dbNot-authenticated' && statusLogin == 'not-authenticated') {
+
+            if(currentScreen === 'LoginDatabaseScreen') return;
+            
+            return navigation.reset({
+                index: 0,
+                routes: [{ name: 'LoginDatabaseScreen' }],
+            })
+        }
+
+        if (statusLoginDatabase == 'dbAuthenticated' && statusLogin == 'not-authenticated') {
+
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
             })
             return;
-        } 
-
-        if (status == "dbNot-authenticated") {
-            if(currentScreen == 'LoginDatabaseScreen') return
-            return navigation.reset({
-                index: 0,
-                routes: [{ name: 'LoginDatabaseScreen' }],
-            })
-        };
-
-        if (state.status === 'authenticated') {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'typeOfMovementScreen' }],
-            });
-        } else {
-            if (currentScreen === 'LoginPage') return;
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'LoginPage' }],
-            });
         }
+
+        if (statusLogin === 'authenticated') {
+            navigation.navigate('typeOfMovementScreen')
+        }
+
     }, [state.status, status])
 
     useEffect(() => {
@@ -106,7 +103,7 @@ export const AuthProvider = ({ children }: any) => {
             if (!token) return dispatch({ type: 'notAuthenticated' });
 
             // Hay token
-            const resp = await api.get('/api/auth/renewWeb', {
+            const resp = await api.get('/api/auth/renewLogin', {
                 headers: {
                     'Content-type': 'application/json',
                     'x-token': token || ''
@@ -125,13 +122,16 @@ export const AuthProvider = ({ children }: any) => {
                     user: resp.data.user
                 }
             });
+
         } catch (error) {
-            console.log({ error })
+            console.log({ errorAuthToken: error })
+            return dispatch({ type: 'notAuthenticated' });
         }
     }
 
     const signIn = async ({ Id_Usuario, password }: LoginData) => {
         setLoggingIn(true)
+
         try {
             state.status = "checking"
             const { data } = await api.post('/api/auth/login', { Id_Usuario, password });
@@ -147,11 +147,12 @@ export const AuthProvider = ({ children }: any) => {
             await AsyncStorage.setItem('token', data.token);
 
         } catch (error: any) {
+            console.log({error})
             setLoggingIn(false)
 
             dispatch({
                 type: 'addError',
-                payload: (error.response ? error.response.data.error : error.message )|| 'Información incorrecta'
+                payload: (error.response ? error.response.data.error : error.message) || 'Información incorrecta'
             })
         }
     };
@@ -166,37 +167,21 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'removeError' });
     };
 
+
     const updateTypeOfMovements = async (value: number) => {
         try {
             const getTypeOfMovements = await api.put(`/api/typeofmovements`, { Id_TipoMovInv: value });
             const typeOfMov = getTypeOfMovements.data;
-            dispatch({ type: 'typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv } });
+            dispatch({ type: '[Settings] - typeOfMovement', user: { ...state.user as UserInterface, Id_TipoMovInv: typeOfMov.user.Id_TipoMovInv} });
             Toast.show({
                 type: 'tomatoToast',
-                text1: 'Se cambio el tipo de movimiento!',
+                text1: 'Se cambio el tipo de movimiento!'
             })
         } catch (error: any) {
             console.log({ error: error })
         }
     }
 
-    const updateBarCode = async (value: string) => {
-        try {
-            handleCodebarScannedProcces(true)
-            dispatch({ type: 'codeBar', codeBar: value });
-        } catch (error: any) {
-            handleCodebarScannedProcces(false)
-            console.log({ error: error })
-        }
-    }
-
-    const handleCodebarScannedProcces = (value: boolean) => {
-        dispatch({ type: 'codeBarStatus', codeBarStatus: value });
-    }
-
-    const handleSetupUser = (user: UserInterface) => {
-        dispatch({ type: 'userSetup', user });
-    }
 
     return (
         <AuthContext.Provider value={{
@@ -204,11 +189,8 @@ export const AuthProvider = ({ children }: any) => {
             signIn,
             loggingIn,
             logOut,
-            removeError,
-            updateBarCode,
-            updateTypeOfMovements,
-            handleCodebarScannedProcces,
-            handleSetupUser
+            removeError,  
+            updateTypeOfMovements          
         }}>
             {children}
         </AuthContext.Provider>

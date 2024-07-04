@@ -4,6 +4,8 @@ import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
 import { AuthContext } from '../auth/AuthContext';
+import { SettingsContext } from '../settings/SettingsContext';
+import { Vibration } from 'react-native';
 
 export interface inventoryDataInterface {
     result: undefined,
@@ -35,16 +37,74 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
-    const [inventoryCreated, setInventoryCreated] = useState(false);
-    const [keyNumber, setKeyNumber] = useState(0)
+    const { vibration } = useContext(SettingsContext);
     const { user } = useContext(AuthContext);
+
+    const [inventoryCreated, setInventoryCreated] = useState(false);
+    const [productAdded, setProductAdded] = useState(false);
+    const [keyNumber, setKeyNumber] = useState(0);
+
+    const productTemplate: PorductInterface = {
+        Descripcion: "Producto ejemplo",
+        Id_Familia: 1,
+        Codigo: "ABC123",
+        Familia: "Familia Ejemplo",
+        CodigoPrecio: "12345",
+        Precio: 100,
+        CodigoExsitencia: "67890",
+        Existencia: 50,
+        Id_Almacen: 1,
+        Marca: "Marca Ejemplo",
+        Id_Marca: 1,
+        Id_ListaPrecios: 1,
+        Piezas: 10,
+        Impto: 0.16,
+        imagen: [{ url: "http://example.com/image.jpg", id: 1 }],
+        CodBar: "1234567890123"
+    };
+
+
+    const addMultipleProducts = () => {
+        let currentKeyNumber = keyNumber;
+    
+        const productsToAdd: PorductInterfaceBag[] = [];
+        for (let i = 0; i < 30; i++) {
+            const newKey = currentKeyNumber + 1;
+            const newProduct = { ...productTemplate, key: newKey };
+            productsToAdd.push(newProduct);
+            currentKeyNumber++;
+        }
+    
+        if (vibration) {
+            Vibration.vibrate(100);
+        }
+    
+        productsToAdd.forEach(product => {
+            dispatch({ type: '[InventoryBag] - Add Product', payload: product });
+        });
+    
+        setKeyNumber(currentKeyNumber);
+    };
+    
+    
 
     const addProduct = (product: PorductInterface) => {
 
-        setKeyNumber(keyNumber + 1)
-        const newKey = keyNumber + 1
+        try {
+            setKeyNumber(keyNumber + 1)
+            const newKey = keyNumber + 1;
+    
+            dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
+            setProductAdded(true);
+        } catch (error) {
+            console.log({error})
+            setProductAdded(false);
+        } finally {
+            timeoutRef.current = setTimeout(() => {
+                setProductAdded(false);
+            }, 1000);
+        }
 
-        dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
     }
 
     const removeProduct = (product: PorductInterfaceBag) => {
@@ -58,7 +118,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const postInventory = async (descripcion?: string) => {
-
         try {
             const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
             const inventorybody = {
@@ -90,7 +149,13 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const postInventoryDetails = async (products: PorductInterface[]) => {
         try {
-            await api.post(`/api/inventory/inventoryDetails`, products);
+            const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
+            const inventoryDetailsbody = {
+                products,
+                Id_TipoMovInv: tipoMovInvId
+            };
+
+            await api.post(`/api/inventory/inventoryDetails`, inventoryDetailsbody);
             dispatch({ type: '[InventoryBag] - Post Inventory Details', payload: products })
             setInventoryCreated(true)
         } catch (error) {
@@ -118,7 +183,9 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             postInventory,
             postInventoryDetails,
             inventoryCreated,
-            cleanBag
+            productAdded,
+            cleanBag,
+            addMultipleProducts
         }}
         >
             {children}

@@ -3,34 +3,46 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ScannerNavigation } from './ScannerNavigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProfileNavigation } from './ProfileNavigation';
-import { colores, globalFont } from '../theme/appTheme';
+import { globalFont } from '../theme/appTheme';
 import { View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export type BottomNavigationStackParamList = {
-    Scanner: undefined;
-    Profile: undefined;
+    "BottomNavigation - Scanner": undefined;
+    "BottomNavigation - Profile": undefined;
 };
+
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { useTheme } from '../context/ThemeContext';
 
 export const BottomNavigation = () => {
 
     const BottomTabIOS = createBottomTabNavigator<BottomNavigationStackParamList>();
+    const { theme } = useTheme();
+
+    const getTabBarVisibility = (route: any) => {
+        const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+        if (routeName === '[ProfileNavigation] - profile') {
+            return 'flex';
+        }
+        return routeName.startsWith('[ProfileNavigation]') ? 'none' : 'flex';
+    };
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: colores.background_color }}>
+            <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: theme.background_color }}>
                 <BottomTabIOS.Navigator
                     screenOptions={({ route, navigation }) => ({
                         tabBarIcon: ({ focused }) => {
                             let iconName: string = '';
-                            let iconColor: string = focused ? colores.color_yellow : colores.text_color_light;
+                            let iconColor: string = focused ? theme.color_yellow : theme.text_color_light;
 
                             switch (route.name) {
-                                case 'Scanner':
+                                case 'BottomNavigation - Scanner':
                                     iconName = focused ? 'scan' : 'scan-outline';
                                     break;
-                                case 'Profile':
+                                case 'BottomNavigation - Profile':
                                     iconName = focused ? 'person' : 'person-outline';
                                     break;
                             }
@@ -42,13 +54,14 @@ export const BottomNavigation = () => {
                             )
                         },
                         tabBarStyle: {
-                            backgroundColor: colores.background_color,
-                            borderTopColor: colores.color_border_secondary,
+                            display: getTabBarVisibility(route),
+                            backgroundColor: theme.background_color,
+                            borderTopColor: theme.color_border_tertiary,
                             height: hp("7.5%"),
                             paddingBottom: hp("1%"),
                         },
                         tabBarLabelStyle: {
-                            color: route.name === navigation.getState().routes[navigation.getState().index].name ? colores.color_yellow : colores.text_color_light,
+                            color: route.name === navigation.getState().routes[navigation.getState().index].name ? theme.color_yellow : theme.text_color_light,
                             paddingBottom: hp("0.5%"),
                             fontSize: globalFont.font_sm
                         },
@@ -57,8 +70,16 @@ export const BottomNavigation = () => {
                         }
                     })}
                 >
-                    <BottomTabIOS.Screen name="Scanner" options={{ headerShown: false, title: "Escaner" }} component={ScannerNavigation} />
-                    <BottomTabIOS.Screen name="Profile" options={{ headerShown: false, title: 'Perfil' }} component={ProfileNavigation} />
+                    <BottomTabIOS.Screen
+                        name="BottomNavigation - Scanner"
+                        options={{ headerShown: false, title: "Escaner" }}
+                        component={ScannerNavigation}
+                    />
+                    <BottomTabIOS.Screen
+                        name="BottomNavigation - Profile"
+                        options={{ headerShown: false, title: 'Perfil' }}
+                        component={ProfileNavigation}
+                    />
                 </BottomTabIOS.Navigator>
             </SafeAreaView>
         </SafeAreaProvider>
