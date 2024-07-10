@@ -71,6 +71,14 @@ export const InventoryBagScreen = () => {
     ), [removeProduct]);
 
 
+    useEffect(() => {
+        const updateFilteredBag = () => {
+            setFilteredBag(bag)
+        }
+        updateFilteredBag()
+    }, [bag])
+
+
     return !createInventaryLoading ? (
         <>
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
@@ -158,7 +166,7 @@ export const InventoryBagScreen = () => {
                     style={[buttonStyles(theme).button, buttonStyles(theme).white]}
                     onPress={() => setOpenModalDecision(false)}
                 >
-                    <Text style={buttonStyles(theme).buttonTextSecondary}>Cancelar</Text>
+                    <Text style={buttonStyles(theme).buttonTextTertiary}>Cancelar</Text>
                 </TouchableOpacity>
             </ModalDecision>
         </>

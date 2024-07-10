@@ -43,49 +43,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const [inventoryCreated, setInventoryCreated] = useState(false);
     const [productAdded, setProductAdded] = useState(false);
     const [keyNumber, setKeyNumber] = useState(0);
-
-    const productTemplate: PorductInterface = {
-        Descripcion: "Producto ejemplo",
-        Id_Familia: 1,
-        Codigo: "ABC123",
-        Familia: "Familia Ejemplo",
-        CodigoPrecio: "12345",
-        Precio: 100,
-        CodigoExsitencia: "67890",
-        Existencia: 50,
-        Id_Almacen: 1,
-        Marca: "Marca Ejemplo",
-        Id_Marca: 1,
-        Id_ListaPrecios: 1,
-        Piezas: 10,
-        Impto: 0.16,
-        imagen: [{ url: "http://example.com/image.jpg", id: 1 }],
-        CodBar: "1234567890123"
-    };
-
-
-    const addMultipleProducts = () => {
-        let currentKeyNumber = keyNumber;
-    
-        const productsToAdd: PorductInterfaceBag[] = [];
-        for (let i = 0; i < 30; i++) {
-            const newKey = currentKeyNumber + 1;
-            const newProduct = { ...productTemplate, key: newKey };
-            productsToAdd.push(newProduct);
-            currentKeyNumber++;
-        }
-    
-        if (vibration) {
-            Vibration.vibrate(100);
-        }
-    
-        productsToAdd.forEach(product => {
-            dispatch({ type: '[InventoryBag] - Add Product', payload: product });
-        });
-    
-        setKeyNumber(currentKeyNumber);
-    };
-    
     
 
     const addProduct = (product: PorductInterface) => {
@@ -184,8 +141,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             postInventoryDetails,
             inventoryCreated,
             productAdded,
-            cleanBag,
-            addMultipleProducts
+            cleanBag
         }}
         >
             {children}

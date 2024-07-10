@@ -13,7 +13,6 @@ interface ContextProps {
     inventoryCreated: boolean;
     numberOfItems: number;
     inventoryData: inventoryDataInterface;
-    addMultipleProducts: any
     productAdded: boolean;
 }
 

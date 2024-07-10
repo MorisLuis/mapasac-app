@@ -33,14 +33,13 @@ const ScannerResult = ({
 
     const { product } = route?.params || {}
     const { theme, typeTheme } = useTheme();
-    const [loadingAddProduct, setLoadingAddProduct] = useState(false)
-
     const { addProduct } = useContext(InventoryBagContext)
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
-
     const navigation = useNavigation<any>();
 
+    const [loadingAddProduct, setLoadingAddProduct] = useState(false)
     const [counterProduct, setCounterProduct] = useState<number>(0);
+    const buttondisabled = loadingAddProduct || counterProduct < 1;
 
     const handleAddToInventory = () => {
         setLoadingAddProduct(true)
@@ -72,7 +71,6 @@ const ScannerResult = ({
         }, 500);
     }
 
-    /* navigation.navigate('BottomNavigation') */
     return (
         <ModalBottom
             visible={true}
@@ -114,13 +112,11 @@ const ScannerResult = ({
                         </View>
 
                         <TouchableOpacity
-                            //style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }]}
-
                             style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' },
-                            ...(loadingAddProduct ? [buttonStyles(theme).disabled] : [])
+                            ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
                             ]}
                             onPress={handleAddToInventory}
-                            disabled={loadingAddProduct}
+                            disabled={buttondisabled}
                         >
                             <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
                             <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</Text>

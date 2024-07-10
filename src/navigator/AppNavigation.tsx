@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
-import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { TESTAPP } from "@env";

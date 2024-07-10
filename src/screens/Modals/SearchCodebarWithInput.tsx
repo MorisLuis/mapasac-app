@@ -93,6 +93,7 @@ export const SearchCodebarWithInput = () => {
                             Codigo de producto
                         </Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity
                         style={[modalRenderstyles(theme).option, typeOfSearch === 'barcode' && modalRenderstyles(theme).optionActive]}
                         onPress={() => setTypeOfSearch('barcode')}

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, Button, Platform, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
@@ -9,14 +9,12 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import DeviceInfo from 'react-native-device-info';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
-    const { addMultipleProducts } = useContext(InventoryBagContext);
     const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
     const { logOut: logOutDB } = useContext(DbAuthContext);
@@ -83,12 +81,12 @@ export const ProfileScreen = () => {
 
                 <View style={ProfileScreenStyles(theme).divider}></View>
 
-                <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - termsOfUseScreen')} style={[ProfileScreenStyles(theme).section]}>
+                {/* <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - termsOfUseScreen')} style={[ProfileScreenStyles(theme).section]}>
                     <Text style={{ color: theme.text_color }}>Terminos de uso</Text>
                     <Icon name="book-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
-                <View style={ProfileScreenStyles(theme).divider}></View>
+                <View style={ProfileScreenStyles(theme).divider}></View> */}
 
                 <TouchableOpacity onPress={logOut} style={[buttonStyles(theme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
                     <Text style={buttonStyles(theme).buttonText}>Cerrar sesión</Text>
