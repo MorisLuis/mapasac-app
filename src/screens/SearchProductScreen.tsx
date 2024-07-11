@@ -19,6 +19,7 @@ type SearchProductScreenInterface = {
     route?: {
         params: {
             modal: boolean;
+            isModal?: boolean,
         };
     };
 };
@@ -26,9 +27,10 @@ type SearchProductScreenInterface = {
 
 export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
 
-    const { modal } = route?.params ?? {};
+    const { modal, isModal } = route?.params ?? {};
     const { codeBar } = useContext(SettingsContext,);
-    const { theme, typeTheme} = useTheme();
+    const { theme, typeTheme } = useTheme();
+
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
@@ -52,11 +54,18 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
         if (modal) {
-            navigation.goBack()
-            navigation.goBack()
-            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+            if (isModal) {
+                navigation?.goBack()
+                navigation?.goBack()
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+                console.log("pass 1")
+            } else {
+                console.log("pass 2")
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+            }
         } else {
-            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
+            console.log("pass 3")
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
         }
     };
 

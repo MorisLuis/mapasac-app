@@ -42,7 +42,7 @@ export type InventoryNavigationStackParamList = {
     //Modal
     "[Modal] - scannerResultScreen": undefined,
     "[Modal] - findByCodebarInputModal": undefined;
-    "[Modal] - searchProductModal": { modal: boolean };
+    "[Modal] - searchProductModal": { modal: boolean, isModal: boolean };
     "[Modal] - productsFindByCodeBarModal": undefined;
 };
 
@@ -139,17 +139,32 @@ export const AppNavigation = () => {
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                if(navigation.canGoBack()){
-                                    navigation.goBack();
-                                } else if ( route?.params?.fromUpdateCodebar) {
-                                    navigation.reset({
-                                        index: 1,
-                                        routes: [{ name: 'BottomNavigation' }],
-                                    })
+
+
+                                navigation.navigate('BottomNavigation', {
+                                    screen: 'BottomNavigation - Scanner',
+                                    params: { screen: '[ScannerNavigation] - inventory' },
+                                });
+
+                                /* if (route?.params?.fromUpdateCodebar) {
+                                    console.log("1")
+                                    navigation.navigate('BottomNavigation', {
+                                        screen: 'BottomNavigation - Scanner',
+                                        params: { screen: '[ScannerNavigation] - inventory' },
+                                    });
+                                } else if (navigation.canGoBack()) {
+                                    console.log("2")
+                                    //navigation.goBack();
+                                    navigation.navigate('BottomNavigation', {
+                                        screen: 'BottomNavigation - Scanner',
+                                        params: { screen: '[ScannerNavigation] - inventory' },
+                                    });
                                 } else {
-                                    console.log("i can go back!")
+                                    console.log("3")
                                     navigation.navigate("BottomNavigation")
-                                }
+                                } */
+
+
                                 updateBarCode('');
                             }}
                         />
@@ -201,6 +216,7 @@ export const AppNavigation = () => {
                     headerTitle: "Buscar Producto",
                     ...commonOptions
                 }}
+                initialParams={{ isModal: true }} // Parámetros iniciales
             />
             <Stack.Screen
                 name="[Modal] - productsFindByCodeBarModal"

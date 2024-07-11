@@ -10,13 +10,17 @@ export type ScannerNavigationStackParamList = {
     "[ScannerNavigation] - inventory": undefined;
 }
 
-export const ScannerNavigation = () => {
+export const ScannerNavigation = ({ route }: any) => {
 
     const TopTabs = createMaterialTopTabNavigator<ScannerNavigationStackParamList>();
+
+    const initialScreen = route?.params?.screen || '[ScannerNavigation] - camera';
+
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }} >
             <TopTabs.Navigator
                 tabBar={(props) => <CustomTabBar {...props} />}
+                initialRouteName={initialScreen}
             >
                 <TopTabs.Screen
                     name="[ScannerNavigation] - camera"

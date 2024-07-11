@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useState } from 'react';
-import { Button, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../services/products';
 import ProductInterface from '../interface/product';
 import { buttonStyles } from '../theme/UI/buttons';
@@ -15,7 +15,6 @@ import { useTheme } from '../context/ThemeContext';
 type ProductDetailsPageInterface = {
     route?: {
         params: {
-            productDetails: ProductInterface;
             selectedProduct: { Codigo: string; Marca: string };
             fromModal?: boolean;
             fromUpdateCodebar: boolean
@@ -24,15 +23,16 @@ type ProductDetailsPageInterface = {
 };
 
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
-    const { productDetails, selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
+    const { selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
     const { Codigo, Marca } = selectedProduct ?? {};
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
+    const shouldCleanUp = useRef(true);
 
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
 
     const handleOptionsToUpdateCodebar = () => {
-        navigation.navigate('CodebarUpdateNavigation', { productDetails, selectedProduct });
+        navigation.navigate('CodebarUpdateNavigation', { selectedProduct });
     };
 
     const handleGetProductDetails = async () => {
@@ -45,6 +45,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleAddToInventory = () => {
+        shouldCleanUp.current = false; // Desactivar la limpieza
         navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct });
     }
 
@@ -52,8 +53,19 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
         useCallback(() => {
             handleCameraAvailable(false);
             handleGetProductDetails();
-        }, [])
+
+            return () => {
+                if (shouldCleanUp.current) {
+                    setProductDetailsData(null);
+                }
+
+                if(fromUpdateCodebar){
+                    shouldCleanUp.current = true;
+                }
+            };
+        }, [selectedProduct])
     );
+
 
     return productDetailsData ? (
         <ProductDetailsContent
