@@ -35,7 +35,8 @@ const getProductByCodeBar = async ({ codeBar, codigo }: getProductByCodeBarInter
 
 
 
-const getProductsByStock = async (PageNumber: number, user: UserInterface | null) => {
+
+const getProductsByStock = async (PageNumber: number) => {
 
     let products;
     try {
@@ -48,9 +49,24 @@ const getProductsByStock = async (PageNumber: number, user: UserInterface | null
     return products
 }
 
+const getTotalProductsByStock = async () => {
+
+    let total;
+    try {
+        const getProduct = await api.get(`/api/product/byStockCount`);
+        total = getProduct.data[0].TotalProductos;
+    } catch (error: any) {
+        console.log({ error: error })
+    }
+
+    return total;
+}
+
+
 
 export {
     getProductByCodeBar,
     getProductsByStock,
+    getTotalProductsByStock,
     getProductDetails
 }

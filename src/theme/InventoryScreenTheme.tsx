@@ -29,5 +29,11 @@ export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
     },
     iconSearch: {
         marginLeft: 15
+    },
+    footerContent: {
+        paddingVertical: globalStyles(theme).globalPadding.padding,
+    },
+    footerMessage: {
+        fontSize: globalFont.font_normal
     }
 })
