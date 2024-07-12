@@ -46,7 +46,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
     const handleAddToInventory = () => {
         shouldCleanUp.current = false;
-        navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct });
+        navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct, fromProductDetails: true });
     }
 
     useFocusEffect(

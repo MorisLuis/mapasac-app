@@ -21,6 +21,7 @@ interface ScannerResultInterface {
     route?: {
         params: {
             product: PorductInterface;
+            fromProductDetails?: boolean
         };
     };
 }
@@ -30,7 +31,7 @@ const ScannerResult = ({
     route
 }: ScannerResultInterface) => {
 
-    const { product } = route?.params || {}
+    const { product, fromProductDetails } = route?.params || {}
     const { theme, typeTheme } = useTheme();
     const { addProduct } = useContext(InventoryBagContext)
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
@@ -95,7 +96,7 @@ const ScannerResult = ({
                         <View style={modalRenderstyles(theme).counterContainer}>
                             <View style={{ width: wp("42.5%") }}>
                                 {
-                                    seeProductDetails &&
+                                    (seeProductDetails && !fromProductDetails) &&
                                     <TouchableOpacity
                                         onPress={handleExpandProductDetails}
                                         style={[buttonStyles(theme).button_small, buttonStyles(theme).white]}
