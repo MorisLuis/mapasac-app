@@ -28,8 +28,6 @@ export const Inventory = () => {
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
 
-        if (productsInInventory.length > 0 && currentPage === 1) return;
-
         const products = await getProductsByStock(currentPage);
 
         setProductsInInventory((prevProducts) => {
@@ -62,7 +60,6 @@ export const Inventory = () => {
         navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
     };
 
-    // Renders
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
     };
@@ -85,7 +82,7 @@ export const Inventory = () => {
         return (
             <View style={InventoryScreenStyles(theme).footerContent}>
                 {
-                    productsInInventory && productsInInventory.length >= totalProducts ?
+                    productsInInventory.length > 0 && productsInInventory.length >= totalProducts ?
                         <Text style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</Text>
                         :
                         renderLoader()

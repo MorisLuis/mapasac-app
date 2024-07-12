@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
@@ -53,9 +53,9 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     };
 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
+
         if (modal) {
             if (isModal) {
-                navigation?.goBack()
                 navigation?.goBack()
                 navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
             } else {

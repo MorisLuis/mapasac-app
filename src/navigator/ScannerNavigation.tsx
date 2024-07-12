@@ -13,9 +13,7 @@ export type ScannerNavigationStackParamList = {
 export const ScannerNavigation = ({ route }: any) => {
 
     const TopTabs = createMaterialTopTabNavigator<ScannerNavigationStackParamList>();
-
     const initialScreen = route?.params?.screen || '[ScannerNavigation] - camera';
-
     return (
         <View style={{ flex: 1 }} >
             <TopTabs.Navigator

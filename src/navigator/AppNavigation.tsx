@@ -19,7 +19,6 @@ import ScannerResult from '../screens/Modals/ScannerResult';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
-import { useNavigationState } from '@react-navigation/native';
 import { AuthContext } from '../context/auth/AuthContext';
 
 export type InventoryNavigationStackParamList = {
