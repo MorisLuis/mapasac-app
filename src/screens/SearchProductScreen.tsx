@@ -58,20 +58,13 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 navigation?.goBack()
                 navigation?.goBack()
                 navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
-                console.log("pass 1")
             } else {
-                console.log("pass 2")
                 navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
             }
         } else {
-            console.log("pass 3")
             navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
         }
     };
-
-    const closeModalHandler = React.useCallback(() => {
-        //handleCameraAvailable(true)
-    }, []);
 
 
     useEffect(() => {
@@ -93,9 +86,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             headerLeft: () =>
                 <CustomBackButton
                     navigation={navigation}
-                    onClick={() => {
-                        //handleCameraAvailable(true)
-                    }}
                 />,
             headerSearchBarOptions: {
                 placeholderTextColor: theme.color_green,
@@ -108,15 +98,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             }
         });
     }, [navigation, theme]);
-
-    // Este efecto se ejecutará cuando la pantalla reciba el foco
-    useFocusEffect(
-        React.useCallback(() => {
-            return () => {
-                closeModalHandler(); // Ejecutar la función al cerrar el modal
-            };
-        }, [])
-    );
 
     return (productsInInventory && productsInInventory.length > 0) ? (
 

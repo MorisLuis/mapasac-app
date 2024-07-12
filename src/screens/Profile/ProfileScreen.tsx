@@ -81,13 +81,6 @@ export const ProfileScreen = () => {
 
                 <View style={ProfileScreenStyles(theme).divider}></View>
 
-                {/* <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - termsOfUseScreen')} style={[ProfileScreenStyles(theme).section]}>
-                    <Text style={{ color: theme.text_color }}>Terminos de uso</Text>
-                    <Icon name="book-outline" size={22} color={iconColor}/>
-                </TouchableOpacity>
-
-                <View style={ProfileScreenStyles(theme).divider}></View> */}
-
                 <TouchableOpacity onPress={logOut} style={[buttonStyles(theme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
                     <Text style={buttonStyles(theme).buttonText}>Cerrar sesión</Text>
                 </TouchableOpacity>

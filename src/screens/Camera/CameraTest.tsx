@@ -137,11 +137,26 @@ const CameraTest: React.FC = () => {
                 torchMode={lightOn ? "on" : "off"}
             />
 
-            <View style={cameraStyles(theme).flash}>
-                <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
-                    <Icon name={lightOn ? "flash" : "flash-outline"} size={24} color="black" />
-                </TouchableOpacity>
+            <View style={cameraStyles(theme).actions}>
+                <View style={cameraStyles(theme).flash}>
+                    <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
+                        <Icon name={lightOn ? "flash" : "flash-outline"} size={28} color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={cameraStyles(theme).cog}>
+                    <TouchableOpacity onPress={() => navigate('typeOfMovementScreen')}>
+                        <Icon name={"cog-outline"} size={28} color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={cameraStyles(theme).cog}>
+                    <TouchableOpacity onPress={handleOpenInputModal}>
+                        <Icon name={"barcode-outline"} size={28} color="white" />
+                    </TouchableOpacity>
+                </View>
             </View>
+
 
             
 
@@ -162,7 +177,7 @@ const CameraTest: React.FC = () => {
 
 
 
-            {
+            {/* {
                 Platform.OS === 'android' ?
                     <TouchableOpacity style={cameraStyles(theme).scannerOptions} onPress={handleOpenInputModal}>
                         <View style={cameraStyles(theme).optionAndroid}>
@@ -181,7 +196,7 @@ const CameraTest: React.FC = () => {
                             </BlurView>
                         </TouchableOpacity>
                     </View>
-            }
+            } */}
         </View>
     );
 };

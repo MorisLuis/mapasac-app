@@ -91,11 +91,17 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         transform: [{ translateX: -150 }, { translateY: -150 }],
         zIndex: 2
     },
-    flash: {
+    actions: {
         position: "absolute",
-        right: "7.5%",
-        top: 100,
+        left: "5%",
+        top: "41.5%",
         zIndex: 2
+    },
+    flash: {
+        marginBottom: 20
+    },
+    cog: {
+       marginBottom: 20
     },
     blurOverlay: {
         position: 'absolute',
