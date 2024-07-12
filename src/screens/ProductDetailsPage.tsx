@@ -45,7 +45,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleAddToInventory = () => {
-        shouldCleanUp.current = false; // Desactivar la limpieza
+        shouldCleanUp.current = false;
         navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct });
     }
 

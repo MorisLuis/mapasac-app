@@ -20,18 +20,19 @@ import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
 import { useNavigationState } from '@react-navigation/native';
+import { AuthContext } from '../context/auth/AuthContext';
 
 export type InventoryNavigationStackParamList = {
-    //Navigation
+    // Navigation
     BottomNavigation: undefined;
     CodebarUpdateNavigation: { product: ProductInterface, selectedProduct: any },
 
-    //Login
+    // Login
     LoginPage: undefined;
     LoginDatabaseScreen: undefined;
     StartupScreen: undefined;
 
-    //Screens
+    // Screens
     "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
     "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
     bagInventoryScreen: undefined;
@@ -39,7 +40,7 @@ export type InventoryNavigationStackParamList = {
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
 
-    //Modal
+    // Modal
     "[Modal] - scannerResultScreen": undefined,
     "[Modal] - findByCodebarInputModal": undefined;
     "[Modal] - searchProductModal": { modal: boolean, isModal: boolean };
@@ -50,7 +51,7 @@ const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
 export const AppNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
-    const currentRoute = useNavigationState(state => state?.routes[state?.index]);
+    const { getTypeOfMovementsName } = useContext(AuthContext);
 
     const commonOptions: any = {
         headerBackTitle: 'Atrás',
@@ -101,12 +102,12 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="bagInventoryScreen"
                 component={InventoryBagScreen}
-                options={({ navigation } : any) => ({
+                options={({ navigation }: any) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
                             {...props}
-                            title="Inventario"
+                            title={getTypeOfMovementsName()}
                             navigation={navigation}
                             backCustum={true}
                             back={() => {
@@ -139,32 +140,10 @@ export const AppNavigation = () => {
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-
-
                                 navigation.navigate('BottomNavigation', {
                                     screen: 'BottomNavigation - Scanner',
                                     params: { screen: '[ScannerNavigation] - inventory' },
                                 });
-
-                                /* if (route?.params?.fromUpdateCodebar) {
-                                    console.log("1")
-                                    navigation.navigate('BottomNavigation', {
-                                        screen: 'BottomNavigation - Scanner',
-                                        params: { screen: '[ScannerNavigation] - inventory' },
-                                    });
-                                } else if (navigation.canGoBack()) {
-                                    console.log("2")
-                                    //navigation.goBack();
-                                    navigation.navigate('BottomNavigation', {
-                                        screen: 'BottomNavigation - Scanner',
-                                        params: { screen: '[ScannerNavigation] - inventory' },
-                                    });
-                                } else {
-                                    console.log("3")
-                                    navigation.navigate("BottomNavigation")
-                                } */
-
-
                                 updateBarCode('');
                             }}
                         />

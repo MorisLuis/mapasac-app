@@ -145,7 +145,7 @@ export const InventoryBagScreen = () => {
                                 style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                                 onPress={onPostInventary}
                             >
-                                <Text style={buttonStyles(theme).buttonText}>Crear Inventario</Text>
+                                <Text style={buttonStyles(theme).buttonText}>Guardar</Text>
                             </TouchableOpacity>
                         </View> 
                         

@@ -4,8 +4,6 @@ import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
 import { AuthContext } from '../auth/AuthContext';
-import { SettingsContext } from '../settings/SettingsContext';
-import { Vibration } from 'react-native';
 
 export interface inventoryDataInterface {
     result: undefined,
@@ -37,7 +35,6 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
-    const { vibration } = useContext(SettingsContext);
     const { user } = useContext(AuthContext);
 
     const [inventoryCreated, setInventoryCreated] = useState(false);

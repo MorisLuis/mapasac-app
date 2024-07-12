@@ -12,7 +12,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         borderWidth: 0.5,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
         backgroundColor: theme.background_color_secondary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,

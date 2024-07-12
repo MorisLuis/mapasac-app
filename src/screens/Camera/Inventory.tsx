@@ -84,10 +84,11 @@ export const Inventory = () => {
     const renderFooter = () => {
         return (
             <View style={InventoryScreenStyles(theme).footerContent}>
-                {productsInInventory.length >= totalProducts ? (
-                    <Text style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</Text>
-                ) :
-                    renderLoader()
+                {
+                    productsInInventory && productsInInventory.length >= totalProducts ?
+                        <Text style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</Text>
+                        :
+                        renderLoader()
                 }
             </View>
         );

@@ -12,6 +12,7 @@ interface ContextProps {
     logOut: () => void;
     removeError: () => void;
     updateTypeOfMovements: (value: number) => void;
+    getTypeOfMovementsName: () => string;
 }
 
 

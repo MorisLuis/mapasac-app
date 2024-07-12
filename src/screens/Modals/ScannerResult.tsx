@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../interface/product';
@@ -29,7 +29,6 @@ const ScannerResult = ({
     seeProductDetails = true,
     route
 }: ScannerResultInterface) => {
-
 
     const { product } = route?.params || {}
     const { theme, typeTheme } = useTheme();

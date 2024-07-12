@@ -13,7 +13,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
     const { numberOfItems, productAdded } = useContext(InventoryBagContext);
-    const { user } = useContext(AuthContext);
+    const { user, getTypeOfMovementsName } = useContext(AuthContext);
     const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
@@ -23,7 +23,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
         navigate('bagInventoryScreen')
     }
 
-    const getTypeOfMovementsName = () => {
+    /* const getTypeOfMovementsName = () => {
         let name;
         if (user?.Id_TipoMovInv?.Accion === 1 && user?.Id_TipoMovInv?.Id_TipoMovInv === 0) { // Inventario fisico
             name = "Inventario"
@@ -35,7 +35,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
             name = "Traspaso"
         }
         return name
-    }
+    } */
 
     const renderTabButton = (route: any, index: number) => {
         const { options } = descriptors[route.key];
@@ -105,9 +105,9 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
         );
     };
 
-    useEffect(() => {
+/*     useEffect(() => {
         getTypeOfMovementsName()
-    }, [user])
+    }, [user]) */
 
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>

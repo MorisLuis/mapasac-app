@@ -183,6 +183,22 @@ export const AuthProvider = ({ children }: any) => {
     }
 
 
+
+    const getTypeOfMovementsName = () => {
+        let name;
+        if (state.user?.Id_TipoMovInv?.Accion === 1 && state.user?.Id_TipoMovInv?.Id_TipoMovInv === 0) { // Inventario fisico
+            name = "Inventario"
+        } else if (state.user?.Id_TipoMovInv?.Accion === 1) {
+            name = "Entrada"
+        } else if (state.user?.Id_TipoMovInv?.Accion === 2) {
+            name = "Salida"
+        } else {
+            name = "Traspaso"
+        }
+        return name
+    }
+
+
     return (
         <AuthContext.Provider value={{
             ...state,
@@ -190,7 +206,8 @@ export const AuthProvider = ({ children }: any) => {
             loggingIn,
             logOut,
             removeError,  
-            updateTypeOfMovements          
+            updateTypeOfMovements,
+            getTypeOfMovementsName       
         }}>
             {children}
         </AuthContext.Provider>
