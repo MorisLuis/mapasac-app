@@ -20,6 +20,8 @@ import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
 import { AuthContext } from '../context/auth/AuthContext';
+import { ConfirmationScreen } from '../screens/InventoryBag/ConfirmationScreen';
+import { EditProductInBag } from '../screens/Modals/EditProductInBag';
 
 export type InventoryNavigationStackParamList = {
     // Navigation
@@ -35,6 +37,7 @@ export type InventoryNavigationStackParamList = {
     "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
     "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
     bagInventoryScreen: undefined;
+    confirmationScreen: undefined;
     succesMessageScreen: undefined;
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
@@ -44,6 +47,8 @@ export type InventoryNavigationStackParamList = {
     "[Modal] - findByCodebarInputModal": undefined;
     "[Modal] - searchProductModal": { modal: boolean, isModal: boolean };
     "[Modal] - productsFindByCodeBarModal": undefined;
+    "[Modal] - editProductInBag": { product: ProductInterface };
+
 };
 
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
@@ -80,6 +85,7 @@ export const AppNavigation = () => {
     const stackScreens = useMemo(() => (
         <>
             {authScreens}
+
             <Stack.Screen
                 name="BottomNavigation"
                 component={BottomNavigation}
@@ -112,6 +118,23 @@ export const AppNavigation = () => {
                             back={() => {
                                 navigation.goBack()
                             }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="confirmationScreen"
+                component={ConfirmationScreen}
+                options={({ navigation }: any) => ({
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Confirmación"}
+                            navigation={navigation}
+                            backCustum={true}
+                            secondaryDesign={true}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -199,6 +222,11 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="[Modal] - productsFindByCodeBarModal"
                 component={ProductsFindByCodeBar}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="[Modal] - editProductInBag"
+                component={EditProductInBag}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
         </>

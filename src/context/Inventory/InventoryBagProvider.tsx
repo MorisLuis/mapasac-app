@@ -4,6 +4,7 @@ import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
 import { AuthContext } from '../auth/AuthContext';
+import Toast from 'react-native-toast-message';
 
 export interface inventoryDataInterface {
     result: undefined,
@@ -40,29 +41,35 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const [inventoryCreated, setInventoryCreated] = useState(false);
     const [productAdded, setProductAdded] = useState(false);
     const [keyNumber, setKeyNumber] = useState(0);
-    
+
 
     const addProduct = (product: PorductInterface) => {
-
         try {
             setKeyNumber(keyNumber + 1)
             const newKey = keyNumber + 1;
-    
+
             dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
             setProductAdded(true);
         } catch (error) {
-            console.log({error})
+            console.log({ error })
             setProductAdded(false);
         } finally {
             timeoutRef.current = setTimeout(() => {
                 setProductAdded(false);
             }, 1000);
         }
-
     }
 
     const removeProduct = (product: PorductInterfaceBag) => {
         dispatch({ type: '[InventoryBag] - Remove Product', payload: product })
+    }
+
+    const editProduct = (product: PorductInterfaceBag) => {
+        dispatch({ type: '[InventoryBag] - Edit Product', payload: product })
+        Toast.show({
+            type: 'tomatoToast',
+            text1: product.Piezas < 2 ? `Se cambio a ${product.Piezas} pieza.` : `Se cambio a ${product.Piezas} piezas.`
+        })
     }
 
     const cleanBag = () => {
@@ -91,16 +98,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     };
 
-    // Cleanup timeout on component unmount
-    useEffect(() => {
-        return () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-        };
-    }, []);
-
-
     const postInventoryDetails = async (products: PorductInterface[]) => {
         try {
             const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
@@ -117,16 +114,22 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
+    // Cleanup timeout on component unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const numberOfItems = state.bag.length;
-
         const orderSummary = {
             numberOfItems
         }
 
         dispatch({ type: '[InventoryBag] - Update Summary', payload: orderSummary })
-
     }, [state.bag])
 
     return (
@@ -134,6 +137,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             ...state,
             addProduct,
             removeProduct,
+            editProduct,
             postInventory,
             postInventoryDetails,
             inventoryCreated,

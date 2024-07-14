@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont } from "../appTheme";
+import { Theme, globalFont, globalStyles } from "../appTheme";
 
 
 export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSheet.create({
@@ -53,5 +53,19 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
     optionActive: {
         backgroundColor: theme.color_yellow,
         borderColor: theme.color_border_tertiary
+    }
+});
+
+
+export const editProductStyles = (theme: Theme, typeTheme?: string ) =>  StyleSheet.create({
+    EditProductInBag_title: {
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    EditProductInBag_warning: {
+        fontSize: globalFont.font_normal,
+        color: theme.color_red,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
     }
 });

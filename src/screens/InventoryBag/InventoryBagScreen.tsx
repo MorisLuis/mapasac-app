@@ -15,8 +15,8 @@ import { useTheme } from '../../context/ThemeContext';
 import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 
 export const InventoryBagScreen = () => {
-    const { bag, cleanBag, numberOfItems, removeProduct, postInventory, postInventoryDetails } = useContext(InventoryBagContext);
-    const { navigate } = useNavigation<any>();
+    const { bag, cleanBag, numberOfItems, removeProduct } = useContext(InventoryBagContext);
+    const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
@@ -52,14 +52,16 @@ export const InventoryBagScreen = () => {
     };
 
     const onPostInventary = async () => {
-        setCreateInventaryLoading(true);
+        goBack()
+        navigate("confirmationScreen")
+        /* setCreateInventaryLoading(true);
         await postInventory();
         await postInventoryDetails(bag);
         cleanBag();
         setOpenModalDecision(false);
         setCreateInventaryLoading(false);
         navigate('BottomNavigation - Scanner');
-        navigate('succesMessageScreen');
+        navigate('succesMessageScreen'); */
     };
 
     const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (

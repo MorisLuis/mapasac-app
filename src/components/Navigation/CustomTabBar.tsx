@@ -13,7 +13,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
     const { numberOfItems, productAdded } = useContext(InventoryBagContext);
-    const { user, getTypeOfMovementsName } = useContext(AuthContext);
+    const { getTypeOfMovementsName } = useContext(AuthContext);
     const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
@@ -22,20 +22,6 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
         handleCameraAvailable(false)
         navigate('bagInventoryScreen')
     }
-
-    /* const getTypeOfMovementsName = () => {
-        let name;
-        if (user?.Id_TipoMovInv?.Accion === 1 && user?.Id_TipoMovInv?.Id_TipoMovInv === 0) { // Inventario fisico
-            name = "Inventario"
-        } else if (user?.Id_TipoMovInv?.Accion === 1) {
-            name = "Entrada"
-        } else if (user?.Id_TipoMovInv?.Accion === 2) {
-            name = "Salida"
-        } else {
-            name = "Traspaso"
-        }
-        return name
-    } */
 
     const renderTabButton = (route: any, index: number) => {
         const { options } = descriptors[route.key];
