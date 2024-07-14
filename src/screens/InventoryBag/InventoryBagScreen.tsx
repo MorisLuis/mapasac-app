@@ -171,6 +171,6 @@ export const InventoryBagScreen = () => {
             </ModalDecision>
         </>
     ) : (
-        <LoadingScreen />
+        <LoadingScreen message='Guardando...'/>
     );
 };

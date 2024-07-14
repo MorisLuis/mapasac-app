@@ -41,8 +41,8 @@ export const ProfileScreen = () => {
                 },
                 {
                     text: "Aceptar", onPress: async () => {
-                        await logOut();
                         await logOutDB();
+                        await logOut();
                     }
                 }
             ],

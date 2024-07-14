@@ -36,7 +36,7 @@ export const LoginDatabaseScreen = () => {
 
     const keyboardActive = useKeyboardStatus();
 
-    if (loggingIn) return <LoadingScreen />;
+    if (loggingIn) return <LoadingScreen message='Iniciando sesion...'/>;
 
     return (
         <KeyboardAvoidingView
