@@ -9,6 +9,7 @@ import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
 import { ProductInventoryConfirmationCard } from '../../components/Cards/ProductInventoryConfirmationCard';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { useNavigation } from '@react-navigation/native';
+import DotLoader from '../../components/Ui/DotLaoder';
 
 
 export const ConfirmationScreen = () => {
@@ -83,8 +84,16 @@ export const ConfirmationScreen = () => {
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                     onPress={onPostInventary}
+                    disabled={createInventaryLoading}
                 >
-                    <Text style={buttonStyles(theme).buttonText}>Confirmar</Text>
+                    <Text style={buttonStyles(theme).buttonText}>
+                        {
+                            createInventaryLoading ?
+                            <DotLoader/>
+                            :
+                            "Confirmar"
+                        }
+                    </Text>
                 </TouchableOpacity>
             </View>
 

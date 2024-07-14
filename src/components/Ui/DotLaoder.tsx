@@ -1,7 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
+import { LoaderStyles } from '../../theme/UI/LoaderStyles';
+import { useTheme } from '../../context/ThemeContext';
 
 const DotLoader = () => {
+    const { theme, typeTheme } = useTheme();
+
     const dot1 = useRef(new Animated.Value(0)).current;
     const dot2 = useRef(new Animated.Value(0)).current;
     const dot3 = useRef(new Animated.Value(0)).current;
@@ -39,27 +43,13 @@ const DotLoader = () => {
     });
 
     return (
-        <View style={styles.container}>
-            <Animated.View style={[styles.dot, dotStyle(dot1)]} />
-            <Animated.View style={[styles.dot, dotStyle(dot2)]} />
-            <Animated.View style={[styles.dot, dotStyle(dot3)]} />
+        <View style={LoaderStyles(theme).container}>
+            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot1)]} />
+            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot2)]} />
+            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot3)]} />
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dot: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#007AFF',
-        marginHorizontal: 5,
-    },
-});
 
 export default DotLoader;

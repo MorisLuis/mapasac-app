@@ -98,3 +98,4 @@ export const toggleStyles = (theme: Theme, typeTheme: string) => StyleSheet.crea
         backgroundColor: typeTheme === 'light' ? theme.background_color_tertiary : theme.background_color_tertiary
     },
 })
+
