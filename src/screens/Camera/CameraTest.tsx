@@ -1,18 +1,17 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
-import { SettingsContext } from '../../context/settings/SettingsContext';
 import PorductInterface from '../../interface/product';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-
 import { cameraStyles } from '../../theme/CameraCustumTheme';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import { CameraPermission } from '../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
-import { useTheme } from '../../context/ThemeContext';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 

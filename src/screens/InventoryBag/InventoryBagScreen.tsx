@@ -63,8 +63,6 @@ export const InventoryBagScreen = () => {
         updateProductBySearch();
     }, [searchText, page, updateProductBySearch]);
 
-    console.log({filteredBag: filteredBag.length})
-    console.log({numberOfItems})
 
     return !createInventaryLoading ? (
         <>

@@ -17,8 +17,6 @@ export const ProductInventoryConfirmationCard = ({
     disabled
 }: ProductInventoryConfirmationCardInterface) => {
 
-    console.log({disabled})
-
     const { theme, typeTheme } = useTheme();
     const iconColor = theme.color_tertiary
 

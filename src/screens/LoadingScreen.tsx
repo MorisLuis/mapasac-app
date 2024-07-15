@@ -28,7 +28,7 @@ export const LoadingScreen = ({
                     marginBottom: 10
                 }}
             />
-            <Text>{message}</Text>
+            <Text style={{ color: theme.text_color}}>{message}</Text>
         </View>
     )
 }
