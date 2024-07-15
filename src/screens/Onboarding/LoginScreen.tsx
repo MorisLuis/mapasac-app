@@ -56,12 +56,12 @@ export const LoginScreen = () => {
         >
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={loginStyles(theme).formContainer}>
-                    <View style={loginStyles(theme).imageContainer}>
+                    {/* <View style={loginStyles(theme).imageContainer}>
                         <Image
                             style={[keyboardActive ? loginStyles(theme).logoActived : loginStyles(theme).logo]}
                             source={require('../../assets/logo01.png')}
                         />
-                    </View>
+                    </View> */}
                     <Text style={loginStyles(theme).title}>Bienvenido!</Text>
                     <Text style={loginStyles(theme).textLogin}>Ingresar datos de Usuario</Text>
 
