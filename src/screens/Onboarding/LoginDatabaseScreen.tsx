@@ -45,9 +45,9 @@ export const LoginDatabaseScreen = () => {
         >
             <View style={loginDBStyles(theme).formContainer}>
 
-                <View style={loginDBStyles(theme).logoContainer}>
+                {/* <View style={loginDBStyles(theme).logoContainer}>
                     <Logo width={keyboardActive ? wp("35%") : wp("60%")} height={"100%"} />
-                </View>
+                </View> */}
 
                 <View style={[keyboardActive ? loginDBStyles(theme).imageContainerActive : loginDBStyles(theme).imageContainer]}>
                     <Banner width={keyboardActive ? "50%" : "90%"} height={"100%"} />
