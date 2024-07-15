@@ -4,8 +4,7 @@ import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { api } from '../../api/api';
 import { AuthContext } from '../auth/AuthContext';
-import { SettingsContext } from '../settings/SettingsContext';
-import { Vibration } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export interface inventoryDataInterface {
     result: undefined,
@@ -37,78 +36,40 @@ export const InventoryBagInitialState: InventoryBagInterface = {
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
-    const { vibration } = useContext(SettingsContext);
     const { user } = useContext(AuthContext);
 
     const [inventoryCreated, setInventoryCreated] = useState(false);
     const [productAdded, setProductAdded] = useState(false);
     const [keyNumber, setKeyNumber] = useState(0);
 
-    const productTemplate: PorductInterface = {
-        Descripcion: "Producto ejemplo",
-        Id_Familia: 1,
-        Codigo: "ABC123",
-        Familia: "Familia Ejemplo",
-        CodigoPrecio: "12345",
-        Precio: 100,
-        CodigoExsitencia: "67890",
-        Existencia: 50,
-        Id_Almacen: 1,
-        Marca: "Marca Ejemplo",
-        Id_Marca: 1,
-        Id_ListaPrecios: 1,
-        Piezas: 10,
-        Impto: 0.16,
-        imagen: [{ url: "http://example.com/image.jpg", id: 1 }],
-        CodBar: "1234567890123"
-    };
-
-
-    const addMultipleProducts = () => {
-        let currentKeyNumber = keyNumber;
-    
-        const productsToAdd: PorductInterfaceBag[] = [];
-        for (let i = 0; i < 30; i++) {
-            const newKey = currentKeyNumber + 1;
-            const newProduct = { ...productTemplate, key: newKey };
-            productsToAdd.push(newProduct);
-            currentKeyNumber++;
-        }
-    
-        if (vibration) {
-            Vibration.vibrate(100);
-        }
-    
-        productsToAdd.forEach(product => {
-            dispatch({ type: '[InventoryBag] - Add Product', payload: product });
-        });
-    
-        setKeyNumber(currentKeyNumber);
-    };
-    
-    
 
     const addProduct = (product: PorductInterface) => {
-
         try {
             setKeyNumber(keyNumber + 1)
             const newKey = keyNumber + 1;
-    
+
             dispatch({ type: '[InventoryBag] - Add Product', payload: { ...product, key: newKey } })
             setProductAdded(true);
         } catch (error) {
-            console.log({error})
+            console.log({ error })
             setProductAdded(false);
         } finally {
             timeoutRef.current = setTimeout(() => {
                 setProductAdded(false);
             }, 1000);
         }
-
     }
 
     const removeProduct = (product: PorductInterfaceBag) => {
         dispatch({ type: '[InventoryBag] - Remove Product', payload: product })
+    }
+
+    const editProduct = (product: PorductInterfaceBag) => {
+        dispatch({ type: '[InventoryBag] - Edit Product', payload: product })
+        Toast.show({
+            type: 'tomatoToast',
+            text1: product.Piezas < 2 ? `Se cambio a ${product.Piezas} pieza.` : `Se cambio a ${product.Piezas} piezas.`
+        })
     }
 
     const cleanBag = () => {
@@ -137,16 +98,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     };
 
-    // Cleanup timeout on component unmount
-    useEffect(() => {
-        return () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-        };
-    }, []);
-
-
     const postInventoryDetails = async (products: PorductInterface[]) => {
         try {
             const tipoMovInvId = user?.Id_TipoMovInv?.Id_TipoMovInv;
@@ -163,16 +114,22 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
+    // Cleanup timeout on component unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const numberOfItems = state.bag.length;
-
         const orderSummary = {
             numberOfItems
         }
 
         dispatch({ type: '[InventoryBag] - Update Summary', payload: orderSummary })
-
     }, [state.bag])
 
     return (
@@ -180,12 +137,12 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             ...state,
             addProduct,
             removeProduct,
+            editProduct,
             postInventory,
             postInventoryDetails,
             inventoryCreated,
             productAdded,
-            cleanBag,
-            addMultipleProducts
+            cleanBag
         }}
         >
             {children}

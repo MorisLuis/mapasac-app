@@ -18,6 +18,18 @@ export const customHeaderStyles = (theme: Theme) => StyleSheet.create({
         width: "100%",
         height: hp("6%"),
     },
+    CustomHeaderSecondary: {
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: theme.background_color,
+        backgroundColor: theme.background_color_secondary,
+        borderBottomWidth: 1,
+        position: "relative",
+        width: "100%",
+        height: hp("6%"),
+    },
     back: {
         display: 'flex',
         flexDirection: 'row',

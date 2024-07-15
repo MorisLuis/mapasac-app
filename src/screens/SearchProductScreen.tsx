@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../services/Search/products';
 import PorductInterface from '../interface/product';
 import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
@@ -19,6 +19,7 @@ type SearchProductScreenInterface = {
     route?: {
         params: {
             modal: boolean;
+            isModal?: boolean,
         };
     };
 };
@@ -26,9 +27,10 @@ type SearchProductScreenInterface = {
 
 export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
 
-    const { modal } = route?.params ?? {};
+    const { modal, isModal } = route?.params ?? {};
     const { codeBar } = useContext(SettingsContext,);
-    const { theme, typeTheme} = useTheme();
+    const { theme, typeTheme } = useTheme();
+
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
@@ -51,18 +53,18 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     };
 
     const navigateToProduct = (selectedProduct: PorductInterface) => {
+
         if (modal) {
-            navigation.goBack()
-            navigation.goBack()
-            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+            if (isModal) {
+                navigation?.goBack()
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+            } else {
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true })
+            }
         } else {
-            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
         }
     };
-
-    const closeModalHandler = React.useCallback(() => {
-        //handleCameraAvailable(true)
-    }, []);
 
 
     useEffect(() => {
@@ -84,9 +86,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             headerLeft: () =>
                 <CustomBackButton
                     navigation={navigation}
-                    onClick={() => {
-                        //handleCameraAvailable(true)
-                    }}
                 />,
             headerSearchBarOptions: {
                 placeholderTextColor: theme.color_green,
@@ -99,15 +98,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             }
         });
     }, [navigation, theme]);
-
-    // Este efecto se ejecutará cuando la pantalla reciba el foco
-    useFocusEffect(
-        React.useCallback(() => {
-            return () => {
-                closeModalHandler(); // Ejecutar la función al cerrar el modal
-            };
-        }, [])
-    );
 
     return (productsInInventory && productsInInventory.length > 0) ? (
 

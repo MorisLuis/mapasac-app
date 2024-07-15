@@ -1,7 +1,7 @@
-import React, { useCallback, useContext, useState } from 'react'
-import { Button, FlatList, SafeAreaView, Text, View } from 'react-native'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { FlatList, SafeAreaView, Text, View } from 'react-native'
 
-import { getProductsByStock } from '../../services/products';
+import { getProductsByStock, getTotalProductsByStock } from '../../services/products';
 import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
 import PorductInterface from '../../interface/product';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -10,13 +10,11 @@ import { ProductInventoryCardSkeleton } from '../../components/Skeletons/Product
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../theme/InventoryScreenTheme';
-import { AuthContext } from '../../context/auth/AuthContext';
 
 
 export const Inventory = () => {
 
     const { handleCodebarScannedProcces } = useContext(SettingsContext);
-    const { user } = useContext(AuthContext);
 
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
@@ -25,19 +23,36 @@ export const Inventory = () => {
     const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalProducts, setTotalProducts] = useState(0);
 
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
 
-        const products = await getProductsByStock(currentPage, user)
-        setProductsInInventory(prevProducts =>
-            prevProducts ? [...prevProducts, ...products] : products
-        );
+        const products = await getProductsByStock(currentPage);
+
+        setProductsInInventory((prevProducts) => {
+            const newProducts = products.filter(
+                (product: any) =>
+                    !prevProducts.some(
+                        (prevProduct) =>
+                            prevProduct.Codigo === product.Codigo &&
+                            prevProduct.Id_Marca === product.Id_Marca &&
+                            prevProduct.Marca === product.Marca &&
+                            prevProduct.Id_Almacen === product.Id_Almacen &&
+                            prevProduct.Id_ListaPrecios === product.Id_ListaPrecios
+                    )
+            );
+
+            return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
+        });
+
         setIsLoading(false);
-    }
+    };
 
     const loadMoreItem = () => {
-        setCurrentPage(currentPage + 1);
+        if (productsInInventory.length < totalProducts) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const handlePressProduct = (selectedProduct: PorductInterface) => {
@@ -45,7 +60,6 @@ export const Inventory = () => {
         navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
     };
 
-    // Renders
     const renderItem = ({ item }: { item: PorductInterface }) => {
         return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
     };
@@ -62,22 +76,40 @@ export const Inventory = () => {
 
     const resetInventory = useCallback(() => {
         setCurrentPage(1);
-        setProductsInInventory([]);
     }, []);
 
-    useFocusEffect(
-        React.useCallback(() => {
-            if (productsInInventory.length <= 0) return;
-            handleGetProductsByStock()
-        }, [currentPage])
-    )
+    const renderFooter = () => {
+        return (
+            <View style={InventoryScreenStyles(theme).footerContent}>
+                {
+                    productsInInventory.length > 0 && productsInInventory.length >= totalProducts ?
+                        <Text style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</Text>
+                        :
+                        renderLoader()
+                }
+            </View>
+        );
+    };
+
+    useEffect(() => {
+        handleGetProductsByStock();
+    }, [currentPage]);
+
+
+    useEffect(() => {
+        const getTotalCountOfProducts = async () => {
+            const total = await getTotalProductsByStock();
+            setTotalProducts(total);
+        }
+        getTotalCountOfProducts()
+    }, [])
 
     useFocusEffect(
         useCallback(() => {
             resetInventory();
             handleGetProductsByStock();
         }, [])
-    )
+    );
 
     return (
         <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
@@ -99,10 +131,11 @@ export const Inventory = () => {
                     data={productsInInventory}
                     renderItem={renderItem}
                     keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
-                    ListFooterComponent={renderLoader}
+                    ListFooterComponent={renderFooter}
                     onEndReached={loadMoreItem}
                     onEndReachedThreshold={0}
                 />
+
             </View>
         </SafeAreaView>
     )

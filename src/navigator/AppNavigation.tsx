@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductInterface from '../interface/product';
 import { BottomNavigation } from './BottomNavigation';
-import { CustomBackButton, CustomHeader } from '../components/Ui/CustomHeader';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { TESTAPP } from "@env";
@@ -19,38 +19,43 @@ import ScannerResult from '../screens/Modals/ScannerResult';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ProductDetailsPage } from '../screens/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Modals/ProductsFindByCodeBar';
-import { useNavigationState } from '@react-navigation/native';
+import { AuthContext } from '../context/auth/AuthContext';
+import { ConfirmationScreen } from '../screens/InventoryBag/ConfirmationScreen';
+import { EditProductInBag } from '../screens/Modals/EditProductInBag';
 
 export type InventoryNavigationStackParamList = {
-    //Navigation
+    // Navigation
     BottomNavigation: undefined;
     CodebarUpdateNavigation: { product: ProductInterface, selectedProduct: any },
 
-    //Login
+    // Login
     LoginPage: undefined;
     LoginDatabaseScreen: undefined;
     StartupScreen: undefined;
 
-    //Screens
+    // Screens
     "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
     "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
     bagInventoryScreen: undefined;
+    confirmationScreen: undefined;
     succesMessageScreen: undefined;
     typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
 
-    //Modal
+    // Modal
     "[Modal] - scannerResultScreen": undefined,
     "[Modal] - findByCodebarInputModal": undefined;
-    "[Modal] - searchProductModal": { modal: boolean };
+    "[Modal] - searchProductModal": { modal: boolean, isModal: boolean };
     "[Modal] - productsFindByCodeBarModal": undefined;
+    "[Modal] - editProductInBag": { product: ProductInterface };
+
 };
 
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
 export const AppNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
-    const currentRoute = useNavigationState(state => state?.routes[state?.index]);
+    const { getTypeOfMovementsName } = useContext(AuthContext);
 
     const commonOptions: any = {
         headerBackTitle: 'Atrás',
@@ -80,6 +85,7 @@ export const AppNavigation = () => {
     const stackScreens = useMemo(() => (
         <>
             {authScreens}
+
             <Stack.Screen
                 name="BottomNavigation"
                 component={BottomNavigation}
@@ -101,17 +107,34 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="bagInventoryScreen"
                 component={InventoryBagScreen}
-                options={({ navigation } : any) => ({
+                options={({ navigation }: any) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
                             {...props}
-                            title="Inventario"
+                            title={getTypeOfMovementsName()}
                             navigation={navigation}
                             backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="confirmationScreen"
+                component={ConfirmationScreen}
+                options={({ navigation }: any) => ({
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Confirmación"}
+                            navigation={navigation}
+                            backCustum={true}
+                            secondaryDesign={true}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -139,17 +162,10 @@ export const AppNavigation = () => {
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                if(navigation.canGoBack()){
-                                    navigation.goBack();
-                                } else if ( route?.params?.fromUpdateCodebar) {
-                                    navigation.reset({
-                                        index: 1,
-                                        routes: [{ name: 'BottomNavigation' }],
-                                    })
-                                } else {
-                                    console.log("i can go back!")
-                                    navigation.navigate("BottomNavigation")
-                                }
+                                navigation.navigate('BottomNavigation', {
+                                    screen: 'BottomNavigation - Scanner',
+                                    params: { screen: '[ScannerNavigation] - inventory' },
+                                });
                                 updateBarCode('');
                             }}
                         />
@@ -201,10 +217,16 @@ export const AppNavigation = () => {
                     headerTitle: "Buscar Producto",
                     ...commonOptions
                 }}
+                initialParams={{ isModal: true }} // Parámetros iniciales
             />
             <Stack.Screen
                 name="[Modal] - productsFindByCodeBarModal"
                 component={ProductsFindByCodeBar}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+            <Stack.Screen
+                name="[Modal] - editProductInBag"
+                component={EditProductInBag}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
         </>

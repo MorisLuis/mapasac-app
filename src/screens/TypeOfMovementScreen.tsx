@@ -7,6 +7,7 @@ import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSk
 import { AuthContext } from '../context/auth/AuthContext';
 import { TypeOfMovementScreenStyles } from '../theme/TypeOfMovementScreenTheme';
 import { useTheme } from '../context/ThemeContext';
+import DotLoader from '../components/Ui/DotLaoder';
 
 export const TypeOfMovementScreen = () => {
 
@@ -24,7 +25,7 @@ export const TypeOfMovementScreen = () => {
 
     const renderOption = ({ item }: { item: Id_TipoMovInvInterface }) => {
         const isSelected = typeSelected === item.Id_TipoMovInv;
-        
+
         return (
             <TouchableOpacity
                 style={[TypeOfMovementScreenStyles(theme).optionContainer, isSelected && TypeOfMovementScreenStyles(theme).selectedOption]}
@@ -63,7 +64,6 @@ export const TypeOfMovementScreen = () => {
 
     const handleGetTypeOfMovements = async () => {
         setIsLoading(true);
-        console.log("hello!!")
         const types = await getTypeOfMovements();
 
         setTypeOfMovement(types);
@@ -73,6 +73,9 @@ export const TypeOfMovementScreen = () => {
     useEffect(() => {
         handleGetTypeOfMovements()
     }, []);
+
+
+    const [startAnimation, setStartAnimation] = useState(false)
 
 
     return (
@@ -88,7 +91,6 @@ export const TypeOfMovementScreen = () => {
                 ListFooterComponent={renderLoader}
                 onEndReachedThreshold={0}
             />
-
 
             {(typeSelected || typeSelected == 0) && (
                 <View style={TypeOfMovementScreenStyles(theme, typeTheme).footer}>

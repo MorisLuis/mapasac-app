@@ -7,6 +7,7 @@ type InventoryBagActionType =
     | { type: '[InventoryBag] - Post Inventory Details', payload: PorductInterface[] }
     | { type: '[InventoryBag] - Add Product', payload: PorductInterfaceBag }
     | { type: '[InventoryBag] - Remove Product', payload: PorductInterfaceBag }
+    | { type: '[InventoryBag] - Edit Product', payload: PorductInterfaceBag }
     | { type: '[InventoryBag] - Clear Bag', payload: [] }
     | {
         type: '[InventoryBag] - Update Summary',
@@ -40,11 +41,18 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
         case '[InventoryBag] - Remove Product':
             return {
                 ...state,
-                bag: state.bag.filter(product => (product.key !== action.payload.key) )
-
-                //bag: state.bag.filter(product => (product.Codigo !== action.payload.Codigo) || (product.Id_Marca !== action.payload.Id_Marca) || (product.Id_Almacen !== action.payload.Id_Almacen))
+                bag: state.bag.filter(product => (product.key !== action.payload.key))
             }
 
+        case '[InventoryBag] - Edit Product':
+            return {
+                ...state,
+                bag: state.bag.map(product =>
+                    product.key === action.payload.key
+                        ? { ...product, Piezas: action.payload.Piezas }
+                        : product
+                )
+            }
         case '[InventoryBag] - Clear Bag':
             return {
                 ...state,

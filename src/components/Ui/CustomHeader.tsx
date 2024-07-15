@@ -12,6 +12,7 @@ interface CustomHeaderInterface {
     backAvailable?: boolean;
     back?: () => void;
     backCustum?: boolean;
+    secondaryDesign?: boolean;
     route?: {
         params?: {
             selectedProduct?: PorductInterface
@@ -26,6 +27,7 @@ export const CustomHeader = ({
     backAvailable = true,
     backCustum = false,
     back,
+    secondaryDesign,
     route
 }: CustomHeaderInterface) => {
 
@@ -60,8 +62,8 @@ export const CustomHeader = ({
                     <Text style={customHeaderStyles(theme).titleHeader}>{title}</Text>
                 </SafeAreaView>
             ) : (
-                <SafeAreaView style={{ backgroundColor: theme.background_color }}>
-                    <View style={customHeaderStyles(theme).CustomHeader}>
+                <SafeAreaView style={{ backgroundColor: secondaryDesign ? theme.background_color_secondary : theme.background_color }}>
+                    <View style={secondaryDesign ? customHeaderStyles(theme).CustomHeaderSecondary :  customHeaderStyles(theme).CustomHeader}>
                         {backAvailable && (
                             <TouchableOpacity
                                 style={customHeaderStyles(theme).back}

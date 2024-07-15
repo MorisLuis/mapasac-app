@@ -28,7 +28,7 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme: string) => Sty
         color: theme.text_color
     },
     footer: {
-        backgroundColor: theme.background_color_secondary,
+        backgroundColor: theme.background_color,
         padding: globalStyles(theme).globalPadding.padding,
         height: "25%",
         maxHeight: 150,

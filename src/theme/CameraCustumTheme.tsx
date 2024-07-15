@@ -1,7 +1,7 @@
 
 import { StyleSheet } from "react-native";
-import { Theme,  globalFont, globalStyles } from "./appTheme";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Theme, globalFont, globalStyles } from "./appTheme";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     cameraScreen: {
@@ -44,7 +44,7 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         zIndex: 2,
         width: wp("20%"),
         height: wp("20%"),
-        
+
     },
     option: {
         flex: 1,
@@ -65,7 +65,7 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: typeTheme === 'light' ?  theme.color_black : theme.color_black
+        borderColor: typeTheme === 'light' ? theme.color_black : theme.color_black
     },
     message: {
         position: "absolute",
@@ -91,11 +91,17 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         transform: [{ translateX: -150 }, { translateY: -150 }],
         zIndex: 2
     },
-    flash: {
+    actions: {
         position: "absolute",
-        right: "7.5%",
-        top: 100,
+        left: wp("5%"),
+        top: hp("37.5%"),
         zIndex: 2
+    },
+    flash: {
+        marginBottom: 20
+    },
+    cog: {
+        marginBottom: 20
     },
     blurOverlay: {
         position: 'absolute',

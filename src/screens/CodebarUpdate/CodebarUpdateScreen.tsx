@@ -26,6 +26,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColorActive = typeTheme === 'dark' ? "black" : "black"
 
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
     const [openModalCamera, setOpenModalCamera] = useState(false)
@@ -129,7 +130,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                                 style={[productDetailsStyles(theme).optionCodebar, selectedOption.screen === 'updateWithCode' && productDetailsStyles(theme).selectedOption]}
                                 onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'updateWithCode', title: 'updateWithCode' })}
                             >
-                                <Icon name="barcode-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
+                                <Icon name="barcode-outline" size={24} color={selectedOption.screen === 'updateWithCode' ? iconColorActive : iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
                                 <Text
                                     style={[selectedOption.screen === 'updateWithCode' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
                                 >
@@ -141,7 +142,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                                 style={[productDetailsStyles(theme).optionCodebar, selectedOption.screen === 'CameraModal' && productDetailsStyles(theme).selectedOption]}
                                 onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'CameraModal', title: 'CameraModal' })}
                             >
-                                <Icon name="camera-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
+                                <Icon name="camera-outline" size={24} color={selectedOption.screen === 'CameraModal' ? iconColorActive : iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
                                 <Text
                                     style={[selectedOption.screen === 'CameraModal' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
                                 >
@@ -156,7 +157,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                             style={[productDetailsStyles(theme).optionCodebar, selectedOption.screen === 'updateWithRandomCode' && productDetailsStyles(theme).selectedOption]}
                             onPress={() => handleOptionOfUpdateCodeSelect({ screen: 'updateWithRandomCode', title: 'updateWithRandomCode' })}
                         >
-                            <Icon name="shuffle-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
+                            <Icon name="shuffle-outline" size={24} color={selectedOption.screen === 'updateWithRandomCode' ? iconColorActive : iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
                             <Text
                                 style={[selectedOption.screen === 'updateWithRandomCode' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
                             >
@@ -170,7 +171,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                         style={[productDetailsStyles(theme).optionCodebar, selectedOption.screen === '[CodebarUpdateNavigation] - UpdateCodeBarWithInput' && productDetailsStyles(theme).selectedOption]}
                         onPress={() => handleOptionOfUpdateCodeSelect({ screen: '[CodebarUpdateNavigation] - UpdateCodeBarWithInput', title: 'Actualizar Manualmente' })}
                     >
-                        <Icon name="text-outline" size={24} color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
+                        <Icon name="text-outline" size={24} color={selectedOption.screen === '[CodebarUpdateNavigation] - UpdateCodeBarWithInput' ? iconColorActive : iconColor} style={productDetailsStyles(theme).optionCodebar_icon} />
                         <Text
                             style={[selectedOption.screen === '[CodebarUpdateNavigation] - UpdateCodeBarWithInput' ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
                         >

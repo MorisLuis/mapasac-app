@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, Text, TouchableOpacity, View } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -19,6 +19,28 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
     const { user: userFromDB, logOut } = useContext(DbAuthContext);
     const { fromLogIn } = route.params || {};
     const { theme, typeTheme } = useTheme();
+
+    const handleLogOut = () => {
+
+        Alert.alert(
+            "Cerrar la base de datos", // Título del cuadro de diálogo
+            "¿Estás seguro de que deseas cambiar la base de datos? Se cerrara la actual.", // Mensaje del cuadro de diálogo
+            [
+                {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Aceptar", onPress: async () => {
+                        await logOut();
+                    }
+                }
+            ],
+            { cancelable: false } // Puedes ponerlo en true para permitir cerrar el diálogo tocando fuera de él
+        );
+
+    }
 
     useEffect(() => {
         console.log('Personal Information effect');
@@ -80,7 +102,7 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={[buttonStyles(theme).button, buttonStyles(theme).black]}
-                    onPress={logOut}
+                    onPress={handleLogOut}
                 >
                     <Text style={buttonStyles(theme).buttonText}>Cerrar sesión de base de datos</Text>
                 </TouchableOpacity>

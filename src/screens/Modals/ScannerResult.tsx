@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import PorductInterface from '../../interface/product';
@@ -21,6 +21,7 @@ interface ScannerResultInterface {
     route?: {
         params: {
             product: PorductInterface;
+            fromProductDetails?: boolean
         };
     };
 }
@@ -30,17 +31,15 @@ const ScannerResult = ({
     route
 }: ScannerResultInterface) => {
 
-
-    const { product } = route?.params || {}
+    const { product, fromProductDetails } = route?.params || {}
     const { theme, typeTheme } = useTheme();
-    const [loadingAddProduct, setLoadingAddProduct] = useState(false)
-
     const { addProduct } = useContext(InventoryBagContext)
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
-
     const navigation = useNavigation<any>();
 
+    const [loadingAddProduct, setLoadingAddProduct] = useState(false)
     const [counterProduct, setCounterProduct] = useState<number>(0);
+    const buttondisabled = loadingAddProduct || counterProduct < 1;
 
     const handleAddToInventory = () => {
         setLoadingAddProduct(true)
@@ -50,7 +49,7 @@ const ScannerResult = ({
         }
         addProduct(inventoryBody as any)
         handleCameraAvailable(true)
-        navigation.goBack()
+        //navigation.goBack()
         setLoadingAddProduct(false)
     }
 
@@ -71,8 +70,8 @@ const ScannerResult = ({
             navigation.navigate('[Modal] - searchProductModal', { modal: true })
         }, 500);
     }
+    
 
-    /* navigation.navigate('BottomNavigation') */
     return (
         <ModalBottom
             visible={true}
@@ -98,7 +97,7 @@ const ScannerResult = ({
                         <View style={modalRenderstyles(theme).counterContainer}>
                             <View style={{ width: wp("42.5%") }}>
                                 {
-                                    seeProductDetails &&
+                                    (seeProductDetails && !fromProductDetails) &&
                                     <TouchableOpacity
                                         onPress={handleExpandProductDetails}
                                         style={[buttonStyles(theme).button_small, buttonStyles(theme).white]}
@@ -114,13 +113,11 @@ const ScannerResult = ({
                         </View>
 
                         <TouchableOpacity
-                            //style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }]}
-
                             style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' },
-                            ...(loadingAddProduct ? [buttonStyles(theme).disabled] : [])
+                            ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
                             ]}
                             onPress={handleAddToInventory}
-                            disabled={loadingAddProduct}
+                            disabled={buttondisabled}
                         >
                             <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
                             <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</Text>

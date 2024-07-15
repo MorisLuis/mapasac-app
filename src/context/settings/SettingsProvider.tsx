@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import { SettingsContext } from './SettingsContext';
 import { settingsReducer } from './settingsReducer';
 import UserInterface from '../../interface/user';
-import { api } from '../../api/api';
-import Toast from 'react-native-toast-message';
-import { AuthContext } from '../auth/AuthContext';
 
 export interface SettingsInterface {
     vibration?: boolean;

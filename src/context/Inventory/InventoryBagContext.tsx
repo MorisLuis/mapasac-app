@@ -6,6 +6,7 @@ import { inventoryDataInterface } from "./InventoryBagProvider";
 interface ContextProps {
     addProduct: (product: PorductInterface) => void;
     removeProduct: (product: PorductInterfaceBag) => void;
+    editProduct: (product: PorductInterfaceBag) => void;
     postInventory: (descripcion?: string) => Promise<void>;
     postInventoryDetails: (products: PorductInterface[]) => Promise<void>;
     cleanBag: () => void;
@@ -13,7 +14,6 @@ interface ContextProps {
     inventoryCreated: boolean;
     numberOfItems: number;
     inventoryData: inventoryDataInterface;
-    addMultipleProducts: any
     productAdded: boolean;
 }
 

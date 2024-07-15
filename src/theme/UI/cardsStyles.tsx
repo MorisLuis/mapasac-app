@@ -12,7 +12,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         borderWidth: 0.5,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
         backgroundColor: theme.background_color_secondary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,
@@ -214,3 +214,59 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         paddingHorizontal: 2
     },
 })
+
+export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+    title: {
+        fontSize: globalFont.font_med,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    ProductInventoryConfirmationCard: {
+        display: "flex",
+        flexDirection: "row",
+        borderWidth: 0.5,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        backgroundColor: theme.background_color_secondary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
+
+    },
+    data: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        maxWidth: "100%"
+    },
+    dataItem: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    dataItemText: {
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
+    },
+    label: {
+        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
+    },
+    information: {
+        maxWidth: "80%"
+    },
+    description: {
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
+    },
+    edit:{
+        backgroundColor: theme.background_color_tertiary,
+        display: "flex",
+        alignContent: "center",
+        justifyContent: "center",
+        paddingHorizontal: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        borderWidth:1,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
+    }
+});
