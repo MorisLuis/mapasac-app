@@ -18,7 +18,7 @@ export const ConfirmationScreen = () => {
     const { bag, cleanBag, numberOfItems, postInventory, postInventoryDetails } = useContext(InventoryBagContext);
     const { navigate } = useNavigation<any>();
 
-    const iconColor = theme.color_tertiary;
+    const iconColor = theme.color_primary;
     const [filteredBag, setFilteredBag] = useState<PorductInterfaceBag[]>([]);
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [page, setPage] = useState(1);

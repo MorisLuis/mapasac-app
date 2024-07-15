@@ -30,10 +30,10 @@ export const TypeOfMovementScreenStyles = (theme: Theme, typeTheme?: string) => 
     },
     optionTextSelected: {
         fontSize: globalFont.font_sm,
-        color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
+        color: typeTheme === 'light' ? theme.text_color_secondary : theme.text_color_secondary
     },
     selectedOption: {
-        backgroundColor: theme.color_yellow,
+        backgroundColor: theme.color_primary,
     },
     footer: {
         padding: globalStyles(theme).globalPadding.padding,

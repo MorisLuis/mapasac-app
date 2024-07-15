@@ -49,7 +49,7 @@ const ScannerResult = ({
         }
         addProduct(inventoryBody as any)
         handleCameraAvailable(true)
-        //navigation.goBack()
+        navigation.goBack()
         setLoadingAddProduct(false)
     }
 

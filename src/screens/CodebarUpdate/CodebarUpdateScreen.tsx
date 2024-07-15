@@ -26,7 +26,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
     const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
-    const iconColorActive = typeTheme === 'dark' ? "black" : "black"
+    const iconColorActive = typeTheme === 'dark' ? "black" : "white"
 
     const [selectedOption, setSelectedOption] = useState<optionSelectedInterface>({ screen: "", title: "" });
     const [openModalCamera, setOpenModalCamera] = useState(false)

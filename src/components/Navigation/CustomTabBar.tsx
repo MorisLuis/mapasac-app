@@ -55,7 +55,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 style={[
                     customTabBarStyles(theme, typeTheme).navButton,
                     {
-                        backgroundColor: isFocused ? theme.color_yellow : (Platform.OS === "android" ? theme.background_color_blur : "transparent")
+                        backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_tertiary : "transparent")
                     }
                 ]}
             >
@@ -90,10 +90,6 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
             </TouchableOpacity>
         );
     };
-
-/*     useEffect(() => {
-        getTypeOfMovementsName()
-    }, [user]) */
 
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>

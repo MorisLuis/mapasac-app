@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "./appTheme";
 
 
-export const ProfileScreenStyles = (theme: Theme) => StyleSheet.create({
+export const ProfileScreenStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ProfileScreen: {
         flex: 1,
         padding: globalStyles(theme).globalPadding.padding,

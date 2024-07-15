@@ -51,7 +51,7 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         color: typeTheme === 'light' ? theme.text_color :  theme.text_color_secondary
     },
     optionActive: {
-        backgroundColor: theme.color_yellow,
+        backgroundColor: theme.color_tertiary,
         borderColor: theme.color_border_tertiary
     }
 });

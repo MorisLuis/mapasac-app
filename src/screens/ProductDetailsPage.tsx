@@ -141,10 +141,10 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 
                 {(!productDetailsData.CodBar && !fromModal) && (
                     <TouchableOpacity
-                        style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
+                        style={[buttonStyles(theme, typeTheme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
                         onPress={handleOptionsToUpdateCodebar}
                     >
-                        <Text style={buttonStyles(theme).buttonText}>Crear codigo de barras</Text>
+                        <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
                     </TouchableOpacity>
                 )}
 
@@ -154,7 +154,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
             {!fromModal && (
                 <View style={productDetailsStyles(theme, typeTheme).footer}>
                     <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
+                        style={[buttonStyles(theme, typeTheme).button, buttonStyles(theme, typeTheme).yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
                         onPress={handleAddToInventory}
                     >
                         <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />

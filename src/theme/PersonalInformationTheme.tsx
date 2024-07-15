@@ -80,6 +80,6 @@ export const PersonalInformationStyles = (theme: Theme, typeTheme?: string) => S
         width: '100%',
         height: 1,
         borderBottomWidth: 1,
-        borderBottomColor: `${theme.color_tertiary}${Math.round(0.25 * 255).toString(16)}`,
+        borderBottomColor: `${theme.color_border}${Math.round(0.25 * 255).toString(16)}`,
     },
 })

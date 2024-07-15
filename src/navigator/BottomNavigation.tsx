@@ -19,7 +19,7 @@ import { useTheme } from '../context/ThemeContext';
 export const BottomNavigation = () => {
 
     const BottomTabIOS = createBottomTabNavigator<BottomNavigationStackParamList>();
-    const { theme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     const getTabBarVisibility = (route: any) => {
         const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -36,7 +36,9 @@ export const BottomNavigation = () => {
                     screenOptions={({ route, navigation }) => ({
                         tabBarIcon: ({ focused }) => {
                             let iconName: string = '';
-                            let iconColor: string = focused ? theme.color_yellow : theme.text_color_light;
+                            let iconColor: string = focused && typeTheme === "light" ? theme.color_secondary :
+                                focused && typeTheme === "dark" ? theme.color_tertiary :
+                                    theme.text_color_light;
 
                             switch (route.name) {
                                 case 'BottomNavigation - Scanner':
@@ -61,7 +63,9 @@ export const BottomNavigation = () => {
                             paddingBottom: hp("1%"),
                         },
                         tabBarLabelStyle: {
-                            color: route.name === navigation.getState().routes[navigation.getState().index].name ? theme.color_yellow : theme.text_color_light,
+                            color: route.name === navigation.getState().routes[navigation.getState().index].name && typeTheme === "light" ? theme.color_secondary :
+                                route.name === navigation.getState().routes[navigation.getState().index].name && typeTheme === "dark" ? theme.color_tertiary :
+                                    theme.text_color_light,
                             paddingBottom: hp("0.5%"),
                             fontSize: globalFont.font_sm
                         },

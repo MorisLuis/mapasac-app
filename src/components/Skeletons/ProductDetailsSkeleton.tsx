@@ -8,9 +8,13 @@ import { useTheme } from '../../context/ThemeContext';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
 export const ProductDetailsSkeleton = () => {
-    const { theme } = useTheme();
-    const shimmerColors = [theme.color_primary, theme.color_secondary, theme.color_primary]
-    
+    const { theme, typeTheme } = useTheme();
+    const shimmerColors = [
+        theme.background_color_tertiary, 
+        typeTheme === "light" ? "#eaeaea" : "#3a3a3a", 
+        theme.background_color_tertiary
+    ]
+
     return (
         <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>
             <ShimmerPlaceHolder
@@ -44,11 +48,11 @@ export const ProductDetailsSkeleton = () => {
             </View>
 
             <ShimmerPlaceHolder
-                        style={ProductDetailsSkeletonStyles(theme).information}
-                        shimmerColors={shimmerColors}
-                        LinearGradient={LinearGradient}
-                    >
-                    </ShimmerPlaceHolder>
+                style={ProductDetailsSkeletonStyles(theme).information}
+                shimmerColors={shimmerColors}
+                LinearGradient={LinearGradient}
+            >
+            </ShimmerPlaceHolder>
         </View>
     )
 

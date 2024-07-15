@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import { getProductByCodeBar } from '../../services/products';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalStyles } from '../../theme/appTheme';
@@ -14,7 +14,7 @@ export const SearchCodebarWithInput = () => {
 
     const { updateBarCode } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
-    const { theme, typeTheme } = useTheme();
+    const { theme, typeTheme, toggleTheme } = useTheme();
 
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
@@ -106,6 +106,7 @@ export const SearchCodebarWithInput = () => {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                {/* <Button title='toggle' onPress={toggleTheme}/> */}
             </View>
         </ModalMiddle>
     );

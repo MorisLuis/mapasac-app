@@ -30,13 +30,19 @@ export interface Theme {
 }
 
 
+/* 
+color_primary: "#e4e4e4",
+    color_secondary: "#eaeaea",
+    color_tertiary: "#001E2B",
+        color_cuaternary: "#F9FAFA"
+*/
 
 
 export const lightTheme = {
     //primary: '#5856D6',
-    color_primary: "#e4e4e4",
-    color_secondary: "#eaeaea",
-    color_tertiary: "#0E1727",
+    color_primary: "#001E2B",
+    color_secondary: "#00684A",
+    color_tertiary: "#00ED64",
     color_cuaternary: "#F9FAFA",
     color_red: "#ff0000",
     color_white: "white",
@@ -49,26 +55,33 @@ export const lightTheme = {
     color_border: "#26282C",
     color_border_secondary: "#cacaca",
     color_border_tertiary: "#6f7b94",
-    text_color: "#1d2a36",
+    text_color: "#1d2a36", // black
     text_color_light: "#657482",
-    text_color_secondary: "#f9f9f9",
+    text_color_secondary: "#f9f9f9", // white
     background_color: "#f1f1f1",
     background_color_secondary: "#eaeaea",
-    background_color_tertiary: "#f1f1f1",
+    background_color_tertiary: "#e4e4e4",
     background_color_blur: "rgba(0, 0, 0, 0.2)",
 };
 
-export const darkTheme = {
-    //primary: '0D0F14',
+/* 
     color_primary: "#26282C",
     color_secondary: "#3a3a3a",
     color_tertiary: "#f1f1f1",
+    color_cuaternary: "#444444",
+*/
+
+export const darkTheme = {
+    //primary: '0D0F14',
+    color_primary: "#f1f1f1",
+    color_secondary: "#00684A",
+    color_tertiary: "#00ED64",
     color_cuaternary: "#444444",
     color_red: "#ff0000",
     color_white: "white",
     color_blue: "#068FFF",
     color_green: "#1F8A70",
-    color_gray: "gray",
+    color_gray: "#3a3a3a",
     color_yellow: "#EDBD42",
     color_black: "black",
     color_red_light: "#ff000056",

@@ -27,6 +27,6 @@ export const CodebarUpdateScreenStyles = (theme: Theme, typeTheme?: string) => S
         color: typeTheme === 'light' ? theme.text_color : theme.text_color
     },
     optionCodebarTextActive: {
-        color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
+        color: typeTheme === 'light' ? theme.text_color_secondary : theme.text_color_secondary
     }
 })

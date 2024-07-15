@@ -115,7 +115,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom,
     },
     selectedOption: {
-        backgroundColor: theme.color_yellow,
+        backgroundColor: theme.color_primary,
         borderColor: theme.color_border_tertiary,
         display: "flex"
     },

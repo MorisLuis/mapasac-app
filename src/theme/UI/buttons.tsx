@@ -49,7 +49,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     // Button text
     buttonText: {
-        color: theme.text_color_secondary,
+        color:  typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
         fontSize: globalFont.font_normal
     },
 
@@ -97,8 +97,8 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
 
     yellow: {
-        backgroundColor: theme.color_yellow,
-        color: theme.text_color_secondary
+        backgroundColor: theme.color_tertiary,
+        color: theme.text_color
     },
 
 
