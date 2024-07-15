@@ -7,13 +7,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ProductInventoryConfirmationCardInterface {
     product: PorductInterface;
-    onClick?: () => void
+    onClick?: () => void;
+    disabled: boolean
 }
 
 export const ProductInventoryConfirmationCard = ({
     product,
-    onClick
+    onClick,
+    disabled
 }: ProductInventoryConfirmationCardInterface) => {
+
+    console.log({disabled})
 
     const { theme, typeTheme } = useTheme();
     const iconColor = theme.color_tertiary
@@ -37,7 +41,7 @@ export const ProductInventoryConfirmationCard = ({
                     </View>
                 </View>
 
-                <TouchableOpacity style={ProductInventoryConfirmationCardTheme(theme, typeTheme).edit}  onPress={onClick}>
+                <TouchableOpacity style={ProductInventoryConfirmationCardTheme(theme, typeTheme).edit}  onPress={onClick} disabled={disabled}>
                     <Icon name="create-outline" size={18} color={iconColor} />
                 </TouchableOpacity>
 

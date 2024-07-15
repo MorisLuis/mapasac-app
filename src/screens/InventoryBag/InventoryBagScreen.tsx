@@ -21,26 +21,26 @@ export const InventoryBagScreen = () => {
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [openModalDecision, setOpenModalDecision] = useState(false);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState<string>('');
     const [filteredBag, setFilteredBag] = useState<PorductInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [pageSize] = useState(5);
     const inputRef = useRef<TextInput>(null);
 
-    useEffect(() => {
-        loadMoreData();
-    }, [bag, searchText, page]);
+    const onPostInventary = async () => {
+        goBack();
+        navigate("confirmationScreen");
+    };
 
-    const loadMoreData = () => {
+    const updateProductBySearch = useCallback(() => {
         const filteredData = bag.filter(product =>
             product.Descripcion.toLowerCase().includes(searchText.toLowerCase())
         );
-        const start = (page - 1) * pageSize;
-        const end = start + pageSize;
-        setFilteredBag(prev => [...prev, ...filteredData.slice(start, end)]);
-    };
+        setFilteredBag(filteredData.slice(0, page * pageSize));
+    }, [searchText, bag, page, pageSize]);
 
     const handleLoadMore = () => {
+        if (filteredBag.length >= numberOfItems) return;
         setPage(prevPage => prevPage + 1);
     };
 
@@ -51,19 +51,6 @@ export const InventoryBagScreen = () => {
         setFilteredBag([]);
     };
 
-    const onPostInventary = async () => {
-        goBack()
-        navigate("confirmationScreen")
-        /* setCreateInventaryLoading(true);
-        await postInventory();
-        await postInventoryDetails(bag);
-        cleanBag();
-        setOpenModalDecision(false);
-        setCreateInventaryLoading(false);
-        navigate('BottomNavigation - Scanner');
-        navigate('succesMessageScreen'); */
-    };
-
     const renderItem = useCallback(({ item }: { item: PorductInterfaceBag }) => (
         <ProductInventoryCard
             product={item}
@@ -72,14 +59,12 @@ export const InventoryBagScreen = () => {
         />
     ), [removeProduct]);
 
-
     useEffect(() => {
-        const updateFilteredBag = () => {
-            setFilteredBag(bag)
-        }
-        updateFilteredBag()
-    }, [bag])
+        updateProductBySearch();
+    }, [searchText, page, updateProductBySearch]);
 
+    console.log({filteredBag: filteredBag.length})
+    console.log({numberOfItems})
 
     return !createInventaryLoading ? (
         <>
@@ -102,10 +87,9 @@ export const InventoryBagScreen = () => {
 
                                 value={searchText}
                                 selectionColor={theme.text_color}
-                                onChangeText={(text) => {
+                                onChangeText={(text: string) => {
                                     setSearchText(text);
                                     setPage(1);
-                                    setFilteredBag([]);
                                 }}
                             />
                         </View>
@@ -115,42 +99,42 @@ export const InventoryBagScreen = () => {
                 {/* PRODUCTS */}
                 {
                     filteredBag.length > 0 ?
-                    <FlatList
-                        style={InventoryBagScreenStyles(theme, typeTheme).content}
-                        data={filteredBag}
-                        renderItem={renderItem}
-                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
-                        onEndReached={handleLoadMore}
-                        onEndReachedThreshold={0.5}
-                    /> 
-                    :
-                    <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                        <EmptyMessageCard
-                            title="No hay productos con ese nombre."
-                            message='Intenta escribiendo algo diferente.'
-                            icon='sad-outline'
+                        <FlatList
+                            style={InventoryBagScreenStyles(theme, typeTheme).content}
+                            data={filteredBag}
+                            renderItem={renderItem}
+                            keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.key}`}
+                            onEndReached={handleLoadMore}
+                            onEndReachedThreshold={0.5}
                         />
-                    </View>
+                        :
+                        <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                            <EmptyMessageCard
+                                title="No hay productos con ese nombre."
+                                message='Intenta escribiendo algo diferente.'
+                                icon='sad-outline'
+                            />
+                        </View>
                 }
 
                 {/* FOOTER */}
                 {
                     numberOfItems > 0 &&
-                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
-                                onPress={() => setOpenModalDecision(true)}
-                            >
-                                <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme).black]}
-                                onPress={onPostInventary}
-                            >
-                                <Text style={buttonStyles(theme).buttonText}>Guardar</Text>
-                            </TouchableOpacity>
-                        </View> 
-                        
+                    <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
+                        <TouchableOpacity
+                            style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
+                            onPress={() => setOpenModalDecision(true)}
+                        >
+                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[buttonStyles(theme).button, buttonStyles(theme).black]}
+                            onPress={onPostInventary}
+                        >
+                            <Text style={buttonStyles(theme).buttonText}>Guardar</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 }
             </SafeAreaView>
 
@@ -173,6 +157,6 @@ export const InventoryBagScreen = () => {
             </ModalDecision>
         </>
     ) : (
-        <LoadingScreen message='Guardando...'/>
+        <LoadingScreen message='Guardando...' />
     );
 };

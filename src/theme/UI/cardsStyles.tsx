@@ -229,7 +229,9 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
+
     },
     data: {
         flex: 1,

@@ -45,7 +45,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme: string) => Sty
     footer: {
         backgroundColor: theme.background_color,
         padding: globalStyles(theme).globalPadding.padding,
-        height: "25%",
+        height: hp("25%"),
         maxHeight: 150,
         width: "100%",
         position: "absolute",

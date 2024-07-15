@@ -49,7 +49,7 @@ const ScannerResult = ({
         }
         addProduct(inventoryBody as any)
         handleCameraAvailable(true)
-        navigation.goBack()
+        //navigation.goBack()
         setLoadingAddProduct(false)
     }
 
@@ -70,6 +70,7 @@ const ScannerResult = ({
             navigation.navigate('[Modal] - searchProductModal', { modal: true })
         }, 500);
     }
+    
 
     return (
         <ModalBottom
