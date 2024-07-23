@@ -1,26 +1,35 @@
-export default interface PorductInterface {
-    Descripcion: string;
-    Id_Familia: number
-    Codigo: string;
-    Familia: string;
-    CodigoPrecio: string;
-    Precio: number;
-    CodigoExsitencia: string;
-    Existencia: number;
-    Id_Almacen: number;
-    Marca: string;
-    Id_Marca: number;
-    Id_ListaPrecios: number;
-    Piezas: number;
-    Impto: number;
-    imagen: [{
-        url: string,
-        id: number
-    }];
+export default interface ProductInterface {
 
-    CodBar?: string
+    // The id of the inventory.
+    // Note: Is different of the product id.
+    idinvearts: number;
+
+    noarticulo: number;
+
+    // The id of the family.
+    cvefamilia: number;
+
+    // The name of the family.
+    familia: string;
+
+    // The codbar.
+    codbarras: string;
+
+    // The name of the product.
+    producto: string;
+
+    // The key of the product.
+    clave: string;
+
+    // The price of the product.
+    precio1: number;
+
+    // The amount added to the stock
+    cantidad?: number
+
+    idenlacemob?: number
 }
 
-export interface PorductInterfaceBag extends PorductInterface {
+export interface ProductInterfaceBag extends ProductInterface {
     key: number
 }

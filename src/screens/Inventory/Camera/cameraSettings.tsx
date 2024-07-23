@@ -1,17 +1,17 @@
 import { useContext, useState } from "react";
 import { Platform, Vibration, Alert } from "react-native";
-import { getProductByCodeBar } from "../../services/products";
+import { getProductByCodeBar } from "../../../services/products";
 import { PERMISSIONS, check, openSettings, request } from "react-native-permissions";
-import { SettingsContext } from "../../context/settings/SettingsContext";
-import PorductInterface from "../../interface/product";
-import UserInterface from "../../interface/user";
+import { SettingsContext } from "../../../context/settings/SettingsContext";
+import ProductInterface from "../../../interface/product";
+import UserInterface from "../../../interface/user";
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
 interface cameraSettingsInterface {
-    handleOpenProductsFoundByCodebar: (response: PorductInterface[]) => void;
-    setProductsScanned: React.Dispatch<React.SetStateAction<PorductInterface[] | undefined>>;
-    productsScanned?: PorductInterface[];
+    handleOpenProductsFoundByCodebar: (response: ProductInterface[]) => void;
+    setProductsScanned: React.Dispatch<React.SetStateAction<ProductInterface[] | undefined>>;
+    productsScanned?: ProductInterface[];
     setCameraPermission: React.Dispatch<React.SetStateAction<PermissionStatus | null>>
 }
 
@@ -113,7 +113,7 @@ export const cameraSettings = ({
 }
 
 export const getTypeOfMovementsName = (user?: UserInterface) => {
-    if (user) {
+   /*  if (user) {
         const { Id_TipoMovInv } = user;
         if (Id_TipoMovInv?.Accion === 1 && Id_TipoMovInv?.Id_TipoMovInv === 0) {
             return "al Inventario";
@@ -124,6 +124,6 @@ export const getTypeOfMovementsName = (user?: UserInterface) => {
         } else {
             return "Traspaso";
         }
-    }
+    } */
     return "";
 };

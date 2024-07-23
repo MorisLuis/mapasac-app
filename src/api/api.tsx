@@ -1,20 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-export const api = axios.create(
-    {
-        baseURL: 'https://seahorse-app-spuvc.ondigitalocean.app/',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }
-)
-
-
-
 /* export const api = axios.create(
     {
-        baseURL: 'http://192.168.1.12:5001',
+        baseURL: 'https://mapasac-app-5iaa6.ondigitalocean.app/',
         headers: {
             'Content-Type': 'application/json',
         }
@@ -22,15 +11,21 @@ export const api = axios.create(
 ) */
 
 
+
+export const api = axios.create(
+    {
+        baseURL: 'http://192.168.100.42:5001',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+)
+
+
 // Interceptor to add the token to headers
 api.interceptors.request.use(
     async config => {
-        const tokenDB = await AsyncStorage.getItem('tokenDB');
         const token = await AsyncStorage.getItem('token');
-
-        if (tokenDB) {
-            config.headers['Authorization'] = `Bearer ${tokenDB}`;
-        }
 
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;

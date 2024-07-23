@@ -1,15 +1,15 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 
-import { getProductsByStock, getTotalProductsByStock } from '../../services/products';
-import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
-import PorductInterface from '../../interface/product';
+import { getProducts, getTotalProducts } from '../../../services/products';
+import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
+import ProductInterface from '../../../interface/product';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { useTheme } from '../../context/ThemeContext';
-import { InventoryScreenStyles } from '../../theme/InventoryScreenTheme';
+import { ProductInventoryCardSkeleton } from '../../../components/Skeletons/ProductInventoryCardSkeleton';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { useTheme } from '../../../context/ThemeContext';
+import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
 
 
 export const Inventory = () => {
@@ -20,7 +20,7 @@ export const Inventory = () => {
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
-    const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([]);
+    const [productsInInventory, setProductsInInventory] = useState<ProductInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -28,18 +28,14 @@ export const Inventory = () => {
     const handleGetProductsByStock = async () => {
         setIsLoading(true);
 
-        const products = await getProductsByStock(currentPage);
+        const products = await getProducts(currentPage);
 
         setProductsInInventory((prevProducts) => {
-            const newProducts = products.filter(
+            const newProducts = products?.filter(
                 (product: any) =>
                     !prevProducts.some(
                         (prevProduct) =>
-                            prevProduct.Codigo === product.Codigo &&
-                            prevProduct.Id_Marca === product.Id_Marca &&
-                            prevProduct.Marca === product.Marca &&
-                            prevProduct.Id_Almacen === product.Id_Almacen &&
-                            prevProduct.Id_ListaPrecios === product.Id_ListaPrecios
+                            prevProduct.idinvearts === product.idinvearts
                     )
             );
 
@@ -55,12 +51,12 @@ export const Inventory = () => {
         }
     };
 
-    const handlePressProduct = (selectedProduct: PorductInterface) => {
+    const handlePressProduct = (selectedProduct: ProductInterface) => {
         handleCodebarScannedProcces(false);
         navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
     };
 
-    const renderItem = ({ item }: { item: PorductInterface }) => {
+    const renderItem = ({ item }: { item: ProductInterface }) => {
         return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
     };
 
@@ -91,15 +87,17 @@ export const Inventory = () => {
         );
     };
 
-    useEffect(() => {
-        handleGetProductsByStock();
-    }, [currentPage]);
-
+    useFocusEffect(
+        useCallback(() => {
+            handleGetProductsByStock();
+            return () => {};
+        }, [currentPage])
+    );
 
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
-            const total = await getTotalProductsByStock();
-            setTotalProducts(total);
+            const total = await getTotalProducts();
+            setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()
     }, [])
@@ -130,7 +128,7 @@ export const Inventory = () => {
                 <FlatList
                     data={productsInInventory}
                     renderItem={renderItem}
-                    keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
+                    keyExtractor={product => `${product.idinvearts}`}
                     ListFooterComponent={renderFooter}
                     onEndReached={loadMoreItem}
                     onEndReachedThreshold={0}

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ProductInventoryConfirmationCardTheme } from '../../theme/UI/cardsStyles';
-import PorductInterface from '../../interface/product.js';
+import ProductInterface from '../../interface/product.js';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ProductInventoryConfirmationCardInterface {
-    product: PorductInterface;
+    product: ProductInterface;
     onClick?: () => void;
     disabled: boolean
 }
@@ -25,17 +25,17 @@ export const ProductInventoryConfirmationCard = ({
             <View style={ProductInventoryConfirmationCardTheme(theme).data}>
                 <View style={ProductInventoryConfirmationCardTheme(theme).information}>
                     <View>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).description}>{product.Descripcion}</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).description}>{product.producto}</Text>
                     </View>
 
                     <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Codigo:</Text>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.Codigo}</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Clave:</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.clave}</Text>
                     </View>
 
                     <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
                         <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Piezas:</Text>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.Piezas}</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.cantidad}</Text>
                     </View>
                 </View>
 

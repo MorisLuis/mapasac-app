@@ -55,9 +55,11 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     price: {
         fontWeight: "bold",
         fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     priceValue: {
         fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     information: {
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
@@ -94,7 +96,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         width: '100%',
         height: 1,
         borderBottomWidth: 1,
-        borderBottomColor: `${theme.color_tertiary}${Math.round(0.25 * 255).toString(16)}`,
+        borderBottomColor: `${theme.color_border}${Math.round(0.25 * 255).toString(16)}`,
         backgroundColor: theme.color_border
     },
     optionsContent: {

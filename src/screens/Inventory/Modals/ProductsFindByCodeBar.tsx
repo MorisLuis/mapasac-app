@@ -1,16 +1,16 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import PorductInterface from '../../interface/product';
-import { ProductInventoryCard } from '../../components/Cards/ProductInventoryCard';
-import ModalMiddle from '../../components/Modals/ModalMiddle';
+import ProductInterface from '../../../interface/product';
+import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
+import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
-import { ProductFindByCodebarInputStyles } from '../../theme/ModalRenders/ProductFindByCodebarInputTheme';
-import { useTheme } from '../../context/ThemeContext';
+import { ProductFindByCodebarInputStyles } from '../../../theme/ModalRenders/ProductFindByCodebarInputTheme';
+import { useTheme } from '../../../context/ThemeContext';
 
 interface ProductFindByCodeBarInterface {
     route?: {
         params: {
-            products: PorductInterface[];
+            products: ProductInterface[];
         };
     };
 }
@@ -21,7 +21,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
     const navigation = useNavigation<any>();
     const { theme } = useTheme();
 
-    const onSelectProduct = (product: PorductInterface) => {
+    const onSelectProduct = (product: ProductInterface) => {
         navigation.goBack()
         navigation.navigate('[Modal] - scannerResultScreen', { product: product })
     }
@@ -38,7 +38,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
                 {
                     products.map((product) =>
                         <ProductInventoryCard
-                            key={`${product.Codigo}-${product.Id_Marca}-${product.Id_Almacen}`}
+                            key={`${product.idinvearts}`}
                             product={product}
                             onClick={() => onSelectProduct(product)}
                         />

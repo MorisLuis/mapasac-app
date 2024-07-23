@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
-import { buttonStyles } from '../theme/UI/buttons';
-import { Id_TipoMovInvInterface, getTypeOfMovements } from '../services/typeOfMovement';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { Id_TipoMovInvInterface, getTypeOfMovements } from '../../services/typeOfMovement';
 import { useNavigation } from '@react-navigation/native';
-import { TypeOfMovementSkeleton } from '../components/Skeletons/TypeOfMovementSkeleton';
-import { AuthContext } from '../context/auth/AuthContext';
-import { TypeOfMovementScreenStyles } from '../theme/TypeOfMovementScreenTheme';
-import { useTheme } from '../context/ThemeContext';
-import DotLoader from '../components/Ui/DotLaoder';
+import { TypeOfMovementSkeleton } from '../../components/Skeletons/TypeOfMovementSkeleton';
+import { AuthContext } from '../../context/auth/AuthContext';
+import { TypeOfMovementScreenStyles } from '../../theme/TypeOfMovementScreenTheme';
+import { useTheme } from '../../context/ThemeContext';
+import DotLoader from '../../components/Ui/DotLaoder';
 
 export const TypeOfMovementScreen = () => {
 
-    const { updateTypeOfMovements, logOut } = useContext(AuthContext);
+    //const { updateTypeOfMovements, logOut } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
@@ -45,8 +45,7 @@ export const TypeOfMovementScreen = () => {
     const onChangetTypeOfMovement = () => {
         try {
             if (typeSelected === undefined || typeSelected === null) return
-            updateTypeOfMovements(typeSelected);
-            navigate('BottomNavigation')
+            //updateTypeOfMovements(typeSelected);
         } catch (error) {
             console.log({ error })
         }

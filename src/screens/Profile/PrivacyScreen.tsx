@@ -22,8 +22,8 @@ export const PrivacyScreen = () => {
             </Text>
             <Text style={PrivacyScreenStyles(theme).subtitle}>Recopilación y uso de información</Text>
             <Text style={PrivacyScreenStyles(theme).paragraph}>
-                • Información de perfil de Olei: Recopilamos información relacionada con su
-                perfil o perfiles de Olei (como por ejemplo Id Usuario y contraseña).
+                • Información de perfil de Mapasac: Recopilamos información relacionada con su
+                perfil o perfiles de Mapasac (como por ejemplo Id Usuario y contraseña).
                 Utilizamos esta información para el acceso a tu base de datos localizada en
                 la nube de Microsoft Azure.
             </Text>
@@ -35,7 +35,7 @@ export const PrivacyScreen = () => {
             <Text style={PrivacyScreenStyles(theme).subtitle}>Cookies</Text>
             <Text style={PrivacyScreenStyles(theme).paragraph}>
                 • Utilizamos cookies para operar y proporcionar nuestros servicios, por
-                ejemplo, usamos cookies para recordar el usuario y contraseña de Olei, a fin
+                ejemplo, usamos cookies para recordar el usuario y contraseña de Mapasac, a fin
                 de proporcionarte una experiencia más eficaz, segura y rápida.
             </Text>
             <Text style={PrivacyScreenStyles(theme).subtitle}>Seguridad</Text>
@@ -54,7 +54,7 @@ export const PrivacyScreen = () => {
             <Text style={PrivacyScreenStyles(theme).paragraph}>
                 Al utilizar nuestra aplicación, acepta los términos de nuestra Política de Privacidad.
                 Si tiene alguna pregunta o inquietud sobre nuestra Política de Privacidad, contacta
-                al Soporte Olei.
+                al Soporte Mapasac.
             </Text>
         </ScrollView>
     )

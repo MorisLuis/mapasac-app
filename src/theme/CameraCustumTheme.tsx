@@ -93,15 +93,34 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
     },
     actions: {
         position: "absolute",
-        left: wp("5%"),
+        right: wp("5%"),
         top: hp("37.5%"),
         zIndex: 2
     },
     flash: {
-        marginBottom: 20
+        marginBottom: 20,
+        backgroundColor: theme.background_color_secondary,
+        padding: globalStyles(theme).globalPadding.padding / 3,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
     },
     cog: {
-        marginBottom: 20
+        marginBottom: 20,
+        backgroundColor: theme.background_color_secondary,
+        padding: globalStyles(theme).globalPadding.padding / 3,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
+    },
+    bagCounter: {
+        position: "absolute",
+        width: hp("3%"),
+        height: hp("3%"),
+        top: - globalStyles(theme).globalPadding.padding / 2,
+        right: - globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        backgroundColor: theme.color_tertiary,
+        borderWidth: 1,
+        borderColor: theme.color_border_tertiary,
+        justifyContent: "center",
+        alignItems: "center"
     },
     blurOverlay: {
         position: 'absolute',

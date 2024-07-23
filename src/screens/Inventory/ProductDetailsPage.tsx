@@ -1,21 +1,22 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { getProductDetails } from '../services/products';
-import ProductInterface from '../interface/product';
-import { buttonStyles } from '../theme/UI/buttons';
+import { getProductDetails } from '../../services/products';
+import ProductInterface from '../../interface/product';
+import { buttonStyles } from '../../theme/UI/buttons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductDetailsSkeleton } from '../components/Skeletons/ProductDetailsSkeleton';
-import { productDetailsStyles } from '../theme/productDetailsTheme';
-import { SettingsContext } from '../context/settings/SettingsContext';
-import { globalStyles } from '../theme/appTheme';
-import { identifyBarcodeType } from '../utils/identifyBarcodeType';
-import { useTheme } from '../context/ThemeContext';
+import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetailsSkeleton';
+import { productDetailsStyles } from '../../theme/productDetailsTheme';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { globalStyles } from '../../theme/appTheme';
+import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
+import { useTheme } from '../../context/ThemeContext';
+import { format } from '../../utils/currency';
 
 type ProductDetailsPageInterface = {
     route?: {
         params: {
-            selectedProduct: { Codigo: string; Marca: string };
+            selectedProduct: { idinvearts: number };
             fromModal?: boolean;
             fromUpdateCodebar: boolean
         };
@@ -24,7 +25,7 @@ type ProductDetailsPageInterface = {
 
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const { selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
-    const { Codigo, Marca } = selectedProduct ?? {};
+    const { idinvearts } = selectedProduct ?? {};
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
     const shouldCleanUp = useRef(true);
 
@@ -36,8 +37,9 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleGetProductDetails = async () => {
+        if (!idinvearts) return;
         try {
-            const productData = await getProductDetails(Codigo as string, Marca as string);
+            const productData = await getProductDetails(idinvearts);
             setProductDetailsData(productData);
         } catch (error) {
             console.error('Error fetching product details:', error);
@@ -59,7 +61,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
                     setProductDetailsData(null);
                 }
 
-                if(fromUpdateCodebar){
+                if (fromUpdateCodebar) {
                     shouldCleanUp.current = true;
                 }
             };
@@ -100,7 +102,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
         <>
             <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
                 <View style={productDetailsStyles(theme, typeTheme).imageContainer}>
-                    {productDetailsData.imagen ? (
+                    {/*  {productDetailsData.imagen ? (
                         <Image
                             style={productDetailsStyles(theme).image}
                             source={{
@@ -112,23 +114,23 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                             <Icon name={'camera'} size={24} color={iconColor} />
                             <Text style={productDetailsStyles(theme).notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
                         </View>
-                    )}
+                    )} */}
                 </View>
                 <View style={productDetailsStyles(theme).header}>
-                    <Text style={productDetailsStyles(theme).description}>{productDetailsData.Descripcion}</Text>
-                    {/* <View>
-                        <Text style={productDetailsStyles(theme).price}>Precio</Text>
-                        <Text style={productDetailsStyles(theme).priceValue}>{format(productDetailsData.Precio)}</Text>
-                    </View> */}
+                    <Text style={productDetailsStyles(theme).description}>{productDetailsData.producto}</Text>
+                    <View>
+                        <Text style={productDetailsStyles(theme, typeTheme).price}>Precio</Text>
+                        <Text style={productDetailsStyles(theme, typeTheme).priceValue}>{format(productDetailsData.precio1)}</Text>
+                    </View>
                 </View>
 
                 <View style={productDetailsStyles(theme, typeTheme).information}>
-                    <ProductDetailItem theme={theme} label="Codigo:" value={productDetailsData.Codigo} />
-                    <ProductDetailItem theme={theme} label="Existencia:" value={productDetailsData.Existencia} />
-                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.Familia} />
-                    <ProductDetailItem theme={theme} label="Marca:" value={productDetailsData.Marca} />
-                    {productDetailsData.CodBar && (
-                        <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.CodBar} isLastChild />
+                    <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
+                    {/* <ProductDetailItem theme={theme} label="Existencia:" value={productDetailsData.Existencia} /> */}
+                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia} />
+                    {/* <ProductDetailItem theme={theme} label="Marca:" value={productDetailsData.Marca} /> */}
+                    {productDetailsData?.codbarras?.trim() !== "" && (
+                        <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.codbarras} isLastChild />
                     )}
                 </View>
 
@@ -139,14 +141,15 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                     </View>
                 }
 
-                {(!productDetailsData.CodBar && !fromModal) && (
-                    <TouchableOpacity
-                        style={[buttonStyles(theme, typeTheme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
-                        onPress={handleOptionsToUpdateCodebar}
-                    >
-                        <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
-                    </TouchableOpacity>
-                )}
+                {(
+                    !productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) && (
+                        <TouchableOpacity
+                            style={[buttonStyles(theme, typeTheme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
+                            onPress={handleOptionsToUpdateCodebar}
+                        >
+                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
+                        </TouchableOpacity>
+                    )}
 
 
             </ScrollView>

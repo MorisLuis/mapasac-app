@@ -11,20 +11,15 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import { LoadingScreen } from '../LoadingScreen';
 import useKeyboardStatus from '../../hooks/useKeyboardStatus';
 import { useForm } from '../../hooks/useForm';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
 import { InputPassword } from '../../components/Ui/InputPassword';
 
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
-
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
-    const navigation = useNavigation<any>();
-    const { Id_Usuario, password, onChange } = useForm({
-        Id_Usuario: '',
-        password: ''
+    const { usr, pas, onChange } = useForm({
+        usr: '',
+        pas: ''
     });
 
     useEffect(() => {
@@ -34,17 +29,9 @@ export const LoginScreen = () => {
 
     const onLogin = () => {
         Keyboard.dismiss();
-        signIn({ Id_Usuario, password });
+        signIn({ usr, pas });
     };
 
-    const handleNavigateToProfile = () => {
-        navigation.navigate('BottomNavigation', {
-            screen: 'BottomNavigation - Profile', params: {
-                screen: '[ProfileNavigation] - personalInformationScreen',
-                params: { fromLogIn: true }
-            }
-        });
-    };
 
     const keyboardActive = useKeyboardStatus();
     if (loggingIn) return <LoadingScreen message='Iniciando sesion...'/>;
@@ -56,12 +43,7 @@ export const LoginScreen = () => {
         >
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={loginStyles(theme).formContainer}>
-                    {/* <View style={loginStyles(theme).imageContainer}>
-                        <Image
-                            style={[keyboardActive ? loginStyles(theme).logoActived : loginStyles(theme).logo]}
-                            source={require('../../assets/logo01.png')}
-                        />
-                    </View> */}
+
                     <Text style={loginStyles(theme).title}>Bienvenido!</Text>
                     <Text style={loginStyles(theme).textLogin}>Ingresar datos de Usuario</Text>
 
@@ -71,19 +53,19 @@ export const LoginScreen = () => {
                         keyboardType="email-address"
                         style={[inputStyles(theme, typeTheme).input, globalStyles(theme).globalMarginBottom]}
                         selectionColor={theme.text_color}
-                        onChangeText={(value) => onChange(value, 'Id_Usuario')}
-                        value={Id_Usuario}
+                        onChangeText={(value) => onChange(value, 'usr')}
+                        value={usr}
                         onSubmitEditing={onLogin}
                         autoCapitalize="none"
                         autoCorrect={false}
                     />
 
                     <InputPassword
-                        password={password}
+                        password={pas}
                         onChange={onChange}
                         onLogin={onLogin}
                         placeholder={"Escribe tu contraseña..."}
-                        inputName="password"
+                        inputName="pas"
                     />
 
                     <View style={loginStyles(theme).buttonContainer}>
@@ -96,11 +78,6 @@ export const LoginScreen = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                <TouchableOpacity style={loginStyles(theme).footer} onPress={handleNavigateToProfile}>
-                    <Text style={loginStyles(theme).footerText}>Configuración</Text>
-                    <Icon name="cog-outline" size={20} color={iconColor} />
-                </TouchableOpacity>
             </SafeAreaView>
         </KeyboardAvoidingView>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Inventory } from '../screens/Camera/Inventory';
+import { Inventory } from '../screens/Inventory/Camera/Inventory';
 import { CustomTabBar } from '../components/Navigation/CustomTabBar';
-import CameraTest from '../screens/Camera/CameraTest';
+import CameraTest from '../screens/Inventory/Camera/CameraTest';
 
 export type ScannerNavigationStackParamList = {
     "[ScannerNavigation] - camera": undefined,
@@ -14,6 +14,7 @@ export const ScannerNavigation = ({ route }: any) => {
 
     const TopTabs = createMaterialTopTabNavigator<ScannerNavigationStackParamList>();
     const initialScreen = route?.params?.screen || '[ScannerNavigation] - camera';
+
     return (
         <View style={{ flex: 1 }} >
             <TopTabs.Navigator

@@ -2,17 +2,17 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import { FlatList, SafeAreaView, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { getSearchProductInStock } from '../services/Search/products';
-import PorductInterface from '../interface/product';
-import { ProductItemSearch } from '../components/Cards/ProductItemSearch';
-import { CustomBackButton } from '../components/Ui/CustomHeader';
-import ModalBottom from '../components/Modals/ModalBottom';
+import { getSearchProductInStock } from '../../services/searchs';
+import ProductInterface from '../../interface/product';
+import { ProductItemSearch } from '../../components/Cards/ProductItemSearch';
+import { CustomBackButton } from '../../components/Ui/CustomHeader';
+import ModalBottom from '../../components/Modals/ModalBottom';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductInventoryCardSkeleton } from '../components/Skeletons/ProductInventoryCardSkeleton';
-import { SettingsContext } from '../context/settings/SettingsContext';
+import { ProductInventoryCardSkeleton } from '../../components/Skeletons/ProductInventoryCardSkeleton';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SearchProductScreenStyles } from '../theme/SearchProductScreenTheme';
-import { useTheme } from '../context/ThemeContext';
+import { SearchProductScreenStyles } from '../../theme/SearchProductScreenTheme';
+import { useTheme } from '../../context/ThemeContext';
 
 
 type SearchProductScreenInterface = {
@@ -33,16 +33,16 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
 
     const navigation = useNavigation<any>();
-    const [productsInInventory, setProductsInInventory] = useState<PorductInterface[]>([])
+    const [productsInInventory, setProductsInInventory] = useState<ProductInterface[]>([])
     const [currentPage, setCurrentPage] = useState(1);
     const [openModalAdvice, setOpenModalAdvice] = useState(false)
 
     const getSearchData = async (searchTerm: string) => {
-        const products = await getSearchProductInStock(searchTerm ? searchTerm : "")
+        const products = await getSearchProductInStock({searchTerm: searchTerm ? searchTerm : ""})
         setProductsInInventory(products);
     }
 
-    const renderItem = ({ item }: { item: PorductInterface }) => {
+    const renderItem = ({ item }: { item: ProductInterface }) => {
         return (
             <ProductItemSearch fromModal={modal ? modal : false} product={item} onClick={() => navigateToProduct(item)} />
         );
@@ -52,7 +52,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
         setCurrentPage(currentPage + 1);
     };
 
-    const navigateToProduct = (selectedProduct: PorductInterface) => {
+    const navigateToProduct = (selectedProduct: ProductInterface) => {
 
         if (modal) {
             if (isModal) {
@@ -107,7 +107,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                     <FlatList
                         data={productsInInventory}
                         renderItem={renderItem}
-                        keyExtractor={product => `${product.Codigo}-${product.Id_Marca}-${product.Marca}-${product.Id_Almacen}-${product.Id_ListaPrecios}`}
+                        keyExtractor={product => `${product.idinvearts}`}
                         onEndReached={loadMoreItem}
                         onEndReachedThreshold={0}
                     />

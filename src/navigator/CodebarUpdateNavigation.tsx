@@ -1,32 +1,31 @@
 import React from 'react';
 import { View } from 'react-native';
-import { CodebarUpdateScreen } from '../screens/CodebarUpdate/CodebarUpdateScreen';
-import { CodebarUpdateWithInputScreen } from '../screens/CodebarUpdate/CodebarUpdateWithInputScreen';
+import { CodebarUpdateScreen } from '../screens/Inventory/CodebarUpdate/CodebarUpdateScreen';
+import { CodebarUpdateWithInputScreen } from '../screens/Inventory/CodebarUpdate/CodebarUpdateWithInputScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 import { globalStyles } from '../theme/appTheme';
-import PorductInterface from '../interface/product';
+import ProductInterface from '../interface/product';
 import { useTheme } from '../context/ThemeContext';
 
 type CodebarUpdateNavigationInterface = {
-    route?: {
+    route: {
         params: {
-            productDetails: PorductInterface;
-            selectedProduct: { Codigo: string; Marca: string };
+            selectedProduct: { idinvearts: number }
         };
     };
 };
 
 
 export type InventoryNavigationStackParamList = {
-    "[CodebarUpdateNavigation] - UpdateCodeBarScreen": { product: PorductInterface };
+    "[CodebarUpdateNavigation] - UpdateCodeBarScreen": { product: ProductInterface };
     "[CodebarUpdateNavigation] - UpdateCodeBarWithInput": undefined
 };
 
 export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterface) => {
 
     const Stack = createStackNavigator<InventoryNavigationStackParamList>();
-    const { productDetails, selectedProduct } = route?.params ?? {};
+    const { selectedProduct } = route?.params ?? {};
     const { theme } = useTheme();
 
     return (
@@ -41,7 +40,7 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                         </View>
                 })}
             >
-                {props => <CodebarUpdateScreen {...props} productDetails={selectedProduct} /* selectedProduct={selectedProduct} */ />}
+                {props => <CodebarUpdateScreen {...props} selectedProduct={selectedProduct} />}
             </Stack.Screen>
 
             <Stack.Screen
@@ -53,8 +52,9 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
                         </View>
                 })}
             >
-                {props => <CodebarUpdateWithInputScreen {...props} productDetails={productDetails} />}
+                {props => <CodebarUpdateWithInputScreen {...props} selectedProduct={selectedProduct} />}
             </Stack.Screen>
+
         </Stack.Navigator>
     );
 };

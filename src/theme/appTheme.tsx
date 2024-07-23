@@ -44,10 +44,10 @@ export const lightTheme = {
     color_secondary: "#00684A",
     color_tertiary: "#00ED64",
     color_cuaternary: "#F9FAFA",
-    color_red: "#ff0000",
+    color_red: "#D85A5B",
     color_white: "white",
-    color_blue: "#068FFF",
-    color_green: "#1F8A70",
+    color_blue: "#415BB8",
+    color_green: "#58B754",
     color_gray: "gray",
     color_yellow: "#EDBD42",
     color_black: "black",
@@ -77,10 +77,10 @@ export const darkTheme = {
     color_secondary: "#00684A",
     color_tertiary: "#00ED64",
     color_cuaternary: "#444444",
-    color_red: "#ff0000",
+    color_red: "#D85A5B",
     color_white: "white",
-    color_blue: "#068FFF",
-    color_green: "#1F8A70",
+    color_blue: "#415BB8",
+    color_green: "#58B754",
     color_gray: "#3a3a3a",
     color_yellow: "#EDBD42",
     color_black: "black",
@@ -100,7 +100,7 @@ export const darkTheme = {
 
 
 
-export const globalStyles = (theme: Theme) => StyleSheet.create({
+export const globalStyles = (theme?: Theme) => StyleSheet.create({
     globalPadding: {
         padding: wp("5%")
     },

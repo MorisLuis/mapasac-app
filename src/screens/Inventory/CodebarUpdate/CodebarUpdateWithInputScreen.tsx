@@ -1,21 +1,19 @@
 import React, { useContext, useState } from 'react'
 import { KeyboardType, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
-import { inputStyles } from '../../theme/UI/inputs';
-import { updateCostos } from '../../services/costos';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
+import { inputStyles } from '../../../theme/UI/inputs';
 import { useNavigation } from '@react-navigation/native';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import codebartypes from '../../utils/codebarTypes.json';
-import PorductInterface from '../../interface/product';
-import { CodebarUpdateWithInputScreenStyles } from '../../theme/CodebarUpdateWithInputScreenTheme';
-import { useTheme } from '../../context/ThemeContext';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import codebartypes from '../../../utils/codebarTypes.json';
+import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdateWithInputScreenTheme';
+import { useTheme } from '../../../context/ThemeContext';
 
 interface CodebarUpdateWithInputScreenInterface {
-    productDetails?: PorductInterface
+    selectedProduct: { idinvearts: number }
 }
 
-export const CodebarUpdateWithInputScreen = ({ productDetails }: CodebarUpdateWithInputScreenInterface) => {
+export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateWithInputScreenInterface) => {
 
     const [text, setText] = useState('');
     const navigation = useNavigation<any>();
@@ -27,16 +25,16 @@ export const CodebarUpdateWithInputScreen = ({ productDetails }: CodebarUpdateWi
 
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-        if (!productDetails) return;
+        if (!selectedProduct) return;
         if(!regex.test(text)) return;
 
-        await updateCostos({
-            codigo: productDetails?.Codigo,
+        /* await updateCodeBar({
+            codigo: productDetails?.clave,
             Id_Marca: productDetails?.Id_Marca,
             body: {
                 CodBar: text
             }
-        })
+        }) */
         navigation.goBack()
         navigation.goBack()
     }

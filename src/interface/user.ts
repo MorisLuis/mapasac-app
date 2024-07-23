@@ -1,66 +1,40 @@
 
 export default interface UserInterface {
 
-    //  The identifier for the warehouse where the products are distributed.
-    Id_Almacen: number;
+    // Id of the user.
+    idusrmob: number;
 
-    // The name of the user company.
-    Nombre: string;
+    // The number specify the "sucural" ( almacen ).
+    idsucursal: number;
 
-    // The name of the company.
-    Company: string,
+    // The name of the user.
+    nombres?: string;
 
-    // The ID of the price list that defines the prices of the products.
-    Id_ListPre?: number | null;
+    // The user namre or alias.
+    usr?: string;
 
-    // The identifier of the client.
-    Id_Cliente: number;
+    // The password of the account.
+    pas?: string;
 
-    // The unique identifier for database access.
-    Id_UsuarioOOL: string;
+    // The server path.
+    svr?: string;
 
-    // The password for database access.
-    PasswordOOL: string;
+    // The database name.
+    dba?: string;
 
-    // The SQL server name or address.
-    ServidorSQL: string;
+    // The port of the connectio database.
+    port: number;
 
-    // The name of the SQL database.
-    BaseSQL: string;
+    // The user name of the database
+    usrdba: string;
 
-    // Represents whether the user is an employee or a direct client. (1) Represent client and (2) represent employee
-    TipoUsuario: number;
+    // The user password of the database
+    pasdba: string;
 
-    // Represents some privileges associated with the user.
-    PrivilegioTipoCliente: number;
+    // Specify the status of the user
+    activo?: number;
 
-    PrecioIncIVA: number;
+    // Specify when the use was created.
+    alta?: Date;
 
-    // Represent if the images are available (1).
-    SwImagenes: 0 | 1;
-
-    // Represent if show the products without stock (1)
-    SwSinStock: 0 | 1;
-
-    // Represent if show the products without price (1)
-    SwsinPrecio: 0 | 1;
-
-    RazonSocial: string,
-
-    //
-    TipoDocOO: number;
-
-    // This field is currently not in use.
-    Id_UsuarioOLEI: number | null;
-    PasswordOLEI: number | null;
-    Id_ClienteDBCLIENTES: number | null;
-
-    Id_Usuario: String | null;
-
-    Id_TipoMovInv?: {
-        Id_TipoMovInv: number,
-        Accion: number,
-        Descripcion: string,
-        Id_AlmDest: number
-    };
 }

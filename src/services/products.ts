@@ -1,13 +1,24 @@
 import { api } from "../api/api";
-import UserInterface from "../interface/user";
+
+const getProducts = async (PageNumber: number) => {
+
+    let products;
+    try {
+        const getProduct = await api.get(`/api/product?page=${PageNumber}&limit=10`);
+        products = getProduct.data.products;
+    } catch (error: any) {
+        console.log({ error: error })
+    }
+
+    return products
+}
 
 
-const getProductDetails = async (id: string, marca: string) => {
+const getProductDetails = async (idinvearts: number) => {
     let product;
     try {
-        const getProduct = await api.get(`/api/product/${id}?Marca=${marca}`);
-        product = getProduct.data;
-
+        const getProduct = await api.get(`/api/product/byid?idinvearts=${idinvearts}`);
+        product = getProduct.data.product;
     } catch (error: any) {
         console.log({ error: error })
     }
@@ -16,15 +27,33 @@ const getProductDetails = async (id: string, marca: string) => {
 }
 
 interface getProductByCodeBarInterface {
-    codeBar?: string, codigo?: string
+    codeBar: string
 }
 
-const getProductByCodeBar = async ({ codeBar, codigo }: getProductByCodeBarInterface) => {
+const getProductByCodeBar = async ({ codeBar }: getProductByCodeBarInterface) => {
 
     let product;
     try {
-        const getProduct = await api.get(`/api/product/byStockAndCodeBar?CodBar=${codeBar}&Codigo=${codigo}`);
-        product = getProduct.data;
+        const getProduct = await api.get(`/api/product/bycodebar?codbarras=${codeBar}`);
+        product = getProduct.data.product;
+
+    } catch (error: any) {
+        console.log({ error: error })
+    }
+
+    return product
+};
+
+interface getProductByClaveInterface {
+    clave: string
+}
+
+const getProductByClave = async ({ clave }: getProductByClaveInterface) => {
+
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/byclave?clave=${clave}`);
+        product = getProduct.data.product;
 
     } catch (error: any) {
         console.log({ error: error })
@@ -35,26 +64,12 @@ const getProductByCodeBar = async ({ codeBar, codigo }: getProductByCodeBarInter
 
 
 
-
-const getProductsByStock = async (PageNumber: number) => {
-
-    let products;
-    try {
-        const getProduct = await api.get(`/api/product/byStock?PageNumber=${PageNumber}&PageSize=10`);
-        products = getProduct.data;
-    } catch (error: any) {
-        console.log({ error: error })
-    }
-
-    return products
-}
-
-const getTotalProductsByStock = async () => {
+const getTotalProducts= async () => {
 
     let total;
     try {
-        const getProduct = await api.get(`/api/product/byStockCount`);
-        total = getProduct.data[0].TotalProductos;
+        const getProduct = await api.get(`/api/product/total`);
+        total = getProduct.data.total;
     } catch (error: any) {
         console.log({ error: error })
     }
@@ -65,8 +80,9 @@ const getTotalProductsByStock = async () => {
 
 
 export {
+    getProducts,
     getProductByCodeBar,
-    getProductsByStock,
-    getTotalProductsByStock,
+    getProductByClave,
+    getTotalProducts,
     getProductDetails
 }

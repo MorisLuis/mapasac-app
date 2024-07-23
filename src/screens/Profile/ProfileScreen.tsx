@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { DbAuthContext } from '../../context/dbAuth/DbAuthContext';
 import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import DeviceInfo from 'react-native-device-info';
@@ -17,7 +16,6 @@ export const ProfileScreen = () => {
     const { logOut } = useContext(AuthContext);
     const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
-    const { logOut: logOutDB } = useContext(DbAuthContext);
     const { theme, typeTheme, toggleTheme} = useTheme();
     const { navigate } = useNavigation<any>();
 
@@ -28,27 +26,7 @@ export const ProfileScreen = () => {
         console.log('Personal Information effect');
     }, [])
 
-    const logOutDataBase = () => {
 
-        Alert.alert(
-            "Cambiar la base de datos", // Título del cuadro de diálogo
-            "¿Estás seguro de que deseas cambiar la base de datos? Se cerrara la actual.", // Mensaje del cuadro de diálogo
-            [
-                {
-                    text: "Cancelar",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                {
-                    text: "Aceptar", onPress: async () => {
-                        await logOutDB();
-                        await logOut();
-                    }
-                }
-            ],
-            { cancelable: false } // Puedes ponerlo en true para permitir cerrar el diálogo tocando fuera de él
-        );
-    }
 
     return (
         <View style={ProfileScreenStyles(theme, typeTheme).ProfileScreen}>
@@ -83,10 +61,6 @@ export const ProfileScreen = () => {
 
                 <TouchableOpacity onPress={logOut} style={[buttonStyles(theme, typeTheme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
                     <Text style={buttonStyles(theme, typeTheme).buttonText}>Cerrar sesión</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={logOutDataBase} style={[ProfileScreenStyles(theme, typeTheme).logOutDB, { marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}>
-                    <Text style={ProfileScreenStyles(theme, typeTheme).logOutDBText}>Cambiar base de datos</Text>
                 </TouchableOpacity>
 
                 <View>

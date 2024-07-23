@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from '../../theme/UI/cardsStyles';
-import PorductInterface from '../../interface/product.js';
+import ProductInterface from '../../interface/product.js';
 import { useTheme } from '../../context/ThemeContext';
 
 interface ProductInventoryCardInterface {
-    product: PorductInterface;
+    product: ProductInterface;
     showDelete?: boolean;
-    onDelete?: (product: PorductInterface) => void;
+    onDelete?: (product: ProductInterface) => void;
     onClick?: () => void
 }
 
@@ -23,34 +23,15 @@ export const ProductInventoryCard = ({
 
     return (
         <TouchableOpacity style={styles(theme, typeTheme).productInventoryCard} onPress={onClick}>
-            {/* {
-                product?.imagen ? 
-                    <Image
-                        style={styles(theme).productInventoryCard__Image}
-                        source={{
-                            uri: product?.imagen[0]?.url
-                        }}
-                    />
-                    :
-                    <View style={styles(theme).notImage}>
-                        <Icon name={'camera'} size={20} color={typeTheme}/>
-                        <Text style={styles(theme).notImageText} numberOfLines={2}>{user?.Company || "Olei"}</Text>
-                    </View>
-            } */}
             <View style={styles(theme).productInventoryCard__data}>
                 <View style={styles(theme).information}>
                     <View>
-                        <Text style={styles(theme).description}>{product.Descripcion}</Text>
+                        <Text style={styles(theme).description}>{product.producto}</Text>
                     </View>
 
                     <View style={styles(theme).dataItem}>
-                        <Text style={styles(theme).label}>Codigo:</Text>
-                        <Text style={styles(theme).dataItemText}>{product?.Codigo}</Text>
-                    </View>
-
-                    <View style={styles(theme).dataItem}>
-                        <Text style={styles(theme).label}>Marca:</Text>
-                        <Text style={styles(theme).dataItemText}>{product?.Marca}</Text>
+                        <Text style={styles(theme).label}>Clave:</Text>
+                        <Text style={styles(theme).dataItemText}>{product?.clave}</Text>
                     </View>
 
                     {
@@ -59,7 +40,7 @@ export const ProductInventoryCard = ({
                 </View>
 
                 <View style={styles(theme, typeTheme).stock}>
-                    <Text style={{ color: theme.text_color }}>{product.Piezas || product.Existencia}</Text>
+                    <Text style={{ color: theme.text_color }}>{product.cantidad}</Text>
                 </View>
             </View>
         </TouchableOpacity>

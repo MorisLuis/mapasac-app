@@ -4,21 +4,21 @@ import { View, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'reac
 import { globalStyles } from '../../../theme/appTheme';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { buttonStyles } from '../../../theme/UI/buttons';
-import { updateCostos } from '../../../services/costos';
 import { useNavigation } from '@react-navigation/native';
-import PorductInterface from '../../../interface/product';
+import ProductInterface from '../../../interface/product';
 import { Camera } from 'react-native-camera-kit';
 import { getProductByCodeBar } from '../../../services/products';
 import codebartypes from '../../../utils/codebarTypes.json';
 import { CameraModalStyles } from '../../../theme/ModalRenders/CameraModalTheme';
 import { useTheme } from '../../../context/ThemeContext';
+import { updateCodeBar } from '../../../services/codebar';
 
 interface CameraModalInterface {
-    productDetails: PorductInterface;
+    selectedProduct: { idinvearts: number }
     onClose: () => void
 }
 
-const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
+const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
@@ -71,14 +71,10 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
     }
 
     const hanldeUpdateCodebar = async () => {
-        if (!productDetails) return;
-
-        await updateCostos({
-            codigo: productDetails?.Codigo,
-            Id_Marca: productDetails?.Id_Marca,
-            body: {
-                CodBar: codeBar
-            }
+        if (!selectedProduct) return;
+        await updateCodeBar({
+            codebarras: codeBar as string,
+            idinvearts: selectedProduct.idinvearts
         })
         onClose();
         navigation.goBack();
@@ -147,17 +143,13 @@ const CameraModal = ({ productDetails, onClose }: CameraModalInterface) => {
                                             </View>
 
                                             {
-                                                codeBar && codeBar?.length < 20 ?
-                                                <TouchableOpacity
-                                                    style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
-                                                    onPress={hanldeUpdateCodebar}
-                                                >
-                                                    <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
-                                                </TouchableOpacity>
-                                                :
-                                                <View>
-                                                    <Text>El codigo de barras es maximo de 20 caracteres</Text>
-                                                </View>
+                                                codeBar &&
+                                                    <TouchableOpacity
+                                                        style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                                                        onPress={hanldeUpdateCodebar}
+                                                    >
+                                                        <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
+                                                    </TouchableOpacity>
                                             }
                                         </>
                         }

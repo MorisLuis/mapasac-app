@@ -1,25 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { productDetailsStyles } from '../../theme/productDetailsTheme';
-import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
+import { productDetailsStyles } from '../../../theme/productDetailsTheme';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
-import { updateCostos } from '../../services/costos';
-import ModalBottom from '../../components/Modals/ModalBottom';
-import CameraModal from '../../components/Modals/ModalRenders/CameraModal';
-import { Selector } from '../../components/Ui/Selector';
-import codebartypes from '../../utils/codebarTypes.json';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { useTheme } from '../../context/ThemeContext';
-import { CodebarUpdateScreenStyles } from '../../theme/CodebarUpdateScreenTheme';
+import { updateCodeBar } from '../../../services/codebar';
+import ModalBottom from '../../../components/Modals/ModalBottom';
+import CameraModal from '../../../components/Modals/ModalRenders/CameraModal';
+import { Selector } from '../../../components/Ui/Selector';
+import codebartypes from '../../../utils/codebarTypes.json';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { useTheme } from '../../../context/ThemeContext';
+import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenTheme';
 
 type optionSelectedInterface = {
     screen: string,
     title: string
 }
 
-export const CodebarUpdateScreen = ({ productDetails }: any) => {
+interface CodebarUpdateScreenInterface {
+    selectedProduct: { idinvearts: number }
+}
+
+export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInterface) => {
 
 
     const navigation = useNavigation<any>();
@@ -50,34 +54,29 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
         } else if (selectedOption.screen === "CameraModal") {
             setOpenModalCamera(true)
         } else {
-            navigation.navigate(selectedOption.screen, { title: selectedOption.title, productDetails });
+            navigation.navigate(selectedOption.screen, { title: selectedOption.title, idinvearts: selectedProduct.idinvearts });
         }
     }
 
     const hanldeUpdateCodebarWithCodeFound = async () => {
-        if (!productDetails) return;
+        if (!selectedProduct) return;
 
-        await updateCostos({
-            codigo: productDetails?.Codigo,
-            Id_Marca: productDetails?.Id_Marca,
-            body: {
-                CodBar: codeBar
-            }
+        await updateCodeBar({
+            codebarras: codeBar as string,
+            idinvearts: selectedProduct.idinvearts
         })
         navigation.goBack()
     }
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-        if (!productDetails) return;
+        if (!selectedProduct) return;
 
-        await updateCostos({
-            codigo: productDetails?.Codigo,
-            Id_Marca: productDetails?.Id_Marca,
-            body: {
-                codeRandom: "true"
-            }
+        await updateCodeBar({
+            codebarras: codeBar as string,
+            idinvearts: selectedProduct.idinvearts
         })
-        navigation.goBack()
+        navigation.goBack();
+
     }
 
 
@@ -195,7 +194,7 @@ export const CodebarUpdateScreen = ({ productDetails }: any) => {
                     handleCodebarScannedProcces(false)
                 }}
             >
-                <CameraModal productDetails={productDetails} onClose={() => {
+                <CameraModal selectedProduct={selectedProduct} onClose={() => {
                     handleCodebarScannedProcces(false)
                     updateBarCode('')
                     setOpenModalCamera(false)

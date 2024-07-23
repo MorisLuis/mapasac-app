@@ -1,27 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
-import { getProductByCodeBar } from '../../services/products';
-import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
-import { inputStyles } from '../../theme/UI/inputs';
-import { modalRenderstyles } from '../../theme/ModalRenders/SearchCodebarWithInputTheme';
-import ModalMiddle from '../../components/Modals/ModalMiddle';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { getProductByClave, getProductByCodeBar } from '../../../services/products';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
+import { inputStyles } from '../../../theme/UI/inputs';
+import { modalRenderstyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { useTheme } from '../../context/ThemeContext';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { useTheme } from '../../../context/ThemeContext';
 
 export const SearchCodebarWithInput = () => {
 
     const { updateBarCode } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
     const [loadingSearch, setLoadingSearch] = useState(false)
     const buttondisabled = Barcode.length < 1 || loadingSearch;
-    
-
 
 
     const handleSearchProductByCodebarInput = async () => {
@@ -30,7 +28,7 @@ export const SearchCodebarWithInput = () => {
 
         let response;
         if (typeOfSearch === 'code') {
-            response = await getProductByCodeBar({ codigo: Barcode });
+            response = await getProductByClave({ clave: Barcode });
             handleNavigatoToProduct(response);
             setLoadingSearch(false);
         } else {
@@ -43,12 +41,12 @@ export const SearchCodebarWithInput = () => {
 
     const handleNavigatoToProduct = (response: any) => {
         navigation.goBack()
-        if (response.length === 1) {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
-        } else if (response.length > 0) {
+        if (response?.length === 1) {
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response });
+        } else if (response?.length > 0) {
             navigation.navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response });
         }
 
     }

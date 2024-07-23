@@ -2,25 +2,26 @@ import React, { useContext, useState } from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-import PorductInterface from '../../interface/product';
-import { Counter } from '../../components/Ui/Counter';
+import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
+import ProductInterface from '../../../interface/product';
+import { Counter } from '../../../components/Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
-import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
-import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { modalRenderstyles } from '../../theme/ModalRenders/ScannerResultTheme';
+import { buttonStyles } from '../../../theme/UI/buttons';
+import { globalStyles } from '../../../theme/appTheme';
+import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import ModalBottom from '../../components/Modals/ModalBottom';
-import { useTheme } from '../../context/ThemeContext';
+import ModalBottom from '../../../components/Modals/ModalBottom';
+import { useTheme } from '../../../context/ThemeContext';
+import { addProductInBagInventory } from '../../../services/bag';
 
 interface ScannerResultInterface {
     fromInput?: boolean;
     seeProductDetails?: boolean;
     route?: {
         params: {
-            product: PorductInterface;
+            product: ProductInterface;
             fromProductDetails?: boolean
         };
     };
@@ -45,9 +46,12 @@ const ScannerResult = ({
         setLoadingAddProduct(true)
         const inventoryBody = {
             ...product,
-            Piezas: counterProduct === 0 ? 1 : counterProduct
+            cantidad: counterProduct === 0 ? 1 : counterProduct
         }
-        addProduct(inventoryBody as any)
+
+        addProduct(inventoryBody as ProductInterface)
+        //addProductInBagInventory(inventoryBody as ProductInterface)
+        //addProduct(inventoryBody as any)
         handleCameraAvailable(true)
         navigation.goBack()
         setLoadingAddProduct(false)
@@ -84,11 +88,11 @@ const ScannerResult = ({
                             <View style={modalRenderstyles(theme).productText}>
                                 <View style={modalRenderstyles(theme).productMessage}>
                                     <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
-                                    <Text style={modalRenderstyles(theme).codeValue}>{product?.Codigo}</Text>
+                                    <Text style={modalRenderstyles(theme).codeValue}>{product?.clave}</Text>
                                     <View style={modalRenderstyles(theme).otherInfo}>
-                                        <Text style={{ color: theme.text_color }}>{product?.CodBar}</Text>
+                                        <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
                                         <Text style={{ color: theme.text_color }}>/</Text>
-                                        <Text style={{ color: theme.text_color }}>{product?.Marca}</Text>
+                                        <Text style={{ color: theme.text_color }}>{product?.familia}</Text>
                                     </View>
                                 </View>
                             </View>

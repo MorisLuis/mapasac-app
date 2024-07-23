@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { InventoryBagContext } from '../context/Inventory/InventoryBagContext';
 import { SuccesMessageScreenStyles } from '../theme/SuccesMessageScreenTheme';
 import { useTheme } from '../context/ThemeContext';
 
@@ -10,7 +9,6 @@ import { useTheme } from '../context/ThemeContext';
 export const SuccesMessage = () => {
 
     const { navigate } = useNavigation<any>();
-    const { inventoryData } = useContext(InventoryBagContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
@@ -24,7 +22,7 @@ export const SuccesMessage = () => {
                 </TouchableOpacity>
                 <View style={SuccesMessageScreenStyles(theme).content}>
                     <Text style={SuccesMessageScreenStyles(theme).title}>Tu inventario ha sido exitoso</Text>
-                    <Text style={SuccesMessageScreenStyles(theme).text}>Tu inventario con el folio {inventoryData.Folio} ha sido realizado.</Text>
+                    {/* <Text style={SuccesMessageScreenStyles(theme).text}>Tu inventario con el folio {inventoryData.Folio} ha sido realizado.</Text> */}
                 </View>
             </View>
         </SafeAreaView>

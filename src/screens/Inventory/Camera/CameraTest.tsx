@@ -2,14 +2,14 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { useTheme } from '../../context/ThemeContext';
+import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
+import { SettingsContext } from '../../../context/settings/SettingsContext';
+import { useTheme } from '../../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
-import PorductInterface from '../../interface/product';
-import { cameraStyles } from '../../theme/CameraCustumTheme';
-import { CameraPermission } from '../../components/screens/CameraPermission';
+import ProductInterface from '../../../interface/product';
+import { cameraStyles } from '../../../theme/CameraCustumTheme';
+import { CameraPermission } from '../../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
 
@@ -23,23 +23,22 @@ export type OnReadCodeData = {
 
 const CameraTest: React.FC = () => {
 
-    const { bag } = useContext(InventoryBagContext);
-
+    const { numberOfItems } = useContext(InventoryBagContext);
     const { handleCameraAvailable, limitProductsScanned, cameraAvailable, startScanning } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
-    const onTheLimitProductScanned = limitProductsScanned < bag?.length;
+    //const onTheLimitProductScanned = limitProductsScanned < bag?.length;
 
     const [lightOn, setLightOn] = useState(false);
     const [cameraKey, setCameraKey] = useState(0);
-    const [productsScanned, setProductsScanned] = useState<PorductInterface[]>();
+    const [productsScanned, setProductsScanned] = useState<ProductInterface[]>();
     const [cameraPermission, setCameraPermission] = useState<PermissionStatus | null>(null);
 
     // Other functions.
-    const handleOpenProductsFoundByCodebar = (response: PorductInterface[]) => {
+    const handleOpenProductsFoundByCodebar = (response: ProductInterface[]) => {
 
         if (response.length === 1) {
             navigate('[Modal] - scannerResultScreen', { product: response[0] });
@@ -55,6 +54,11 @@ const CameraTest: React.FC = () => {
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         navigate('[Modal] - findByCodebarInputModal');
+    }
+
+    const handleOpenBagInventory = () => {
+        //handleCameraAvailable(false)
+        navigate('bagInventoryScreen')
     }
 
     const {
@@ -113,14 +117,14 @@ const CameraTest: React.FC = () => {
     return (
         <View style={cameraStyles(theme).cameraScreen}>
 
-            {
+            {/* {
                 onTheLimitProductScanned &&
                 <BlurView
                     style={cameraStyles(theme).blurOverlay}
                     blurType="dark"
                     blurAmount={5}
                 />
-            }
+            } */}
 
             <View style={cameraStyles(theme).backgroundBlurTop}></View>
             <View style={cameraStyles(theme).backgroundBlurBottom}></View>
@@ -137,42 +141,48 @@ const CameraTest: React.FC = () => {
             />
 
             <View style={cameraStyles(theme).actions}>
-                <View style={cameraStyles(theme).flash}>
-                    <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
-                        <Icon name={lightOn ? "flash" : "flash-outline"} size={28} color="white" />
+                <View style={cameraStyles(theme).cog}>
+                    <TouchableOpacity onPress={handleOpenBagInventory}>
+                        <Icon name={"albums-outline"} size={22} color="white" />
                     </TouchableOpacity>
+                    {
+                        numberOfItems > 0 &&
+                        <View style={cameraStyles(theme).bagCounter}>
+                            <Text>{numberOfItems}</Text>
+                        </View>
+                    }
                 </View>
 
-                <View style={cameraStyles(theme).cog}>
-                    <TouchableOpacity onPress={() => navigate('typeOfMovementScreen')}>
-                        <Icon name={"cog-outline"} size={28} color="white" />
+                <View style={cameraStyles(theme).flash}>
+                    <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
+                        <Icon name={lightOn ? "flash" : "flash-outline"} size={22} color="white" />
                     </TouchableOpacity>
                 </View>
 
                 <View style={cameraStyles(theme).cog}>
                     <TouchableOpacity onPress={handleOpenInputModal}>
-                        <Icon name={"barcode-outline"} size={28} color="white" />
+                        <Icon name={"barcode-outline"} size={22} color="white" />
                     </TouchableOpacity>
                 </View>
             </View>
 
 
-            
 
-            {
+
+            {/* {
                 !startScanning ?
-                <View style={cameraStyles(theme).message}>
-                    {onTheLimitProductScanned ? (
-                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
-                    ) : (
-                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
-                    )}
-                </View>
-                :
-                <View style={cameraStyles(theme).message}>
-                    <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
-                </View>
-            }
+                    <View style={cameraStyles(theme).message}>
+                        {onTheLimitProductScanned ? (
+                            <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
+                        ) : (
+                            <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
+                        )}
+                    </View>
+                    :
+                    <View style={cameraStyles(theme).message}>
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
+                    </View>
+            } */}
 
 
 

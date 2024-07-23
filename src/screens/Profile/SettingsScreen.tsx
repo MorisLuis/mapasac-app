@@ -15,24 +15,23 @@ import { useTheme } from '../../context/ThemeContext';
 
 export const SettingsScreen = () => {
 
-    const { updateTypeOfMovements } = useContext(AuthContext);
+    //const { updateTypeOfMovements } = useContext(AuthContext);
     const { theme, toggleTheme, typeTheme } = useTheme();
 
     const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned } = useContext(SettingsContext);
-    const [typeSelected, setTypeSelected] = useState<number>()
+    //const [typeSelected, setTypeSelected] = useState<number>()
 
-    const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
-    const { user } = useContext(AuthContext);
+    //const [typeOfMovement, setTypeOfMovement] = useState<Id_TipoMovInvInterface[]>([]);
 
     const [editingLimitProducts, setEditingLimitProducts] = useState(false);
     const [limitProductValue, setLimitProductValue] = useState(limitProductsScanned)
 
 
-    const onChangetTypeOfMovement = (value: number) => {
+    /* const onChangetTypeOfMovement = (value: number) => {
         if (value === undefined || value === null) return
         setTypeSelected(value)
         updateTypeOfMovements(value)
-    }
+    } */
 
     const onChangeLimitProducts = () => {
         handleLimitProductsScanned(limitProductValue);
@@ -43,7 +42,7 @@ export const SettingsScreen = () => {
         })
     }
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log('Settings Screen effect');
         const handleGetTypeOfMovements = async () => {
             const types = await getTypeOfMovements();
@@ -51,17 +50,15 @@ export const SettingsScreen = () => {
         }
         setTypeSelected(user?.Id_TipoMovInv?.Id_TipoMovInv)
         handleGetTypeOfMovements()
-    }, []);
+    }, []); */
 
-    const visible = (typeOfMovement?.length > 0) ? true : false;
+    //const visible = (typeOfMovement?.length > 0) ? true : false;
 
     return (
         <>
             <View style={SettingsScreenStyles(theme).SettingsScreen}>
-                {
-                    visible ?
-                        <>
-                            <Selector
+                <>
+                    {/* <Selector
                                 label={"Tipo de movimiento"}
                                 items={typeOfMovement.map((item: any) => {
                                     return { label: item?.Descripcion, value: item?.Id_TipoMovInv }
@@ -75,66 +72,58 @@ export const SettingsScreen = () => {
                                 onValueChange={(value) => onChangetTypeOfMovement(value)}
                             />
 
-                            <View style={SettingsScreenStyles(theme).divider}></View>
+                    <View style={SettingsScreenStyles(theme).divider}></View> */}
 
-                            <Toggle
-                                label='Vibracion en escaneo'
-                                message="Hacer vibrar el celular cuando escaneas."
-                                extraStyles={{}}
-                                value={vibration}
-                                onChange={(value: boolean) => handleVibrationState(value)}
-                            />
+                    <Toggle
+                        label='Vibracion en escaneo'
+                        message="Hacer vibrar el celular cuando escaneas."
+                        extraStyles={{}}
+                        value={vibration}
+                        onChange={(value: boolean) => handleVibrationState(value)}
+                    />
 
-                            <View style={SettingsScreenStyles(theme).divider}></View>
+                    <View style={SettingsScreenStyles(theme).divider}></View>
 
-                            <View style={SettingsScreenStyles(theme).section}>
-                                <View style={SettingsScreenStyles(theme).sectionContent}>
-                                    <View>
-                                        <Text style={SettingsScreenStyles(theme).label}>Limite de productos a escanear</Text>
-                                        {
-                                            !editingLimitProducts &&
-                                            <Text style={{ color: theme.text_color }}>{limitProductValue}</Text>
-                                        }
-                                    </View>
-                                    <TouchableOpacity onPress={() => setEditingLimitProducts(!editingLimitProducts)}>
-                                        <Text style={SettingsScreenStyles(theme).edit}>
-                                            {!editingLimitProducts ? "Editar" : "Cancelar"}
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
+                    <View style={SettingsScreenStyles(theme).section}>
+                        <View style={SettingsScreenStyles(theme).sectionContent}>
+                            <View>
+                                <Text style={SettingsScreenStyles(theme).label}>Limite de productos a escanear</Text>
                                 {
-                                    editingLimitProducts &&
-                                    <>
-                                        <View style={SettingsScreenStyles(theme).sectionClosed}>
-                                            <Counter counter={limitProductValue} setCounter={setLimitProductValue} />
-                                        </View>
-                                        <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={onChangeLimitProducts}>
-                                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Guardar</Text>
-                                        </TouchableOpacity>
-                                    </>
+                                    !editingLimitProducts &&
+                                    <Text style={{ color: theme.text_color }}>{limitProductValue}</Text>
                                 }
                             </View>
-
-                            <View style={SettingsScreenStyles(theme).divider}></View>
-
-                            <Toggle
-                                label='Apariencia'
-                                message="Personaliza el aspecto de Olei en tu dispositivo."
-                                extraStyles={{}}
-                                value={typeTheme === 'light' ? true : false}
-                                onChange={(value: boolean) => toggleTheme()}
-                            />
-
-                            <View style={SettingsScreenStyles(theme).divider}></View>
-                        </>
-
-                        :
-                        <View>
-                            <Text style={{ color: theme.text_color }}>
-                                Cargando...
-                            </Text>
+                            <TouchableOpacity onPress={() => setEditingLimitProducts(!editingLimitProducts)}>
+                                <Text style={SettingsScreenStyles(theme).edit}>
+                                    {!editingLimitProducts ? "Editar" : "Cancelar"}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
-                }
+                        {
+                            editingLimitProducts &&
+                            <>
+                                <View style={SettingsScreenStyles(theme).sectionClosed}>
+                                    <Counter counter={limitProductValue} setCounter={setLimitProductValue} />
+                                </View>
+                                <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={onChangeLimitProducts}>
+                                    <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Guardar</Text>
+                                </TouchableOpacity>
+                            </>
+                        }
+                    </View>
+
+                    <View style={SettingsScreenStyles(theme).divider}></View>
+
+                    <Toggle
+                        label='Apariencia'
+                        message="Personaliza el aspecto de Olei en tu dispositivo."
+                        extraStyles={{}}
+                        value={typeTheme === 'light' ? true : false}
+                        onChange={(value: boolean) => toggleTheme()}
+                    />
+
+                    <View style={SettingsScreenStyles(theme).divider}></View>
+                </>
             </View>
 
         </>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { DbAuthProvider } from './src/context/dbAuth/DbAuthProvider';
 import { AuthProvider } from './src/context/auth/AuthProvider';
 import { SettingsProvider } from './src/context/settings/SettingsProvider';
 import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider';
@@ -21,7 +20,6 @@ const App = () => {
 
 const AppState = ({ children }: any) => {
   return (
-    <DbAuthProvider>
       <AuthProvider>
         <ThemeProvider>
           <SettingsProvider>
@@ -31,7 +29,6 @@ const AppState = ({ children }: any) => {
           </SettingsProvider>
         </ThemeProvider>
       </AuthProvider>
-    </DbAuthProvider>
   )
 }
 
