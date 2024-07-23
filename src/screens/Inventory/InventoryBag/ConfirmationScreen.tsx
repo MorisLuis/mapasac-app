@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState, useEffect } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { ProductInventoryConfirmationCard } from '../../../components/Cards/ProductInventoryConfirmationCard';
@@ -6,7 +6,7 @@ import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/auth/AuthContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { ProductInterfaceBag } from '../../../interface/product';
@@ -15,22 +15,24 @@ import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
 
 export const ConfirmationScreen = () => {
-
     const { getTypeOfMovementsName, user } = useContext(AuthContext);
-    const {  numberOfItems } = useContext(InventoryBagContext);
+    const { numberOfItems } = useContext(InventoryBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<any>();
 
     const iconColor = theme.color_primary;
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [bags, setBags] = useState<any>([]);
+    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
 
     const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
-        <ProductInventoryConfirmationCard product={item} onClick={() => navigate('[Modal] - editProductInBag', { product: item })} disabled={createInventaryLoading}/>
+        <ProductInventoryConfirmationCard
+            product={item}
+            onClick={() => navigate('[Modal] - editProductInBag', { product: item })}
+            disabled={createInventaryLoading}
+        />
     ), [createInventaryLoading]);
 
     const onPostInventory = async () => {
@@ -58,6 +60,21 @@ export const ConfirmationScreen = () => {
         setIsLoading(false);
     };
 
+    useFocusEffect(
+        useCallback(() => {
+            const refreshBags = async () => {
+                setIsLoading(true);
+                const refreshedBags = await getBagInventory({ page: 1, limit: 5 });
+                setBags(refreshedBags);
+                setPage(2);
+                setIsLoading(false);
+                setHasMore(true);
+            };
+
+            refreshBags();
+        }, [])
+    );
+
     return (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View style={{ flex: 1, marginBottom: hp("12.5%") }}>
@@ -81,7 +98,7 @@ export const ConfirmationScreen = () => {
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                                 <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados {numberOfItems}</Text>
                                 <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento: {getTypeOfMovementsName()}</Text>
-                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Sucursal: {user?.idsucursal}</Text>
+                                {/* <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Sucursal: {user?.idsucursal}</Text> */}
                             </View>
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
                                 <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>

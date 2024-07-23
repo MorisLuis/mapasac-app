@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
-import { addProductInBagInventory, deleteProductInBagInventory, getTotalProductsInBag } from '../../services/bag';
+import { addProductInBagInventory, deleteProductInBagInventory, getTotalProductsInBag, updateProductInBagInventory } from '../../services/bag';
 import ProductInterface from '../../interface/product';
 
 export interface InventoryBagInterface {
@@ -55,6 +55,17 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
+    const editProduct = ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
+        try {
+            updateProductInBagInventory({ idenlacemob, cantidad })
+            setProductAdded(true);
+        } catch (error) {
+            console.log({ error })
+        } finally {
+            handleUpdateSummary()
+        }
+    }
+
     useEffect(() => {
         handleUpdateSummary();
     }, [productAdded, state.numberOfItems]);
@@ -63,7 +74,8 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         <InventoryBagContext.Provider value={{
             ...state,
             addProduct,
-            deleteProduct
+            deleteProduct,
+            editProduct
         }}>
             {children}
         </InventoryBagContext.Provider>

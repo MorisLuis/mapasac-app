@@ -7,27 +7,21 @@ interface getBagInterface {
 }
 
 const getBagInventory = async ({ page, limit }: getBagInterface) => {
-
-
     try {
         const { data } = await api.get(`/api/bag?limit=${limit}&page=${page}&option=0`);
-
         return data.bag
     } catch (error: any) {
         console.log({ errorTP: error })
     }
-
 }
 
 const addProductInBagInventory = async (product: ProductInterface) => {
-
     try {
         const data = await api.post(`/api/bag`, {...product, opcion: 0});
         return data
     } catch (error: any) {
         console.log({ errorTP: error })
     }
-
 }
 
 interface updateProductInBagInventoryInterface {

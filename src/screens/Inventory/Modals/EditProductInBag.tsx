@@ -21,7 +21,7 @@ type EditProductInBagInterface = {
 export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
 
     const { product } = route?.params ?? {};
-    const { editProduct, removeProduct } = useContext(InventoryBagContext);
+    const { editProduct, deleteProduct } = useContext(InventoryBagContext);
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
     const [loadingSearch, setLoadingSearch] = useState(false)
@@ -33,12 +33,12 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     }
 
     const onEdit = () => {
-        if (!product) return;
+        if (!product?.idenlacemob) return;
 
         if(piezasCount < 1) {
-            removeProduct(product)
+            deleteProduct(product.idenlacemob as number)
         } else {
-            editProduct({ ...product, cantidad: piezasCount });
+            editProduct({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
 
         handleCloseModal()
