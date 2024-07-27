@@ -109,6 +109,7 @@ export const Inventory = () => {
         }, [])
     );
 
+
     return (
         <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
             <View style={InventoryScreenStyles(theme).content}>

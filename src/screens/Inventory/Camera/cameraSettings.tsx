@@ -70,7 +70,8 @@ export const cameraSettings = ({
             return;
         };
 
-        if (!productsScanned && codes?.length > 0) {
+
+        if (!productsScanned) {
 
             setCodeDetected(true)
             if (codeDetected) {
@@ -86,7 +87,7 @@ export const cameraSettings = ({
             };
 
             try {
-                const response = await getProductByCodeBar({ codeBar: codeValue.trim() });
+                const response = await getProductByCodeBar({ codeBar: codeValue?.trim() });
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
                 updateBarCode(codeValue)

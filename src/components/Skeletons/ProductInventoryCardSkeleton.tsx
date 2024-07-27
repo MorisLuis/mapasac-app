@@ -13,7 +13,8 @@ export const ProductInventoryCardSkeleton = () => {
         theme.background_color_tertiary, 
         typeTheme === "light" ? "#eaeaea" : "#3a3a3a", 
         theme.background_color_tertiary
-    ]
+    ];
+
     return (
         <View
             style={{

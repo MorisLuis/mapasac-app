@@ -10,7 +10,8 @@ export const CodebarUpdateWithInputScreenStyles = (theme: Theme) => StyleSheet.c
     inputLabel: {
         fontSize: globalFont.font_normal,
         fontWeight: "bold",
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        color: theme.text_color
     },
     warningMessage: {
         fontSize: globalFont.font_normal,

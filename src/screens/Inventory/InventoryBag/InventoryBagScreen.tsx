@@ -14,22 +14,25 @@ import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme
 import { deleteAllProductsInBagInventory, getBagInventory } from '../../../services/bag';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { getSearchProductInBack } from '../../../services/searchs';
+import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
 
 export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { numberOfItems, deleteProduct } = useContext(InventoryBagContext);
+    const { deleteProduct } = useContext(InventoryBagContext);
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
     const inputRef = useRef<TextInput>(null);
 
 
-    const [bags, setBags] = useState<any>([]);
+    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const [dataUploaded, setDataUploaded] = useState(false)
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+
 
     const onPostInventary = async () => {
         goBack();
@@ -49,6 +52,7 @@ export const InventoryBagScreen = () => {
         }
 
         setIsLoading(false);
+        setDataUploaded(true)
     };
 
     const refreshBags = async () => {
@@ -79,7 +83,7 @@ export const InventoryBagScreen = () => {
         } else {
             const products = await getSearchProductInBack({ searchTerm: text, opcion: 0 });
             setBags(products || []);
-            setPage(1); 
+            setPage(1);
         }
     };
 
@@ -95,14 +99,13 @@ export const InventoryBagScreen = () => {
         loadBags();
     }, []);
 
-
     return (
         <>
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
                 {
-                    numberOfItems > 0 &&
+                    (bags?.length > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -125,20 +128,7 @@ export const InventoryBagScreen = () => {
 
                 {/* PRODUCTS */}
                 {
-                    bags.length > 0 ?
-                        <FlatList
-                            style={InventoryBagScreenStyles(theme, typeTheme).content}
-                            data={bags}
-                            renderItem={renderItem}
-                            keyExtractor={product => `${product.idenlacemob}`}
-
-                            onEndReached={loadBags}
-                            onEndReachedThreshold={0.5}
-                            //ListFooterComponent={renderFooter}
-                            refreshing={isRefreshing}
-                            onRefresh={refreshBags}
-                        />
-                        :
+                    (bags?.length <= 0 && dataUploaded) ?
                         <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
                             <EmptyMessageCard
                                 title="No hay productos con ese nombre."
@@ -146,11 +136,27 @@ export const InventoryBagScreen = () => {
                                 icon='sad-outline'
                             />
                         </View>
+                        :
+                        (bags.length > 0 && dataUploaded) ?
+                            <FlatList
+                                style={InventoryBagScreenStyles(theme, typeTheme).content}
+                                data={bags}
+                                renderItem={renderItem}
+                                keyExtractor={product => `${product.idenlacemob}`}
+
+                                onEndReached={loadBags}
+                                onEndReachedThreshold={0.5}
+                                refreshing={isRefreshing}
+                                onRefresh={refreshBags}
+                            />
+                            :
+                            <InventoryBagSkeleton />
+
                 }
 
                 {/* FOOTER */}
                 {
-                    numberOfItems > 0 &&
+                    (bags.length > 0 && dataUploaded) &&
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                         <TouchableOpacity
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}

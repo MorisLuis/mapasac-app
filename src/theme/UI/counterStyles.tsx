@@ -11,11 +11,15 @@ export const counterStyles = (theme: Theme) => StyleSheet.create({
         alignItems: "center",
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
-    input: {
+    inputContainer: {
+        display: "flex",
+        flexDirection: "row",
         textAlign: 'center',
+        justifyContent: 'center',
+        gap: 5,
         marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom / 2,
         backgroundColor: theme.background_color_secondary,
-        paddingHorizontal: wp("7.5%"),
+        paddingHorizontal: wp("3%"),
         paddingVertical: 10,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
@@ -25,5 +29,13 @@ export const counterStyles = (theme: Theme) => StyleSheet.create({
         backgroundColor: theme.background_color_secondary,
         padding: globalStyles(theme).globalPadding.padding / 5,
         borderRadius: globalStyles(theme).borderRadius.borderRadius
-    }
+    },
+    inputText: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    unitText: {
+        fontSize: globalFont.font_sm,
+        color: theme.text_color
+    },
 })

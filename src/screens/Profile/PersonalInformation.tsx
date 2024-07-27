@@ -16,7 +16,6 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
     const { user } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
 
-
     useEffect(() => {
         console.log('Personal Information effect');
     }, []);
@@ -27,7 +26,7 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
                 <View style={PersonalInformationStyles(theme).circle}>
                     <View style={PersonalInformationStyles(theme).circleContent}>
                         <Text style={PersonalInformationStyles(theme).circleText}>
-                            {user?.nombres?.slice(0, 1)}
+                            {user?.usr?.slice(0, 1)}
                         </Text>
                     </View>
                 </View>
@@ -39,11 +38,17 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
             </View>
 
             <View style={PersonalInformationStyles(theme, typeTheme).information}>
-                {/* <View style={PersonalInformationStyles(theme).data}>
-                    <Text style={PersonalInformationStyles(theme).label}>Razón Social:</Text>
-                    <Text style={{ color: theme.text_color }}>{user?.usr}</Text>
+                <View style={PersonalInformationStyles(theme).data}>
+                    <Text style={PersonalInformationStyles(theme).label}>Empresa:</Text>
+                    <Text style={{ color: theme.text_color }}>{user?.empresa}</Text>
                     <View style={PersonalInformationStyles(theme).separator} />
-                </View> */}
+                </View>
+
+                <View style={PersonalInformationStyles(theme).data}>
+                    <Text style={PersonalInformationStyles(theme).label}>Razón Social:</Text>
+                    <Text style={{ color: theme.text_color }}>{user?.razonsocial}</Text>
+                    <View style={PersonalInformationStyles(theme).separator} />
+                </View>
 
                 {(user?.usr) && (
                     <View style={PersonalInformationStyles(theme).data}>

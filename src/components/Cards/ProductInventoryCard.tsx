@@ -38,10 +38,6 @@ export const ProductInventoryCard = ({
                         showDelete && <Text style={styles(theme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
                     }
                 </View>
-
-                <View style={styles(theme, typeTheme).stock}>
-                    <Text style={{ color: theme.text_color }}>{product.cantidad}</Text>
-                </View>
             </View>
         </TouchableOpacity>
     )

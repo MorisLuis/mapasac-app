@@ -31,7 +31,6 @@ export type InventoryNavigationStackParamList = {
     bagInventoryScreen: undefined;
     confirmationScreen: undefined;
     succesMessageScreen: undefined;
-    typeOfMovementScreen: undefined;
     searchProductScreen: undefined;
 
     // Modal
@@ -67,11 +66,6 @@ export const InventoryNavigation = () => {
                 options={{ presentation: "modal", headerShown: false }}
             />
 
-            <Stack.Screen
-                name="typeOfMovementScreen"
-                component={TypeOfMovementScreen}
-                options={{ headerShown: false }}
-            />
 
             <Stack.Screen
                 name="bagInventoryScreen"
@@ -124,17 +118,13 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="[ProductDetailsPage] - inventoryDetailsScreen"
                 component={ProductDetailsPage}
-                options={({ navigation, route }: any) => ({
+                options={({ navigation }: any) => ({
                     header: props => (
                         <CustomHeader
                             {...props}
                             title="Detalles de Producto"
                             navigation={navigation}
                             back={() => {
-                                /* navigation.navigate('BottomNavigation', {
-                                    screen: 'BottomNavigation - Scanner',
-                                    params: { screen: '[ScannerNavigation] - inventory' },
-                                }); */
                                 navigation.goBack();
                                 updateBarCode('');
                             }}

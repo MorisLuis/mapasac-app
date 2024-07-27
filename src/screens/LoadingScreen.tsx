@@ -10,7 +10,7 @@ export const LoadingScreen = ({
     message
 }: LoadingScreenInterface) => {
 
-    const { typeTheme, theme } = useTheme();
+    const { theme } = useTheme();
     const iconColor = theme.color_tertiary
 
     return (

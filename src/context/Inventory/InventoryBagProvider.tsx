@@ -66,6 +66,10 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
+    const resetAfterPost = () => {
+        handleUpdateSummary()
+    }
+
     useEffect(() => {
         handleUpdateSummary();
     }, [productAdded, state.numberOfItems]);
@@ -75,7 +79,8 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             ...state,
             addProduct,
             deleteProduct,
-            editProduct
+            editProduct,
+            resetAfterPost
         }}>
             {children}
         </InventoryBagContext.Provider>

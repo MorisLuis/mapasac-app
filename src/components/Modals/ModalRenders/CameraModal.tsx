@@ -12,6 +12,7 @@ import codebartypes from '../../../utils/codebarTypes.json';
 import { CameraModalStyles } from '../../../theme/ModalRenders/CameraModalTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
+import { identifyBarcodeType } from '../../../utils/identifyBarcodeType';
 
 interface CameraModalInterface {
     selectedProduct: { idinvearts: number }
@@ -41,23 +42,32 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const codeScanned = async ({ codes }: any) => {
 
-        if (!regex.test(codes)) {
-            setCodebarTest(false)
-        }
 
 
         setCodeIsScanning(true)
         if (codes.length > 0 && isScanningAllowed) {
             setIsScanningAllowed(false);
-            const codeValue = codes;
+            let codeValue = codes;
             if (!codeValue) return;
+
+            const identifycodebarType = identifyBarcodeType(codeValue);
+
+            if (identifycodebarType === "UPC-A convertido a EAN-13") {
+                codeValue = codeValue?.substring(1)
+            }
+
+            if (!regex.test(codeValue)) {
+                setCodebarTest(false)
+            }
+
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue });
                 handleVibrate()
                 updateBarCode(codeValue)
+
                 if (response.length > 0) {
                     setProductExistent(true)
-                }
+                } 
             } catch (error) {
                 setCodebarTest(true)
                 console.error('Error fetching product:', error);
@@ -128,6 +138,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                     :
                                     (codeBar && !codeIsScanning && !codebarTest) ?
                                         <View>
+                                            <Text style={[CameraModalStyles(theme).textcodebarFound, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}>{codeBar}</Text>
                                             <Text style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
                                             <TouchableOpacity
                                                 style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
@@ -144,12 +155,12 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
                                             {
                                                 codeBar &&
-                                                    <TouchableOpacity
-                                                        style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
-                                                        onPress={hanldeUpdateCodebar}
-                                                    >
-                                                        <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
-                                                    </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                                                    onPress={hanldeUpdateCodebar}
+                                                >
+                                                    <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
+                                                </TouchableOpacity>
                                             }
                                         </>
                         }

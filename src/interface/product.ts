@@ -1,3 +1,5 @@
+
+// Table: invearts
 export default interface ProductInterface {
 
     // The id of the inventory.
@@ -10,7 +12,7 @@ export default interface ProductInterface {
     cvefamilia: number;
 
     // The name of the family.
-    familia: string;
+    familia?: string;
 
     // The codbar.
     codbarras: string;
@@ -25,9 +27,15 @@ export default interface ProductInterface {
     precio1: number;
 
     // The amount added to the stock
-    cantidad?: number
+    cantidad?: number,
 
     idenlacemob?: number
+
+    // Id of the 'unidad'
+    unidad?: number,
+
+    // The name of the 'unidad'
+    unidad_nombre?: string
 }
 
 export interface ProductInterfaceBag extends ProductInterface {

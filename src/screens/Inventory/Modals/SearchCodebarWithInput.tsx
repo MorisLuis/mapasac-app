@@ -42,11 +42,11 @@ export const SearchCodebarWithInput = () => {
     const handleNavigatoToProduct = (response: any) => {
         navigation.goBack()
         if (response?.length === 1) {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response });
-        } else if (response?.length > 0) {
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
+        } else if (response?.length > 1) {
             navigation.navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response });
+            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
         }
 
     }
@@ -104,7 +104,6 @@ export const SearchCodebarWithInput = () => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                {/* <Button title='toggle' onPress={toggleTheme}/> */}
             </View>
         </ModalMiddle>
     );

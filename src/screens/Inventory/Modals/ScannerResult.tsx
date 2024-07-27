@@ -14,7 +14,6 @@ import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultThem
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
-import { addProductInBagInventory } from '../../../services/bag';
 
 interface ScannerResultInterface {
     fromInput?: boolean;
@@ -49,12 +48,10 @@ const ScannerResult = ({
             cantidad: counterProduct === 0 ? 1 : counterProduct
         }
 
-        addProduct(inventoryBody as ProductInterface)
-        //addProductInBagInventory(inventoryBody as ProductInterface)
-        //addProduct(inventoryBody as any)
+        addProduct(inventoryBody as ProductInterface);
         handleCameraAvailable(true)
-        navigation.goBack()
         setLoadingAddProduct(false)
+        navigation.goBack()
     }
 
     const handleExpandProductDetails = () => {
@@ -74,7 +71,6 @@ const ScannerResult = ({
             navigation.navigate('[Modal] - searchProductModal', { modal: true })
         }, 500);
     }
-    
 
     return (
         <ModalBottom
@@ -90,7 +86,16 @@ const ScannerResult = ({
                                     <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
                                     <Text style={modalRenderstyles(theme).codeValue}>{product?.clave}</Text>
                                     <View style={modalRenderstyles(theme).otherInfo}>
-                                        <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
+                                        {
+                                            product?.codbarras ?
+                                                <View style={modalRenderstyles(theme, typeTheme).codebarNotAvailable}>
+                                                    <Text style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
+                                                        No tiene código
+                                                    </Text>
+                                                </View>
+                                                :
+                                                <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
+                                        }
                                         <Text style={{ color: theme.text_color }}>/</Text>
                                         <Text style={{ color: theme.text_color }}>{product?.familia}</Text>
                                     </View>
@@ -99,7 +104,7 @@ const ScannerResult = ({
                         </View>
 
                         <View style={modalRenderstyles(theme).counterContainer}>
-                            <View style={{ width: wp("42.5%") }}>
+                            <View style={{ width: wp("40%") }}>
                                 {
                                     (seeProductDetails && !fromProductDetails) &&
                                     <TouchableOpacity
@@ -111,8 +116,8 @@ const ScannerResult = ({
 
                                 }
                             </View>
-                            <View style={{ width: wp("42.5%") }}>
-                                <Counter counter={counterProduct} setCounter={setCounterProduct} />
+                            <View style={{ width: wp("45%") }}>
+                                <Counter counter={counterProduct} setCounter={setCounterProduct} unit={product.unidad_nombre}/>
                             </View>
                         </View>
 

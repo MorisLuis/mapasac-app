@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -48,7 +48,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
     const handleAddToInventory = () => {
         shouldCleanUp.current = false;
-        navigation.navigate('[Modal] - scannerResultScreen', { product: selectedProduct, fromProductDetails: true });
+        navigation.navigate('[Modal] - scannerResultScreen', { product: productDetailsData, fromProductDetails: true });
     }
 
     useFocusEffect(
@@ -67,7 +67,6 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
             };
         }, [selectedProduct])
     );
-
 
     return productDetailsData ? (
         <ProductDetailsContent
@@ -93,7 +92,7 @@ interface ProductDetailsContentInterface {
     fromUpdateCodebar?: boolean
 }
 
-const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar, fromUpdateCodebar }: ProductDetailsContentInterface) => {
+const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar }: ProductDetailsContentInterface) => {
     const codebarTypeIndetify = identifyBarcodeType(codeBar as string)
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
@@ -134,22 +133,24 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                     )}
                 </View>
 
-                {
+                {/* {
                     (codeBar && fromUpdateCodebar) &&
                     <View style={productDetailsStyles(theme).codebarIdentify}>
                         <Text style={{ color: theme.text_color }}>El codigo de barras identificado es: {codebarTypeIndetify?.type}</Text>
                     </View>
-                }
+                } */}
 
-                {(
-                    !productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) && (
+                {
+                    (
+                        !productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) && (
                         <TouchableOpacity
                             style={[buttonStyles(theme, typeTheme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
                             onPress={handleOptionsToUpdateCodebar}
                         >
                             <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
                         </TouchableOpacity>
-                    )}
+                    )
+                }
 
 
             </ScrollView>

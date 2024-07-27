@@ -35,7 +35,7 @@ export const ProductInventoryConfirmationCard = ({
 
                     <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
                         <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Piezas:</Text>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.cantidad}</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.cantidad} / {product.unidad_nombre}</Text>
                     </View>
                 </View>
 

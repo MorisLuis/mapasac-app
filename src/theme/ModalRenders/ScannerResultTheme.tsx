@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const { height } = Dimensions.get('window');
 
 
-export const modalRenderstyles = (theme:Theme) => StyleSheet.create({
+export const modalRenderstyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -52,7 +52,19 @@ export const modalRenderstyles = (theme:Theme) => StyleSheet.create({
     otherInfo: {
         display: "flex",
         flexDirection: 'row',
-        gap: 10
+        gap: 10,
+        alignItems: "center"
+    },
+    codebarNotAvailable: {
+        backgroundColor: theme.color_tertiary + '13',
+        padding: globalStyles(theme).globalPadding.padding / 3,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        //marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
+    },
+    textNotAvailable: {
+        color: theme.color_tertiary,
+        fontSize: globalFont.font_normal
     },
     productIcon: {
         width: 50,

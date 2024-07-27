@@ -53,6 +53,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
         dispatch({ type: '[Settings] - codebarType', codebarType: codebarType });
     }
 
+    // Just to store de codebar.
     const updateBarCode = async (value: string) => {
         try {
             handleCodebarScannedProcces(true)

@@ -24,13 +24,12 @@ export type OnReadCodeData = {
 const CameraTest: React.FC = () => {
 
     const { numberOfItems } = useContext(InventoryBagContext);
-    const { handleCameraAvailable, limitProductsScanned, cameraAvailable, startScanning } = useContext(SettingsContext);
+    const { handleCameraAvailable, cameraAvailable } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const { navigate } = useNavigation<any>();
     const isFocused = useIsFocused();
-    //const onTheLimitProductScanned = limitProductsScanned < bag?.length;
 
     const [lightOn, setLightOn] = useState(false);
     const [cameraKey, setCameraKey] = useState(0);
@@ -40,9 +39,9 @@ const CameraTest: React.FC = () => {
     // Other functions.
     const handleOpenProductsFoundByCodebar = (response: ProductInterface[]) => {
 
-        if (response.length === 1) {
+        if (response?.length === 1) {
             navigate('[Modal] - scannerResultScreen', { product: response[0] });
-        } else if (response.length > 0) {
+        } else if (response?.length > 0) {
             navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
             navigate('[Modal] - scannerResultScreen', { product: response[0] });
@@ -57,7 +56,6 @@ const CameraTest: React.FC = () => {
     }
 
     const handleOpenBagInventory = () => {
-        //handleCameraAvailable(false)
         navigate('bagInventoryScreen')
     }
 
@@ -117,15 +115,6 @@ const CameraTest: React.FC = () => {
     return (
         <View style={cameraStyles(theme).cameraScreen}>
 
-            {/* {
-                onTheLimitProductScanned &&
-                <BlurView
-                    style={cameraStyles(theme).blurOverlay}
-                    blurType="dark"
-                    blurAmount={5}
-                />
-            } */}
-
             <View style={cameraStyles(theme).backgroundBlurTop}></View>
             <View style={cameraStyles(theme).backgroundBlurBottom}></View>
 
@@ -166,46 +155,6 @@ const CameraTest: React.FC = () => {
                 </View>
             </View>
 
-
-
-
-            {/* {
-                !startScanning ?
-                    <View style={cameraStyles(theme).message}>
-                        {onTheLimitProductScanned ? (
-                            <Text style={cameraStyles(theme, typeTheme).textmessage}>Es necesario subir el inventario para seguir escaneando.</Text>
-                        ) : (
-                            <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo {getTypeOfMovementsName()}</Text>
-                        )}
-                    </View>
-                    :
-                    <View style={cameraStyles(theme).message}>
-                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
-                    </View>
-            } */}
-
-
-
-            {/* {
-                Platform.OS === 'android' ?
-                    <TouchableOpacity style={cameraStyles(theme).scannerOptions} onPress={handleOpenInputModal}>
-                        <View style={cameraStyles(theme).optionAndroid}>
-                            <View style={cameraStyles(theme).optionContent}>
-                                <Icon name="barcode-outline" size={hp("3%")} color={iconColor} />
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    :
-                    <View style={cameraStyles(theme, typeTheme).scannerOptions}>
-                        <TouchableOpacity onPress={handleOpenInputModal}>
-                            <BlurView style={cameraStyles(theme, typeTheme).option} blurType="light" blurAmount={20}>
-                                <View style={cameraStyles(theme, typeTheme).optionContent}>
-                                    <Icon name="barcode-outline" size={hp("3%")} color={"black"} />
-                                </View>
-                            </BlurView>
-                        </TouchableOpacity>
-                    </View>
-            } */}
         </View>
     );
 };

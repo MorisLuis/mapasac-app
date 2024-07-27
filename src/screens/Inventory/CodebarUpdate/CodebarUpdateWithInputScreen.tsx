@@ -8,6 +8,7 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import codebartypes from '../../../utils/codebarTypes.json';
 import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdateWithInputScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
+import { updateCodeBar } from '../../../services/codebar';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -28,13 +29,11 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
         if (!selectedProduct) return;
         if(!regex.test(text)) return;
 
-        /* await updateCodeBar({
-            codigo: productDetails?.clave,
-            Id_Marca: productDetails?.Id_Marca,
-            body: {
-                CodBar: text
-            }
-        }) */
+        await updateCodeBar({
+            codebarras: text as string,
+            idinvearts: selectedProduct.idinvearts
+        })
+
         navigation.goBack()
         navigation.goBack()
     }

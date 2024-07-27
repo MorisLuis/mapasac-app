@@ -5,6 +5,7 @@ interface ContextProps {
     addProduct: (inventoryBody: ProductInterface) => void;
     deleteProduct: (idenlacemob: number) => void;
     editProduct: ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => void;
+    resetAfterPost: () => void;
     numberOfItems: number;
 }
 

@@ -1,4 +1,5 @@
 
+// Table: usrmob
 export default interface UserInterface {
 
     // Id of the user.
@@ -37,4 +38,7 @@ export default interface UserInterface {
     // Specify when the use was created.
     alta?: Date;
 
+    empresa?: string;
+
+    razonsocial?: string;
 }

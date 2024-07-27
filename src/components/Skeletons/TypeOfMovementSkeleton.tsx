@@ -23,14 +23,14 @@ export const TypeOfMovementSkeleton = () => {
             }}
         >
             <ShimmerPlaceHolder
+            shimmerColors={shimmerColors}
+            LinearGradient={LinearGradient}
                 style={{
                     height: 40,
                     width: "100%",
                     borderRadius: 5,
                     marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
                 }}
-                shimmerColors={shimmerColors}
-                LinearGradient={LinearGradient}
             >
             </ShimmerPlaceHolder>
         </View>

@@ -67,7 +67,6 @@ export const ProfileScreen = () => {
                     <Text style={{ color: theme.text_color }}>Version: {version}</Text>
                 </View>
 
-                <Button title='toggle' onPress={toggleTheme}/>
             </SafeAreaView>
         </View>
     )

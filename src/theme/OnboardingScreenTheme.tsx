@@ -23,9 +23,11 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         marginBottom: hp("1%")
     },
     headerTitle: {
-        fontSize: globalFont.font_big,
+        fontSize: globalFont.font_med * 1.2,
         color: theme.text_color,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        width: wp("80%")
     },
     content: {
         flex: 2,
@@ -37,15 +39,16 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         flexDirection: "row",
         gap: globalStyles(theme).globalPadding.padding / 2,
         marginBottom: globalStyles(theme).globalPadding.padding / 2,
-        height: hp("12.5%")
+        height: hp("15%")
     },
     moduleOption: {
         borderWidth: 1,
         flex: 1,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 3,
         display: "flex",
         justifyContent: "space-between",
-        padding: globalStyles(theme).globalPadding.padding / 2
+        
+        padding: globalStyles(theme).globalPadding.padding / 1.5
     },
     moduleOption2: {
         borderWidth: 0,

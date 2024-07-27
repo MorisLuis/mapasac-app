@@ -60,7 +60,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     buttonTextTertiary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_sm
     },
 
     buttonTextRed: {

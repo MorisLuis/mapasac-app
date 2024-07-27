@@ -59,7 +59,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
         >
             <View>
                 <Text style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</Text>
-                <Counter counter={piezasCount} setCounter={setPiezasCount} />
+                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre}/>
             </View>
 
             {
