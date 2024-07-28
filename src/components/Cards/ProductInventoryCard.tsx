@@ -19,7 +19,6 @@ export const ProductInventoryCard = ({
 }: ProductInventoryCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     return (
         <TouchableOpacity style={styles(theme, typeTheme).productInventoryCard} onPress={onClick}>

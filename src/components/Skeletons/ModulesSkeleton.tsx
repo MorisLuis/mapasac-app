@@ -28,15 +28,13 @@ export const ModulesSkeleton = () => {
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0 }]}
-            //style={[ OnboardingScreenStyles(theme).moduleOption, { height: "20%", width: "100%", padding: 0, borderWidth: 0}]}
+                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0, borderWidth: 0 }]}
             ></ShimmerPlaceHolder>
 
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0 }]}
-            //style={[ OnboardingScreenStyles(theme).moduleOption, { height: "20%", width: "100%", padding: 0, borderWidth: 0}]}
+                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0, borderWidth: 0 }]}
             ></ShimmerPlaceHolder>
         </View>
 

@@ -7,7 +7,7 @@ import ProductInterface from '../../../interface/product';
 import { Counter } from '../../../components/Ui/Counter';
 import { useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
-import { globalStyles } from '../../../theme/appTheme';
+import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultTheme';
@@ -111,7 +111,7 @@ const ScannerResult = ({
                                         onPress={handleExpandProductDetails}
                                         style={[buttonStyles(theme).button_small, buttonStyles(theme).white]}
                                     >
-                                        <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Ver producto</Text>
+                                        <Text style={[buttonStyles(theme, typeTheme).buttonTextTertiary, { fontSize: globalFont.font_sm }]}>Ver producto</Text>
                                     </TouchableOpacity>
 
                                 }

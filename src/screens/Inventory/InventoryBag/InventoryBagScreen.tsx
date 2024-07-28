@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
-import { FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
@@ -19,7 +19,8 @@ import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBag
 export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProduct } = useContext(InventoryBagContext);
+    const { deleteProduct, numberOfItems } = useContext(InventoryBagContext);
+    const iconColor = theme.text_color_secondary
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
@@ -71,9 +72,22 @@ export const InventoryBagScreen = () => {
     };
 
     const handleDeleteProduct = async (productId: number) => {
-        await deleteProduct(productId);
-        setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
+        const confirmDelete = async () => {
+            await deleteProduct(productId);
+            setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
+        }
+
+        Alert.alert(
+            'Seguro de eliminar este producto?',
+            '',
+            [
+                { text: 'Cancelar', style: 'cancel' },
+                { text: 'Eliminar', onPress: confirmDelete }
+            ]
+        );
     };
+
+
 
     const handleSearch = async (text: string) => {
         setSearchText(text);
@@ -105,7 +119,7 @@ export const InventoryBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (bags?.length > 0 && dataUploaded) &&
+                    (numberOfItems && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -168,6 +182,7 @@ export const InventoryBagScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                             onPress={onPostInventary}
                         >
+                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon}/>
                             <Text style={buttonStyles(theme).buttonText}>Guardar</Text>
                         </TouchableOpacity>
                     </View>

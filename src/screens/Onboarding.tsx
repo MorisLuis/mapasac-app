@@ -81,9 +81,9 @@ export const ModuleOption = ({
     option2,
 }: ModuleOptionInterface) => {
 
-    const { theme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<any>();
-    const iconColor = theme.text_color_secondary
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const moduleNavigate = (option: number) => {
         let navigate;
@@ -93,7 +93,6 @@ export const ModuleOption = ({
         } else if (option === 2) {
             navigation.navigate("SellsNavigation")
         } else { //TEMPORAL
-            //navigation.navigate("InventoryNavigation")
             Alert.alert(
                 'Permiso Bloqueado',
                 'El permiso no ha sido desbloqueado. Por favor, habla con el administrador.',
@@ -138,7 +137,7 @@ export const ModuleOption = ({
             >
                 <Icon name={extraStyles(option).icon} size={24} color={iconColor} />
                 <View>
-                    <Text style={OnboardingScreenStyles(theme).optionText}>{option.appmob}</Text>
+                    <Text style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option.appmob}</Text>
                 </View>
             </TouchableOpacity>
 
@@ -150,13 +149,13 @@ export const ModuleOption = ({
                     >
                         <Icon name={extraStyles(option2).icon} size={24} color={iconColor} />
                         <View>
-                            <Text style={OnboardingScreenStyles(theme).optionText}>{option2.appmob}</Text>
+                            <Text style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option2.appmob}</Text>
                         </View>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity
                         //onPress={() => moduleNavigate(option2.idappmob)}
-                        style={[OnboardingScreenStyles(theme).moduleOption2]}
+                        style={[OnboardingScreenStyles(theme, typeTheme).moduleOption2]}
                     >
                         <View>
                         </View>

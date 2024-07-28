@@ -17,14 +17,13 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        
     },
-    productInventoryCard__Image: {
+    /* productInventoryCard__Image: {
         width: wp("15%"),
         minHeight: wp("17.5%"),
         marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
         borderRadius: globalStyles(theme).borderRadius.borderRadius / 2,
-    },
+    }, */
     productInventoryCard__data: {
         flex: 1,
         flexDirection: "row",
@@ -67,13 +66,13 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         alignItems: "center",
     },
     delete: {
-        color: "red",
-        paddingVertical: globalStyles(theme).globalPadding.padding / 2
+        color: typeTheme === 'light' ? theme.text_color : theme.color_tertiary,
+        paddingTop: globalStyles(theme).globalPadding.padding / 2
     },
 
 
 
-    notImage: {
+    /* notImage: {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
@@ -93,7 +92,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         maxHeight: 40,
         overflow: 'hidden',
         paddingHorizontal: 2
-    },
+    }, */
 });
 
 

@@ -126,8 +126,8 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                 <View style={productDetailsStyles(theme, typeTheme).information}>
                     <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
                     {/* <ProductDetailItem theme={theme} label="Existencia:" value={productDetailsData.Existencia} /> */}
-                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia} />
-                    {/* <ProductDetailItem theme={theme} label="Marca:" value={productDetailsData.Marca} /> */}
+                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia || ""} />
+                    <ProductDetailItem theme={theme} label="Unidad:" value={productDetailsData.unidad_nombre || ""} />
                     {productDetailsData?.codbarras?.trim() !== "" && (
                         <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.codbarras} isLastChild />
                     )}

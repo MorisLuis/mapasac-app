@@ -14,11 +14,11 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         minHeight: 40,
         width: wp("100%"),
 
-        display:"flex",
+        display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end" 
+        justifyContent: "flex-end"
     },
-    header:{
+    header: {
         width: wp("100%"),
         marginBottom: hp("1%")
     },
@@ -47,7 +47,7 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 3,
         display: "flex",
         justifyContent: "space-between",
-        
+
         padding: globalStyles(theme).globalPadding.padding / 1.5
     },
     moduleOption2: {
@@ -55,9 +55,9 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         flex: 1,
         padding: globalStyles(theme).globalPadding.padding / 2,
     },
-    optionText:{
+    optionText: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color_secondary
+        color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
     }
 
 })

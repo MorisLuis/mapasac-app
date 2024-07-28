@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -9,7 +9,6 @@ import { inputStyles } from '../../theme/UI/inputs';
 import { buttonStyles } from '../../theme/UI/buttons';
 
 import { LoadingScreen } from '../LoadingScreen';
-import useKeyboardStatus from '../../hooks/useKeyboardStatus';
 import { useForm } from '../../hooks/useForm';
 import { InputPassword } from '../../components/Ui/InputPassword';
 
@@ -22,10 +21,12 @@ export const LoginScreen = () => {
         pas: ''
     });
 
+
     useEffect(() => {
         if (errorMessage.length === 0) return;
         Alert.alert('Login incorrecto', errorMessage, [{ text: 'Ok', onPress: removeError }]);
-    }, []);
+    }, []); // Agregar `errorMessage` como dependencia
+    
 
     const onLogin = () => {
         Keyboard.dismiss();
@@ -33,14 +34,12 @@ export const LoginScreen = () => {
     };
 
 
-    const keyboardActive = useKeyboardStatus();
     if (loggingIn) return <LoadingScreen message='Iniciando sesion...'/>;
 
     return (
         <KeyboardAvoidingView
             style={[loginStyles(theme).LoginScreen]}
-            behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
-        >
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={loginStyles(theme).formContainer}>
 

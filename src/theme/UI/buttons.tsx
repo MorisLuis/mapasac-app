@@ -15,7 +15,13 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         color: theme.text_color_secondary,
         display: "flex",
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        flexDirection: "row",
+        gap: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
+    },
+
+    button_icon: {
+
     },
 
     button_small: {
@@ -60,7 +66,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     buttonTextTertiary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color,
-        fontSize: globalFont.font_sm
+        fontSize: globalFont.font_normal
     },
 
     buttonTextRed: {

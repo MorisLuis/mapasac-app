@@ -54,6 +54,8 @@ export const InventoryNavigation = () => {
 
     const stackScreens = useMemo(() => (
         <>
+
+
             <Stack.Screen
                 name="ScanneNavigation"
                 component={ScannerNavigation}

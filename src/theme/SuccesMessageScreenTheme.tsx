@@ -3,7 +3,7 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-export const SuccesMessageScreenStyles = (theme: Theme) => StyleSheet.create({
+export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SuccesMessage: {
         display: "flex",
         height: "100%",
@@ -21,7 +21,7 @@ export const SuccesMessageScreenStyles = (theme: Theme) => StyleSheet.create({
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         borderRadius: 100,
-        padding: 8
+        padding: 8,
     },
     content: {
         padding: globalStyles(theme).globalPadding.padding,
@@ -29,7 +29,7 @@ export const SuccesMessageScreenStyles = (theme: Theme) => StyleSheet.create({
     title: {
         fontSize: globalFont.font_big,
         width: "80%",
-        color: theme.color_tertiary,
+        color: typeTheme === 'light' ? theme.text_color : theme.color_tertiary,
         fontWeight: "bold",
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
