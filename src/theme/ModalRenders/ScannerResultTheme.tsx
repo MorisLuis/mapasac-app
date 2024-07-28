@@ -56,14 +56,13 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string) => StyleShee
         alignItems: "center"
     },
     codebarNotAvailable: {
-        backgroundColor: theme.color_tertiary + '13',
+        backgroundColor: typeTheme === 'light' ?  theme.color_secondary + '30' : theme.color_tertiary + '13',
         padding: globalStyles(theme).globalPadding.padding / 3,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        //marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
     },
     textNotAvailable: {
-        color: theme.color_tertiary,
+        color:  typeTheme === 'light' ? theme.color_secondary : theme.color_tertiary,
         fontSize: globalFont.font_normal
     },
     productIcon: {

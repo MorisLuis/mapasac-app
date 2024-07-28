@@ -20,7 +20,7 @@ export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
     const { deleteProduct, numberOfItems } = useContext(InventoryBagContext);
-    const iconColor = theme.text_color_secondary
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
@@ -179,11 +179,11 @@ export const InventoryBagScreen = () => {
                             <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme).black]}
+                            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
                             onPress={onPostInventary}
                         >
                             <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon}/>
-                            <Text style={buttonStyles(theme).buttonText}>Guardar</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
                         </TouchableOpacity>
                     </View>
                 }

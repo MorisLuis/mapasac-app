@@ -6,7 +6,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
 
     ConfirmationScreen: {
         flex: 1,
-        backgroundColor: theme.background_color_secondary,
+        backgroundColor:  typeTheme === 'light' ? theme.background_color : theme.background_color_secondary,
         height: "100%",
         padding: 20,
     },
@@ -43,7 +43,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         color: theme.text_color
     },
     footer: {
-        backgroundColor: theme.background_color,
+        backgroundColor:  typeTheme === 'light' ? theme.background_color : theme.background_color,
         padding: globalStyles(theme).globalPadding.padding,
         height: hp("25%"),
         maxHeight: 150,

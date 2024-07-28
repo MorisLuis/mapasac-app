@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList, Button } from 'react-native';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { ProductInventoryConfirmationCard } from '../../../components/Cards/ProductInventoryConfirmationCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
@@ -18,7 +18,7 @@ import { ConfirmationSkeleton } from '../../../components/Skeletons/Confirmation
 export const ConfirmationScreen = () => {
     const { getTypeOfMovementsName } = useContext(AuthContext);
     const { numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
-    const { typeTheme, theme } = useTheme();
+    const { typeTheme, theme, toggleTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
     const iconColor = theme.color_primary;
@@ -123,7 +123,7 @@ export const ConfirmationScreen = () => {
                     onPress={onPostInventory}
                     disabled={createInventaryLoading}
                 >
-                    <Text style={buttonStyles(theme).buttonText}>
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
                         {createInventaryLoading ? <DotLoader /> : "Confirmar"}
                     </Text>
                 </TouchableOpacity>

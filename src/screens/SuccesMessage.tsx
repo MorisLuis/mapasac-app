@@ -25,9 +25,7 @@ export const SuccesMessage = () => {
                 <View style={SuccesMessageScreenStyles(theme, typeTheme).content}>
                     <Icon name="checkmark-done-outline" size={hp("10%")} color={iconColor} />
                     <Text style={SuccesMessageScreenStyles(theme, typeTheme).title}>Tu inventario ha sido exitoso.</Text>
-                    {/* <Text style={SuccesMessageScreenStyles(theme).text}>Tu inventario con el folio {inventoryData.Folio} ha sido realizado.</Text> */}
                 </View>
-                {/* <Button title='change' onPress={toggleTheme} /> */}
             </View>
 
         </SafeAreaView>

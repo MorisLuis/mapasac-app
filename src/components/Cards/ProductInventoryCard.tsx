@@ -34,7 +34,7 @@ export const ProductInventoryCard = ({
                     </View>
 
                     {
-                        showDelete && <Text style={styles(theme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
+                        showDelete && <Text style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
                     }
                 </View>
             </View>

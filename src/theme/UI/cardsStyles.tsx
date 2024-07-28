@@ -66,33 +66,9 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         alignItems: "center",
     },
     delete: {
-        color: typeTheme === 'light' ? theme.text_color : theme.color_tertiary,
+        color: typeTheme === 'light' ? theme.color_red : theme.color_tertiary,
         paddingTop: globalStyles(theme).globalPadding.padding / 2
-    },
-
-
-
-    /* notImage: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 60,
-        minHeight: 70,
-        marginRight: 10,
-        borderRadius: 5,
-        backgroundColor: theme.background_color_tertiary,
-        borderWidth: 1,
-        borderColor: theme.color_border
-    },
-    notImageText: {
-        fontWeight: 'bold',
-        fontSize: 8,
-        textAlign: "center",
-        lineHeight: 8, 
-        maxHeight: 40,
-        overflow: 'hidden',
-        paddingHorizontal: 2
-    }, */
+    }
 });
 
 
@@ -223,7 +199,7 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
         display: "flex",
         flexDirection: "row",
         borderWidth: 0.5,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
         backgroundColor: theme.background_color_secondary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,

@@ -129,28 +129,28 @@ const CameraTest: React.FC = () => {
                 torchMode={lightOn ? "on" : "off"}
             />
 
-            <View style={cameraStyles(theme).actions}>
-                <View style={cameraStyles(theme).cog}>
+            <View style={cameraStyles(theme, typeTheme).actions}>
+                <View style={cameraStyles(theme, typeTheme).cog}>
                     <TouchableOpacity onPress={handleOpenBagInventory}>
-                        <Icon name={"albums-outline"} size={22} color="white" />
+                        <Icon name={"albums-outline"} size={22} color={iconColor} />
                     </TouchableOpacity>
                     {
                         numberOfItems > 0 &&
-                        <View style={cameraStyles(theme).bagCounter}>
+                        <View style={cameraStyles(theme, typeTheme).bagCounter}>
                             <Text>{numberOfItems}</Text>
                         </View>
                     }
                 </View>
 
-                <View style={cameraStyles(theme).flash}>
+                <View style={cameraStyles(theme, typeTheme).flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
-                        <Icon name={lightOn ? "flash" : "flash-outline"} size={22} color="white" />
+                        <Icon name={lightOn ? "flash" : "flash-outline"} size={22} color={iconColor} />
                     </TouchableOpacity>
                 </View>
 
-                <View style={cameraStyles(theme).cog}>
+                <View style={cameraStyles(theme, typeTheme).cog}>
                     <TouchableOpacity onPress={handleOpenInputModal}>
-                        <Icon name={"barcode-outline"} size={22} color="white" />
+                        <Icon name={"barcode-outline"} size={22} color={iconColor} />
                     </TouchableOpacity>
                 </View>
             </View>

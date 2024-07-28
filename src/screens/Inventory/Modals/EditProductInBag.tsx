@@ -76,7 +76,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
                 onPress={onEdit}
                 disabled={buttondisabled}
             >
-                <Text style={buttonStyles(theme).buttonText}>{loadingSearch ? "Editando..." : "Editar"}</Text>
+                <Text style={buttonStyles(theme, typeTheme).buttonText}>{loadingSearch ? "Editando..." : "Editar"}</Text>
             </TouchableOpacity>
         </ModalMiddle>
     );

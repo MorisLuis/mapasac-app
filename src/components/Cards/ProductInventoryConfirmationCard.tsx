@@ -18,7 +18,7 @@ export const ProductInventoryConfirmationCard = ({
 }: ProductInventoryConfirmationCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const iconColor = theme.color_tertiary
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.color_tertiary
 
     return (
         <View style={ProductInventoryConfirmationCardTheme(theme, typeTheme).ProductInventoryConfirmationCard}>
