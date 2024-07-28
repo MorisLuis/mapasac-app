@@ -11,7 +11,7 @@ const getBagInventory = async ({ page, limit }: getBagInterface) => {
         const { data } = await api.get(`/api/bag?limit=${limit}&page=${page}&option=0`);
         return data.bag
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 }
 
@@ -20,7 +20,7 @@ const addProductInBagInventory = async (product: ProductInterface) => {
         const data = await api.post(`/api/bag`, {...product, opcion: 0});
         return data
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 }
 
@@ -35,7 +35,7 @@ const updateProductInBagInventory = async ({ idenlacemob, cantidad }: updateProd
         const { data } = await api.put(`/api/bag`, { idenlacemob, cantidad });
         return data
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 }
 
@@ -45,7 +45,7 @@ const deleteProductInBagInventory = async (idenlacemob: number) => {
         const { data } = await api.delete(`/api/bag/${idenlacemob}`);
         return data
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 
 }
@@ -56,7 +56,7 @@ const deleteAllProductsInBagInventory = async (opcion: number) => {
         const { data } = await api.delete(`/api/bag/all?opcion=${opcion}`);
         return data
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 
 }
@@ -67,7 +67,7 @@ const getTotalProductsInBag = async (opcion: number) => {
         const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
         return data.total
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({ error: error?.response?.data })
     }
 
 }

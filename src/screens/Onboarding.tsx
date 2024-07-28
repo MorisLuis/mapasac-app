@@ -83,7 +83,7 @@ export const ModuleOption = ({
 
     const { theme } = useTheme();
     const navigation = useNavigation<any>();
-    const iconColor = theme.color_primary
+    const iconColor = theme.text_color_secondary
 
     const moduleNavigate = (option: number) => {
         let navigate;
@@ -112,13 +112,13 @@ export const ModuleOption = ({
         let icon;
 
         if (option.idappmob === 1) {
-            styles = { backgroundColor: option.permisos === 1 ? theme.color_red : theme.color_gray }
+            styles = { backgroundColor: option.permisos === 1 ? theme.color_tertiary : theme.color_gray }
             icon = "scan-outline"
         } else if (option.idappmob === 2) { // TEMPORAL
-            styles = { backgroundColor: option.permisos === 1 ? theme.color_blue : theme.color_gray }
+            styles = { backgroundColor: option.permisos === 1 ? theme.color_tertiary : theme.color_gray }
             icon = "swap-horizontal-outline"
         } else { // TEMPORAL
-            styles = { backgroundColor: option.permisos === 1 ? theme.color_green : theme.color_gray }
+            styles = { backgroundColor: option.permisos === 1 ? theme.color_tertiary : theme.color_gray }
             icon = "thumbs-up-outline"
         }
 

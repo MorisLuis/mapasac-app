@@ -7,7 +7,7 @@ const getProducts = async (PageNumber: number) => {
         const getProduct = await api.get(`/api/product?page=${PageNumber}&limit=10`);
         products = getProduct.data.products;
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ error: error?.response?.data })
     }
 
     return products
@@ -20,7 +20,7 @@ const getProductDetails = async (idinvearts: number) => {
         const getProduct = await api.get(`/api/product/byid?idinvearts=${idinvearts}`);
         product = getProduct.data.product;
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ error: error?.response?.data })
     }
 
     return product;
@@ -38,7 +38,7 @@ const getProductByCodeBar = async ({ codeBar }: getProductByCodeBarInterface) =>
         product = getProduct.data.product;
 
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ error: error?.response?.data })
     }
 
     return product
@@ -56,7 +56,7 @@ const getProductByClave = async ({ clave }: getProductByClaveInterface) => {
         product = getProduct.data.product;
 
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ error: error?.response?.data })
     }
 
     return product
@@ -71,7 +71,7 @@ const getTotalProducts= async () => {
         const getProduct = await api.get(`/api/product/total`);
         total = getProduct.data.total;
     } catch (error: any) {
-        console.log({ error: error })
+        console.log({ error: error?.response?.data })
     }
 
     return total;

@@ -20,7 +20,7 @@ const updateCodeBar = async ({
             text1: 'Se actualizó el codigo de barras!'
         })
     } catch (error: any) {
-        console.log({ errorupdateCostos: error })
+        console.log({ error: error?.response?.data })
     }
 }
 

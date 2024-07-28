@@ -1,26 +1,26 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-/* export const api = axios.create(
+export const api = axios.create(
     {
         baseURL: 'https://mapasac-app-5iaa6.ondigitalocean.app/',
         headers: {
             'Content-Type': 'application/json',
         }
     }
-) */
+)
 
 
 
-export const api = axios.create(
+/* export const api = axios.create(
     {
-        baseURL: 'http://172.20.10.3:5001',
+        baseURL: 'http://192.168.100.62:5001',
         headers: {
             'Content-Type': 'application/json',
         }
     }
 )
-
+ */
 
 // Interceptor to add the token to headers
 api.interceptors.request.use(

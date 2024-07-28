@@ -6,18 +6,14 @@ interface postLoginInterface {
 }
 
 const postLogin = async ({ usr, pas }: postLoginInterface) => {
-
-    let modules;
     try {
         const { data } = await api.post('/api/auth/login', { usr, pas });
-        return data
+        return data;
     } catch (error: any) {
-        console.log({ errorTP: error })
+        return error.response.data
     }
-
-    return modules
-
 }
+
 
 
 interface renewLoginInterface {
@@ -26,7 +22,6 @@ interface renewLoginInterface {
 
 const renewLogin = async ({ token }: renewLoginInterface) => {
 
-    let modules;
     try {
         const resp = await api.get('/api/auth/renew', {
             headers: {
@@ -37,11 +32,9 @@ const renewLogin = async ({ token }: renewLoginInterface) => {
 
         return resp
     } catch (error: any) {
-        console.log({ errorTP: error })
+        console.log({renewError: error?.response?.data})
+        return error.response.data
     }
-
-    return modules
-
 }
 
 export {

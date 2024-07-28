@@ -107,18 +107,25 @@ export const AuthProvider = ({ children }: any) => {
             state.status = "checking"
             const data = await postLogin({ usr, pas })
 
+            if (data.error) {
+                setLoggingIn(false)
+                return dispatch({
+                    type: 'addError',
+                    payload: data.error
+                })
+            }
+
             dispatch({
                 type: 'signUp',
                 payload: {
-                    token: data.token,
-                    user: data.user
+                    token: data?.token,
+                    user: data?.user
                 }
             });
 
             await AsyncStorage.setItem('token', data.token);
 
         } catch (error: any) {
-            console.log({ error })
             setLoggingIn(false)
 
             dispatch({
@@ -152,7 +159,6 @@ export const AuthProvider = ({ children }: any) => {
             logOut,
             removeError,
             getTypeOfMovementsName
-            /* updateTypeOfMovements */
         }}>
             {children}
         </AuthContext.Provider>

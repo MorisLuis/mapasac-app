@@ -57,7 +57,7 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     },
     optionText:{
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color_secondary
     }
 
 })
