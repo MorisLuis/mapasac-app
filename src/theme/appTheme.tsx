@@ -124,6 +124,9 @@ export const globalStyles = (theme?: Theme) => StyleSheet.create({
     },
     borderRadius: {
         borderRadius: hp("1%"),
+    },
+    borderRadiusStandard: {
+        borderRadius: 15
     }
 
 });

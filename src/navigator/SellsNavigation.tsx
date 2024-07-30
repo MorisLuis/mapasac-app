@@ -4,11 +4,16 @@ import { SettingsContext } from '../context/settings/SettingsContext';
 
 // Screens
 import { SellsScreen } from '../screens/Sells/SellsScreen';
-import { CustomHeader } from '../components/Ui/CustomHeader';
+import { CustomTopBar } from '../components/Navigation/CustumTopBar';
+import { SellsFamilyScreen } from '../screens/Sells/SellsFamilyScreen';
+import { SellsFamilyScreenStep3 } from '../screens/Sells/SellsFamilyScreenStep3';
 
 export type SellsNavigationStackParamList = {
     // Navigation
-    sellsScreen: undefined
+    sellsScreen: undefined;
+    sellsFamilyScreen: { cvefamilia: number, descripcio: string };
+    sellsFamilyScreen3: { cvefamilia?: number, descripcio?: string };
+
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -21,18 +26,24 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="sellsScreen"
                 component={SellsScreen}
-                options={({ navigation }: any) => ({
+                options={() => ({
                     header: props => (
-                        <CustomHeader
-                            {...props}
-                            title={"Ventas"}
-                            navigation={navigation}
-                            backCustum={true}
-                            secondaryDesign={true}
-                            back={() => navigation.goBack()}
-                        />
+                        <CustomTopBar />
                     )
                 })}
+            />
+
+            <Stack.Screen
+                name="sellsFamilyScreen"
+                component={SellsFamilyScreen}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+
+            <Stack.Screen
+                name="sellsFamilyScreen3"
+                component={SellsFamilyScreenStep3}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
         </>
     ), [handleCameraAvailable, updateBarCode]);

@@ -32,7 +32,6 @@ const ModalBottom = ({
         Keyboard.dismiss();
     };
 
-
     const render = () => {
         return (
             <TouchableWithoutFeedback onPress={handleDismissKeyboard}>

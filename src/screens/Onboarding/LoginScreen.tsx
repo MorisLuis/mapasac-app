@@ -73,7 +73,7 @@ export const LoginScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                             onPress={onLogin}
                         >
-                            <Text style={buttonStyles(theme).buttonText}>Iniciar sesión</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Iniciar sesión</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

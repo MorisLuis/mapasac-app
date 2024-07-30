@@ -25,7 +25,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
     },
 
     button_small: {
-        height: hp("5%"),
+        //height: hp("5%"),
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
         borderColor: theme.color_border_tertiary,

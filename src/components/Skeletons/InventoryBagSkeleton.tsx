@@ -24,7 +24,7 @@ export const InventoryBagSkeleton = () => {
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, { backgroundColor: "red", width: "auto", height: 45, borderRadius: globalStyles(theme).borderRadius.borderRadius }]}
+                style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, { width: "auto", height: 45, borderRadius: globalStyles(theme).borderRadius.borderRadius }]}
             ></ShimmerPlaceHolder>
 
             <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>

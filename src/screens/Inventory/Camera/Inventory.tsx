@@ -108,7 +108,7 @@ export const Inventory = () => {
             handleGetProductsByStock();
         }, [])
     );
-
+ 
 
     return (
         <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>

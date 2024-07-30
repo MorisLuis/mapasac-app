@@ -25,14 +25,7 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string) => StyleShee
         paddingBottom: globalStyles(theme).globalMarginBottom.marginBottom,
 
     },
-    productText: {
-        display: "flex",
-        alignItems: 'center',
-        flexDirection: "row"
-    },
-    productMessage: {
-        marginLeft: 10
-    },
+
     code: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
         display: 'flex',
@@ -103,6 +96,7 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string) => StyleShee
     counterContainer: {
         display: "flex",
         flexDirection: "row",
-        gap: wp("5%")
+        justifyContent: "space-between",
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
     }
 });

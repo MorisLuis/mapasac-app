@@ -38,7 +38,6 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const [openModalAdvice, setOpenModalAdvice] = useState(false)
 
     const getSearchData = async (searchTerm: string) => {
-        console.log({searchTerm})
         const products = await getSearchProductInStock({ searchTerm: searchTerm ? searchTerm : "" })
         setProductsInInventory(products);
     }

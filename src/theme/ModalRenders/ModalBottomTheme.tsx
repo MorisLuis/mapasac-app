@@ -7,6 +7,7 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         flex: 1,
         justifyContent: "flex-end",
         position: 'relative',
+        padding: globalStyles(theme).globalPadding.padding / 2.5
     },
     modalContent: {
         backgroundColor: theme.background_color,
@@ -19,15 +20,13 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        borderRadius: 10,
+        borderRadius: globalStyles(theme).borderRadiusStandard.borderRadius * 2,
         borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color
     },
     modalChildren: {
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 20,
-        paddingLeft: 20,
+        padding: globalStyles(theme).globalPadding.padding,
+        paddingTop: 10
     },
     header: {
         width: "100%",

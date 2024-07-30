@@ -8,27 +8,26 @@ export const counterStyles = (theme: Theme) => StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        alignItems: "center"
     },
     inputContainer: {
         display: "flex",
         flexDirection: "row",
         textAlign: 'center',
-        justifyContent: 'center',
-        gap: 5,
+        alignItems: 'center',
         marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom / 2,
         backgroundColor: theme.background_color_secondary,
         paddingHorizontal: wp("3%"),
-        paddingVertical: 10,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color,
+        height: "100%"
     },
     counterButton: {
         backgroundColor: theme.background_color_secondary,
         padding: globalStyles(theme).globalPadding.padding / 5,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        height: "100%"
     },
     inputText: {
         fontSize: globalFont.font_normal,

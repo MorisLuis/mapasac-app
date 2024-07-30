@@ -16,7 +16,7 @@ export const ScannerNavigation = ({ route }: any) => {
     const initialScreen = route?.params?.screen || '[ScannerNavigation] - camera';
 
     return (
-        <View style={{ flex: 1 }} >
+        <View style={{ flex: 1, backgroundColor: "green" }} >
             <TopTabs.Navigator
                 tabBar={(props) => <CustomTabBar {...props} />}
                 initialRouteName={initialScreen}

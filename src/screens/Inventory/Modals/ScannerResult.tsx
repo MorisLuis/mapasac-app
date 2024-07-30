@@ -81,30 +81,28 @@ const ScannerResult = ({
                 (product) ?
                     <View style={modalRenderstyles(theme).ScannerResult}>
                         <View style={modalRenderstyles(theme).product}>
-                            <View style={modalRenderstyles(theme).productText}>
-                                <View style={modalRenderstyles(theme).productMessage}>
-                                    <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
-                                    <Text style={modalRenderstyles(theme).codeValue}>{product?.clave}</Text>
-                                    <View style={modalRenderstyles(theme).otherInfo}>
-                                        {
-                                            product?.codbarras ?
-                                                <View style={modalRenderstyles(theme, typeTheme).codebarNotAvailable}>
-                                                    <Text style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
-                                                        No tiene código
-                                                    </Text>
-                                                </View>
-                                                :
-                                                <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
-                                        }
-                                        <Text style={{ color: theme.text_color }}>/</Text>
-                                        <Text style={{ color: theme.text_color }}>{product?.familia}</Text>
-                                    </View>
+                            <View>
+                                <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
+                                <Text style={modalRenderstyles(theme).codeValue}>{product?.clave}</Text>
+                                <View style={modalRenderstyles(theme).otherInfo}>
+                                    {
+                                        product?.codbarras ?
+                                            <View style={modalRenderstyles(theme, typeTheme).codebarNotAvailable}>
+                                                <Text style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
+                                                    No tiene código
+                                                </Text>
+                                            </View>
+                                            :
+                                            <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
+                                    }
+                                    <Text style={{ color: theme.text_color }}>/</Text>
+                                    <Text style={{ color: theme.text_color }}>{product?.familia}</Text>
                                 </View>
                             </View>
                         </View>
 
                         <View style={modalRenderstyles(theme).counterContainer}>
-                            <View style={{ width: wp("40%") }}>
+                            <View style={{ width: "40%"}}>
                                 {
                                     (seeProductDetails && !fromProductDetails) &&
                                     <TouchableOpacity
@@ -116,7 +114,7 @@ const ScannerResult = ({
 
                                 }
                             </View>
-                            <View style={{ width: wp("45%") }}>
+                            <View style={{ width: "55%" }}>
                                 <Counter counter={counterProduct} setCounter={setCounterProduct} unit={product.unidad_nombre}/>
                             </View>
                         </View>

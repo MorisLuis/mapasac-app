@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Theme, globalFont, globalStyles } from '../appTheme';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
@@ -93,7 +93,7 @@ export const EmptyMessageCardStyles = (theme: Theme, typeTheme: string) => Style
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
         borderColor: theme.color_border,
-        width: 40, 
+        width: 40,
         height: 40,
         borderRadius: 20,
         justifyContent: "center",
@@ -124,7 +124,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
     },
     productInventoryCard__Image: {
         width: wp("17.5%"),
-        minHeight:  wp("17.5%"),
+        minHeight: wp("17.5%"),
         marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
         borderRadius: globalStyles(theme).borderRadius.borderRadius
     },
@@ -141,19 +141,19 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         flexDirection: "row",
         gap: 5
     },
-    otherInformationText:{
+    otherInformationText: {
         fontSize: globalFont.font_sm,
         color: theme.text_color
     },
     codebarAvailable: {
-        backgroundColor: typeTheme === 'light' ? theme.color_border_tertiary + '23' :  theme.color_border_secondary + '23',
+        backgroundColor: typeTheme === 'light' ? theme.color_border_tertiary + '23' : theme.color_border_secondary + '23',
         padding: globalStyles(theme).globalPadding.padding / 5,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     textAvailable: {
-        color: typeTheme === 'light' ? theme.color_border_tertiary :  theme.color_border_secondary,
+        color: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_secondary,
         fontSize: globalFont.font_normal
     },
     codebarNotAvailable: {
@@ -172,7 +172,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         alignItems: 'center',
         justifyContent: 'center',
         width: wp("17.5%"),
-        minHeight:  wp("17.5%"),
+        minHeight: wp("17.5%"),
         marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         backgroundColor: theme.background_color_tertiary,
@@ -234,14 +234,60 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
         fontSize: globalFont.font_sm,
         color: theme.text_color
     },
-    edit:{
+    edit: {
         backgroundColor: theme.background_color_tertiary,
         display: "flex",
         alignContent: "center",
         justifyContent: "center",
         paddingHorizontal: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
-        borderWidth:1,
+        borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius
     }
+});
+
+
+export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+    ProductSellsCardTheme: {
+        flex: 1,
+        display: "flex"
+    },
+    image: {
+        flex: 1,
+        borderWidth: 3,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderColor: theme.background_color_secondary,
+        resizeMode: "cover",
+        width: "100%",
+        height: hp("15%"),
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+    },
+    shadowImage: {
+        /* shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4.65,
+        
+        elevation: 8 */
+    },
+    notImage: {
+        flex: 1,
+        borderWidth: 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderColor: theme.background_color_secondary,
+        resizeMode: "cover",
+        width: "100%",
+        height: hp("15%"),
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        backgroundColor: theme.background_color_tertiary
+    },
+    title: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color,
+        //fontWeight: 'bold'
+    }
+
 });

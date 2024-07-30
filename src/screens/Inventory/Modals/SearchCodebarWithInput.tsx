@@ -76,7 +76,7 @@ export const SearchCodebarWithInput = () => {
                     onPress={handleSearchProductByCodebarInput}
                     disabled={buttondisabled}
                 >
-                    <Text style={buttonStyles(theme).buttonText}>{loadingSearch ?  "Buscando..." : "Buscar producto"}</Text>
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>{loadingSearch ?  "Buscando..." : "Buscar producto"}</Text>
                 </TouchableOpacity>
 
                 <View style={modalRenderstyles(theme).optionsContainer}>
