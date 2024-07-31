@@ -43,7 +43,7 @@ export const ConfirmationScreen = () => {
     const onPostInventory = async () => {
         setCreateInventaryLoading(true);
         try {
-            const data = await postInventory();
+            await postInventory();
             resetAfterPost();
             setTimeout(() => {
                 setCreateInventaryLoading(false);

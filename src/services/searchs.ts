@@ -12,7 +12,7 @@ const getSearchProductInStock = async ({ searchTerm }: SearchInterface) => {
         const getProduct = await api.get(`/api/search/product?term=${searchTerm}`);
         products = getProduct.data.products;
     } catch (error: any) {
-        console.log({ error: error?.response?.data })
+        throw error?.response?.data || new Error('Unknown error');
     }
 
     return products
@@ -25,7 +25,7 @@ const getSearchProductInBack = async ({ searchTerm, opcion }: SearchInterface) =
         const getProduct = await api.get(`/api/search/productInBag?term=${searchTerm}&opcion=${opcion}`);
         products = getProduct.data.products;
     } catch (error: any) {
-        console.log({ error: error?.response?.data })
+        throw error?.response?.data || new Error('Unknown error');
     }
 
     return products

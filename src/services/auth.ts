@@ -10,7 +10,7 @@ const postLogin = async ({ usr, pas }: postLoginInterface) => {
         const { data } = await api.post('/api/auth/login', { usr, pas });
         return data;
     } catch (error: any) {
-        return error.response.data
+        throw error?.response?.data || new Error('Unknown error');
     }
 }
 
@@ -32,8 +32,7 @@ const renewLogin = async ({ token }: renewLoginInterface) => {
 
         return resp
     } catch (error: any) {
-        console.log({renewError: error?.response?.data})
-        return error.response.data
+        throw error?.response?.data || new Error('Unknown error');
     }
 }
 

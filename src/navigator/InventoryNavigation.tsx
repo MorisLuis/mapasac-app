@@ -4,13 +4,11 @@ import ProductInterface from '../interface/product';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
 import { SettingsContext } from '../context/settings/SettingsContext';
-import { TESTAPP } from "@env";
 
 // Screens
 import { SearchProductScreen } from '../screens/Inventory/SearchProductScreen';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
-import { TypeOfMovementScreen } from '../screens/Inventory/TypeOfMovementScreen';
 import { SearchCodebarWithInput } from '../screens/Inventory/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Inventory/Modals/ScannerResult';
 import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';

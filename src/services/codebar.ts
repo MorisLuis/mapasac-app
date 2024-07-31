@@ -20,7 +20,7 @@ const updateCodeBar = async ({
             text1: 'Se actualizó el codigo de barras!'
         })
     } catch (error: any) {
-        console.log({ error: error?.response?.data })
+        throw error?.response?.data || new Error('Unknown error');
     }
 }
 

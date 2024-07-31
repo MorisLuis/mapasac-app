@@ -94,8 +94,8 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
 
-        } catch (error) {
-            console.log({ errorAuthToken: error })
+        } catch (error: any) {
+            console.log({ errorAuthToken: error.error })
             return dispatch({ type: 'notAuthenticated' });
         }
     }
@@ -127,10 +127,9 @@ export const AuthProvider = ({ children }: any) => {
 
         } catch (error: any) {
             setLoggingIn(false)
-
             dispatch({
                 type: 'addError',
-                payload: (error.response ? error.response.data.error : error.message) || 'Información incorrecta'
+                payload: (error.error) || 'Información incorrecta'
             })
         }
     };
