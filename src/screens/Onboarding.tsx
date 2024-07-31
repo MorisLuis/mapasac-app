@@ -8,7 +8,6 @@ import { getModules } from '../services/others';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
-import { globalStyles } from '../theme/appTheme';
 
 interface modulesInterface {
     idappmob: number,
@@ -33,7 +32,11 @@ export const OnboardingScreen = () => {
         }
 
         onGetModules()
-    }, [])
+    }, []);
+
+
+    const oddModules = modules?.filter(module => module.idappmob % 2 !== 0);
+    const evenModules = modules?.filter(module => module.idappmob % 2 === 0);
 
     return (
         <SafeAreaView style={OnboardingScreenStyles(theme).OnboardingScreen}>
@@ -49,15 +52,13 @@ export const OnboardingScreen = () => {
             <View style={OnboardingScreenStyles(theme).content}>
                 {
                     modules ?
-                        modules?.map((option: modulesInterface, index: number) => (
-                            index % 2 === 0 ? (
-                                <View key={index}>
-                                    <ModuleOption
-                                        option={option}
-                                        option2={modules[index + 1] || ""}
-                                    />
-                                </View>
-                            ) : null
+                        oddModules?.map((option, index) => (
+                            <View key={option.idappmob}>
+                                <ModuleOption
+                                    option={option}
+                                    option2={evenModules && evenModules[index]}
+                                />
+                            </View>
                         ))
                         :
                         <>
@@ -73,7 +74,7 @@ export const OnboardingScreen = () => {
 
 interface ModuleOptionInterface {
     option: modulesInterface,
-    option2: modulesInterface,
+    option2?: modulesInterface,
 }
 
 export const ModuleOption = ({

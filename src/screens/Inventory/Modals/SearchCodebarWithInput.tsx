@@ -9,6 +9,7 @@ import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
+import DotLoader from '../../../components/Ui/DotLaoder';
 
 export const SearchCodebarWithInput = () => {
 
@@ -76,7 +77,9 @@ export const SearchCodebarWithInput = () => {
                     onPress={handleSearchProductByCodebarInput}
                     disabled={buttondisabled}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>{loadingSearch ?  "Buscando..." : "Buscar producto"}</Text>
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                        {loadingSearch ? <DotLoader /> : "Buscar producto"}
+                    </Text>
                 </TouchableOpacity>
 
                 <View style={modalRenderstyles(theme).optionsContainer}>

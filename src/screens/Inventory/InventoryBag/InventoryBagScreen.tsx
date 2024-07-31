@@ -15,11 +15,13 @@ import { deleteAllProductsInBagInventory, getBagInventory } from '../../../servi
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { getSearchProductInBack } from '../../../services/searchs';
 import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
+import DotLoader from '../../../components/Ui/DotLaoder';
+import Toast from 'react-native-toast-message';
 
 export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProduct, numberOfItems } = useContext(InventoryBagContext);
+    const { deleteProduct, numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
@@ -33,6 +35,7 @@ export const InventoryBagScreen = () => {
     const [dataUploaded, setDataUploaded] = useState(false)
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+    const [loadingCleanBag, setLoadingCleanBag] = useState(false)
 
 
     const onPostInventary = async () => {
@@ -66,9 +69,17 @@ export const InventoryBagScreen = () => {
     };
 
     const handleCleanTemporal = () => {
-        setOpenModalDecision(false);
+        setLoadingCleanBag(true)
         deleteAllProductsInBagInventory(0);
+        resetAfterPost()
         setPage(1);
+        setLoadingCleanBag(false);
+        goBack();
+        setOpenModalDecision(false);
+        Toast.show({
+            type: 'tomatoToast',
+            text1: 'Se limpio el inventario!'
+        })
     };
 
     const handleDeleteProduct = async (productId: number) => {
@@ -119,7 +130,7 @@ export const InventoryBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (numberOfItems && dataUploaded) &&
+                    (numberOfItems > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -196,8 +207,11 @@ export const InventoryBagScreen = () => {
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).red, globalStyles(theme).globalMarginBottomSmall]}
                     onPress={handleCleanTemporal}
+                    disabled={loadingCleanBag}
                 >
-                    <Text style={buttonStyles(theme).buttonTextRed}>Limpiar carrito</Text>
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                        {loadingCleanBag ? <DotLoader /> : "Limpiar carrito"}
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).white]}

@@ -4,17 +4,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { counterStyles } from '../../theme/UI/counterStyles';
 import { useTheme } from '../../context/ThemeContext';
+import { globalFont } from '../../theme/appTheme';
 
 interface CounterInterface {
     counter: number,
     setCounter: React.Dispatch<React.SetStateAction<number>> | ((value: number) => void),
-    unit?: string
+    unit?: string;
+    secondaryDesign?: boolean
 }
 
 export const Counter = ({
     counter,
     setCounter,
-    unit
+    unit,
+    secondaryDesign
 }: CounterInterface) => {
 
     const { theme, typeTheme } = useTheme();
@@ -67,13 +70,13 @@ export const Counter = ({
             </TouchableOpacity>
 
             <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-                <View style={[counterStyles(theme).inputContainer]}>
+                <View style={[counterStyles(theme).inputContainer, secondaryDesign && { backgroundColor: theme.background_color }]}>
                     <TextInput
                         ref={inputRef}
                         value={`${counter.toString()}`}
                         onChangeText={handleInputChange}
                         keyboardType="numeric"
-                        style={counterStyles(theme).inputText}
+                        style={[counterStyles(theme).inputText, secondaryDesign && { fontSize: globalFont.font_big }]}
                     />
                     {
                         unit &&

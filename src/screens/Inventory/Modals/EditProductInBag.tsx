@@ -9,6 +9,7 @@ import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { Counter } from '../../../components/Ui/Counter';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
+import DotLoader from '../../../components/Ui/DotLaoder';
 
 type EditProductInBagInterface = {
     route?: {
@@ -24,9 +25,9 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     const { editProduct, deleteProduct } = useContext(InventoryBagContext);
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const [loadingSearch, setLoadingSearch] = useState(false)
-    const [piezasCount, setPiezasCount] = useState(0)
-    const buttondisabled = false;
+    const [loadingSearch, setLoadingSearch] = useState(false);
+    const [piezasCount, setPiezasCount] = useState(0);
+    const [editingProduct, setEditingProduct] = useState(false)
 
     const handleCloseModal = () => {
         navigation.goBack()
@@ -34,13 +35,15 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
 
     const onEdit = () => {
         if (!product?.idenlacemob) return;
+        setEditingProduct(true)
 
-        if(piezasCount < 1) {
+        if (piezasCount < 1) {
             deleteProduct(product.idenlacemob as number)
         } else {
             editProduct({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
 
+        setEditingProduct(false);
         handleCloseModal()
     }
 
@@ -57,9 +60,9 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
             visible={true}
             onClose={handleCloseModal}
         >
-            <View>
+            <View style={editProductStyles(theme).EditProductInBag_header}>
                 <Text style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</Text>
-                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre}/>
+                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign/>
             </View>
 
             {
@@ -71,12 +74,14 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
 
             <TouchableOpacity
                 style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
+                ...(editingProduct ? [buttonStyles(theme).disabled] : [])
                 ]}
                 onPress={onEdit}
-                disabled={buttondisabled}
+                disabled={editingProduct}
             >
-                <Text style={buttonStyles(theme, typeTheme).buttonText}>{loadingSearch ? "Editando..." : "Editar"}</Text>
+                <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    {editingProduct ? <DotLoader /> : "Editar"}
+                </Text>
             </TouchableOpacity>
         </ModalMiddle>
     );

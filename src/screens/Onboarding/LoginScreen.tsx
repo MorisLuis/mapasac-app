@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, TextInput, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -11,10 +11,12 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import { LoadingScreen } from '../LoadingScreen';
 import { useForm } from '../../hooks/useForm';
 import { InputPassword } from '../../components/Ui/InputPassword';
+import DotLoader from '../../components/Ui/DotLaoder';
 
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
+    const [loadingLogin, setLoadingLogin] = useState(false)
 
     const { usr, pas, onChange } = useForm({
         usr: '',
@@ -26,15 +28,17 @@ export const LoginScreen = () => {
         if (errorMessage.length === 0) return;
         Alert.alert('Login incorrecto', errorMessage, [{ text: 'Ok', onPress: removeError }]);
     }, []); // Agregar `errorMessage` como dependencia
-    
+
 
     const onLogin = () => {
+        setLoadingLogin(true)
         Keyboard.dismiss();
         signIn({ usr, pas });
+        setLoadingLogin(false)
     };
 
 
-    if (loggingIn) return <LoadingScreen message='Iniciando sesion...'/>;
+    if (loggingIn) return <LoadingScreen message='Iniciando sesion...' />;
 
     return (
         <KeyboardAvoidingView
@@ -72,8 +76,11 @@ export const LoginScreen = () => {
                             activeOpacity={0.8}
                             style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                             onPress={onLogin}
+                            disabled={loadingLogin}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Iniciar sesión</Text>
+                            <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                                {loadingLogin ? <DotLoader /> : "Iniciar sesión"}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

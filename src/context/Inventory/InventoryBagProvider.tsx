@@ -43,7 +43,6 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
-
     const deleteProduct = (idenlacemob: number) => {
         try {
             deleteProductInBagInventory(idenlacemob)

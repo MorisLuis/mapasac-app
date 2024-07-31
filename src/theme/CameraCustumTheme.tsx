@@ -94,7 +94,7 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
     actions: {
         position: "absolute",
         right: wp("5%"),
-        top: hp("37.5%"),
+        top: hp("42.5%"),
         zIndex: 2
     },
     flash: {

@@ -23,7 +23,6 @@ export type OnReadCodeData = {
 
 const CameraTest: React.FC = () => {
 
-    const { numberOfItems } = useContext(InventoryBagContext);
     const { handleCameraAvailable, cameraAvailable } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
@@ -130,18 +129,6 @@ const CameraTest: React.FC = () => {
             />
 
             <View style={cameraStyles(theme, typeTheme).actions}>
-                <View style={cameraStyles(theme, typeTheme).cog}>
-                    <TouchableOpacity onPress={handleOpenBagInventory}>
-                        <Icon name={"albums-outline"} size={22} color={iconColor} />
-                    </TouchableOpacity>
-                    {
-                        numberOfItems > 0 &&
-                        <View style={cameraStyles(theme, typeTheme).bagCounter}>
-                            <Text>{numberOfItems}</Text>
-                        </View>
-                    }
-                </View>
-
                 <View style={cameraStyles(theme, typeTheme).flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
                         <Icon name={lightOn ? "flash" : "flash-outline"} size={22} color={iconColor} />

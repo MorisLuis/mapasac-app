@@ -43,10 +43,10 @@ const DotLoader = () => {
     });
 
     return (
-        <View style={LoaderStyles(theme).container}>
-            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot1)]} />
-            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot2)]} />
-            <Animated.View style={[LoaderStyles(theme).dot, dotStyle(dot3)]} />
+        <View style={LoaderStyles(theme, typeTheme).container}>
+            <Animated.View style={[LoaderStyles(theme, typeTheme).dot, dotStyle(dot1)]} />
+            <Animated.View style={[LoaderStyles(theme, typeTheme).dot, dotStyle(dot2)]} />
+            <Animated.View style={[LoaderStyles(theme, typeTheme).dot, dotStyle(dot3)]} />
         </View>
     );
 };

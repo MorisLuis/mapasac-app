@@ -14,6 +14,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
+import Toast from 'react-native-toast-message';
 
 export const ConfirmationScreen = () => {
     const { getTypeOfMovementsName } = useContext(AuthContext);
@@ -41,14 +42,23 @@ export const ConfirmationScreen = () => {
 
     const onPostInventory = async () => {
         setCreateInventaryLoading(true);
-        await postInventory();
-        resetAfterPost();
-
-        setTimeout(() => {
+        try {
+            const data = await postInventory();
+            resetAfterPost();
+            setTimeout(() => {
+                setCreateInventaryLoading(false);
+                navigate('succesMessageScreen');
+            }, 500);
+        } catch (error: any) {
+            Toast.show({
+                type: 'tomatoError',
+                text1: 'Hubo un error, asegurate de tener conexión a internet.'
+            })
             setCreateInventaryLoading(false);
-            navigate('succesMessageScreen');
-        }, 500);
+            console.log("Error al crear inventario:", error);
+        }
     };
+
 
     const loadBags = async () => {
         if (isLoading || !hasMore) return;

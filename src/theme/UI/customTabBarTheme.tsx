@@ -17,8 +17,17 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
     content: {
         display: "flex",
         flexDirection: "row",
-        width: "auto",
-        paddingHorizontal: globalStyles(theme).globalPadding.padding
+        width: "100%",
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        justifyContent: "space-between"
+    },
+    content_left: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    content_right: {
+        display: "flex",
+        flexDirection: "row"
     },
     buttonBack: {
         justifyContent: 'center',
@@ -30,7 +39,6 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         marginRight: wp("2%"),
         borderWidth: 0.7,
         borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
-        overflow: "hidden",
         backgroundColor: theme.background_color
     },
     navigation: {
@@ -56,6 +64,19 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: globalStyles(theme).globalPadding.padding
+    },
+    bagCounter:{
+        position: "absolute",
+        width: hp("3%"),
+        height: hp("3%"),
+        top: - globalStyles(theme).globalPadding.padding / 2,
+        right: - globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        backgroundColor: theme.color_tertiary,
+        borderWidth: 1,
+        borderColor: theme.color_border_tertiary,
+        justifyContent: "center",
+        alignItems: "center"
     },
     sectionBag: {
         fontSize: globalFont.font_normal,

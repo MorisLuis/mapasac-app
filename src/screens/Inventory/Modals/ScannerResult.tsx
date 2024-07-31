@@ -14,6 +14,7 @@ import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultThem
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
+import Toast from 'react-native-toast-message';
 
 interface ScannerResultInterface {
     fromInput?: boolean;
@@ -49,6 +50,13 @@ const ScannerResult = ({
         }
 
         addProduct(inventoryBody as ProductInterface);
+
+        if(fromProductDetails) {
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se agrego el producto la inventario!'
+            })
+        }
         handleCameraAvailable(true)
         setLoadingAddProduct(false)
         navigation.goBack()
@@ -102,7 +110,7 @@ const ScannerResult = ({
                         </View>
 
                         <View style={modalRenderstyles(theme).counterContainer}>
-                            <View style={{ width: "40%"}}>
+                            <View style={{ width: "40%" }}>
                                 {
                                     (seeProductDetails && !fromProductDetails) &&
                                     <TouchableOpacity
@@ -111,11 +119,10 @@ const ScannerResult = ({
                                     >
                                         <Text style={[buttonStyles(theme, typeTheme).buttonTextTertiary, { fontSize: globalFont.font_sm }]}>Ver producto</Text>
                                     </TouchableOpacity>
-
                                 }
                             </View>
                             <View style={{ width: "55%" }}>
-                                <Counter counter={counterProduct} setCounter={setCounterProduct} unit={product.unidad_nombre}/>
+                                <Counter counter={counterProduct} setCounter={setCounterProduct} unit={product.unidad_nombre} />
                             </View>
                         </View>
 

@@ -9,6 +9,7 @@ import codebartypes from '../../../utils/codebarTypes.json';
 import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdateWithInputScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
+import DotLoader from '../../../components/Ui/DotLaoder';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -16,10 +17,11 @@ interface CodebarUpdateWithInputScreenInterface {
 
 export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateWithInputScreenInterface) => {
 
-    const [text, setText] = useState('');
     const navigation = useNavigation<any>();
+    const { theme, typeTheme } = useTheme();
     const { codebarType } = useContext(SettingsContext);
-    const { theme } = useTheme();
+    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
@@ -27,7 +29,8 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
         if (!selectedProduct) return;
-        if(!regex.test(text)) return;
+        if (!regex.test(text)) return;
+        setLoading(true)
 
         await updateCodeBar({
             codebarras: text as string,
@@ -36,6 +39,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
 
         navigation.goBack()
         navigation.goBack()
+        setLoading(false)
     }
 
     const handleTextChange = (value: string) => {
@@ -58,8 +62,14 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
             <Text style={CodebarUpdateWithInputScreenStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
 
             {regex.test(text) && (
-                <TouchableOpacity style={buttonStyles(theme).button} onPress={hanldeUpdateCodebarWithCodeRandom}>
-                    <Text style={buttonStyles(theme).buttonText}>Actualizar</Text>
+                <TouchableOpacity
+                    style={buttonStyles(theme).button}
+                    onPress={hanldeUpdateCodebarWithCodeRandom}
+                    disabled={loading}
+                >
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                        {loading ? <DotLoader /> : "Actualizar"}
+                    </Text>
                 </TouchableOpacity>
             )}
         </View>)

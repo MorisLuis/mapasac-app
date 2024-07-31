@@ -31,7 +31,8 @@ export const counterStyles = (theme: Theme) => StyleSheet.create({
     },
     inputText: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color,
+        marginRight: globalStyles(theme).globalMarginBottom.marginBottom / 4
     },
     unitText: {
         fontSize: globalFont.font_sm,

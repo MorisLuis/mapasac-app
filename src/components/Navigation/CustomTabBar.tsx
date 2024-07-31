@@ -6,15 +6,21 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
     if (!state) return null;
     const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
+    const { numberOfItems } = useContext(InventoryBagContext);
+
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
+    const handleOpenBagInventory = () => {
+        navigate('bagInventoryScreen')
+    }
 
     const renderTabButton = (route: any, index: number) => {
         const { options } = descriptors[route.key];
@@ -87,11 +93,27 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
             <View style={customTabBarStyles(theme).content}>
-                <TouchableOpacity onPress={() => navigate("OnboardingScreen")} style={customTabBarStyles(theme).buttonBack}>
-                    <Icon name="arrow-back-outline" size={20} color={iconColor} />
-                </TouchableOpacity>
-                <View style={customTabBarStyles(theme).navigation}>
-                    {state.routes.map(renderTabButton)}
+            <View style={customTabBarStyles(theme).content_left}>
+                    <TouchableOpacity onPress={() => navigate("OnboardingScreen")} style={customTabBarStyles(theme).buttonBack}>
+                        <Icon name="arrow-back-outline" size={20} color={iconColor} />
+                    </TouchableOpacity>
+                    <View style={customTabBarStyles(theme).navigation}>
+                        {state.routes.map(renderTabButton)}
+                    </View>
+                </View>
+
+                <View style={customTabBarStyles(theme).content_right}>
+                    <View style={customTabBarStyles(theme, typeTheme).buttonBack}>
+                        <TouchableOpacity onPress={handleOpenBagInventory}>
+                            <Icon name={"albums-outline"} size={22} color={iconColor} />
+                        </TouchableOpacity>
+                    {
+                        numberOfItems > 0 &&
+                        <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
+                            <Text>{numberOfItems}</Text>
+                        </View>
+                    }
+                    </View>
                 </View>
             </View>
         </SafeAreaView>

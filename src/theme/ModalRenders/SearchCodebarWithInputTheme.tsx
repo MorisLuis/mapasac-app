@@ -63,6 +63,9 @@ export const editProductStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         fontSize: globalFont.font_normal,
         color: theme.text_color
     },
+    EditProductInBag_header: {
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
     EditProductInBag_warning: {
         fontSize: globalFont.font_normal,
         color: theme.color_red,
