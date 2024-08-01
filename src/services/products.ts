@@ -61,6 +61,19 @@ const getProductByClave = async ({ clave }: getProductByClaveInterface) => {
     return product
 };
 
+const getProductByNoArticulo = async ({ noarticulo }: { noarticulo: string }) => {
+
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/bynoarticulo?noarticulo=${noarticulo}`);
+        product = getProduct.data.product;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return product
+};
+
 
 
 const getTotalProducts = async () => {
@@ -80,7 +93,7 @@ interface updateProductInterface {
     idinvearts: number;
     data: string | number;
     dataValue: string;
-    onFinish?: () => void 
+    onFinish?: () => void
 }
 
 const updateProduct = async ({
@@ -113,6 +126,7 @@ export {
     getProducts,
     getProductByCodeBar,
     getProductByClave,
+    getProductByNoArticulo,
     getTotalProducts,
     getProductDetails,
     updateProduct

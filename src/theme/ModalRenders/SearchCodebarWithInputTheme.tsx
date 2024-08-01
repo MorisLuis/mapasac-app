@@ -31,16 +31,16 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
     },
     optionsContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        gap: 10
+        flexDirection: 'row'
     },
     option: {
         backgroundColor: theme.background_color_tertiary,
-        padding: 5,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
         paddingHorizontal: 10,
-        borderRadius: 100,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary
+        borderColor: theme.color_border_tertiary,
+        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     optionText: {
         fontSize: globalFont.font_normal,
