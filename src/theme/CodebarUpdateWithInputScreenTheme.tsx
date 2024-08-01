@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import {Theme, globalFont, globalStyles } from "./appTheme";
 
-export const CodebarUpdateWithInputScreenStyles = (theme: Theme) => StyleSheet.create({
+export const CodebarUpdateWithInputScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     CodebarUpdateWithInputScreen: {
         backgroundColor: theme.background_color,
         padding: globalStyles(theme).globalPadding.padding,
@@ -16,6 +16,7 @@ export const CodebarUpdateWithInputScreenStyles = (theme: Theme) => StyleSheet.c
     warningMessage: {
         fontSize: globalFont.font_normal,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        color: theme.color_red
+        color: typeTheme === "light" ? theme.color_red : theme.color_tertiary,
+        width: "80%",
     }
 })

@@ -103,7 +103,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 </View>
 
                 <View style={customTabBarStyles(theme).content_right}>
-                    <View style={customTabBarStyles(theme, typeTheme).buttonBack}>
+                    <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
                         <TouchableOpacity onPress={handleOpenBagInventory}>
                             <Icon name={"albums-outline"} size={22} color={iconColor} />
                         </TouchableOpacity>

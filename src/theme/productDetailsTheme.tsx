@@ -107,7 +107,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.background_color_tertiary,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -117,8 +117,9 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom,
     },
     selectedOption: {
-        backgroundColor: theme.color_primary,
-        borderColor: theme.color_border_tertiary,
+        backgroundColor: theme.background_color,
+        borderWidth: 1,
+        borderColor: theme.color_border,
         display: "flex"
     },
     //Footer

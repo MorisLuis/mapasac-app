@@ -1,18 +1,22 @@
 import React, { useContext, useState } from 'react';
-
 import { View, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { globalStyles } from '../../../theme/appTheme';
-import { SettingsContext } from '../../../context/settings/SettingsContext';
-import { buttonStyles } from '../../../theme/UI/buttons';
 import { useNavigation } from '@react-navigation/native';
-import ProductInterface from '../../../interface/product';
 import { Camera } from 'react-native-camera-kit';
-import { getProductByCodeBar } from '../../../services/products';
-import codebartypes from '../../../utils/codebarTypes.json';
+
+import { globalStyles } from '../../../theme/appTheme';
+import { buttonStyles } from '../../../theme/UI/buttons';
 import { CameraModalStyles } from '../../../theme/ModalRenders/CameraModalTheme';
+
+import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
+
+import { getProductByCodeBar } from '../../../services/products';
 import { updateCodeBar } from '../../../services/codebar';
-import { identifyBarcodeType } from '../../../utils/identifyBarcodeType';
+
+import codebartypes from '../../../utils/codebarTypes.json';
+import { identifyBarcodeType, identifyUPCOrEANBarcode } from '../../../utils/identifyBarcodeType';
+import { MessageCard } from '../../Cards/MessageCard';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface CameraModalInterface {
     selectedProduct: { idinvearts: number }
@@ -42,17 +46,15 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const codeScanned = async ({ codes }: any) => {
 
-
-
         setCodeIsScanning(true)
         if (codes.length > 0 && isScanningAllowed) {
             setIsScanningAllowed(false);
             let codeValue = codes;
             if (!codeValue) return;
 
-            const identifycodebarType = identifyBarcodeType(codeValue);
+            const identifyUPCOrEAN = identifyUPCOrEANBarcode(codeValue);
 
-            if (identifycodebarType === "UPC-A convertido a EAN-13") {
+            if (identifyUPCOrEAN === "UPC-A convertido a EAN-13") {
                 codeValue = codeValue?.substring(1)
             }
 
@@ -67,7 +69,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
                 if (response.length > 0) {
                     setProductExistent(true)
-                } 
+                }
             } catch (error) {
                 setCodebarTest(true)
                 console.error('Error fetching product:', error);
@@ -100,7 +102,6 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
             {
                 !productExistent ?
                     <>
-
                         <View style={CameraModalStyles(theme).header}>
                             <Text style={CameraModalStyles(theme).header_title}>Escanea el codigo</Text>
                             {
@@ -150,8 +151,16 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                         :
                                         <>
                                             <View style={CameraModalStyles(theme).codebarFound}>
-                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</Text>
+                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar} 12345678</Text>
                                             </View>
+
+                                            <MessageCard
+                                                title='El tipo de codigo de barras es:'
+                                                message={`${identifyBarcodeType('12345678')}`}
+                                                icon="barcode-outline"
+                                                extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
+                                            />
+
 
                                             {
                                                 codeBar &&
@@ -159,9 +168,11 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                                     style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
                                                     onPress={hanldeUpdateCodebar}
                                                 >
+                                                    <Icon name={"bookmark-outline"} size={18} color={iconColor} />
                                                     <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
                                                 </TouchableOpacity>
                                             }
+
                                         </>
                         }
                     </>

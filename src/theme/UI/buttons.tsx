@@ -26,6 +26,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     button_small: {
         //height: hp("5%"),
+        flexDirection: "row",
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
         borderColor: theme.color_border_tertiary,
@@ -36,7 +37,8 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         color: theme.color_tertiary,
         display: "flex",
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        gap: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
     },
 
     button_line: {

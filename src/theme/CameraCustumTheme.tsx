@@ -101,13 +101,17 @@ export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         marginBottom: 20,
         backgroundColor: theme.background_color_secondary,
         padding: globalStyles(theme).globalPadding.padding / 3,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 1,
+        borderColor: theme.color_border
     },
     cog: {
         marginBottom: 20,
         backgroundColor: theme.background_color_secondary,
         padding: globalStyles(theme).globalPadding.padding / 3,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 1,
+        borderColor: theme.color_border
     },
     bagCounter: {
         position: "absolute",

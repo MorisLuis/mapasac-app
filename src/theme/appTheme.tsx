@@ -27,15 +27,8 @@ export interface Theme {
     background_color_secondary: string;
     background_color_tertiary: string;
     background_color_blur: string;
+    color_tertiary_opacity: string;
 }
-
-
-/* 
-color_primary: "#e4e4e4",
-    color_secondary: "#eaeaea",
-    color_tertiary: "#001E2B",
-        color_cuaternary: "#F9FAFA"
-*/
 
 
 export const lightTheme = {
@@ -62,14 +55,9 @@ export const lightTheme = {
     background_color_secondary: "#eaeaea",
     background_color_tertiary: "#e4e4e4",
     background_color_blur: "rgba(0, 0, 0, 0.2)",
+    color_tertiary_opacity: "rgba(0, 237, 97, 0.2)"
 };
 
-/* 
-    color_primary: "#26282C",
-    color_secondary: "#3a3a3a",
-    color_tertiary: "#f1f1f1",
-    color_cuaternary: "#444444",
-*/
 
 export const darkTheme = {
     //primary: '0D0F14',
@@ -95,6 +83,7 @@ export const darkTheme = {
     background_color_secondary: "#222222",
     background_color_tertiary: "#26282C",
     background_color_blur: "rgba(0, 0, 0, 0.2)",
+    color_tertiary_opacity: "rgba(0, 237, 97, 0.2)"
 };
 
 
@@ -111,7 +100,6 @@ export const globalStyles = (theme?: Theme) => StyleSheet.create({
         marginBottom:  hp("1.75%")
     },
     blur: {
-        //backdropFilter: "blur(10px)",
         backgroundColor: " rgba(255, 255, 255, 0.2)"
     },
     divider: {

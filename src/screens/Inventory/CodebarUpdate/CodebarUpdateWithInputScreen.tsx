@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { KeyboardType, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, KeyboardType, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
@@ -10,6 +10,7 @@ import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdate
 import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
 import DotLoader from '../../../components/Ui/DotLaoder';
+import { getProductByCodeBar } from '../../../services/products';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -32,11 +33,33 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
         if (!regex.test(text)) return;
         setLoading(true)
 
+        const response = await getProductByCodeBar({ codeBar: text });
+
+        const onCancel = () => {
+            navigation.goBack()
+            navigation.goBack()
+            setLoading(false)
+        }
+
+        if (response.length > 0) {
+            Alert.alert(
+                'Ya existe un producto con este codigo de barras.',
+                'Deseas continuar?',
+                [
+                    { text: 'Cancelar', style: 'cancel', onPress: onCancel },
+                    { text: 'Actualizar', onPress: onUpdateCodeBar }
+                ]
+            );
+        } else {
+            onUpdateCodeBar()
+        }
+    }
+
+    const onUpdateCodeBar = async () => {
         await updateCodeBar({
             codebarras: text as string,
             idinvearts: selectedProduct.idinvearts
         })
-
         navigation.goBack()
         navigation.goBack()
         setLoading(false)
@@ -51,6 +74,8 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
 
             <Text style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</Text>
 
+            <Text style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</Text>
+
             <TextInput
                 style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
                 placeholder="Ej: 654s1q"
@@ -58,8 +83,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                 keyboardType={currentType?.keyboardType as KeyboardType}
                 maxLength={currentType?.maxLength}
             />
-
-            <Text style={CodebarUpdateWithInputScreenStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
 
             {regex.test(text) && (
                 <TouchableOpacity

@@ -42,7 +42,7 @@ export const CameraModalStyles = (theme: Theme ) =>  StyleSheet.create({
     },
     textcodebarFound: {
         fontWeight: 'bold',
-        fontSize: globalFont.font_normal,
+        fontSize: globalFont.font_med,
         color: theme.text_color
     },
     warningMessage: {

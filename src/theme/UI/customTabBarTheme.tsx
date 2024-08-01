@@ -12,14 +12,15 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         zIndex: 1,
         width: "100%",
         height: globalFont.font_med,
-        paddingTop: hp("1%"),
+        paddingTop: hp("1%")
     },
     content: {
         display: "flex",
         flexDirection: "row",
         width: "100%",
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        backgroundColor: 'blue'
     },
     content_left: {
         display: "flex",
@@ -37,6 +38,17 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         width: hp("5%"),
         maxHeight: 32,
         marginRight: wp("2%"),
+        borderWidth: 0.7,
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
+        backgroundColor: theme.background_color
+    },
+    buttonBag: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        height: hp("5%"),
+        width: hp("5%"),
+        maxHeight: 32,
         borderWidth: 0.7,
         borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
         backgroundColor: theme.background_color

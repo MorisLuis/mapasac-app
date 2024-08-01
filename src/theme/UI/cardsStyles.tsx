@@ -18,12 +18,6 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         padding: globalStyles(theme).globalPadding.padding / 2,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
     },
-    /* productInventoryCard__Image: {
-        width: wp("15%"),
-        minHeight: wp("17.5%"),
-        marginRight: globalStyles(theme).globalMarginBottom.marginBottom,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius / 2,
-    }, */
     productInventoryCard__data: {
         flex: 1,
         flexDirection: "row",
@@ -71,7 +65,6 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     }
 });
 
-
 export const EmptyMessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     EmptyMessageCard: {
         backgroundColor: theme.background_color,
@@ -107,6 +100,43 @@ export const EmptyMessageCardStyles = (theme: Theme, typeTheme: string) => Style
         color: theme.text_color
     }
 })
+
+export const MessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
+    MessageCard: {
+        backgroundColor: theme.color_tertiary_opacity,
+        borderWidth: 1,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        width: "100%",
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: 10,
+        display: "flex",
+        flexDirection: 'row',
+        alignItems: "center"
+    },
+    text:{
+
+    },
+    title: {
+        fontWeight: "bold",
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    iconContainer: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom
+    },
+    icon: {
+        textAlign: "center"
+    },
+    message: {
+        color: theme.text_color
+    }
+})
+
 
 export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ProductItemSearch: {
@@ -246,7 +276,6 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
     }
 });
 
-
 export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductSellsCardTheme: {
         flex: 1,
@@ -263,15 +292,6 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
     shadowImage: {
-        /* shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 4.65,
-        
-        elevation: 8 */
     },
     notImage: {
         flex: 1,

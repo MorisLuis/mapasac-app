@@ -9,7 +9,7 @@ import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetail
 import { productDetailsStyles } from '../../theme/productDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { globalStyles } from '../../theme/appTheme';
-import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
+import { identifyUPCOrEANBarcode } from '../../utils/identifyBarcodeType';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 
@@ -93,7 +93,7 @@ interface ProductDetailsContentInterface {
 }
 
 const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar }: ProductDetailsContentInterface) => {
-    const codebarTypeIndetify = identifyBarcodeType(codeBar as string)
+    const codebarTypeIndetify = identifyUPCOrEANBarcode(codeBar as string)
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
