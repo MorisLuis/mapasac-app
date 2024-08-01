@@ -151,12 +151,12 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                         :
                                         <>
                                             <View style={CameraModalStyles(theme).codebarFound}>
-                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar} 12345678</Text>
+                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</Text>
                                             </View>
 
                                             <MessageCard
                                                 title='El tipo de codigo de barras es:'
-                                                message={`${identifyBarcodeType('12345678')}`}
+                                                message={`${identifyBarcodeType(codeBar as string)}`}
                                                 icon="barcode-outline"
                                                 extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                                             />

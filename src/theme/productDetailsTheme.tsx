@@ -12,7 +12,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         minHeight: 300,
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
-        borderColor: typeTheme ==='light' ? theme.color_border_secondary : theme.background_color_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_tertiary,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
@@ -30,11 +30,34 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         shadowRadius: 5,
     },
     notImage: {
-        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold',
+        backgroundColor: theme.background_color_secondary,
+        borderWidth: 1,
+        borderColor: theme.color_border_secondary,
+        height: wp("20%"),
+        width:  wp("20%"),
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        transform: [{ rotate: '12.5deg' }],
+        position: "relative",
+        zIndex: 3
+    },
+    notImageBackground: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        backgroundColor: theme.background_color_tertiary,
+        borderWidth: 1,
+        borderColor: theme.color_border_secondary,
+        height: wp("20%"),
+        width:  wp("20%"),        
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        transform: [{ rotate: '-25deg' }],
+        position: "absolute",
+        zIndex: 1
     },
     notImageText: {
         fontWeight: 'bold',
@@ -47,10 +70,12 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     header: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
     },
+
     description: {
         fontSize: globalFont.font_med,
         fontWeight: "bold",
-        color: theme.text_color
+        color: theme.text_color,
+        width: "90%"
     },
     price: {
         fontWeight: "bold",
@@ -66,7 +91,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
-        borderColor: typeTheme ==='light' ? theme.color_border_secondary : theme.background_color_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_tertiary,
         borderRadius: 5,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
     },
@@ -96,8 +121,9 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         width: '100%',
         height: 1,
         borderBottomWidth: 1,
-        borderBottomColor: `${theme.color_border}${Math.round(0.25 * 255).toString(16)}`,
-        backgroundColor: theme.color_border
+        //borderBottomColor: `${theme.color_border_secondary}${Math.round(0.25 * 255).toString(16)}`,
+        backgroundColor: theme.color_border,
+        borderBottomColor: theme.color_border_secondary
     },
     optionsContent: {
 
@@ -122,9 +148,76 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         borderColor: theme.color_border,
         display: "flex"
     },
-    //Footer
+
+    manageEvents: {
+        flex: 3,
+        display: "flex",
+        width: "100%",
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
+    },
+    manageEvents_content: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10
+    },
+    manageEvents_title: {
+        fontSize: globalFont.font_normal,
+        fontWeight: "bold",
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+    },
+
+    event:{
+        borderWidth: 1,
+        borderColor: theme.color_border_secondary,
+        width: wp("25%"),
+        height: hp("12.5%"),
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        display: 'flex',
+        justifyContent: "space-between"
+    },
+    event_icon: {
+        backgroundColor: theme.background_color_secondary,
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: theme.color_border_secondary,
+        width:34,
+        height: 34,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2
+    },
+    editContainer: {
+        backgroundColor: theme.background_color_tertiary,
+        padding: globalStyles(theme).globalPadding.padding / 1.5,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        display: "flex",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "space-between",
+        
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+    },
+    editContainer_text: {
+        fontSize: globalFont.font_normal,
+    },
+    editContainer_label: {
+        color: theme.text_color_light
+    },
+    editContainer_left: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10,
+        width: "35%"
+    },
+    editContainer_right: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'flex-end',
+        width: "65%"
+    },
     footer: {
-        //position: "absolute",
         bottom: 0,
         height: 100,
         width: "100%",

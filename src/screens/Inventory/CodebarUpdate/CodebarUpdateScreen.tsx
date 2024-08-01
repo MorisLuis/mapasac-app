@@ -37,7 +37,6 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     }
 
     const handleGoToNextStep = () => {
-        console.log({ optionSelected })
         if (optionSelected === 1) {
             hanldeUpdateCodebarWithCodeFound()
         } else if (optionSelected === 2) {

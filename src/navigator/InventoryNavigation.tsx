@@ -17,6 +17,9 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { ConfirmationScreen } from '../screens/Inventory/InventoryBag/ConfirmationScreen';
 import { EditProductInBag } from '../screens/Inventory/Modals/EditProductInBag';
 import { ScannerNavigation } from './ScannerNavigation';
+import { ProductDetailsPageEdit } from '../screens/Inventory/ProductDetailsPageEdit';
+import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
+import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 
 export type InventoryNavigationStackParamList = {
     // Navigation
@@ -26,6 +29,10 @@ export type InventoryNavigationStackParamList = {
     // Screens
     "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
     "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
+    "[ProductDetailsPage] - productDetailsScreenEdit": { product: { idinvearts: number } };
+    "[ProductDetailsPage] - editPrice": { product: ProductInterface };
+    "[ProductDetailsPage] - editDescripcio": { product: ProductInterface };
+
     bagInventoryScreen: undefined;
     confirmationScreen: undefined;
     succesMessageScreen: undefined;
@@ -156,6 +163,35 @@ export const InventoryNavigation = () => {
                         />
                     )
                 })}
+            />
+
+            <Stack.Screen
+                name="[ProductDetailsPage] - productDetailsScreenEdit"
+                component={ProductDetailsPageEdit}
+                options={({ navigation }) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title="Editando Producto"
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => navigation.goBack()}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="[ProductDetailsPage] - editPrice"
+                component={EditPrice}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="[ProductDetailsPage] - editDescripcio"
+                component={EditDescripcio}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             {/* modals */}

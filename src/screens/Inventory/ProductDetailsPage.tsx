@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -9,9 +9,10 @@ import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetail
 import { productDetailsStyles } from '../../theme/productDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { globalStyles } from '../../theme/appTheme';
-import { identifyUPCOrEANBarcode } from '../../utils/identifyBarcodeType';
+import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
+import { MessageCard } from '../../components/Cards/MessageCard';
 
 type ProductDetailsPageInterface = {
     route?: {
@@ -35,6 +36,11 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const handleOptionsToUpdateCodebar = () => {
         navigation.navigate('CodebarUpdateNavigation', { selectedProduct });
     };
+
+    const handleEditProduct = () => {
+        navigation.navigate("[ProductDetailsPage] - productDetailsScreenEdit", { product: productDetailsData })
+    }
+
 
     const handleGetProductDetails = async () => {
         if (!idinvearts) return;
@@ -73,6 +79,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
             productDetailsData={productDetailsData}
             handleOptionsToUpdateCodebar={handleOptionsToUpdateCodebar}
             handleAddToInventory={handleAddToInventory}
+            handleEditProduct={handleEditProduct}
             fromModal={fromModal}
             codeBar={codeBar}
             fromUpdateCodebar={fromUpdateCodebar}
@@ -87,21 +94,23 @@ interface ProductDetailsContentInterface {
     productDetailsData: ProductInterface,
     handleOptionsToUpdateCodebar: any,
     handleAddToInventory: any,
+    handleEditProduct: () => void;
+
     fromModal?: boolean,
     codeBar?: string,
     fromUpdateCodebar?: boolean
 }
 
-const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, fromModal, codeBar }: ProductDetailsContentInterface) => {
-    const codebarTypeIndetify = identifyUPCOrEANBarcode(codeBar as string)
+const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, handleEditProduct, fromModal, codeBar, fromUpdateCodebar }: ProductDetailsContentInterface) => {
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColor = typeTheme === 'dark' ? "white" : "black";
+    const codebarAvailable = productDetailsData?.codbarras?.trim() !== "";
 
     return (
         <>
             <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
                 <View style={productDetailsStyles(theme, typeTheme).imageContainer}>
-                    {/*  {productDetailsData.imagen ? (
+                    {/* {productDetailsData.imagen ? (
                         <Image
                             style={productDetailsStyles(theme).image}
                             source={{
@@ -114,6 +123,11 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                             <Text style={productDetailsStyles(theme).notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
                         </View>
                     )} */}
+                    <View style={productDetailsStyles(theme).notImage}>
+                        <View style={productDetailsStyles(theme).notImageBackground}>
+                            <Icon name={'image-outline'} size={24} color={iconColor} />
+                        </View>
+                    </View>
                 </View>
                 <View style={productDetailsStyles(theme).header}>
                     <Text style={productDetailsStyles(theme).description}>{productDetailsData.producto}</Text>
@@ -125,22 +139,53 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 
                 <View style={productDetailsStyles(theme, typeTheme).information}>
                     <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
-                    {/* <ProductDetailItem theme={theme} label="Existencia:" value={productDetailsData.Existencia} /> */}
                     <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia || ""} />
-                    <ProductDetailItem theme={theme} label="Unidad:" value={productDetailsData.unidad_nombre || ""} />
-                    {productDetailsData?.codbarras?.trim() !== "" && (
+                    <ProductDetailItem theme={theme} label="Unidad:" value={productDetailsData.unidad_nombre || ""} isLastChild={!codebarAvailable} />
+                    {codebarAvailable && (
                         <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.codbarras} isLastChild />
                     )}
                 </View>
 
-                {/* {
-                    (codeBar && fromUpdateCodebar) &&
-                    <View style={productDetailsStyles(theme).codebarIdentify}>
-                        <Text style={{ color: theme.text_color }}>El codigo de barras identificado es: {codebarTypeIndetify?.type}</Text>
-                    </View>
-                } */}
-
                 {
+                    (codeBar && fromUpdateCodebar) &&
+                    <MessageCard
+                        title='El tipo de codigo de barras es:'
+                        message={`${identifyBarcodeType(codeBar as string)}`}
+                        icon="barcode-outline"
+                        extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
+                    />
+                }
+
+                <View style={productDetailsStyles(theme, typeTheme).manageEvents}>
+                    <Text style={productDetailsStyles(theme, typeTheme).manageEvents_title}>Manejar producto</Text>
+
+                    <View style={productDetailsStyles(theme, typeTheme).manageEvents_content}>
+                        {(!productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) &&
+                            <TouchableOpacity
+                                style={productDetailsStyles(theme, typeTheme).event}
+                                onPress={handleOptionsToUpdateCodebar}
+                            >
+                                <View style={productDetailsStyles(theme, typeTheme).event_icon}>
+                                    <Icon name={'barcode-outline'} size={20} color={iconColor} />
+                                </View>
+                                <Text>Crear codigo</Text>
+                            </TouchableOpacity>
+                        }
+
+                        <TouchableOpacity
+                            style={productDetailsStyles(theme, typeTheme).event}
+                            onPress={handleEditProduct}
+                        >
+                            <View style={productDetailsStyles(theme, typeTheme).event_icon}>
+                                <Icon name={'create-outline'} size={20} color={iconColor} />
+                            </View>
+                            <Text>Editar producto</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+
+                {/* {
                     (
                         !productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) && (
                         <TouchableOpacity
@@ -150,7 +195,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                             <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
                         </TouchableOpacity>
                     )
-                }
+                } */}
 
 
             </ScrollView>

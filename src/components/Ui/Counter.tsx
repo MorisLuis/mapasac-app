@@ -23,7 +23,6 @@ export const Counter = ({
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const inputRef = useRef<TextInput>(null);
-    const [prevValue, setPrevValue] = useState<string>(counter.toString());
 
     const addProduct = () => {
         setCounter(Number(counter) + 1)
@@ -42,7 +41,6 @@ export const Counter = ({
             numericValue = Number(value);
         }
 
-        setPrevValue(numericValue.toString());
         setCounter(numericValue);
     }
 

@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import { api } from "../api/api";
 
 const getProducts = async (PageNumber: number) => {
@@ -62,7 +63,7 @@ const getProductByClave = async ({ clave }: getProductByClaveInterface) => {
 
 
 
-const getTotalProducts= async () => {
+const getTotalProducts = async () => {
 
     let total;
     try {
@@ -75,6 +76,37 @@ const getTotalProducts= async () => {
     return total;
 }
 
+interface updateProductInterface {
+    idinvearts: number;
+    data: string | number;
+    dataValue: string;
+    onFinish?: () => void 
+}
+
+const updateProduct = async ({
+    idinvearts,
+    data,
+    dataValue,
+    onFinish
+}: updateProductInterface) => {
+
+    const payload = {
+        [dataValue]: data
+    };
+
+    try {
+        await api.put(`/api/product/${idinvearts}`, payload);
+        Toast.show({
+            type: 'tomatoToast',
+            text1: `Se actualizó ${dataValue}!`
+        })
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    } finally {
+        onFinish?.()
+    }
+}
+
 
 
 export {
@@ -82,5 +114,6 @@ export {
     getProductByCodeBar,
     getProductByClave,
     getTotalProducts,
-    getProductDetails
+    getProductDetails,
+    updateProduct
 }
