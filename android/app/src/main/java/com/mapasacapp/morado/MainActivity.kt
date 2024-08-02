@@ -1,4 +1,4 @@
-package com.oleisoftware.oleiapp
+package com.mapasacapp.morado
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

@@ -1,4 +1,4 @@
-package com.oleisoftware.oleiapp
+package com.mapasacapp.morado
 
 import android.app.Application
 import com.facebook.react.PackageList
