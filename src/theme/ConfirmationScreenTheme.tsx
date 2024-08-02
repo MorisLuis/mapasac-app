@@ -6,28 +6,38 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
 
     ConfirmationScreen: {
         flex: 1,
-        backgroundColor:  typeTheme === 'light' ? theme.background_color : theme.background_color_secondary,
+        backgroundColor: theme.background_color,
         height: "100%",
-        padding: 20,
+        padding: 20
     },
     confirmationHeader: {
         height: hp("20%"),
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     confirmationHeaderTitle: {
         fontSize: globalFont.font_normal,
         color: theme.text_color
     },
     confirmationInfo: {
-        backgroundColor: typeTheme === "light" ? theme.background_color_tertiary : theme.background_color,
-        borderWidth: 1,
-        borderColor: typeTheme === "light" ? theme.color_border_secondary : theme.color_border_tertiary,
-        padding: globalStyles(theme).globalPadding.padding,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2,
-        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
+        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderBottomWidth: 1,
+        borderBottomColor: theme.color_border_tertiary,
+        paddingVertical: globalStyles(theme).globalPadding.padding,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    confirmationItems: {
+        display: 'flex',
+    },
+    confirmationItems_number: {
+        fontSize: globalFont.font_big * 1.5,
+        color: theme.text_color
+    },
+    confirmationMovement: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10
     },
     confirmationProductsContent: {
         marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
@@ -43,11 +53,10 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         color: theme.text_color
     },
     footer: {
-        backgroundColor:  typeTheme === 'light' ? theme.background_color : theme.background_color,
+        backgroundColor: typeTheme === 'light' ? theme.background_color : theme.background_color,
         padding: globalStyles(theme).globalPadding.padding,
-        height: hp("25%"),
         maxHeight: 150,
-        width: "100%",
+        width: wp("100%"),
         position: "absolute",
         bottom: 0,
         display: "flex",

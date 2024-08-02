@@ -21,7 +21,7 @@ export const ProductInventoryConfirmationCard = ({
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.color_tertiary
 
     return (
-        <View style={ProductInventoryConfirmationCardTheme(theme, typeTheme).ProductInventoryConfirmationCard}>
+        <TouchableOpacity style={ProductInventoryConfirmationCardTheme(theme, typeTheme).ProductInventoryConfirmationCard} onPress={onClick} disabled={disabled}>
             <View style={ProductInventoryConfirmationCardTheme(theme).data}>
                 <View style={ProductInventoryConfirmationCardTheme(theme).information}>
                     <View>
@@ -39,11 +39,11 @@ export const ProductInventoryConfirmationCard = ({
                     </View>
                 </View>
 
-                <TouchableOpacity style={ProductInventoryConfirmationCardTheme(theme, typeTheme).edit}  onPress={onClick} disabled={disabled}>
-                    <Icon name="create-outline" size={18} color={iconColor} />
-                </TouchableOpacity>
+                <View style={ProductInventoryConfirmationCardTheme(theme, typeTheme).edit}>
+                    <Icon name="chevron-down-outline" size={20} color={iconColor} />
+                </View>
 
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

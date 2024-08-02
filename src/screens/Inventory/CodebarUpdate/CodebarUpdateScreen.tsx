@@ -40,6 +40,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
         if (optionSelected === 1) {
             hanldeUpdateCodebarWithCodeFound()
         } else if (optionSelected === 2) {
+            updateBarCode('')
             setOpenModalCamera(true)
         } else if (optionSelected === 3) {
             hanldeUpdateCodebarWithCodeRandom()

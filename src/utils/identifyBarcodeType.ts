@@ -16,8 +16,10 @@ export const identifyUPCOrEANBarcode = (codebar?: string) => {
 };
 
 export const identifyBarcodeType = (barcode: string) => {
+    console.log({barcode})
     // Patrones comunes de longitud y caracteres para distintos tipos de códigos de barras
     const barcodePatterns: { [key: string]: RegExp } = {
+        EAN_14: /^\d{14}$/,                // 13 dígitos numéricos
         EAN_13: /^\d{13}$/,                // 13 dígitos numéricos
         EAN_8: /^\d{8}$/,                  // 8 dígitos numéricos
         UPC_A: /^\d{12}$/,                 // 12 dígitos numéricos
@@ -35,5 +37,5 @@ export const identifyBarcodeType = (barcode: string) => {
         }
     }
 
-    return 'UNKNOWN';
+    return 'Desconocido';
 }

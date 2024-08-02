@@ -54,13 +54,13 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                 style={[
                     customTabBarStyles(theme, typeTheme).navButton,
                     {
-                        backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_tertiary : "transparent")
+                        backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_black : "transparent")
                     }
                 ]}
             >
                 {
                     Platform.OS === "android" ?
-                        <View style={customTabBarStyles(theme).blurContainer} >
+                        <View style={customTabBarStyles(theme, typeTheme).blurContainer}>
                             <Text style={[customTabBarStyles(theme).sectionTitle, {
                                 color: isFocused && typeTheme === 'dark' ? theme.text_color_secondary :
                                     isFocused ? theme.text_color :
@@ -72,7 +72,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                         </View>
                         :
                         <BlurView
-                            style={customTabBarStyles(theme).blurContainer}
+                            style={customTabBarStyles(theme, typeTheme).blurContainer}
                             blurType="light"
                             blurAmount={10}
                         >
@@ -93,7 +93,7 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
             <View style={customTabBarStyles(theme).content}>
-            <View style={customTabBarStyles(theme).content_left}>
+                <View style={customTabBarStyles(theme).content_left}>
                     <TouchableOpacity onPress={() => navigate("OnboardingScreen")} style={customTabBarStyles(theme).buttonBack}>
                         <Icon name="arrow-back-outline" size={20} color={iconColor} />
                     </TouchableOpacity>
@@ -107,12 +107,12 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                         <TouchableOpacity onPress={handleOpenBagInventory}>
                             <Icon name={"albums-outline"} size={22} color={iconColor} />
                         </TouchableOpacity>
-                    {
-                        numberOfItems > 0 &&
-                        <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
-                            <Text>{numberOfItems}</Text>
-                        </View>
-                    }
+                        {
+                            numberOfItems > 0 &&
+                            <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
+                                <Text>{numberOfItems}</Text>
+                            </View>
+                        }
                     </View>
                 </View>
             </View>

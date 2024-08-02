@@ -1,17 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, Button } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { BlurView } from '@react-native-community/blur';
 import ProductInterface from '../../../interface/product';
 import { cameraStyles } from '../../../theme/CameraCustumTheme';
 import { CameraPermission } from '../../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
-import { cameraSettings, getTypeOfMovementsName } from './cameraSettings';
+import { cameraSettings } from './cameraSettings';
+import { identifyBarcodeType } from '../../../utils/identifyBarcodeType';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -23,7 +22,7 @@ export type OnReadCodeData = {
 
 const CameraTest: React.FC = () => {
 
-    const { handleCameraAvailable, cameraAvailable } = useContext(SettingsContext);
+    const { handleCameraAvailable, cameraAvailable, startScanning } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
@@ -52,10 +51,6 @@ const CameraTest: React.FC = () => {
     const handleOpenInputModal = () => {
         handleCameraAvailable(false);
         navigate('[Modal] - findByCodebarInputModal');
-    }
-
-    const handleOpenBagInventory = () => {
-        navigate('bagInventoryScreen')
     }
 
     const {
@@ -141,6 +136,17 @@ const CameraTest: React.FC = () => {
                     </TouchableOpacity>
                 </View>
             </View>
+
+            {
+                !startScanning ?
+                    <View style={cameraStyles(theme).message}>
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
+                    </View>
+                    :
+                    <View style={cameraStyles(theme).message}>
+                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
+                    </View>
+            }
 
         </View>
     );

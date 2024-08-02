@@ -5,6 +5,7 @@ import { PERMISSIONS, check, openSettings, request } from "react-native-permissi
 import { SettingsContext } from "../../../context/settings/SettingsContext";
 import ProductInterface from "../../../interface/product";
 import UserInterface from "../../../interface/user";
+import { identifyUPCOrEANBarcode } from "../../../utils/identifyBarcodeType";
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -65,21 +66,25 @@ export const cameraSettings = ({
         handleStartScanning(true)
         handleCameraAvailable(false)
         setProductsScanned(undefined)
+        let codeValue = codes;
+
         if (!cameraAvailable) {
             handleCameraAvailable(true)
             return;
         };
 
+        const identifyUPCOrEAN = identifyUPCOrEANBarcode(codeValue);
+
+        if (identifyUPCOrEAN === "UPC-A convertido a EAN-13") {
+            codeValue = codeValue?.substring(1)
+        }
 
         if (!productsScanned) {
-
             setCodeDetected(true)
             if (codeDetected) {
                 handleCameraAvailable(true)
                 return;
             };
-
-            const codeValue = codes;
 
             if (!codeValue) {
                 handleCameraAvailable(true)
@@ -111,20 +116,4 @@ export const cameraSettings = ({
         setCodeDetected
     }
 
-}
-
-export const getTypeOfMovementsName = (user?: UserInterface) => {
-   /*  if (user) {
-        const { Id_TipoMovInv } = user;
-        if (Id_TipoMovInv?.Accion === 1 && Id_TipoMovInv?.Id_TipoMovInv === 0) {
-            return "al Inventario";
-        } else if (Id_TipoMovInv?.Accion === 1) {
-            return "a la Entrada";
-        } else if (Id_TipoMovInv?.Accion === 2) {
-            return "a la Salida";
-        } else {
-            return "Traspaso";
-        }
-    } */
-    return "";
 };

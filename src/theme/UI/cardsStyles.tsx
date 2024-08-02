@@ -22,7 +22,8 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        maxWidth: "100%"
+        width: "100%",
+        //gap: "10%"
     },
     dataItem: {
         display: "flex",
@@ -39,12 +40,28 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         color: theme.text_color
     },
     information: {
-        maxWidth: "80%"
+        width: "72.5%"
+    },
+    quantity: {
+        display: "flex",
+        flexDirection: 'column',
+        justifyContent: "flex-start",
+        alignItems: "flex-end",
+        width: "22.5%"
+    },
+    quantity_value: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    quantity_unity: {
+        display: "flex",
+        fontSize: globalFont.font_sm,
+        width: "auto",
+        color: theme.text_color
     },
     description: {
         fontWeight: "bold",
         fontSize: globalFont.font_normal,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
         color: theme.text_color
     },
     stock: {
@@ -265,12 +282,8 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
         color: theme.text_color
     },
     edit: {
-        backgroundColor: theme.background_color_tertiary,
         display: "flex",
         alignContent: "center",
-        justifyContent: "center",
-        paddingHorizontal: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
-        borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius
     }

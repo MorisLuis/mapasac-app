@@ -10,6 +10,7 @@ import { globalStyles } from '../../../theme/appTheme';
 import { Counter } from '../../../components/Ui/Counter';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
+import Toast from 'react-native-toast-message';
 
 type EditProductInBagInterface = {
     route?: {
@@ -42,6 +43,11 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
         } else {
             editProduct({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
+
+        Toast.show({
+            type: 'tomatoToast',
+            text1: 'Se actualizo la cantidad!'
+        })
 
         setEditingProduct(false);
         handleCloseModal()

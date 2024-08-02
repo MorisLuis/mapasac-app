@@ -8,6 +8,8 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { getProductDetails } from '../../services/products';
+import { ProductDetailsEditSkeleton } from '../../components/Skeletons/ProductDetailsEditSkeleton';
+import { ProductDetailsSkeletonStyles } from '../../theme/UI/skeletons';
 
 type ProductDetailsPageEditInterface = {
     route?: {
@@ -87,8 +89,6 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
             } */}
         </ScrollView>
     ) : (
-        <View>
-            <Text>cargando...</Text>
-        </View>
+        <ProductDetailsEditSkeleton />
     );
 };

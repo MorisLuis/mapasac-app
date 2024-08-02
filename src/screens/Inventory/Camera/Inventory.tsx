@@ -11,7 +11,6 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
 
-
 export const Inventory = () => {
 
     const { handleCodebarScannedProcces } = useContext(SettingsContext);
@@ -97,6 +96,7 @@ export const Inventory = () => {
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProducts();
+            console.log({total})
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()
@@ -108,11 +108,12 @@ export const Inventory = () => {
             handleGetProductsByStock();
         }, [])
     );
- 
+
 
     return (
         <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
             <View style={InventoryScreenStyles(theme).content}>
+
                 <View style={InventoryScreenStyles(theme).header}>
                     <Text style={InventoryScreenStyles(theme).title}>Inventario</Text>
                     <View style={InventoryScreenStyles(theme).actions}>

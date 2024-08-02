@@ -31,7 +31,8 @@ export const modalRenderstyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
     },
     optionsContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        minHeight: globalStyles(theme).globalPadding.padding * 1.75,
     },
     option: {
         backgroundColor: theme.background_color_tertiary,

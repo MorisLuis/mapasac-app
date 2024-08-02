@@ -34,5 +34,12 @@ export const ProductDetailsSkeletonStyles = (theme: Theme) => StyleSheet.create(
         borderRadius: 5,
         width: "100%",
         height: 200
+    },
+
+    ProductDetailsEditSkeleton: {
+        height: globalFont.font_normal + (globalStyles(theme).globalPadding.padding * 1.5),
+        width: "100%",
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
     }
 })

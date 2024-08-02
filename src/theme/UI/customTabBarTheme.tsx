@@ -19,8 +19,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         flexDirection: "row",
         width: "100%",
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        justifyContent: "space-between",
-        backgroundColor: 'blue'
+        justifyContent: "space-between"
     },
     content_left: {
         display: "flex",

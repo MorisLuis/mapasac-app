@@ -4,19 +4,21 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     OnboardingScreen: {
-        padding: globalStyles(theme).globalPadding.padding,
+        paddingVertical: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color,
-        height: hp('100%')
+        height: hp('100%'),
     },
     topbar: {
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         height: hp('5%'),
         minHeight: 40,
-        width: wp("100%"),
 
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end"
+    },
+    topbar_profile: {
+        paddingLeft: globalStyles(theme).globalPadding.padding
     },
     header: {
         width: wp("100%"),
@@ -32,7 +34,7 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     content: {
         flex: 2,
         marginHorizontal: "auto",
-        width: 400,
+        //width: 400,
         paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     moduleOptionRow: {

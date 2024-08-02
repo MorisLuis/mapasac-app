@@ -27,9 +27,14 @@ export const ProfileNavigation = () => {
                 options={({ navigation }) => ({
                     header: props => (
                         <CustomHeader
-                            navigation={navigation}
+                            {...props}
                             title="Perfil"
-                            backAvailable={false}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack();
+                                //updateBarCode('');
+                            }}
                         />
                     )
                 })}

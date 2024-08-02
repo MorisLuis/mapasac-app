@@ -36,7 +36,7 @@ export const ModalMiddlenStyles = (theme: Theme, typeTheme: string) => StyleShee
         paddingTop: 10,
         paddingRight: 20,
         paddingBottom: 20,
-        paddingLeft: 20,
+        paddingLeft: 20
     },
     header: {
         width: "100%",

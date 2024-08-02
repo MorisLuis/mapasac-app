@@ -156,6 +156,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
     },
     manageEvents_content: {
+        flex: 3,
         display: "flex",
         flexDirection: 'row',
         gap: 10
@@ -163,30 +164,32 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     manageEvents_title: {
         fontSize: globalFont.font_normal,
         fontWeight: "bold",
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        color: theme.text_color
     },
 
     event:{
-        borderWidth: 1,
-        borderColor: theme.color_border_secondary,
-        width: wp("25%"),
-        height: hp("12.5%"),
+        flex: 1,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,
         display: 'flex',
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: 'center',
+        backgroundColor: theme.background_color_secondary
     },
     event_icon: {
-        backgroundColor: theme.background_color_secondary,
+        //backgroundColor: theme.background_color_secondary,
         display: "flex",
         flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
-        borderColor: theme.color_border_secondary,
         width:34,
         height: 34,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2
+    },
+    event_text: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color,
+        textAlign: "center"
     },
     editContainer: {
         backgroundColor: theme.background_color_tertiary,
@@ -201,6 +204,7 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     },
     editContainer_text: {
         fontSize: globalFont.font_normal,
+        color: theme.text_color
     },
     editContainer_label: {
         color: theme.text_color_light

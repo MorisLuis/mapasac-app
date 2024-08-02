@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -102,7 +102,7 @@ interface ProductDetailsContentInterface {
 }
 
 const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, handleEditProduct, fromModal, codeBar, fromUpdateCodebar }: ProductDetailsContentInterface) => {
-    const { theme, typeTheme } = useTheme();
+    const { theme, typeTheme, toggleTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const codebarAvailable = productDetailsData?.codbarras?.trim() !== "";
 
@@ -156,34 +156,37 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                     />
                 }
 
-                <View style={productDetailsStyles(theme, typeTheme).manageEvents}>
-                    <Text style={productDetailsStyles(theme, typeTheme).manageEvents_title}>Manejar producto</Text>
 
-                    <View style={productDetailsStyles(theme, typeTheme).manageEvents_content}>
-                        {(!productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) &&
+                {
+                    !fromModal &&
+                    <View style={productDetailsStyles(theme, typeTheme).manageEvents}>
+                        <Text style={productDetailsStyles(theme, typeTheme).manageEvents_title}>Manejar producto</Text>
+                        <View style={productDetailsStyles(theme, typeTheme).manageEvents_content}>
+                            {(!codebarAvailable) &&
+                                <TouchableOpacity
+                                    style={productDetailsStyles(theme, typeTheme).event}
+                                    onPress={handleOptionsToUpdateCodebar}
+                                >
+                                    <View style={productDetailsStyles(theme, typeTheme).event_icon}>
+                                        <Icon name={'barcode-outline'} size={20} color={iconColor} />
+                                    </View>
+                                    <Text style={productDetailsStyles(theme, typeTheme).event_text}>Crear codigo</Text>
+                                </TouchableOpacity>
+                            }
+
+
                             <TouchableOpacity
-                                style={productDetailsStyles(theme, typeTheme).event}
-                                onPress={handleOptionsToUpdateCodebar}
+                                style={[productDetailsStyles(theme, typeTheme).event, codebarAvailable && { flex: 0.33 }]}
+                                onPress={handleEditProduct}
                             >
                                 <View style={productDetailsStyles(theme, typeTheme).event_icon}>
-                                    <Icon name={'barcode-outline'} size={20} color={iconColor} />
+                                    <Icon name={'create-outline'} size={20} color={iconColor} />
                                 </View>
-                                <Text>Crear codigo</Text>
+                                <Text style={productDetailsStyles(theme, typeTheme).event_text}>Editar</Text>
                             </TouchableOpacity>
-                        }
-
-                        <TouchableOpacity
-                            style={productDetailsStyles(theme, typeTheme).event}
-                            onPress={handleEditProduct}
-                        >
-                            <View style={productDetailsStyles(theme, typeTheme).event_icon}>
-                                <Icon name={'create-outline'} size={20} color={iconColor} />
-                            </View>
-                            <Text>Editar producto</Text>
-                        </TouchableOpacity>
-
+                        </View>
                     </View>
-                </View>
+                }
 
                 {/* {
                     (

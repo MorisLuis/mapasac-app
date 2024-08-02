@@ -24,6 +24,9 @@ export const counterStyles = (theme: Theme) => StyleSheet.create({
         height: "100%"
     },
     counterButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: "center",
         backgroundColor: theme.background_color_secondary,
         padding: globalStyles(theme).globalPadding.padding / 5,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

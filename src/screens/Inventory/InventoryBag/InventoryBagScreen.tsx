@@ -98,8 +98,6 @@ export const InventoryBagScreen = () => {
         );
     };
 
-
-
     const handleSearch = async (text: string) => {
         setSearchText(text);
         if (text === '') {

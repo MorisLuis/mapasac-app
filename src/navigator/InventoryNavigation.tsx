@@ -97,13 +97,13 @@ export const InventoryNavigation = () => {
                 name="confirmationScreen"
                 component={ConfirmationScreen}
                 options={({ navigation }: any) => ({
+                    
                     header: props => (
                         <CustomHeader
                             {...props}
                             title={"Confirmación"}
                             navigation={navigation}
                             backCustum={true}
-                            secondaryDesign={true}
                             back={() => navigation.goBack()}
                         />
                     )

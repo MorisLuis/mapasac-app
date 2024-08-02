@@ -74,7 +74,7 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
                         ref={inputRef}
                         value={descripcioState}
                         onChangeText={handleEditDescripcio}
-                        keyboardType="numeric"
+                        //keyboardType="numeric"
                         style={[inputStyles(theme, typeTheme).input]}
                     />
             </View>

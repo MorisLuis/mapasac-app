@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -8,6 +8,7 @@ import { getModules } from '../services/others';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface modulesInterface {
     idappmob: number,
@@ -18,12 +19,12 @@ interface modulesInterface {
 
 export const OnboardingScreen = () => {
 
-    const { theme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const { user } = useContext(AuthContext);
 
     const navigation = useNavigation<any>();
     const [modules, setModules] = useState<modulesInterface[]>()
-    const iconColor = theme.color_primary
+    const iconColor = typeTheme === "light" ? theme.color_secondary : theme.color_primary
 
     useEffect(() => {
         const onGetModules = async () => {
@@ -42,7 +43,9 @@ export const OnboardingScreen = () => {
         <SafeAreaView style={OnboardingScreenStyles(theme).OnboardingScreen}>
 
             <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigation.navigate("ProfileNavigation")}>
-                <Icon name="person-circle-outline" size={24} color={iconColor} />
+                <View style={OnboardingScreenStyles(theme).topbar_profile}>
+                    <Icon name="person-circle-outline" size={wp("7.5%")} color={iconColor} />
+                </View>
             </TouchableOpacity>
 
             <View style={OnboardingScreenStyles(theme).header}>

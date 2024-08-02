@@ -6,9 +6,6 @@ import { globalStyles } from '../../theme/appTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductInventoryCardSkeleton } from './ProductInventoryCardSkeleton';
 import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
-import { Text } from 'react-native';
-import { Icon } from 'react-native-vector-icons/Icon';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
@@ -23,32 +20,41 @@ export const ConfirmationSkeleton = () => {
 
     return (
         <>
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationHeader}>
-                <View style={{ position: 'relative', marginBottom: 15 }}>
+            <View style={[
+                ConfirmationScreenStyles(theme, typeTheme).confirmationInfo,
+                {
+                    borderBottomWidth: 0,
+                    marginBottom: 0,
+                    paddingVertical: 0,
+                    paddingTop: globalStyles(theme).globalPadding.padding,
+                }]}
+            >
+
+                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
+
                     <ShimmerPlaceHolder
                         shimmerColors={shimmerColors}
                         LinearGradient={LinearGradient}
-                        style={{ position: 'relative', width: 50, height: 50 }}
+                        style={[ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number, { height: 70, marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2 }]}
                     ></ShimmerPlaceHolder>
+
+                    <ShimmerPlaceHolder
+                        shimmerColors={shimmerColors}
+                        LinearGradient={LinearGradient}
+                        style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2 }]}>
+                    </ShimmerPlaceHolder>
+                    <ShimmerPlaceHolder
+                        shimmerColors={shimmerColors}
+                        LinearGradient={LinearGradient}
+                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>
+                    </ShimmerPlaceHolder>
                 </View>
-
-                <ShimmerPlaceHolder
-                    shimmerColors={shimmerColors}
-                    LinearGradient={LinearGradient}
-                    style={{ position: 'relative', marginBottom: 15 }}
-                ></ShimmerPlaceHolder>
-
-                <ShimmerPlaceHolder
-                    shimmerColors={shimmerColors}
-                    LinearGradient={LinearGradient}
-                    style={ConfirmationScreenStyles(theme, typeTheme).confirmationHeaderTitle}
-                ></ShimmerPlaceHolder>
             </View>
 
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[ConfirmationScreenStyles(theme).confirmationInfo, { width: "auto", height: 40, padding: 0, borderWidth: 0 }]}
+                style={[ConfirmationScreenStyles(theme).confirmationInfo, { width: "auto", height: 40, marginBottom: 0, borderBottomWidth: 0 }]}
             ></ShimmerPlaceHolder>
 
             <ShimmerPlaceHolder
