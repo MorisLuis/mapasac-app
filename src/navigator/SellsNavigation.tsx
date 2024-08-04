@@ -1,25 +1,25 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SettingsContext } from '../context/settings/SettingsContext';
 
 // Screens
 import { SellsScreen } from '../screens/Sells/SellsScreen';
 import { CustomTopBar } from '../components/Navigation/CustumTopBar';
-import { SellsFamilyScreen } from '../screens/Sells/SellsFamilyScreen';
-import { SellsFamilyScreenStep3 } from '../screens/Sells/SellsFamilyScreenStep3';
+import { SellsDataScreen } from '../screens/Sells/SellsDataScreen';
+import { SelectAmountScreen } from '../screens/Sells/SelectAmountScreen';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 
 export type SellsNavigationStackParamList = {
     // Navigation
     sellsScreen: undefined;
-    sellsFamilyScreen: { cvefamilia: number, descripcio: string };
-    sellsFamilyScreen3: { cvefamilia?: number, descripcio?: string };
+    sellsDataScreen: undefined;
 
+    piecesScreen: undefined;
+    priceScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
 
 export const SellsNavigation = () => {
-    const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
 
     const stackScreens = useMemo(() => (
         <>
@@ -34,19 +34,64 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="sellsFamilyScreen"
-                component={SellsFamilyScreen}
-                options={{ presentation: 'transparentModal', headerShown: false }}
+                name="sellsDataScreen"
+                component={SellsDataScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={""}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
             />
-
 
             <Stack.Screen
-                name="sellsFamilyScreen3"
-                component={SellsFamilyScreenStep3}
-                options={{ presentation: 'transparentModal', headerShown: false }}
+                name="piecesScreen"
+                component={SelectAmountScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Cantidad"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
             />
+
+            <Stack.Screen
+                name="priceScreen"
+                component={SelectAmountScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Cantidad"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
         </>
-    ), [handleCameraAvailable, updateBarCode]);
+    ), []);
 
     return (
         <Stack.Navigator>

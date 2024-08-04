@@ -49,7 +49,7 @@ export const lightTheme = {
     color_border_secondary: "#cacaca",
     color_border_tertiary: "#6f7b94",
     text_color: "#1d2a36", // black
-    text_color_light: "#657482",
+    text_color_light: "#8e9dab",
     text_color_secondary: "#f9f9f9", // white
     background_color: "#f1f1f1",
     background_color_secondary: "#eaeaea",

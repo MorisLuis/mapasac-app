@@ -292,16 +292,18 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
 export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductSellsCardTheme: {
         flex: 1,
-        display: "flex"
+        display: "flex",
+        position: 'relative'
     },
     image: {
         flex: 1,
         borderWidth: 3,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         borderColor: theme.background_color_secondary,
         resizeMode: "cover",
+        display: "flex",
         width: "100%",
-        height: hp("15%"),
+        minHeight: 140,
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
     shadowImage: {
@@ -309,18 +311,18 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
     notImage: {
         flex: 1,
         borderWidth: 2,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         borderColor: theme.background_color_secondary,
-        resizeMode: "cover",
+        display: "flex",
         width: "100%",
-        height: hp("15%"),
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        minHeight: 140,
         backgroundColor: theme.background_color_tertiary
     },
     title: {
         fontSize: globalFont.font_normal,
         color: theme.text_color,
-        //fontWeight: 'bold'
+        fontWeight: "bold",
+        textTransform: "capitalize"
     }
 
 });

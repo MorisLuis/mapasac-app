@@ -27,8 +27,34 @@ const getProductsSellsFromFamily = async (cvefamilia: number) => {
     return products
 };
 
+const getProductSellsDetails = async (idinvearts: number) => {
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/sells/byid?idinvearts=${idinvearts}`);
+        product = getProduct.data.product;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return product;
+}
+
+const getUnits = async () => {
+
+    try {
+        const getUnits = await api.get(`/api/product/sells/units`);
+        return getUnits.data.units;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+}
+
+
 
 export {
     getProductsSells,
-    getProductsSellsFromFamily
+    getProductSellsDetails,
+    getProductsSellsFromFamily,
+    getUnits
 }

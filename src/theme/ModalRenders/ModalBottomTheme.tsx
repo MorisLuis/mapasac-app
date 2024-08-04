@@ -6,7 +6,7 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
     modalBottom: {
         flex: 1,
         justifyContent: "flex-end",
-        position: 'relative',
+        //position: 'relative',
         padding: globalStyles(theme).globalPadding.padding / 2.5
     },
     modalContent: {
