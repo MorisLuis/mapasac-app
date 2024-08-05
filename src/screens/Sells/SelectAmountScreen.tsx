@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
@@ -9,7 +9,8 @@ interface SelectAmountScreenInterface {
     route?: {
         params: {
             valueDefault: string;
-            unit?: string
+            unit?: string;
+            from: string
         };
     };
 }
@@ -17,26 +18,28 @@ interface SelectAmountScreenInterface {
 export const SelectAmountScreen = ({
     route
 }: SelectAmountScreenInterface) => {
-
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, unit } = route?.params ?? {};
+    const { valueDefault, unit, from } = route?.params ?? {};
     const navigation = useNavigation<any>();
 
-
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<string>()
-    const buttondisabled = false
+    const [value, setValue] = useState<string>(valueDefault as string);
+    const buttondisabled = false;
 
     const handleInputChange = (value: string) => {
-        setValue(value)
+        setValue(value);
     };
 
     const handleSave = () => {
-        navigation.goBack()
-    }
+        if (from === 'pieces') {
+            navigation.navigate('sellsDataScreen', { pieces: value });
+        } else {
+            navigation.navigate('sellsDataScreen', { price: value });
+        }
+    };
 
     useEffect(() => {
-        setValue(valueDefault);
+        setValue(valueDefault as string);
 
         if (inputRef.current) {
             inputRef.current.focus();
@@ -44,14 +47,12 @@ export const SelectAmountScreen = ({
     }, []);
 
     return (
-
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1 }}
             keyboardVerticalOffset={Platform.select({ ios: 60, android: 80 })}
         >
             <View style={SelectAmountScreenTheme(theme, typeTheme).SelectAmountScreen}>
-
                 <View style={SelectAmountScreenTheme(theme, typeTheme).header}>
                     <Text style={SelectAmountScreenTheme(theme, typeTheme).headerTitle}>Escribe la cantidad.</Text>
                 </View>
@@ -65,23 +66,13 @@ export const SelectAmountScreen = ({
                             keyboardType="numeric"
                             style={SelectAmountScreenTheme(theme, typeTheme).amountNumber}
                         />
-                        {
-                            unit &&
-                            <Text>{unit}</Text>
-                        }
+                        {unit && <Text>{unit}</Text>}
                     </View>
                 </View>
 
-                <View style={{
-                    paddingBottom: Platform.select({
-                        ios: "20%",
-                        android: "20%",
-                    }),
-                }}>
+                <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
                     <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' },
-                        ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
-                        ]}
+                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
                         onPress={handleSave}
                         disabled={buttondisabled}
                     >
@@ -90,5 +81,5 @@ export const SelectAmountScreen = ({
                 </View>
             </View>
         </KeyboardAvoidingView>
-    )
+    );
 };

@@ -7,19 +7,17 @@ import { useNavigation } from '@react-navigation/native';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
-    onClick?: () => void
 }
 
 export const ProductSellsCard = ({
     product,
-    onClick
 }: ProductSellsCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<any>();
 
     const handleSelectProduct = async () => {
-        navigation.navigate('sellsDataScreen', { cvefamilia: product.cvefamilia, descripcio: product.descripcio })
+        navigation.navigate('sellsDataScreen', { cvefamilia: product.cvefamilia, descripcio: product.descripcio, idinvearts: product.ridinvearts })
     }
 
     return (

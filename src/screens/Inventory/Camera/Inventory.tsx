@@ -96,7 +96,6 @@ export const Inventory = () => {
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProducts();
-            console.log({total})
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()

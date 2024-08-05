@@ -39,6 +39,18 @@ const getProductSellsDetails = async (idinvearts: number) => {
     return product;
 }
 
+const getProductSellsDetailsBycvefamilia = async (cvefamilia: number) => {
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/sells/bycvefamilia?cvefamilia=${cvefamilia}`);
+        product = getProduct.data.product;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return product;
+}
+
 const getUnits = async () => {
 
     try {
@@ -55,6 +67,7 @@ const getUnits = async () => {
 export {
     getProductsSells,
     getProductSellsDetails,
+    getProductSellsDetailsBycvefamilia,
     getProductsSellsFromFamily,
     getUnits
 }

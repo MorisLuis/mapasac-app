@@ -22,6 +22,7 @@
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "react": "18.2.0",
+    "react-hook-form": "^7.52.2",
     "react-native": "0.73.6",
     "react-native-camera-kit": "^13.0.0",
     "react-native-device-info": "^11.1.0",

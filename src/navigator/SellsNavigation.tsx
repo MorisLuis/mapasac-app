@@ -7,6 +7,8 @@ import { CustomTopBar } from '../components/Navigation/CustumTopBar';
 import { SellsDataScreen } from '../screens/Sells/SellsDataScreen';
 import { SelectAmountScreen } from '../screens/Sells/SelectAmountScreen';
 import { CustomHeader } from '../components/Ui/CustomHeader';
+import { SelectClassScreen } from '../screens/Sells/SelectClassScreen';
+import { SelectUnitScreen } from '../screens/Sells/SelectUnitsScreen';
 
 export type SellsNavigationStackParamList = {
     // Navigation
@@ -15,6 +17,8 @@ export type SellsNavigationStackParamList = {
 
     piecesScreen: undefined;
     priceScreen: undefined;
+    classScreen: undefined;
+    unitScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -80,6 +84,44 @@ export const SellsNavigation = () => {
                         <CustomHeader
                             {...props}
                             title={"Cantidad"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="unitScreen"
+                component={SelectUnitScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Clase"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="classScreen"
+                component={SelectClassScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Clase"}
                             navigation={navigation}
                             backCustum={true}
                             back={() => {
