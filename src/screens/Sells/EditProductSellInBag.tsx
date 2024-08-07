@@ -1,29 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
+import { editProductStyles } from '../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../../../context/ThemeContext';
-import { ProductInterfaceBag } from '../../../interface/product';
-import { buttonStyles } from '../../../theme/UI/buttons';
-import { globalStyles } from '../../../theme/appTheme';
-import { Counter } from '../../../components/Ui/Counter';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import DotLoader from '../../../components/Ui/DotLaoder';
+import { useTheme } from '../../context/ThemeContext';
+import { buttonStyles } from '../../theme/UI/buttons';
+import { globalStyles } from '../../theme/appTheme';
+import { Counter } from '../../components/Ui/Counter';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import DotLoader from '../../components/Ui/DotLaoder';
 import Toast from 'react-native-toast-message';
+import { ProductSellsInterface } from '../../interface/productSells';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
-type EditProductInBagInterface = {
+type EditProductSellInBagInterface = {
     route?: {
         params: {
-            product: ProductInterfaceBag;
+            product: ProductSellsInterface;
         };
     };
 };
 
-export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
+export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) => {
 
     const { product } = route?.params ?? {};
-    const { editProduct, deleteProduct } = useContext(InventoryBagContext);
+    const { editProductSell, deleteProductSell } = useContext(SellsBagContext);
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
     const [piezasCount, setPiezasCount] = useState(0);
@@ -38,9 +39,9 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
         setEditingProduct(true)
 
         if (piezasCount < 1) {
-            deleteProduct(product.idenlacemob as number)
+            deleteProductSell(product.idenlacemob as number)
         } else {
-            editProduct({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
+            editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
 
         Toast.show({

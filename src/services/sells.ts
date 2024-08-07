@@ -1,8 +1,8 @@
 import { api } from "../api/api";
 
-const postInventory = async () => {
+const postSells = async () => {
     try {
-        const data = await api.post('/api/invearts/inventory');
+        const data = await api.post('/api/invearts/sell?mercado=true');
         return data;
     } catch (error: any) {
         throw error?.response?.data || new Error('Unknown error');
@@ -10,5 +10,5 @@ const postInventory = async () => {
 }
 
 export {
-    postInventory
+    postSells
 }

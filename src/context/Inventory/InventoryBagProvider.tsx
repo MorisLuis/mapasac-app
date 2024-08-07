@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
-import { addProductInBagInventory, deleteProductInBagInventory, getTotalProductsInBag, updateProductInBagInventory } from '../../services/bag';
+import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import ProductInterface from '../../interface/product';
 
 export interface InventoryBagInterface {
@@ -19,7 +19,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const handleUpdateSummary = async () => {
         try {
-            const total = await getTotalProductsInBag(0);
+            const total = await getTotalProductsInBag({opcion: 0});
             const numberOfItems = total;
             const orderSummary = {
                 numberOfItems
@@ -34,7 +34,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const addProduct = (inventoryBody: ProductInterface) => {
         try {
-            addProductInBagInventory(inventoryBody as ProductInterface)
+            addProductInBag({product: inventoryBody})
             setProductAdded(true);
         } catch (error) {
             console.log({ error })
@@ -45,7 +45,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const deleteProduct = (idenlacemob: number) => {
         try {
-            deleteProductInBagInventory(idenlacemob)
+            deleteProductInBag({idenlacemob})
             setProductAdded(true);
         } catch (error) {
             console.log({ error })
@@ -56,7 +56,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const editProduct = ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
         try {
-            updateProductInBagInventory({ idenlacemob, cantidad })
+            updateProductInBag({ idenlacemob, cantidad })
             setProductAdded(true);
         } catch (error) {
             console.log({ error })

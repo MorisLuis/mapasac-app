@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigation } from './src/navigator/AppNavigation';
 import { ShowToastMessage } from './src/components/ToastMesage';
 import { ThemeProvider } from './src/context/ThemeContext';
+import { SellsProvider } from './src/context/Sells/SellsBagProvider';
 
 const App = () => {
   return (
@@ -20,15 +21,17 @@ const App = () => {
 
 const AppState = ({ children }: any) => {
   return (
-      <AuthProvider>
-        <ThemeProvider>
-          <SettingsProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <SettingsProvider>
+          <SellsProvider>
             <InventoryProvider>
               {children}
             </InventoryProvider>
-          </SettingsProvider>
-        </ThemeProvider>
-      </AuthProvider>
+          </SellsProvider>
+        </SettingsProvider>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 

@@ -1,13 +1,8 @@
-import ProductInterface, { ProductInterfaceBag } from "../../interface/product";
-import { InventoryBagInterface, inventoryDataInterface } from "./InventoryBagProvider";
+import { InventoryBagInterface } from "./InventoryBagProvider";
 
 
 type InventoryBagActionType =
     | { type: '[InventoryBag] - Post Inventory'}
-    | { type: '[InventoryBag] - Add Product', payload: ProductInterfaceBag }
-    | { type: '[InventoryBag] - Remove Product', payload: ProductInterfaceBag }
-    | { type: '[InventoryBag] - Edit Product', payload: ProductInterfaceBag }
-    | { type: '[InventoryBag] - Clear Bag', payload: [] }
     | {
         type: '[InventoryBag] - Update Summary',
         payload: {
@@ -22,35 +17,7 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
 
         case '[InventoryBag] - Post Inventory':
             return {
-                ...state,
-                //inventoryData: action.payload as inventoryDataInterface
-            }
-
-        case '[InventoryBag] - Add Product':
-            return {
-                ...state,
-                bag: [...state.bag, action.payload]
-            }
-
-        case '[InventoryBag] - Remove Product':
-            return {
-                ...state,
-                bag: state.bag.filter(product => (product.key !== action.payload.key))
-            }
-
-        case '[InventoryBag] - Edit Product':
-            return {
-                ...state,
-                bag: state.bag.map(product =>
-                    product.key === action.payload.key
-                        ? { ...product, Piezas: action.payload.cantidad }
-                        : product
-                )
-            }
-        case '[InventoryBag] - Clear Bag':
-            return {
-                ...state,
-                bag: []
+                ...state
             }
 
         case '[InventoryBag] - Update Summary':
@@ -58,7 +25,6 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
                 ...state,
                 ...action.payload
             }
-
 
         default:
             return state

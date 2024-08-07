@@ -1,24 +1,45 @@
 import React, { useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ClassInterface from '../interface/class';
+import { UnitData } from '../interface/units';
+import { CustomTopBar } from '../components/Navigation/CustumTopBar';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 
 // Screens
+import { SelectClassScreen } from '../screens/Sells/SelectClassScreen';
 import { SellsScreen } from '../screens/Sells/SellsScreen';
-import { CustomTopBar } from '../components/Navigation/CustumTopBar';
 import { SellsDataScreen } from '../screens/Sells/SellsDataScreen';
 import { SelectAmountScreen } from '../screens/Sells/SelectAmountScreen';
-import { CustomHeader } from '../components/Ui/CustomHeader';
-import { SelectClassScreen } from '../screens/Sells/SelectClassScreen';
 import { SelectUnitScreen } from '../screens/Sells/SelectUnitsScreen';
+import { SellsBagScreen } from '../screens/Sells/SellsBag/SellsBagScreen';
+import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationSellsScreen';
+import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
+import { SuccesMessageSells } from '../screens/SuccesMessageSells';
+import { ProductSellsInterface } from '../interface/productSells';
 
 export type SellsNavigationStackParamList = {
-    // Navigation
-    sellsScreen: undefined;
-    sellsDataScreen: undefined;
 
-    piecesScreen: undefined;
-    priceScreen: undefined;
-    classScreen: undefined;
-    unitScreen: undefined;
+    SellsScreen: undefined;
+    SellsDataScreen: { 
+        descripcio: string;
+        image: string;
+        cvefamilia?: number;
+        pieces?: string;
+        price?: string;
+        typeClass?: ClassInterface;
+        units?: UnitData;
+        productSellData?: { idinvearts: number, capa: string, idinveclas: number };
+    };
+    BagSellsScreen: undefined;
+
+    "[Modal] - editProductSellInBag": { product: ProductSellsInterface };
+    "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
+    "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
+    "[Modal] - UnitScreen": { valueDefault: string, unit?: string, from: string };
+    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number };
+
+    "[Sells] - confirmationScreen": undefined;
+    "[Sells] - succesMessageScreen": undefined;
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -28,7 +49,7 @@ export const SellsNavigation = () => {
     const stackScreens = useMemo(() => (
         <>
             <Stack.Screen
-                name="sellsScreen"
+                name="SellsScreen"
                 component={SellsScreen}
                 options={() => ({
                     header: props => (
@@ -38,7 +59,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="sellsDataScreen"
+                name="SellsDataScreen"
                 component={SellsDataScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -57,7 +78,26 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="piecesScreen"
+                name="BagSellsScreen"
+                component={SellsBagScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Ventas"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="[Modal] - PiecesScreen"
                 component={SelectAmountScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -76,7 +116,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="priceScreen"
+                name="[Modal] - PriceScreen"
                 component={SelectAmountScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -95,7 +135,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="unitScreen"
+                name="[Modal] - UnitScreen"
                 component={SelectUnitScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -114,7 +154,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="classScreen"
+                name="[Modal] - ClassScreen"
                 component={SelectClassScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -130,6 +170,34 @@ export const SellsNavigation = () => {
                         />
                     )
                 })}
+            />
+
+            <Stack.Screen
+                name="[Modal] - editProductSellInBag"
+                component={EditProductSellInBag}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="[Sells] - confirmationScreen"
+                component={ConfirmationSellsScreen}
+                options={({ navigation }: any) => ({
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Confirmación"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => navigation.goBack()}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="[Sells] - succesMessageScreen"
+                component={SuccesMessageSells}
+                options={{ headerShown: false }}
             />
 
         </>

@@ -7,10 +7,10 @@ import { useTheme } from '../context/ThemeContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-export const SuccesMessage = () => {
+export const SuccesMessageSells = () => {
 
-    const { navigate, goBack } = useNavigation<any>();
-    const { theme, toggleTheme, typeTheme } = useTheme();
+    const { navigate } = useNavigation<any>();
+    const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.color_tertiary
 
     return (
@@ -18,7 +18,7 @@ export const SuccesMessage = () => {
             <View style={[SuccesMessageScreenStyles(theme).SuccesMessage]}>
 
                 <TouchableOpacity style={[SuccesMessageScreenStyles(theme).header]} onPress={() => {
-                    navigate('ScanneNavigation');
+                    navigate('SellsScreen');
                 }}>
                     <Icon name="close-outline" size={24} color={iconColor} />
                 </TouchableOpacity>

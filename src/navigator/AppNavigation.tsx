@@ -11,6 +11,7 @@ import { InventoryNavigation } from './InventoryNavigation';
 import { OnboardingScreen } from '../screens/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
 import { SellsNavigation } from './SellsNavigation';
+import { SuccesMessage } from '../screens/SuccesMessage';
 
 export type InventoryNavigationStackParamList = {
     OnboardingScreen: undefined;
@@ -76,6 +77,7 @@ export const AppNavigation = () => {
                     presentation: "modal"
                 }}
             />
+
         </>
     ), [authScreens, handleCameraAvailable, updateBarCode]);
 

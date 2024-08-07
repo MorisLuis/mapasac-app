@@ -32,9 +32,9 @@ export const SelectAmountScreen = ({
 
     const handleSave = () => {
         if (from === 'pieces') {
-            navigation.navigate('sellsDataScreen', { pieces: value });
+            navigation.navigate('SellsDataScreen', { pieces: value });
         } else {
-            navigation.navigate('sellsDataScreen', { price: value });
+            navigation.navigate('SellsDataScreen', { price: value });
         }
     };
 

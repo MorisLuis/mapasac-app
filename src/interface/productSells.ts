@@ -1,3 +1,4 @@
+// ??
 export interface ProductSellsInterface {
 
     imagen?: string;
@@ -8,22 +9,42 @@ export interface ProductSellsInterface {
 
     descripcio?: string;
 
+    producto?: string;
+
     ridinvearts?: number;
 
     ridinveclas?: number;
 
     clase?: string;
+
+    cantidad?: number;
+
+    unidad_nombre?: string;
+
+    idenlacemob?: number;
+
+    capa?: string;
 }
 
-export interface ProductSellsFamilyInterface {
+// Function: 
+export default interface ProductSellsFamilyInterface {
 
+    // The name of the product
     rproducto?: string;
 
+    //The id of the table invearts
     ridinvearts?: number;
 
+    // The class id
     ridinveclas?: number;
 
-    rcapa?: string;
-
+    // The class name
     clase?: string;
+
+    // The capa name
+    rcapa?: string;
+}
+
+export interface ProductSellsInterfaceBag extends ProductSellsInterface {
+    key: number
 }

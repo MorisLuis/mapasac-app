@@ -7,8 +7,9 @@ export default interface ClassInterface {
     rproducto: string;
 }
 
-export type ClassData = {
+/* export type ClassData = {
     rcapa: string;
     ridinvearts: number;
     rproducto: string;
-}
+    ridinveclas: number;
+} */

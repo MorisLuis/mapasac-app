@@ -16,12 +16,28 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
         padding: globalStyles(theme).globalPadding.padding
     },
     image: {
-        backgroundColor: theme.background_color_secondary,
-
+        borderWidth: 3,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderColor: theme.background_color_secondary,
+        resizeMode: "cover",
+        display: "flex",
         width: wp("50%"),
         height: hp("20%"),
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
+        minHeight: 140,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
+
+    notImage: {
+        borderWidth: 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderColor: theme.background_color_secondary,
+        display: "flex",
+        width: wp("50%"),
+        height: hp("20%"),
+        minHeight: 140,
+        backgroundColor: theme.background_color_tertiary
+    },
+
     titleContent: {
         width: '100%',
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
@@ -53,5 +69,5 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     label: {
         fontSize: globalFont.font_normal,
         color: theme.text_color_light
-    }
+    },
 })

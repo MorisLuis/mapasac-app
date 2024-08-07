@@ -24,32 +24,8 @@ const getProductsSellsFromFamily = async (cvefamilia: number) => {
         throw error?.response?.data || new Error('Unknown error');
     }
 
-    return products
+    return products;
 };
-
-const getProductSellsDetails = async (idinvearts: number) => {
-    let product;
-    try {
-        const getProduct = await api.get(`/api/product/sells/byid?idinvearts=${idinvearts}`);
-        product = getProduct.data.product;
-    } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
-    }
-
-    return product;
-}
-
-const getProductSellsDetailsBycvefamilia = async (cvefamilia: number) => {
-    let product;
-    try {
-        const getProduct = await api.get(`/api/product/sells/bycvefamilia?cvefamilia=${cvefamilia}`);
-        product = getProduct.data.product;
-    } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
-    }
-
-    return product;
-}
 
 const getUnits = async () => {
 
@@ -62,12 +38,43 @@ const getUnits = async () => {
 
 }
 
+interface getProductByEnlacemobInterface {
+    idinvearts: number;
+    idinveclas: number;
+    capa: string;
+}
+
+const getProductByEnlacemob = async ({ idinvearts, idinveclas, capa }: getProductByEnlacemobInterface) => {
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/sells/byenlacemob?idinvearts=${idinvearts}&idinveclas=${idinveclas}&capa=${capa}`);
+        product = getProduct.data.product;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return product;
+}
+
+const getTotalProductsSells = async (cvefamilia: number) => {
+
+    let total;
+    try {
+        const getProduct = await api.get(`/api/product/sells/total?cvefamilia=${cvefamilia}`);
+        total = getProduct.data.total;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return total;
+}
+
 
 
 export {
     getProductsSells,
-    getProductSellsDetails,
-    getProductSellsDetailsBycvefamilia,
     getProductsSellsFromFamily,
-    getUnits
+    getUnits,
+    getProductByEnlacemob,
+    getTotalProductsSells
 }

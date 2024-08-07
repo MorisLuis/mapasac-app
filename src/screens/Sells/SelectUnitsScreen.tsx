@@ -36,7 +36,7 @@ export const SelectUnitScreen = ({
     };
 
     const handleSave = () => {
-        navigation.navigate('sellsDataScreen', {
+        navigation.navigate('SellsDataScreen', {
             units: {
                 unidad: value?.unidad as number,
                 descripcio: value?.descripcio?.trim() as string

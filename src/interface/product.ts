@@ -26,6 +26,9 @@ export default interface ProductInterface {
     // The price of the product.
     precio1: number;
 
+    precio: number;
+
+
     // The amount added to the stock
     cantidad?: number,
 
@@ -36,6 +39,7 @@ export default interface ProductInterface {
 
     // The name of the 'unidad'
     unidad_nombre?: string
+    
 }
 
 export interface ProductInterfaceBag extends ProductInterface {

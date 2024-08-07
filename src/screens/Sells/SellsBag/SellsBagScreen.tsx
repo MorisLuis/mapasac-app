@@ -1,35 +1,35 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
 import { Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
+import { inputStyles } from '../../../theme/UI/inputs';
+import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
 import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
 import ModalDecision from '../../../components/Modals/ModalDecision';
-import { useNavigation } from '@react-navigation/native';
-import { ProductInterfaceBag } from '../../../interface/product';
-import { inputStyles } from '../../../theme/UI/inputs';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useTheme } from '../../../context/ThemeContext';
-import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
-import { deleteAllProductsInBag, getBagInventory } from '../../../services/bag';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import { getSearchProductInBack } from '../../../services/searchs';
 import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
 import DotLoader from '../../../components/Ui/DotLaoder';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../../../context/ThemeContext';
+import { deleteAllProductsInBag, getBagInventory } from '../../../services/bag';
+import { getSearchProductInBack } from '../../../services/searchs';
 import Toast from 'react-native-toast-message';
+import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
+import { ProductSellsInterfaceBag } from '../../../interface/productSells';
+import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
 
-export const InventoryBagScreen = () => {
+export const SellsBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProduct, numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
+    const { deleteProductSell, numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
+
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
     const inputRef = useRef<TextInput>(null);
 
-
-    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false)
@@ -37,19 +37,18 @@ export const InventoryBagScreen = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loadingCleanBag, setLoadingCleanBag] = useState(false)
 
-
     const onPostInventary = async () => {
         goBack();
-        navigate("confirmationScreen");
+        navigate("[Sells] - confirmationScreen");
     };
 
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
 
         if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
+            setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
             setPage(page + 1);
         } else {
             setHasMore(false);
@@ -62,7 +61,7 @@ export const InventoryBagScreen = () => {
     const refreshBags = async () => {
         setIsRefreshing(true);
         setPage(1);
-        const newBags = await getBagInventory({ page: 1, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
         setBags(newBags || []);
         setHasMore(true);
         setIsRefreshing(false);
@@ -70,9 +69,9 @@ export const InventoryBagScreen = () => {
 
     const handleCleanTemporal = () => {
         setLoadingCleanBag(true)
-        deleteAllProductsInBag({opcion: 0});
+        deleteAllProductsInBag({ opcion: 2, mercado: true });
         resetAfterPost()
-        setPage(1); 
+        setPage(1);
         setLoadingCleanBag(false);
         goBack();
         setOpenModalDecision(false);
@@ -84,8 +83,8 @@ export const InventoryBagScreen = () => {
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
-            await deleteProduct(productId);
-            setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
+            await deleteProductSell(productId);
+            setBags((prevBags: ProductSellsInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
         }
 
         Alert.alert(
@@ -104,14 +103,14 @@ export const InventoryBagScreen = () => {
             setPage(1);
             loadBags();
         } else {
-            const products = await getSearchProductInBack({ searchTerm: text, opcion: 0 });
+            const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
             setBags(products || []);
             setPage(1);
         }
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
-        <ProductInventoryCard
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
+        <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
             showDelete
@@ -128,7 +127,7 @@ export const InventoryBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (numberOfItems > 0 && dataUploaded) &&
+                    (numberOfItemsSells > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -191,7 +190,7 @@ export const InventoryBagScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
                             onPress={onPostInventary}
                         >
-                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon}/>
+                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon} />
                             <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
                         </TouchableOpacity>
                     </View>

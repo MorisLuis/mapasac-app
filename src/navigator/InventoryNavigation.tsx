@@ -59,8 +59,6 @@ export const InventoryNavigation = () => {
 
     const stackScreens = useMemo(() => (
         <>
-
-
             <Stack.Screen
                 name="ScanneNavigation"
                 component={ScannerNavigation}
@@ -72,7 +70,6 @@ export const InventoryNavigation = () => {
                 component={CodebarUpdateNavigation}
                 options={{ presentation: "modal", headerShown: false }}
             />
-
 
             <Stack.Screen
                 name="bagInventoryScreen"

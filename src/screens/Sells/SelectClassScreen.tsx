@@ -4,14 +4,14 @@ import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
-import { getProductSellsDetailsBycvefamilia, getProductsSellsFromFamily, getUnits } from '../../services/productsSells';
-import ClassInterface, { ClassData } from '../../interface/class';
+import { getProductsSellsFromFamily } from '../../services/productsSells';
+import ClassInterface from '../../interface/class';
 
 interface SelectAmountScreenInterface {
     route?: {
         params: {
-            valueDefault: ClassData;
-            cvefamilia?: number
+            valueDefault: ClassInterface;
+            cvefamilia?: number;
         };
     };
 }
@@ -24,33 +24,37 @@ export const SelectClassScreen = ({
     const navigation = useNavigation<any>();
 
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<ClassData>(valueDefault as ClassData);
+    const [value, setValue] = useState<ClassInterface>(valueDefault as ClassInterface);
     const [classes, setClasses] = useState<ClassInterface[]>()
-    const [optionSelected, setOptionSelected] = useState<ClassData>()
+    const [optionSelected, setOptionSelected] = useState<ClassInterface>()
     const buttondisabled = false;
 
-    const handleSelectOption = (value: ClassData) => {
+    const handleSelectOption = (value: ClassInterface) => {
         setValue({
             rcapa: value.rcapa,
             ridinvearts: value.ridinvearts,
-            rproducto: value.rproducto
+            rproducto: value.rproducto,
+            ridinveclas: value.ridinveclas,
+            clase: value.clase
         });
         setOptionSelected({
             rcapa: value?.rcapa?.trim(),
             ridinvearts: value.ridinvearts,
-            rproducto: value.rproducto
+            rproducto: value.rproducto,
+            ridinveclas: value.ridinveclas,
+            clase: value.clase
         })
     };
 
     const handleSave = () => {
-        navigation.navigate('sellsDataScreen', { typeClass: value });
+        navigation.navigate('SellsDataScreen', { typeClass: value, productSellData: { idinvearts: value.ridinvearts, capa: value.rcapa, idinveclas: value.ridinveclas } });
     };
 
-    const renderItem = ({ item }: { item: ClassData }) => {
-        const sameValue = item.rcapa ? item.rcapa.trim() === optionSelected?.rcapa : item.ridinvearts === optionSelected?.ridinvearts
+    const renderItem = ({ item }: { item: ClassInterface }) => {
+        const sameValue = (item.rcapa && item.rcapa.trim() !== "") ? item.rcapa.trim() === optionSelected?.rcapa.trim() : item.ridinveclas === optionSelected?.ridinveclas;
         return (
             <TouchableOpacity style={[SelectScreenTheme(theme, typeTheme).optionsContainer]} onPress={() => handleSelectOption(item)}>
-                <Text style={SelectScreenTheme(theme, typeTheme).optionText}>{item?.rcapa?.trim()}</Text>
+                <Text style={SelectScreenTheme(theme, typeTheme).optionText}>{(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}</Text>
                 <View style={[sameValue ? SelectScreenTheme(theme, typeTheme).optionCheckActive : SelectScreenTheme(theme, typeTheme).optionCheck]}></View>
             </TouchableOpacity>
         )
@@ -69,13 +73,12 @@ export const SelectClassScreen = ({
     useEffect(() => {
         const handleGetClasess = async () => {
             const classesData = await getProductsSellsFromFamily(cvefamilia as number);
-            //console.log({classesData: JSON.stringify(classesData, null, 2)})
             setClasses(classesData)
         };
         handleGetClasess();
     }, []);
 
-    console.log({optionSelected})
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -90,7 +93,7 @@ export const SelectClassScreen = ({
                 <FlatList
                     data={classes}
                     renderItem={renderItem}
-                    keyExtractor={product => `${product.rcapa ? product.rcapa : product.ridinveclas}`}
+                    keyExtractor={product => `${(product.rcapa && product.rcapa.trim() !== "") ? product.rcapa : product.ridinveclas}`}
                     onEndReachedThreshold={0}
                 />
 

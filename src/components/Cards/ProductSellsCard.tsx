@@ -1,42 +1,64 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { styles } from '../../theme/UI/cardsStyles';
 import { useTheme } from '../../context/ThemeContext';
+import { quantityFormat } from '../../utils/quantityFormat';
 import { ProductSellsInterface } from '../../interface/productSells';
-import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
-import { useNavigation } from '@react-navigation/native';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
+    showDelete?: boolean;
+    onDelete?: (product: ProductSellsInterface) => void;
+    onClick?: () => void
 }
 
 export const ProductSellsCard = ({
     product,
+    showDelete,
+    onDelete,
+    onClick
 }: ProductSellsCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const navigation = useNavigation<any>();
-
-    const handleSelectProduct = async () => {
-        navigation.navigate('sellsDataScreen', { cvefamilia: product.cvefamilia, descripcio: product.descripcio, idinvearts: product.ridinvearts })
-    }
 
     return (
-        <TouchableOpacity
-            onPress={handleSelectProduct}
-            style={ProductSellsCardTheme(theme, typeTheme).ProductSellsCardTheme}
-        >
-            <View style={ProductSellsCardTheme(theme, typeTheme).shadowImage}>
+        <TouchableOpacity style={styles(theme, typeTheme).productInventoryCard} onPress={onClick}>
+            <View style={styles(theme).productInventoryCard__data}>
+                <View style={styles(theme).information}>
+                    <View>
+                        <Text style={styles(theme).description}>{product.producto}</Text>
+                    </View>
+
+                    <View style={styles(theme).dataItem}>
+                        <Text style={styles(theme).label}>Clase:</Text>
+                        <Text style={styles(theme).dataItemText}>{product?.clase}</Text>
+                    </View>
+
+                    {
+                        showDelete && <Text style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
+                    }
+                </View>
+
+                <View style={styles(theme).quantity}>
+                    {
+                        product?.cantidad &&
+                        <Text
+                            style={styles(theme).quantity_value}
+                            numberOfLines={1}
+                            ellipsizeMode="tail"
+                        >
+                            {quantityFormat(product?.cantidad)}
+                        </Text>
+                    }
+                    <Text
+                        style={styles(theme).quantity_unity}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {product.unidad_nombre?.trim()}
+                    </Text>
+                </View>
             </View>
-
-            {
-                product.imagen ? (
-                    <Image source={{ uri: `data:image/png;base64,${product.imagen}` }} style={ProductSellsCardTheme(theme, typeTheme).image} />
-                )
-                    :
-                    <View style={ProductSellsCardTheme(theme, typeTheme).notImage}></View>
-            }
-
-            <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
         </TouchableOpacity>
     )
 }

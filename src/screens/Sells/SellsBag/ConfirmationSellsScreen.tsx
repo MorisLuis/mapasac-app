@@ -1,36 +1,34 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import { ProductInventoryConfirmationCard } from '../../../components/Cards/ProductInventoryConfirmationCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { AuthContext } from '../../../context/auth/AuthContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
-import ProductInterface, { ProductInterfaceBag } from '../../../interface/product';
 import { getBagInventory } from '../../../services/bag';
-import { postInventory } from '../../../services/inventory';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
+import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
+import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
+import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
+import { postSells } from '../../../services/sells';
 
-export const ConfirmationScreen = () => {
-    const { getTypeOfMovementsName } = useContext(AuthContext);
-    const { numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
+export const ConfirmationSellsScreen = () => {
+    const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<any>();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false)
 
-    const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
-        <ProductInventoryConfirmationCard
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
+        <ProductSellsConfirmationCard
             product={item}
-            onClick={() => navigate('[Modal] - editProductInBag', { product: item })}
+            onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
             disabled={createInventaryLoading}
         />
     ), [createInventaryLoading]);
@@ -38,11 +36,11 @@ export const ConfirmationScreen = () => {
     const onPostInventory = async () => {
         setCreateInventaryLoading(true);
         try {
-            await postInventory();
+            await postSells();
             resetAfterPost();
             setTimeout(() => {
                 setCreateInventaryLoading(false);
-                navigate('succesMessageScreen');
+                navigate('[Sells] - succesMessageScreen');
             }, 500);
         } catch (error: any) {
             Toast.show({
@@ -58,10 +56,10 @@ export const ConfirmationScreen = () => {
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
 
         if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
+            setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
             setPage(page + 1);
         } else {
             setHasMore(false);
@@ -74,7 +72,7 @@ export const ConfirmationScreen = () => {
         useCallback(() => {
             const refreshBags = async () => {
                 setIsLoading(true);
-                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
+                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2 , mercado: true });
                 setBags(refreshedBags);
                 setPage(2);
                 setIsLoading(false);
@@ -101,13 +99,13 @@ export const ConfirmationScreen = () => {
                                 <>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
+                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItemsSells}</Text>
                                             <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
                                         </View>
                                         <View
                                             style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
                                             <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</Text>
+                                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>Venta</Text>
                                         </View>
                                     </View>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
