@@ -22,7 +22,6 @@ type ProductSellData = {
     idinveclas: number
 }
 
-
 interface SellsDataScreenInterface {
     route?: {
         params: {
@@ -36,7 +35,7 @@ interface SellsDataScreenInterface {
             productSellData?: ProductSellData;
         };
     };
-}
+};
 
 export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const { pieces, price, typeClass, units, cvefamilia, productSellData, descripcio, image } = route?.params ?? {};
@@ -46,8 +45,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const iconColor = typeTheme === 'dark' ? "white" : theme.text_color_light;
     const navigation = useNavigation<any>();
 
-    const [title, setTitle] = useState<string>()
-    const [imageValue, setImageValue] = useState<string>()
+    const [title, setTitle] = useState<string>();
+    const [imageValue, setImageValue] = useState<string>();
     const [classType, setClassType] = useState<ClassInterface>();
     const [piecesValue, setPiecesValue] = useState<string>();
     const [priceValue, setPriceValue] = useState<string>();
@@ -55,8 +54,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const [classValue, setClassValue] = useState<number>();
     const [capaValue, setCapaValue] = useState<string>();
     const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
-    const [idinveartsValue, setIdinveartsValue] = useState<number>()
-    const [totalClasses, setTotalClasses] = useState<number>()
+    const [idinveartsValue, setIdinveartsValue] = useState<number>();
+    const [totalClasses, setTotalClasses] = useState<number>();
 
     const continueWithoutClass = totalClasses !== undefined && totalClasses !== null && totalClasses < 1;
     const buttondisabled = continueWithoutClass ? !(!classValue && unitValue && priceValue && piecesValue) : !(classValue && unitValue && priceValue && piecesValue)
@@ -87,8 +86,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetTotal = async () => {
         if (!cvefamilia) return;
-        const total : string = await getTotalProductsSells(cvefamilia);
-        console.log({total})
+        const total: string = await getTotalProductsSells(cvefamilia);
+        console.log({ total })
 
         if (total === "1") {
             const classesData = await getProductsSellsFromFamily(cvefamilia);
@@ -112,7 +111,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             });
 
             handleGetProduct({ idinvearts, capa, idinveclas });
-        } else if ( total === "0" ) {
+        } else if (total === "0") {
             const product = await getIdinveartsProduct(cvefamilia);
             setIdinveartsValue(product.idinvearts)
         }
@@ -208,6 +207,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
         handleGoToClass()
     }, [cvefamiliaValue, totalClasses])
+
+    console.log({unitValue})
 
     return (
         <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>

@@ -35,7 +35,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     },
     label: {
         fontWeight: "bold",
-        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
         fontSize: globalFont.font_normal,
         color: theme.text_color
     },

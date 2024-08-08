@@ -4,6 +4,7 @@ import { styles } from '../../theme/UI/cardsStyles';
 import { useTheme } from '../../context/ThemeContext';
 import { quantityFormat } from '../../utils/quantityFormat';
 import { ProductSellsInterface } from '../../interface/productSells';
+import { format } from '../../utils/currency';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -29,10 +30,24 @@ export const ProductSellsCard = ({
                         <Text style={styles(theme).description}>{product.producto}</Text>
                     </View>
 
+                    {
+                        product?.capa?.trim() !== "" ?
+                            <View style={styles(theme).dataItem}>
+                                <Text style={styles(theme).label}>Clase:</Text>
+                                <Text style={styles(theme).dataItemText}>{product?.capa}</Text>
+                            </View>
+                            :
+                            <View style={styles(theme).dataItem}>
+                                <Text style={styles(theme).label}>Clase:</Text>
+                                <Text style={styles(theme).dataItemText}>{product?.clase}</Text>
+                            </View>
+                    }
+
                     <View style={styles(theme).dataItem}>
-                        <Text style={styles(theme).label}>Clase:</Text>
-                        <Text style={styles(theme).dataItemText}>{product?.clase}</Text>
+                        <Text style={styles(theme).label}>Precio:</Text>
+                        <Text style={styles(theme).dataItemText}>{format(parseInt(product?.precio as string))}</Text>
                     </View>
+                    
 
                     {
                         showDelete && <Text style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>

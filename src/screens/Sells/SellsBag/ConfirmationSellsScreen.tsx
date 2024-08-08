@@ -5,13 +5,14 @@ import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import DotLoader from '../../../components/Ui/DotLaoder';
-import { getBagInventory } from '../../../services/bag';
+import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
 import { postSells } from '../../../services/sells';
+import { format } from '../../../utils/currency';
 
 export const ConfirmationSellsScreen = () => {
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
@@ -23,7 +24,8 @@ export const ConfirmationSellsScreen = () => {
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [dataUploaded, setDataUploaded] = useState(false)
+    const [dataUploaded, setDataUploaded] = useState(false);
+    const [totalPrice, setTotalPrice] = useState<number>()
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsConfirmationCard
@@ -80,6 +82,12 @@ export const ConfirmationSellsScreen = () => {
                 setDataUploaded(true)
             };
 
+            const handleGetPrice = async () => {
+                const totalprice : string = await getTotalPriceBag({opcion: 2, mercado: true});
+                setTotalPrice(parseInt(totalprice))
+            }
+
+            handleGetPrice()
             refreshBags();
         }, [])
     );
@@ -106,6 +114,11 @@ export const ConfirmationSellsScreen = () => {
                                             style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
                                             <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
                                             <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>Venta</Text>
+                                        </View>
+                                        <View
+                                            style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
+                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</Text>
+                                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
                                         </View>
                                     </View>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>

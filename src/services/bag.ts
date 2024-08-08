@@ -132,6 +132,21 @@ const getTotalProductsInBag = async ({opcion, mercado} : getTotalProductsInBagIn
 
 }
 
+const getTotalPriceBag = async ({opcion, mercado} : getTotalProductsInBagInterface) => {
+    try {
+        if (mercado) {
+            const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
+            return data.total
+        } else {
+            //const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
+            //return data.total
+        }
+
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+}
+
 
 
 export {
@@ -141,4 +156,5 @@ export {
     deleteProductInBag,
     deleteAllProductsInBag,
     getTotalProductsInBag,
+    getTotalPriceBag
 }

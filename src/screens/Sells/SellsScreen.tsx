@@ -44,7 +44,6 @@ export const SellsScreen = () => {
                                 <Text style={{ color: theme.text_color, fontSize: 20 }}>Ventas</Text>
                             </View>
 
-
                             <FlatList
                                 data={products}
                                 numColumns={2}

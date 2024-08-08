@@ -5,6 +5,7 @@ import ProductInterface from '../../interface/product.js';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductSellsInterface } from '../../interface/productSells';
+import { format } from '../../utils/currency';
 
 interface ProductSellsConfirmationCardInterface {
     product: ProductSellsInterface;
@@ -37,6 +38,12 @@ export const ProductSellsConfirmationCard = ({
                     <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
                         <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Piezas:</Text>
                         <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{product?.cantidad} / {product.unidad_nombre}</Text>
+                    </View>
+
+
+                    <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Precio:</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{format(parseInt(product?.precio as string))}</Text>
                     </View>
                 </View>
 

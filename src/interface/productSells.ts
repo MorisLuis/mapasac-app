@@ -24,6 +24,8 @@ export interface ProductSellsInterface {
     idenlacemob?: number;
 
     capa?: string;
+
+    precio?: string;
 }
 
 // Function: 

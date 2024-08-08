@@ -7,7 +7,6 @@ import { SettingsContext } from '../context/settings/SettingsContext';
 
 // Screens
 import { SearchProductScreen } from '../screens/Inventory/SearchProductScreen';
-import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { SearchCodebarWithInput } from '../screens/Inventory/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Inventory/Modals/ScannerResult';
@@ -20,6 +19,7 @@ import { ScannerNavigation } from './ScannerNavigation';
 import { ProductDetailsPageEdit } from '../screens/Inventory/ProductDetailsPageEdit';
 import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
+import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 
 export type InventoryNavigationStackParamList = {
     // Navigation

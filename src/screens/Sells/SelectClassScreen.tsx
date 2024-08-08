@@ -25,9 +25,11 @@ export const SelectClassScreen = ({
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<ClassInterface>(valueDefault as ClassInterface);
-    const [classes, setClasses] = useState<ClassInterface[]>()
-    const [optionSelected, setOptionSelected] = useState<ClassInterface>()
+    const [classes, setClasses] = useState<ClassInterface[]>();
+    const [optionSelected, setOptionSelected] = useState<ClassInterface>();
     const buttondisabled = false;
+    const isCapa = classes?.[0]?.rcapa?.trim() !== "";
+    console.log({isCapa})
 
     const handleSelectOption = (value: ClassInterface) => {
         setValue({
@@ -79,7 +81,7 @@ export const SelectClassScreen = ({
     }, []);
 
 
-    return (
+    return classes ? (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1 }}
@@ -87,7 +89,7 @@ export const SelectClassScreen = ({
         >
             <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                 <View style={SelectScreenTheme(theme, typeTheme).header}>
-                    <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona la unidad.</Text>
+                    <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona {isCapa ? "la capa" : "el tipo"}.</Text>
                 </View>
 
                 <FlatList
@@ -108,5 +110,9 @@ export const SelectClassScreen = ({
                 </View>
             </View>
         </KeyboardAvoidingView>
-    );
+    )
+    :
+    <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
+        <Text>Cargando...</Text>
+    </View>
 };
