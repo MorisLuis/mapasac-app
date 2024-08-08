@@ -7,6 +7,8 @@ interface ContextProps {
     editProduct: ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => void;
     resetAfterPost: () => void;
     numberOfItems: number;
+
+    handleUpdateSummary: () => void;
 }
 
 export const InventoryBagContext = createContext({} as ContextProps)

@@ -11,6 +11,7 @@ import { CameraPermission } from '../../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings } from './cameraSettings';
 import { identifyBarcodeType } from '../../../utils/identifyBarcodeType';
+import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -23,6 +24,8 @@ export type OnReadCodeData = {
 const CameraTest: React.FC = () => {
 
     const { handleCameraAvailable, cameraAvailable, startScanning } = useContext(SettingsContext);
+    const { handleUpdateSummary } = useContext(InventoryBagContext);
+
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
@@ -67,6 +70,9 @@ const CameraTest: React.FC = () => {
 
     useEffect(() => {
         requestCameraPermission();
+
+        handleUpdateSummary()
+        
         return () => {
             handleCameraAvailable(false);
         };

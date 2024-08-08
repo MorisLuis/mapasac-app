@@ -8,6 +8,7 @@ interface ContextProps {
     editProductSell: ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => void;
     resetAfterPost: () => void;
     numberOfItemsSells: number;
+    handleUpdateSummary: () => void;
 }
 
 export const SellsBagContext = createContext({} as ContextProps)

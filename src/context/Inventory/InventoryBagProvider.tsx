@@ -20,6 +20,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const handleUpdateSummary = async () => {
         try {
             const total = await getTotalProductsInBag({opcion: 0});
+            
             const numberOfItems = total;
             const orderSummary = {
                 numberOfItems
@@ -79,7 +80,8 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             addProduct,
             deleteProduct,
             editProduct,
-            resetAfterPost
+            resetAfterPost,
+            handleUpdateSummary
         }}>
             {children}
         </InventoryBagContext.Provider>

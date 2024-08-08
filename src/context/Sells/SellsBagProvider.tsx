@@ -18,6 +18,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const [productAdded, setProductAdded] = useState(false);
 
     const handleUpdateSummary = async () => {
+        console.log("summary")
         try {
             const total = await getTotalProductsInBag({opcion: 2, mercado: true});
             const numberOfItemsSells = total;
@@ -73,13 +74,18 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         handleUpdateSummary();
     }, [productAdded, state.numberOfItemsSells]);
 
+    useEffect(() => {
+        handleUpdateSummary();
+    }, [])
+
     return (
         <SellsBagContext.Provider value={{
             ...state,
             addProductSell,
             deleteProductSell,
             editProductSell,
-            resetAfterPost
+            resetAfterPost,
+            handleUpdateSummary
         }}>
             {children}
         </SellsBagContext.Provider>

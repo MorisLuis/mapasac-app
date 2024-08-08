@@ -1,92 +1,94 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
 import { Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
+import { inputStyles } from '../../../theme/UI/inputs';
+import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
 import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
 import ModalDecision from '../../../components/Modals/ModalDecision';
-import { useNavigation } from '@react-navigation/native';
-import { ProductInterfaceBag } from '../../../interface/product';
-import { inputStyles } from '../../../theme/UI/inputs';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useTheme } from '../../../context/ThemeContext';
-import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
-import { deleteAllProductsInBag, getBagInventory } from '../../../services/bag';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import { getSearchProductInBack } from '../../../services/searchs';
-import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
 import DotLoader from '../../../components/Ui/DotLaoder';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../../../context/ThemeContext';
+import { deleteAllProductsInBag, getBagInventory } from '../../../services/bag';
+import { getSearchProductInBack } from '../../../services/searchs';
 import Toast from 'react-native-toast-message';
+import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
+import { ProductSellsInterfaceBag } from '../../../interface/productSells';
+import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
 
-export const InventoryBagScreen = () => {
+
+export const SellsBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProduct, numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
+    const { deleteProductSell, numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
+
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
     const inputRef = useRef<TextInput>(null);
 
-
-    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [dataUploaded, setDataUploaded] = useState(false)
+    const [dataUploaded, setDataUploaded] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [loadingCleanBag, setLoadingCleanBag] = useState(false)
-
+    const [loadingCleanBag, setLoadingCleanBag] = useState(false);
 
     const onPostInventary = async () => {
         goBack();
-        navigate("confirmationScreen");
+        navigate("[Sells] - confirmationScreen");
     };
 
     const loadBags = async () => {
-        if (isLoading || !hasMore) return;
+        if (searchText !== "" || isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5,  option: 0 });
-
-        if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
-            setPage(page + 1);
-        } else {
-            setHasMore(false);
+        try {
+            const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
+            if (newBags && newBags.length > 0) {
+                setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
+                setPage(prevPage => prevPage + 1);
+            } else {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error('Error loading bags:', error);
+        } finally {
+            setIsLoading(false);
+            setDataUploaded(true);
         }
-
-        setIsLoading(false);
-        setDataUploaded(true)
     };
 
-    const refreshBags = async () => {
-        setIsRefreshing(true);
-        setPage(1);
-        const newBags = await getBagInventory({ page: 1, limit: 5,  option: 0 });
-        setBags(newBags || []);
-        setHasMore(true);
-        setIsRefreshing(false);
-    };
-
-    const handleCleanTemporal = () => {
-        setLoadingCleanBag(true)
-        deleteAllProductsInBag({opcion: 0});
-        resetAfterPost()
-        setPage(1); 
-        setLoadingCleanBag(false);
-        goBack();
-        setOpenModalDecision(false);
-        Toast.show({
-            type: 'tomatoToast',
-            text1: 'Se limpio el inventario!'
-        })
+    const handleCleanTemporal = async () => {
+        setLoadingCleanBag(true);
+        try {
+            await deleteAllProductsInBag({ opcion: 2, mercado: true });
+            resetAfterPost();
+            setPage(1);
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se limpió el inventario!',
+            });
+        } catch (error) {
+            console.error('Error cleaning inventory:', error);
+        } finally {
+            setLoadingCleanBag(false);
+            goBack();
+            setOpenModalDecision(false);
+        }
     };
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
-            await deleteProduct(productId);
-            setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
-        }
+            try {
+                await deleteProductSell(productId);
+                setBags(prevBags => prevBags.filter(bag => bag.idenlacemob !== productId));
+            } catch (error) {
+                console.error('Error deleting product:', error);
+            }
+        };
 
         Alert.alert(
             'Seguro de eliminar este producto?',
@@ -104,14 +106,20 @@ export const InventoryBagScreen = () => {
             setPage(1);
             loadBags();
         } else {
-            const products = await getSearchProductInBack({ searchTerm: text, opcion: 0 });
-            setBags(products || []);
-            setPage(1);
+            try {
+                const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
+                setBags(products || []);
+                setPage(1);
+            } catch (error) {
+                console.error('Error searching products:', error);
+            }
         }
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
-        <ProductInventoryCard
+    const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
+
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
+        <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
             showDelete
@@ -127,8 +135,7 @@ export const InventoryBagScreen = () => {
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
-                {
-                    (numberOfItems > 0 && dataUploaded) &&
+                {(numberOfItemsSells > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -140,18 +147,24 @@ export const InventoryBagScreen = () => {
                                     fontSize: globalFont.font_normal,
                                     color: theme.text_color
                                 }}
-
                                 value={searchText}
                                 selectionColor={theme.text_color}
-                                onChangeText={handleSearch}
+                                onChangeText={debouncedSearch}
                             />
                         </View>
                     </TouchableWithoutFeedback>
                 }
 
                 {/* PRODUCTS */}
-                {
-                    (bags?.length <= 0 && dataUploaded) ?
+                <FlatList
+                    style={InventoryBagScreenStyles(theme, typeTheme).content}
+                    data={bags}
+                    renderItem={renderItem}
+                    keyExtractor={product => `${product.idenlacemob}`}
+                    onEndReached={loadBags}
+                    onEndReachedThreshold={0.5}
+                    refreshing={isRefreshing}
+                    ListEmptyComponent={dataUploaded && bags.length === 0 ? (
                         <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
                             <EmptyMessageCard
                                 title="No hay productos con ese nombre."
@@ -159,27 +172,12 @@ export const InventoryBagScreen = () => {
                                 icon='sad-outline'
                             />
                         </View>
-                        :
-                        (bags.length > 0 && dataUploaded) ?
-                            <FlatList
-                                style={InventoryBagScreenStyles(theme, typeTheme).content}
-                                data={bags}
-                                renderItem={renderItem}
-                                keyExtractor={product => `${product.idenlacemob}`}
-
-                                onEndReached={loadBags}
-                                onEndReachedThreshold={0.5}
-                                refreshing={isRefreshing}
-                                //onRefresh={refreshBags}
-                            />
-                            :
-                            <InventoryBagSkeleton />
-
-                }
+                    ) : null}
+                    ListFooterComponent={isLoading ? <DotLoader /> : null}
+                />
 
                 {/* FOOTER */}
-                {
-                    (bags.length > 0 && dataUploaded) &&
+                {(bags.length > 0 && dataUploaded) &&
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                         <TouchableOpacity
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
@@ -191,7 +189,7 @@ export const InventoryBagScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
                             onPress={onPostInventary}
                         >
-                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon}/>
+                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon} />
                             <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
                         </TouchableOpacity>
                     </View>
@@ -219,5 +217,21 @@ export const InventoryBagScreen = () => {
                 </TouchableOpacity>
             </ModalDecision>
         </>
-    )
+    );
 };
+
+
+// Definición del tipo para la función debounce
+type DebouncedFunction<T extends (...args: any[]) => void> = (...args: Parameters<T>) => void;
+
+// Función debounce con tipado en TypeScript
+function debounce<T extends (...args: any[]) => void>(func: T, delay: number): DebouncedFunction<T> {
+    let timer: NodeJS.Timeout;
+
+    return function(...args: Parameters<T>) {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => func(...args), delay);
+    } as DebouncedFunction<T>;
+}

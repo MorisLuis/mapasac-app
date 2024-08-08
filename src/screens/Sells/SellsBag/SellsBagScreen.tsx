@@ -42,7 +42,9 @@ export const SellsBagScreen = () => {
         navigate("[Sells] - confirmationScreen");
     };
 
+
     const loadBags = async () => {
+        if(searchText !== "") return;
         if (isLoading || !hasMore) return;
         setIsLoading(true);
         const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
@@ -58,14 +60,6 @@ export const SellsBagScreen = () => {
         setDataUploaded(true)
     };
 
-    const refreshBags = async () => {
-        setIsRefreshing(true);
-        setPage(1);
-        const newBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
-        setBags(newBags || []);
-        setHasMore(true);
-        setIsRefreshing(false);
-    };
 
     const handleCleanTemporal = () => {
         setLoadingCleanBag(true)
@@ -139,7 +133,6 @@ export const SellsBagScreen = () => {
                                     fontSize: globalFont.font_normal,
                                     color: theme.text_color
                                 }}
-
                                 value={searchText}
                                 selectionColor={theme.text_color}
                                 onChangeText={handleSearch}
@@ -169,7 +162,6 @@ export const SellsBagScreen = () => {
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
                                 refreshing={isRefreshing}
-                                //onRefresh={refreshBags}
                             />
                             :
                             <InventoryBagSkeleton />

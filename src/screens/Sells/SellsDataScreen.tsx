@@ -4,18 +4,17 @@ import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-nati
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { globalFont, globalStyles } from '../../theme/appTheme';
+import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { getProductByEnlacemob, getProductsSellsFromFamily, getTotalProductsSells } from '../../services/productsSells';
+import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalProductsSells } from '../../services/productsSells';
 import ProductInterface from '../../interface/product';
 import { UnitData } from '../../interface/units';
 import ClassInterface from '../../interface/class';
 import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 
 type ProductSellData = {
     idinvearts: number,
@@ -56,9 +55,12 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const [classValue, setClassValue] = useState<number>();
     const [capaValue, setCapaValue] = useState<string>();
     const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
+    const [idinveartsValue, setIdinveartsValue] = useState<number>()
     const [totalClasses, setTotalClasses] = useState<number>()
 
-    const buttondisabled = !(classValue && unitValue && priceValue && piecesValue);
+    const continueWithoutClass = totalClasses !== undefined && totalClasses !== null && totalClasses < 1;
+    const buttondisabled = continueWithoutClass ? !(!classValue && unitValue && priceValue && piecesValue) : !(classValue && unitValue && priceValue && piecesValue)
+
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: {
             pieces: pieces,
@@ -70,7 +72,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const onSubmit = () => {
         const bagProduct: EnlacemobInterface = {
-            idinvearts: classType?.ridinvearts as number,
+            idinvearts: classType?.ridinvearts as number || idinveartsValue as number,
             unidad: units?.unidad as number || unitValue?.unidad as number,
             cantidad: parseInt(pieces as string) || parseInt(piecesValue as string),
             precio: parseInt(price as string) || parseInt(priceValue as string),
@@ -85,7 +87,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetTotal = async () => {
         if (!cvefamilia) return;
-        const total = await getTotalProductsSells(cvefamilia)
+        const total : string = await getTotalProductsSells(cvefamilia);
+        console.log({total})
 
         if (total === "1") {
             const classesData = await getProductsSellsFromFamily(cvefamilia);
@@ -109,8 +112,11 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             });
 
             handleGetProduct({ idinvearts, capa, idinveclas });
+        } else if ( total === "0" ) {
+            const product = await getIdinveartsProduct(cvefamilia);
+            setIdinveartsValue(product.idinvearts)
         }
-        setTotalClasses(total)
+        setTotalClasses(parseFloat(total));
     };
 
     const handleGetProduct = async ({ idinvearts, capa, idinveclas }: any) => {
@@ -182,7 +188,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
         handleGetTotal()
 
-    }, [pieces, price, typeClass, units, cvefamilia]);
+    }, [pieces, price, typeClass, units, cvefamilia, image]);
 
     useEffect(() => {
         if (!productSellData) return;
@@ -190,12 +196,25 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
 
+    useEffect(() => {
+        if (classValue) return;
+        if (!cvefamiliaValue) return;
+        if (!totalClasses) return;
+        if (totalClasses <= 1) return;
+
+        const handleGoToClass = () => {
+            navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: classType, cvefamilia: cvefamiliaValue })
+        };
+
+        handleGoToClass()
+    }, [cvefamiliaValue, totalClasses])
+
     return (
         <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
             <View style={SellsDataScreenTheme(theme, typeTheme).imageContainer}>
                 {
-                    image ? (
-                        <Image source={{ uri: `data:image/png;base64,${image}` }} style={SellsDataScreenTheme(theme, typeTheme).image} />
+                    imageValue ? (
+                        <Image source={{ uri: `data:image/png;base64,${imageValue}` }} style={SellsDataScreenTheme(theme, typeTheme).image} />
                     )
                         :
                         <View style={SellsDataScreenTheme(theme, typeTheme).notImage}></View>
@@ -211,7 +230,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 onPress={() => {
                     if (totalClasses && totalClasses > 1) {
                         navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: classType, cvefamilia: cvefamiliaValue })
-                    } else if ( totalClasses && totalClasses < 1 ){
+                    } else if (totalClasses && totalClasses < 1) {
                         Alert.alert(
                             'No tiene clase este producto',
                             '',
@@ -248,7 +267,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
 
             {
-                classType &&
+                (classType || continueWithoutClass) &&
                 <>
                     <TouchableOpacity
                         style={SellsDataScreenTheme(theme, typeTheme).inputContainer}

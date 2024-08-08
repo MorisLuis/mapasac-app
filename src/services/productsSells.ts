@@ -69,12 +69,23 @@ const getTotalProductsSells = async (cvefamilia: number) => {
     return total;
 }
 
+const getIdinveartsProduct = async (cvefamilia: number) => {
+    let product;
+    try {
+        const getProduct = await api.get(`/api/product/sells/getidinvearts?cvefamilia=${cvefamilia}`);
+        product = getProduct.data.product;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
 
+    return product;
+}
 
 export {
     getProductsSells,
     getProductsSellsFromFamily,
     getUnits,
     getProductByEnlacemob,
-    getTotalProductsSells
+    getTotalProductsSells,
+    getIdinveartsProduct
 }

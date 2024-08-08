@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { getProductsSells } from '../../services/productsSells';
@@ -6,6 +6,7 @@ import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquar
 import { ProductSellsInterface } from '../../interface/productSells';
 import { globalStyles } from '../../theme/appTheme';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 
 export const SellsScreen = () => {
@@ -15,6 +16,7 @@ export const SellsScreen = () => {
 
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
     const [loading, setLoading] = useState(true);
+    const { handleUpdateSummary } = useContext(SellsBagContext);
 
     useEffect(() => {
         const handleGetProducts = async () => {
@@ -23,6 +25,8 @@ export const SellsScreen = () => {
             setLoading(false);
         };
         handleGetProducts();
+
+        handleUpdateSummary()
     }, []);
 
     const renderItem = ({ item }: { item: ProductSellsInterface }) => (
