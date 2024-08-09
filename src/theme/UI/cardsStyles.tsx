@@ -291,7 +291,7 @@ export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: 
 
 export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductSellsCardTheme: {
-        flex: 1,
+        flex: 0.5,
         display: "flex",
         position: 'relative'
     },

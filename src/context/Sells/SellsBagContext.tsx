@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { ProductSellsInterface } from "../../interface/productSells";
 import EnlacemobInterface from "../../interface/enlacemob";
 
 interface ContextProps {
@@ -7,7 +6,7 @@ interface ContextProps {
     deleteProductSell: (idenlacemob: number) => void;
     editProductSell: ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => void;
     resetAfterPost: () => void;
-    numberOfItemsSells: number;
+    numberOfItemsSells: string;
     handleUpdateSummary: () => void;
 }
 

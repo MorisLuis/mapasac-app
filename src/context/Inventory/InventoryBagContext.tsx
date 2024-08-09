@@ -6,7 +6,7 @@ interface ContextProps {
     deleteProduct: (idenlacemob: number) => void;
     editProduct: ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => void;
     resetAfterPost: () => void;
-    numberOfItems: number;
+    numberOfItems: string;
 
     handleUpdateSummary: () => void;
 }

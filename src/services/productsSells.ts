@@ -56,11 +56,24 @@ const getProductByEnlacemob = async ({ idinvearts, idinveclas, capa }: getProduc
     return product;
 }
 
-const getTotalProductsSells = async (cvefamilia: number) => {
+const getTotalProductSells = async () => {
 
     let total;
     try {
-        const getProduct = await api.get(`/api/product/sells/total?cvefamilia=${cvefamilia}`);
+        const getProduct = await api.get(`/api/product/sells/total`);
+        total = getProduct.data.total;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return total;
+}
+
+const getTotalClassesSells = async (cvefamilia: number) => {
+
+    let total;
+    try {
+        const getProduct = await api.get(`/api/product/sells/totalclasses?cvefamilia=${cvefamilia}`);
         total = getProduct.data.total;
     } catch (error: any) {
         throw error?.response?.data || new Error('Unknown error');
@@ -83,9 +96,10 @@ const getIdinveartsProduct = async (cvefamilia: number) => {
 
 export {
     getProductsSells,
+    getTotalProductSells,
     getProductsSellsFromFamily,
     getUnits,
     getProductByEnlacemob,
-    getTotalProductsSells,
+    getTotalClassesSells,
     getIdinveartsProduct
 }

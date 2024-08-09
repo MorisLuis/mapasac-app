@@ -58,7 +58,7 @@ export const ConfirmationScreen = () => {
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page, limit: 5, option: 0 });
 
         if (newBags && newBags.length > 0) {
             setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
@@ -86,7 +86,21 @@ export const ConfirmationScreen = () => {
         }, [])
     );
 
-    return (
+    const protectThisPage = parseFloat(numberOfItems) <= 0 && createInventaryLoading === false;
+
+    useFocusEffect(
+        useCallback(() => {
+            const checkAccess = async () => {
+                if (protectThisPage) {
+                    navigate('ScanneNavigation')
+                }
+            };
+            checkAccess();
+            return () => { };
+        }, [protectThisPage])
+    );
+
+    return !protectThisPage ? (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
                 {
@@ -132,5 +146,11 @@ export const ConfirmationScreen = () => {
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-    );
+    )
+        :
+        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+            <View>
+                <Text>Redireccionando...</Text>
+            </View>
+        </SafeAreaView>
 };

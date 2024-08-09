@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
@@ -39,11 +39,14 @@ export const ConfirmationSellsScreen = () => {
         setCreateInventaryLoading(true);
         try {
             await postSells();
-            resetAfterPost();
+            setTimeout(() => {
+                navigate('[Sells] - succesMessageScreen');
+                resetAfterPost();
+            }, 500);
+
             setTimeout(() => {
                 setCreateInventaryLoading(false);
-                navigate('[Sells] - succesMessageScreen');
-            }, 500);
+            }, 750);
         } catch (error: any) {
             Toast.show({
                 type: 'tomatoError',
@@ -74,7 +77,7 @@ export const ConfirmationSellsScreen = () => {
         useCallback(() => {
             const refreshBags = async () => {
                 setIsLoading(true);
-                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2 , mercado: true });
+                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
                 setBags(refreshedBags);
                 setPage(2);
                 setIsLoading(false);
@@ -83,7 +86,7 @@ export const ConfirmationSellsScreen = () => {
             };
 
             const handleGetPrice = async () => {
-                const totalprice : string = await getTotalPriceBag({opcion: 2, mercado: true});
+                const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
                 setTotalPrice(parseInt(totalprice))
             }
 
@@ -92,7 +95,22 @@ export const ConfirmationSellsScreen = () => {
         }, [])
     );
 
-    return (
+    const protectThisPage = parseFloat(numberOfItemsSells) <= 0 && createInventaryLoading === false;
+
+    useFocusEffect(
+        useCallback(() => {
+            const checkAccess = async () => {
+                if (protectThisPage) {
+                    navigate('SellsScreen')
+                }
+            };
+            checkAccess();
+            return () => { };
+        }, [protectThisPage])
+    );
+
+
+    return !protectThisPage ? (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
                 {
@@ -143,5 +161,12 @@ export const ConfirmationSellsScreen = () => {
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-    );
+    )
+        :
+        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+            <View>
+                <Text>Redireccionando...</Text>
+            </View>
+        </SafeAreaView>
+
 };

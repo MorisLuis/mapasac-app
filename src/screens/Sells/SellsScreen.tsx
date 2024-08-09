@@ -1,33 +1,69 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, FlatList, SafeAreaView } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Text, View, FlatList, SafeAreaView, Button } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { getProductsSells } from '../../services/productsSells';
+import { getProductsSells, getTotalProductSells } from '../../services/productsSells';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { globalStyles } from '../../theme/appTheme';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 
 export const SellsScreen = () => {
 
     const { typeTheme, theme } = useTheme();
     const iconColor = theme.color_tertiary;
+    const { navigate } = useNavigation<any>();
 
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
     const [loading, setLoading] = useState(true);
     const { handleUpdateSummary } = useContext(SellsBagContext);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalProducts, setTotalProducts] = useState(0);
+
+    const loadMoreItem = () => {
+        if (products.length < totalProducts) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handleGetProducts = async () => {
+        setLoading(true);
+
+        const products = await getProductsSells(currentPage);
+
+        setProducts((prevProducts) => {
+            const newProducts = products?.filter(
+                (product: ProductSellsInterface) =>
+                    !prevProducts.some(
+                        (prevProduct) =>
+                            prevProduct.idinvefami === product.idinvefami
+                    )
+            );
+
+            return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
+        });
+
+        setLoading(false);
+    };
 
     useEffect(() => {
-        const handleGetProducts = async () => {
-            const products = await getProductsSells(1);
-            setProducts(products);
-            setLoading(false);
-        };
-        handleGetProducts();
+        const getTotalCountOfProducts = async () => {
+            const total = await getTotalProductSells();
+            setTotalProducts(Number(total));
+        }
+        getTotalCountOfProducts()
+    }, [])
 
-        handleUpdateSummary()
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            handleGetProducts();
+            handleUpdateSummary()
+            return () => { };
+        }, [currentPage])
+    );
+
 
     const renderItem = ({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsSquareCard product={item} />
@@ -51,6 +87,8 @@ export const SellsScreen = () => {
                                 keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
                                 contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
                                 columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                                onEndReached={loadMoreItem}
+                                onEndReachedThreshold={0}
                             />
                         </>
                         :

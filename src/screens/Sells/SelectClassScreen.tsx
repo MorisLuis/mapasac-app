@@ -29,7 +29,6 @@ export const SelectClassScreen = ({
     const [optionSelected, setOptionSelected] = useState<ClassInterface>();
     const buttondisabled = false;
     const isCapa = classes?.[0]?.rcapa?.trim() !== "";
-    console.log({isCapa})
 
     const handleSelectOption = (value: ClassInterface) => {
         setValue({

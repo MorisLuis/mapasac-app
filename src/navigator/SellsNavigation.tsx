@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassInterface from '../interface/class';
 import { UnitData } from '../interface/units';
@@ -16,11 +16,12 @@ import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationS
 import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
 import { SuccesMessageSells } from '../screens/SuccesMessageSells';
 import { ProductSellsInterface } from '../interface/productSells';
+import { SellsBagContext } from '../context/Sells/SellsBagContext';
 
 export type SellsNavigationStackParamList = {
 
     SellsScreen: undefined;
-    SellsDataScreen: { 
+    SellsDataScreen: {
         descripcio: string;
         image: string;
         cvefamilia?: number;

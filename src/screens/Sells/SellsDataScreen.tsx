@@ -8,7 +8,7 @@ import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalProductsSells } from '../../services/productsSells';
+import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
 import ProductInterface from '../../interface/product';
 import { UnitData } from '../../interface/units';
 import ClassInterface from '../../interface/class';
@@ -86,8 +86,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetTotal = async () => {
         if (!cvefamilia) return;
-        const total: string = await getTotalProductsSells(cvefamilia);
-        console.log({ total })
+        const total: string = await getTotalClassesSells(cvefamilia);
 
         if (total === "1") {
             const classesData = await getProductsSellsFromFamily(cvefamilia);
@@ -207,8 +206,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
         handleGoToClass()
     }, [cvefamiliaValue, totalClasses])
-
-    console.log({unitValue})
 
     return (
         <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
