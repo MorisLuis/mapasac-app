@@ -26,8 +26,23 @@ export const SelectAmountScreen = ({
     const [value, setValue] = useState<string>(valueDefault as string);
     const buttondisabled = false;
 
-    const handleInputChange = (value: string) => {
-        setValue(value);
+    // Function to limit decimal places
+    const formatValue = (input: string): string => {
+        // Number of decimal places you want to limit to
+        const decimalPlaces = 2;
+
+        // Regular expression to validate and format the input
+        const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?`);
+
+        // Format the input value
+        const formattedValue = input.match(regex)?.[0] || '';
+
+        return formattedValue;
+    };
+
+    const handleInputChange = (input: string) => {
+        const formattedValue = formatValue(input);
+        setValue(formattedValue);
     };
 
     const handleSave = () => {
