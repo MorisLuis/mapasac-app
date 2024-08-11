@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { useNavigation } from '@react-navigation/native';
+import {CounterSecondary} from '../../components/Ui/CounterSecondary';
 
 interface SelectAmountScreenInterface {
     route?: {
@@ -25,25 +26,6 @@ export const SelectAmountScreen = ({
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<string>(valueDefault as string);
     const buttondisabled = false;
-
-    // Function to limit decimal places
-    const formatValue = (input: string): string => {
-        // Number of decimal places you want to limit to
-        const decimalPlaces = 2;
-
-        // Regular expression to validate and format the input
-        const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?`);
-
-        // Format the input value
-        const formattedValue = input.match(regex)?.[0] || '';
-
-        return formattedValue;
-    };
-
-    const handleInputChange = (input: string) => {
-        const formattedValue = formatValue(input);
-        setValue(formattedValue);
-    };
 
     const handleSave = () => {
         if (from === 'pieces') {
@@ -74,14 +56,11 @@ export const SelectAmountScreen = ({
 
                 <View style={SelectAmountScreenTheme(theme, typeTheme).amountContent}>
                     <View style={SelectAmountScreenTheme(theme, typeTheme).amountContainer}>
-                        <TextInput
-                            ref={inputRef}
-                            value={value}
-                            onChangeText={handleInputChange}
-                            keyboardType="numeric"
-                            style={SelectAmountScreenTheme(theme, typeTheme).amountNumber}
+                        <CounterSecondary
+                            counter={value}
+                            unit={unit}
+                            setValue={setValue}
                         />
-                        {unit && <Text>{unit}</Text>}
                     </View>
                 </View>
 

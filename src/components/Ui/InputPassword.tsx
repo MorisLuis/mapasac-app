@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { TextInput, View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 
 import { inputStyles } from '../../theme/UI/inputs';
 
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { TextInput } from 'react-native-paper';
+import { globalStyles } from '../../theme/appTheme';
 
 
 interface InputPasswordInterface {
@@ -30,17 +32,26 @@ export const InputPassword = ({
 
     return (
         <View style={[inputStyles(theme, typeTheme).passwordContainer]}>
+
             <TextInput
-                placeholder={placeholder}
+                label={placeholder}
                 placeholderTextColor={theme.text_color}
                 secureTextEntry={!showPassword}
-                style={[inputStyles(theme, typeTheme).input, inputStyles(theme, typeTheme).passwordInput]}
                 selectionColor={theme.text_color}
                 onChangeText={(value) => onChange(value, inputName)}
                 value={password}
                 onSubmitEditing={onLogin}
                 autoCapitalize="none"
                 autoCorrect={false}
+
+                style={[inputStyles(theme, typeTheme).input, inputStyles(theme, typeTheme).passwordInput, { borderWidth: 0, paddingHorizontal: globalStyles(theme).globalPadding.padding / 2 }]}
+                mode="outlined"
+                theme={{
+                    ...theme,
+                    colors: {
+                        primary: theme.color_border,
+                    },
+                }}
             />
             <TouchableOpacity
                 onPress={() => setShowPassword(!showPassword)}

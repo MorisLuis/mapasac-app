@@ -3,6 +3,7 @@ import { Theme, globalFont, globalStyles } from "../appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.create({
+
     // Button size
     button: {
         height: hp("5%"),
@@ -20,12 +21,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         gap: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
     },
 
-    button_icon: {
-
-    },
-
     button_small: {
-        //height: hp("5%"),
         flexDirection: "row",
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
@@ -39,20 +35,6 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         justifyContent:"center",
         alignItems:"center",
         gap: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
-    },
-
-    button_line: {
-        height: 36,
-        backgroundColor: "transparent",
-        borderWidth: 0,
-        borderColor: "transparent",
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        width: "100%",
-        color: theme.text_color_secondary,
-        display: "flex",
-        justifyContent:"center",
-        alignItems:"center"
     },
 
     // Button text
@@ -76,6 +58,26 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         fontSize: globalFont.font_normal
     },
 
+    buttonTextClear: {
+        color: theme.text_color_light,
+        fontSize: globalFont.font_sm
+    },
+
+    // Others
+    button_line: {
+        height: 36,
+        backgroundColor: "transparent",
+        borderWidth: 0,
+        borderColor: "transparent",
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        width: "100%",
+        color: theme.text_color_secondary,
+        display: "flex",
+        justifyContent:"center",
+        alignItems:"center"
+    },
+
     button_line_text: {
         textDecorationLine: "underline"
     },
@@ -84,18 +86,24 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         marginRight: 8
     },
 
-    white: {
-        backgroundColor: typeTheme === 'light' ? theme.color_primary : "transparent",
-        color: theme.text_color,
-        borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
-    },
-
     search: {
         backgroundColor: "transparent",
         borderWidth: 1,
         borderColor: theme.color_border_tertiary,
         color: theme.text_color
+    },
+
+    disabled: {
+        opacity: 0.5,
+    },
+
+
+    // Colors
+    white: {
+        backgroundColor: typeTheme === 'light' ? theme.color_primary : "transparent",
+        color: theme.text_color,
+        borderWidth: 1,
+        borderColor: theme.color_border_tertiary,
     },
 
     black: {
@@ -115,14 +123,10 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         color: theme.color_red_light,
     },
 
-    transparent: {
-        backgroundColor: "transparent",
-        textDecorationLine: "underline"
+    light: {
+        backgroundColor: theme.background_color_secondary,
+        textDecorationLine: "underline",
+        borderWidth: 0,
     },
-
-
-    disabled: {
-        opacity: 0.5,
-    }
 
 })

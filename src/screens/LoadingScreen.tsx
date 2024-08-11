@@ -3,15 +3,18 @@ import { ActivityIndicator, Text, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 
 interface LoadingScreenInterface {
-    message?: string
+    message?: string;
+    loading: boolean
 };
 
 export const LoadingScreen = ({
-    message
+    message,
+    loading
 }: LoadingScreenInterface) => {
 
     const { theme } = useTheme();
-    const iconColor = theme.color_tertiary
+    const iconColor = theme.color_tertiary;
+    console.log({loading})
 
     return (
         <View style={{
@@ -24,9 +27,7 @@ export const LoadingScreen = ({
             <ActivityIndicator
                 size="large"
                 color={iconColor}
-                style={{
-                    marginBottom: 10
-                }}
+                style={{ marginBottom: 10 }}
             />
             <Text style={{ color: theme.text_color}}>{message}</Text>
         </View>

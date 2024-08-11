@@ -5,7 +5,6 @@ import { TESTAPP } from "@env";
 
 // Screens
 import { LoginScreen } from '../screens/Onboarding/LoginScreen';
-import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 
 import { InventoryNavigation } from './InventoryNavigation';
 import { OnboardingScreen } from '../screens/Onboarding';
@@ -18,7 +17,6 @@ export type InventoryNavigationStackParamList = {
 
     // Login
     LoginPage: undefined;
-    StartupScreen: undefined;
 
     // Navigation
     InventoryNavigation: undefined;
@@ -33,11 +31,6 @@ export const AppNavigation = () => {
 
     const authScreens = TESTAPP !== 'FALSE' ? (
         <>
-            <Stack.Screen
-                name="StartupScreen"
-                component={StartupScreen}
-                options={{ headerShown: false }}
-            />
             <Stack.Screen
                 name="LoginPage"
                 component={LoginScreen}

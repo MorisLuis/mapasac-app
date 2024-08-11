@@ -43,7 +43,9 @@ export const loginStyles = (theme: Theme, typeTheme?:string) => StyleSheet.creat
     title: {
         color: theme.text_color,
         fontSize: globalFont.font_big,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        lineHeight: globalFont.font_big,
+        width: "90%"
     },
     textLogin: {
         fontSize: globalFont.font_normal,

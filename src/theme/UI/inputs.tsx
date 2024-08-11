@@ -4,8 +4,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
-        height: hp("5%"),
-        minHeight: 45,
+        //height: hp("5%"),
+        minHeight: 50,
         borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

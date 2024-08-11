@@ -11,7 +11,10 @@ export const SearchProductScreenStyles = (theme: Theme, typeTheme?: string) => S
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         marginTop: globalStyles(theme).globalPadding.padding,
     },
-    searchAdvice: {
+    searchbar: {
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        backgroundColor: theme.background_color_secondary,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
 
     },
     adviceHeader: {

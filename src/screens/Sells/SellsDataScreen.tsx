@@ -120,7 +120,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const handleGetProduct = async ({ idinvearts, capa, idinveclas }: any) => {
         const product: ProductInterface = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
 
-        console.log({product: JSON.stringify(product, null, 2)})
         setValue('price', product?.precio.toString());
         setPriceValue(product?.precio.toString())
 

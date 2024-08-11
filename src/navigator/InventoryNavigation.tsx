@@ -116,7 +116,19 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="searchProductScreen"
                 component={SearchProductScreen}
-                options={commonOptions}
+                options={({ navigation }: any) => ({
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title="Buscar producto"
+                            navigation={navigation}
+                            back={() => {
+                                navigation.goBack();
+                                updateBarCode('');
+                            }}
+                        />
+                    )
+                })}
             />
 
             <Stack.Screen

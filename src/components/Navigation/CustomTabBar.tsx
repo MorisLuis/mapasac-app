@@ -108,9 +108,9 @@ export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
                             <Icon name={"albums-outline"} size={22} color={iconColor} />
                         </TouchableOpacity>
                         {
-                            numberOfItems > 0 &&
+                            parseInt(numberOfItems) > 0 &&
                             <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
-                                <Text>{numberOfItems}</Text>
+                                <Text>{parseInt(numberOfItems)}</Text>
                             </View>
                         }
                     </View>

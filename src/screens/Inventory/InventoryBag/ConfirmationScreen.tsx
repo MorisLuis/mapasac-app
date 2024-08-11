@@ -13,6 +13,7 @@ import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
+import { useProtectPage } from '../../../hooks/useProtectPage';
 
 export const ConfirmationScreen = () => {
     const { getTypeOfMovementsName } = useContext(AuthContext);
@@ -86,19 +87,11 @@ export const ConfirmationScreen = () => {
         }, [])
     );
 
-    const protectThisPage = parseFloat(numberOfItems) <= 0 && createInventaryLoading === false;
-
-    useFocusEffect(
-        useCallback(() => {
-            const checkAccess = async () => {
-                if (protectThisPage) {
-                    navigate('ScanneNavigation')
-                }
-            };
-            checkAccess();
-            return () => { };
-        }, [protectThisPage])
-    );
+    const { protectThisPage } = useProtectPage({
+        numberOfItems: numberOfItems,
+        loading: createInventaryLoading,
+        navigatePage: 'ScanneNavigation'
+    });
 
     return !protectThisPage ? (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>

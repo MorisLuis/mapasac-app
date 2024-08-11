@@ -13,13 +13,14 @@ import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interf
 import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
 import { postSells } from '../../../services/sells';
 import { format } from '../../../utils/currency';
+import { useProtectPage } from '../../../hooks/useProtectPage';
 
 export const ConfirmationSellsScreen = () => {
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<any>();
 
-    const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
+    const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -31,12 +32,12 @@ export const ConfirmationSellsScreen = () => {
         <ProductSellsConfirmationCard
             product={item}
             onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
-            disabled={createInventaryLoading}
+            disabled={createSellLoading}
         />
-    ), [createInventaryLoading]);
+    ), [createSellLoading]);
 
     const onPostInventory = async () => {
-        setCreateInventaryLoading(true);
+        setCreateSellLoading(true);
         try {
             await postSells();
             setTimeout(() => {
@@ -45,14 +46,14 @@ export const ConfirmationSellsScreen = () => {
             }, 500);
 
             setTimeout(() => {
-                setCreateInventaryLoading(false);
+                setCreateSellLoading(false);
             }, 750);
         } catch (error: any) {
             Toast.show({
                 type: 'tomatoError',
                 text1: 'Hubo un error, asegurate de tener conexión a internet.'
             })
-            setCreateInventaryLoading(false);
+            setCreateSellLoading(false);
             console.log("Error al crear inventario:", error);
         }
     };
@@ -95,20 +96,11 @@ export const ConfirmationSellsScreen = () => {
         }, [])
     );
 
-    const protectThisPage = parseFloat(numberOfItemsSells) <= 0 && createInventaryLoading === false;
-
-    useFocusEffect(
-        useCallback(() => {
-            const checkAccess = async () => {
-                if (protectThisPage) {
-                    navigate('SellsScreen')
-                }
-            };
-            checkAccess();
-            return () => { };
-        }, [protectThisPage])
-    );
-
+    const { protectThisPage } = useProtectPage({
+        numberOfItems: numberOfItemsSells,
+        loading: createSellLoading,
+        navigatePage: 'SellsScreen'
+    });
 
     return !protectThisPage ? (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
@@ -153,10 +145,10 @@ export const ConfirmationSellsScreen = () => {
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                     onPress={onPostInventory}
-                    disabled={createInventaryLoading}
+                    disabled={createSellLoading}
                 >
                     <Text style={buttonStyles(theme, typeTheme).buttonText}>
-                        {createInventaryLoading ? <DotLoader /> : "Confirmar"}
+                        {createSellLoading ? <DotLoader /> : "Confirmar"}
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -17,7 +17,7 @@ export const SellsScreen = () => {
     const { navigate } = useNavigation<any>();
 
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const { handleUpdateSummary } = useContext(SellsBagContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -29,7 +29,7 @@ export const SellsScreen = () => {
     };
 
     const handleGetProducts = async () => {
-        setLoading(true);
+        setIsLoading(true);
 
         const products = await getProductsSells(currentPage);
 
@@ -45,7 +45,7 @@ export const SellsScreen = () => {
             return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
         });
 
-        setLoading(false);
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -69,6 +69,28 @@ export const SellsScreen = () => {
         <ProductSellsSquareCard product={item} />
     );
 
+    const renderLoader = () => {
+        return (
+            isLoading ?
+                Array.from({ length: 1 }).map((_, index) => (
+                    <View key={index}>
+                        <Text>Cargando...</Text>
+                    </View>
+                ))
+                : null
+        );
+    };
+
+    const renderFooter = () => {
+        return (
+            <View>
+                {
+                    renderLoader()
+                }
+            </View>
+        );
+    };
+
     return (
         <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
             <View style={SellsScreenStyles(theme).content}>
@@ -87,6 +109,7 @@ export const SellsScreen = () => {
                                 keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
                                 contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
                                 columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                                ListFooterComponent={renderFooter}
                                 onEndReached={loadMoreItem}
                                 onEndReachedThreshold={0}
                             />
