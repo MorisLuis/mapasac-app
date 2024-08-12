@@ -44,10 +44,10 @@ export const InventoryBagScreen = () => {
     };
 
     const loadBags = async () => {
-        if(searchText !== "") return;
+        if (searchText !== "") return;
         if (isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page, limit: 5, option: 0 });
 
         if (newBags && newBags.length > 0) {
             setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
@@ -63,7 +63,7 @@ export const InventoryBagScreen = () => {
     const refreshBags = async () => {
         setIsRefreshing(true);
         setPage(1);
-        const newBags = await getBagInventory({ page: 1, limit: 5,  option: 0 });
+        const newBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
         setBags(newBags || []);
         setHasMore(true);
         setIsRefreshing(false);
@@ -71,9 +71,9 @@ export const InventoryBagScreen = () => {
 
     const handleCleanTemporal = () => {
         setLoadingCleanBag(true)
-        deleteAllProductsInBag({opcion: 0});
+        deleteAllProductsInBag({ opcion: 0 });
         resetAfterPost()
-        setPage(1); 
+        setPage(1);
         setLoadingCleanBag(false);
         goBack();
         setOpenModalDecision(false);
@@ -129,7 +129,7 @@ export const InventoryBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (numberOfItems > 0 && dataUploaded) &&
+                    (parseInt(numberOfItems) > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -154,11 +154,20 @@ export const InventoryBagScreen = () => {
                 {
                     (bags?.length <= 0 && dataUploaded) ?
                         <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                            <EmptyMessageCard
-                                title="No hay productos con ese nombre."
-                                message='Intenta escribiendo algo diferente.'
-                                icon='sad-outline'
-                            />
+                            {
+                                searchText !== "" ?
+                                    <EmptyMessageCard
+                                        title="No hay productos con ese nombre."
+                                        message='Intenta escribiendo algo diferente.'
+                                        icon='sad-outline'
+                                    />
+                                    :
+                                    <EmptyMessageCard
+                                        title="No tienes productos aún."
+                                        message='Empieza a agregar productos al inventario'
+                                        icon='rocket-outline'
+                                    />
+                            }
                         </View>
                         :
                         (bags.length > 0 && dataUploaded) ?
@@ -171,7 +180,7 @@ export const InventoryBagScreen = () => {
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
                                 refreshing={isRefreshing}
-                                //onRefresh={refreshBags}
+                            //onRefresh={refreshBags}
                             />
                             :
                             <InventoryBagSkeleton />
@@ -192,7 +201,7 @@ export const InventoryBagScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
                             onPress={onPostInventary}
                         >
-                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon}/>
+                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
                             <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
                         </TouchableOpacity>
                     </View>

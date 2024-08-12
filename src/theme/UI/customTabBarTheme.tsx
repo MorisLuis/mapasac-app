@@ -133,9 +133,9 @@ export const customTopBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         maxHeight: 32,
         marginRight: wp("2%"),
         borderWidth: 0.7,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary,
         overflow: "hidden",
-        backgroundColor: theme.background_color
+        backgroundColor:  typeTheme === 'light'  ?  theme.background_color : theme.background_color_secondary
     },
     bagButton: {
         justifyContent: 'center',
@@ -146,9 +146,8 @@ export const customTopBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         maxHeight: 32,
         marginRight: wp("2%"),
         borderWidth: 0.7,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_black,
-        //overflow: "hidden",
-        backgroundColor: theme.background_color
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary,
+        backgroundColor:  typeTheme === 'light'  ?  theme.background_color : theme.background_color_secondary
     },
     bagCounter:{
         position: "absolute",

@@ -4,8 +4,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const SelectScreenTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SelectScreen: {
-        height: "auto",
-        //flex:1,
+        height: "100%",
+        backgroundColor: theme.background_color,
         paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     header: {
@@ -13,7 +13,8 @@ export const SelectScreenTheme = (theme: Theme, typeTheme?: string) => StyleShee
     },
     headerTitle: {
         fontSize: globalFont.font_med,
-        textAlign:"center"
+        textAlign:"center",
+        color: theme.text_color
     },
     optionsContainer: {
         display: "flex",

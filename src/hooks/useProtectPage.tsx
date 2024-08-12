@@ -3,20 +3,36 @@ import { useCallback } from 'react';
 
 // Define el tipo de tus parámetros si es necesario
 interface UseProtectPageProps {
-    numberOfItems: string;
-    loading: boolean;
+    numberOfItems?: string;
+    anotherCondition?: any;
+    loading?: boolean;
     navigatePage: string
 }
 
-export const useProtectPage = ({ numberOfItems, loading, navigatePage }: UseProtectPageProps) => {
-    const protectThisPage = parseFloat(numberOfItems) <= 0 && !loading;
-    const { navigate } = useNavigation<any>();
+export const useProtectPage = ({
+    numberOfItems,
+    anotherCondition,
+    loading,
+    navigatePage
+}: UseProtectPageProps) => {
+
+    const { navigate, goBack } = useNavigation<any>();
+    const protectThisPage = (numberOfItems && parseFloat(numberOfItems) <= 0 && !loading) ? true : false;
+    const protectThisPage2 = anotherCondition;
 
     useFocusEffect(
         useCallback(() => {
             const checkAccess = async () => {
+                if( navigatePage === 'back' ) {
+                    return goBack()
+                }
+
                 if (protectThisPage) {
-                    navigate(navigatePage);
+                    return navigate(navigatePage);
+                }
+
+                if (protectThisPage2) {
+                    return navigate(navigatePage);
                 }
             };
             checkAccess();
@@ -24,6 +40,6 @@ export const useProtectPage = ({ numberOfItems, loading, navigatePage }: UseProt
     );
 
     return {
-        protectThisPage
+        protectThisPage: protectThisPage ? protectThisPage : protectThisPage2
     }
 };

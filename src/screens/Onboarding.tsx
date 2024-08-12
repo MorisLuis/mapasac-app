@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -8,7 +8,6 @@ import { getModules } from '../services/others';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface modulesInterface {
     idappmob: number,
@@ -19,12 +18,11 @@ interface modulesInterface {
 
 export const OnboardingScreen = () => {
 
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const { user } = useContext(AuthContext);
 
     const navigation = useNavigation<any>();
     const [modules, setModules] = useState<modulesInterface[]>()
-    const iconColor = typeTheme === "light" ? theme.color_secondary : theme.color_primary
 
     useEffect(() => {
         const onGetModules = async () => {
@@ -44,7 +42,8 @@ export const OnboardingScreen = () => {
 
             <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigation.navigate("ProfileNavigation")}>
                 <View style={OnboardingScreenStyles(theme).topbar_profile}>
-                    <Icon name="person-circle-outline" size={wp("7.5%")} color={iconColor} />
+                    {/* <Icon name="person-circle-outline" size={wp("7.5%")} color={iconColor} /> */}
+                    <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>M</Text>
                 </View>
             </TouchableOpacity>
 
@@ -87,7 +86,7 @@ export const ModuleOption = ({
 
     const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<any>();
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
+    const iconColor = typeTheme === 'light' ? theme.color_primary : theme.text_color_secondary
 
     const moduleNavigate = (option: number) => {
         let navigate;
@@ -106,7 +105,7 @@ export const ModuleOption = ({
             );
         }
 
-        return navigate
+        return navigate;
     }
 
 
@@ -134,10 +133,10 @@ export const ModuleOption = ({
 
 
     return (
-        <View style={OnboardingScreenStyles(theme).moduleOptionRow}>
+        <View style={OnboardingScreenStyles(theme, typeTheme).moduleOptionRow}>
             <TouchableOpacity
                 onPress={() => moduleNavigate(option.idappmob)}
-                style={[OnboardingScreenStyles(theme).moduleOption, extraStyles(option).styles]}
+                style={[OnboardingScreenStyles(theme, typeTheme).moduleOption, extraStyles(option).styles]}
             >
                 <Icon name={extraStyles(option).icon} size={24} color={iconColor} />
                 <View>
@@ -149,7 +148,7 @@ export const ModuleOption = ({
                 option2 ?
                     <TouchableOpacity
                         onPress={() => moduleNavigate(option2.idappmob)}
-                        style={[OnboardingScreenStyles(theme).moduleOption, extraStyles(option2).styles]}
+                        style={[OnboardingScreenStyles(theme, typeTheme).moduleOption, extraStyles(option2).styles]}
                     >
                         <Icon name={extraStyles(option2).icon} size={24} color={iconColor} />
                         <View>

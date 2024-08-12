@@ -1,6 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
+import { useProtectPage } from '../hooks/useProtectPage';
 
 interface LoadingScreenInterface {
     message?: string;
@@ -14,7 +15,12 @@ export const LoadingScreen = ({
 
     const { theme } = useTheme();
     const iconColor = theme.color_tertiary;
-    console.log({loading})
+
+    const { protectThisPage } = useProtectPage({
+        anotherCondition: loading === false ? true : false,
+        navigatePage: 'back'
+    })
+
 
     return (
         <View style={{
@@ -29,7 +35,7 @@ export const LoadingScreen = ({
                 color={iconColor}
                 style={{ marginBottom: 10 }}
             />
-            <Text style={{ color: theme.text_color}}>{message}</Text>
+            <Text style={{ color: theme.text_color }}>{message}</Text>
         </View>
     )
 }

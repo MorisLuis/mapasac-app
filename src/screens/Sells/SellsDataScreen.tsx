@@ -256,7 +256,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         control={control}
                         name="typeClass"
                         render={({ field: { value } }) => (
-                            <Text>{value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim()) : "Selecciona la clase"}</Text>
+                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim()) : "Selecciona la clase"}</Text>
                         )}
                     />
                     <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
@@ -279,7 +279,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                             control={control}
                             name="pieces"
                             render={({ field: { value } }) => (
-                                <Text>{value ? value : "Seleccion cantidad"}</Text>
+                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? value : "Seleccion cantidad"}</Text>
                             )}
                         />
                     </TouchableOpacity>
@@ -305,7 +305,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                                 control={control}
                                 name="units"
                                 render={({ field: { value } }) => (
-                                    <Text>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</Text>
+                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</Text>
                                 )}
                             />
                             <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
@@ -324,7 +324,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                             control={control}
                             name="price"
                             render={({ field: { value } }) => (
-                                <Text>{value ? format(Number(value)) : "Selecciona precio"}</Text>
+                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? format(Number(value)) : "Selecciona precio"}</Text>
                             )}
                         />
                     </TouchableOpacity>
