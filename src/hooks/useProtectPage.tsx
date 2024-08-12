@@ -17,6 +17,8 @@ export const useProtectPage = ({
 }: UseProtectPageProps) => {
 
     const { navigate, goBack } = useNavigation<any>();
+    const navigation = useNavigation<any>();
+
     const protectThisPage = (numberOfItems && parseFloat(numberOfItems) <= 0 && !loading) ? true : false;
     const protectThisPage2 = anotherCondition;
 
@@ -24,7 +26,7 @@ export const useProtectPage = ({
         useCallback(() => {
             const checkAccess = async () => {
                 if( navigatePage === 'back' ) {
-                    return goBack()
+                    return navigation.canGoBack() ? navigation.canGoBack?.() : navigation.navigate('OnboardingScreen')
                 }
 
                 if (protectThisPage) {
@@ -36,7 +38,7 @@ export const useProtectPage = ({
                 }
             };
             checkAccess();
-        }, [protectThisPage, navigate])
+        }, [protectThisPage, protectThisPage2,navigate])
     );
 
     return {

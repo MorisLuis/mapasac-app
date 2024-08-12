@@ -102,10 +102,6 @@ export const LoginScreen = () => {
             </SafeAreaView>
         </KeyboardAvoidingView>
         :
-        <View style={[loginStyles(theme).LoginScreen]}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <Text>Cargando...</Text>
-            </SafeAreaView>
-        </View>
+        <LoadingScreen message='Redireccionando...' loading={!protectThisPage} />
 };
 
