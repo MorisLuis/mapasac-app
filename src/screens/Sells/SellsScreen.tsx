@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Text, View, FlatList, SafeAreaView, Button } from 'react-native';
+import { Text, View, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { getProductsSells, getTotalProductSells } from '../../services/productsSells';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
@@ -7,15 +7,12 @@ import { ProductSellsInterface } from '../../interface/productSells';
 import { globalStyles } from '../../theme/appTheme';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export const SellsScreen = () => {
 
     const { typeTheme, theme } = useTheme();
-    const iconColor = theme.color_tertiary;
-    const { navigate } = useNavigation<any>();
-
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const { handleUpdateSummary } = useContext(SellsBagContext);

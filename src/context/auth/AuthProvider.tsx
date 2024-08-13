@@ -59,7 +59,6 @@ export const AuthProvider = ({ children }: any) => {
             })
         }
 
-
         if (statusLogin === 'authenticated') {
             navigation.navigate('OnboardingScreen')
         }
@@ -115,6 +114,8 @@ export const AuthProvider = ({ children }: any) => {
                 })
             }
 
+            await AsyncStorage.setItem('token', data.token);
+
             dispatch({
                 type: 'signUp',
                 payload: {
@@ -123,7 +124,6 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
 
-            await AsyncStorage.setItem('token', data.token);
 
         } catch (error: any) {
             setLoggingIn(false)

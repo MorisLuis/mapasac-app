@@ -16,12 +16,11 @@ export const LoadingScreen = ({
     const { theme } = useTheme();
     const iconColor = theme.color_tertiary;
 
-    const { protectThisPage } = useProtectPage({
-        anotherCondition: loading === false ? true : false,
+    /* const { protectThisPage } = useProtectPage({
+        protectionCondition: loading === false ? true : false,
         navigatePage: 'back'
     })
-
-
+ */
     return (
         <View style={{
             flex: 1,

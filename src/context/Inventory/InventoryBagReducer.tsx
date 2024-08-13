@@ -6,7 +6,7 @@ type InventoryBagActionType =
     | {
         type: '[InventoryBag] - Update Summary',
         payload: {
-            numberOfItems?: number;
+            numberOfItems?: string;
         }
     }
 

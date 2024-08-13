@@ -11,12 +11,13 @@ import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBag
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { deleteAllProductsInBag, getBagInventory } from '../../../services/bag';
+import { deleteAllProductsInBag, getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { getSearchProductInBack } from '../../../services/searchs';
 import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
+import { format } from '../../../utils/currency';
 
 export const SellsBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
@@ -36,6 +37,7 @@ export const SellsBagScreen = () => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [loadingCleanBag, setLoadingCleanBag] = useState(false)
+    const [totalPrice, setTotalPrice] = useState<number>()
 
     const onPostInventary = async () => {
         goBack();
@@ -44,7 +46,7 @@ export const SellsBagScreen = () => {
 
 
     const loadBags = async () => {
-        if(searchText !== "") return;
+        if (searchText !== "") return;
         if (isLoading || !hasMore) return;
         setIsLoading(true);
         const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
@@ -113,6 +115,13 @@ export const SellsBagScreen = () => {
 
     useEffect(() => {
         loadBags();
+
+        const handleGetPrice = async () => {
+            const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
+            setTotalPrice(parseInt(totalprice))
+        }
+
+        handleGetPrice()
     }, []);
 
     return (
@@ -121,7 +130,7 @@ export const SellsBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (numberOfItemsSells > 0 && dataUploaded) &&
+                    (parseFloat(numberOfItemsSells) > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
                             <Icon name={'search'} color="gray" />
@@ -172,19 +181,26 @@ export const SellsBagScreen = () => {
                 {
                     (bags.length > 0 && dataUploaded) &&
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
-                        <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
-                            onPress={() => setOpenModalDecision(true)}
-                        >
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
-                            onPress={onPostInventary}
-                        >
-                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} style={buttonStyles(theme, typeTheme).button_icon} />
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
-                        </TouchableOpacity>
+                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
+                            <Text style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</Text>
+                            <Text style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
+                        </View>
+                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
+                            <TouchableOpacity
+                                style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall, { width: "19%" }]}
+                                onPress={() => setOpenModalDecision(true)}
+                            >
+                                <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
+                                {/* <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text> */}
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black, { width: "79%" }]}
+                                onPress={onPostInventary}
+                            >
+                                <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
+                                <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 }
             </SafeAreaView>

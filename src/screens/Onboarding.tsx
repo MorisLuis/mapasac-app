@@ -43,7 +43,7 @@ export const OnboardingScreen = () => {
             <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigation.navigate("ProfileNavigation")}>
                 <View style={OnboardingScreenStyles(theme).topbar_profile}>
                     {/* <Icon name="person-circle-outline" size={wp("7.5%")} color={iconColor} /> */}
-                    <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>M</Text>
+                    <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</Text>
                 </View>
             </TouchableOpacity>
 

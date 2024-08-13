@@ -11,12 +11,14 @@ import { OnboardingScreen } from '../screens/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
 import { SellsNavigation } from './SellsNavigation';
 import { SuccesMessage } from '../screens/SuccesMessage';
+import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 
 export type InventoryNavigationStackParamList = {
     OnboardingScreen: undefined;
 
     // Login
     LoginPage: undefined;
+    StartupScreen: undefined;
 
     // Navigation
     InventoryNavigation: undefined;
@@ -31,6 +33,11 @@ export const AppNavigation = () => {
 
     const authScreens = TESTAPP !== 'FALSE' ? (
         <>
+            <Stack.Screen
+                name="StartupScreen"
+                component={StartupScreen}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name="LoginPage"
                 component={LoginScreen}

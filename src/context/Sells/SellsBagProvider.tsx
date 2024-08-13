@@ -1,24 +1,26 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import { SellsBagContext } from './SellsBagContext';
 import { sellsBagReducer } from './SellsBagReducer';
 import EnlacemobInterface from '../../interface/enlacemob';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface SellsBagInterface {
-    numberOfItemsSells: number;
+    numberOfItemsSells: string;
 }
 
 export const SellsBagInitialState: SellsBagInterface = {
-    numberOfItemsSells: 0
+    numberOfItemsSells: "0"
 }
 
 export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const [state, dispatch] = useReducer(sellsBagReducer, SellsBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
+    const { user } = useContext(AuthContext);
 
     const handleUpdateSummary = async () => {
-        console.log("summary")
+        if(!user) return;
         try {
             const total = await getTotalProductsInBag({opcion: 2, mercado: true});
             const numberOfItemsSells = total;

@@ -5,7 +5,7 @@ type SellsBagActionType =
     | {
         type: '[SellsBag] - Update Summary',
         payload: {
-            numberOfItemsSells?: number;
+            numberOfItemsSells?: string;
         }
     }
 

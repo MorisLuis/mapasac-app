@@ -73,8 +73,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         const bagProduct: EnlacemobInterface = {
             idinvearts: classType?.ridinvearts as number || idinveartsValue as number,
             unidad: units?.unidad as number || unitValue?.unidad as number,
-            cantidad: parseInt(pieces as string) || parseInt(piecesValue as string),
-            precio: parseInt(price as string) || parseInt(priceValue as string),
+            cantidad: parseFloat(pieces as string) || parseFloat(piecesValue as string),
+            precio: parseFloat(price as string) || parseFloat(priceValue as string),
             idusrmob: user?.idusrmob as number,
             idinveclas: classValue,
             capa: capaValue
@@ -135,8 +135,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             descripcio: product?.unidad_nombre?.trim() as string
         })
 
-        setValue('pieces', product?.cantidad?.toString());
-        setPiecesValue(product?.cantidad?.toString())
+        /* setValue('pieces', product?.cantidad?.toString());
+        setPiecesValue(product?.cantidad?.toString()) */
 
         setCapaValue(capa);
         setClassValue(idinveclas)

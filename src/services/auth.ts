@@ -22,6 +22,8 @@ interface renewLoginInterface {
 
 const renewLogin = async ({ token }: renewLoginInterface) => {
 
+    console.log("renewLogin")
+
     try {
         const resp = await api.get('/api/auth/renew', {
             headers: {

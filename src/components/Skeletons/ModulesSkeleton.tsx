@@ -5,6 +5,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { OnboardingScreenStyles } from '../../theme/OnboardingScreenTheme';
 import { globalStyles } from '../../theme/appTheme';
 import { View } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
@@ -20,21 +21,22 @@ export const ModulesSkeleton = () => {
         <View
             style={[
                 {
-                    flex: 0.2,
-                    padding: globalStyles(theme).globalPadding.padding / 2,
-                    flexDirection: 'row'
+                    //flex: 0.2,
+                    marginBottom: globalStyles(theme).globalPadding.padding / 2,
+                    flexDirection: 'row',
+                    height: 'auto'
                 }
             ]}>
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0, borderWidth: 0 }]}
+                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: hp("12.5%"), marginRight: 10, padding: 0, borderWidth: 0 }]}
             ></ShimmerPlaceHolder>
 
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: "100%", marginRight: 10, padding: 0, borderWidth: 0 }]}
+                style={[OnboardingScreenStyles(theme).moduleOption, { flex: 1, height: hp("12.5%"), marginRight: 0, padding: 0, borderWidth: 0 }]}
             ></ShimmerPlaceHolder>
         </View>
 

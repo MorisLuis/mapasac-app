@@ -4,14 +4,14 @@ import { useCallback } from 'react';
 // Define el tipo de tus parámetros si es necesario
 interface UseProtectPageProps {
     numberOfItems?: string;
-    anotherCondition?: any;
+    protectionCondition?: any;
     loading?: boolean;
     navigatePage: string
 }
 
 export const useProtectPage = ({
     numberOfItems,
-    anotherCondition,
+    protectionCondition,
     loading,
     navigatePage
 }: UseProtectPageProps) => {
@@ -20,7 +20,7 @@ export const useProtectPage = ({
     const navigation = useNavigation<any>();
 
     const protectThisPage = (numberOfItems && parseFloat(numberOfItems) <= 0 && !loading) ? true : false;
-    const protectThisPage2 = anotherCondition;
+    const protectThisPage2 = protectionCondition;
 
     useFocusEffect(
         useCallback(() => {

@@ -1,23 +1,26 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import ProductInterface from '../../interface/product';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface InventoryBagInterface {
-    numberOfItems: number;
+    numberOfItems: string;
 }
 
 export const InventoryBagInitialState: InventoryBagInterface = {
-    numberOfItems: 0
+    numberOfItems: "0"
 }
 
 export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => {
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
+    const { user } = useContext(AuthContext);
 
     const handleUpdateSummary = async () => {
+        if(!user) return
         try {
             const total = await getTotalProductsInBag({opcion: 0});
             

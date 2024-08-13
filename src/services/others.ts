@@ -8,6 +8,7 @@ export const getModules = async () => {
         const getModules = await api.get(`/api/auth/modules`);
         modules = getModules.data.modules;
     } catch (error: any) {
+        console.log({errorModules: error})
         throw error?.response?.data || new Error('Unknown error');
     }
 

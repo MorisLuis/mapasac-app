@@ -41,21 +41,20 @@ export const LoginScreen = () => {
     };
 
     const { protectThisPage } = useProtectPage({
-        anotherCondition: status === 'authenticated',
+        protectionCondition: status === 'authenticated',
         navigatePage: 'OnboardingScreen'
     })
 
-
     if (loggingIn) return <LoadingScreen message='Iniciando sesion...' loading={loggingIn} />;
 
-    return protectThisPage ?
+    return !protectThisPage ?
         <KeyboardAvoidingView
             style={[loginStyles(theme).LoginScreen]}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={loginStyles(theme).formContainer}>
 
-                    <Text style={loginStyles(theme).title}>Mapasoft & Morado IT Software.</Text>
+                    <Text style={loginStyles(theme).title}>Mapasac & Morado IT Systems.</Text>
                     <Text style={loginStyles(theme).textLogin}>Ingresar datos de Usuario</Text>
 
                     <TextInput

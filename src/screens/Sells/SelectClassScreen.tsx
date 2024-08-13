@@ -27,8 +27,8 @@ export const SelectClassScreen = ({
     const [value, setValue] = useState<ClassInterface>(valueDefault as ClassInterface);
     const [classes, setClasses] = useState<ClassInterface[]>();
     const [optionSelected, setOptionSelected] = useState<ClassInterface>();
-    const buttondisabled = false;
     const isCapa = classes?.[0]?.rcapa?.trim() !== "";
+    const buttondisabled = !value ? true : false;
 
     const handleSelectOption = (value: ClassInterface) => {
         setValue({
@@ -104,7 +104,7 @@ export const SelectClassScreen = ({
                         onPress={handleSave}
                         disabled={buttondisabled}
                     >
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Guardar</Text>
+                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Seleccionar</Text>
                     </TouchableOpacity>
                 </View>
             </View>

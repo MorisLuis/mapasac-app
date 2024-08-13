@@ -70,7 +70,7 @@ export const SelectAmountScreen = ({
                         onPress={handleSave}
                         disabled={buttondisabled}
                     >
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Guardar</Text>
+                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</Text>
                     </TouchableOpacity>
                 </View>
             </View>
