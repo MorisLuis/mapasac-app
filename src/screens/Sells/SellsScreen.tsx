@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Text, View, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, FlatList, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { getProductsSells, getTotalProductSells } from '../../services/productsSells';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
@@ -45,6 +45,14 @@ export const SellsScreen = () => {
         setIsLoading(false);
     };
 
+    const renderFooter = useCallback(() => (
+        isLoading ? <ActivityIndicator size="large" color={theme.color_primary} /> : null
+    ), [isLoading, theme.color_primary]);
+
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
+        <ProductSellsSquareCard product={item} />
+    ), []);
+
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProductSells();
@@ -61,39 +69,11 @@ export const SellsScreen = () => {
         }, [currentPage])
     );
 
-
-    const renderItem = ({ item }: { item: ProductSellsInterface }) => (
-        <ProductSellsSquareCard product={item} />
-    );
-
-    const renderLoader = () => {
-        return (
-            isLoading ?
-                Array.from({ length: 1 }).map((_, index) => (
-                    <View key={index}>
-                        <Text>Cargando...</Text>
-                    </View>
-                ))
-                : null
-        );
-    };
-
-    const renderFooter = () => {
-        return (
-            <View>
-                {
-                    renderLoader()
-                }
-            </View>
-        );
-    };
-
     return (
         <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
             <View style={SellsScreenStyles(theme).content}>
 
-                {
-                    products.length > 1 ?
+                { products.length > 1 ?
                         <>
                             <View style={SellsScreenStyles(theme).header}>
                                 <Text style={{ color: theme.text_color, fontSize: 20 }}>Ventas</Text>
