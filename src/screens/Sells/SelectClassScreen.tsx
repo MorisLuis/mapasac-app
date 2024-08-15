@@ -12,8 +12,12 @@ interface SelectAmountScreenInterface {
         params: {
             valueDefault: ClassInterface;
             cvefamilia?: number;
+
+            // This props are used to send to "SellsDataScreen".
+            // This happend when the totalClasses in 'ProductSellsSquareCard' is more than 0 and navigate direclty to here "SelectClassScreen".
             descripcio: string;
             image: string;
+            totalClasses: number
         };
     };
 }
@@ -22,7 +26,7 @@ export const SelectClassScreen = ({
     route
 }: SelectAmountScreenInterface) => {
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, cvefamilia, descripcio, image } = route?.params ?? {};
+    const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route?.params ?? {};
     const navigation = useNavigation<any>();
 
     const inputRef = useRef<TextInput>(null);
@@ -53,6 +57,8 @@ export const SelectClassScreen = ({
         navigation.goBack();
         navigation.navigate('SellsDataScreen',
             {
+                totalClasses: totalClasses,
+                cvefamilia: cvefamilia,
                 typeClass: value,
                 descripcio: descripcio,
                 image: image,

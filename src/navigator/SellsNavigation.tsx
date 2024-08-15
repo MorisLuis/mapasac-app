@@ -21,6 +21,7 @@ export type SellsNavigationStackParamList = {
 
     SellsScreen: undefined;
     SellsDataScreen: {
+        totalClasses: number;
         descripcio: string;
         image: string;
         cvefamilia?: number;
@@ -36,7 +37,7 @@ export type SellsNavigationStackParamList = {
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - UnitScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string; };
+    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number};
 
     "[Sells] - confirmationScreen": undefined;
     "[Sells] - succesMessageScreen": undefined;

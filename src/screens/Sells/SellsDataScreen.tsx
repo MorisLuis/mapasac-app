@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,6 +36,8 @@ interface SellsDataScreenInterface {
         params: {
             image: string;
             descripcio: string;
+            totalClasses?: number;
+
             cvefamilia?: number;
             pieces?: string;
             price?: string;
@@ -47,7 +49,7 @@ interface SellsDataScreenInterface {
 };
 
 export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
-    const { pieces, price, typeClass, units, cvefamilia, productSellData, descripcio, image } = route?.params ?? {};
+    const { pieces, price, typeClass, units, cvefamilia, productSellData, descripcio, image, totalClasses: totalClassesProp } = route?.params ?? {};
     const { typeTheme, theme } = useTheme();
     const { user } = useContext(AuthContext);
     const { addProductSell } = useContext(SellsBagContext);
@@ -58,7 +60,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const [idinveartsValue, setIdinveartsValue] = useState<number>();
     const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
-    const [totalClasses, setTotalClasses] = useState<number>();
+    const [totalClasses] = useState<number>(totalClassesProp as number);
 
     const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
         defaultValues: {
@@ -95,7 +97,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetTotal = useCallback(async () => {
         if (!cvefamilia) return;
-        const total: string = await getTotalClassesSells(cvefamilia);
+        const total: string = await getTotalClassesSells(cvefamilia); // * It could be a prop this value
 
         if (total === "1") {
             const classesData = await getProductsSellsFromFamily(cvefamilia);
@@ -116,7 +118,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             setIdinveartsValue(product.idinvearts);
         }
 
-        setTotalClasses(parseFloat(total));
+        //setTotalClasses(parseFloat(total));
     }, [cvefamilia, setValue]);
 
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
@@ -144,12 +146,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const handleGoToClassScreen = useCallback(() => {
         if (totalClasses && totalClasses > 1) {
             navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: getValues('typeClass'), cvefamilia: cvefamiliaValue });
-        } else if (totalClasses && totalClasses < 1) {
-            Alert.alert(
-                'No tiene clase este producto',
-                '',
-                [{ text: 'Cerrar', style: 'cancel' }]
-            );
         }
     }, [totalClasses, cvefamiliaValue, getValues, navigation]);
 
@@ -165,8 +161,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         if (descripcio) setTitle(descripcio);
         if (image) setImageValue(image);
         handleGetTotal();
-
-        //watch()
     }, [pieces, price, typeClass, units, cvefamilia, descripcio, image]);
 
     useEffect(() => {
@@ -174,20 +168,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         const { idinvearts, capa, idinveclas } = productSellData ?? {};
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
-
-    useEffect(() => {
-        if (getValues('idinveclas')) return;
-        if (!cvefamiliaValue) return;
-        if (!totalClasses) return;
-        if (totalClasses <= 1) return;
-
-        const handleGoToClass = () => {
-            navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: getValues('typeClass'), cvefamilia: cvefamiliaValue })
-        };
-
-        handleGoToClass()
-    }, [cvefamiliaValue, totalClasses]);
-
 
     return (
         <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
@@ -205,6 +185,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             <TouchableOpacity
                 style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
                 onPress={handleGoToClassScreen}
+                disabled={!haveClasses}
             >
                 <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                     <Icon name={'resize-outline'} color={iconColor} size={globalFont.font_normal} />
@@ -215,7 +196,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         control={control}
                         name="typeClass"
                         render={({ field: { value } }) => (
-                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim()) : "Selecciona la clase"}</Text>
+                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>
+                                {
+                                    !haveClasses ? "No tiene clase" :
+                                        value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim())
+                                            : "Selecciona la clase"
+                                }
+                            </Text>
                         )}
                     />
                     <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
@@ -224,72 +211,76 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
 
             {
-                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !haveClasses)) &&
-                <>
-                    <TouchableOpacity
-                        style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
-                    >
-                        <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
-                            <Icon name={'bag-handle'} color={iconColor} size={globalFont.font_normal} />
-                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Cantidad:</Text>
-                        </View>
-                        <Controller
-                            control={control}
-                            name="pieces"
-                            render={({ field: { value } }) => (
-                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? value : "Seleccion cantidad"}</Text>
-                            )}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - UnitScreen', { from: "units", valueDefault: getValues('units') })}
-                    >
-                        <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
-                            <Icon name={'shapes'} color={iconColor} size={globalFont.font_normal} />
-                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Unidad:</Text>
-                        </View>
-                        <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
+                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !haveClasses)) ?
+                    <>
+                        <TouchableOpacity
+                            style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
+                            onPress={() => navigation.navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
+                        >
+                            <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
+                                <Icon name={'bag-handle'} color={iconColor} size={globalFont.font_normal} />
+                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Cantidad:</Text>
+                            </View>
                             <Controller
                                 control={control}
-                                name="units"
+                                name="pieces"
                                 render={({ field: { value } }) => (
-                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</Text>
+                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? value : "Seleccion cantidad"}</Text>
                                 )}
                             />
-                            <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
-                    >
-                        <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
-                            <Icon name={'pricetags'} color={iconColor} size={globalFont.font_normal} />
-                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Precio:</Text>
-                        </View>
-                        <Controller
-                            control={control}
-                            name="price"
-                            render={({ field: { value } }) => (
-                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? format(Number(value)) : "Selecciona precio"}</Text>
-                            )}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                        <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
-                            onPress={handleSubmit(onSubmit)}
-                            disabled={buttondisabled}
-                        >
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Publicar</Text>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
+                            onPress={() => navigation.navigate('[Modal] - UnitScreen', { from: "units", valueDefault: getValues('units') })}
+                        >
+                            <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
+                                <Icon name={'shapes'} color={iconColor} size={globalFont.font_normal} />
+                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Unidad:</Text>
+                            </View>
+                            <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
+                                <Controller
+                                    control={control}
+                                    name="units"
+                                    render={({ field: { value } }) => (
+                                        <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</Text>
+                                    )}
+                                />
+                                <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
+                            onPress={() => navigation.navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
+                        >
+                            <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
+                                <Icon name={'pricetags'} color={iconColor} size={globalFont.font_normal} />
+                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Precio:</Text>
+                            </View>
+                            <Controller
+                                control={control}
+                                name="price"
+                                render={({ field: { value } }) => (
+                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? format(Number(value)) : "Selecciona precio"}</Text>
+                                )}
+                            />
+                        </TouchableOpacity>
+
+                        <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
+                            <TouchableOpacity
+                                style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                                onPress={handleSubmit(onSubmit)}
+                                disabled={buttondisabled}
+                            >
+                                <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Publicar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                    :
+                    <View>
+                        <Text>Cargando...</Text>
                     </View>
-                </>
             }
         </View>
     );

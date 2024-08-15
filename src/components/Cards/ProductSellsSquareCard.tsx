@@ -24,7 +24,8 @@ export const ProductSellsSquareCard = ({
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,
                     idinvearts: product.ridinvearts,
-                    image: product.imagen
+                    image: product.imagen,
+                    totalClasses: product.classcount
                 }
             );
         } else {
@@ -32,7 +33,8 @@ export const ProductSellsSquareCard = ({
                 {
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,
-                    image: product.imagen
+                    image: product.imagen,
+                    totalClasses: product.classcount
                 }
             );
         }
