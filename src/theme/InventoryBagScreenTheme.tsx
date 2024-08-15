@@ -4,7 +4,7 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 
 
-export const InventoryBagScreenStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
+export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     InventoryBagScreen: {
         backgroundColor: theme.background_color,
         height: "100%",

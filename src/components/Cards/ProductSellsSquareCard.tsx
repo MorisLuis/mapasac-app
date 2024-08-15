@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -15,6 +16,7 @@ export const ProductSellsSquareCard = ({
 
     const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<any>();
+    const iconColor = typeTheme === 'dark' ? "white" : "gray"
 
     const handleSelectProduct = async () => {
         const count = parseInt(product.classcount ?? "0")
@@ -53,7 +55,11 @@ export const ProductSellsSquareCard = ({
                     <Image source={{ uri: `data:image/png;base64,${product.imagen}` }} style={ProductSellsCardTheme(theme, typeTheme).image} />
                 )
                     :
-                    <View style={ProductSellsCardTheme(theme, typeTheme).notImage}></View>
+                    <View style={ProductSellsCardTheme(theme).notImage}>
+                        <View style={ProductSellsCardTheme(theme).notImageBackground}>
+                            <Icon name={'image-outline'} size={24} color={iconColor} />
+                        </View>
+                    </View>
             }
 
             <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>

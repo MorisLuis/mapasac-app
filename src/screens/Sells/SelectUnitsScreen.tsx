@@ -78,28 +78,37 @@ export const SelectUnitScreen = ({
             style={{ flex: 1 }}
             keyboardVerticalOffset={Platform.select({ ios: 60, android: 80 })}
         >
-            <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-                <View style={SelectScreenTheme(theme, typeTheme).header}>
-                    <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona la unidad.</Text>
-                </View>
+            {
+                units ?
+                    <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
+                        <View style={SelectScreenTheme(theme, typeTheme).header}>
+                            <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona la unidad.</Text>
+                        </View>
 
-                <FlatList
-                    data={units}
-                    renderItem={renderItem}
-                    keyExtractor={product => `${product.idinveunid}`}
-                    onEndReachedThreshold={0}
-                />
+                        <FlatList
+                            data={units}
+                            renderItem={renderItem}
+                            keyExtractor={product => `${product.idinveunid}`}
+                            onEndReachedThreshold={0}
+                        />
 
-                <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                    <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
-                        onPress={handleSave}
-                        disabled={buttondisabled}
-                    >
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                        <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
+                            <TouchableOpacity
+                                style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                                onPress={handleSave}
+                                disabled={buttondisabled}
+                            >
+                                <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    :
+                    <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
+                        <View style={SelectScreenTheme(theme, typeTheme).header}>
+                            <Text>Cargando...</Text>
+                        </View>
+                    </View>
+            }
         </KeyboardAvoidingView>
     );
 };

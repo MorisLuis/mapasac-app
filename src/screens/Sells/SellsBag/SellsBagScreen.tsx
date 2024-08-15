@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
-import { Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
@@ -28,13 +28,12 @@ export const SellsBagScreen = () => {
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
-    const inputRef = useRef<TextInput>(null);
 
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false)
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    //const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [loadingCleanBag, setLoadingCleanBag] = useState(false)
     const [totalPrice, setTotalPrice] = useState<number>()
@@ -44,24 +43,24 @@ export const SellsBagScreen = () => {
         navigate("[Sells] - confirmationScreen");
     };
 
-
-    const loadBags = async () => {
-        if (searchText !== "") return;
-        if (isLoading || !hasMore) return;
+    const loadBags = useCallback(async () => {
+        if (searchText !== "" || isLoading || !hasMore) return;
         setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
-
-        if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
-            setPage(page + 1);
-        } else {
-            setHasMore(false);
+        try {
+            const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
+            if (newBags && newBags.length > 0) {
+                setBags(prevBags => [...prevBags, ...newBags]);
+                setPage(page + 1);
+            } else {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+            setDataUploaded(true);
         }
-
-        setIsLoading(false);
-        setDataUploaded(true)
-    };
-
+    }, [searchText, isLoading, hasMore, page]);
 
     const handleCleanTemporal = () => {
         setLoadingCleanBag(true)
@@ -87,8 +86,7 @@ export const SellsBagScreen = () => {
             'Seguro de eliminar este producto?',
             '',
             [
-                { text: 'Cancelar', style: 'cancel' },
-                { text: 'Eliminar', onPress: confirmDelete }
+                { text: 'Cancelar', style: 'cancel' }, { text: 'Eliminar', onPress: confirmDelete }
             ]
         );
     };
@@ -113,6 +111,11 @@ export const SellsBagScreen = () => {
         />
     ), [handleDeleteProduct]);
 
+    const renderFooter = useCallback(() => (
+        (bags?.length <= 0 && dataUploaded) ? <ActivityIndicator size="large" color={theme.color_primary} /> : null
+    ), [isLoading, theme.color_primary]);
+
+
     useEffect(() => {
         loadBags();
 
@@ -131,23 +134,10 @@ export const SellsBagScreen = () => {
                 {/* SEARCH BAR */}
                 {
                     (parseFloat(numberOfItemsSells) > 0 && dataUploaded) &&
-                    <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-                        <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
-                            <Icon name={'search'} color="gray" />
-                            <TextInput
-                                ref={inputRef}
-                                placeholder="Buscar producto..."
-                                placeholderTextColor="gray"
-                                style={{
-                                    fontSize: globalFont.font_normal,
-                                    color: theme.text_color
-                                }}
-                                value={searchText}
-                                selectionColor={theme.text_color}
-                                onChangeText={handleSearch}
-                            />
-                        </View>
-                    </TouchableWithoutFeedback>
+                    <SearchBar
+                        searchText={searchText}
+                        onSearch={handleSearch}
+                    />
                 }
 
                 {/* PRODUCTS */}
@@ -167,14 +157,13 @@ export const SellsBagScreen = () => {
                                 data={bags}
                                 renderItem={renderItem}
                                 keyExtractor={product => `${product.idenlacemob}`}
-
+                                ListFooterComponent={renderFooter}
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
-                                refreshing={isRefreshing}
+                                //refreshing={isRefreshing}
                             />
                             :
                             <InventoryBagSkeleton />
-
                 }
 
                 {/* FOOTER */}
@@ -191,7 +180,6 @@ export const SellsBagScreen = () => {
                                 onPress={() => setOpenModalDecision(true)}
                             >
                                 <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
-                                {/* <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text> */}
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black, { width: "79%" }]}
@@ -226,5 +214,36 @@ export const SellsBagScreen = () => {
                 </TouchableOpacity>
             </ModalDecision>
         </>
+    )
+};
+
+interface SearchBarInterface {
+    searchText: string;
+    onSearch: (text: string) => Promise<void>
+}
+
+const SearchBar = ({ searchText, onSearch }: SearchBarInterface) => {
+
+    const inputRef = useRef<TextInput>(null);
+    const { theme } = useTheme();
+
+    return (
+        <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
+            <View style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input]}>
+                <Icon name={'search'} color="gray" />
+                <TextInput
+                    ref={inputRef}
+                    placeholder="Buscar producto..."
+                    placeholderTextColor="gray"
+                    style={{
+                        fontSize: globalFont.font_normal,
+                        color: theme.text_color
+                    }}
+                    value={searchText}
+                    selectionColor={theme.text_color}
+                    onChangeText={onSearch}
+                />
+            </View>
+        </TouchableWithoutFeedback>
     )
 };
