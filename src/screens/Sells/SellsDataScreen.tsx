@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Alert, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
@@ -22,6 +22,15 @@ type ProductSellData = {
     idinveclas: number
 }
 
+type FormType = {
+    pieces: string;
+    price: string;
+    typeClass: ClassInterface;
+    units: UnitData;
+    capa: string;
+    idinveclas?: number;
+};
+
 interface SellsDataScreenInterface {
     route?: {
         params: {
@@ -42,55 +51,55 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const { typeTheme, theme } = useTheme();
     const { user } = useContext(AuthContext);
     const { addProductSell } = useContext(SellsBagContext);
-    const iconColor = typeTheme === 'dark' ? "white" : theme.text_color_light;
     const navigation = useNavigation<any>();
 
     const [title, setTitle] = useState<string>();
     const [imageValue, setImageValue] = useState<string>();
-    const [classType, setClassType] = useState<ClassInterface>();
-    const [piecesValue, setPiecesValue] = useState<string>();
-    const [priceValue, setPriceValue] = useState<string>();
-    const [unitValue, setUnitValue] = useState<UnitData>();
-    const [classValue, setClassValue] = useState<number>();
-    const [capaValue, setCapaValue] = useState<string>();
-    const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
+
     const [idinveartsValue, setIdinveartsValue] = useState<number>();
+    const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
     const [totalClasses, setTotalClasses] = useState<number>();
 
-    const continueWithoutClass = totalClasses !== undefined && totalClasses !== null && totalClasses < 1;
-    const buttondisabled = continueWithoutClass ? !(!classValue && unitValue && priceValue && piecesValue) : !(classValue && unitValue && priceValue && piecesValue)
-
-    const { control, handleSubmit, setValue } = useForm({
+    const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
         defaultValues: {
             pieces: pieces,
             price: price,
             typeClass: typeClass,
-            units: units
+            units: units,
+            capa: typeClass?.rcapa,
+            idinveclas: undefined
         },
     });
 
-    const onSubmit = () => {
+    const iconColor = typeTheme === 'dark' ? "white" : theme.text_color_light;
+    const haveClasses = (totalClasses as number) > 0;
+    const completeTheForm = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
+    const buttondisabled = !haveClasses ? !(watch('units') && watch('price') && watch('pieces')) : !completeTheForm;
+
+    const onSubmit = useCallback(() => {
+        if (!getValues('idinveclas') && haveClasses) return;
+
         const bagProduct: EnlacemobInterface = {
-            idinvearts: classType?.ridinvearts as number || idinveartsValue as number,
-            unidad: units?.unidad as number || unitValue?.unidad as number,
-            cantidad: parseFloat(pieces as string) || parseFloat(piecesValue as string),
-            precio: parseFloat(price as string) || parseFloat(priceValue as string),
+            cantidad: parseFloat(getValues('pieces')),
+            precio: parseFloat(getValues('price')),
+            idinvearts: getValues('typeClass')?.ridinvearts || idinveartsValue as number,
+            unidad: getValues('units')?.unidad,
+            capa: getValues('capa'),
             idusrmob: user?.idusrmob as number,
-            idinveclas: classValue,
-            capa: capaValue
-        }
+            idinveclas: getValues('idinveclas')
+        };
 
-        navigation.goBack()
-        addProductSell(bagProduct)
-    };
+        navigation.goBack();
+        addProductSell(bagProduct);
+    }, [getValues, haveClasses, idinveartsValue, navigation, addProductSell, user?.idusrmob]);
 
-    const handleGetTotal = async () => {
+    const handleGetTotal = useCallback(async () => {
         if (!cvefamilia) return;
         const total: string = await getTotalClassesSells(cvefamilia);
 
         if (total === "1") {
             const classesData = await getProductsSellsFromFamily(cvefamilia);
-            const clases = classesData[0]
+            const clases = classesData[0];
             const { ridinvearts: idinvearts, rcapa: capa, ridinveclas: idinveclas } = clases ?? {};
 
             setValue('typeClass', {
@@ -101,92 +110,64 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 clase: clases.clase
             });
 
-            setClassType({
-                rcapa: clases?.rcapa?.trim(),
-                ridinvearts: clases.ridinvearts,
-                rproducto: clases.rproducto,
-                ridinveclas: clases.ridinveclas,
-                clase: clases.clase
-            });
-
             handleGetProduct({ idinvearts, capa, idinveclas });
         } else if (total === "0") {
             const product = await getIdinveartsProduct(cvefamilia);
-            setIdinveartsValue(product.idinvearts)
+            setIdinveartsValue(product.idinvearts);
         }
+
         setTotalClasses(parseFloat(total));
-    };
+    }, [cvefamilia, setValue]);
 
-    const handleGetProduct = async ({ idinvearts, capa, idinveclas }: any) => {
+    const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
         const product: ProductInterface = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-
         setValue('price', product?.precio.toString());
-        setPriceValue(product?.precio.toString())
-
-        setValue('units',
-            {
-                unidad: product?.unidad as number,
-                descripcio: product?.unidad_nombre?.trim() as string
-            }
-        );
-
-        setUnitValue({
+        setValue('units', {
             unidad: product?.unidad as number,
             descripcio: product?.unidad_nombre?.trim() as string
-        })
-
-        /* setValue('pieces', product?.cantidad?.toString());
-        setPiecesValue(product?.cantidad?.toString()) */
-
-        setCapaValue(capa);
-        setClassValue(idinveclas)
-    };
-
-    useEffect(() => {
-        if (pieces) {
-            setValue('pieces', pieces);
-            setPiecesValue(pieces);
-        }
-
-        if (price) {
-            setValue('price', price);
-            setPriceValue(price)
-        }
+        });
 
         if (typeClass) {
-            setValue('typeClass', typeClass);
-            setClassType({
+            setValue('typeClass', {
                 rcapa: typeClass?.rcapa?.trim(),
-                ridinvearts: typeClass.ridinvearts,
+                ridinvearts: typeClass?.ridinvearts,
                 rproducto: typeClass.rproducto,
                 ridinveclas: typeClass.ridinveclas,
                 clase: typeClass.clase
-            })
+            });
         }
 
-        if (units) {
-            setValue('units', units);
-            setUnitValue({
-                unidad: units?.unidad as number,
-                descripcio: units?.descripcio?.trim() as string
-            })
+        setValue('capa', capa);
+        setValue("idinveclas", idinveclas);
+    }, [setValue, typeClass]);
+
+    const handleGoToClassScreen = useCallback(() => {
+        if (totalClasses && totalClasses > 1) {
+            navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: getValues('typeClass'), cvefamilia: cvefamiliaValue });
+        } else if (totalClasses && totalClasses < 1) {
+            Alert.alert(
+                'No tiene clase este producto',
+                '',
+                [{ text: 'Cerrar', style: 'cancel' }]
+            );
         }
+    }, [totalClasses, cvefamiliaValue, getValues, navigation]);
 
-        if (cvefamilia) {
-            setCvefamiliaValue(cvefamilia)
-        };
+    useEffect(() => {
+        // Actualiza los valores usando setValue solo para los casos en que el setter se necesita
+        if (pieces) setValue('pieces', pieces);
+        if (price) setValue('price', price);
+        if (typeClass) setValue('typeClass', typeClass);
+        if (units) setValue('units', units);
 
-        if (descripcio) {
-            setTitle(descripcio)
-        }
+        // Actualiza valores usando setters específicos
+        if (cvefamilia) setCvefamiliaValue(cvefamilia);
+        if (descripcio) setTitle(descripcio);
+        if (image) setImageValue(image);
+        handleGetTotal();
 
-        if (image) {
-            setImageValue(image)
-        }
-
-        handleGetTotal()
-
-    }, [pieces, price, typeClass, units, cvefamilia, image]);
+        //watch()
+    }, [pieces, price, typeClass, units, cvefamilia, descripcio, image]);
 
     useEffect(() => {
         if (!productSellData) return;
@@ -195,27 +176,25 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     }, [productSellData]);
 
     useEffect(() => {
-        if (classValue) return;
+        if (getValues('idinveclas')) return;
         if (!cvefamiliaValue) return;
         if (!totalClasses) return;
         if (totalClasses <= 1) return;
 
         const handleGoToClass = () => {
-            navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: classType, cvefamilia: cvefamiliaValue })
+            navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: getValues('typeClass'), cvefamilia: cvefamiliaValue })
         };
 
         handleGoToClass()
-    }, [cvefamiliaValue, totalClasses])
+    }, [cvefamiliaValue, totalClasses]);
+
 
     return (
         <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
             <View style={SellsDataScreenTheme(theme, typeTheme).imageContainer}>
                 {
-                    imageValue ? (
-                        <Image source={{ uri: `data:image/png;base64,${imageValue}` }} style={SellsDataScreenTheme(theme, typeTheme).image} />
-                    )
-                        :
-                        <View style={SellsDataScreenTheme(theme, typeTheme).notImage}></View>
+                    imageValue ? <Image source={{ uri: `data:image/png;base64,${imageValue}` }} style={SellsDataScreenTheme(theme, typeTheme).image} />
+                        : <View style={SellsDataScreenTheme(theme, typeTheme).notImage}></View>
                 }
             </View>
 
@@ -225,33 +204,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
             <TouchableOpacity
                 style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                onPress={() => {
-                    if (totalClasses && totalClasses > 1) {
-                        navigation.navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: classType, cvefamilia: cvefamiliaValue })
-                    } else if (totalClasses && totalClasses < 1) {
-                        Alert.alert(
-                            'No tiene clase este producto',
-                            '',
-                            [
-                                { text: 'Cerrar', style: 'cancel' },
-                            ]
-                        );
-                    }
-                }}
+                onPress={handleGoToClassScreen}
             >
                 <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                     <Icon name={'resize-outline'} color={iconColor} size={globalFont.font_normal} />
                     <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Clase:</Text>
                 </View>
-                <View
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: 6
-                    }}
-                >
+                <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
                     <Controller
                         control={control}
                         name="typeClass"
@@ -265,11 +224,11 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
 
             {
-                (classType || continueWithoutClass) &&
+                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !haveClasses)) &&
                 <>
                     <TouchableOpacity
                         style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: piecesValue, unit: 'PZA' })}
+                        onPress={() => navigation.navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
                     >
                         <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                             <Icon name={'bag-handle'} color={iconColor} size={globalFont.font_normal} />
@@ -286,21 +245,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
                     <TouchableOpacity
                         style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - UnitScreen', { from: "units", valueDefault: unitValue })}
+                        onPress={() => navigation.navigate('[Modal] - UnitScreen', { from: "units", valueDefault: getValues('units') })}
                     >
                         <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                             <Icon name={'shapes'} color={iconColor} size={globalFont.font_normal} />
                             <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Unidad:</Text>
                         </View>
-                        <View
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                gap: 6
-                            }}
-                        >
+                        <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
                             <Controller
                                 control={control}
                                 name="units"
@@ -314,7 +265,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
                     <TouchableOpacity
                         style={SellsDataScreenTheme(theme, typeTheme).inputContainer}
-                        onPress={() => navigation.navigate('[Modal] - PriceScreen', { from: "price", valueDefault: priceValue, unit: 'MXN' })}
+                        onPress={() => navigation.navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
                     >
                         <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                             <Icon name={'pricetags'} color={iconColor} size={globalFont.font_normal} />
@@ -340,7 +291,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                     </View>
                 </>
             }
-
         </View>
     );
 };

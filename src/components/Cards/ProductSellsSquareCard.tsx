@@ -25,7 +25,6 @@ export const ProductSellsSquareCard = ({
                 image: product.imagen
             }
         );
-        //navigation.navigate('[Modal] - ClassScreen')
     }
 
     return (

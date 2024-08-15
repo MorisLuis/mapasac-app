@@ -24,7 +24,7 @@ export const SelectAmountScreen = ({
     const navigation = useNavigation<any>();
 
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<string>(valueDefault as string);
+    const [value, setValue] = useState<string>(valueDefault ?? "0");
     const buttondisabled = false;
 
     const handleSave = () => {
@@ -36,8 +36,6 @@ export const SelectAmountScreen = ({
     };
 
     useEffect(() => {
-        setValue(valueDefault as string);
-
         if (inputRef.current) {
             inputRef.current.focus();
         }

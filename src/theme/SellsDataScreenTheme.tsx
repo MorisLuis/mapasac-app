@@ -66,6 +66,13 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
         alignItems: "center",
         gap: 6
     },
+    inputContainer_right : {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 6
+    },
     label: {
         fontSize: globalFont.font_normal,
         color: theme.text_color_light
