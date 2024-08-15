@@ -17,14 +17,25 @@ export const ProductSellsSquareCard = ({
     const navigation = useNavigation<any>();
 
     const handleSelectProduct = async () => {
-        navigation.navigate('SellsDataScreen',
-            {
-                cvefamilia: product.cvefamilia,
-                descripcio: product.descripcio,
-                idinvearts: product.ridinvearts,
-                image: product.imagen
-            }
-        );
+        const count = parseInt(product.classcount ?? "0")
+        if (count <= 1) {
+            navigation.navigate('SellsDataScreen',
+                {
+                    cvefamilia: product.cvefamilia,
+                    descripcio: product.descripcio,
+                    idinvearts: product.ridinvearts,
+                    image: product.imagen
+                }
+            );
+        } else {
+            navigation.navigate('[Modal] - ClassScreen',
+                {
+                    cvefamilia: product.cvefamilia,
+                    descripcio: product.descripcio,
+                    image: product.imagen
+                }
+            );
+        }
     }
 
     return (

@@ -55,8 +55,6 @@ export const CounterSecondary: React.FC<CounterInterface> = ({
         }
     }, [setValue]);
 
-    console.log({counter})
-
     return (
         <View>
             <View style={counterSecondaryStyles(theme).counter}>

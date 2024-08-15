@@ -12,6 +12,8 @@ interface SelectAmountScreenInterface {
         params: {
             valueDefault: ClassInterface;
             cvefamilia?: number;
+            descripcio: string;
+            image: string;
         };
     };
 }
@@ -20,7 +22,7 @@ export const SelectClassScreen = ({
     route
 }: SelectAmountScreenInterface) => {
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, cvefamilia } = route?.params ?? {};
+    const { valueDefault, cvefamilia, descripcio, image } = route?.params ?? {};
     const navigation = useNavigation<any>();
 
     const inputRef = useRef<TextInput>(null);
@@ -48,7 +50,15 @@ export const SelectClassScreen = ({
     };
 
     const handleSave = () => {
-        navigation.navigate('SellsDataScreen', { typeClass: value, productSellData: { idinvearts: value.ridinvearts, capa: value.rcapa, idinveclas: value.ridinveclas } });
+        navigation.goBack();
+        navigation.navigate('SellsDataScreen',
+            {
+                typeClass: value,
+                descripcio: descripcio,
+                image: image,
+                productSellData: { idinvearts: value.ridinvearts, capa: value.rcapa, idinveclas: value.ridinveclas }
+            }
+        );
     };
 
     const renderItem = ({ item }: { item: ClassInterface }) => {
@@ -110,8 +120,8 @@ export const SelectClassScreen = ({
             </View>
         </KeyboardAvoidingView>
     )
-    :
-    <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-        <Text>Cargando...</Text>
-    </View>
+        :
+        <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
+            <Text>Cargando...</Text>
+        </View>
 };

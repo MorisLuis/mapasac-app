@@ -53,6 +53,7 @@ export const SellsScreen = () => {
         <ProductSellsSquareCard product={item} />
     ), []);
 
+
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProductSells();

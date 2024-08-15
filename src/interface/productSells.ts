@@ -26,6 +26,8 @@ export interface ProductSellsInterface {
     capa?: string;
 
     precio?: string;
+
+    classcount?: string;
 }
 
 // Function: 
