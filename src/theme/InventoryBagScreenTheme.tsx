@@ -12,10 +12,10 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
     searchBar: {
         marginHorizontal: globalStyles(theme).globalPadding.padding,
         marginTop: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-        display: "flex",
+        /* display: "flex",
         flexDirection: "row",
         alignContent: "center",
-        alignItems: 'center'
+        alignItems: 'center' */
     },
     content: {
         minHeight: "auto",

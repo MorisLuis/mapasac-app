@@ -18,6 +18,7 @@ import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
 import { format } from '../../../utils/currency';
+import { Searchbar } from 'react-native-paper';
 
 export const SellsBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
@@ -33,10 +34,10 @@ export const SellsBagScreen = () => {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false)
-    //const [isRefreshing, setIsRefreshing] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [loadingCleanBag, setLoadingCleanBag] = useState(false)
     const [totalPrice, setTotalPrice] = useState<number>()
+    const searchInputRef = useRef<any>(null);
 
     const onPostInventary = async () => {
         goBack();
@@ -93,15 +94,15 @@ export const SellsBagScreen = () => {
 
     const handleSearch = async (text: string) => {
         setSearchText(text);
-        if (text === '') {
-            setPage(1);
-            loadBags();
-        } else {
-            const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
+        const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
             setBags(products || []);
             setPage(1);
-        }
     };
+
+    const handleGetPrice = async () => {
+        const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
+        setTotalPrice(parseInt(totalprice))
+    }
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
         <ProductSellsCard
@@ -118,27 +119,25 @@ export const SellsBagScreen = () => {
 
     useEffect(() => {
         loadBags();
-
-        const handleGetPrice = async () => {
-            const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-            setTotalPrice(parseInt(totalprice))
-        }
-
         handleGetPrice()
-    }, []);
+    }, [handleDeleteProduct]);
 
     return (
         <>
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
-                {
-                    (parseFloat(numberOfItemsSells) > 0 && dataUploaded) &&
-                    <SearchBar
-                        searchText={searchText}
-                        onSearch={handleSearch}
+                    <Searchbar
+                        ref={searchInputRef}
+                        placeholder="Buscar producto por nombre..."
+                        onChangeText={query => handleSearch(query)}
+                        value={searchText}
+                        style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
+                        iconColor={theme.text_color}
+                        placeholderTextColor={theme.text_color}
+                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
                     />
-                }
 
                 {/* PRODUCTS */}
                 {
@@ -160,7 +159,6 @@ export const SellsBagScreen = () => {
                                 ListFooterComponent={renderFooter}
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
-                                //refreshing={isRefreshing}
                             />
                             :
                             <InventoryBagSkeleton />
@@ -221,29 +219,3 @@ interface SearchBarInterface {
     searchText: string;
     onSearch: (text: string) => Promise<void>
 }
-
-const SearchBar = ({ searchText, onSearch }: SearchBarInterface) => {
-
-    const inputRef = useRef<TextInput>(null);
-    const { theme } = useTheme();
-
-    return (
-        <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-            <View style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input]}>
-                <Icon name={'search'} color="gray" />
-                <TextInput
-                    ref={inputRef}
-                    placeholder="Buscar producto..."
-                    placeholderTextColor="gray"
-                    style={{
-                        fontSize: globalFont.font_normal,
-                        color: theme.text_color
-                    }}
-                    value={searchText}
-                    selectionColor={theme.text_color}
-                    onChangeText={onSearch}
-                />
-            </View>
-        </TouchableWithoutFeedback>
-    )
-};

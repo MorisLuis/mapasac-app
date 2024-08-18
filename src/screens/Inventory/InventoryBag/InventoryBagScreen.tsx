@@ -17,6 +17,7 @@ import { getSearchProductInBack } from '../../../services/searchs';
 import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import Toast from 'react-native-toast-message';
+import { Searchbar } from 'react-native-paper';
 
 export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
@@ -27,6 +28,7 @@ export const InventoryBagScreen = () => {
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
     const inputRef = useRef<TextInput>(null);
+    const searchInputRef = useRef<any>(null);
 
 
     const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
@@ -101,14 +103,9 @@ export const InventoryBagScreen = () => {
 
     const handleSearch = async (text: string) => {
         setSearchText(text);
-        if (text === '') {
-            setPage(1);
-            loadBags();
-        } else {
-            const products = await getSearchProductInBack({ searchTerm: text, opcion: 0 });
-            setBags(products || []);
-            setPage(1);
-        }
+        const products = await getSearchProductInBack({ searchTerm: text, opcion: 0 });
+        setBags(products || []);
+        setPage(1);
     };
 
     const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
@@ -128,7 +125,7 @@ export const InventoryBagScreen = () => {
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
-                {
+                {/* {
                     (parseInt(numberOfItems) > 0 && dataUploaded) &&
                     <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                         <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
@@ -148,7 +145,19 @@ export const InventoryBagScreen = () => {
                             />
                         </View>
                     </TouchableWithoutFeedback>
-                }
+                } */}
+
+                <Searchbar
+                    ref={searchInputRef}
+                    placeholder="Buscar producto por nombre..."
+                    onChangeText={query => handleSearch(query)}
+                    value={searchText}
+                    style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
+                    iconColor={theme.text_color}
+                    placeholderTextColor={theme.text_color}
+                    icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                    clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                />
 
                 {/* PRODUCTS */}
                 {

@@ -45,7 +45,7 @@ export const ProductSellsCard = ({
 
                     <View style={styles(theme).dataItem}>
                         <Text style={styles(theme).label}>Precio:</Text>
-                        <Text style={styles(theme).dataItemText}>{format(parseInt(product?.precio as string))}</Text>
+                        <Text style={styles(theme).dataItemText}>{format(parseFloat(product?.precio as string))}</Text>
                     </View>
                     
 
