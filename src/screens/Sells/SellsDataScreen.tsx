@@ -73,7 +73,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         },
     });
 
-    const iconColor = typeTheme === 'dark' ? "white" : theme.text_color_light;
+    const iconColor = typeTheme === 'dark' ? "white" : theme.text_color;
     const haveClasses = (totalClasses as number) > 0;
     const completeTheForm = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
     const buttondisabled = !haveClasses ? !(watch('units') && watch('price') && watch('pieces')) : !completeTheForm;

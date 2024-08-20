@@ -43,7 +43,12 @@ export const ProductSellsConfirmationCard = ({
 
                     <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
                         <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Precio:</Text>
-                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{format(parseInt(product?.precio as string))}</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{format(parseFloat(product?.precio as string))}</Text>
+                    </View>
+
+                    <View style={ProductInventoryConfirmationCardTheme(theme).dataItem}>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).label}>Importe:</Text>
+                        <Text style={ProductInventoryConfirmationCardTheme(theme).dataItemText}>{format(parseFloat(product?.precio as string) * (product?.cantidad as number))}</Text>
                     </View>
                 </View>
 

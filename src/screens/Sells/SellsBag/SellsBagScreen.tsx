@@ -23,7 +23,7 @@ import { Searchbar } from 'react-native-paper';
 export const SellsBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProductSell, numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
+    const { deleteProductSell, resetAfterPost } = useContext(SellsBagContext);
 
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
@@ -68,18 +68,24 @@ export const SellsBagScreen = () => {
         deleteAllProductsInBag({ opcion: 2, mercado: true });
         resetAfterPost()
         setPage(1);
-        setLoadingCleanBag(false);
-        goBack();
-        setOpenModalDecision(false);
-        Toast.show({
-            type: 'tomatoToast',
-            text1: 'Se limpio el inventario!'
-        })
+
+        setTimeout(() => {
+            setLoadingCleanBag(false);
+            goBack();
+            setOpenModalDecision(false);
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se limpio el inventario!'
+            })
+        }, 500);
+
+
     };
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
             await deleteProductSell(productId);
+            await handleGetPrice();
             setBags((prevBags: ProductSellsInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
         }
 
@@ -127,17 +133,20 @@ export const SellsBagScreen = () => {
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
-                    <Searchbar
-                        ref={searchInputRef}
-                        placeholder="Buscar producto por nombre..."
-                        onChangeText={query => handleSearch(query)}
-                        value={searchText}
-                        style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
-                        iconColor={theme.text_color}
-                        placeholderTextColor={theme.text_color}
-                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                    />
+                {
+                    (bags.length > 0 && dataUploaded) &&
+                        <Searchbar
+                            ref={searchInputRef}
+                            placeholder="Buscar producto por nombre..."
+                            onChangeText={query => handleSearch(query)}
+                            value={searchText}
+                            style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
+                            iconColor={theme.text_color}
+                            placeholderTextColor={theme.text_color}
+                            icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                            clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                        />
+                }
 
                 {/* PRODUCTS */}
                 {

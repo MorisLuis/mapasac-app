@@ -26,7 +26,7 @@ export const ConfirmationSellsScreen = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false);
-    const [totalPrice, setTotalPrice] = useState<number>()
+    const [totalPrice, setTotalPrice] = useState<number>();
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsConfirmationCard
@@ -74,6 +74,11 @@ export const ConfirmationSellsScreen = () => {
         setIsLoading(false);
     };
 
+    const handleGetPrice = async () => {
+        const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
+        setTotalPrice(parseInt(totalprice))
+    }
+
     useFocusEffect(
         useCallback(() => {
             const refreshBags = async () => {
@@ -85,16 +90,11 @@ export const ConfirmationSellsScreen = () => {
                 setHasMore(true);
                 setDataUploaded(true)
             };
-
-            const handleGetPrice = async () => {
-                const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-                setTotalPrice(parseInt(totalprice))
-            }
-
-            handleGetPrice()
+            handleGetPrice();
             refreshBags();
         }, [])
     );
+    
 
     const { protectThisPage } = useProtectPage({
         numberOfItems: numberOfItemsSells,

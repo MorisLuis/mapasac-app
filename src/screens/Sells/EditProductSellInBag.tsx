@@ -12,6 +12,7 @@ import DotLoader from '../../components/Ui/DotLaoder';
 import Toast from 'react-native-toast-message';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { CounterSecondary } from '../../components/Ui/CounterSecondary';
 
 type EditProductSellInBagInterface = {
     route?: {

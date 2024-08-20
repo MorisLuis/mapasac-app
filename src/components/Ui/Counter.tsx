@@ -13,6 +13,7 @@ interface CounterInterface {
     secondaryDesign?: boolean
 }
 
+
 export const Counter = ({
     counter,
     setCounter,

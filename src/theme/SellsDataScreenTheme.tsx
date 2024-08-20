@@ -75,6 +75,6 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     },
     label: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color_light
+        color: theme.text_color
     },
 })

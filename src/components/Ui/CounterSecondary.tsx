@@ -55,6 +55,12 @@ export const CounterSecondary: React.FC<CounterInterface> = ({
         }
     }, [setValue]);
 
+    const onFocus = useCallback(() => {
+        if (counter.startsWith("0")) {
+            setValue(counter.substring(1))
+        }
+    }, [])
+
     return (
         <View>
             <View style={counterSecondaryStyles(theme).counter}>
@@ -70,6 +76,7 @@ export const CounterSecondary: React.FC<CounterInterface> = ({
                             onChangeText={handleInputChange}
                             keyboardType="numeric"
                             style={[counterSecondaryStyles(theme).inputText]}
+                            onFocus={onFocus}
                         />
                         {unit && <Text style={counterSecondaryStyles(theme).unitText}>{unit}</Text>}
                     </View>
