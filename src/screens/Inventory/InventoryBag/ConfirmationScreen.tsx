@@ -26,7 +26,7 @@ export const ConfirmationScreen = () => {
     const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [dataUploaded, setDataUploaded] = useState(false)
+    const [dataUploaded, setDataUploaded] = useState(false);
 
     const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
         <ProductInventoryConfirmationCard

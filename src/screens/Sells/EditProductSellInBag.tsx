@@ -45,13 +45,16 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
             editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
 
-        Toast.show({
-            type: 'tomatoToast',
-            text1: 'Se actualizo la cantidad!'
-        })
+        
+        setTimeout(() => {
+            Toast.show({
+                type: 'tomatoToast',
+                text1: 'Se actualizo la cantidad!'
+            })
+            setEditingProduct(false);
+            handleCloseModal()
+        }, 500);
 
-        setEditingProduct(false);
-        handleCloseModal()
     }
 
     useEffect(() => {

@@ -9,6 +9,7 @@ interface ContextProps {
     handleUpdateSummary: () => void;
     
     numberOfItemsSells: string;
+    editingProduct: boolean
 }
 
 export const SellsBagContext = createContext({} as ContextProps)

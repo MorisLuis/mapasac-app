@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
-import { ActivityIndicator, Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
@@ -25,11 +25,8 @@ export const SellsBagScreen = () => {
     const { theme, typeTheme } = useTheme();
     const { deleteProductSell, resetAfterPost } = useContext(SellsBagContext);
 
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
-
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
-
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +34,10 @@ export const SellsBagScreen = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loadingCleanBag, setLoadingCleanBag] = useState(false)
     const [totalPrice, setTotalPrice] = useState<number>()
+    const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
     const searchInputRef = useRef<any>(null);
+
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const onPostInventary = async () => {
         goBack();
@@ -84,9 +84,11 @@ export const SellsBagScreen = () => {
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
+            setDeletingProductId(productId)
             await deleteProductSell(productId);
             await handleGetPrice();
             setBags((prevBags: ProductSellsInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
+            setDeletingProductId(null);
         }
 
         Alert.alert(
@@ -101,8 +103,8 @@ export const SellsBagScreen = () => {
     const handleSearch = async (text: string) => {
         setSearchText(text);
         const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
-            setBags(products || []);
-            setPage(1);
+        setBags(products || []);
+        setPage(1);
     };
 
     const handleGetPrice = async () => {
@@ -114,6 +116,7 @@ export const SellsBagScreen = () => {
         <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
+            deletingProduct={deletingProductId === item.idenlacemob}  // Comparar si este producto está siendo eliminado
             showDelete
         />
     ), [handleDeleteProduct]);
@@ -134,18 +137,18 @@ export const SellsBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    (bags.length > 0 && dataUploaded) &&
-                        <Searchbar
-                            ref={searchInputRef}
-                            placeholder="Buscar producto por nombre..."
-                            onChangeText={query => handleSearch(query)}
-                            value={searchText}
-                            style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
-                            iconColor={theme.text_color}
-                            placeholderTextColor={theme.text_color}
-                            icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                            clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                        />
+                    ((bags.length > 0 && dataUploaded) || (bags.length <= 0 && searchText.length > 0 && dataUploaded)) &&
+                    <Searchbar
+                        ref={searchInputRef}
+                        placeholder="Buscar producto por nombre..."
+                        onChangeText={query => handleSearch(query)}
+                        value={searchText}
+                        style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
+                        iconColor={theme.text_color}
+                        placeholderTextColor={theme.text_color}
+                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                    />
                 }
 
                 {/* PRODUCTS */}
@@ -170,7 +173,7 @@ export const SellsBagScreen = () => {
                                 onEndReachedThreshold={0.5}
                             />
                             :
-                            <InventoryBagSkeleton />
+                            <InventoryBagSkeleton length={10} />
                 }
 
                 {/* FOOTER */}
@@ -179,7 +182,11 @@ export const SellsBagScreen = () => {
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <Text style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</Text>
-                            <Text style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
+                            <Text style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                                {
+                                    deletingProductId ? "Calculando..." : format(totalPrice as number)
+                                }
+                            </Text>
                         </View>
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
                             <TouchableOpacity

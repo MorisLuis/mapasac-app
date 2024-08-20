@@ -5,24 +5,27 @@ import { useTheme } from '../../context/ThemeContext';
 import { quantityFormat } from '../../utils/quantityFormat';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { format } from '../../utils/currency';
+import { InventoryBagSkeleton } from '../Skeletons/InventoryBagSkeleton';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
     showDelete?: boolean;
     onDelete?: (product: ProductSellsInterface) => void;
-    onClick?: () => void
+    onClick?: () => void;
+    deletingProduct?: boolean;
 }
 
 export const ProductSellsCard = ({
     product,
     showDelete,
     onDelete,
-    onClick
+    onClick,
+    deletingProduct
 }: ProductSellsCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
 
-    return (
+    return !deletingProduct ? (
         <TouchableOpacity style={styles(theme, typeTheme).productInventoryCard} onPress={onClick}>
             <View style={styles(theme).productInventoryCard__data}>
                 <View style={styles(theme).information}>
@@ -52,7 +55,7 @@ export const ProductSellsCard = ({
                         <Text style={styles(theme).label}>Importe:</Text>
                         <Text style={styles(theme).dataItemText}>{format(parseFloat(product?.precio as string) * (product?.cantidad as number))}</Text>
                     </View>
-                    
+
 
                     {
                         showDelete && <Text style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
@@ -81,4 +84,9 @@ export const ProductSellsCard = ({
             </View>
         </TouchableOpacity>
     )
+        :
+        <View style={{ flex: 1 }}>
+            <InventoryBagSkeleton length={1} />
+        </View>
+
 }

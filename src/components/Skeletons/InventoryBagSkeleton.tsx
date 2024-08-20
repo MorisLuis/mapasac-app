@@ -6,12 +6,11 @@ import { ProductDetailsSkeletonStyles } from '../../theme/UI/skeletons';
 import { useTheme } from '../../context/ThemeContext';
 import { styles } from '../../theme/UI/cardsStyles';
 import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
-import { inputStyles } from '../../theme/UI/inputs';
 import { globalStyles } from '../../theme/appTheme';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
-export const InventoryBagSkeleton = () => {
+export const InventoryBagSkeleton = ({ length } : { length: number}) => {
     const { theme, typeTheme } = useTheme();
     const shimmerColors = [
         theme.background_color_tertiary,
@@ -29,7 +28,7 @@ export const InventoryBagSkeleton = () => {
 
             <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>
                 {
-                    Array.from({ length: 10 }).map((_, index) => (
+                    Array.from({ length: length }).map((_, index) => (
                         <View key={index} style={{ marginBottom: 20 }}>
                             <View>
                                 <View style={styles(theme).information}>

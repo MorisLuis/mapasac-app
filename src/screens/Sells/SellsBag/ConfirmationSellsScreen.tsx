@@ -16,7 +16,7 @@ import { format } from '../../../utils/currency';
 import { useProtectPage } from '../../../hooks/useProtectPage';
 
 export const ConfirmationSellsScreen = () => {
-    const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
+    const { numberOfItemsSells, resetAfterPost, editingProduct } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<any>();
 
@@ -28,13 +28,14 @@ export const ConfirmationSellsScreen = () => {
     const [dataUploaded, setDataUploaded] = useState(false);
     const [totalPrice, setTotalPrice] = useState<number>();
 
+
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsConfirmationCard
             product={item}
             onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
             disabled={createSellLoading}
         />
-    ), [createSellLoading]);
+    ), [createSellLoading, bags]);
 
     const onPostInventory = async () => {
         setCreateSellLoading(true);
