@@ -28,16 +28,17 @@ export const SellsBagScreen = () => {
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
+    const [filteredBags, setFilteredBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [dataUploaded, setDataUploaded] = useState(false)
+    const [dataUploaded, setDataUploaded] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [loadingCleanBag, setLoadingCleanBag] = useState(false)
-    const [totalPrice, setTotalPrice] = useState<number>()
+    const [loadingCleanBag, setLoadingCleanBag] = useState(false);
+    const [totalPrice, setTotalPrice] = useState<number>();
     const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
     const searchInputRef = useRef<any>(null);
 
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
+    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
     const onPostInventary = async () => {
         goBack();
@@ -45,12 +46,13 @@ export const SellsBagScreen = () => {
     };
 
     const loadBags = useCallback(async () => {
-        if (searchText !== "" || isLoading || !hasMore) return;
+        if (isLoading || !hasMore) return;
         setIsLoading(true);
         try {
             const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
             if (newBags && newBags.length > 0) {
                 setBags(prevBags => [...prevBags, ...newBags]);
+                setFilteredBags(prevBags => [...prevBags, ...newBags]);
                 setPage(page + 1);
             } else {
                 setHasMore(false);
@@ -61,12 +63,12 @@ export const SellsBagScreen = () => {
             setIsLoading(false);
             setDataUploaded(true);
         }
-    }, [searchText, isLoading, hasMore, page]);
+    }, [isLoading, hasMore, page]);
 
     const handleCleanTemporal = () => {
-        setLoadingCleanBag(true)
+        setLoadingCleanBag(true);
         deleteAllProductsInBag({ opcion: 2, mercado: true });
-        resetAfterPost()
+        resetAfterPost();
         setPage(1);
 
         setTimeout(() => {
@@ -75,24 +77,26 @@ export const SellsBagScreen = () => {
             setOpenModalDecision(false);
             Toast.show({
                 type: 'tomatoToast',
-                text1: 'Se limpio el inventario!'
-            })
-        }, 500);
-
-
+                text1: 'Se limpió el inventario!'
+            });
+        }, 100);
     };
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
-            setDeletingProductId(productId)
+            setDeletingProductId(productId);
             await deleteProductSell(productId);
             await handleGetPrice();
-            setBags((prevBags: ProductSellsInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
-            setDeletingProductId(null);
-        }
+            setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productId));
+            setFilteredBags((prevFilteredBags) => prevFilteredBags.filter(bag => bag.idenlacemob !== productId));
+
+            setTimeout(() => {
+                setDeletingProductId(null);
+            }, 500);
+        };
 
         Alert.alert(
-            'Seguro de eliminar este producto?',
+            '¿Seguro de eliminar este producto?',
             '',
             [
                 { text: 'Cancelar', style: 'cancel' }, { text: 'Eliminar', onPress: confirmDelete }
@@ -102,33 +106,36 @@ export const SellsBagScreen = () => {
 
     const handleSearch = async (text: string) => {
         setSearchText(text);
+        if (text === '') {
+            setFilteredBags(bags);
+            return;
+        }
         const products = await getSearchProductInBack({ searchTerm: text, opcion: 2, mercado: true });
-        setBags(products || []);
+        setFilteredBags(products || []);
         setPage(1);
     };
 
     const handleGetPrice = async () => {
         const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-        setTotalPrice(parseInt(totalprice))
-    }
+        setTotalPrice(parseInt(totalprice));
+    };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
         <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
-            deletingProduct={deletingProductId === item.idenlacemob}  // Comparar si este producto está siendo eliminado
+            deletingProduct={deletingProductId === item.idenlacemob}
             showDelete
         />
     ), [handleDeleteProduct]);
 
     const renderFooter = useCallback(() => (
-        (bags?.length <= 0 && dataUploaded) ? <ActivityIndicator size="large" color={theme.color_primary} /> : null
+        (filteredBags?.length <= 0 && dataUploaded) ? <ActivityIndicator size="large" color={theme.color_primary} /> : null
     ), [isLoading, theme.color_primary]);
-
 
     useEffect(() => {
         loadBags();
-        handleGetPrice()
+        handleGetPrice();
     }, [handleDeleteProduct]);
 
     return (
@@ -137,7 +144,7 @@ export const SellsBagScreen = () => {
 
                 {/* SEARCH BAR */}
                 {
-                    ((bags.length > 0 && dataUploaded) || (bags.length <= 0 && searchText.length > 0 && dataUploaded)) &&
+                    ((filteredBags.length > 0 && dataUploaded) || (filteredBags.length <= 0 && searchText.length > 0 && dataUploaded)) &&
                     <Searchbar
                         ref={searchInputRef}
                         placeholder="Buscar producto por nombre..."
@@ -153,7 +160,7 @@ export const SellsBagScreen = () => {
 
                 {/* PRODUCTS */}
                 {
-                    (bags?.length <= 0 && dataUploaded) ?
+                    (filteredBags?.length <= 0 && dataUploaded) ?
                         <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
                             <EmptyMessageCard
                                 title="No hay productos con ese nombre."
@@ -162,10 +169,10 @@ export const SellsBagScreen = () => {
                             />
                         </View>
                         :
-                        (bags.length > 0 && dataUploaded) ?
+                        (filteredBags.length > 0 && dataUploaded) ?
                             <FlatList
                                 style={InventoryBagScreenStyles(theme, typeTheme).content}
-                                data={bags}
+                                data={filteredBags}
                                 renderItem={renderItem}
                                 keyExtractor={product => `${product.idenlacemob}`}
                                 ListFooterComponent={renderFooter}
@@ -178,7 +185,7 @@ export const SellsBagScreen = () => {
 
                 {/* FOOTER */}
                 {
-                    (bags.length > 0 && dataUploaded) &&
+                    (filteredBags.length > 0 && dataUploaded) &&
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <Text style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</Text>
@@ -207,6 +214,15 @@ export const SellsBagScreen = () => {
                 }
             </SafeAreaView>
 
+            {/* LOADING INDICATOR */}
+            {
+                loadingCleanBag &&
+                <View>
+                    <DotLoader />
+                </View>
+            }
+
+            {/* MODAL */}
             <ModalDecision
                 visible={openModalDecision}
                 message="Seguro de limpiar el inventario actual?"
@@ -228,10 +244,12 @@ export const SellsBagScreen = () => {
                 </TouchableOpacity>
             </ModalDecision>
         </>
-    )
+    );
 };
 
 interface SearchBarInterface {
     searchText: string;
     onSearch: (text: string) => Promise<void>
 }
+
+
