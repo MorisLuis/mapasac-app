@@ -189,10 +189,9 @@ export const InventoryBagScreen = () => {
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
                                 refreshing={isRefreshing}
-                            //onRefresh={refreshBags}
                             />
                             :
-                            <InventoryBagSkeleton />
+                            <InventoryBagSkeleton length={10} />
 
                 }
 

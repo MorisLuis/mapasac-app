@@ -24,7 +24,7 @@ export const SuccesMessageSells = () => {
                 </TouchableOpacity>
                 <View style={SuccesMessageScreenStyles(theme, typeTheme).content}>
                     <Icon name="checkmark-done-outline" size={hp("10%")} color={iconColor} />
-                    <Text style={SuccesMessageScreenStyles(theme, typeTheme).title}>Tu inventario ha sido exitoso.</Text>
+                    <Text style={SuccesMessageScreenStyles(theme, typeTheme).title}>Se ha generado con exito su pedido.</Text>
                 </View>
             </View>
 

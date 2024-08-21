@@ -77,7 +77,7 @@ export const ConfirmationSellsScreen = () => {
 
     const handleGetPrice = async () => {
         const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-        setTotalPrice(parseInt(totalprice))
+        setTotalPrice(parseFloat(totalprice))
     }
 
     useFocusEffect(

@@ -37,6 +37,7 @@ export const SellsBagScreen = () => {
     const [totalPrice, setTotalPrice] = useState<number>();
     const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
     const searchInputRef = useRef<any>(null);
+    console.log({totalPrice})
 
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
@@ -117,7 +118,7 @@ export const SellsBagScreen = () => {
 
     const handleGetPrice = async () => {
         const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-        setTotalPrice(parseInt(totalprice));
+        setTotalPrice(parseFloat(totalprice));
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
