@@ -1,7 +1,6 @@
 import { api } from "../api/api";
 import EnlacemobInterface from "../interface/enlacemob";
 import ProductInterface from "../interface/product";
-import { ProductSellsInterface } from "../interface/productSells";
 
 interface getBagInterface {
     limit: number;

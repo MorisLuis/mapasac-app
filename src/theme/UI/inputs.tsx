@@ -1,14 +1,13 @@
 import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "../appTheme";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
-        minHeight: 45,
+        minHeight: 50,
+        fontSize: globalFont.font_normal,
         borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        fontSize: globalFont.font_normal,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         backgroundColor: theme.background_color_secondary,
         gap: 10,
@@ -42,17 +41,19 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
 });
 
 
-export const selectStyles = (theme: Theme) => StyleSheet.create({
+export const selectStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
+        minHeight: 50,
         fontSize: globalFont.font_normal,
-        paddingVertical: globalStyles(theme).globalPadding.padding,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         borderWidth: 1,
-        borderColor: theme.color_border,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        backgroundColor: theme.background_color_secondary,
         color: theme.text_color,
+
+        paddingVertical: globalStyles(theme).globalPadding.padding,
         paddingRight: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color,
     }
 });
 

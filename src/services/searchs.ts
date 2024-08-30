@@ -38,8 +38,23 @@ const getSearchProductInBack = async ({ searchTerm, opcion, mercado }: SearchInt
     return products
 }
 
+const getSearchClients = async ({ searchTerm }: SearchInterface) => {
+    let products;
+    try {
+        const getProduct = await api.get(`/api/search/clients?term=${searchTerm}`);
+        products = getProduct.data.clients;
+    } catch (error: any) {
+        throw error?.response?.data || new Error('Unknown error');
+    }
+
+    return products
+}
+
+
+
 
 export {
     getSearchProductInStock,
-    getSearchProductInBack
+    getSearchProductInBack,
+    getSearchClients
 }

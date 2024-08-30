@@ -14,6 +14,11 @@ interface CounterInterface {
 }
 
 const formatValue = (input: string): string => {
+    // Si el input comienza con '0' y no es '0.' (para números decimales), eliminarlo
+    if (input.startsWith('0') && input.length > 1) {
+        input = input.substring(1);
+    }
+
     const decimalPlaces = 2;
     const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?`);
     const formattedValue = input.match(regex)?.[0] || '';

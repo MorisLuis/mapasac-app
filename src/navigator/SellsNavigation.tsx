@@ -16,6 +16,7 @@ import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationS
 import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
 import { SuccesMessageSells } from '../screens/SuccesMessageSells';
 import { ProductSellsInterface } from '../interface/productSells';
+import { SelectClient } from '../screens/Sells/SelectClient';
 
 export type SellsNavigationStackParamList = {
 
@@ -37,9 +38,10 @@ export type SellsNavigationStackParamList = {
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - UnitScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number};
+    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number };
+    "[Modal] - SelectClient": undefined;
 
-    "[Sells] - confirmationScreen": undefined;
+    "[Sells] - confirmationScreen": { client: ClassInterface };
     "[Sells] - succesMessageScreen": undefined;
 };
 
@@ -163,6 +165,25 @@ export const SellsNavigation = () => {
                         <CustomHeader
                             {...props}
                             title={"Clase"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="[Modal] - SelectClient"
+                component={SelectClient}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Cliente"}
                             navigation={navigation}
                             backCustum={true}
                             back={() => {

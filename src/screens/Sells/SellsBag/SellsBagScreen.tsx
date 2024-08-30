@@ -37,7 +37,6 @@ export const SellsBagScreen = () => {
     const [totalPrice, setTotalPrice] = useState<number>();
     const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
     const searchInputRef = useRef<any>(null);
-    console.log({totalPrice})
 
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 

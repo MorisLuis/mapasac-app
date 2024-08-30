@@ -10,6 +10,12 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         height: "100%",
         padding: 20
     },
+    confirmation: {
+        borderBottomWidth: 1,
+        borderBottomColor: theme.color_border_tertiary,
+        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
     confirmationHeader: {
         height: hp("20%"),
         display: "flex",
@@ -21,7 +27,6 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         color: theme.text_color
     },
     confirmationInfo: {
-        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
         borderBottomWidth: 1,
         borderBottomColor: theme.color_border_tertiary,
         paddingVertical: globalStyles(theme).globalPadding.padding,
@@ -38,6 +43,43 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         display: "flex",
         flexDirection: 'row',
         gap: 10
+    },
+    confirmationPaymentInfo: {
+        //marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+        paddingBottom: globalStyles(theme).globalPadding.padding,
+    },
+    confirmationDataHeader: {
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom / 2
+    },
+    paymentMethodContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: 10,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    paymentMethodClient: {
+        display: "flex",
+        gap: 10,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    paymentMethodItem: {
+        flex: 1,
+        backgroundColor: theme.background_color_tertiary,
+        width: "100%",
+        padding: globalStyles(theme).globalPadding.padding,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 1,
+        borderColor: theme.color_border_tertiary
+    },
+    paymentMethodItemActive: {
+        flex: 1,
+        backgroundColor: theme.color_tertiary,
+        width: "100%",
+        padding: globalStyles(theme).globalPadding.padding,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 1,
+        borderColor: theme.color_border
     },
     confirmationProductsContent: {
         marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom

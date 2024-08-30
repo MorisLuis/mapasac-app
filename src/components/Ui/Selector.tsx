@@ -32,9 +32,8 @@ export const Selector = ({
     return (
         <View>
             <Text style={{
-                fontWeight: 'bold',
                 fontSize: globalFont.font_normal,
-                marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+                marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
                 color: theme.text_color
             }}
             >{label}</Text>

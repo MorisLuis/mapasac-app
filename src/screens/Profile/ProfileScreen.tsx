@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { Alert, Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
@@ -16,7 +16,7 @@ export const ProfileScreen = () => {
     const { logOut } = useContext(AuthContext);
     const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
-    const { theme, typeTheme, toggleTheme} = useTheme();
+    const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
     const iconColor = typeTheme === 'dark' ? "white" : "black"

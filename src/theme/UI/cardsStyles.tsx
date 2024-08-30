@@ -169,6 +169,19 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         backgroundColor: theme.background_color_secondary,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
     },
+    ProductItemSearchSelected: {
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        borderWidth: 1,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: theme.color_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
+    },
     productInventoryCard__Image: {
         width: wp("17.5%"),
         minHeight: wp("17.5%"),

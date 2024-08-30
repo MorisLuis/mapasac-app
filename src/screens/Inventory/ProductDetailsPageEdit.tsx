@@ -9,7 +9,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { getProductDetails } from '../../services/products';
 import { ProductDetailsEditSkeleton } from '../../components/Skeletons/ProductDetailsEditSkeleton';
-import { ProductDetailsSkeletonStyles } from '../../theme/UI/skeletons';
 
 type ProductDetailsPageEditInterface = {
     route?: {
