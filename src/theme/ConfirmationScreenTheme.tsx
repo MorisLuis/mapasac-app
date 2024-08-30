@@ -10,6 +10,9 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         height: "100%",
         padding: 20
     },
+    ConfirmationScreenContent: {
+        marginBottom: globalStyles(theme).globalPadding.padding * 3
+    },
     confirmation: {
         borderBottomWidth: 1,
         borderBottomColor: theme.color_border_tertiary,

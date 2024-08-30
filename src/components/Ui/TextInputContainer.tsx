@@ -8,13 +8,15 @@ interface TextInputContainerInterface {
 
     placeholder?: string;
     label?: string;
-    setComments: any
+    setComments: any;
+    value?: string
 }
 
 export const TextInputContainer = ({
     placeholder = "Escribe algo...",
     label = "label",
-    setComments
+    setComments,
+    value
 }: TextInputContainerInterface) => {
 
     const [height, setHeight] = useState(50);
@@ -38,6 +40,8 @@ export const TextInputContainer = ({
                 multiline={true}
                 placeholder={placeholder}
                 onContentSizeChange={(event) => setHeight(event.nativeEvent.contentSize.height)}
+                placeholderTextColor={theme.color_gray}
+                value={value}
             />
         </>
     )

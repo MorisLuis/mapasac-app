@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, FlatList, ScrollView } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
@@ -191,7 +191,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             {
                                 methodPayment !== 0 &&
                                 <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                                    <TextInputContainer label='Comentarios' setComments={setComments} />
+                                        <TextInputContainer label='Comentarios' setComments={setComments} value={comments}/>
                                 </View>
                             }
                         </>
@@ -236,10 +236,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         navigatePage: 'SellsScreen'
     });
 
-
     return !protectThisPage ? (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-            <View >
+            <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreenContent}>
                 {
                     dataUploaded ? (
                         <FlatList
