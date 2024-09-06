@@ -9,17 +9,28 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import DeviceInfo from 'react-native-device-info';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 
 
 export const ProfileScreen = () => {
 
     const { logOut } = useContext(AuthContext);
+    const { handleCleanState } = useContext(SellsBagContext);
+    const { handleCleanState: handleCleanStateInventory } = useContext(InventoryBagContext);
+
     const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
     const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<any>();
 
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColor = typeTheme === 'dark' ? "white" : "black";
+
+    const handleLogOut = async ( ) => {
+        await logOut()
+        handleCleanState()
+        handleCleanStateInventory()
+    }
 
 
     useEffect(() => {
@@ -59,7 +70,7 @@ export const ProfileScreen = () => {
 
                 <View style={ProfileScreenStyles(theme, typeTheme).divider}></View>
 
-                <TouchableOpacity onPress={logOut} style={[buttonStyles(theme, typeTheme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
+                <TouchableOpacity onPress={handleLogOut} style={[buttonStyles(theme, typeTheme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
                     <Text style={buttonStyles(theme, typeTheme).buttonText}>Cerrar sesión</Text>
                 </TouchableOpacity>
 

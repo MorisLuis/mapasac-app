@@ -8,6 +8,7 @@ import { AuthContext } from './AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { postLogin, renewLogin } from '../../services/auth';
+import { api } from '../../api/api';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -136,6 +137,8 @@ export const AuthProvider = ({ children }: any) => {
 
     const logOut = async () => {
         setLoggingIn(false);
+        navigation.navigate('ClosingPage')
+        await api.get('/api/auth/logout');
         await AsyncStorage.removeItem('token');
         dispatch({ type: 'logout' });
     };

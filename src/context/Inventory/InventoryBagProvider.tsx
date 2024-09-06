@@ -20,10 +20,10 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const { user } = useContext(AuthContext);
 
     const handleUpdateSummary = async () => {
-        if(!user) return
+        if (!user) return
         try {
-            const total = await getTotalProductsInBag({opcion: 0});
-            
+            const total = await getTotalProductsInBag({ opcion: 0 });
+
             const numberOfItems = total;
             const orderSummary = {
                 numberOfItems
@@ -38,7 +38,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const addProduct = (inventoryBody: ProductInterface) => {
         try {
-            addProductInBag({product: inventoryBody})
+            addProductInBag({ product: inventoryBody })
             setProductAdded(true);
         } catch (error) {
             console.log({ error })
@@ -49,7 +49,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const deleteProduct = (idenlacemob: number) => {
         try {
-            deleteProductInBag({idenlacemob})
+            deleteProductInBag({ idenlacemob })
             setProductAdded(true);
         } catch (error) {
             console.log({ error })
@@ -69,6 +69,10 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
         }
     }
 
+    const handleCleanState = () => {
+        dispatch({ type: '[InventoryBag] - LogOut' })
+    }
+
     const resetAfterPost = () => {
         handleUpdateSummary()
     }
@@ -84,7 +88,8 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             deleteProduct,
             editProduct,
             resetAfterPost,
-            handleUpdateSummary
+            handleUpdateSummary,
+            handleCleanState
         }}>
             {children}
         </InventoryBagContext.Provider>

@@ -11,8 +11,18 @@ export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleShee
         height: "100%"
     },
     header:{
-        flexDirection: "row",
+        display: "flex",
+        flexDirection: "column",
         marginBottom: hp("2.5%"),
         marginTop: hp("7.5%")
+    },
+    header_subtitle: {
+        color: theme.text_color_light,
+        fontSize: globalFont.font_normal
+    },
+    header_total: {
+        color: theme.text_color,
+        fontSize: globalFont.font_med
+
     }
 })

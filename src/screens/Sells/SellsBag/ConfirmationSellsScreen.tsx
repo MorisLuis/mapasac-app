@@ -108,7 +108,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const renderScreen = () => {
 
         return (
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
+            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
                         <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItemsSells}</Text>
@@ -252,9 +252,13 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                     {renderScreen()}
                                     {
                                         availableToPost &&
+                                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
+
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
                                             <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
                                         </View>
+                                        </View>
+
                                     }
                                 </>
                             }

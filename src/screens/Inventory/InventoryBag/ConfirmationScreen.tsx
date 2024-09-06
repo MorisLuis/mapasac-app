@@ -105,7 +105,7 @@ export const ConfirmationScreen = () => {
                             onEndReached={loadBags}
                             onEndReachedThreshold={0.5}
                             ListHeaderComponent={
-                                <>
+                                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
                                             <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
@@ -120,7 +120,7 @@ export const ConfirmationScreen = () => {
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
                                         <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
                                     </View>
-                                </>
+                                </View>
                             }
                         />
                         :

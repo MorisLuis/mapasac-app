@@ -19,7 +19,7 @@ export const ConfirmationSkeleton = () => {
     ]
 
     return (
-        <>
+        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
             <View style={[
                 ConfirmationScreenStyles(theme, typeTheme).confirmationInfo,
                 {
@@ -31,7 +31,6 @@ export const ConfirmationSkeleton = () => {
             >
 
                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-
                     <ShimmerPlaceHolder
                         shimmerColors={shimmerColors}
                         LinearGradient={LinearGradient}
@@ -65,13 +64,13 @@ export const ConfirmationSkeleton = () => {
 
             <View
                 style={{
-                    paddingHorizontal: globalStyles(theme).globalPadding.padding
+                    //paddingHorizontal: globalStyles(theme).globalPadding.padding
                 }}
             >
                 {Array.from({ length: 10 }).map((_, index) => (
                     <ProductInventoryCardSkeleton key={index} />
                 ))}
             </View>
-        </>
+        </View>
     )
 }

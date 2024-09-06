@@ -8,6 +8,8 @@ import { globalStyles } from '../../theme/appTheme';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { format } from '../../utils/currency';
+import { getTotalPriceBag } from '../../services/bag';
 
 
 export const SellsScreen = () => {
@@ -18,6 +20,12 @@ export const SellsScreen = () => {
     const { handleUpdateSummary } = useContext(SellsBagContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [totalPrice, setTotalPrice] = useState<number>();
+
+    const handleGetPrice = async () => {
+        const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
+        setTotalPrice(parseFloat(totalprice));
+    };
 
     const loadMoreItem = () => {
         if (products.length < totalProducts) {
@@ -70,32 +78,41 @@ export const SellsScreen = () => {
         }, [currentPage])
     );
 
+    /* useEffect(() => {
+        handleGetPrice();
+    }, [handleUpdateSummary]);
+ */
     return (
         <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
             <View style={SellsScreenStyles(theme).content}>
 
-                { products.length > 1 ?
-                        <>
-                            <View style={SellsScreenStyles(theme).header}>
-                                <Text style={{ color: theme.text_color, fontSize: 20 }}>Ventas</Text>
-                            </View>
+                {products.length > 1 ?
+                    <>
+                        {/* <View style={SellsScreenStyles(theme).header}>
+                                <Text style={SellsScreenStyles(theme).header_subtitle}>Total de venta</Text>
+                                <Text style={SellsScreenStyles(theme).header_total}>{format(totalPrice as number)}</Text>
+                            </View> */}
 
-                            <FlatList
-                                data={products}
-                                numColumns={2}
-                                renderItem={renderItem}
-                                keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
-                                contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                                columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                                ListFooterComponent={renderFooter}
-                                onEndReached={loadMoreItem}
-                                onEndReachedThreshold={0}
-                            />
-                        </>
-                        :
                         <View style={SellsScreenStyles(theme).header}>
-                            <Text>Cargando...</Text>
+                            <Text style={SellsScreenStyles(theme).header_total}>Ventas</Text>
                         </View>
+
+                        <FlatList
+                            data={products}
+                            numColumns={2}
+                            renderItem={renderItem}
+                            keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
+                            contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                            columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                            ListFooterComponent={renderFooter}
+                            onEndReached={loadMoreItem}
+                            onEndReachedThreshold={0}
+                        />
+                    </>
+                    :
+                    <View style={SellsScreenStyles(theme).header}>
+                        <Text>Cargando...</Text>
+                    </View>
                 }
             </View>
         </SafeAreaView>

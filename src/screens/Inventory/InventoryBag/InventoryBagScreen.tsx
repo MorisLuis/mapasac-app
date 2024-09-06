@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
-import { Alert, FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
@@ -22,12 +22,12 @@ import { Searchbar } from 'react-native-paper';
 export const InventoryBagScreen = () => {
     const { navigate, goBack } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
-    const { deleteProduct, numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
+    const { deleteProduct, resetAfterPost } = useContext(InventoryBagContext);
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
 
     const [openModalDecision, setOpenModalDecision] = useState(false);
     const [searchText, setSearchText] = useState<string>('');
-    const inputRef = useRef<TextInput>(null);
+    //const inputRef = useRef<TextInput>(null);
     const searchInputRef = useRef<any>(null);
 
 
@@ -62,19 +62,20 @@ export const InventoryBagScreen = () => {
         setDataUploaded(true)
     };
 
-    const refreshBags = async () => {
+    /* const refreshBags = async () => {
         setIsRefreshing(true);
         setPage(1);
         const newBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
         setBags(newBags || []);
         setHasMore(true);
         setIsRefreshing(false);
-    };
+    }; */
 
-    const handleCleanTemporal = () => {
+    const handleCleanTemporal = async () => {
         setLoadingCleanBag(true)
-        deleteAllProductsInBag({ opcion: 0 });
-        resetAfterPost()
+        await deleteAllProductsInBag({ opcion: 0 });
+        await resetAfterPost()
+
         setPage(1);
         setLoadingCleanBag(false);
         goBack();
@@ -88,7 +89,7 @@ export const InventoryBagScreen = () => {
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
             await deleteProduct(productId);
-            setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
+            await setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
         }
 
         Alert.alert(
@@ -125,28 +126,6 @@ export const InventoryBagScreen = () => {
             <SafeAreaView style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                 {/* SEARCH BAR */}
-                {/* {
-                    (parseInt(numberOfItems) > 0 && dataUploaded) &&
-                    <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
-                        <View style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, inputStyles(theme).input]}>
-                            <Icon name={'search'} color="gray" />
-                            <TextInput
-                                ref={inputRef}
-                                placeholder="Buscar producto..."
-                                placeholderTextColor="gray"
-                                style={{
-                                    fontSize: globalFont.font_normal,
-                                    color: theme.text_color
-                                }}
-
-                                value={searchText}
-                                selectionColor={theme.text_color}
-                                onChangeText={handleSearch}
-                            />
-                        </View>
-                    </TouchableWithoutFeedback>
-                } */}
-
                 <Searchbar
                     ref={searchInputRef}
                     placeholder="Buscar producto por nombre..."

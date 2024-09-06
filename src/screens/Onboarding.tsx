@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -70,6 +70,8 @@ export const OnboardingScreen = () => {
                 }
             </View>
 
+{/*             <Button title='ola' onPress={() => navigation.navigate('ClosingPage')}/>
+ */}
         </SafeAreaView>
     )
 }

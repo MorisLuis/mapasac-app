@@ -9,6 +9,7 @@ type InventoryBagActionType =
             numberOfItems?: string;
         }
     }
+    | { type: '[InventoryBag] - LogOut' }
 
 
 export const innventoryBagReducer = (state: InventoryBagInterface, action: InventoryBagActionType): InventoryBagInterface => {
@@ -25,6 +26,12 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
                 ...state,
                 ...action.payload
             }
+
+            case '[InventoryBag] - LogOut':
+                return {
+                    ...state,
+                    numberOfItems: "0"
+                }
 
         default:
             return state

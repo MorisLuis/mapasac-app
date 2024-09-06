@@ -1,12 +1,5 @@
 import UserInterface from "../../interface/user";
-
-export interface AuthState {
-    status: 'checking' | 'authenticated' | 'not-authenticated';
-    token: string | null;
-    errorMessage: string;
-    user: UserInterface | null;
-    codeBar?: string;
-}
+import { AuthState } from "./AuthProvider";
 
 type AuthAction =
     | { type: 'signUp', payload: { token: string, user: UserInterface } }
@@ -45,6 +38,15 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
             }
 
         case 'logout':
+            return {
+                status: 'not-authenticated',
+                token: null,
+                user: null,
+                errorMessage: '',
+                codeBar: "",
+                codeBarStatus: false
+            }
+
         case 'notAuthenticated':
             return {
                 ...state,

@@ -10,11 +10,12 @@ import { InventoryNavigation } from './InventoryNavigation';
 import { OnboardingScreen } from '../screens/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
 import { SellsNavigation } from './SellsNavigation';
-import { SuccesMessage } from '../screens/SuccesMessage';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
+import { ClosingScreen } from '../screens/ClosingScreen';
 
 export type InventoryNavigationStackParamList = {
     OnboardingScreen: undefined;
+    ClosingPage: undefined;
 
     // Login
     LoginPage: undefined;
@@ -49,7 +50,6 @@ export const AppNavigation = () => {
     const stackScreens = useMemo(() => (
         <>
             {authScreens}
-
             <Stack.Screen
                 name="OnboardingScreen"
                 component={OnboardingScreen}
@@ -77,6 +77,16 @@ export const AppNavigation = () => {
                     presentation: "modal"
                 }}
             />
+
+            <Stack.Screen
+                name="ClosingPage"
+                component={ClosingScreen}
+                options={{
+                    headerShown: false,
+                    presentation: "transparentModal"
+                }}
+            />
+
 
         </>
     ), [authScreens, handleCameraAvailable, updateBarCode]);

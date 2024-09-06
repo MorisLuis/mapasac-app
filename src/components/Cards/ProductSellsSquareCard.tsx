@@ -47,12 +47,43 @@ export const ProductSellsSquareCard = ({
             onPress={handleSelectProduct}
             style={ProductSellsCardTheme(theme, typeTheme).ProductSellsCardTheme}
         >
-            <View style={ProductSellsCardTheme(theme, typeTheme).shadowImage}>
-            </View>
-
             {
                 product.imagen ? (
-                    <Image source={{ uri: `data:image/png;base64,${product.imagen}` }} style={ProductSellsCardTheme(theme, typeTheme).image} />
+                    <View style={ProductSellsCardTheme(theme, typeTheme).item}>
+                        <Image
+                            source={{ uri: `data:image/png;base64,${product.imagen}` }}
+                            style={ProductSellsCardTheme(theme, typeTheme).image}
+                        />
+                        <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
+                    </View>
+                )
+                    :
+                    <View style={ProductSellsCardTheme(theme, typeTheme).item}>
+                        <View style={ProductSellsCardTheme(theme).notImage}>
+                            <View style={ProductSellsCardTheme(theme).notImageBackground}>
+                                <Icon name={'image-outline'} size={24} color={iconColor} />
+                            </View>
+                        </View>
+                        <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
+                    </View>
+            }
+
+        </TouchableOpacity>
+    )
+}
+
+
+/* 
+        <TouchableOpacity
+            onPress={handleSelectProduct}
+            style={ProductSellsCardTheme(theme, typeTheme).ProductSellsCardTheme}
+        >
+            {
+                product.imagen ? (
+                    <Image
+                        source={{ uri: `data:image/png;base64,${product.imagen}` }}
+                        style={ProductSellsCardTheme(theme, typeTheme).image}
+                    />
                 )
                     :
                     <View style={ProductSellsCardTheme(theme).notImage}>
@@ -64,5 +95,4 @@ export const ProductSellsSquareCard = ({
 
             <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
         </TouchableOpacity>
-    )
-}
+*/

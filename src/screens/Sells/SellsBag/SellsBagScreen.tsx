@@ -65,10 +65,10 @@ export const SellsBagScreen = () => {
         }
     }, [isLoading, hasMore, page]);
 
-    const handleCleanTemporal = () => {
+    const handleCleanTemporal = async () => {
         setLoadingCleanBag(true);
-        deleteAllProductsInBag({ opcion: 2, mercado: true });
-        resetAfterPost();
+        await deleteAllProductsInBag({ opcion: 2, mercado: true });
+        await resetAfterPost();
         setPage(1);
 
         setTimeout(() => {
@@ -87,7 +87,7 @@ export const SellsBagScreen = () => {
             setDeletingProductId(productId);
             await deleteProductSell(productId);
             await handleGetPrice();
-            setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productId));
+            await setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productId));
             setFilteredBags((prevFilteredBags) => prevFilteredBags.filter(bag => bag.idenlacemob !== productId));
 
             setTimeout(() => {

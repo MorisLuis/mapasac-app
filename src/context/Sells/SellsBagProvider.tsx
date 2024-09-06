@@ -68,6 +68,10 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         }
     }
 
+    const handleCleanState = () => {
+        dispatch({ type: '[SellsBag] - LogOut'})
+    }
+
     const resetAfterPost = () => {
         handleUpdateSummary()
     }
@@ -87,7 +91,8 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
             deleteProductSell,
             editProductSell,
             resetAfterPost,
-            handleUpdateSummary
+            handleUpdateSummary,
+            handleCleanState
         }}>
             {children}
         </SellsBagContext.Provider>

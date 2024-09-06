@@ -13,9 +13,13 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     ConfirmationScreenContent: {
         marginBottom: globalStyles(theme).globalPadding.padding * 3
     },
-    confirmation: {
+    confirmationSells: {
         borderBottomWidth: 1,
         borderBottomColor: theme.color_border_tertiary,
+        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    confirmation: {
         marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
@@ -33,7 +37,9 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         borderBottomWidth: 1,
         borderBottomColor: theme.color_border_tertiary,
         paddingVertical: globalStyles(theme).globalPadding.padding,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        //marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
+
     },
     confirmationItems: {
         display: 'flex',
@@ -85,7 +91,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         borderColor: theme.color_border
     },
     confirmationProductsContent: {
-        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
+        //marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom
     },
     confirmationProductsContentHeader: {
         color: theme.text_color,

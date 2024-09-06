@@ -2,12 +2,8 @@ import { SellsBagInterface } from "./SellsBagProvider";
 
 
 type SellsBagActionType =
-    | {
-        type: '[SellsBag] - Update Summary',
-        payload: {
-            numberOfItemsSells?: string;
-        }
-    }
+    | { type: '[SellsBag] - Update Summary', payload: { numberOfItemsSells?: string; } }
+    | { type: '[SellsBag] - LogOut' }
 
 
 export const sellsBagReducer = (state: SellsBagInterface, action: SellsBagActionType): SellsBagInterface => {
@@ -18,6 +14,12 @@ export const sellsBagReducer = (state: SellsBagInterface, action: SellsBagAction
             return {
                 ...state,
                 ...action.payload
+            }
+
+        case '[SellsBag] - LogOut':
+            return {
+                ...state,
+                numberOfItemsSells : "0",
             }
 
         default:

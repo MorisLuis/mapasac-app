@@ -308,36 +308,38 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         display: "flex",
         position: 'relative'
     },
+    item: {
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderWidth: 0.5,
+        borderColor: theme.color_border_secondary
+    },
     image: {
         flex: 1,
-        borderWidth: 3,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderColor: theme.background_color_secondary,
+        borderWidth: 1,
+        borderTopLeftRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderTopRightRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         resizeMode: "cover",
         display: "flex",
         width: "100%",
         minHeight: 120,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
-    },
-    shadowImage: {
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
     },
     notImage: {
         flex: 1,
         borderWidth: 2,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderTopLeftRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderTopRightRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         borderColor: theme.background_color_secondary,
         display: "flex",
         width: "100%",
         minHeight: 120,
         backgroundColor: theme.background_color_tertiary,
+
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: 'bold',
-        height: wp("20%"),
-        position: "relative",
-        zIndex: 3,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        justifyContent: 'center'
     },
     notImageBackground: {
         flexDirection: 'column',
@@ -357,8 +359,9 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
     title: {
         fontSize: globalFont.font_normal,
         color: theme.text_color,
-        fontWeight: "bold",
-        textTransform: "capitalize"
+        textTransform: "capitalize",
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+        paddingBottom: globalStyles(theme).globalPadding.padding / 3
     }
 
 });
