@@ -112,28 +112,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     }
 
     const renderScreen = () => {
-
         return (
             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItemsSells}</Text>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
-                    </View>
-                    <View
-                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>Venta</Text>
-                    </View>
-                    <View
-                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
-                    </View>
-                </View>
-
                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationPaymentInfo}>
-
                     {
                         methodPayment !== 0 &&
                         <View style={{
@@ -208,17 +189,18 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         )
     }
 
+    const refreshBags = async () => {
+        setIsLoading(true);
+        const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
+        setBags(refreshedBags);
+        setPage(2);
+        setIsLoading(false);
+        setHasMore(true);
+        setDataUploaded(true)
+    };
+
     useFocusEffect(
         useCallback(() => {
-            const refreshBags = async () => {
-                setIsLoading(true);
-                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
-                setBags(refreshedBags);
-                setPage(2);
-                setIsLoading(false);
-                setHasMore(true);
-                setDataUploaded(true)
-            };
             handleGetPrice();
             refreshBags();
         }, [])
@@ -228,13 +210,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         handleGetClient();
     }, [client])
 
-    const { protectThisPage } = useProtectPage({
-        numberOfItems: numberOfItemsSells,
-        loading: createSellLoading,
-        navigatePage: 'SellsScreen'
-    });
-
-    return !protectThisPage ? (
+    return (
         <LayoutConfirmation
             data={bags}
             renderItem={renderItem}
@@ -245,12 +221,8 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             loadData={dataUploaded}
             availableToPost={availableToPost}
             buttonPostDisabled={createSellLoading}
+            numberOfItems={numberOfItemsSells}
+            totalPrice={totalPrice}
         />
-    ) : (
-        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-            <View>
-                <Text>Redireccionando sells...</Text>
-            </View>
-        </SafeAreaView>
-    );
+    )
 };

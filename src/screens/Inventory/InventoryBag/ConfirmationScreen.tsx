@@ -70,66 +70,33 @@ export const ConfirmationScreen = () => {
         setIsLoading(false);
     };
 
+    const refreshBags = async () => {
+        setIsLoading(true);
+        const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
+        setBags(refreshedBags);
+        setPage(2);
+        setIsLoading(false);
+        setHasMore(true);
+        setDataUploaded(true)
+    };
+
     useFocusEffect(
         useCallback(() => {
-            const refreshBags = async () => {
-                setIsLoading(true);
-                const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
-                setBags(refreshedBags);
-                setPage(2);
-                setIsLoading(false);
-                setHasMore(true);
-                setDataUploaded(true)
-            };
-
             refreshBags();
         }, [])
     );
 
-    const { protectThisPage } = useProtectPage({
-        numberOfItems: numberOfItems,
-        loading: createInventaryLoading,
-        navigatePage: 'ScanneNavigation'
-    });
-
-    const renderListHeaderComponent = () => {
-        return (
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
-                    </View>
-                    <View
-                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</Text>
-                    </View>
-                </View>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                    <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
-                </View>
-            </View>
-        )
-    }
-
-    return !protectThisPage ? (
+    return (
         <LayoutConfirmation
             data={bags}
             renderItem={renderItem}
             loadBags={loadBags}
-            ListHeaderComponent={renderListHeaderComponent}
             Type="inventory"
             onPost={onPostInventory}
             loadData={dataUploaded}
             availableToPost={true}
             buttonPostDisabled={createInventaryLoading}
+            numberOfItems={numberOfItems}
         />
     )
-        :
-        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-            <View>
-                <Text>Redireccionando...</Text>
-            </View>
-        </SafeAreaView>
 };
