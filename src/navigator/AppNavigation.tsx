@@ -1,19 +1,24 @@
 import React, { useContext, useMemo } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { TESTAPP } from "@env";
 
 // Screens
 import { LoginScreen } from '../screens/Onboarding/LoginScreen';
-
-import { InventoryNavigation } from './InventoryNavigation';
+import { InventoryNavigation, InventoryNavigationStackParamList } from './InventoryNavigation';
 import { OnboardingScreen } from '../screens/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
-import { SellsNavigation } from './SellsNavigation';
+import { SellsNavigation, SellsNavigationStackParamList } from './SellsNavigation';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ClosingScreen } from '../screens/ClosingScreen';
+import { SuccesMessage } from '../screens/SuccesMessage';
 
-export type InventoryNavigationStackParamList = {
+// useNavigation() type. 
+export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
+export type CombinedInventoryAndAppNavigationStackParamList = InventoryNavigationStackParamList & AppNavigationStackParamList;
+export type CombinedSellsAndAppNavigationStackParamList = SellsNavigationStackParamList & AppNavigationStackParamList;
+
+export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;
     ClosingPage: undefined;
 
@@ -25,9 +30,11 @@ export type InventoryNavigationStackParamList = {
     InventoryNavigation: undefined;
     ProfileNavigation: undefined;
     SellsNavigation: undefined;
+
+    succesMessageScreen: { message: string, redirection: keyof AppNavigationStackParamList };
 };
 
-const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
+const Stack = createNativeStackNavigator<AppNavigationStackParamList>();
 
 export const AppNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
@@ -68,7 +75,6 @@ export const AppNavigation = () => {
                 options={{ headerShown: false }}
             />
 
-
             <Stack.Screen
                 name="ProfileNavigation"
                 component={ProfileNavigation}
@@ -87,6 +93,11 @@ export const AppNavigation = () => {
                 }}
             />
 
+            <Stack.Screen
+                name="succesMessageScreen"
+                component={SuccesMessage}
+                options={{ headerShown: false }}
+            />
 
         </>
     ), [authScreens, handleCameraAvailable, updateBarCode]);

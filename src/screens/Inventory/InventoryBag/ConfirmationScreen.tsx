@@ -14,12 +14,14 @@ import { postInventory } from '../../../services/inventory';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
 import { useProtectPage } from '../../../hooks/useProtectPage';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 
 export const ConfirmationScreen = () => {
     const { getTypeOfMovementsName } = useContext(AuthContext);
     const { numberOfItems, resetAfterPost } = useContext(InventoryBagContext);
     const { typeTheme, theme } = useTheme();
-    const { navigate } = useNavigation<any>();
+    const navigation = useNavigation<NativeStackNavigationProp<CombinedInventoryAndAppNavigationStackParamList>>();
 
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -31,7 +33,7 @@ export const ConfirmationScreen = () => {
     const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
         <ProductInventoryConfirmationCard
             product={item}
-            onClick={() => navigate('[Modal] - editProductInBag', { product: item })}
+            onClick={() => navigation.navigate('[Modal] - editProductInBag', { product: item })}
             disabled={createInventaryLoading}
         />
     ), [createInventaryLoading]);
@@ -43,7 +45,7 @@ export const ConfirmationScreen = () => {
             resetAfterPost();
             setTimeout(() => {
                 setCreateInventaryLoading(false);
-                navigate('succesMessageScreen');
+                navigation.navigate('succesMessageScreen', { message: "Se ha generado con exito su inventario.", redirection: 'InventoryNavigation' });
             }, 500);
         } catch (error: any) {
             Toast.show({

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassInterface from '../interface/class';
 import { UnitData } from '../interface/units';
 import { CustomTopBar } from '../components/Navigation/CustumTopBar';
@@ -14,12 +14,14 @@ import { SelectUnitScreen } from '../screens/Sells/SelectUnitsScreen';
 import { SellsBagScreen } from '../screens/Sells/SellsBag/SellsBagScreen';
 import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationSellsScreen';
 import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
-import { SuccesMessageSells } from '../screens/SuccesMessageSells';
 import { ProductSellsInterface } from '../interface/productSells';
 import { SelectClient } from '../screens/Sells/SelectClient';
+import ClientInterface from '../interface/utils';
+
+// useNavigation() type.
+export type SellsNavigationProp = NativeStackNavigationProp<Partial<SellsNavigationStackParamList>>;
 
 export type SellsNavigationStackParamList = {
-
     SellsScreen: undefined;
     SellsDataScreen: {
         totalClasses: number;
@@ -41,8 +43,7 @@ export type SellsNavigationStackParamList = {
     "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number };
     "[Modal] - SelectClient": undefined;
 
-    "[Sells] - confirmationScreen": { client: ClassInterface };
-    "[Sells] - succesMessageScreen": undefined;
+    "[Sells] - confirmationScreen": { client?: ClientInterface };
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -215,13 +216,6 @@ export const SellsNavigation = () => {
                     )
                 })}
             />
-
-            <Stack.Screen
-                name="[Sells] - succesMessageScreen"
-                component={SuccesMessageSells}
-                options={{ headerShown: false }}
-            />
-
         </>
     ), []);
 

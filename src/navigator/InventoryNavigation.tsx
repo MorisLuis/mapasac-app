@@ -7,7 +7,6 @@ import { SettingsContext } from '../context/settings/SettingsContext';
 
 // Screens
 import { SearchProductScreen } from '../screens/Inventory/SearchProductScreen';
-import { SuccesMessage } from '../screens/SuccesMessage';
 import { SearchCodebarWithInput } from '../screens/Inventory/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Inventory/Modals/ScannerResult';
 import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
@@ -20,6 +19,10 @@ import { ProductDetailsPageEdit } from '../screens/Inventory/ProductDetailsPageE
 import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// useNavigation() type. 
+export type InventoryNavigationProp = NativeStackNavigationProp<Partial<InventoryNavigationStackParamList>>;
 
 export type InventoryNavigationStackParamList = {
     // Navigation
@@ -35,7 +38,6 @@ export type InventoryNavigationStackParamList = {
 
     bagInventoryScreen: undefined;
     confirmationScreen: undefined;
-    succesMessageScreen: undefined;
     searchProductScreen: undefined;
 
     // Modal
@@ -105,12 +107,6 @@ export const InventoryNavigation = () => {
                         />
                     )
                 })}
-            />
-
-            <Stack.Screen
-                name="succesMessageScreen"
-                component={SuccesMessage}
-                options={{ headerShown: false }}
             />
 
             <Stack.Screen

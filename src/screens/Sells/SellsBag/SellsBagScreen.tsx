@@ -19,9 +19,11 @@ import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
 import { format } from '../../../utils/currency';
 import { Searchbar } from 'react-native-paper';
+import { SellsNavigationProp } from '../../../navigator/SellsNavigation';
 
 export const SellsBagScreen = () => {
-    const { navigate, goBack } = useNavigation<any>();
+
+    const { navigate, goBack } = useNavigation<SellsNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { deleteProductSell, resetAfterPost } = useContext(SellsBagContext);
 
@@ -42,7 +44,7 @@ export const SellsBagScreen = () => {
 
     const onPostInventary = async () => {
         goBack();
-        navigate("[Sells] - confirmationScreen");
+        navigate('[Sells] - confirmationScreen');
     };
 
     const loadBags = useCallback(async () => {

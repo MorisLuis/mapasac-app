@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
@@ -19,13 +19,14 @@ import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { TextInputContainer } from '../../../components/Ui/TextInputContainer';
 import { selectStyles } from '../../../theme/UI/inputs';
 import ClientInterface from '../../../interface/utils';
+import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
+
+type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
 interface ConfirmationSellsScreenInterface {
-    route?: {
-        params: {
-            client: ClientInterface
-        };
-    };
+    route: ConfirmationSellsScreenRouteProp;
 }
 
 export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterface) => {
@@ -33,7 +34,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const { client } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
@@ -46,8 +47,8 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [methodPayment, setMethodPayment] = useState(0);
     const [typeSelected, setTypeSelected] = useState<ClientInterface>();
     const [comments, setComments] = useState("");
-    const availableToPost = methodPayment !== 0;
     const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
+    const availableToPost = methodPayment !== 0;
     const disabledToPost = methodPayment === 1 && !typeSelected;
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
@@ -68,7 +69,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             }
             await postSells(sellBody);
             setTimeout(() => {
-                navigate('[Sells] - succesMessageScreen');
+                navigate('succesMessageScreen', { message: 'Se ha generado con exito su pedido.', redirection: 'SellsNavigation' });
                 resetAfterPost();
             }, 500);
 
@@ -103,6 +104,10 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const handleGetPrice = async () => {
         const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
         setTotalPrice(parseFloat(totalprice))
+    }
+
+    const handleGetClient = () => {
+        setTypeSelected(client)
     }
 
     const renderScreen = () => {
@@ -191,7 +196,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             {
                                 methodPayment !== 0 &&
                                 <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                                        <TextInputContainer label='Comentarios' setComments={setComments} value={comments}/>
+                                    <TextInputContainer label='Comentarios' setComments={setComments} value={comments} />
                                 </View>
                             }
                         </>
@@ -220,12 +225,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
 
     useEffect(() => {
-        if (!client) return;
-
-        const handleGetClient = () => {
-            setTypeSelected(client)
-        }
-
         handleGetClient();
     }, [client])
 
@@ -254,9 +253,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                         availableToPost &&
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
 
-                                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
-                                        </View>
+                                            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
+                                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                                            </View>
                                         </View>
 
                                     }
@@ -288,7 +287,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     ) : (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
-                <Text>Redireccionando...</Text>
+                <Text>Redireccionando sells...</Text>
             </View>
         </SafeAreaView>
     );

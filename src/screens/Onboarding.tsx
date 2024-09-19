@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -24,25 +24,24 @@ export const OnboardingScreen = () => {
     const navigation = useNavigation<any>();
     const [modules, setModules] = useState<modulesInterface[]>()
 
-    useEffect(() => {
-        const onGetModules = async () => {
-            const modulesData = await getModules();
-            setModules(modulesData);
-        }
+    const oddModules = modules?.filter(module => module.idappmob % 2 !== 0);
+    const evenModules = modules?.filter(module => module.idappmob % 2 === 0);
 
+    const onGetModules = async () => {
+        const modulesData = await getModules();
+        setModules(modulesData);
+    };
+
+    useEffect(() => {
         onGetModules()
     }, []);
 
-
-    const oddModules = modules?.filter(module => module.idappmob % 2 !== 0);
-    const evenModules = modules?.filter(module => module.idappmob % 2 === 0);
 
     return (
         <SafeAreaView style={OnboardingScreenStyles(theme).OnboardingScreen}>
 
             <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigation.navigate("ProfileNavigation")}>
                 <View style={OnboardingScreenStyles(theme).topbar_profile}>
-                    {/* <Icon name="person-circle-outline" size={wp("7.5%")} color={iconColor} /> */}
                     <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</Text>
                 </View>
             </TouchableOpacity>
@@ -69,9 +68,6 @@ export const OnboardingScreen = () => {
                         </>
                 }
             </View>
-
-{/*             <Button title='ola' onPress={() => navigation.navigate('ClosingPage')}/>
- */}
         </SafeAreaView>
     )
 }
@@ -110,7 +106,6 @@ export const ModuleOption = ({
         return navigate;
     }
 
-
     const extraStyles = (option: modulesInterface) => {
         let styles;
         let icon;
@@ -131,8 +126,6 @@ export const ModuleOption = ({
             icon
         }
     }
-
-
 
     return (
         <View style={OnboardingScreenStyles(theme, typeTheme).moduleOptionRow}>
