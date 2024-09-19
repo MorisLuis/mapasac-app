@@ -1,19 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
-import { buttonStyles } from '../../../theme/UI/buttons';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
-import DotLoader from '../../../components/Ui/DotLaoder';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
-import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
 import { postSells, postSellsInterface } from '../../../services/sells';
-import { format } from '../../../utils/currency';
-import { useProtectPage } from '../../../hooks/useProtectPage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { TextInputContainer } from '../../../components/Ui/TextInputContainer';
@@ -52,14 +47,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const availableToPost = methodPayment !== 0;
     const disabledToPost = methodPayment === 1 && !typeSelected;
 
-    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
-        <ProductSellsConfirmationCard
-            product={item}
-            onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
-            disabled={createSellLoading}
-        />
-    ), [createSellLoading, bags]);
-
     const onPostInventory = async () => {
         setCreateSellLoading(true);
         try {
@@ -77,6 +64,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             setTimeout(() => {
                 setCreateSellLoading(false);
             }, 750);
+
         } catch (error: any) {
             Toast.show({
                 type: 'tomatoError',
@@ -198,6 +186,14 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         setHasMore(true);
         setDataUploaded(true)
     };
+
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
+        <ProductSellsConfirmationCard
+            product={item}
+            onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
+            disabled={createSellLoading}
+        />
+    ), [createSellLoading, bags]);
 
     useFocusEffect(
         useCallback(() => {
