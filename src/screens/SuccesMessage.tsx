@@ -7,8 +7,6 @@ import { useTheme } from '../context/ThemeContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { AppNavigationProp, AppNavigationStackParamList } from '../navigator/AppNavigation';
 
-/* Se ha generado con exito su pedido. */
-
 type SuccesMessageScreenRouteProp = RouteProp<AppNavigationStackParamList, 'succesMessageScreen'>;
 
 interface SuccesMessageProps {

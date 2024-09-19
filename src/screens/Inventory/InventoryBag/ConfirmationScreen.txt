@@ -1,19 +1,21 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { ProductInventoryConfirmationCard } from '../../../components/Cards/ProductInventoryConfirmationCard';
+import { buttonStyles } from '../../../theme/UI/buttons';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { AuthContext } from '../../../context/auth/AuthContext';
-import { ProductInterfaceBag } from '../../../interface/product';
+import DotLoader from '../../../components/Ui/DotLaoder';
+import ProductInterface, { ProductInterfaceBag } from '../../../interface/product';
 import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
+import { ConfirmationSkeleton } from '../../../components/Skeletons/ConfirmationSkeleton';
 import Toast from 'react-native-toast-message';
 import { useProtectPage } from '../../../hooks/useProtectPage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
-import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 
 export const ConfirmationScreen = () => {
     const { getTypeOfMovementsName } = useContext(AuthContext);
@@ -28,7 +30,7 @@ export const ConfirmationScreen = () => {
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false);
 
-    const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
+    const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
         <ProductInventoryConfirmationCard
             product={item}
             onClick={() => navigation.navigate('[Modal] - editProductInBag', { product: item })}
@@ -54,6 +56,7 @@ export const ConfirmationScreen = () => {
             console.log("Error al crear inventario:", error);
         }
     };
+
 
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
@@ -92,39 +95,52 @@ export const ConfirmationScreen = () => {
         navigatePage: 'ScanneNavigation'
     });
 
-    const renderListHeaderComponent = () => {
-        return (
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
-                    </View>
-                    <View
-                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</Text>
-                    </View>
-                </View>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                    <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
-                </View>
-            </View>
-        )
-    }
-
     return !protectThisPage ? (
-        <LayoutConfirmation
-            data={bags}
-            renderItem={renderItem}
-            loadBags={loadBags}
-            ListHeaderComponent={renderListHeaderComponent}
-            Type="inventory"
-            onPost={onPostInventory}
-            loadData={dataUploaded}
-            availableToPost={true}
-            buttonPostDisabled={createInventaryLoading}
-        />
+        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+            <View>
+                {
+                    dataUploaded ?
+                        <FlatList
+                            data={bags}
+                            renderItem={renderItem}
+                            keyExtractor={product => `${product.idenlacemob}`}
+                            onEndReached={loadBags}
+                            onEndReachedThreshold={0.5}
+                            ListHeaderComponent={
+                                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
+                                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
+                                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
+                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
+                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
+                                        </View>
+                                        <View
+                                            style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
+                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
+                                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
+                                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                                    </View>
+                                </View>
+                            }
+                        />
+                        :
+                        <ConfirmationSkeleton />
+                }
+            </View>
+            <View style={ConfirmationScreenStyles(theme, typeTheme).footer}>
+                <TouchableOpacity
+                    style={[buttonStyles(theme).button, buttonStyles(theme).black]}
+                    onPress={onPostInventory}
+                    disabled={createInventaryLoading}
+                >
+                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                        {createInventaryLoading ? <DotLoader /> : "Confirmar"}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     )
         :
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>

@@ -22,7 +22,6 @@ import ClientInterface from '../../../interface/utils';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
-import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -224,9 +223,11 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         }, [])
     );
 
+
     useEffect(() => {
         handleGetClient();
     }, [client])
+
 
     const { protectThisPage } = useProtectPage({
         numberOfItems: numberOfItemsSells,
@@ -235,17 +236,53 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     });
 
     return !protectThisPage ? (
-        <LayoutConfirmation
-            data={bags}
-            renderItem={renderItem}
-            loadBags={loadBags}
-            ListHeaderComponent={renderScreen}
-            Type="sells"
-            onPost={onPostInventory}
-            loadData={dataUploaded}
-            availableToPost={availableToPost}
-            buttonPostDisabled={createSellLoading}
-        />
+        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+            <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreenContent}>
+                {
+                    dataUploaded ? (
+                        <FlatList
+                            data={availableToPost ? bags : []}
+                            renderItem={renderItem}
+                            keyExtractor={product => `${product.idenlacemob}`}
+                            onEndReached={loadBags}
+                            onEndReachedThreshold={0.5}
+                            ListHeaderComponent={
+                                <>
+                                    {renderScreen()}
+                                    {
+                                        availableToPost &&
+                                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
+                                            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
+                                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                                            </View>
+                                        </View>
+
+                                    }
+                                </>
+                            }
+                        />
+                    ) : (
+                        <ConfirmationSkeleton />
+                    )
+                }
+            </View>
+
+            {
+                availableToPost && (
+                    <View style={ConfirmationScreenStyles(theme, typeTheme).footer}>
+                        <TouchableOpacity
+                            style={[buttonStyles(theme).button, buttonStyles(theme).black, disabledToPost && buttonStyles(theme).disabled]}
+                            onPress={onPostInventory}
+                            disabled={disabledToPost}
+                        >
+                            <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                                {createSellLoading ? <DotLoader /> : "Confirmar"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
+        </SafeAreaView>
     ) : (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>

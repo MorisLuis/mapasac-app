@@ -28,7 +28,6 @@ export default interface ProductInterface {
 
     precio: number;
 
-
     // The amount added to the stock
     cantidad?: number,
 
