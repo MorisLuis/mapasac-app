@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { Button, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetailsSkeleton';
 import { productDetailsStyles } from '../../theme/productDetailsTheme';
@@ -14,44 +14,39 @@ import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { MessageCard } from '../../components/Cards/MessageCard';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+
+type ProductDetailsPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreen'>;
+type InventoryDetailsScreenPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - inventoryDetailsScreen'>;
 
 type ProductDetailsPageInterface = {
-    route?: {
-        params: {
-            selectedProduct: { idinvearts: number };
-            fromModal?: boolean;
-            fromUpdateCodebar: boolean
-        };
-    };
+    route: ProductDetailsPageRouteProp | InventoryDetailsScreenPageRouteProp
 };
 
 export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
-    const { selectedProduct, fromModal, fromUpdateCodebar } = route?.params ?? {};
-    const { idinvearts } = selectedProduct ?? {};
+
+    const { selectedProduct, fromModal } = route.params;
+    const { idinvearts } = selectedProduct;
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
     const shouldCleanUp = useRef(true);
     const { handleError } = useErrorHandler()
 
-    const navigation = useNavigation<any>();
-    const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
+    const navigation = useNavigation<InventoryNavigationProp>();
+    const [productDetailsData, setProductDetailsData] = useState<ProductInterface>();
 
     const handleOptionsToUpdateCodebar = () => {
-        navigation.navigate('CodebarUpdateNavigation', { selectedProduct });
+        navigation.navigate('CodebarUpdateNavigation', { selectedProduct: { idinvearts: selectedProduct.idinvearts } });
     };
 
     const handleEditProduct = () => {
-        navigation.navigate("[ProductDetailsPage] - productDetailsScreenEdit", { product: productDetailsData })
+        if (!productDetailsData) return;
+        navigation.navigate("[ProductDetailsPage] - productDetailsScreenEdit", { product: { idinvearts: productDetailsData?.idinvearts } })
     }
 
-
     const handleGetProductDetails = async () => {
-        if (!idinvearts) return;
         try {
             const productData = await getProductDetails(idinvearts);
-            if (productData.error) {
-                handleError(productData.error);
-                return;
-            }
+            if (productData.error) return handleError(productData.error);
             setProductDetailsData(productData);
         } catch (error) {
             handleError(error)
@@ -59,6 +54,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     };
 
     const handleAddToInventory = () => {
+        if (!productDetailsData) return;
         shouldCleanUp.current = false;
         navigation.navigate('[Modal] - scannerResultScreen', { product: productDetailsData, fromProductDetails: true });
     }
@@ -70,12 +66,12 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
             return () => {
                 if (shouldCleanUp.current) {
-                    setProductDetailsData(null);
+                    setProductDetailsData(undefined);
                 }
 
-                if (fromUpdateCodebar) {
+                /* if (fromUpdateCodebar) {
                     shouldCleanUp.current = true;
-                }
+                } */
             };
         }, [selectedProduct])
     );
@@ -88,7 +84,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
             handleEditProduct={handleEditProduct}
             fromModal={fromModal}
             codeBar={codeBar}
-            fromUpdateCodebar={fromUpdateCodebar}
+        //fromUpdateCodebar={fromUpdateCodebar}
         />
     ) : (
         <ProductDetailsSkeleton />
@@ -116,19 +112,6 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
         <>
             <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
                 <View style={productDetailsStyles(theme, typeTheme).imageContainer}>
-                    {/* {productDetailsData.imagen ? (
-                        <Image
-                            style={productDetailsStyles(theme).image}
-                            source={{
-                                uri: productDetailsData.imagen[0]?.url
-                            }}
-                        />
-                    ) : (
-                        <View style={productDetailsStyles(theme).notImage}>
-                            <Icon name={'camera'} size={24} color={iconColor} />
-                            <Text style={productDetailsStyles(theme).notImageText} numberOfLines={2}>OLEI SOFTWARE</Text>
-                        </View>
-                    )} */}
                     <View style={productDetailsStyles(theme).notImage}>
                         <View style={productDetailsStyles(theme).notImageBackground}>
                             <Icon name={'image-outline'} size={24} color={iconColor} />
@@ -195,20 +178,6 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                         </View>
                     </View>
                 }
-
-                {/* {
-                    (
-                        !productDetailsData?.codbarras || productDetailsData?.codbarras?.trim() === "" && !fromModal) && (
-                        <TouchableOpacity
-                            style={[buttonStyles(theme, typeTheme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}
-                            onPress={handleOptionsToUpdateCodebar}
-                        >
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Crear codigo de barras</Text>
-                        </TouchableOpacity>
-                    )
-                } */}
-
-
             </ScrollView>
 
             {!fromModal && (

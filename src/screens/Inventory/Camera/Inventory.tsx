@@ -11,13 +11,14 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 
 export const Inventory = () => {
 
     const { handleCodebarScannedProcces } = useContext(SettingsContext);
     const { handleError } = useErrorHandler()
 
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<InventoryNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
@@ -64,7 +65,7 @@ export const Inventory = () => {
 
     const handlePressProduct = (selectedProduct: ProductInterface) => {
         handleCodebarScannedProcces(false);
-        navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
+        navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromModal: false });
     };
 
     const renderItem = ({ item }: { item: ProductInterface }) => {
@@ -136,7 +137,7 @@ export const Inventory = () => {
                             name="search-outline"
                             size={30}
                             style={InventoryScreenStyles(theme).iconSearch}
-                            onPress={() => navigate('searchProductScreen')}
+                            onPress={() => navigate('searchProductScreen', { modal: false, isModal: false })}
                             color={iconColor}
                         />
                     </View>

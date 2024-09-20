@@ -1,29 +1,27 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { ProductInterfaceBag } from '../../../interface/product';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+
+type EditDescripcioPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editDescripcio'>;
 
 type EditDescripcioInterface = {
-    route?: {
-        params: {
-            product: ProductInterfaceBag;
-        };
-    };
+    route: EditDescripcioPageRouteProp
 };
 
 export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
 
     const { product } = route?.params ?? {};
-    const navigation = useNavigation<any>();
+    const { goBack } = useNavigation<InventoryNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const [editingProduct, setEditingProduct] = useState(false);
     const [descripcioState, setDescripcioState] = useState<string>()
@@ -31,7 +29,7 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
     const { handleError } = useErrorHandler()
 
     const handleCloseModal = () => {
-        navigation.goBack()
+        goBack()
     }
 
     const handleEditDescripcio = (text: string) => {

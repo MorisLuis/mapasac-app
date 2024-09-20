@@ -10,8 +10,8 @@ import { cameraStyles } from '../../../theme/CameraCustumTheme';
 import { CameraPermission } from '../../../components/screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { cameraSettings } from './cameraSettings';
-import { identifyBarcodeType } from '../../../utils/identifyBarcodeType';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
+import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -29,7 +29,7 @@ const CameraTest: React.FC = () => {
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<InventoryNavigationProp>();
     const isFocused = useIsFocused();
 
     const [lightOn, setLightOn] = useState(false);
@@ -41,11 +41,11 @@ const CameraTest: React.FC = () => {
     const handleOpenProductsFoundByCodebar = (response: ProductInterface[]) => {
 
         if (response?.length === 1) {
-            navigate('[Modal] - scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0], fromProductDetails: false });
         } else if (response?.length > 0) {
             navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
-            navigate('[Modal] - scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0], fromProductDetails: false });
         }
 
         setProductsScanned(response);

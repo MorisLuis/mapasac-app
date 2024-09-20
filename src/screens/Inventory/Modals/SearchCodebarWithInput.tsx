@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import { getProductByClave, getProductByCodeBar, getProductByNoArticulo } from '../../../services/products';
+import { getProductByClave, getProductByNoArticulo } from '../../../services/products';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
@@ -11,11 +11,13 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
+import ProductInterface from '../../../interface/product';
 
 export const SearchCodebarWithInput = () => {
 
     const { updateBarCode } = useContext(SettingsContext);
-    const navigation = useNavigation<any>();
+    const { navigate, goBack } = useNavigation<InventoryNavigationProp>();
     const { theme, typeTheme } = useTheme();
 
     const [Barcode, onChangeBarcode] = useState('');
@@ -27,10 +29,10 @@ export const SearchCodebarWithInput = () => {
 
     const handleSearchProductByCodebarInput = async () => {
 
-        try {            
+        try {
             updateBarCode('')
             setLoadingSearch(true)
-    
+
             let response;
             if (typeOfSearch === 'code') {
                 response = await getProductByClave({ clave: Barcode });
@@ -42,10 +44,7 @@ export const SearchCodebarWithInput = () => {
 
             handleNavigatoToProduct(response);
 
-            if (response.error) {
-                handleError(response.error);
-                return;
-            }
+            if (response.error) return handleError(response.error);
 
         } catch (error) {
             handleError(error);
@@ -55,20 +54,19 @@ export const SearchCodebarWithInput = () => {
 
     }
 
-    const handleNavigatoToProduct = (response: any) => {
-        navigation.goBack()
+    const handleNavigatoToProduct = (response: ProductInterface[]) => {
+        goBack()
         if (response?.length === 1) {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0], fromProductDetails: false });
         } else if (response?.length > 1) {
-            navigation.navigate('[Modal] - productsFindByCodeBarModal', { products: response });
+            navigate('[Modal] - productsFindByCodeBarModal', { products: response });
         } else {
-            navigation.navigate('[Modal] - scannerResultScreen', { product: response[0] });
+            navigate('[Modal] - scannerResultScreen', { product: response[0], fromProductDetails: false });
         }
-
     }
 
     const handleCloseModal = () => {
-        navigation.goBack()
+        goBack()
     }
 
     return (

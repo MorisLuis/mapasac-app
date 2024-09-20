@@ -1,37 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { ProductInterfaceBag } from '../../../interface/product';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { Counter } from '../../../components/Ui/Counter';
-import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+
+type EditPricePageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editPrice'>;
 
 type EditPriceInterface = {
-    route?: {
-        params: {
-            product: ProductInterfaceBag;
-        };
-    };
+    route: EditPricePageRouteProp
 };
 
 export const EditPrice = ({ route }: EditPriceInterface) => {
 
-    const { product } = route?.params ?? {};
-    const navigation = useNavigation<any>();
+    const { product } = route.params;
+    const { goBack } = useNavigation<InventoryNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { handleError } = useErrorHandler()
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
 
     const handleCloseModal = () => {
-        navigation.goBack()
+        goBack()
     }
 
     const onFinish = () => {
@@ -42,7 +39,6 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
     const onEdit = async () => {
 
         try {
-            if (!product?.idinvearts) return;
             setEditingProduct(true);
 
             const productUpdated = await updateProduct({
@@ -52,10 +48,7 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
                 onFinish: onFinish
             });
 
-            if (productUpdated.error) {
-                handleError(productUpdated.error);
-                return;
-            };
+            if (productUpdated.error) return handleError(productUpdated.error);
 
         } catch (error) {
             handleCloseModal();

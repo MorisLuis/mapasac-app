@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../../services/searchs';
 import ProductInterface from '../../interface/product';
 import { ProductItemSearch } from '../../components/Cards/ProductItemSearch';
@@ -13,28 +13,28 @@ import { SearchProductScreenStyles } from '../../theme/SearchProductScreenTheme'
 import { useTheme } from '../../context/ThemeContext';
 import { Searchbar } from 'react-native-paper';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+
+type SearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, 'searchProductScreen'>;
+type ModalSearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - searchProductModal'>;
 
 type SearchProductScreenInterface = {
-    route?: {
-        params: {
-            modal: boolean;
-            isModal?: boolean,
-        };
-    };
+    route: SearchProductPageRouteProp | ModalSearchProductPageRouteProp
 };
 
 export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => {
-    const { modal, isModal } = route?.params ?? {};
+
+    const { modal, isModal } = route.params;
     const { codeBar } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const { handleError } = useErrorHandler()
 
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<InventoryNavigationProp>();
     const [productsInInventory, setProductsInInventory] = useState<ProductInterface[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [openModalAdvice, setOpenModalAdvice] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(true); // Estado de carga
+    const [loading, setLoading] = useState(true);
     const iconColor = typeTheme === 'dark' ? "white" : "black"
     const searchInputRef = useRef<any>(null);
 
@@ -70,12 +70,12 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
         if (modal) {
             if (isModal) {
                 navigation?.goBack();
-                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromModal: true });
             } else {
-                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromUpdateCodebar: true });
+                navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromModal: true });
             }
         } else {
-            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct });
+            navigation.navigate('[ProductDetailsPage] - inventoryDetailsScreen', { selectedProduct, fromModal: false });
         }
     };
 

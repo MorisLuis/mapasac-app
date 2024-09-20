@@ -2,35 +2,33 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { ProductInterfaceBag } from '../../../interface/product';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { Counter } from '../../../components/Ui/Counter';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import Toast from 'react-native-toast-message';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+
+type EditProductInBagPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - editProductInBag'>;
 
 type EditProductInBagInterface = {
-    route?: {
-        params: {
-            product: ProductInterfaceBag;
-        };
-    };
+    route: EditProductInBagPageRouteProp
 };
 
 export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
 
-    const { product } = route?.params ?? {};
+    const { product } = route.params;
     const { editProduct, deleteProduct } = useContext(InventoryBagContext);
-    const navigation = useNavigation<any>();
+    const { goBack } = useNavigation<InventoryNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
 
     const handleCloseModal = () => {
-        navigation.goBack()
+        goBack()
     }
 
     const onEdit = () => {

@@ -5,7 +5,6 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { ProductInterfaceBag } from '../../../interface/product';
 import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
-import Toast from 'react-native-toast-message';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';

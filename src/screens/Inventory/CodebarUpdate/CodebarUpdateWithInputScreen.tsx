@@ -12,6 +12,7 @@ import { updateCodeBar } from '../../../services/codebar';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { getProductByCodeBar } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -19,7 +20,7 @@ interface CodebarUpdateWithInputScreenInterface {
 
 export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateWithInputScreenInterface) => {
 
-    const navigation = useNavigation<any>();
+    const { goBack } = useNavigation<CodebarNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { codebarType } = useContext(SettingsContext);
     const [text, setText] = useState('');
@@ -32,24 +33,24 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
 
-        try {            
+        try {
             if (!selectedProduct) return;
             if (!regex.test(text)) return;
             setLoading(true)
-    
+
             const response = await getProductByCodeBar({ codeBar: text });
 
             if (response.error) {
                 handleError(response.error);
                 return;
             }
-    
+
             const onCancel = () => {
-                navigation.goBack()
-                navigation.goBack()
+                goBack()
+                goBack()
                 setLoading(false)
             }
-    
+
             if (response.length > 0) {
                 Alert.alert(
                     'Ya existe un producto con este codigo de barras.',
@@ -80,11 +81,11 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                 return;
             };
 
-            navigation.goBack()
-            navigation.goBack()
+            goBack()
+            goBack()
         } catch (error) {
             handleError(error);
-        } finally{ 
+        } finally {
             setLoading(false)
         };
 

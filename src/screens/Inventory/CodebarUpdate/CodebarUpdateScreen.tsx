@@ -15,6 +15,7 @@ import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenThe
 import { CodebarUpdateOptionCard } from '../../../components/Cards/CodebarUpdateOptionCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -22,7 +23,7 @@ interface CodebarUpdateScreenInterface {
 
 export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInterface) => {
 
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<CodebarNavigationProp>();
     const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
     const { handleError } = useErrorHandler()
@@ -52,40 +53,28 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     }
 
     const hanldeUpdateCodebarWithCodeFound = async () => {
-        if (!selectedProduct) return;
-
-        try {    
-            const codebar = await updateCodeBar({
-                codebarras: codeBar as string,
-                idinvearts: selectedProduct.idinvearts
-            })
-
-            if (codebar.error) {
-                handleError(codebar.error);
-                return;
-            }
-            navigation.goBack()
-        } catch (error) {
-            handleError(error);
-
-        }
-    }
-
-    const hanldeUpdateCodebarWithCodeRandom = async () => {
-
-        if (!selectedProduct) return;
 
         try {
             const codebar = await updateCodeBar({
                 codebarras: codeBar as string,
                 idinvearts: selectedProduct.idinvearts
             })
+            if (codebar.error) return handleError(codebar.error);
+            navigation.goBack()
+        } catch (error) {
+            handleError(error);
+        }
 
-            if (codebar.error) {
-                handleError(codebar.error);
-                return;
-            };
+    }
 
+    const hanldeUpdateCodebarWithCodeRandom = async () => {
+
+        try {
+            const codebar = await updateCodeBar({
+                codebarras: codeBar as string,
+                idinvearts: selectedProduct.idinvearts
+            })
+            if (codebar.error) return handleError(codebar.error);
             navigation.goBack();
         } catch (error) {
             handleError(error);

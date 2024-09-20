@@ -13,7 +13,6 @@ interface CounterInterface {
     secondaryDesign?: boolean
 }
 
-
 export const Counter = ({
     counter,
     setCounter,
@@ -51,7 +50,6 @@ export const Counter = ({
     }
 
     const modifyUnit = () => {
-        if (!unit) return;
         let unitModified = unit?.trim();
 
         if (unitModified === "PIEZA") {

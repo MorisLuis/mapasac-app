@@ -1,29 +1,28 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import ProductInterface from '../../../interface/product';
 import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { ProductFindByCodebarInputStyles } from '../../../theme/ModalRenders/ProductFindByCodebarInputTheme';
 import { useTheme } from '../../../context/ThemeContext';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+
+type ProductsFindByCodeBarRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - productsFindByCodeBarModal'>;
 
 interface ProductFindByCodeBarInterface {
-    route?: {
-        params: {
-            products: ProductInterface[];
-        };
-    };
+    route: ProductsFindByCodeBarRouteProp
 }
 
 export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) => {
 
-    const { products } = route?.params || {}
-    const navigation = useNavigation<any>();
+    const { products } = route.params
+    const navigation = useNavigation<InventoryNavigationProp>();
     const { theme } = useTheme();
 
     const onSelectProduct = (product: ProductInterface) => {
         navigation.goBack()
-        navigation.navigate('[Modal] - scannerResultScreen', { product: product })
+        navigation.navigate('[Modal] - scannerResultScreen', { product: product, fromProductDetails: false })
     }
 
     if (!products) return;

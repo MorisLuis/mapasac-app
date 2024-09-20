@@ -9,7 +9,6 @@ import { SettingsContext } from '../context/settings/SettingsContext';
 import { SearchProductScreen } from '../screens/Inventory/SearchProductScreen';
 import { SearchCodebarWithInput } from '../screens/Inventory/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Inventory/Modals/ScannerResult';
-import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
 import { ProductsFindByCodeBar } from '../screens/Inventory/Modals/ProductsFindByCodeBar';
 import { AuthContext } from '../context/auth/AuthContext';
 import { ConfirmationScreen } from '../screens/Inventory/InventoryBag/ConfirmationScreen';
@@ -20,31 +19,32 @@ import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
 
 // useNavigation() type. 
 export type InventoryNavigationProp = NativeStackNavigationProp<Partial<InventoryNavigationStackParamList>>;
 
 export type InventoryNavigationStackParamList = {
     // Navigation
-    CodebarUpdateNavigation: { product: ProductInterface, selectedProduct: any },
+    CodebarUpdateNavigation: { selectedProduct: { idinvearts: number } }
     ScanneNavigation: undefined;
 
     // Screens
-    "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface };
-    "[ProductDetailsPage] - productDetailsScreen": { selectedProduct?: ProductInterface, productDetails?: ProductInterface, fromModal?: boolean };
+    "[ProductDetailsPage] - inventoryDetailsScreen": { selectedProduct: ProductInterface, fromModal: boolean };
+    "[ProductDetailsPage] - productDetailsScreen": { selectedProduct: ProductInterface, fromModal: boolean };
     "[ProductDetailsPage] - productDetailsScreenEdit": { product: { idinvearts: number } };
     "[ProductDetailsPage] - editPrice": { product: ProductInterface };
     "[ProductDetailsPage] - editDescripcio": { product: ProductInterface };
 
     bagInventoryScreen: undefined;
     confirmationScreen: undefined;
-    searchProductScreen: undefined;
+    searchProductScreen: { modal: boolean, isModal: boolean };
 
     // Modal
-    "[Modal] - scannerResultScreen": undefined,
+    "[Modal] - scannerResultScreen": { product: ProductInterface, fromProductDetails: boolean },
     "[Modal] - findByCodebarInputModal": undefined;
     "[Modal] - searchProductModal": { modal: boolean, isModal: boolean };
-    "[Modal] - productsFindByCodeBarModal": undefined;
+    "[Modal] - productsFindByCodeBarModal": { products: ProductInterface[] };
     "[Modal] - editProductInBag": { product: ProductInterface };
 };
 
@@ -96,7 +96,7 @@ export const InventoryNavigation = () => {
                 name="confirmationScreen"
                 component={ConfirmationScreen}
                 options={({ navigation }: any) => ({
-                    
+
                     header: props => (
                         <CustomHeader
                             {...props}
@@ -130,7 +130,7 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="[ProductDetailsPage] - inventoryDetailsScreen"
                 component={ProductDetailsPage}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     header: props => (
                         <CustomHeader
                             {...props}

@@ -5,27 +5,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import ProductInterface from '../../../interface/product';
 import { Counter } from '../../../components/Ui/Counter';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultTheme';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
 import Toast from 'react-native-toast-message';
+import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+
+type ScannerResultRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - scannerResultScreen'>;
 
 interface ScannerResultInterface {
     fromInput?: boolean;
     seeProductDetails?: boolean;
-    route?: {
-        params: {
-            product: ProductInterface;
-            fromProductDetails?: boolean
-        };
-    };
-}
+    route: ScannerResultRouteProp;
+};
+
 const ScannerResult = ({
     fromInput,
     seeProductDetails = true,
@@ -36,7 +34,7 @@ const ScannerResult = ({
     const { theme, typeTheme } = useTheme();
     const { addProduct } = useContext(InventoryBagContext)
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<InventoryNavigationProp>();
 
     const [loadingAddProduct, setLoadingAddProduct] = useState(false)
     const [counterProduct, setCounterProduct] = useState<number>(0);
@@ -76,7 +74,7 @@ const ScannerResult = ({
         handleCameraAvailable(false)
         setTimeout(() => {
             navigation.goBack()
-            navigation.navigate('[Modal] - searchProductModal', { modal: true })
+            navigation.navigate('[Modal] - searchProductModal', { modal: true, isModal: false })
         }, 500);
     }
 

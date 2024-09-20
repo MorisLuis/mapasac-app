@@ -93,7 +93,6 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
     const hanldeUpdateCodebar = async () => {
 
         try {            
-            if (!selectedProduct) return;
             const codebar = await updateCodeBar({
                 codebarras: codeBar as string,
                 idinvearts: selectedProduct.idinvearts
