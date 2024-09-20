@@ -1,3 +1,4 @@
+import { da } from "date-fns/locale";
 import { api } from "../api/api";
 import EnlacemobInterface from "../interface/enlacemob";
 import ProductInterface from "../interface/product";
@@ -114,7 +115,7 @@ interface getTotalProductsInBagInterface {
     mercado?: boolean
 }
 
-const getTotalProductsInBag = async ({opcion, mercado} : getTotalProductsInBagInterface) => {
+const getTotalProductsInBag = async ({ opcion, mercado }: getTotalProductsInBagInterface) => {
 
     try {
         if (mercado) {
@@ -131,15 +132,10 @@ const getTotalProductsInBag = async ({opcion, mercado} : getTotalProductsInBagIn
 
 }
 
-const getTotalPriceBag = async ({opcion, mercado} : getTotalProductsInBagInterface) => {
+const getTotalPriceBag = async ({ opcion }: getTotalProductsInBagInterface) => {
     try {
-        if (mercado) {
-            const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
-            return data.total
-        } else {
-            //const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
-            //return data.total
-        }
+        const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
+        return data.total
 
     } catch (error: any) {
         throw error?.response?.data || new Error('Unknown error');

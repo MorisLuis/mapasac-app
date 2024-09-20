@@ -21,7 +21,7 @@ export interface ProductSellsInterface {
 
     unidad_nombre?: string;
 
-    idenlacemob?: number;
+    idenlacemob: number;
 
     capa?: string;
 

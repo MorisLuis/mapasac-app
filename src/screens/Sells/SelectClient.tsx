@@ -8,12 +8,8 @@ import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSke
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { format } from '../../utils/currency';
-import DotLoader from '../../components/Ui/DotLaoder';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
-import { ProductSellsCard } from '../../components/Cards/ProductSellsCard';
-import { getBagInventory, getTotalPriceBag } from '../../services/bag';
-import { getSearchClients, getSearchProductInBack } from '../../services/searchs';
+import { getSearchClients } from '../../services/searchs';
 import { inputStyles } from '../../theme/UI/inputs';
 import { getClients } from '../../services/utils';
 import ClientInterface from '../../interface/utils';

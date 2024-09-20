@@ -8,7 +8,6 @@ import { globalStyles } from '../../theme/appTheme';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { useFocusEffect } from '@react-navigation/native';
-import { format } from '../../utils/currency';
 import { getTotalPriceBag } from '../../services/bag';
 
 
@@ -22,10 +21,11 @@ export const SellsScreen = () => {
     const [totalProducts, setTotalProducts] = useState(0);
     const [totalPrice, setTotalPrice] = useState<number>();
 
-    const handleGetPrice = async () => {
+/*     const handleGetPrice = async () => {
         const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
         setTotalPrice(parseFloat(totalprice));
     };
+ */
 
     const loadMoreItem = () => {
         if (products.length < totalProducts) {

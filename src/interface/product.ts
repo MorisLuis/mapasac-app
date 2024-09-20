@@ -31,7 +31,7 @@ export default interface ProductInterface {
     // The amount added to the stock
     cantidad?: number,
 
-    idenlacemob?: number
+    idenlacemob: number
 
     // Id of the 'unidad'
     unidad?: number,

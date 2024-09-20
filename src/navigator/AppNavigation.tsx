@@ -17,6 +17,7 @@ import { SuccesMessage } from '../screens/SuccesMessage';
 export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
 export type CombinedInventoryAndAppNavigationStackParamList = InventoryNavigationStackParamList & AppNavigationStackParamList;
 export type CombinedSellsAndAppNavigationStackParamList = SellsNavigationStackParamList & AppNavigationStackParamList;
+export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationStackParamList & InventoryNavigationStackParamList;
 
 export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;
