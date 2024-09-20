@@ -3,25 +3,24 @@ import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import {CounterSecondary} from '../../components/Ui/CounterSecondary';
+import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+
+type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
+type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
 
 interface SelectAmountScreenInterface {
-    route?: {
-        params: {
-            valueDefault: string;
-            unit?: string;
-            from: string
-        };
-    };
+    route: PiecesScreenRouteProp | PriceScreenRouteProp
 }
 
 export const SelectAmountScreen = ({
     route
 }: SelectAmountScreenInterface) => {
+
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, unit, from } = route?.params ?? {};
-    const navigation = useNavigation<any>();
+    const { valueDefault, unit, from } = route.params;
+    const navigation = useNavigation<SellsNavigationProp>();
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<string>(valueDefault ?? "0");

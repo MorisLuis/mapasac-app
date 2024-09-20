@@ -14,7 +14,6 @@ export const SellsScreen = () => {
             renderItem={renderItem}
             opcion={2}
         />
-
     )
 };
 

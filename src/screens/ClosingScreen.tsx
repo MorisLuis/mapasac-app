@@ -1,11 +1,10 @@
 import React from 'react'
-import { ActivityIndicator, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 
 export const ClosingScreen = () => {
 
     const { theme } = useTheme();
-    const iconColor = theme.color_tertiary;
 
     return (
         <View style={{

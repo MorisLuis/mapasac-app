@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
@@ -15,12 +15,9 @@ import ClassInterface from '../../interface/class';
 import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 
-type ProductSellData = {
-    idinvearts: number,
-    capa: string,
-    idinveclas: number
-}
+type SellsDataScreenRouteProp = RouteProp<SellsNavigationStackParamList, 'SellsDataScreen'>;
 
 type FormType = {
     pieces: string;
@@ -32,20 +29,7 @@ type FormType = {
 };
 
 interface SellsDataScreenInterface {
-    route?: {
-        params: {
-            image: string;
-            descripcio: string;
-            totalClasses?: number;
-
-            cvefamilia?: number;
-            pieces?: string;
-            price?: string;
-            typeClass?: ClassInterface;
-            units?: UnitData;
-            productSellData?: ProductSellData;
-        };
-    };
+    route: SellsDataScreenRouteProp
 };
 
 export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
@@ -74,7 +58,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     });
 
     const iconColor = typeTheme === 'dark' ? "white" : theme.text_color;
-    const haveClasses = (totalClasses as number) > 0;
+    const haveClasses = totalClasses > 0;
     const completeTheForm = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
     const buttondisabled = !haveClasses ? !(watch('units') && watch('price') && watch('pieces')) : !completeTheForm;
 

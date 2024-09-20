@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useState, useEffect, useRef, useContext } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { Alert, FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSkeleton';
@@ -14,14 +14,15 @@ import { inputStyles } from '../../theme/UI/inputs';
 import { getClients } from '../../services/utils';
 import ClientInterface from '../../interface/utils';
 import { OneDataCard } from '../../components/Cards/OneDataCard';
+import { SellsNavigationProp } from '../../navigator/SellsNavigation';
 
 
 export const SelectClient = () => {
-    const { navigate, goBack } = useNavigation<any>();
+    const { navigate } = useNavigation<SellsNavigationProp>();
     const { theme, typeTheme } = useTheme();
 
     const [searchText, setSearchText] = useState<string>('');
-    const [clients, setClients] = useState<ClientInterface[]>([]);
+    //const [clients, setClients] = useState<ClientInterface[]>([]);
     const [filteredClients, setFilteredClients] = useState<ClientInterface[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,7 @@ export const SelectClient = () => {
         try {
             const newClients = await getClients({ page, limit: 5 });
             if (newClients && newClients.length > 0) {
-                setClients(prevClients => [...prevClients, ...newClients]);
+                //setClients(prevClients => [...prevClients, ...newClients]);
                 setFilteredClients(prevClients => [...prevClients, ...newClients]);
                 setPage(page + 1);
             } else {

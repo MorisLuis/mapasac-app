@@ -24,9 +24,9 @@ export type SellsNavigationProp = NativeStackNavigationProp<Partial<SellsNavigat
 export type SellsNavigationStackParamList = {
     SellsScreen: undefined;
     SellsDataScreen: {
-        totalClasses: number;
-        descripcio: string;
-        image: string;
+        totalClasses?: number;
+        descripcio?: string;
+        image?: string;
         cvefamilia?: number;
         pieces?: string;
         price?: string;
@@ -39,7 +39,7 @@ export type SellsNavigationStackParamList = {
     "[Modal] - editProductSellInBag": { product: ProductSellsInterface };
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - UnitScreen": { valueDefault: string, unit?: string, from: string };
+    "[Modal] - UnitScreen": { valueDefault: UnitData };
     "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number };
     "[Modal] - SelectClient": undefined;
 

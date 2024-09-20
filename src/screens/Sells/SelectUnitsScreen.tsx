@@ -2,26 +2,24 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getUnits } from '../../services/productsSells';
 import UnitInterfacce, { UnitData } from '../../interface/units';
+import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+
+type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
+
 
 interface SelectAmountScreenInterface {
-    route?: {
-        params: {
-            valueDefault: UnitData;
-            unit?: string;
-            from: string
-        };
-    };
+    route: SelectUnitScreenRouteProp
 }
 
 export const SelectUnitScreen = ({
     route
 }: SelectAmountScreenInterface) => {
     const { theme, typeTheme } = useTheme();
-    const { valueDefault } = route?.params ?? {};
+    const { valueDefault } = route?.params;
     const navigation = useNavigation<any>();
 
     const inputRef = useRef<TextInput>(null);
@@ -54,7 +52,6 @@ export const SelectUnitScreen = ({
     }
 
     useEffect(() => {
-        if (!valueDefault) return;
         setValue(valueDefault);
         setOptionSelected(valueDefault)
 

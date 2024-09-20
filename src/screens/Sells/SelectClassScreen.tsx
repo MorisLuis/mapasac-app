@@ -2,35 +2,28 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
+import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 
-interface SelectAmountScreenInterface {
-    route?: {
-        params: {
-            valueDefault: ClassInterface;
-            cvefamilia?: number;
+type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
-            // This props are used to send to "SellsDataScreen".
-            // This happend when the totalClasses in 'ProductSellsSquareCard' is more than 0 and navigate direclty to here "SelectClassScreen".
-            descripcio: string;
-            image: string;
-            totalClasses: number
-        };
-    };
+interface SelectClassScreenInterface {
+    route: SelectClassScreenRouteProp
 }
 
 export const SelectClassScreen = ({
     route
-}: SelectAmountScreenInterface) => {
+}: SelectClassScreenInterface) => {
+
+    const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route.params;
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route?.params ?? {};
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<SellsNavigationProp>();
 
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<ClassInterface>(valueDefault as ClassInterface);
+    const [value, setValue] = useState<ClassInterface>(valueDefault);
     const [classes, setClasses] = useState<ClassInterface[]>();
     const [optionSelected, setOptionSelected] = useState<ClassInterface>();
     const isCapa = classes?.[0]?.rcapa?.trim() !== "";
@@ -78,7 +71,6 @@ export const SelectClassScreen = ({
     }
 
     useEffect(() => {
-        if (!valueDefault) return;
         setValue(valueDefault);
         setOptionSelected(valueDefault)
 
