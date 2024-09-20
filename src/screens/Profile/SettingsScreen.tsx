@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { View } from 'react-native'
 import Toggle from '../../components/Ui/Toggle';
 import { SettingsContext } from '../../context/settings/SettingsContext';
@@ -8,7 +8,7 @@ import { useTheme } from '../../context/ThemeContext';
 export const SettingsScreen = () => {
 
     const { theme, toggleTheme, typeTheme } = useTheme();
-    const { vibration, handleVibrationState, limitProductsScanned, handleLimitProductsScanned } = useContext(SettingsContext);
+    const { vibration, handleVibrationState } = useContext(SettingsContext);
 
     return (
         <View style={SettingsScreenStyles(theme).SettingsScreen}>

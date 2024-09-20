@@ -9,6 +9,7 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
 import useErrorHandler from '../hooks/useErrorHandler';
+import { AppNavigationProp } from '../navigator/AppNavigation';
 
 interface modulesInterface {
     idappmob: number,
@@ -23,7 +24,7 @@ export const OnboardingScreen = () => {
     const { user } = useContext(AuthContext);
     const { handleError } = useErrorHandler()
 
-    const navigation = useNavigation<any>();
+    const { navigate } = useNavigation<AppNavigationProp>();
     const [modules, setModules] = useState<modulesInterface[]>()
 
     const oddModules = modules?.filter(module => module.idappmob % 2 !== 0);
@@ -54,7 +55,7 @@ export const OnboardingScreen = () => {
     return (
         <SafeAreaView style={OnboardingScreenStyles(theme).OnboardingScreen}>
 
-            <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigation.navigate("ProfileNavigation")}>
+            <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigate("ProfileNavigation")}>
                 <View style={OnboardingScreenStyles(theme).topbar_profile}>
                     <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</Text>
                 </View>
@@ -97,16 +98,15 @@ export const ModuleOption = ({
 }: ModuleOptionInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const navigation = useNavigation<any>();
+    const { navigate } = useNavigation<AppNavigationProp>();
     const iconColor = typeTheme === 'light' ? theme.color_primary : theme.text_color_secondary
 
     const moduleNavigate = (option: number) => {
-        let navigate;
 
         if (option === 1) {
-            navigation.navigate("InventoryNavigation")
+            navigate("InventoryNavigation")
         } else if (option === 2) {
-            navigation.navigate("SellsNavigation")
+            navigate("SellsNavigation")
         } else { //TEMPORAL
             Alert.alert(
                 'Permiso Bloqueado',
@@ -117,7 +117,6 @@ export const ModuleOption = ({
             );
         }
 
-        return navigate;
     }
 
     const extraStyles = (option: modulesInterface) => {

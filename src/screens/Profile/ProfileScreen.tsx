@@ -11,6 +11,7 @@ import { useTheme } from '../../context/ThemeContext';
 import DeviceInfo from 'react-native-device-info';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import { ProfileNavigationProp } from '../../navigator/ProfileNavigation';
 
 
 export const ProfileScreen = () => {
@@ -22,7 +23,7 @@ export const ProfileScreen = () => {
     const version = DeviceInfo.getVersion(); // Esto obtiene la versión de la aplicación
 
     const { theme, typeTheme } = useTheme();
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<ProfileNavigationProp>();
 
     const iconColor = typeTheme === 'dark' ? "white" : "black";
 

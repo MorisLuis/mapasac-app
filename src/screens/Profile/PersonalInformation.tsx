@@ -1,18 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Text, View } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { PersonalInformationStyles } from '../../theme/PersonalInformationTheme';
 import { useTheme } from '../../context/ThemeContext';
 
-interface PersonalInformationInterface {
-    route: {
-        params: {
-            fromLogIn?: boolean;
-        };
-    };
-}
 
-export const PersonalInformation = ({ route }: PersonalInformationInterface) => {
+export const PersonalInformation = () => {
     const { user } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
 

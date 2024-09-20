@@ -1,19 +1,19 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import { SettingsScreen } from '../screens/Profile/SettingsScreen';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 import { PrivacyScreen } from '../screens/Profile/PrivacyScreen';
-import { TermsOfUseScreen } from '../screens/Profile/TermsOfUseScreen';
 import { PersonalInformation } from '../screens/Profile/PersonalInformation';
 
 
+export type ProfileNavigationProp = NativeStackNavigationProp<Partial<ProfileNavigationStackParamList>>;
+
 export type ProfileNavigationStackParamList = {
     "[ProfileNavigation] - profile": undefined,
-    "[ProfileNavigation] - personalInformationScreen": { fromLogIn?: boolean },
+    "[ProfileNavigation] - personalInformationScreen": undefined;
     "[ProfileNavigation] - settingsSceen": undefined;
     "[ProfileNavigation] - privacyScreen": undefined;
-    "[ProfileNavigation] - termsOfUseScreen": undefined;
 }
 
 export const ProfileNavigation = () => {
@@ -31,10 +31,7 @@ export const ProfileNavigation = () => {
                             title="Perfil"
                             navigation={navigation}
                             backCustum={true}
-                            back={() => {
-                                navigation.goBack();
-                                //updateBarCode('');
-                            }}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -49,13 +46,7 @@ export const ProfileNavigation = () => {
                         <CustomHeader
                             title="Información Personal"
                             navigation={navigation}
-                            back={() => {
-                                if(route?.params?.fromLogIn){
-                                    navigation.navigate("LoginPage")
-                                } else {
-                                    navigation.goBack()
-                                }
-                            }}
+                            back={() => navigation.goBack()}
                         />)
                 })}
             />
@@ -73,14 +64,6 @@ export const ProfileNavigation = () => {
                 component={PrivacyScreen}
                 options={({ navigation }) => ({
                     header: props => <CustomHeader title="Aviso de privacidad" navigation={navigation} />,
-                })}
-            />
-
-            <ProfileTabs.Screen
-                name="[ProfileNavigation] - termsOfUseScreen"
-                component={TermsOfUseScreen}
-                options={({ navigation }) => ({
-                    header: props => <CustomHeader title="Terminos de uso" navigation={navigation} />,
                 })}
             />
         </ProfileTabs.Navigator>

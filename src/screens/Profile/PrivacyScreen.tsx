@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 import { useTheme } from '../../context/ThemeContext';
 import { PrivacyScreenStyles } from '../../theme/PrivacyScreenTheme';
 
