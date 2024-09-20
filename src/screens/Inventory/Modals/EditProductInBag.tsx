@@ -32,9 +32,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     }
 
     const onEdit = () => {
-        if (!product?.idenlacemob) return;
         setEditingProduct(true)
-
         if (piezasCount < 1) {
             deleteProduct(product.idenlacemob as number)
         } else {

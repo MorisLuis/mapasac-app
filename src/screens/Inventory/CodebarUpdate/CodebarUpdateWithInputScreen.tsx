@@ -39,11 +39,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
             setLoading(true)
 
             const response = await getProductByCodeBar({ codeBar: text });
-
-            if (response.error) {
-                handleError(response.error);
-                return;
-            }
+            if (response.error) return handleError(response.error);
 
             const onCancel = () => {
                 goBack()
@@ -75,12 +71,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                 codebarras: text as string,
                 idinvearts: selectedProduct.idinvearts
             });
-
-            if (codebar.error) {
-                handleError(codebar.error);
-                return;
-            };
-
+            if (codebar.error) return handleError(codebar.error);
             goBack()
             goBack()
         } catch (error) {

@@ -81,10 +81,7 @@ export const LayoutBag = ({
             setLoadingCleanBag(true);
             const product = await deleteAllProductsInBag({ opcion: opcion, mercado: true });
 
-            if (product.error) {
-                handleError(product.error);
-                return;
-            }
+            if (product.error) return handleError(product.error);
     
             if (Type === 'inventory') {
                 await resetAfterPostInventory()
@@ -134,10 +131,7 @@ export const LayoutBag = ({
             }
 
             const products = await getSearchProductInBack({ searchTerm: text, opcion: opcion });
-            if (products.error) {
-                handleError(products.error);
-                return;
-            }
+            if (products.error) return handleError(products.error);
 
             setBags(products || []);
         } catch (error) {
@@ -154,11 +148,7 @@ export const LayoutBag = ({
         try {
             setIsLoading(true);
             const newBags = await getBagInventory({ page, limit: 5, option: opcion });
-
-            if (newBags.error) {
-                handleError(newBags.error);
-                return;
-            }
+            if (newBags.error) return handleError(newBags.error);
 
             if (newBags && newBags.length > 0) {
                 setBags((prevBags: CombinedProductInterface[]) => [...prevBags, ...newBags]);

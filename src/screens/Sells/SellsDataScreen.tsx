@@ -86,19 +86,12 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
         try {
             const total = await getTotalClassesSells(cvefamilia);
+            if (total.error) return handleError(total.error);
 
-            if (total.error) {
-                handleError(total.error);
-                return;
-            }
 
             if (total === "1") {
                 const classesData = await getProductsSellsFromFamily(cvefamilia);
-
-                if (classesData.error) {
-                    handleError(classesData.error);
-                    return;
-                }
+                if (classesData.error) return handleError(classesData.error);
 
                 const clases = classesData[0];
                 const { ridinvearts: idinvearts, rcapa: capa, ridinveclas: idinveclas } = clases ?? {};
@@ -114,11 +107,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 handleGetProduct({ idinvearts, capa, idinveclas });
             } else if (total === "0") {
                 const product = await getIdinveartsProduct(cvefamilia);
-
-                if (product.error) {
-                    handleError(product.error);
-                    return;
-                };
+                if (product.error) return handleError(product.error);
 
                 setIdinveartsValue(product.idinvearts);
             }
@@ -126,19 +115,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             handleError(error);
         }
 
-        //setTotalClasses(parseFloat(total));
     }, [cvefamilia, setValue]);
 
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
 
         try {            
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-
-            if (product.error) {
-                handleError(product.error);
-                return;
-            }
-
+            if (product.error) return handleError(product.error);
             setValue('price', product?.precio.toString());
             setValue('units', {
                 unidad: product?.unidad as number,

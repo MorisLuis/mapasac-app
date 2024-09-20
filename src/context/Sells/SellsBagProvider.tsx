@@ -22,11 +22,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const handleUpdateSummary = async () => {
         try {
             const total = await getTotalProductsInBag({opcion: 2, mercado: true});
-
-            if (total.error) {
-                handleError(total.error);
-                return;
-            }
+            if (total.error) return handleError(total.error);
 
             const numberOfItemsSells = total;
             const orderSummary = {
@@ -44,11 +40,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const addProductSell = async (sellBody: EnlacemobInterface) => {
         try {
             const product = await addProductInBag({product: sellBody, mercado: true});
-
-            if (product.error) {
-                handleError(product.error);
-                return;
-            }
+            if (product.error) return handleError(product.error);
 
             setProductAdded(true);
         } catch (error) {
@@ -61,11 +53,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const deleteProductSell = async (idenlacemob: number) => {
         try {
             const product = await deleteProductInBag({idenlacemob, mercado: true});
-            
-            if (product.error) {
-                handleError(product.error);
-                return;
-            }
+            if (product.error) return handleError(product.error);
 
             setProductAdded(true);
         } catch (error) {
@@ -78,12 +66,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const editProductSell = async ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
         try {
             const product = await updateProductInBag({ idenlacemob, cantidad, mercado: true });
-
-            if (product.error) {
-                handleError(product.error);
-                return;
-            }
-
+            if (product.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {
             handleError(error)

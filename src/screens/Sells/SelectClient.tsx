@@ -44,11 +44,7 @@ export const SelectClient = () => {
         setIsLoading(true);
         try {
             const newClients = await getClients({ page, limit: 5 });
-
-            if (newClients.error) {
-                handleError(newClients.error);
-                return;
-            }
+            if (newClients.error) return handleError(newClients.error);
 
             if (newClients && newClients.length > 0) {
                 //setClients(prevClients => [...prevClients, ...newClients]);
@@ -79,11 +75,8 @@ export const SelectClient = () => {
             }
 
             const clientsSearch = await getSearchClients({ searchTerm: text });
+            if (clientsSearch.error) return handleError(clientsSearch.error);
 
-            if (clientsSearch.error) {
-                handleError(clientsSearch.error);
-                return;
-            }
             setFilteredClients(clientsSearch || []);
         } catch (error) {
             handleError(error);

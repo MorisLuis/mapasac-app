@@ -53,10 +53,7 @@ export const LayoutSell = ({
 
         try {
             const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
-            if (totalprice.error) {
-                handleError(totalprice.error);
-                return;
-            }
+            if (totalprice.error) return handleError(totalprice.error);
             setTotalPrice(parseFloat(totalprice));
         } catch (error) {
             handleError(error);
@@ -70,11 +67,7 @@ export const LayoutSell = ({
         try {            
             setIsLoading(true);
             const products = await getProductsSells(currentPage);
-
-            if (products.error) {
-                handleError(products.error);
-                return;
-            }
+            if (products.error) return handleError(products.error);
 
             setProducts((prevProducts) => {
                 const newProducts = products?.filter(

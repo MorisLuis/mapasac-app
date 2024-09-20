@@ -34,12 +34,7 @@ export const OnboardingScreen = () => {
 
         try {
             const modulesData = await getModules();
-
-            if (modulesData.error) {
-                handleError(modulesData.error);
-                return;
-            };
-
+            if (modulesData.error) return handleError(modulesData.error);
             setModules(modulesData);
         } catch (error) {
             handleError(error);

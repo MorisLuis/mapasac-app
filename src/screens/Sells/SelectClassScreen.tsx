@@ -84,12 +84,7 @@ export const SelectClassScreen = ({
     useEffect(() => {
         const handleGetClasess = async () => {
             const classesData = await getProductsSellsFromFamily(cvefamilia as number);
-
-            if (classesData.error) {
-                handleError(classesData.error);
-                return;
-            }
-
+            if (classesData.error) return handleError(classesData.error);
             setClasses(classesData)
         };
         handleGetClasess();

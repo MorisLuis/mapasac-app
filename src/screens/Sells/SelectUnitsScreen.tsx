@@ -65,12 +65,7 @@ export const SelectUnitScreen = ({
     useEffect(() => {
         const handleGetClasess = async () => {
             const unitsData = await getUnits();
-
-            if (unitsData.error) {
-                handleError(unitsData.error);
-                return;
-            };
-
+            if (unitsData.error) return handleError(unitsData.error);
             setUnits(unitsData)
         };
         handleGetClasess();

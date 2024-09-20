@@ -42,24 +42,16 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
     }
 
     const onEdit = async () => {
-        
-        if (!product?.idinvearts) return;
 
         try {            
             setEditingProduct(true);
-    
             const productUpdated = await updateProduct({
                 idinvearts: product?.idinvearts,
                 dataValue: "producto",
                 data: descripcioState as string,
                 onFinish: onFinish
             });
-
-            if (productUpdated.error) {
-                handleError(productUpdated.error);
-                return;
-            };
-
+            if (productUpdated.error) return handleError(productUpdated.error);
         } catch (error) {
             handleError(error)
         }
