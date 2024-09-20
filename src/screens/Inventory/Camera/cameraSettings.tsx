@@ -6,6 +6,7 @@ import { SettingsContext } from "../../../context/settings/SettingsContext";
 import ProductInterface from "../../../interface/product";
 import UserInterface from "../../../interface/user";
 import { identifyUPCOrEANBarcode } from "../../../utils/identifyBarcodeType";
+import useErrorHandler from "../../../hooks/useErrorHandler";
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -25,6 +26,7 @@ export const cameraSettings = ({
 
     const { handleCameraAvailable, cameraAvailable, vibration, updateBarCode, handleStartScanning } = useContext(SettingsContext);
     const [codeDetected, setCodeDetected] = useState(false)
+    const { handleError } = useErrorHandler()
 
 
     const requestCameraPermission = async () => {
@@ -93,15 +95,21 @@ export const cameraSettings = ({
 
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue?.trim() });
+
+                if (response.error) {
+                    handleError(response.error);
+                    return;
+                }
+
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
                 updateBarCode(codeValue)
-                handleStartScanning(false)
             } catch (error) {
+                handleError(error)
+            }  finally {
                 handleStartScanning(false)
                 setCodeDetected(false)
                 handleCameraAvailable(true)
-                console.error('Error fetching product:', error);
             }
         } else {
             handleCameraAvailable(true)

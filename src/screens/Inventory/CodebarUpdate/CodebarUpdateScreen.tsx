@@ -14,6 +14,7 @@ import { useTheme } from '../../../context/ThemeContext';
 import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenTheme';
 import { CodebarUpdateOptionCard } from '../../../components/Cards/CodebarUpdateOptionCard';
 import Icon from 'react-native-vector-icons/Ionicons';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -24,6 +25,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const navigation = useNavigation<any>();
     const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
+    const { handleError } = useErrorHandler()
 
     const [openModalCamera, setOpenModalCamera] = useState(false)
     const [codebartypeSelected, setCodebartypeSelected] = useState<number>();
@@ -52,21 +54,43 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const hanldeUpdateCodebarWithCodeFound = async () => {
         if (!selectedProduct) return;
 
-        await updateCodeBar({
-            codebarras: codeBar as string,
-            idinvearts: selectedProduct.idinvearts
-        })
-        navigation.goBack()
+        try {    
+            const codebar = await updateCodeBar({
+                codebarras: codeBar as string,
+                idinvearts: selectedProduct.idinvearts
+            })
+
+            if (codebar.error) {
+                handleError(codebar.error);
+                return;
+            }
+            navigation.goBack()
+        } catch (error) {
+            handleError(error);
+
+        }
     }
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
+
         if (!selectedProduct) return;
 
-        await updateCodeBar({
-            codebarras: codeBar as string,
-            idinvearts: selectedProduct.idinvearts
-        })
-        navigation.goBack();
+        try {
+            const codebar = await updateCodeBar({
+                codebarras: codeBar as string,
+                idinvearts: selectedProduct.idinvearts
+            })
+
+            if (codebar.error) {
+                handleError(codebar.error);
+                return;
+            };
+
+            navigation.goBack();
+        } catch (error) {
+            handleError(error);
+        }
+
     }
 
     useEffect(() => {

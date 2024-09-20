@@ -12,6 +12,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { SearchProductScreenStyles } from '../../theme/SearchProductScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { Searchbar } from 'react-native-paper';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type SearchProductScreenInterface = {
     route?: {
@@ -26,6 +27,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const { modal, isModal } = route?.params ?? {};
     const { codeBar } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
+    const { handleError } = useErrorHandler()
 
     const navigation = useNavigation<any>();
     const [productsInInventory, setProductsInInventory] = useState<ProductInterface[]>([]);
@@ -37,10 +39,21 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
     const searchInputRef = useRef<any>(null);
 
     const getSearchData = async (searchTerm: string) => {
-        setLoading(true); // Activar estado de carga
-        const products = await getSearchProductInStock({ searchTerm: searchTerm ? searchTerm : "" });
-        setProductsInInventory(products);
-        setLoading(false); // Desactivar estado de carga
+
+        try {
+            setLoading(true); // Activar estado de carga
+            const products = await getSearchProductInStock({ searchTerm: searchTerm ? searchTerm : "" });
+            if (products.error) {
+                handleError(products.error);
+                return;
+            }
+            setProductsInInventory(products);
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setLoading(false);
+        };
+
     };
 
     const renderItem = ({ item }: { item: ProductInterface }) => {

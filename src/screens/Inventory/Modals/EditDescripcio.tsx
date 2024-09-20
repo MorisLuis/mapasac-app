@@ -10,6 +10,7 @@ import { globalStyles } from '../../../theme/appTheme';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { updateProduct } from '../../../services/products';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 type EditDescripcioInterface = {
     route?: {
@@ -27,6 +28,7 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
     const [editingProduct, setEditingProduct] = useState(false);
     const [descripcioState, setDescripcioState] = useState<string>()
     const inputRef = useRef<TextInput>(null);
+    const { handleError } = useErrorHandler()
 
     const handleCloseModal = () => {
         navigation.goBack()
@@ -41,17 +43,28 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
         handleCloseModal()
     }
 
-    const onEdit = () => {
+    const onEdit = async () => {
         
         if (!product?.idinvearts) return;
-        setEditingProduct(true);
 
-        updateProduct({
-            idinvearts: product?.idinvearts,
-            dataValue: "producto",
-            data: descripcioState as string,
-            onFinish: onFinish
-        })
+        try {            
+            setEditingProduct(true);
+    
+            const productUpdated = await updateProduct({
+                idinvearts: product?.idinvearts,
+                dataValue: "producto",
+                data: descripcioState as string,
+                onFinish: onFinish
+            });
+
+            if (productUpdated.error) {
+                handleError(productUpdated.error);
+                return;
+            };
+
+        } catch (error) {
+            handleError(error)
+        }
 
     }
 

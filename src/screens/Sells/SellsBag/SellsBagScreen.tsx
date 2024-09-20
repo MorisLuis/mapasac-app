@@ -5,6 +5,7 @@ import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 export const SellsBagScreen = () => {
 
@@ -12,6 +13,7 @@ export const SellsBagScreen = () => {
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
+    const { handleError } = useErrorHandler();
 
     const handleDeleteProduct = async (productId: number) => {
         const confirmDelete = async () => {
@@ -35,12 +37,25 @@ export const SellsBagScreen = () => {
     };
 
     const handleGetPrice = async () => {
-        const totalpriceData = await getTotalPriceBag({ opcion: 2 });
-        if(!totalpriceData) {
-            setTotalPrice(parseFloat("0"));
-        } else {
-            setTotalPrice(parseFloat(totalpriceData));
-        }
+
+        try {
+            const totalpriceData = await getTotalPriceBag({ opcion: 2 });
+
+            if (totalpriceData.error) {
+                handleError(totalpriceData.error);
+                return;
+            };
+
+            if(!totalpriceData) {
+                setTotalPrice(parseFloat("0"));
+            } else {
+                setTotalPrice(parseFloat(totalpriceData));
+            }
+            
+        } catch (error) {
+            handleError(error)
+        };
+
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (

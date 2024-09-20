@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 export const SearchCodebarWithInput = () => {
 
@@ -21,27 +22,37 @@ export const SearchCodebarWithInput = () => {
     const [typeOfSearch, setTypeOfSearch] = useState('code')
     const [loadingSearch, setLoadingSearch] = useState(false)
     const buttondisabled = Barcode.length < 1 || loadingSearch;
+    const { handleError } = useErrorHandler()
 
 
     const handleSearchProductByCodebarInput = async () => {
-        updateBarCode('')
-        setLoadingSearch(true)
 
-        let response;
-        if (typeOfSearch === 'code') {
-            response = await getProductByClave({ clave: Barcode });
+        try {            
+            updateBarCode('')
+            setLoadingSearch(true)
+    
+            let response;
+            if (typeOfSearch === 'code') {
+                response = await getProductByClave({ clave: Barcode });
+            } else if (typeOfSearch === 'noarticulo') {
+                response = await getProductByNoArticulo({ noarticulo: Barcode });
+            } else {
+                updateBarCode(Barcode)
+            }
+
             handleNavigatoToProduct(response);
+
+            if (response.error) {
+                handleError(response.error);
+                return;
+            }
+
+        } catch (error) {
+            handleError(error);
+        } finally {
             setLoadingSearch(false);
-        } else if (typeOfSearch === 'noarticulo') {
-            response = await getProductByNoArticulo({ noarticulo: Barcode });
-            handleNavigatoToProduct(response);
-            setLoadingSearch(false);
-        } else {
-            updateBarCode(Barcode)
-            response = await getProductByCodeBar({ codeBar: Barcode });
-            handleNavigatoToProduct(response);
-            setLoadingSearch(false);
-        }
+        };
+
     }
 
     const handleNavigatoToProduct = (response: any) => {

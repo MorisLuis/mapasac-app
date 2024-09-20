@@ -10,10 +10,12 @@ import { ProductInventoryCardSkeleton } from '../../../components/Skeletons/Prod
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 export const Inventory = () => {
 
     const { handleCodebarScannedProcces } = useContext(SettingsContext);
+    const { handleError } = useErrorHandler()
 
     const { navigate } = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
@@ -25,23 +27,33 @@ export const Inventory = () => {
     const [totalProducts, setTotalProducts] = useState(0);
 
     const handleGetProductsByStock = async () => {
-        setIsLoading(true);
 
-        const products = await getProducts(currentPage);
+        try {
+            setIsLoading(true);
 
-        setProductsInInventory((prevProducts) => {
-            const newProducts = products?.filter(
-                (product: any) =>
-                    !prevProducts.some(
-                        (prevProduct) =>
-                            prevProduct.idinvearts === product.idinvearts
-                    )
-            );
+            const products = await getProducts(currentPage);
 
-            return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
-        });
+            if (products.error) {
+                handleError(products.error);
+                return;
+            }
 
-        setIsLoading(false);
+            setProductsInInventory((prevProducts) => {
+                const newProducts = products?.filter(
+                    (product: any) =>
+                        !prevProducts.some(
+                            (prevProduct) =>
+                                prevProduct.idinvearts === product.idinvearts
+                        )
+                );
+                return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
+            });
+
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const loadMoreItem = () => {
@@ -96,6 +108,10 @@ export const Inventory = () => {
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProducts();
+            if (total.error) {
+                handleError(total.error);
+                return;
+            }
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()

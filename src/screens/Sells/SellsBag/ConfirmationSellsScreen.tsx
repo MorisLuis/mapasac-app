@@ -18,6 +18,7 @@ import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -31,6 +32,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
+    const { handleError } = useErrorHandler();
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
@@ -45,7 +47,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [comments, setComments] = useState("");
     const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
     const availableToPost = methodPayment !== 0;
-    const disabledToPost = methodPayment === 1 && !typeSelected;
 
     const onPostInventory = async () => {
         setCreateSellLoading(true);
@@ -55,7 +56,13 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                 idclientes: typeSelected?.idclientes,
                 comments
             }
-            await postSells(sellBody);
+            const postSell = await postSells(sellBody);
+            
+            if (postSell.error) {
+                handleError(postSell.error);
+                return;
+            };
+
             setTimeout(() => {
                 navigate('succesMessageScreen', { message: 'Se ha generado con exito su pedido.', redirection: 'SellsNavigation' });
                 resetAfterPost();
@@ -66,33 +73,54 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             }, 750);
 
         } catch (error: any) {
-            Toast.show({
-                type: 'tomatoError',
-                text1: 'Hubo un error, asegurate de tener conexión a internet.'
-            })
+            handleError(error)
+        } finally {
             setCreateSellLoading(false);
-            console.log("Error al crear inventario:", error);
         }
     };
 
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
-        setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
 
-        if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
-            setPage(page + 1);
-        } else {
-            setHasMore(false);
-        }
+        try {            
+            setIsLoading(true);
+            const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
 
-        setIsLoading(false);
+
+            if (newBags.error) {
+                handleError(newBags.error);
+                return;
+            }
+    
+            if (newBags && newBags.length > 0) {
+                setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
+                setPage(page + 1);
+            } else {
+                setHasMore(false);
+            }
+
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        };
+
     };
 
     const handleGetPrice = async () => {
-        const totalprice: string = await getTotalPriceBag({ opcion: 2, mercado: true });
-        setTotalPrice(parseFloat(totalprice))
+
+        try {
+            const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
+
+            if (totalprice.error) {
+                handleError(totalprice.error);
+                return;
+            };
+
+            setTotalPrice(parseFloat(totalprice))
+        } catch (error) {
+            handleError(error);
+        }
     }
 
     const handleGetClient = () => {
@@ -178,13 +206,26 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     }
 
     const refreshBags = async () => {
-        setIsLoading(true);
-        const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
-        setBags(refreshedBags);
-        setPage(2);
-        setIsLoading(false);
-        setHasMore(true);
-        setDataUploaded(true)
+
+        try {            
+            setIsLoading(true);
+            const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
+
+            if (refreshedBags.error) {
+                handleError(refreshedBags.error);
+                return;
+            }
+
+            setBags(refreshedBags);
+
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setPage(2);
+            setIsLoading(false);
+            setHasMore(true);
+            setDataUploaded(true)
+        }
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (

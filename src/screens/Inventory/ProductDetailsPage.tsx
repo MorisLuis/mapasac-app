@@ -13,6 +13,7 @@ import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { MessageCard } from '../../components/Cards/MessageCard';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type ProductDetailsPageInterface = {
     route?: {
@@ -29,6 +30,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const { idinvearts } = selectedProduct ?? {};
     const { handleCameraAvailable, codeBar } = useContext(SettingsContext);
     const shouldCleanUp = useRef(true);
+    const { handleError } = useErrorHandler()
 
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
@@ -46,10 +48,14 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
         if (!idinvearts) return;
         try {
             const productData = await getProductDetails(idinvearts);
+            if (productData.error) {
+                handleError(productData.error);
+                return;
+            }
             setProductDetailsData(productData);
         } catch (error) {
-            console.error('Error fetching product details:', error);
-        }
+            handleError(error)
+        };
     };
 
     const handleAddToInventory = () => {

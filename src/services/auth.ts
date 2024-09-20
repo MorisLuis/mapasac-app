@@ -10,19 +10,11 @@ const postLogin = async ({ usr, pas }: postLoginInterface) => {
         const { data } = await api.post('/api/auth/login', { usr, pas });
         return data;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 
-
-
-interface renewLoginInterface {
-    token: string | null
-}
-
-const renewLogin = async ({ token }: renewLoginInterface) => {
-
-    console.log("renewLogin")
+const renewLogin = async (token: string) => {
 
     try {
         const resp = await api.get('/api/auth/renew', {
@@ -31,11 +23,11 @@ const renewLogin = async ({ token }: renewLoginInterface) => {
                 'x-token': token || ''
             }
         });
-
-        return resp
+        return resp as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
+
 }
 
 export {

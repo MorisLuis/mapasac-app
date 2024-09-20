@@ -7,6 +7,7 @@ import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -21,6 +22,7 @@ export const SelectClassScreen = ({
     const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route.params;
     const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<SellsNavigationProp>();
+    const { handleError } = useErrorHandler()
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<ClassInterface>(valueDefault);
@@ -82,6 +84,12 @@ export const SelectClassScreen = ({
     useEffect(() => {
         const handleGetClasess = async () => {
             const classesData = await getProductsSellsFromFamily(cvefamilia as number);
+
+            if (classesData.error) {
+                handleError(classesData.error);
+                return;
+            }
+
             setClasses(classesData)
         };
         handleGetClasess();

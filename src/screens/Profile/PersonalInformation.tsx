@@ -16,10 +16,6 @@ export const PersonalInformation = ({ route }: PersonalInformationInterface) => 
     const { user } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
 
-    useEffect(() => {
-        console.log('Personal Information effect');
-    }, []);
-
     return (
         <View style={PersonalInformationStyles(theme).PersonalInformation}>
             <View style={PersonalInformationStyles(theme).profile}>

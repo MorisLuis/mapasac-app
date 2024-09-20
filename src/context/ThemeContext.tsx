@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import { Theme, darkTheme, lightTheme } from '../theme/appTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 const ThemeContext = createContext({
     theme: lightTheme,
@@ -39,6 +40,8 @@ const themeReducer = (state: ThemeState, action: ThemeAction): ThemeState => {
 };
 
 export const ThemeProvider = ({ children }: any) => {
+    const { handleError } = useErrorHandler()
+
     const [state, dispatch] = useReducer(themeReducer, {
         theme: lightTheme,
         typeTheme: 'light',
@@ -58,7 +61,7 @@ export const ThemeProvider = ({ children }: any) => {
                     });
                 }
             } catch (error) {
-                console.error('Error loading theme from AsyncStorage:', error);
+                handleError(error)
             }
         };
 
@@ -70,7 +73,7 @@ export const ThemeProvider = ({ children }: any) => {
             dispatch({ type: 'TOGGLE_THEME' });
             await AsyncStorage.setItem('theme', state.typeTheme === 'light' ? 'dark' : 'light');
         } catch (error) {
-            console.error('Error saving theme to AsyncStorage:', error);
+            handleError(error)
         }
     };
 

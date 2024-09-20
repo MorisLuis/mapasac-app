@@ -9,6 +9,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { getProductDetails } from '../../services/products';
 import { ProductDetailsEditSkeleton } from '../../components/Skeletons/ProductDetailsEditSkeleton';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type ProductDetailsPageEditInterface = {
     route?: {
@@ -22,10 +23,10 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
     const { product } = route?.params ?? {};
     const { handleCameraAvailable } = useContext(SettingsContext);
     const { theme } = useTheme();
+    const { handleError } = useErrorHandler()
 
     const navigation = useNavigation<any>();
     const [productDetailsData, setProductDetailsData] = useState<ProductInterface | null>(null);
-    const codebarAvailable = productDetailsData?.codbarras?.trim() !== "";
 
     const handleGoEditDescripcion = () => {
         navigation.navigate("[ProductDetailsPage] - editDescripcio", { product: productDetailsData })
@@ -39,9 +40,15 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
         if (!product?.idinvearts) return;
         try {
             const productData = await getProductDetails(product.idinvearts);
+
+            if (productData.error) {
+                handleError(productData.error);
+                return;
+            }
+
             setProductDetailsData(productData);
         } catch (error) {
-            console.error('Error fetching product details:', error);
+            handleError(error)
         }
     };
 

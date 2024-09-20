@@ -8,6 +8,7 @@ import { getModules } from '../services/others';
 import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 interface modulesInterface {
     idappmob: number,
@@ -20,6 +21,7 @@ export const OnboardingScreen = () => {
 
     const { theme } = useTheme();
     const { user } = useContext(AuthContext);
+    const { handleError } = useErrorHandler()
 
     const navigation = useNavigation<any>();
     const [modules, setModules] = useState<modulesInterface[]>()
@@ -28,8 +30,20 @@ export const OnboardingScreen = () => {
     const evenModules = modules?.filter(module => module.idappmob % 2 === 0);
 
     const onGetModules = async () => {
-        const modulesData = await getModules();
-        setModules(modulesData);
+
+        try {
+            const modulesData = await getModules();
+
+            if (modulesData.error) {
+                handleError(modulesData.error);
+                return;
+            };
+
+            setModules(modulesData);
+        } catch (error) {
+            handleError(error);
+        }
+
     };
 
     useEffect(() => {

@@ -15,9 +15,9 @@ const postSells = async ({ clavepago, idclientes, comments } : postSellsInterfac
         };
 
         const data = await api.post('/api/invearts/sell?mercado=true', sellBody);
-        return data;
+        return data as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 

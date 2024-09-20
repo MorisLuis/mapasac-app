@@ -2,55 +2,45 @@ import { api } from "../api/api";
 
 interface SearchInterface {
     searchTerm: string;
-    opcion?: number;
-    mercado?: boolean
+    opcion: number;
 }
 
 
-const getSearchProductInStock = async ({ searchTerm }: SearchInterface) => {
-    let products;
+const getSearchProductInBack = async ({ searchTerm, opcion }: SearchInterface) => {
+
+    try {
+        const getProduct = await api.get(`/api/search/productInBag?term=${searchTerm}&opcion=${opcion}`);
+        const products = getProduct.data.products;
+        return products
+    } catch (error: any) {
+        return { error: error };
+    }
+
+}
+
+const getSearchProductInStock = async ({ searchTerm }: { searchTerm : string }) => {
+
     try {
         const getProduct = await api.get(`/api/search/product?term=${searchTerm}`);
-        products = getProduct.data.products;
+        const products = getProduct.data.products;
+        return products
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return products
 }
 
+const getSearchClients = async ({ searchTerm }: { searchTerm : string }) => {
 
-const getSearchProductInBack = async ({ searchTerm, opcion, mercado }: SearchInterface) => {
-
-    let products;
-    try {
-        if( mercado ) {
-            const getProduct = await api.get(`/api/search/productInBag?term=${searchTerm}&opcion=${opcion}&mercado=${mercado}`);
-            products = getProduct.data.products;
-        } else {
-            const getProduct = await api.get(`/api/search/productInBag?term=${searchTerm}&opcion=${opcion}`);
-            products = getProduct.data.products;
-        }
-    } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
-    }
-
-    return products
-}
-
-const getSearchClients = async ({ searchTerm }: SearchInterface) => {
-    let products;
     try {
         const getProduct = await api.get(`/api/search/clients?term=${searchTerm}`);
-        products = getProduct.data.clients;
+        const products = getProduct.data.clients;
+        return products;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return products
 }
-
-
 
 
 export {

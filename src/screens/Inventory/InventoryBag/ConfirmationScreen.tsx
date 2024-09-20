@@ -9,6 +9,7 @@ import Toast from 'react-native-toast-message';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 export const ConfirmationScreen = () => {
 
@@ -20,49 +21,78 @@ export const ConfirmationScreen = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false);
+    const { handleError } = useErrorHandler()
 
     const onPostInventory = async () => {
         setCreateInventaryLoading(true);
         try {
-            await postInventory();
+            const inventory = await postInventory();
+
+            if (inventory.error) {
+                handleError(inventory.error);
+                return;
+            };
+
             resetAfterPost();
             setTimeout(() => {
-                setCreateInventaryLoading(false);
                 navigation.navigate('succesMessageScreen', { message: "Se ha generado con exito su inventario.", redirection: 'InventoryNavigation' });
             }, 500);
+
         } catch (error: any) {
-            Toast.show({
-                type: 'tomatoError',
-                text1: 'Hubo un error, asegurate de tener conexión a internet.'
-            })
+            handleError(error);
+        } finally {
             setCreateInventaryLoading(false);
-            console.log("Error al crear inventario:", error);
+
         }
     };
 
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
-        setIsLoading(true);
-        const newBags = await getBagInventory({ page, limit: 5, option: 0 });
 
-        if (newBags && newBags.length > 0) {
-            setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
-            setPage(page + 1);
-        } else {
-            setHasMore(false);
+        try {
+            setIsLoading(true);
+            const newBags = await getBagInventory({ page, limit: 5, option: 0 });
+
+            if (newBags.error) {
+                handleError(newBags.error);
+                return;
+            }
+
+            if (newBags && newBags.length > 0) {
+                setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
+                setPage(page + 1);
+            } else {
+                setHasMore(false);
+            }
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
         }
 
-        setIsLoading(false);
     };
 
     const refreshBags = async () => {
-        setIsLoading(true);
-        const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
-        setBags(refreshedBags);
-        setPage(2);
-        setIsLoading(false);
-        setHasMore(true);
-        setDataUploaded(true)
+
+        try {
+            setIsLoading(true);
+            const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
+
+            if (refreshedBags.error) {
+                handleError(refreshedBags.error);
+                return;
+            }
+
+            setBags(refreshedBags);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setPage(2);
+            setIsLoading(false);
+            setHasMore(true);
+            setDataUploaded(true)
+        };
+
     };
 
     const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (

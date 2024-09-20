@@ -1,12 +1,14 @@
 import { api } from "../api/api";
 
 const postInventory = async () => {
+
     try {
         const data = await api.post('/api/invearts/inventory');
-        return data;
+        return data as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
-    }
+        return { error: error };
+    };
+
 }
 
 export {

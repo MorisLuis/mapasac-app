@@ -11,6 +11,7 @@ import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { getProductByCodeBar } from '../../../services/products';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -23,46 +24,70 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const { codebarType } = useContext(SettingsContext);
     const [text, setText] = useState('');
     const [loading, setLoading] = useState(false)
+    const { handleError } = useErrorHandler()
 
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-        if (!selectedProduct) return;
-        if (!regex.test(text)) return;
-        setLoading(true)
 
-        const response = await getProductByCodeBar({ codeBar: text });
+        try {            
+            if (!selectedProduct) return;
+            if (!regex.test(text)) return;
+            setLoading(true)
+    
+            const response = await getProductByCodeBar({ codeBar: text });
 
-        const onCancel = () => {
-            navigation.goBack()
-            navigation.goBack()
-            setLoading(false)
-        }
-
-        if (response.length > 0) {
-            Alert.alert(
-                'Ya existe un producto con este codigo de barras.',
-                'Deseas continuar?',
-                [
-                    { text: 'Cancelar', style: 'cancel', onPress: onCancel },
-                    { text: 'Actualizar', onPress: onUpdateCodeBar }
-                ]
-            );
-        } else {
-            onUpdateCodeBar()
+            if (response.error) {
+                handleError(response.error);
+                return;
+            }
+    
+            const onCancel = () => {
+                navigation.goBack()
+                navigation.goBack()
+                setLoading(false)
+            }
+    
+            if (response.length > 0) {
+                Alert.alert(
+                    'Ya existe un producto con este codigo de barras.',
+                    'Deseas continuar?',
+                    [
+                        { text: 'Cancelar', style: 'cancel', onPress: onCancel },
+                        { text: 'Actualizar', onPress: onUpdateCodeBar }
+                    ]
+                );
+            } else {
+                onUpdateCodeBar()
+            }
+        } catch (error) {
+            handleError(error)
         }
     }
 
     const onUpdateCodeBar = async () => {
-        await updateCodeBar({
-            codebarras: text as string,
-            idinvearts: selectedProduct.idinvearts
-        })
-        navigation.goBack()
-        navigation.goBack()
-        setLoading(false)
+
+        try {
+            const codebar = await updateCodeBar({
+                codebarras: text as string,
+                idinvearts: selectedProduct.idinvearts
+            });
+
+            if (codebar.error) {
+                handleError(codebar.error);
+                return;
+            };
+
+            navigation.goBack()
+            navigation.goBack()
+        } catch (error) {
+            handleError(error);
+        } finally{ 
+            setLoading(false)
+        };
+
     }
 
     const handleTextChange = (value: string) => {

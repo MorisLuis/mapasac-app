@@ -10,6 +10,7 @@ import { getTotalPriceBag } from '../../services/bag';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { getProductsSells, getTotalProductSells } from '../../services/productsSells';
 import { useFocusEffect } from '@react-navigation/native';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 interface LayoutSellInterface {
     renderItem:  ({ item }: { item: ProductSellsInterface }) => React.JSX.Element;
@@ -28,6 +29,7 @@ export const LayoutSell = ({
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
+    const { handleError } = useErrorHandler()
 
     const loadMoreItem = () => {
         if (products.length < totalProducts) {
@@ -38,35 +40,58 @@ export const LayoutSell = ({
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProductSells();
+            if (total.error) {
+                handleError(total.error);
+                return;
+            }
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()
     }, [])
 
     const handleGetPrice = async () => {
-        const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
-        setTotalPrice(parseFloat(totalprice));
+
+        try {
+            const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
+            if (totalprice.error) {
+                handleError(totalprice.error);
+                return;
+            }
+            setTotalPrice(parseFloat(totalprice));
+        } catch (error) {
+            handleError(error);
+        };
+
     };
 
 
     const handleGetProducts = async () => {
-        setIsLoading(true);
 
-        const products = await getProductsSells(currentPage);
+        try {            
+            setIsLoading(true);
+            const products = await getProductsSells(currentPage);
 
-        setProducts((prevProducts) => {
-            const newProducts = products?.filter(
-                (product: ProductSellsInterface) =>
-                    !prevProducts.some(
-                        (prevProduct) =>
-                            prevProduct.idinvefami === product.idinvefami
-                    )
-            );
+            if (products.error) {
+                handleError(products.error);
+                return;
+            }
 
-            return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
-        });
-
-        setIsLoading(false);
+            setProducts((prevProducts) => {
+                const newProducts = products?.filter(
+                    (product: ProductSellsInterface) =>
+                        !prevProducts.some(
+                            (prevProduct) =>
+                                prevProduct.idinvefami === product.idinvefami
+                        )
+                );
+                return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
+            });
+    
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const renderFooter = useCallback(() => (

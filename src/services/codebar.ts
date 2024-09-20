@@ -14,13 +14,15 @@ const updateCodeBar = async ({
 }: updateCostosInterface) => {
 
     try {
-        await api.put(`/api/product/codebar/${idinvearts}`, { codbarras: codebarras });
+        const codebar = await api.put(`/api/product/codebar/${idinvearts}`, { codbarras: codebarras });
         Toast.show({
             type: 'tomatoToast',
             text1: 'Se actualizó el codigo de barras!'
         })
+
+        return codebar as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 

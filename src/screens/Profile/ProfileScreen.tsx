@@ -32,13 +32,6 @@ export const ProfileScreen = () => {
         handleCleanStateInventory()
     }
 
-
-    useEffect(() => {
-        console.log('Personal Information effect');
-    }, [])
-
-
-
     return (
         <View style={ProfileScreenStyles(theme, typeTheme).ProfileScreen}>
             <SafeAreaView style={ProfileScreenStyles(theme, typeTheme).content}>

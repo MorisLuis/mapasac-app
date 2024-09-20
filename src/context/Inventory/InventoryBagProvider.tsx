@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import ProductInterface from '../../interface/product';
-import { AuthContext } from '../auth/AuthContext';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export interface InventoryBagInterface {
     numberOfItems: string;
@@ -17,12 +17,16 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
-    const { user } = useContext(AuthContext);
+    const { handleError } = useErrorHandler()
 
     const handleUpdateSummary = async () => {
-        if (!user) return
         try {
             const total = await getTotalProductsInBag({ opcion: 0 });
+
+            if (total.error) {
+                handleError(total.error);
+                return;
+            }
 
             const numberOfItems = total;
             const orderSummary = {
@@ -30,40 +34,58 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             };
             dispatch({ type: '[InventoryBag] - Update Summary', payload: orderSummary });
         } catch (error) {
-            console.log({ error });
+            handleError(error)
         } finally {
             setProductAdded(false);
         }
     };
 
-    const addProduct = (inventoryBody: ProductInterface) => {
+    const addProduct = async (inventoryBody: ProductInterface) => {
         try {
-            addProductInBag({ product: inventoryBody })
+            const product = await addProductInBag({ product: inventoryBody });
+
+            if (product.error) {
+                handleError(product.error);
+                return;
+            }
+
             setProductAdded(true);
         } catch (error) {
-            console.log({ error })
+            handleError(error)
         } finally {
             handleUpdateSummary()
         }
     }
 
-    const deleteProduct = (idenlacemob: number) => {
+    const deleteProduct = async (idenlacemob: number) => {
         try {
-            deleteProductInBag({ idenlacemob })
+            const product = await deleteProductInBag({ idenlacemob });
+
+            if (product.error) {
+                handleError(product.error);
+                return;
+            }
+
             setProductAdded(true);
         } catch (error) {
-            console.log({ error })
+            handleError(error)
         } finally {
             handleUpdateSummary()
         }
     }
 
-    const editProduct = ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
+    const editProduct = async ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
         try {
-            updateProductInBag({ idenlacemob, cantidad })
+            const product = await updateProductInBag({ idenlacemob, cantidad });
+
+            if (product.error) {
+                handleError(product.error);
+                return;
+            }
+
             setProductAdded(true);
         } catch (error) {
-            console.log({ error })
+            handleError(error)
         } finally {
             handleUpdateSummary()
         }

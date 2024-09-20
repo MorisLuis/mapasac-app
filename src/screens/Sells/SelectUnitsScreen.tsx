@@ -7,6 +7,7 @@ import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getUnits } from '../../services/productsSells';
 import UnitInterfacce, { UnitData } from '../../interface/units';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
 
@@ -21,6 +22,7 @@ export const SelectUnitScreen = ({
     const { theme, typeTheme } = useTheme();
     const { valueDefault } = route?.params;
     const navigation = useNavigation<any>();
+    const { handleError } = useErrorHandler()
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<UnitData>();
@@ -63,6 +65,12 @@ export const SelectUnitScreen = ({
     useEffect(() => {
         const handleGetClasess = async () => {
             const unitsData = await getUnits();
+
+            if (unitsData.error) {
+                handleError(unitsData.error);
+                return;
+            };
+
             setUnits(unitsData)
         };
         handleGetClasess();

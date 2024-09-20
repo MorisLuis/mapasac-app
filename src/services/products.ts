@@ -3,90 +3,78 @@ import { api } from "../api/api";
 
 const getProducts = async (PageNumber: number) => {
 
-    let products;
     try {
         const getProduct = await api.get(`/api/product?page=${PageNumber}&limit=10`);
-        products = getProduct.data.products;
+        const products = getProduct.data.products;
+        return products
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
-    }
+        return { error: error };
+    };
 
-    return products
 }
 
 
 const getProductDetails = async (idinvearts: number) => {
-    let product;
+
     try {
         const getProduct = await api.get(`/api/product/byid?idinvearts=${idinvearts}`);
-        product = getProduct.data.product;
+        const product = getProduct.data.product;
+        return product
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return product;
 }
 
-interface getProductByCodeBarInterface {
-    codeBar: string
-}
 
-const getProductByCodeBar = async ({ codeBar }: getProductByCodeBarInterface) => {
+const getProductByCodeBar = async ({ codeBar }: { codeBar: string }) => {
 
-    let product;
     try {
         const getProduct = await api.get(`/api/product/bycodebar?codbarras=${codeBar}`);
-        product = getProduct.data.product;
+        const product = getProduct.data.product;
+        return product
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return product
 };
 
-interface getProductByClaveInterface {
-    clave: string
-}
+const getProductByClave = async ({ clave }: { clave: string }) => {
 
-const getProductByClave = async ({ clave }: getProductByClaveInterface) => {
-
-    let product;
     try {
         const getProduct = await api.get(`/api/product/byclave?clave=${clave}`);
-        product = getProduct.data.product;
+        const product = getProduct.data.product;
+        return product;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return product
 };
 
 const getProductByNoArticulo = async ({ noarticulo }: { noarticulo: string }) => {
 
-    let product;
     try {
         const getProduct = await api.get(`/api/product/bynoarticulo?noarticulo=${noarticulo}`);
-        product = getProduct.data.product;
+        const product = getProduct.data.product;
+        return product
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return product
 };
 
 
 
 const getTotalProducts = async () => {
 
-    let total;
     try {
         const getProduct = await api.get(`/api/product/total`);
-        total = getProduct.data.total;
+        const total = getProduct.data.total;
+        return total;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
-    return total;
 }
 
 interface updateProductInterface {
@@ -108,16 +96,19 @@ const updateProduct = async ({
     };
 
     try {
-        await api.put(`/api/product/${idinvearts}`, payload);
+        const product = await api.put(`/api/product/${idinvearts}`, payload);
         Toast.show({
             type: 'tomatoToast',
             text1: `Se actualizó ${dataValue}!`
-        })
+        });
+
+        return product as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     } finally {
         onFinish?.()
     }
+
 }
 
 

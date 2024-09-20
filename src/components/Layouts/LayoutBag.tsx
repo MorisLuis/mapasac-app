@@ -22,6 +22,7 @@ import { ProductSellsInterfaceBag } from '../../interface/productSells';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../navigator/AppNavigation';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -52,6 +53,7 @@ export const LayoutBag = ({
     const { goBack, navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
     const { resetAfterPost } = useContext(SellsBagContext);
     const { resetAfterPost: resetAfterPostInventory } = useContext(InventoryBagContext);
+    const { handleError } = useErrorHandler()
 
     const [searchText, setSearchText] = useState<string>('');
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
@@ -74,48 +76,76 @@ export const LayoutBag = ({
     };
 
     const handleCleanTemporal = async () => {
-        setLoadingCleanBag(true);
-        await deleteAllProductsInBag({ opcion: opcion, mercado: true });
 
-        if (Type === 'inventory') {
-            await resetAfterPostInventory()
-        } else {
-            await resetAfterPost();
+        try {            
+            setLoadingCleanBag(true);
+            const product = await deleteAllProductsInBag({ opcion: opcion, mercado: true });
+
+            if (product.error) {
+                handleError(product.error);
+                return;
+            }
+    
+            if (Type === 'inventory') {
+                await resetAfterPostInventory()
+            } else {
+                await resetAfterPost();
+            }
+    
+            setTimeout(() => {
+                setLoadingCleanBag(false);
+                goBack();
+                setOpenModalDecision(false);
+                Toast.show({
+                    type: 'tomatoToast',
+                    text1: 'Se limpió el inventario!'
+                });
+            }, 100);
+        } catch (error) {
+            handleError(error);
         }
-
-        setTimeout(() => {
-            setLoadingCleanBag(false);
-            goBack();
-            setOpenModalDecision(false);
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se limpió el inventario!'
-            });
-        }, 100);
     };
 
     const handleSearch = async (text: string) => {
-        setSearchText(text);
 
-        // Clean Search.
-        if (text === '') {
-            setCleanSearchText(true)
-            setBags([]);
+        try {            
+            setSearchText(text);
+
+            // Clean Search.
+            if (text === '') {
+                setCleanSearchText(true)
+                setBags([]);
+                setPage(1);
+
+                setTimeout(async () => {
+                    const newBags = await getBagInventory({ page, limit: 5, option: opcion });
+
+                    if (newBags.error) {
+                        handleError(newBags.error);
+                        return;
+                    }
+
+                    setBags(newBags);
+                    setPage(page + 1);
+                    setCleanSearchText(false);
+                }, 300);
+
+                return;
+            }
+
+            const products = await getSearchProductInBack({ searchTerm: text, opcion: opcion });
+            if (products.error) {
+                handleError(products.error);
+                return;
+            }
+
+            setBags(products || []);
+        } catch (error) {
+            handleError(error);
+        } finally {
             setPage(1);
-
-            setTimeout(async () => {
-                const newBags = await getBagInventory({ page, limit: 5, option: opcion });
-                setBags(newBags);
-                setPage(page + 1);
-                setCleanSearchText(false);
-            }, 300);
-
-            return;
         }
 
-        const products = await getSearchProductInBack({ searchTerm: text, opcion: opcion });
-        setBags(products || []);
-        setPage(1);
     };
 
     const loadBags = async () => {
@@ -125,6 +155,11 @@ export const LayoutBag = ({
             setIsLoading(true);
             const newBags = await getBagInventory({ page, limit: 5, option: opcion });
 
+            if (newBags.error) {
+                handleError(newBags.error);
+                return;
+            }
+
             if (newBags && newBags.length > 0) {
                 setBags((prevBags: CombinedProductInterface[]) => [...prevBags, ...newBags]);
                 setPage(page + 1);
@@ -133,7 +168,7 @@ export const LayoutBag = ({
             };
 
         } catch (error) {
-            console.log({ error })
+            handleError(error)
         } finally {
             setIsLoading(false);
             setDataUploaded(true)

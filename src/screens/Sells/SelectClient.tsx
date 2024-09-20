@@ -15,6 +15,7 @@ import { getClients } from '../../services/utils';
 import ClientInterface from '../../interface/utils';
 import { OneDataCard } from '../../components/Cards/OneDataCard';
 import { SellsNavigationProp } from '../../navigator/SellsNavigation';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 
 export const SelectClient = () => {
@@ -22,7 +23,7 @@ export const SelectClient = () => {
     const { theme, typeTheme } = useTheme();
 
     const [searchText, setSearchText] = useState<string>('');
-    //const [clients, setClients] = useState<ClientInterface[]>([]);
+    const { handleError } = useErrorHandler()
     const [filteredClients, setFilteredClients] = useState<ClientInterface[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +44,12 @@ export const SelectClient = () => {
         setIsLoading(true);
         try {
             const newClients = await getClients({ page, limit: 5 });
+
+            if (newClients.error) {
+                handleError(newClients.error);
+                return;
+            }
+
             if (newClients && newClients.length > 0) {
                 //setClients(prevClients => [...prevClients, ...newClients]);
                 setFilteredClients(prevClients => [...prevClients, ...newClients]);
@@ -51,7 +58,7 @@ export const SelectClient = () => {
                 setHasMore(false);
             }
         } catch (error) {
-            console.error(error);
+            handleError(error);
         } finally {
             setIsLoading(false);
             setDataUploaded(true);
@@ -60,17 +67,30 @@ export const SelectClient = () => {
 
 
     const handleSearch = async (text: string) => {
-        setSearchText(text);
-        if (text === '') {
-            setDataUploaded(false)
-            setFilteredClients([]);
-            setPage(0);
-            loadClients();
-            return;
-        }
-        const clientsSearch = await getSearchClients({ searchTerm: text });
-        setFilteredClients(clientsSearch || []);
-        setPage(1);
+
+        try {            
+            setSearchText(text);
+            if (text === '') {
+                setDataUploaded(false)
+                setFilteredClients([]);
+                setPage(0);
+                loadClients();
+                return;
+            }
+
+            const clientsSearch = await getSearchClients({ searchTerm: text });
+
+            if (clientsSearch.error) {
+                handleError(clientsSearch.error);
+                return;
+            }
+            setFilteredClients(clientsSearch || []);
+        } catch (error) {
+            handleError(error);
+        } finally{
+            setPage(1);
+        };
+
     };
 
     const renderItem = useCallback(({ item }: { item: ClientInterface }) => (

@@ -6,7 +6,6 @@ export const quantityFormat = (quantity: number | string): string => {
 
     // Manejar el caso cuando la conversión falla (NaN)
     if (isNaN(num)) {
-        console.error("Invalid input: Not a number");
         return "0.00"; // o cualquier valor predeterminado apropiado
     }
 

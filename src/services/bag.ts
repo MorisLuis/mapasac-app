@@ -20,7 +20,7 @@ const getBagInventory = async ({ page, limit, option, mercado }: getBagInterface
             return data.bag
         }
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 
@@ -31,16 +31,15 @@ interface addProductInBagInventoryInterface {
 
 const addProductInBag = async ({ product, mercado }: addProductInBagInventoryInterface) => {
     try {
+        let data
         if (mercado) {
-            const data = await api.post(`/api/bag?mercado=true`, { ...product, opcion: 2 });
-            return data
+            data = await api.post(`/api/bag?mercado=true`, { ...product, opcion: 2 });
         } else {
-            const data = await api.post(`/api/bag`, { ...product, opcion: 0 });
-            return data
+            data = await api.post(`/api/bag`, { ...product, opcion: 0 });
         }
-
+        return data as any;
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 
@@ -53,16 +52,15 @@ interface updateProductInBagInventoryInterface {
 const updateProductInBag = async ({ idenlacemob, cantidad, mercado }: updateProductInBagInventoryInterface) => {
 
     try {
+        let data;
         if (mercado) {
-            const { data } = await api.put(`/api/bag?mercado=true`, { idenlacemob, cantidad });
-            return data
+            data = await api.put(`/api/bag?mercado=true`, { idenlacemob, cantidad });
         } else {
-            const { data } = await api.put(`/api/bag`, { idenlacemob, cantidad });
-            return data
+            data = await api.put(`/api/bag`, { idenlacemob, cantidad });
         }
-
+        return data as any
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 
@@ -82,9 +80,8 @@ const deleteProductInBag = async ({ idenlacemob, mercado }: deleteProductInBagIn
             const { data } = await api.delete(`/api/bag/${idenlacemob}`);
             return data
         }
-
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
 }
@@ -104,9 +101,8 @@ const deleteAllProductsInBag = async ({ opcion, mercado }: deleteAllProductsInBa
             const { data } = await api.delete(`/api/bag/all?opcion=${opcion}`);
             return data
         }
-
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 
@@ -125,9 +121,8 @@ const getTotalProductsInBag = async ({ opcion, mercado }: getTotalProductsInBagI
             const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
             return data.total
         }
-
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 
 }
@@ -136,9 +131,8 @@ const getTotalPriceBag = async ({ opcion }: getTotalProductsInBagInterface) => {
     try {
         const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
         return data.total
-
     } catch (error: any) {
-        throw error?.response?.data || new Error('Unknown error');
+        return { error: error };
     }
 }
 

@@ -17,6 +17,7 @@ import codebartypes from '../../../utils/codebarTypes.json';
 import { identifyBarcodeType, identifyUPCOrEANBarcode } from '../../../utils/identifyBarcodeType';
 import { MessageCard } from '../../Cards/MessageCard';
 import Icon from 'react-native-vector-icons/Ionicons';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 interface CameraModalInterface {
     selectedProduct: { idinvearts: number }
@@ -28,6 +29,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
     const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
+    const { handleError } = useErrorHandler()
 
     const [isScanningAllowed, setIsScanningAllowed] = useState(true);
     const [codeIsScanning, setCodeIsScanning] = useState(false);
@@ -64,6 +66,12 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue });
+
+                if (response.error) {
+                    handleError(response.error);
+                    return;
+                };
+
                 handleVibrate()
                 updateBarCode(codeValue)
 
@@ -72,7 +80,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                 }
             } catch (error) {
                 setCodebarTest(true)
-                console.error('Error fetching product:', error);
+                handleError(error)
             } finally {
                 setTimeout(() => {
                     setIsScanningAllowed(true);
@@ -83,13 +91,24 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
     }
 
     const hanldeUpdateCodebar = async () => {
-        if (!selectedProduct) return;
-        await updateCodeBar({
-            codebarras: codeBar as string,
-            idinvearts: selectedProduct.idinvearts
-        })
-        onClose();
-        navigation.goBack();
+
+        try {            
+            if (!selectedProduct) return;
+            const codebar = await updateCodeBar({
+                codebarras: codeBar as string,
+                idinvearts: selectedProduct.idinvearts
+            })
+
+            if (codebar.error) {
+                handleError(codebar.error);
+                return;
+            };
+
+            onClose();
+            navigation.goBack();
+        } catch (error) {
+            handleError(error);
+        }
     }
 
     const handleTryAgain = () => {

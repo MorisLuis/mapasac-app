@@ -11,6 +11,7 @@ import { Counter } from '../../../components/Ui/Counter';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { updateProduct } from '../../../services/products';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 type EditPriceInterface = {
     route?: {
@@ -25,6 +26,7 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
     const { product } = route?.params ?? {};
     const navigation = useNavigation<any>();
     const { theme, typeTheme } = useTheme();
+    const { handleError } = useErrorHandler()
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
 
@@ -37,22 +39,29 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
         handleCloseModal()
     }
 
-    const onEdit = () => {
+    const onEdit = async () => {
 
         try {
             if (!product?.idinvearts) return;
             setEditingProduct(true);
 
-            updateProduct({
+            const productUpdated = await updateProduct({
                 idinvearts: product?.idinvearts,
                 dataValue: "precio1",
                 data: piezasCount,
                 onFinish: onFinish
-            })
+            });
+
+            if (productUpdated.error) {
+                handleError(productUpdated.error);
+                return;
+            };
+
         } catch (error) {
-            console.log({ error })
+            handleCloseModal();
+            handleError(error)
+        } finally {
             setEditingProduct(false);
-            handleCloseModal()
         }
     }
 

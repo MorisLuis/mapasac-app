@@ -9,12 +9,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { postLogin, renewLogin } from '../../services/auth';
 import { api } from '../../api/api';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
     token: string | null;
     errorMessage: string;
-    user: UserInterface | null;
+    user: UserInterface;
     codeBar?: string;
     codeBarStatus?: boolean
 }
@@ -32,7 +33,13 @@ export interface LoginData {
 const AUTH_INITIAL_STATE: AuthState = {
     status: 'checking',
     token: null,
-    user: null,
+    user: {
+        idusrmob: 0,
+        idsucursal: 0,
+        port: 0,
+        usrdba: '',
+        pasdba: ''
+    },
     errorMessage: '',
     codeBar: "",
     codeBarStatus: false
@@ -44,6 +51,7 @@ export const AuthProvider = ({ children }: any) => {
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
     const navigation = useNavigation<any>();
+    const { handleError } = useErrorHandler()
 
     useEffect(() => {
         const statusLogin = state.status;
@@ -79,9 +87,14 @@ export const AuthProvider = ({ children }: any) => {
             if (!token) return dispatch({ type: 'notAuthenticated' });
 
             // Hay token
-            const resp = await renewLogin({ token })
+            const resp = await renewLogin(token);
 
-            if (resp?.status !== 200) {
+            if (resp.error) {
+                handleError(resp.error);
+                return;
+            }
+
+            if (resp.status !== 200) {
                 return dispatch({ type: 'notAuthenticated' });
             }
 
@@ -95,7 +108,7 @@ export const AuthProvider = ({ children }: any) => {
             });
 
         } catch (error: any) {
-            console.log({ errorAuthToken: error.error })
+            handleError(error)
             return dispatch({ type: 'notAuthenticated' });
         }
     }
@@ -108,11 +121,8 @@ export const AuthProvider = ({ children }: any) => {
             const data = await postLogin({ usr, pas })
 
             if (data.error) {
-                setLoggingIn(false)
-                return dispatch({
-                    type: 'addError',
-                    payload: data.error
-                })
+                handleError(data.error);
+                return dispatch({ type: 'addError', payload: data.error })
             }
 
             await AsyncStorage.setItem('token', data.token);
@@ -125,13 +135,13 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
 
-
         } catch (error: any) {
-            setLoggingIn(false)
             dispatch({
                 type: 'addError',
                 payload: (error.error) || 'Información incorrecta'
             })
+        } finally {
+            setLoggingIn(false)
         }
     };
 

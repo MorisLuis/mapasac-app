@@ -5,7 +5,7 @@ import UserInterface from '../../interface/user';
 interface ContextProps {
     errorMessage: string;
     token: string | null;
-    user: UserInterface | null;
+    user: UserInterface;
     status: 'checking' | 'authenticated' | 'not-authenticated';
     loggingIn: boolean;
     signIn: (loginData: LoginData) => void;

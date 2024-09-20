@@ -16,6 +16,7 @@ import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 type SellsDataScreenRouteProp = RouteProp<SellsNavigationStackParamList, 'SellsDataScreen'>;
 
@@ -38,6 +39,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const { user } = useContext(AuthContext);
     const { addProductSell } = useContext(SellsBagContext);
     const navigation = useNavigation<any>();
+    const { handleError } = useErrorHandler()
 
     const [title, setTitle] = useState<string>();
     const [imageValue, setImageValue] = useState<string>();
@@ -81,50 +83,83 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetTotal = useCallback(async () => {
         if (!cvefamilia) return;
-        const total: string = await getTotalClassesSells(cvefamilia); // * It could be a prop this value
 
-        if (total === "1") {
-            const classesData = await getProductsSellsFromFamily(cvefamilia);
-            const clases = classesData[0];
-            const { ridinvearts: idinvearts, rcapa: capa, ridinveclas: idinveclas } = clases ?? {};
+        try {
+            const total = await getTotalClassesSells(cvefamilia);
 
-            setValue('typeClass', {
-                rcapa: clases?.rcapa?.trim(),
-                ridinvearts: clases.ridinvearts,
-                rproducto: clases.rproducto,
-                ridinveclas: clases.ridinveclas,
-                clase: clases.clase
-            });
+            if (total.error) {
+                handleError(total.error);
+                return;
+            }
 
-            handleGetProduct({ idinvearts, capa, idinveclas });
-        } else if (total === "0") {
-            const product = await getIdinveartsProduct(cvefamilia);
-            setIdinveartsValue(product.idinvearts);
+            if (total === "1") {
+                const classesData = await getProductsSellsFromFamily(cvefamilia);
+
+                if (classesData.error) {
+                    handleError(classesData.error);
+                    return;
+                }
+
+                const clases = classesData[0];
+                const { ridinvearts: idinvearts, rcapa: capa, ridinveclas: idinveclas } = clases ?? {};
+
+                setValue('typeClass', {
+                    rcapa: clases?.rcapa?.trim(),
+                    ridinvearts: clases.ridinvearts,
+                    rproducto: clases.rproducto,
+                    ridinveclas: clases.ridinveclas,
+                    clase: clases.clase
+                });
+
+                handleGetProduct({ idinvearts, capa, idinveclas });
+            } else if (total === "0") {
+                const product = await getIdinveartsProduct(cvefamilia);
+
+                if (product.error) {
+                    handleError(product.error);
+                    return;
+                };
+
+                setIdinveartsValue(product.idinvearts);
+            }
+        } catch (error) {
+            handleError(error);
         }
 
         //setTotalClasses(parseFloat(total));
     }, [cvefamilia, setValue]);
 
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
-        const product: ProductInterface = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-        setValue('price', product?.precio.toString());
-        setValue('units', {
-            unidad: product?.unidad as number,
-            descripcio: product?.unidad_nombre?.trim() as string
-        });
 
-        if (typeClass) {
-            setValue('typeClass', {
-                rcapa: typeClass?.rcapa?.trim(),
-                ridinvearts: typeClass?.ridinvearts,
-                rproducto: typeClass.rproducto,
-                ridinveclas: typeClass.ridinveclas,
-                clase: typeClass.clase
+        try {            
+            const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
+
+            if (product.error) {
+                handleError(product.error);
+                return;
+            }
+
+            setValue('price', product?.precio.toString());
+            setValue('units', {
+                unidad: product?.unidad as number,
+                descripcio: product?.unidad_nombre?.trim() as string
             });
+    
+            if (typeClass) {
+                setValue('typeClass', {
+                    rcapa: typeClass?.rcapa?.trim(),
+                    ridinvearts: typeClass?.ridinvearts,
+                    rproducto: typeClass.rproducto,
+                    ridinveclas: typeClass.ridinveclas,
+                    clase: typeClass.clase
+                });
+            }
+    
+            setValue('capa', capa);
+            setValue("idinveclas", idinveclas);
+        } catch (error) {
+            handleError(error);
         }
-
-        setValue('capa', capa);
-        setValue("idinveclas", idinveclas);
     }, [setValue, typeClass]);
 
     const handleGoToClassScreen = useCallback(() => {
