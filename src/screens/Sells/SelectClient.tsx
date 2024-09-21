@@ -111,11 +111,12 @@ export const SelectClient = () => {
                     placeholder="Buscar producto por nombre..."
                     onChangeText={query => handleSearch(query)}
                     value={searchText}
-                    style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
+                    style={[inputStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
                     iconColor={theme.text_color}
                     placeholderTextColor={theme.text_color}
                     icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
                     clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                    inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
                 />
             }
 

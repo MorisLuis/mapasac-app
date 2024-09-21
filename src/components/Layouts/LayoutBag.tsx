@@ -78,18 +78,18 @@ export const LayoutBag = ({
 
     const handleCleanTemporal = async () => {
 
-        try {            
+        try {
             setLoadingCleanBag(true);
             const product = await deleteAllProductsInBag({ opcion: opcion, mercado: true });
 
             if (product.error) return handleError(product.error);
-    
+
             if (Type === 'inventory') {
                 await resetAfterPostInventory()
             } else {
                 await resetAfterPost();
             }
-    
+
             setTimeout(() => {
                 setLoadingCleanBag(false);
                 goBack();
@@ -106,7 +106,7 @@ export const LayoutBag = ({
 
     const handleSearch = async (text: string) => {
 
-        try {            
+        try {
             setSearchText(text);
 
             // Clean Search.
@@ -179,7 +179,14 @@ export const LayoutBag = ({
                     placeholder="Buscar producto por nombre..."
                     onChangeText={query => handleSearch(query)}
                     value={searchText}
-                    style={[InventoryBagScreenStyles(theme).searchBar, inputStyles(theme).input, hideSearch && {  display: 'none' }]}
+                    style={[
+                        inputStyles(theme).searchBar,
+                        { 
+                            marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+                            marginBottom: 0
+                        },
+                        hideSearch && { display: 'none' }]
+                    }
                     iconColor={theme.text_color}
                     placeholderTextColor={theme.text_color}
                     icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
@@ -194,7 +201,6 @@ export const LayoutBag = ({
                             data={bags}
                             renderItem={renderItem}
                             keyExtractor={product => `${product.idenlacemob}`}
-
                             onEndReached={loadBags}
                             onEndReachedThreshold={0.5}
                         />

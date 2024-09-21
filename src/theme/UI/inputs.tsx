@@ -4,7 +4,6 @@ import { Theme, globalFont, globalStyles } from "../appTheme";
 export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
         minHeight: 50,
-        //fontSize: globalFont.font_normal,
         borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
@@ -28,7 +27,6 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomColor: theme.text_color,
-        //borderBottomWidth: 1,
     },
     passwordInput: {
         flex: 1,
@@ -37,6 +35,14 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
         padding: 10,
         position: 'absolute',
         right: 0
+    },
+
+    searchBar: {
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        backgroundColor: theme.background_color_secondary,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderWidth: 0.5,
+        borderColor: theme.color_border_secondary
     },
 });
 

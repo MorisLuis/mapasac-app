@@ -5,12 +5,12 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { ProductDetailsSkeletonStyles } from '../../theme/UI/skeletons';
 import { useTheme } from '../../context/ThemeContext';
 import { styles } from '../../theme/UI/cardsStyles';
-import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 import { globalStyles } from '../../theme/appTheme';
+import { inputStyles } from '../../theme/UI/inputs';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient)
 
-export const InventoryBagSkeleton = ({ length } : { length: number}) => {
+export const InventoryBagSkeleton = ({ length }: { length: number }) => {
     const { theme, typeTheme } = useTheme();
     const shimmerColors = [
         theme.background_color_tertiary,
@@ -23,7 +23,16 @@ export const InventoryBagSkeleton = ({ length } : { length: number}) => {
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
-                style={[InventoryBagScreenStyles(theme, typeTheme).searchBar, { width: "auto", height: 45, borderRadius: globalStyles(theme).borderRadius.borderRadius }]}
+                style={[
+                    inputStyles(theme, typeTheme).searchBar,
+                    {
+                        width: "auto", 
+                        height: 45, 
+                        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+                        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
+                        marginBottom: 0
+                    },
+                ]}
             ></ShimmerPlaceHolder>
 
             <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>

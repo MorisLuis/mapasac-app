@@ -9,11 +9,7 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
         backgroundColor: theme.background_color,
         height: "100%",
     },
-    searchBar: {
-        marginHorizontal: globalStyles(theme).globalPadding.padding,
-        marginTop: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-        fontFamily: 'SourceSans3-Regular'
-    },
+
     content: {
         minHeight: "auto",
         height: "85%",

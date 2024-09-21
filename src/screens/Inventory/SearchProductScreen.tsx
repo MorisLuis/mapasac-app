@@ -15,6 +15,8 @@ import { Searchbar } from 'react-native-paper';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import { globalFont } from '../../theme/appTheme';
+import { inputStyles } from '../../theme/UI/inputs';
 
 type SearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, 'searchProductScreen'>;
 type ModalSearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - searchProductModal'>;
@@ -101,11 +103,12 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                     placeholder="Buscar producto por nombre..."
                     onChangeText={query => setSearchQuery(query)}
                     value={searchQuery}
-                    style={SearchProductScreenStyles(theme).searchbar}
+                    style={[inputStyles(theme).searchBar]}
                     iconColor={theme.text_color}
                     placeholderTextColor={theme.text_color}
                     icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
                     clearIcon={() => searchQuery !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                    inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
                 />
 
                 {loading ? (
