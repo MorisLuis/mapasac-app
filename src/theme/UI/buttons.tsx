@@ -41,19 +41,19 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
     buttonText: {
         color:  typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
         fontSize: globalFont.font_normal,
-        fontFamily: 'SourceSans3-Regular'
+        fontFamily: 'Rubik-Regular'
     },
 
     buttonTextSecondary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
         fontSize: globalFont.font_normal,
-        fontFamily: 'SourceSans3-Regular'
+        fontFamily: 'Rubik-Regular'
     },
 
     buttonTextTertiary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color,
         fontSize: globalFont.font_normal,
-        fontFamily: 'SourceSans3-Regular'
+        fontFamily: 'Rubik-Regular'
     },
 
     buttonTextRed: {

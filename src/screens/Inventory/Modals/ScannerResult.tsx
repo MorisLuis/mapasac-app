@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 
 import { TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import ProductInterface from '../../../interface/product';
 import { Counter } from '../../../components/Inputs/Counter';
@@ -17,6 +16,7 @@ import Toast from 'react-native-toast-message';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import Tag from '../../../components/Ui/Tag';
 
 type ScannerResultRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - scannerResultScreen'>;
 
@@ -40,7 +40,7 @@ const ScannerResult = ({
 
     const [loadingAddProduct, setLoadingAddProduct] = useState(false)
     const [counterProduct, setCounterProduct] = useState<number>(0);
-    const buttondisabled = loadingAddProduct || counterProduct < 1;
+    //const buttondisabled = loadingAddProduct || counterProduct < 1;
 
     const handleAddToInventory = () => {
         setLoadingAddProduct(true)
@@ -95,11 +95,7 @@ const ScannerResult = ({
                                 <View style={modalRenderstyles(theme).otherInfo}>
                                     {
                                         product?.codbarras ?
-                                            <View style={modalRenderstyles(theme, typeTheme).codebarNotAvailable}>
-                                                <CustomText style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
-                                                    No tiene código
-                                                </CustomText>
-                                            </View>
+                                            <Tag message='No tiene codigo' color='green'/>
                                             :
                                             <CustomText style={{ color: theme.text_color }}>{product?.codbarras}</CustomText>
                                     }
@@ -129,8 +125,8 @@ const ScannerResult = ({
                         <ButtonCustum
                             title="Agregar al inventario"
                             onPress={handleAddToInventory}
-                            disabled={buttondisabled}
-                            buttonColor='white'
+                            disabled={loadingAddProduct}
+                            buttonColor='black'
                         />
 
                     </View>

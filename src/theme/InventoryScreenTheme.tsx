@@ -28,15 +28,8 @@ export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
     },
     subtitle: {
         display: 'flex',
-        marginBottom: 0,
-        height: 'auto',
-        color: theme.text_color,
-        backgroundColor: theme.color_tertiary_opacity,
         alignSelf: 'flex-start', 
-        flexShrink: 1,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
-        paddingVertical: globalStyles(theme).globalPadding.padding / 6
+        flexShrink: 1
     },
     actions: {
         display: "flex",

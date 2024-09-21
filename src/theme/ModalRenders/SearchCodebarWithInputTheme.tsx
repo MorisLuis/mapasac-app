@@ -44,11 +44,13 @@ export const SearchCodebarWithInputStyles = (theme: Theme, typeTheme?: string ) 
     },
     optionText: {
         fontSize: globalFont.font_normal,
-        color: typeTheme === 'light' ? theme.text_color :  theme.text_color
+        color: typeTheme === 'light' ? theme.text_color :  theme.text_color,
+        fontFamily: 'Rubik-Regular'
     },
     optionTextActive: {
         fontSize: globalFont.font_normal,
-        color: typeTheme === 'light' ? theme.text_color :  theme.text_color_secondary
+        color: typeTheme === 'light' ? theme.text_color :  theme.text_color_secondary,
+        fontFamily: 'Rubik-Regular'
     },
     optionActive: {
         backgroundColor: theme.color_tertiary,

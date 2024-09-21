@@ -15,6 +15,7 @@ import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation'
 import CustomText from '../../../components/Ui/CustumText';
 import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';
 import { globalFont } from '../../../theme/appTheme';
+import Tag from '../../../components/Ui/Tag';
 
 export const Inventory = () => {
 
@@ -129,7 +130,7 @@ export const Inventory = () => {
                         <View style={InventoryScreenStyles(theme).headerContent}>
                             <CustomText style={InventoryScreenStyles(theme).title}>Inventario</CustomText>
                             <View style={InventoryScreenStyles(theme).subtitle}>
-                                <CustomText style={{ color: theme.color_green }}>{totalProducts} Productos</CustomText>
+                                <Tag message={`${totalProducts} Productos`} color='green'/>
                             </View>
                         </View>
 

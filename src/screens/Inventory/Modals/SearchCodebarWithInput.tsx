@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { getProductByClave, getProductByNoArticulo } from '../../../services/products';
-import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { SearchCodebarWithInputStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
@@ -9,7 +8,6 @@ import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
-import DotLoader from '../../../components/Ui/DotLaoder';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import ProductInterface from '../../../interface/product';
@@ -25,7 +23,7 @@ export const SearchCodebarWithInput = () => {
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
     const [loadingSearch, setLoadingSearch] = useState(false)
-    const buttondisabled = Barcode.length < 1 || loadingSearch;
+    //const buttondisabled = Barcode.length > 0 || loadingSearch;
     const { handleError } = useErrorHandler()
 
 
@@ -95,8 +93,9 @@ export const SearchCodebarWithInput = () => {
                 <ButtonCustum
                     title="Buscar producto"
                     onPress={handleSearchProductByCodebarInput}
-                    disabled={buttondisabled}
+                    disabled={loadingSearch}
                     buttonColor='black'
+                    extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                 />
 
                 <ScrollView horizontal style={SearchCodebarWithInputStyles(theme).optionsContainer}>
