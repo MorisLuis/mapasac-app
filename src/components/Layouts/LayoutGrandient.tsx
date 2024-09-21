@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTheme } from '../../context/ThemeContext';
 
 interface LayoutGrandientInterface {
     children: React.ReactNode;
@@ -8,6 +9,9 @@ interface LayoutGrandientInterface {
 }
 
 const LayoutGrandient = ({ children, color }: LayoutGrandientInterface) => {
+
+    const { theme, typeTheme } = useTheme();
+
     const handleBackgroundColor = () => {
         let colorGradient = '#D8D2F6'; // Valor predeterminado
         if (color === 'green') {
@@ -21,7 +25,7 @@ const LayoutGrandient = ({ children, color }: LayoutGrandientInterface) => {
 
     return (
         <LinearGradient
-            colors={[handleBackgroundColor(), '#ffffff']} // Color morado a blanco
+            colors={[handleBackgroundColor(), theme.background_color ]} // Color morado a blanco
             locations={[0, 0.5]} // Cambia el color en la mitad
         >
             {children}

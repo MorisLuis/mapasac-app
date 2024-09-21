@@ -10,23 +10,29 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     },
     productInventoryCard: {
         display: "flex",
-        flexDirection: "row",
-        borderWidth: 0.5,
+        flexDirection: "column",
+        borderWidth: 0.25,
         borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
         backgroundColor: theme.background_color,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        padding: globalStyles(theme).globalPadding.padding / 2,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        padding: globalStyles(theme).globalPadding.padding / 4,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
     },
     productInventoryCard__data: {
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "100%"
+        width: "100%",
+        backgroundColor: theme.background_color_secondary,
+        borderWidth: 0.25,
+        borderColor: theme.color_border_tertiary,
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius / 2
     },
     dataItem: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        //marginBottom:0
     },
     dataItemText: {
         fontSize: globalFont.font_normal,
@@ -39,7 +45,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         color: theme.text_color
     },
     information: {
-        width: "72.5%"
+        width: "72.5%",
     },
     quantity: {
         display: "flex",
@@ -60,10 +66,10 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     },
     description: {
         fontWeight: "bold",
-        fontSize: globalFont.font_normal,
+        fontSize: globalFont.font_med / 1.25,
         color: theme.text_color
     },
-    stock: {
+    /* stock: {
         backgroundColor: theme.background_color,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color,
         borderWidth: 1,
@@ -74,10 +80,20 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+    }, */
+    deleteContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: globalStyles(theme).globalPadding.padding / 2
     },
     delete: {
         color: typeTheme === 'light' ? theme.color_red : theme.color_tertiary,
-        paddingTop: globalStyles(theme).globalPadding.padding / 2
+        marginLeft: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end'
+        //backgroundColor: 'red'
     }
 });
 
@@ -129,7 +145,7 @@ export const MessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet
         flexDirection: 'row',
         alignItems: "center"
     },
-    text:{
+    text: {
 
     },
     title: {
@@ -346,7 +362,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         height: wp("15%"),
-        width:  wp("15%"),        
+        width: wp("15%"),
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         transform: [{ rotate: '-25deg' }],
         position: "absolute",

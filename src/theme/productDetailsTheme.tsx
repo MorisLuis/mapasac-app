@@ -16,7 +16,8 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius
     },
     image: {
         position: 'absolute',
@@ -28,6 +29,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 1,
         shadowRadius: 5,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius / 3
     },
     notImage: {
         flexDirection: 'column',
@@ -38,7 +40,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         height: wp("20%"),
-        width:  wp("20%"),
+        width: wp("20%"),
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         transform: [{ rotate: '12.5deg' }],
         position: "relative",
@@ -53,14 +55,13 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         height: wp("20%"),
-        width:  wp("20%"),        
+        width: wp("20%"),
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         transform: [{ rotate: '-25deg' }],
         position: "absolute",
         zIndex: 1
     },
     notImageText: {
-        fontWeight: 'bold',
         fontSize: globalFont.font_med,
         textAlign: "center",
         lineHeight: globalFont.font_med,
@@ -80,20 +81,24 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     },
     price: {
         fontWeight: "bold",
-        fontSize: globalFont.font_normal,
         color: theme.text_color
     },
     priceValue: {
-        fontSize: globalFont.font_normal,
         color: theme.text_color
     },
-    information: {
-        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+    informationContainer: {
         backgroundColor: theme.background_color_secondary,
-        borderWidth: 1,
+        padding: globalStyles(theme).globalPadding.padding / 2,
+        borderWidth: 0.5,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_tertiary,
-        borderRadius: 5,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius / 2
+    },
+    information: {
+        padding: globalStyles(theme).globalPadding.padding / 3,
+        backgroundColor: theme.background_color,
+        borderWidth: 0.5,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_tertiary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
     },
     codebarIdentify: {
@@ -102,7 +107,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
     data: {
         display: "flex",
         flexDirection: "row",
-        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 4,
         position: "relative"
     },
     label: {
@@ -169,7 +174,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         color: theme.text_color
     },
 
-    event:{
+    event: {
         flex: 1,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,
@@ -184,7 +189,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
-        width:34,
+        width: 34,
         height: 34,
     },
     event_text: {
@@ -200,7 +205,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-between",
-        
+
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     editContainer_text: {

@@ -56,7 +56,7 @@ export const CustomHeader = ({
                             style={customHeaderStyles(theme).back}
                             onPress={handleOnPress}
                         >
-                            <Icon name="chevron-back-outline" size={20} color={iconColor} />
+                                <Icon name="caret-back" size={hp("2.5%")} color={iconColor} />
                             <CustomText style={customHeaderStyles(theme).backText}>Atrás</CustomText>
                         </TouchableOpacity>
                     )}
@@ -70,7 +70,7 @@ export const CustomHeader = ({
                                 style={customHeaderStyles(theme).back}
                                 onPress={handleOnPress}
                             >
-                                <Icon name="chevron-back-outline" size={hp("2.5%")} color={iconColor} />
+                                <Icon name="caret-back" size={hp("2.5%")} color={iconColor} />
                                 <CustomText style={customHeaderStyles(theme).backText}>Atrás</CustomText>
                             </TouchableOpacity>
                         )}

@@ -105,7 +105,7 @@ interface ProductDetailsContentInterface {
 }
 
 const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToUpdateCodebar, handleAddToInventory, handleEditProduct, fromModal, codeBar, fromUpdateCodebar }: ProductDetailsContentInterface) => {
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const codebarAvailable = productDetailsData?.codbarras?.trim() !== "";
 
@@ -128,14 +128,16 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                 </View>
 
                 <View style={ProductDetailsStyles(theme, typeTheme).information}>
-                    <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
-                    <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia || ""} />
-                    <ProductDetailItem theme={theme} label="No. Artiuclo:" value={productDetailsData.noarticulo || ""} />
+                    <View style={ProductDetailsStyles(theme, typeTheme).informationContainer}>
+                        <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
+                        <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia || ""} />
+                        <ProductDetailItem theme={theme} label="No. Artiuclo:" value={productDetailsData.noarticulo || ""} />
 
-                    <ProductDetailItem theme={theme} label="Unidad:" value={productDetailsData.unidad_nombre || ""} isLastChild={!codebarAvailable} />
-                    {codebarAvailable && (
-                        <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.codbarras} isLastChild />
-                    )}
+                        <ProductDetailItem theme={theme} label="Unidad:" value={productDetailsData.unidad_nombre || ""} isLastChild={!codebarAvailable} />
+                        {codebarAvailable && (
+                            <ProductDetailItem theme={theme} label="Codigo de barras:" value={productDetailsData.codbarras} isLastChild />
+                        )}
+                    </View>
                 </View>
 
                 {

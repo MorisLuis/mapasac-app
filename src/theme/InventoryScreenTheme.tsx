@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
     Inventory: {
+        
     },
     content: {
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
