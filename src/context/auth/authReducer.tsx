@@ -1,5 +1,5 @@
 import UserInterface from "../../interface/user";
-import { AuthState } from "./AuthProvider";
+import { AuthState, USER_INITIAL_STATE } from "./AuthProvider";
 
 type AuthAction =
     | { type: 'signUp', payload: { token: string, user: UserInterface } }
@@ -16,7 +16,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         case 'addError':
             return {
                 ...state,
-                user: null,
+                user: USER_INITIAL_STATE,
                 status: 'not-authenticated',
                 token: null,
                 errorMessage: action.payload
@@ -41,7 +41,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
             return {
                 status: 'not-authenticated',
                 token: null,
-                user: null,
+                user: USER_INITIAL_STATE,
                 errorMessage: '',
                 codeBar: "",
                 codeBarStatus: false
@@ -52,7 +52,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
                 ...state,
                 status: 'not-authenticated',
                 token: null,
-                user: null
+                user: USER_INITIAL_STATE
             }
 
         case '[Settings] - typeOfMovement':

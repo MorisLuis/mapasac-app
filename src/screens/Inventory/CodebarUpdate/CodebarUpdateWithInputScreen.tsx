@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Alert, KeyboardType, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, KeyboardType, TextInput, TouchableOpacity, View } from 'react-native'
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
@@ -13,6 +13,7 @@ import DotLoader from '../../../components/Ui/DotLaoder';
 import { getProductByCodeBar } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
+import CustomText from '../../../components/Ui/CustumText';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -89,9 +90,9 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     return (
         <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
 
-            <Text style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</Text>
+            <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
 
-            <Text style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</Text>
+            <CustomText style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</CustomText>
 
             <TextInput
                 style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
@@ -107,9 +108,9 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                     onPress={hanldeUpdateCodebarWithCodeRandom}
                     disabled={loading}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {loading ? <DotLoader /> : "Actualizar"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
             )}
         </View>)

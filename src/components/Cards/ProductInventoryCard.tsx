@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { styles } from '../../theme/UI/cardsStyles';
 import ProductInterface from '../../interface/product.js';
 import { useTheme } from '../../context/ThemeContext';
 import { quantityFormat } from '../../utils/quantityFormat';
+import CustomText from '../Ui/CustumText';
 
 interface ProductInventoryCardInterface {
     product: ProductInterface;
@@ -26,37 +27,37 @@ export const ProductInventoryCard = ({
             <View style={styles(theme).productInventoryCard__data}>
                 <View style={styles(theme).information}>
                     <View>
-                        <Text style={styles(theme).description}>{product.producto}</Text>
+                        <CustomText style={styles(theme).description}>{product.producto}</CustomText>
                     </View>
 
                     <View style={styles(theme).dataItem}>
-                        <Text style={styles(theme).label}>Clave:</Text>
-                        <Text style={styles(theme).dataItemText}>{product?.clave}</Text>
+                        <CustomText style={styles(theme).label}>Clave:</CustomText>
+                        <CustomText style={styles(theme).dataItemText}>{product?.clave}</CustomText>
                     </View>
 
                     {
-                        showDelete && <Text style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</Text>
+                        showDelete && <CustomText style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</CustomText>
                     }
                 </View>
 
                 <View style={styles(theme).quantity}>
                     {
                         product?.cantidad &&
-                        <Text
+                        <CustomText
                             style={styles(theme).quantity_value}
                             numberOfLines={1}
                             ellipsizeMode="tail"
                         >
                             {quantityFormat(product?.cantidad)}
-                        </Text>
+                        </CustomText>
                     }
-                    <Text
+                    <CustomText
                         style={styles(theme).quantity_unity}
                         numberOfLines={1}
                         ellipsizeMode="tail"
                     >
                         {product.unidad_nombre?.trim()}
-                    </Text>
+                    </CustomText>
                 </View>
             </View>
         </TouchableOpacity>

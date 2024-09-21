@@ -2,9 +2,9 @@ import React from 'react';
 import { Modal, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Text } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { ModalCompleteStyles } from '../../theme/ModalRenders/ModalCompleteTheme';
+import CustomText from '../Ui/CustumText';
 
 interface ModalCompleteInterface {
     visible: boolean;
@@ -41,7 +41,7 @@ const ModalComplete = ({
                                 <Icon name="close-outline" size={24} color={iconColor} />
                                 {
                                     title &&
-                                    <Text style={ModalCompleteStyles(theme).title}>{title}</Text>
+                                    <CustomText style={ModalCompleteStyles(theme).title}>{title}</CustomText>
                                 }
                             </TouchableOpacity>
                             <View style={ModalCompleteStyles(theme).modalChildren}>

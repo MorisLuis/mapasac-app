@@ -35,14 +35,12 @@ export const InventoryBagScreen = () => {
     ), [handleDeleteProduct]);
 
     return (
-        <>
-            <LayoutBag
-                opcion={0}
-                renderItem={renderItem}
-                setBags={setBags}
-                bags={bags}
-                Type='inventory'
-            />
-        </>
+        <LayoutBag
+            opcion={0}
+            renderItem={renderItem}
+            setBags={setBags}
+            bags={bags}
+            Type='inventory'
+        />
     )
 };

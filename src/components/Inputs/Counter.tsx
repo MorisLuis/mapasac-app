@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
+import React, { useRef } from 'react';
+import { TextInput, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { counterStyles } from '../../theme/UI/counterStyles';
 import { useTheme } from '../../context/ThemeContext';
 import { globalFont } from '../../theme/appTheme';
+import CustomText from '../Ui/CustumText';
 
 interface CounterInterface {
     counter: number,
@@ -77,7 +78,7 @@ export const Counter = ({
                     />
                     {
                         unit &&
-                        <Text style={counterStyles(theme).unitText}>{modifyUnit()}</Text>
+                        <CustomText style={counterStyles(theme).unitText}>{modifyUnit()}</CustomText>
                     }
                 </View>
             </TouchableWithoutFeedback>

@@ -182,14 +182,14 @@ export const InventoryBagScreen = () => {
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall]}
                             onPress={() => setOpenModalDecision(true)}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Limpiar carrito</CustomText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
                             onPress={onPostInventary}
                         >
                             <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
                         </TouchableOpacity>
                     </View>
                 }
@@ -204,15 +204,15 @@ export const InventoryBagScreen = () => {
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {loadingCleanBag ? <DotLoader /> : "Limpiar carrito"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).white]}
                     onPress={() => setOpenModalDecision(false)}
                 >
-                    <Text style={buttonStyles(theme).buttonTextTertiary}>Cancelar</Text>
+                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Cancelar</CustomText>
                 </TouchableOpacity>
             </ModalDecision>
         </>

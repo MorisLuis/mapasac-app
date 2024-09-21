@@ -4,7 +4,7 @@ import { getProductByClave, getProductByNoArticulo } from '../../../services/pro
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
-import { modalRenderstyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import { SearchCodebarWithInputStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
@@ -13,6 +13,7 @@ import DotLoader from '../../../components/Ui/DotLaoder';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import ProductInterface from '../../../interface/product';
+import CustomText from '../../../components/Ui/CustumText';
 
 export const SearchCodebarWithInput = () => {
 
@@ -74,14 +75,14 @@ export const SearchCodebarWithInput = () => {
             visible={true}
             onClose={handleCloseModal}
         >
-            <View style={modalRenderstyles(theme).SearchCodebarWithInput}>
-                <Text style={modalRenderstyles(theme).SearchCodebarWithInput_title}>
+            <View style={SearchCodebarWithInputStyles(theme).SearchCodebarWithInput}>
+                <CustomText style={SearchCodebarWithInputStyles(theme).SearchCodebarWithInput_title}>
                     Escribe el {
                         typeOfSearch === 'code' ? 'Codigo' :
                             typeOfSearch === 'noarticulo' ? "no. de articulo" :
                                 'Codigo de barras'
                     }:
-                </Text>
+                </CustomText>
                 <TextInput
                     style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
                     onChangeText={onChangeBarcode}
@@ -96,46 +97,46 @@ export const SearchCodebarWithInput = () => {
                     onPress={handleSearchProductByCodebarInput}
                     disabled={buttondisabled}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {loadingSearch ? <DotLoader /> : "Buscar producto"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
 
-                <ScrollView horizontal style={modalRenderstyles(theme).optionsContainer}>
+                <ScrollView horizontal style={SearchCodebarWithInputStyles(theme).optionsContainer}>
                     <TouchableOpacity
-                        style={[modalRenderstyles(theme).option, typeOfSearch === 'code' && modalRenderstyles(theme).optionActive]}
+                        style={[SearchCodebarWithInputStyles(theme).option, typeOfSearch === 'code' && SearchCodebarWithInputStyles(theme).optionActive]}
                         onPress={() => setTypeOfSearch('code')}
                     >
-                        <Text style={
+                        <CustomText style={
                             typeOfSearch === 'code' ?
-                                modalRenderstyles(theme, typeTheme).optionTextActive : modalRenderstyles(theme, typeTheme).optionText
+                                SearchCodebarWithInputStyles(theme, typeTheme).optionTextActive : SearchCodebarWithInputStyles(theme, typeTheme).optionText
                         }>
                             Codigo de producto
-                        </Text>
+                        </CustomText>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[modalRenderstyles(theme).option, typeOfSearch === 'barcode' && modalRenderstyles(theme).optionActive]}
+                        style={[SearchCodebarWithInputStyles(theme).option, typeOfSearch === 'barcode' && SearchCodebarWithInputStyles(theme).optionActive]}
                         onPress={() => setTypeOfSearch('barcode')}
                     >
-                        <Text style={
+                        <CustomText style={
                             typeOfSearch === 'barcode' ?
-                                modalRenderstyles(theme, typeTheme).optionTextActive : modalRenderstyles(theme, typeTheme).optionText
+                                SearchCodebarWithInputStyles(theme, typeTheme).optionTextActive : SearchCodebarWithInputStyles(theme, typeTheme).optionText
                         }>
                             Codigo de barras
-                        </Text>
+                        </CustomText>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[modalRenderstyles(theme).option, typeOfSearch === 'noarticulo' && modalRenderstyles(theme).optionActive]}
+                        style={[SearchCodebarWithInputStyles(theme).option, typeOfSearch === 'noarticulo' && SearchCodebarWithInputStyles(theme).optionActive]}
                         onPress={() => setTypeOfSearch('noarticulo')}
                     >
-                        <Text style={
+                        <CustomText style={
                             typeOfSearch === 'noarticulo' ?
-                                modalRenderstyles(theme, typeTheme).optionTextActive : modalRenderstyles(theme, typeTheme).optionText
+                                SearchCodebarWithInputStyles(theme, typeTheme).optionTextActive : SearchCodebarWithInputStyles(theme, typeTheme).optionText
                         }>
                             No. articulo
-                        </Text>
+                        </CustomText>
                     </TouchableOpacity>
                 </ScrollView>
             </View>

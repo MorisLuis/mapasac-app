@@ -1,10 +1,11 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { Text, TextInput, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
+import React, { useRef, useCallback } from 'react';
+import { TextInput, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { counterSecondaryStyles } from '../../theme/UI/counterStyles';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
+import CustomText from '../Ui/CustumText';
 
 interface CounterInterface {
     counter: string;
@@ -83,7 +84,7 @@ export const CounterSecondary: React.FC<CounterInterface> = ({
                             style={[counterSecondaryStyles(theme).inputText]}
                             onFocus={onFocus}
                         />
-                        {unit && <Text style={counterSecondaryStyles(theme).unitText}>{unit}</Text>}
+                        {unit && <CustomText style={counterSecondaryStyles(theme).unitText}>{unit}</CustomText>}
                     </View>
                 </TouchableWithoutFeedback>
 
@@ -98,7 +99,7 @@ export const CounterSecondary: React.FC<CounterInterface> = ({
                         onPress={handleClean}
                         style={[buttonStyles(theme).button_small, buttonStyles(theme).light]}
                     >
-                        <Text style={buttonStyles(theme).buttonTextClear}>Limpiar</Text>
+                        <CustomText style={buttonStyles(theme).buttonTextClear}>Limpiar</CustomText>
                     </TouchableOpacity>
                 </View>
             </View>

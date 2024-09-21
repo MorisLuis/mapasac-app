@@ -4,7 +4,7 @@ import { Theme, globalFont, globalStyles } from "../appTheme";
 export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     input: {
         minHeight: 50,
-        fontSize: globalFont.font_normal,
+        //fontSize: globalFont.font_normal,
         borderWidth: 1,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

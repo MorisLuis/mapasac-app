@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { globalFont, globalStyles } from '../theme/appTheme';
+import { StyleSheet, View } from 'react-native';
+import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import CustomText from './CustumText';
 
 const toastConfig = {
     success: (props: any) => (
@@ -31,20 +32,20 @@ const toastConfig = {
     tomatoToast: ({ text1, props }: any) => (
         <View style={styles.ToastMessage}>
             <Icon name="checkmark-circle" size={24} color="yellowgreen" style={styles.icon}/>
-            <Text numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
+            <CustomText numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
                 {text1}
-            </Text>
-            <Text>{props.uuid}</Text>
+            </CustomText>
+            <CustomText>{props.uuid}</CustomText>
         </View>
     ),
 
     tomatoError: ({ text1, props }: any) => (
         <View style={styles.ToastMessage}>
             <Icon name="close-circle" size={24} color="red" style={styles.icon}/>
-            <Text numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
+            <CustomText numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
                 {text1}
-            </Text>
-            {/* <Text>{props.uuid}</Text> */}
+            </CustomText>
+            {/* <CustomText>{props.uuid}</CustomText> */}
         </View>
     )
 };

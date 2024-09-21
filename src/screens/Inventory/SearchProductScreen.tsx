@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FlatList, SafeAreaView, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { getSearchProductInStock } from '../../services/searchs';
 import ProductInterface from '../../interface/product';
@@ -14,6 +14,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { Searchbar } from 'react-native-paper';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import CustomText from '../../components/Ui/CustumText';
 
 type SearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, 'searchProductScreen'>;
 type ModalSearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - searchProductModal'>;
@@ -127,9 +128,9 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                     ) : (
                         // Mostrar mensaje de sin resultados cuando no hay productos
                         <View>
-                            <Text >
+                            <CustomText >
                                 No se encontraron productos.
-                            </Text>
+                            </CustomText>
                         </View>
                     )
                 )}
@@ -145,14 +146,14 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
                 <View>
                     <View style={SearchProductScreenStyles(theme, typeTheme).adviceHeader}>
                         <Icon name="bulb" size={hp("3%")} color={typeTheme === 'light' ? "red" : "white"} />
-                        <Text style={SearchProductScreenStyles(theme, typeTheme).titleHeader}>Asignar producto</Text>
+                        <CustomText style={SearchProductScreenStyles(theme, typeTheme).titleHeader}>Asignar producto</CustomText>
                     </View>
                     <View style={SearchProductScreenStyles(theme, typeTheme).adviceMessage}>
-                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage1}>
-                            Selecciona un producto al cual podrás asignarle el código de barras: <Text style={{ fontWeight: 'bold' }}>{codeBar}</Text>
-                        </Text>
+                        <CustomText style={SearchProductScreenStyles(theme, typeTheme).adviceMessage1}>
+                            Selecciona un producto al cual podrás asignarle el código de barras: <CustomText style={{ fontWeight: 'bold' }}>{codeBar}</CustomText>
+                        </CustomText>
 
-                        <Text style={SearchProductScreenStyles(theme, typeTheme).adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</Text>
+                        <CustomText style={SearchProductScreenStyles(theme, typeTheme).adviceMessage2}>Los productos con mensaje "No tiene codigo" son elegibles por que aun no tienen codigo de barras.</CustomText>
                     </View>
                 </View>
             </ModalBottom>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Vibration, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Vibration, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'react-native-camera-kit';
 
@@ -18,6 +18,7 @@ import { identifyBarcodeType, identifyUPCOrEANBarcode } from '../../../utils/ide
 import { MessageCard } from '../../Cards/MessageCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import CustomText from '../../Ui/CustumText';
 
 interface CameraModalInterface {
     selectedProduct: { idinvearts: number }
@@ -112,20 +113,20 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                 !productExistent ?
                     <>
                         <View style={CameraModalStyles(theme).header}>
-                            <Text style={CameraModalStyles(theme).header_title}>Escanea el codigo</Text>
+                            <CustomText style={CameraModalStyles(theme).header_title}>Escanea el codigo</CustomText>
                             {
                                 (codeBar && !codebarTest) ?
-                                    <Text style={CameraModalStyles(theme).header_message}>
+                                    <CustomText style={CameraModalStyles(theme).header_message}>
                                         Revisa el tipo de codigo de barras requerido, cambiar si asi lo deseas.
-                                    </Text>
+                                    </CustomText>
                                     : (codeBar && !codeIsScanning) ?
-                                        <Text style={CameraModalStyles(theme).header_message}>
+                                        <CustomText style={CameraModalStyles(theme).header_message}>
                                             Asegurate que es el codigo que deseas asignarle a este producto.
-                                        </Text>
+                                        </CustomText>
                                         :
                                         <View >
-                                            <Text style={{ color: theme.text_color }}>Escanea el codigo que le pondras a este producto.</Text>
-                                            <Text style={CameraModalStyles(theme).header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</Text>
+                                            <CustomText style={{ color: theme.text_color }}>Escanea el codigo que le pondras a este producto.</CustomText>
+                                            <CustomText style={CameraModalStyles(theme).header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</CustomText>
                                         </View>
                             }
                         </View>
@@ -148,19 +149,19 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                     :
                                     (codeBar && !codeIsScanning && !codebarTest) ?
                                         <View>
-                                            <Text style={[CameraModalStyles(theme).textcodebarFound, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}>{codeBar}</Text>
-                                            <Text style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</Text>
+                                            <CustomText style={[CameraModalStyles(theme).textcodebarFound, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}>{codeBar}</CustomText>
+                                            <CustomText style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</CustomText>
                                             <TouchableOpacity
                                                 style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
                                                 onPress={handleTryAgain}
                                             >
-                                                <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</Text>
+                                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
                                             </TouchableOpacity>
                                         </View>
                                         :
                                         <>
                                             <View style={CameraModalStyles(theme).codebarFound}>
-                                                <Text style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</Text>
+                                                <CustomText style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</CustomText>
                                             </View>
 
                                             <MessageCard
@@ -178,7 +179,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                                     onPress={hanldeUpdateCodebar}
                                                 >
                                                     <Icon name={"bookmark-outline"} size={18} color={iconColor} />
-                                                    <Text style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</Text>
+                                                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</CustomText>
                                                 </TouchableOpacity>
                                             }
 
@@ -188,14 +189,14 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                     :
                     <>
                         <View style={CameraModalStyles(theme).header}>
-                            <Text style={CameraModalStyles(theme).header_title}>Producto encontrado</Text>
-                            <Text style={CameraModalStyles(theme).header_message}>
+                            <CustomText style={CameraModalStyles(theme).header_title}>Producto encontrado</CustomText>
+                            <CustomText style={CameraModalStyles(theme).header_message}>
                                 Se encontro un producto con el codigo de barras: {codeBar}
-                            </Text>
+                            </CustomText>
                         </View>
 
                         <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
                         </TouchableOpacity>
                     </>
             }

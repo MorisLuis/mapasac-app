@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FlatList, SafeAreaView, Text, View } from 'react-native'
+import { FlatList, SafeAreaView, View } from 'react-native'
 
 import { getProducts, getTotalProducts } from '../../../services/products';
 import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
@@ -12,6 +12,9 @@ import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
+import CustomText from '../../../components/Ui/CustumText';
+import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';
+import { globalFont } from '../../../theme/appTheme';
 
 export const Inventory = () => {
 
@@ -31,17 +34,11 @@ export const Inventory = () => {
 
         try {
             setIsLoading(true);
-
             const products = await getProducts(currentPage);
-
-            if (products.error) {
-                handleError(products.error);
-                return;
-            }
-
+            if (products.error) return handleError(products.error);
             setProductsInInventory((prevProducts) => {
                 const newProducts = products?.filter(
-                    (product: any) =>
+                    (product: ProductInterface) =>
                         !prevProducts.some(
                             (prevProduct) =>
                                 prevProduct.idinvearts === product.idinvearts
@@ -91,7 +88,7 @@ export const Inventory = () => {
             <View style={InventoryScreenStyles(theme).footerContent}>
                 {
                     productsInInventory.length > 0 && productsInInventory.length >= totalProducts ?
-                        <Text style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</Text>
+                        <CustomText style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</CustomText>
                         :
                         renderLoader()
                 }
@@ -102,7 +99,7 @@ export const Inventory = () => {
     useFocusEffect(
         useCallback(() => {
             handleGetProductsByStock();
-            return () => {};
+            return () => { };
         }, [currentPage])
     );
 
@@ -124,33 +121,41 @@ export const Inventory = () => {
 
 
     return (
-        <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
-            <View style={InventoryScreenStyles(theme).content}>
+        <LayoutGrandient color="green">
+            <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
+                <View style={InventoryScreenStyles(theme).content}>
 
-                <View style={InventoryScreenStyles(theme).header}>
-                    <Text style={InventoryScreenStyles(theme).title}>Inventario</Text>
-                    <View style={InventoryScreenStyles(theme).actions}>
-                        <Icon
-                            name="search-outline"
-                            size={30}
-                            style={InventoryScreenStyles(theme).iconSearch}
-                            onPress={() => navigate('searchProductScreen', { modal: false, isModal: false })}
-                            color={iconColor}
-                        />
+                    <View style={InventoryScreenStyles(theme).header}>
+                        <View style={InventoryScreenStyles(theme).headerContent}>
+                            <CustomText style={InventoryScreenStyles(theme).title}>Inventario</CustomText>
+                            <View style={InventoryScreenStyles(theme).subtitle}>
+                                <CustomText style={{ color: theme.color_green }}>{totalProducts} Productos</CustomText>
+                            </View>
+                        </View>
+
+                        <View style={InventoryScreenStyles(theme).actions}>
+                            <Icon
+                                name="search-outline"
+                                size={globalFont.font_big}
+                                style={InventoryScreenStyles(theme).iconSearch}
+                                onPress={() => navigate('searchProductScreen', { modal: false, isModal: false })}
+                                color={iconColor}
+                            />
+                        </View>
                     </View>
+
+                    <FlatList
+                        data={productsInInventory}
+                        renderItem={renderItem}
+                        keyExtractor={product => `${product.idinvearts}`}
+                        ListFooterComponent={renderFooter}
+                        onEndReached={loadMoreItem}
+                        onEndReachedThreshold={0}
+                    />
+
                 </View>
-
-                <FlatList
-                    data={productsInInventory}
-                    renderItem={renderItem}
-                    keyExtractor={product => `${product.idinvearts}`}
-                    ListFooterComponent={renderFooter}
-                    onEndReached={loadMoreItem}
-                    onEndReachedThreshold={0}
-                />
-
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+        </LayoutGrandient>
     )
 }
 

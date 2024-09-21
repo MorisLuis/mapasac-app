@@ -1,11 +1,12 @@
 import React from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, RouteProp } from '@react-navigation/native';
 import { SuccesMessageScreenStyles } from '../theme/SuccesMessageScreenTheme';
 import { useTheme } from '../context/ThemeContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { AppNavigationProp, AppNavigationStackParamList } from '../navigator/AppNavigation';
+import CustomText from '../components/Ui/CustumText';
 
 type SuccesMessageScreenRouteProp = RouteProp<AppNavigationStackParamList, 'succesMessageScreen'>;
 
@@ -35,7 +36,7 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
                 </TouchableOpacity>
                 <View style={SuccesMessageScreenStyles(theme, typeTheme).content}>
                     <Icon name="checkmark-done-outline" size={hp("10%")} color={iconColor} />
-                    <Text style={SuccesMessageScreenStyles(theme, typeTheme).title}>{message}</Text>
+                    <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).title}>{message}</CustomText>
                 </View>
             </View>
         </SafeAreaView>

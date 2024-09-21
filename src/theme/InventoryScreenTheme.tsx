@@ -4,11 +4,9 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
     Inventory: {
-        backgroundColor: theme.background_color
     },
     content: {
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color,
         height: "100%"
     },
     header: {
@@ -18,17 +16,40 @@ export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
         marginBottom: hp("2.5%"),
         marginTop: hp("7.5%")
     },
+    headerContent: {
+        display: 'flex'
+    },
     title: {
         display: "flex",
-        fontSize: globalFont.font_med,
-        color: theme.text_color
+        fontSize: globalFont.font_big,
+        color: theme.text_color,
+        fontFamily: 'Rubik-Bold'
+    },
+    subtitle: {
+        display: 'flex',
+        marginBottom: 0,
+        height: 'auto',
+        color: theme.text_color,
+        backgroundColor: theme.color_tertiary_opacity,
+        alignSelf: 'flex-start', 
+        flexShrink: 1,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+        paddingVertical: globalStyles(theme).globalPadding.padding / 6
     },
     actions: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        alignContent: 'flex-end',
+        height: "100%"
     },
     iconSearch: {
-        marginLeft: 15
+        display: 'flex',
+        marginBottom: 0,
+        height: 'auto',
+        color: theme.text_color,
+        alignSelf: 'flex-start', 
+        flexShrink: 1
     },
     footerContent: {
         paddingVertical: globalStyles(theme).globalPadding.padding,

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { inputStyles } from '../../theme/UI/inputs';
 import { useTheme } from '../../context/ThemeContext';
-import { Text, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import { globalFont, globalStyles } from '../../theme/appTheme';
+import CustomText from '../Ui/CustumText';
 
 interface TextInputContainerInterface {
 
@@ -28,11 +29,11 @@ export const TextInputContainer = ({
 
     return (
         <>
-            <Text style={{
+            <CustomText style={{
                 fontSize: globalFont.font_normal,
                 color: theme.text_color
             }}
-            >{label}</Text>
+            >{label}</CustomText>
 
             <TextInput
                 style={[inputStyles(theme).input, { height: height, minHeight: 50, marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}

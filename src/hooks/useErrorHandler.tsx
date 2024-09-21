@@ -13,7 +13,7 @@ export const useErrorHandler = () => {
         const { status: statusCode, Message, Metodo } = error ?? {}
 
         const status = error?.response?.status || statusCode;
-        const method = error?.response?.config?.method;
+        const method = error?.response?.config?.method || Metodo;
 
         const message = error?.response?.data?.error
             ? error?.response?.data?.error
@@ -23,19 +23,22 @@ export const useErrorHandler = () => {
                     ? error?.message
                     : error;
 
+        console.log({message, method, status})
         if (status === 401) {
             console.log("session ended");
-            navigation.navigate('OnboardingScreen');
-            return logOut?.();
+            navigation.navigate('LoginPage');
+            logOut?.();
+
+            return;
         }
 
-        await sendError({
+        /* await sendError({
             From: `${user.idusrmob}`,
             Message: message || Message,
             Id_Usuario: user.idusrmob,
             Metodo: method || Metodo || '',
             code: status.toString()
-        });
+        }); */
 
         Toast.show({
             type: 'error',

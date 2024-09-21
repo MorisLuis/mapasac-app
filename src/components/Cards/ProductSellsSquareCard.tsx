@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CustomText from '../Ui/CustumText';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -54,7 +55,7 @@ export const ProductSellsSquareCard = ({
                             source={{ uri: `data:image/png;base64,${product.imagen}` }}
                             style={ProductSellsCardTheme(theme, typeTheme).image}
                         />
-                        <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
+                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</CustomText>
                     </View>
                 )
                     :
@@ -64,35 +65,9 @@ export const ProductSellsSquareCard = ({
                                 <Icon name={'image-outline'} size={24} color={iconColor} />
                             </View>
                         </View>
-                        <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
+                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</CustomText>
                     </View>
             }
-
         </TouchableOpacity>
     )
 }
-
-
-/* 
-        <TouchableOpacity
-            onPress={handleSelectProduct}
-            style={ProductSellsCardTheme(theme, typeTheme).ProductSellsCardTheme}
-        >
-            {
-                product.imagen ? (
-                    <Image
-                        source={{ uri: `data:image/png;base64,${product.imagen}` }}
-                        style={ProductSellsCardTheme(theme, typeTheme).image}
-                    />
-                )
-                    :
-                    <View style={ProductSellsCardTheme(theme).notImage}>
-                        <View style={ProductSellsCardTheme(theme).notImageBackground}>
-                            <Icon name={'image-outline'} size={24} color={iconColor} />
-                        </View>
-                    </View>
-            }
-
-            <Text style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</Text>
-        </TouchableOpacity>
-*/

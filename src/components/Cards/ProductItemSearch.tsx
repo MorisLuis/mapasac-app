@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import ProductInterface from '../../interface/product';
 import { ProductItemSearchStyles } from '../../theme/UI/cardsStyles';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
 
 interface ProductItemSearchInterface {
     product: ProductInterface;
@@ -24,20 +25,20 @@ export const ProductItemSearch = ({
     return (
         <TouchableOpacity style={ProductItemSearchStyles(theme, typeTheme).ProductItemSearch} onPress={onClick}>
             <View style={ProductItemSearchStyles(theme, typeTheme).information}>
-                <Text style={ProductItemSearchStyles(theme, typeTheme).description}>{product.producto}</Text>
+                <CustomText style={ProductItemSearchStyles(theme, typeTheme).description}>{product.producto}</CustomText>
                 <View style={ProductItemSearchStyles(theme, typeTheme).otherInformation}>
-                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Codigo: {product.clave.trim()}</Text>
-                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>-</Text>
-                    <Text style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Familia: {product.familia}</Text>
+                    <CustomText style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Codigo: {product.clave.trim()}</CustomText>
+                    <CustomText style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>-</CustomText>
+                    <CustomText style={ProductItemSearchStyles(theme, typeTheme).otherInformationText}>Familia: {product.familia}</CustomText>
                 </View>
                 {
                     fromModal &&
                     <View style={[product.codbarras ? ProductItemSearchStyles(theme, typeTheme).codebarAvailable : ProductItemSearchStyles(theme, typeTheme).codebarNotAvailable]}>
-                        <Text style={product.codbarras ? ProductItemSearchStyles(theme, typeTheme).textAvailable : ProductItemSearchStyles(theme, typeTheme).textNotAvailable}>
+                        <CustomText style={product.codbarras ? ProductItemSearchStyles(theme, typeTheme).textAvailable : ProductItemSearchStyles(theme, typeTheme).textNotAvailable}>
                             {
                                 product.codbarras && product?.codbarras?.trim() !== "" ? "Tiene código" : "No tiene código"
                             }
-                        </Text>
+                        </CustomText>
                     </View>
 
                 }

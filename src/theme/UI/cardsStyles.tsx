@@ -13,7 +13,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         flexDirection: "row",
         borderWidth: 0.5,
         borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
-        backgroundColor: theme.background_color_secondary,
+        backgroundColor: theme.background_color,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 2,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
@@ -22,8 +22,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "100%",
-        //gap: "10%"
+        width: "100%"
     },
     dataItem: {
         display: "flex",
@@ -310,14 +309,12 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
     },
     item: {
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderWidth: 0.5,
-        borderColor: theme.color_border_secondary
     },
     image: {
         flex: 1,
-        borderWidth: 1,
-        borderTopLeftRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderTopRightRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderWidth: 0.5,
+        borderColor: theme.color_border_secondary,
         resizeMode: "cover",
         display: "flex",
         width: "100%",
@@ -327,13 +324,12 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
     notImage: {
         flex: 1,
         borderWidth: 2,
-        borderTopLeftRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderTopRightRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderColor: theme.background_color_secondary,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderColor: theme.background_color,
         display: "flex",
         width: "100%",
         minHeight: 120,
-        backgroundColor: theme.background_color_tertiary,
+        backgroundColor: theme.background_color,
 
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
 
@@ -346,7 +342,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold',
-        backgroundColor: theme.background_color_tertiary,
+        backgroundColor: theme.background_color,
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         height: wp("15%"),
@@ -361,7 +357,9 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         color: theme.text_color,
         textTransform: "capitalize",
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
-        paddingBottom: globalStyles(theme).globalPadding.padding / 3
+        paddingBottom: globalStyles(theme).globalPadding.padding / 3,
+        display: "flex",
+        textAlign: 'center'
     }
 
 });

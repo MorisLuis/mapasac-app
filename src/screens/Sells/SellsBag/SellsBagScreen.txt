@@ -190,12 +190,12 @@ export const SellsBagScreen = () => {
                     (filteredBags.length > 0 && dataUploaded) &&
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                            <Text style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</Text>
-                            <Text style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                            <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</CustomText>
+                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
                                 {
                                     deletingProductId ? "Calculando..." : format(totalPrice as number)
                                 }
-                            </Text>
+                            </CustomText>
                         </View>
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
                             <TouchableOpacity
@@ -209,7 +209,7 @@ export const SellsBagScreen = () => {
                                 onPress={onPostInventary}
                             >
                                 <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                                <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -234,15 +234,15 @@ export const SellsBagScreen = () => {
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {loadingCleanBag ? <DotLoader /> : "Limpiar carrito"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).white]}
                     onPress={() => setOpenModalDecision(false)}
                 >
-                    <Text style={buttonStyles(theme).buttonTextTertiary}>Cancelar</Text>
+                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Cancelar</CustomText>
                 </TouchableOpacity>
             </ModalDecision>
         </>

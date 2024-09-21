@@ -1,10 +1,11 @@
 import React from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, Text, Platform, KeyboardAvoidingView } from 'react-native';
+import { Modal, StyleSheet, View, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ModalMiddlenStyles } from '../../theme/ModalRenders/ModalMiddleTheme';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
 
 interface ModalMiddleInterface {
     visible: boolean;
@@ -39,7 +40,7 @@ const ModalMiddle = ({
                                 <TouchableOpacity style={ModalMiddlenStyles(theme, typeTheme).header} onPress={onClose}>
                                     {
                                         title ?
-                                            <Text style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</Text> : <Text></Text>
+                                            <CustomText style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</CustomText> : <CustomText></CustomText>
                                     }
                                     <Icon name="close-outline" size={hp("4%")} color={iconColor} />
                                 </TouchableOpacity>
@@ -62,7 +63,7 @@ const ModalMiddle = ({
                                     <TouchableOpacity style={ModalMiddlenStyles(theme, typeTheme).header} onPress={onClose}>
                                         {
                                             title ?
-                                                <Text style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</Text> : <Text></Text>
+                                                <CustomText style={ModalMiddlenStyles(theme, typeTheme).title}>{title}</CustomText> : <CustomText></CustomText>
                                         }
                                         <Icon name="close-outline" size={hp("4%")} color={iconColor} />
                                     </TouchableOpacity>

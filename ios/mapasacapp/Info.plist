@@ -36,12 +36,18 @@
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>We need access to the local network to debug your application.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your Microphone.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
+		<string>Rubik-Bold.ttf</string>
+		<string>Rubik-Regular.ttf</string>
+		<string>RobotoMono-Bold.ttf</string>
+		<string>RobotoMono-Regular.ttf</string>
+		<string>SourceSans3-Bold.ttf</string>
+		<string>SourceSans3-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

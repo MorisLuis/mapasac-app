@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { globalStyles } from '../../theme/appTheme';
@@ -12,6 +12,7 @@ import DeviceInfo from 'react-native-device-info';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { ProfileNavigationProp } from '../../navigator/ProfileNavigation';
+import CustomText from '../../components/Ui/CustumText';
 
 
 export const ProfileScreen = () => {
@@ -37,10 +38,10 @@ export const ProfileScreen = () => {
         <View style={ProfileScreenStyles(theme, typeTheme).ProfileScreen}>
             <SafeAreaView style={ProfileScreenStyles(theme, typeTheme).content}>
 
-                <Text style={ProfileScreenStyles(theme, typeTheme).title}>Configuación</Text>
+                <CustomText style={ProfileScreenStyles(theme, typeTheme).title}>Configuación</CustomText>
 
                 <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - personalInformationScreen')} style={ProfileScreenStyles(theme, typeTheme).section}>
-                    <Text style={{ color: theme.text_color }}>Información Personal</Text>
+                    <CustomText style={{ color: theme.text_color }}>Información Personal</CustomText>
                     <Icon name="person-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
@@ -48,28 +49,28 @@ export const ProfileScreen = () => {
 
 
                 <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - settingsSceen')} style={[ProfileScreenStyles(theme, typeTheme).section]}>
-                    <Text style={{ color: theme.text_color }}>Configuración General</Text>
+                    <CustomText style={{ color: theme.text_color }}>Configuración General</CustomText>
                     <Icon name="settings-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
                 <View style={ProfileScreenStyles(theme, typeTheme).divider}></View>
 
 
-                <Text style={ProfileScreenStyles(theme, typeTheme).title}>Legal</Text>
+                <CustomText style={ProfileScreenStyles(theme, typeTheme).title}>Legal</CustomText>
 
                 <TouchableOpacity onPress={() => navigate('[ProfileNavigation] - privacyScreen')} style={[ProfileScreenStyles(theme, typeTheme).section]}>
-                    <Text style={{ color: theme.text_color }}>Aviso de privacidad</Text>
+                    <CustomText style={{ color: theme.text_color }}>Aviso de privacidad</CustomText>
                     <Icon name="book-outline" size={22} color={iconColor}/>
                 </TouchableOpacity>
 
                 <View style={ProfileScreenStyles(theme, typeTheme).divider}></View>
 
                 <TouchableOpacity onPress={handleLogOut} style={[buttonStyles(theme, typeTheme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>Cerrar sesión</Text>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Cerrar sesión</CustomText>
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={{ color: theme.text_color }}>Version: {version}</Text>
+                    <CustomText style={{ color: theme.text_color }}>Version: {version}</CustomText>
                 </View>
 
             </SafeAreaView>

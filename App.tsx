@@ -4,7 +4,7 @@ import { SettingsProvider } from './src/context/settings/SettingsProvider';
 import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigation } from './src/navigator/AppNavigation';
-import { ShowToastMessage } from './src/components/ToastMesage';
+import { ShowToastMessage } from './src/components/Ui/ToastMesage';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { SellsProvider } from './src/context/Sells/SellsBagProvider';
 

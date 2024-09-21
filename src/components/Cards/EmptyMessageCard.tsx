@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../context/ThemeContext';
 import { EmptyMessageCardStyles } from '../../theme/UI/cardsStyles';
+import CustomText from '../Ui/CustumText';
 
 interface EmptyMessageCardInterface {
     title: string;
@@ -25,8 +26,8 @@ export const EmptyMessageCard = ({
                 <Icon name={icon} size={24} color={iconColor} style={EmptyMessageCardStyles(theme, typeTheme).icon} />
             </View>
 
-            <Text style={EmptyMessageCardStyles(theme, typeTheme).title}>{title}</Text>
-            <Text style={EmptyMessageCardStyles(theme, typeTheme).message}>{message}</Text>
+            <CustomText style={EmptyMessageCardStyles(theme, typeTheme).title}>{title}</CustomText>
+            <CustomText style={EmptyMessageCardStyles(theme, typeTheme).message}>{message}</CustomText>
         </View>
     );
 };

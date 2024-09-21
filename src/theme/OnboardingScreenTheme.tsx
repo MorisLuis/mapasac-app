@@ -18,7 +18,6 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         justifyContent: "flex-end"
     },
     topbar_profile: {
-        //paddingLeft: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.color_secondary,
         height: 30,
         width: 30,
@@ -26,11 +25,11 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        //padding: globalStyles(theme).globalPadding.padding / 2
     },
     topbar_profile_text: {
         fontSize: globalFont.font_normal,
-        color: theme.color_tertiary
+        color: theme.color_tertiary,
+        fontFamily: 'Rubik-Bold'
     },
     header: {
         width: wp("100%"),
@@ -41,7 +40,8 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
         color: theme.text_color,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        width: wp("80%")
+        width: wp("80%"),
+        fontFamily: 'Rubik-Bold'
     },
     content: {
         flex: 2,
@@ -72,7 +72,8 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     },
     optionText: {
         fontSize: globalFont.font_normal,
-        color: typeTheme === 'light' ? theme.color_primary : theme.text_color_secondary
+        color: typeTheme === 'light' ? theme.color_primary : theme.text_color_secondary,
+        fontFamily: 'Rubik-Regular'
     }
 
 })

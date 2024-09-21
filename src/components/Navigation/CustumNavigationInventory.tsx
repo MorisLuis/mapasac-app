@@ -1,0 +1,95 @@
+import { View, Platform, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
+import CustomTabBar from './CustomTabBar'
+import { NavigationHelpers, ParamListBase, TabNavigationState, useNavigation } from '@react-navigation/native';
+import { MaterialTopTabDescriptorMap, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs/lib/typescript/src/types';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
+import { BlurView } from '@react-native-community/blur';
+import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
+import { InventoryNavigationProp } from '../../navigator/InventoryNavigation';
+
+interface CustomTabBarProps {
+    state: TabNavigationState<ParamListBase>;
+    descriptors: MaterialTopTabDescriptorMap;
+    navigation: NavigationHelpers<ParamListBase, MaterialTopTabNavigationEventMap>
+}
+
+const CustumNavigationInventory = ({ state, descriptors, navigation } : CustomTabBarProps) => {
+
+    const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
+    const { navigate } = useNavigation<InventoryNavigationProp>();
+    const { theme, typeTheme } = useTheme();
+
+    const renderTabButton = (route: any, index: number) => {
+        const { options } = descriptors[route.key];
+        const label = options.tabBarLabel ?? options.title ?? route.name;
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+            handleCameraAvailable(route.name === "[ScannerNavigation] - camera");
+            const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+                navigate(route.name);
+            }
+        };
+
+        const textColor = isFocused
+            ? (typeTheme === 'dark' ? theme.text_color_secondary : theme.text_color)
+            : (typeTheme === 'dark' ? theme.text_color_secondary : theme.text_color);
+
+        const containerStyle = {
+            backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_black : "transparent")
+        };
+
+        // Determina si `label` es una función o un string y maneja según corresponda
+        let labelContent: React.ReactNode;
+        if (typeof label === 'function') {
+            labelContent = label({ focused: isFocused, color: textColor, children: label });
+        } else {
+            labelContent = label;
+        }
+
+        return (
+            <TouchableOpacity
+                key={index}
+                onPress={onPress}
+                disabled={startScanning}
+                style={[customTabBarStyles(theme, typeTheme).navButton, containerStyle]}
+            >
+                {Platform.OS === "android" ? (
+                    <View style={customTabBarStyles(theme, typeTheme).blurContainer}>
+                        <CustomText style={[customTabBarStyles(theme).sectionTitle, { color: textColor }]}>
+                            {labelContent}
+                        </CustomText>
+                    </View>
+                ) : (
+                    <BlurView
+                        style={customTabBarStyles(theme, typeTheme).blurContainer}
+                        blurType="light"
+                        blurAmount={10}
+                    >
+                        <CustomText style={[customTabBarStyles(theme).sectionTitle, { color: textColor }]}>
+                            {labelContent}
+                        </CustomText>
+                    </BlurView>
+                )}
+            </TouchableOpacity>
+        );
+    };
+
+    return (
+        <CustomTabBar
+            renderTabButton={renderTabButton}
+            state={state}
+        />
+    )
+}
+
+export default CustumNavigationInventory

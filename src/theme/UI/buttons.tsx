@@ -40,17 +40,20 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
     // Button text
     buttonText: {
         color:  typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        fontFamily: 'SourceSans3-Regular'
     },
 
     buttonTextSecondary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color_secondary,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        fontFamily: 'SourceSans3-Regular'
     },
 
     buttonTextTertiary: {
         color: typeTheme === 'light' ? theme.text_color : theme.text_color,
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        fontFamily: 'SourceSans3-Regular'
     },
 
     buttonTextRed: {

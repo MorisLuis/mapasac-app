@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetailsSkeleton';
-import { productDetailsStyles } from '../../theme/productDetailsTheme';
+import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { globalStyles } from '../../theme/appTheme';
 import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
@@ -15,6 +15,7 @@ import { format } from '../../utils/currency';
 import { MessageCard } from '../../components/Cards/MessageCard';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import CustomText from '../../components/Ui/CustumText';
 
 type ProductDetailsPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreen'>;
 type InventoryDetailsScreenPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - inventoryDetailsScreen'>;
@@ -110,23 +111,23 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 
     return (
         <>
-            <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
-                <View style={productDetailsStyles(theme, typeTheme).imageContainer}>
-                    <View style={productDetailsStyles(theme).notImage}>
-                        <View style={productDetailsStyles(theme).notImageBackground}>
+            <ScrollView style={ProductDetailsStyles(theme).ProductDetailsPage}>
+                <View style={ProductDetailsStyles(theme, typeTheme).imageContainer}>
+                    <View style={ProductDetailsStyles(theme).notImage}>
+                        <View style={ProductDetailsStyles(theme).notImageBackground}>
                             <Icon name={'image-outline'} size={24} color={iconColor} />
                         </View>
                     </View>
                 </View>
-                <View style={productDetailsStyles(theme).header}>
-                    <Text style={productDetailsStyles(theme).description}>{productDetailsData.producto}</Text>
+                <View style={ProductDetailsStyles(theme).header}>
+                    <CustomText style={ProductDetailsStyles(theme).description}>{productDetailsData.producto}</CustomText>
                     <View>
-                        <Text style={productDetailsStyles(theme, typeTheme).price}>Precio</Text>
-                        <Text style={productDetailsStyles(theme, typeTheme).priceValue}>{format(productDetailsData.precio1)}</Text>
+                        <CustomText style={ProductDetailsStyles(theme, typeTheme).price}>Precio</CustomText>
+                        <CustomText style={ProductDetailsStyles(theme, typeTheme).priceValue}>{format(productDetailsData.precio1)}</CustomText>
                     </View>
                 </View>
 
-                <View style={productDetailsStyles(theme, typeTheme).information}>
+                <View style={ProductDetailsStyles(theme, typeTheme).information}>
                     <ProductDetailItem theme={theme} label="Clave:" value={productDetailsData.clave} />
                     <ProductDetailItem theme={theme} label="Familia:" value={productDetailsData.familia || ""} />
                     <ProductDetailItem theme={theme} label="No. Artiuclo:" value={productDetailsData.noarticulo || ""} />
@@ -150,30 +151,30 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 
                 {
                     !fromModal &&
-                    <View style={productDetailsStyles(theme, typeTheme).manageEvents}>
-                        <Text style={productDetailsStyles(theme, typeTheme).manageEvents_title}>Manejar producto</Text>
-                        <View style={productDetailsStyles(theme, typeTheme).manageEvents_content}>
+                    <View style={ProductDetailsStyles(theme, typeTheme).manageEvents}>
+                        <CustomText style={ProductDetailsStyles(theme, typeTheme).manageEvents_title}>Manejar producto</CustomText>
+                        <View style={ProductDetailsStyles(theme, typeTheme).manageEvents_content}>
                             {(!codebarAvailable) &&
                                 <TouchableOpacity
-                                    style={productDetailsStyles(theme, typeTheme).event}
+                                    style={ProductDetailsStyles(theme, typeTheme).event}
                                     onPress={handleOptionsToUpdateCodebar}
                                 >
-                                    <View style={productDetailsStyles(theme, typeTheme).event_icon}>
+                                    <View style={ProductDetailsStyles(theme, typeTheme).event_icon}>
                                         <Icon name={'barcode-outline'} size={20} color={iconColor} />
                                     </View>
-                                    <Text style={productDetailsStyles(theme, typeTheme).event_text}>Crear codigo</Text>
+                                    <CustomText style={ProductDetailsStyles(theme, typeTheme).event_text}>Crear codigo</CustomText>
                                 </TouchableOpacity>
                             }
 
 
                             <TouchableOpacity
-                                style={[productDetailsStyles(theme, typeTheme).event, codebarAvailable && { flex: 0.33 }]}
+                                style={[ProductDetailsStyles(theme, typeTheme).event, codebarAvailable && { flex: 0.33 }]}
                                 onPress={handleEditProduct}
                             >
-                                <View style={productDetailsStyles(theme, typeTheme).event_icon}>
+                                <View style={ProductDetailsStyles(theme, typeTheme).event_icon}>
                                     <Icon name={'create-outline'} size={20} color={iconColor} />
                                 </View>
-                                <Text style={productDetailsStyles(theme, typeTheme).event_text}>Editar</Text>
+                                <CustomText style={ProductDetailsStyles(theme, typeTheme).event_text}>Editar</CustomText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -181,13 +182,13 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
             </ScrollView>
 
             {!fromModal && (
-                <View style={productDetailsStyles(theme, typeTheme).footer}>
+                <View style={ProductDetailsStyles(theme, typeTheme).footer}>
                     <TouchableOpacity
                         style={[buttonStyles(theme, typeTheme).button, buttonStyles(theme, typeTheme).yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
                         onPress={handleAddToInventory}
                     >
                         <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar a inventario</Text>
+                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar a inventario</CustomText>
                     </TouchableOpacity>
                 </View>
             )}
@@ -205,12 +206,12 @@ interface ProductDetailItem {
 
 const ProductDetailItem = React.memo(({ label, value, theme, isLastChild = false }: ProductDetailItem) => (
 
-    <View style={productDetailsStyles(theme).data}>
-        <Text style={productDetailsStyles(theme).label}>{label}</Text>
-        <Text style={productDetailsStyles(theme).dataValue}>{value}</Text>
+    <View style={ProductDetailsStyles(theme).data}>
+        <CustomText style={ProductDetailsStyles(theme).label}>{label}</CustomText>
+        <CustomText style={ProductDetailsStyles(theme).dataValue}>{value}</CustomText>
         {
             !isLastChild &&
-            <View style={productDetailsStyles(theme).separator} />
+            <View style={ProductDetailsStyles(theme).separator} />
         }
     </View>
 ));

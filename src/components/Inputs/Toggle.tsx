@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Switch, Text, Platform } from 'react-native';
+import { View, Switch, Platform } from 'react-native';
 import { toggleStyles } from '../../theme/UI/inputs';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CustomText from '../Ui/CustumText';
 
 interface ToggleInterface {
     label: string;
@@ -33,8 +34,8 @@ const Toggle = ({
     return (
         <View style={[toggleStyles(theme, typeTheme).Toggle, extraStyles]}>
             <View style={toggleStyles(theme, typeTheme).toggleText}>
-                <Text style={toggleStyles(theme, typeTheme).togglelabel}>{label}</Text>
-                <Text style={toggleStyles(theme, typeTheme).togglemessage}>{message}</Text>
+                <CustomText style={toggleStyles(theme, typeTheme).togglelabel}>{label}</CustomText>
+                <CustomText style={toggleStyles(theme, typeTheme).togglemessage}>{message}</CustomText>
             </View>
 
             <View

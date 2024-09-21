@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "./appTheme";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export const cameraStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const CameraScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     cameraScreen: {
         flex: 1,
         backgroundColor: theme.color_black,

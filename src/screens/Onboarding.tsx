@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -10,6 +10,7 @@ import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
 import useErrorHandler from '../hooks/useErrorHandler';
 import { AppNavigationProp } from '../navigator/AppNavigation';
+import CustomText from '../components/Ui/CustumText';
 
 interface modulesInterface {
     idappmob: number,
@@ -52,12 +53,12 @@ export const OnboardingScreen = () => {
 
             <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigate("ProfileNavigation")}>
                 <View style={OnboardingScreenStyles(theme).topbar_profile}>
-                    <Text style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</Text>
+                    <CustomText style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</CustomText>
                 </View>
             </TouchableOpacity>
 
             <View style={OnboardingScreenStyles(theme).header}>
-                <Text style={OnboardingScreenStyles(theme).headerTitle}>{user?.empresa?.trim()}</Text>
+                <CustomText style={OnboardingScreenStyles(theme).headerTitle}>{user?.empresa?.trim()}</CustomText>
             </View>
 
             <View style={OnboardingScreenStyles(theme).content}>
@@ -143,7 +144,7 @@ export const ModuleOption = ({
             >
                 <Icon name={extraStyles(option).icon} size={24} color={iconColor} />
                 <View>
-                    <Text style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option.appmob}</Text>
+                    <CustomText style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option.appmob}</CustomText>
                 </View>
             </TouchableOpacity>
 
@@ -155,12 +156,11 @@ export const ModuleOption = ({
                     >
                         <Icon name={extraStyles(option2).icon} size={24} color={iconColor} />
                         <View>
-                            <Text style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option2.appmob}</Text>
+                            <CustomText style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option2.appmob}</CustomText>
                         </View>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity
-                        //onPress={() => moduleNavigate(option2.idappmob)}
                         style={[OnboardingScreenStyles(theme, typeTheme).moduleOption2]}
                     >
                         <View>

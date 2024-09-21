@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { getUnits } from '../../services/productsSells';
 import UnitInterfacce, { UnitData } from '../../interface/units';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../../components/Ui/CustumText';
 
 type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
 
@@ -47,7 +48,7 @@ export const SelectUnitScreen = ({
     const renderItem = ({ item }: { item: UnitInterfacce }) => {
         return (
             <TouchableOpacity style={[SelectScreenTheme(theme, typeTheme).optionsContainer]} onPress={() => handleSelectOption(item)}>
-                <Text style={SelectScreenTheme(theme, typeTheme).optionText}>{item.descripcio.trim()} / {item?.abrevia}</Text>
+                <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{item.descripcio.trim()} / {item?.abrevia}</CustomText>
                 <View style={[optionSelected?.unidad === item.idinveunid ? SelectScreenTheme(theme, typeTheme).optionCheckActive : SelectScreenTheme(theme, typeTheme).optionCheck]}></View>
             </TouchableOpacity>
         )
@@ -82,7 +83,7 @@ export const SelectUnitScreen = ({
                 units ?
                     <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                         <View style={SelectScreenTheme(theme, typeTheme).header}>
-                            <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona la unidad.</Text>
+                            <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona la unidad.</CustomText>
                         </View>
 
                         <FlatList
@@ -98,14 +99,14 @@ export const SelectUnitScreen = ({
                                 onPress={handleSave}
                                 disabled={buttondisabled}
                             >
-                                <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</Text>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</CustomText>
                             </TouchableOpacity>
                         </View>
                     </View>
                     :
                     <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                         <View style={SelectScreenTheme(theme, typeTheme).header}>
-                            <Text>Cargando...</Text>
+                            <CustomText>Cargando...</CustomText>
                         </View>
                     </View>
             }

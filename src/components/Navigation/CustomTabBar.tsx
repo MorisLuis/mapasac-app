@@ -1,121 +1,66 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { BlurView } from '@react-native-community/blur';
-import { SettingsContext } from '../../context/settings/SettingsContext';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { ParamListBase, TabNavigationState, useNavigation } from '@react-navigation/native';
 import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
+import CustomText from '../Ui/CustumText';
+import { CombineNavigationProp } from '../../navigator/AppNavigation';
 
-export const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
-    if (!state) return null;
-    const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
+
+interface CustomTabBarInterface {
+    renderTabButton?: (route: any, index: number) => React.JSX.Element;
+    state?: TabNavigationState<ParamListBase>;
+}
+
+const CustomTabBar = ({ renderTabButton, state }: CustomTabBarInterface) => {
     const { numberOfItems } = useContext(InventoryBagContext);
-
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<CombineNavigationProp>();
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColor = typeTheme === 'dark' ? "white" : "black";
 
     const handleOpenBagInventory = () => {
-        navigate('bagInventoryScreen')
-    }
-
-    const renderTabButton = (route: any, index: number) => {
-        const { options } = descriptors[route.key];
-        const label = options.tabBarLabel ?? options.title ?? route.name;
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-
-            if (route?.name === "[ScannerNavigation] - camera") {
-                handleCameraAvailable(true)
-            } else {
-                handleCameraAvailable(false)
-            }
-
-            const event = navigation.emit({
-                type: 'tabPress',
-                target: route.key,
-                canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-                navigation.navigate(route.name);
-            }
-        };
-
-        return (
-            <TouchableOpacity
-                key={index}
-                onPress={onPress}
-                disabled={startScanning}
-                style={[
-                    customTabBarStyles(theme, typeTheme).navButton,
-                    {
-                        backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_black : "transparent")
-                    }
-                ]}
-            >
-                {
-                    Platform.OS === "android" ?
-                        <View style={customTabBarStyles(theme, typeTheme).blurContainer}>
-                            <Text style={[customTabBarStyles(theme).sectionTitle, {
-                                color: isFocused && typeTheme === 'dark' ? theme.text_color_secondary :
-                                    isFocused ? theme.text_color :
-                                        !isFocused && typeTheme === 'dark' ? theme.text_color :
-                                            theme.text_color_secondary
-                            }]}>
-                                {label}
-                            </Text>
-                        </View>
-                        :
-                        <BlurView
-                            style={customTabBarStyles(theme, typeTheme).blurContainer}
-                            blurType="light"
-                            blurAmount={10}
-                        >
-                            <Text style={[customTabBarStyles(theme).sectionTitle, {
-                                color: isFocused && typeTheme === 'dark' ? theme.text_color_secondary :
-                                    isFocused ? theme.text_color :
-                                        !isFocused && typeTheme === 'dark' ? theme.text_color_secondary :
-                                            theme.text_color
-                            }]}>
-                                {label}
-                            </Text>
-                        </BlurView>
-                }
-            </TouchableOpacity>
-        );
+        navigate('bagInventoryScreen');
     };
+
+    const handleGoOnboarding = () => {
+        navigate("OnboardingScreen")
+    }
 
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
             <View style={customTabBarStyles(theme).content}>
+
                 <View style={customTabBarStyles(theme).content_left}>
-                    <TouchableOpacity onPress={() => navigate("OnboardingScreen")} style={customTabBarStyles(theme).buttonBack}>
+                    <TouchableOpacity onPress={handleGoOnboarding} style={customTabBarStyles(theme).buttonBack}>
                         <Icon name="arrow-back-outline" size={20} color={iconColor} />
                     </TouchableOpacity>
-                    <View style={customTabBarStyles(theme).navigation}>
-                        {state.routes.map(renderTabButton)}
-                    </View>
+
+                    {
+                        (state && renderTabButton) &&
+                        <View style={customTabBarStyles(theme).navigation}>
+                            {state.routes.map(renderTabButton)}
+                        </View>
+                    }
                 </View>
 
                 <View style={customTabBarStyles(theme).content_right}>
                     <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
                         <TouchableOpacity onPress={handleOpenBagInventory}>
-                            <Icon name={"albums-outline"} size={22} color={iconColor} />
+                            <Icon name="albums-outline" size={22} color={iconColor} />
                         </TouchableOpacity>
-                        {
-                            parseInt(numberOfItems) > 0 &&
+                        {parseInt(numberOfItems) > 0 && (
                             <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
-                                <Text>{parseInt(numberOfItems)}</Text>
+                                <CustomText>{parseInt(numberOfItems)}</CustomText>
                             </View>
-                        }
+                        )}
                     </View>
                 </View>
             </View>
         </SafeAreaView>
     );
 };
+
+export default CustomTabBar;

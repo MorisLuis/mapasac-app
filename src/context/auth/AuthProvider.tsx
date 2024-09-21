@@ -30,16 +30,18 @@ export interface LoginData {
     pas: string;
 }
 
+export const USER_INITIAL_STATE = {
+    idusrmob: 0,
+    idsucursal: 0,
+    port: 0,
+    usrdba: '',
+    pasdba: ''
+}
+
 const AUTH_INITIAL_STATE: AuthState = {
     status: 'checking',
     token: null,
-    user: {
-        idusrmob: 0,
-        idsucursal: 0,
-        port: 0,
-        usrdba: '',
-        pasdba: ''
-    },
+    user: USER_INITIAL_STATE,
     errorMessage: '',
     codeBar: "",
     codeBarStatus: false
@@ -55,7 +57,6 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         const statusLogin = state.status;
-
         if (statusLogin == 'checking') {
             return;
         }
@@ -89,11 +90,6 @@ export const AuthProvider = ({ children }: any) => {
             // Hay token
             const resp = await renewLogin(token);
 
-            if (resp.error) {
-                handleError(resp.error);
-                return;
-            }
-
             if (resp.status !== 200) {
                 return dispatch({ type: 'notAuthenticated' });
             }
@@ -108,7 +104,7 @@ export const AuthProvider = ({ children }: any) => {
             });
 
         } catch (error: any) {
-            handleError(error)
+            //handleError(error)
             return dispatch({ type: 'notAuthenticated' });
         }
     }
@@ -146,11 +142,16 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logOut = async () => {
-        setLoggingIn(false);
-        navigation.navigate('ClosingPage')
-        await api.get('/api/auth/logout');
-        await AsyncStorage.removeItem('token');
-        dispatch({ type: 'logout' });
+
+        try {            
+            setLoggingIn(false);
+            navigation.navigate('ClosingPage')
+            await api.get('/api/auth/logout');
+            AsyncStorage.removeItem('token');
+            dispatch({ type: 'logout' });
+        } catch (error) {
+            handleError(error)
+        }
     };
 
     const removeError = () => {

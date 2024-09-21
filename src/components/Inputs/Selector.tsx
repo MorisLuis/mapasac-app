@@ -1,9 +1,10 @@
 import React from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import { selectStyles } from '../../theme/UI/inputs';
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
 
 
 interface SelectorInterface {
@@ -31,12 +32,12 @@ export const Selector = ({
 
     return (
         <View>
-            <Text style={{
+            <CustomText style={{
                 fontSize: globalFont.font_normal,
                 marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
                 color: theme.text_color
             }}
-            >{label}</Text>
+            >{label}</CustomText>
 
             <RNPickerSelect
                 onValueChange={handleValueChange}
@@ -48,9 +49,9 @@ export const Selector = ({
                 onDonePress={onDone}
             >
                 <View style={selectStyles(theme).input}>
-                    <Text style={{ color: theme.text_color }}>
+                    <CustomText style={{ color: theme.text_color }}>
                         {value}
-                    </Text>
+                    </CustomText>
                 </View>
             </RNPickerSelect>
         </View>

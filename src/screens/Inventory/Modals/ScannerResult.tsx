@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import ProductInterface from '../../../interface/product';
-import { Counter } from '../../../components/Ui/Counter';
+import { Counter } from '../../../components/Inputs/Counter';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
@@ -15,6 +15,7 @@ import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
 import Toast from 'react-native-toast-message';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+import CustomText from '../../../components/Ui/CustumText';
 
 type ScannerResultRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - scannerResultScreen'>;
 
@@ -88,21 +89,21 @@ const ScannerResult = ({
                     <View style={modalRenderstyles(theme).ScannerResult}>
                         <View style={modalRenderstyles(theme).product}>
                             <View>
-                                <Text style={modalRenderstyles(theme).codeLabel}>Codigo: </Text>
-                                <Text style={modalRenderstyles(theme).codeValue}>{product?.clave}</Text>
+                                <CustomText style={modalRenderstyles(theme).codeLabel}>Codigo: </CustomText>
+                                <CustomText style={modalRenderstyles(theme).codeValue}>{product?.clave}</CustomText>
                                 <View style={modalRenderstyles(theme).otherInfo}>
                                     {
                                         product?.codbarras ?
                                             <View style={modalRenderstyles(theme, typeTheme).codebarNotAvailable}>
-                                                <Text style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
+                                                <CustomText style={modalRenderstyles(theme, typeTheme).textNotAvailable}>
                                                     No tiene código
-                                                </Text>
+                                                </CustomText>
                                             </View>
                                             :
-                                            <Text style={{ color: theme.text_color }}>{product?.codbarras}</Text>
+                                            <CustomText style={{ color: theme.text_color }}>{product?.codbarras}</CustomText>
                                     }
-                                    <Text style={{ color: theme.text_color }}>/</Text>
-                                    <Text style={{ color: theme.text_color }}>{product?.familia}</Text>
+                                    <CustomText style={{ color: theme.text_color }}>/</CustomText>
+                                    <CustomText style={{ color: theme.text_color }}>{product?.familia}</CustomText>
                                 </View>
                             </View>
                         </View>
@@ -115,7 +116,7 @@ const ScannerResult = ({
                                         onPress={handleExpandProductDetails}
                                         style={[buttonStyles(theme).button_small, buttonStyles(theme).white]}
                                     >
-                                        <Text style={[buttonStyles(theme, typeTheme).buttonTextTertiary, { fontSize: globalFont.font_sm }]}>Ver producto</Text>
+                                        <CustomText style={[buttonStyles(theme, typeTheme).buttonTextTertiary, { fontSize: globalFont.font_sm }]}>Ver producto</CustomText>
                                     </TouchableOpacity>
                                 }
                             </View>
@@ -132,7 +133,7 @@ const ScannerResult = ({
                             disabled={buttondisabled}
                         >
                             <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</CustomText>
                         </TouchableOpacity>
                     </View>
                     :
@@ -143,7 +144,7 @@ const ScannerResult = ({
                             onPress={handleSearchByCode}
                             style={[buttonStyles(theme).button, buttonStyles(theme).white, { marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Buscar producto</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Buscar producto</CustomText>
                         </TouchableOpacity>
 
                         {
@@ -152,7 +153,7 @@ const ScannerResult = ({
                                 onPress={handleAssignCodeToProduct}
                                 style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
                             >
-                                <Text style={buttonStyles(theme, typeTheme).buttonText}>Asignar a un producto</Text>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Asignar a un producto</CustomText>
                             </TouchableOpacity>
                         }
                     </View>

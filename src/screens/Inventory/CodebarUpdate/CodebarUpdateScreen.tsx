@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { productDetailsStyles } from '../../../theme/productDetailsTheme';
+import { TouchableOpacity, View } from 'react-native'
+import { ProductDetailsStyles } from '../../../theme/ProductDetailsTheme';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
 import { updateCodeBar } from '../../../services/codebar';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import CameraModal from '../../../components/Modals/ModalRenders/CameraModal';
-import { Selector } from '../../../components/Ui/Selector';
+import { Selector } from '../../../components/Inputs/Selector';
 import codebartypes from '../../../utils/codebarTypes.json';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
@@ -16,6 +16,7 @@ import { CodebarUpdateOptionCard } from '../../../components/Cards/CodebarUpdate
 import Icon from 'react-native-vector-icons/Ionicons';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
+import CustomText from '../../../components/Ui/CustumText';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -93,15 +94,15 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     return (
         <>
             <View style={CodebarUpdateScreenStyles(theme).CodebarUpdateScreen}>
-                <View style={productDetailsStyles(theme).optionsContent}>
+                <View style={ProductDetailsStyles(theme).optionsContent}>
                     {
                         !changeTypeOfCodebar ?
                             <View style={CodebarUpdateScreenStyles(theme).actualCodebarType}>
-                                <Text style={CodebarUpdateScreenStyles(theme).actualCodebarTypeText}>Actualmente el codigo de barras es tipo {currentType?.type}</Text>
+                                <CustomText style={CodebarUpdateScreenStyles(theme).actualCodebarTypeText}>Actualmente el codigo de barras es tipo {currentType?.type}</CustomText>
                                 <TouchableOpacity
                                     onPress={() => setChangeTypeOfCodebar(true)}
                                 >
-                                    <Text style={CodebarUpdateScreenStyles(theme).actualCodebarTypeChange}>Cambiar</Text>
+                                    <CustomText style={CodebarUpdateScreenStyles(theme).actualCodebarTypeChange}>Cambiar</CustomText>
                                 </TouchableOpacity>
                             </View>
                             :
@@ -119,7 +120,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                                 <TouchableOpacity
                                     onPress={() => setChangeTypeOfCodebar(false)}
                                 >
-                                    <Text style={[CodebarUpdateScreenStyles(theme).actualCodebarTypeChange, { marginTop: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}>Ocultar</Text>
+                                    <CustomText style={[CodebarUpdateScreenStyles(theme).actualCodebarTypeChange, { marginTop: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}>Ocultar</CustomText>
                                 </TouchableOpacity>
                             </View>
                     }
@@ -158,7 +159,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
 
                 {optionSelected !== 0 && (
                     <TouchableOpacity style={buttonStyles(theme).button} onPress={handleGoToNextStep}>
-                        <Text style={buttonStyles(theme, typeTheme).buttonText}>Avanzar</Text>
+                        <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Avanzar</CustomText>
                         <Icon name="arrow-forward" size={16} color={iconColor} />
                     </TouchableOpacity>
                 )}

@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
 import { globalStyles } from '../../theme/appTheme';
-import { loginStyles } from '../../theme/loginTheme';
+import { LoginScreenStyles } from '../../theme/LoginScreenTheme';
 import { inputStyles } from '../../theme/UI/inputs';
 import { buttonStyles } from '../../theme/UI/buttons';
 
 import { LoadingScreen } from '../LoadingScreen';
-import { InputPassword } from '../../components/Ui/InputPassword';
+import { InputPassword } from '../../components/Inputs/InputPassword';
 import DotLoader from '../../components/Ui/DotLaoder';
 import { TextInput } from 'react-native-paper';
 import { useForm } from '../../hooks/useForm';
 import { useProtectPage } from '../../hooks/useProtectPage';
+import CustomText from '../../components/Ui/CustumText';
 
 
 export const LoginScreen = () => {
@@ -49,13 +50,13 @@ export const LoginScreen = () => {
 
     return !protectThisPage ?
         <KeyboardAvoidingView
-            style={[loginStyles(theme).LoginScreen]}
+            style={[LoginScreenStyles(theme).LoginScreen]}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={loginStyles(theme).formContainer}>
+                <View style={LoginScreenStyles(theme).formContainer}>
 
-                    <Text style={loginStyles(theme).title}>Mapasac & Morado IT Systems.</Text>
-                    <Text style={loginStyles(theme).textLogin}>Ingresar datos de Usuario</Text>
+                    <CustomText style={LoginScreenStyles(theme).title}>Mapasac & Morado IT Systems.</CustomText>
+                    <CustomText style={LoginScreenStyles(theme).textLogin}>Ingresar datos de Usuario</CustomText>
 
                     <TextInput
                         label="Escribe tu usuario."
@@ -85,16 +86,16 @@ export const LoginScreen = () => {
                         inputName="pas"
                     />
 
-                    <View style={loginStyles(theme).buttonContainer}>
+                    <View style={LoginScreenStyles(theme).buttonContainer}>
                         <TouchableOpacity
                             activeOpacity={0.8}
                             style={[buttonStyles(theme).button, buttonStyles(theme).black]}
                             onPress={onLogin}
                             disabled={loadingLogin}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                                 {loadingLogin ? <DotLoader /> : "Iniciar sesión"}
-                            </Text>
+                            </CustomText>
                         </TouchableOpacity>
                     </View>
                 </View>

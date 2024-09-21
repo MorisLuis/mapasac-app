@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ProductInterface from '../../interface/product';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { productDetailsStyles } from '../../theme/productDetailsTheme';
+import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
@@ -11,6 +11,7 @@ import { getProductDetails } from '../../services/products';
 import { ProductDetailsEditSkeleton } from '../../components/Skeletons/ProductDetailsEditSkeleton';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import CustomText from '../../components/Ui/CustumText';
 
 type EditProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreenEdit'>;
 
@@ -56,24 +57,24 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
     );
 
     return productDetailsData ? (
-        <ScrollView style={productDetailsStyles(theme).ProductDetailsPage}>
-            <TouchableOpacity style={productDetailsStyles(theme).editContainer} onPress={handleGoEditDescripcion}>
-                <View style={productDetailsStyles(theme).editContainer_left}>
+        <ScrollView style={ProductDetailsStyles(theme).ProductDetailsPage}>
+            <TouchableOpacity style={ProductDetailsStyles(theme).editContainer} onPress={handleGoEditDescripcion}>
+                <View style={ProductDetailsStyles(theme).editContainer_left}>
                     <Icon name={'reader-outline'} size={18} color={theme.text_color_light} />
-                    <Text style={productDetailsStyles(theme).editContainer_label}>Descripcion</Text>
+                    <CustomText style={ProductDetailsStyles(theme).editContainer_label}>Descripcion</CustomText>
                 </View>
-                <View style={productDetailsStyles(theme).editContainer_right}>
-                    <Text style={productDetailsStyles(theme).editContainer_text}>{productDetailsData.producto}</Text>
+                <View style={ProductDetailsStyles(theme).editContainer_right}>
+                    <CustomText style={ProductDetailsStyles(theme).editContainer_text}>{productDetailsData.producto}</CustomText>
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={productDetailsStyles(theme).editContainer} onPress={handleGoEditPrice}>
-                <View style={productDetailsStyles(theme).editContainer_left}>
+            <TouchableOpacity style={ProductDetailsStyles(theme).editContainer} onPress={handleGoEditPrice}>
+                <View style={ProductDetailsStyles(theme).editContainer_left}>
                     <Icon name={'pricetag-outline'} size={18} color={theme.text_color_light} />
-                    <Text style={productDetailsStyles(theme).editContainer_label}>Precio</Text>
+                    <CustomText style={ProductDetailsStyles(theme).editContainer_label}>Precio</CustomText>
                 </View>
-                <View style={productDetailsStyles(theme).editContainer_right}>
-                    <Text style={productDetailsStyles(theme).editContainer_text}>{format(productDetailsData.precio1)}</Text>
+                <View style={ProductDetailsStyles(theme).editContainer_right}>
+                    <CustomText style={ProductDetailsStyles(theme).editContainer_text}>{format(productDetailsData.precio1)}</CustomText>
                 </View>
             </TouchableOpacity>
         </ScrollView>

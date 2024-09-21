@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassInterface from '../interface/class';
 import { UnitData } from '../interface/units';
-import { CustomTopBar } from '../components/Navigation/CustumTopBar';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 
 // Screens
@@ -17,6 +16,7 @@ import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
 import { ProductSellsInterface } from '../interface/productSells';
 import { SelectClient } from '../screens/Sells/SelectClient';
 import ClientInterface from '../interface/utils';
+import CustomTabBar from '../components/Navigation/CustomTabBar';
 
 // useNavigation() type.
 export type SellsNavigationProp = NativeStackNavigationProp<Partial<SellsNavigationStackParamList>>;
@@ -57,7 +57,7 @@ export const SellsNavigation = () => {
                 component={SellsScreen}
                 options={() => ({
                     header: props => (
-                        <CustomTopBar />
+                        <CustomTabBar />
                     )
                 })}
             />

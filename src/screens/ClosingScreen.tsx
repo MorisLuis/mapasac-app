@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
+import CustomText from '../components/Ui/CustumText';
 
 export const ClosingScreen = () => {
 
@@ -14,7 +15,7 @@ export const ClosingScreen = () => {
             height: "100%",
             backgroundColor: 'rgba(255, 255, 255, 0.7)', // Fondo semi-transparente para simular blur
         }}>
-            <Text style={{ color: theme.text_color }}>Cerrando sesion...</Text>
+            <CustomText style={{ color: theme.text_color }}>Cerrando sesion...</CustomText>
         </View>
     )
 }

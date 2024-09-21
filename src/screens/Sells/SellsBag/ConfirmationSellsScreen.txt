@@ -116,18 +116,18 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItemsSells}</Text>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItemsSells}</CustomText>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</CustomText>
                     </View>
                     <View
                         style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>Venta</Text>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</CustomText>
+                        <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>Venta</CustomText>
                     </View>
                     <View
                         style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</CustomText>
+                        <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</CustomText>
                     </View>
                 </View>
 
@@ -142,7 +142,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             alignItems: 'center'
                         }}>
                             {
-                                !openConfirmationInfo ? <Text>Metodo de pago</Text> : <View></View>
+                                !openConfirmationInfo ? <CustomText>Metodo de pago</CustomText> : <View></View>
                             }
                             <TouchableOpacity
                                 onPress={() => setOpenConfirmationInfo(!openConfirmationInfo)}
@@ -164,7 +164,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                         openConfirmationInfo &&
                         <>
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationDataHeader}>
-                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Forma de pago</Text>
+                                <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Forma de pago</CustomText>
                             </View>
 
                             <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
@@ -173,14 +173,14 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                     onPress={() => setMethodPayment(1)}
                                 >
                                     <Icon name='card-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <Text>Credito</Text>
+                                    <CustomText>Credito</CustomText>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
                                     onPress={() => setMethodPayment(2)}
                                 >
                                     <Icon name='cash-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <Text>Contado</Text>
+                                    <CustomText>Contado</CustomText>
                                 </TouchableOpacity>
                             </View>
 
@@ -188,7 +188,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                 methodPayment === 1 &&
                                 <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
                                     <TouchableOpacity onPress={() => navigate("[Modal] - SelectClient")} style={selectStyles(theme).input}>
-                                        <Text>{typeSelected ? typeSelected.nombres : 'Selecciona el cliente...'}</Text>
+                                        <CustomText>{typeSelected ? typeSelected.nombres : 'Selecciona el cliente...'}</CustomText>
                                     </TouchableOpacity>
                                 </View>
                             }
@@ -253,7 +253,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                         availableToPost &&
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
                                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                                                <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</CustomText>
                                             </View>
                                         </View>
 
@@ -275,9 +275,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             onPress={onPostInventory}
                             disabled={disabledToPost}
                         >
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                                 {createSellLoading ? <DotLoader /> : "Confirmar"}
-                            </Text>
+                            </CustomText>
                         </TouchableOpacity>
                     </View>
                 )
@@ -286,7 +286,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     ) : (
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
-                <Text>Redireccionando sells...</Text>
+                <CustomText>Redireccionando sells...</CustomText>
             </View>
         </SafeAreaView>
     );

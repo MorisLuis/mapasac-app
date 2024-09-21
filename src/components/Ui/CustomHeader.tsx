@@ -1,10 +1,11 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProductInterface from '../../interface/product';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { customHeaderStyles } from '../../theme/UI/customHeader';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from './CustumText';
 
 interface CustomHeaderInterface {
     navigation: any;
@@ -56,10 +57,10 @@ export const CustomHeader = ({
                             onPress={handleOnPress}
                         >
                             <Icon name="chevron-back-outline" size={20} color={iconColor} />
-                            <Text style={customHeaderStyles(theme).backText}>Atrás</Text>
+                            <CustomText style={customHeaderStyles(theme).backText}>Atrás</CustomText>
                         </TouchableOpacity>
                     )}
-                    <Text style={customHeaderStyles(theme).titleHeader}>{title}</Text>
+                    <CustomText style={customHeaderStyles(theme).titleHeader}>{title}</CustomText>
                 </SafeAreaView>
             ) : (
                 <SafeAreaView style={{ backgroundColor: secondaryDesign ? theme.background_color_secondary : theme.background_color }}>
@@ -70,10 +71,10 @@ export const CustomHeader = ({
                                 onPress={handleOnPress}
                             >
                                 <Icon name="chevron-back-outline" size={hp("2.5%")} color={iconColor} />
-                                <Text style={customHeaderStyles(theme).backText}>Atrás</Text>
+                                <CustomText style={customHeaderStyles(theme).backText}>Atrás</CustomText>
                             </TouchableOpacity>
                         )}
-                        <Text style={customHeaderStyles(theme).titleHeader}>{title}</Text>
+                        <CustomText style={customHeaderStyles(theme).titleHeader}>{title}</CustomText>
                     </View>
                 </SafeAreaView>
             )}
@@ -100,12 +101,12 @@ export const CustomBackButton = ({ navigation, onClick }: any) => {
             onPress={handlePress}
         >
             <Icon name="chevron-back-outline" size={20} color={iconColor} />
-            <Text style={{
+            <CustomText style={{
                 fontWeight: 'bold',
                 fontSize: 14,
                 marginLeft: 3,
                 color: theme.text_color
-            }}>Atrás</Text>
+            }}>Atrás</CustomText>
         </TouchableOpacity>
     );
 };

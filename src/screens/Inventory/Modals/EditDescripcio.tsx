@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, TextInput } from 'react-native';
 import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import { inputStyles } from '../../../theme/UI/inputs';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+import CustomText from '../../../components/Ui/CustumText';
 
 type EditDescripcioPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editDescripcio'>;
 
@@ -72,7 +73,7 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
             onClose={handleCloseModal}
         >
             <View style={editProductStyles(theme).EditProductInBag_header}>
-                <Text style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la descripción?</Text>
+                <CustomText style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la descripción?</CustomText>
                 <TextInput
                         ref={inputRef}
                         value={descripcioState}
@@ -89,9 +90,9 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
                 onPress={onEdit}
                 disabled={editingProduct}
             >
-                <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                     {editingProduct ? <DotLoader /> : "Editar"}
-                </Text>
+                </CustomText>
             </TouchableOpacity>
         </ModalMiddle>
     );

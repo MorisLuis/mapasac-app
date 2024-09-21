@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface } from '../../interface/productSells';
@@ -11,9 +11,11 @@ import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { getProductsSells, getTotalProductSells } from '../../services/productsSells';
 import { useFocusEffect } from '@react-navigation/native';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../Ui/CustumText';
+import LayoutGrandient from './LayoutGrandient';
 
 interface LayoutSellInterface {
-    renderItem:  ({ item }: { item: ProductSellsInterface }) => React.JSX.Element;
+    renderItem: ({ item }: { item: ProductSellsInterface }) => React.JSX.Element;
     opcion: number
 }
 
@@ -64,7 +66,7 @@ export const LayoutSell = ({
 
     const handleGetProducts = async () => {
 
-        try {            
+        try {
             setIsLoading(true);
             const products = await getProductsSells(currentPage);
             if (products.error) return handleError(products.error);
@@ -79,7 +81,7 @@ export const LayoutSell = ({
                 );
                 return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
             });
-    
+
         } catch (error) {
             handleError(error)
         } finally {
@@ -105,34 +107,37 @@ export const LayoutSell = ({
     }, [handleUpdateSummary]);
 
     return (
-        <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
-            <View style={SellsScreenStyles(theme).content}>
+        <LayoutGrandient color="purple">
+            <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
+                <View style={SellsScreenStyles(theme).content}>
 
-                {products.length > 1 ?
-                    <>
+                    {products.length > 1 ?
+                        <>
+                            <View style={SellsScreenStyles(theme).header}>
+                                <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
+                                <CustomText style={[SellsScreenStyles(theme).header_total, { fontFamily: 'Rubik-Bold' }]}>{format(totalPrice)}</CustomText>
+                            </View>
+
+                            <FlatList
+                                data={products}
+                                numColumns={2}
+                                renderItem={renderItem}
+                                keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
+                                contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                                columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                                ListFooterComponent={renderFooter}
+                                onEndReached={loadMoreItem}
+                                onEndReachedThreshold={0}
+                            />
+                        </>
+                        :
                         <View style={SellsScreenStyles(theme).header}>
-                            <Text style={SellsScreenStyles(theme).header_subtitle}>Total de venta</Text>
-                            <Text style={SellsScreenStyles(theme).header_total}>{format(totalPrice)}</Text>
+                            <CustomText>Cargando...</CustomText>
                         </View>
-
-                        <FlatList
-                            data={products}
-                            numColumns={2}
-                            renderItem={renderItem}
-                            keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
-                            contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                            columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                            ListFooterComponent={renderFooter}
-                            onEndReached={loadMoreItem}
-                            onEndReachedThreshold={0}
-                        />
-                    </>
-                    :
-                    <View style={SellsScreenStyles(theme).header}>
-                        <Text>Cargando...</Text>
-                    </View>
-                }
-            </View>
-        </SafeAreaView>
+                    }
+                </View>
+            </SafeAreaView>
+        </LayoutGrandient>
     )
 }
+

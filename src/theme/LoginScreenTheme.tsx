@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "./appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-export const loginStyles = (theme: Theme, typeTheme?:string) => StyleSheet.create({
+export const LoginScreenStyles = (theme: Theme, typeTheme?:string) => StyleSheet.create({
     LoginScreen: {
         flex: 1,
         backgroundColor: theme.background_color
@@ -45,7 +45,8 @@ export const loginStyles = (theme: Theme, typeTheme?:string) => StyleSheet.creat
         fontSize: globalFont.font_big,
         fontWeight: 'bold',
         lineHeight: globalFont.font_big,
-        width: "90%"
+        width: "90%",
+        fontFamily: 'Rubik-Bold'
     },
     textLogin: {
         fontSize: globalFont.font_normal,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Image, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { StartupScreenTheme } from '../../theme/UI/StartupScreenTheme';
+import { StartupScreenTheme } from '../../theme/StartupScreenTheme';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import { AuthContext } from '../../context/auth/AuthContext';
 

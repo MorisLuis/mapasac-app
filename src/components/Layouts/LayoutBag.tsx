@@ -6,7 +6,7 @@ import { getSearchProductInBack } from '../../services/searchs';
 import { ProductInterfaceBag } from '../../interface/product';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { inputStyles } from '../../theme/UI/inputs';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { EmptyMessageCard } from '../Cards/EmptyMessageCard';
 import { InventoryBagSkeleton } from '../Skeletons/InventoryBagSkeleton';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -23,6 +23,7 @@ import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../navigator/AppNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../Ui/CustumText';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -183,7 +184,7 @@ export const LayoutBag = ({
                     placeholderTextColor={theme.text_color}
                     icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
                     clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                    
+                    inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
                 />
 
                 {
@@ -225,12 +226,12 @@ export const LayoutBag = ({
                         {
                             Type === "sells" &&
                             <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                                <Text style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</Text>
-                                <Text style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                                <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</CustomText>
+                                <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
                                     {
                                         deletingProductId ? "Calculando..." : format(totalPrice || 0)
                                     }
-                                </Text>
+                                </CustomText>
                             </View>
                         }
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
@@ -245,7 +246,7 @@ export const LayoutBag = ({
                                 onPress={onPost}
                             >
                                 <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                                <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -269,15 +270,15 @@ export const LayoutBag = ({
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {loadingCleanBag ? <DotLoader /> : "Limpiar carrito"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[buttonStyles(theme).button, buttonStyles(theme).white]}
                     onPress={() => setOpenModalDecision(false)}
                 >
-                    <Text style={buttonStyles(theme).buttonTextTertiary}>Cancelar</Text>
+                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Cancelar</CustomText>
                 </TouchableOpacity>
             </ModalDecision>
         </>

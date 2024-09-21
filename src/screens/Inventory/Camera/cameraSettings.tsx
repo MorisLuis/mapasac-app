@@ -4,7 +4,6 @@ import { getProductByCodeBar } from "../../../services/products";
 import { PERMISSIONS, check, openSettings, request } from "react-native-permissions";
 import { SettingsContext } from "../../../context/settings/SettingsContext";
 import ProductInterface from "../../../interface/product";
-import UserInterface from "../../../interface/user";
 import { identifyUPCOrEANBarcode } from "../../../utils/identifyBarcodeType";
 import useErrorHandler from "../../../hooks/useErrorHandler";
 
@@ -17,7 +16,7 @@ interface cameraSettingsInterface {
     setCameraPermission: React.Dispatch<React.SetStateAction<PermissionStatus | null>>
 }
 
-export const cameraSettings = ({
+export const CameraSettings = ({
     handleOpenProductsFoundByCodebar,
     setProductsScanned,
     productsScanned,

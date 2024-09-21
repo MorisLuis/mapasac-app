@@ -1,17 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
-import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
 import { postSells, postSellsInterface } from '../../../services/sells';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
-import { TextInputContainer } from '../../../components/Ui/TextInputContainer';
+import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 import { selectStyles } from '../../../theme/UI/inputs';
 import ClientInterface from '../../../interface/utils';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
@@ -19,6 +18,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import CustomText from '../../../components/Ui/CustumText';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -140,7 +140,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             alignItems: 'center'
                         }}>
                             {
-                                !openConfirmationInfo ? <Text>Metodo de pago</Text> : <View></View>
+                                !openConfirmationInfo ? <CustomText>Metodo de pago</CustomText> : <View></View>
                             }
                             <TouchableOpacity
                                 onPress={() => setOpenConfirmationInfo(!openConfirmationInfo)}
@@ -162,7 +162,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                         openConfirmationInfo &&
                         <>
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationDataHeader}>
-                                <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Forma de pago</Text>
+                                <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Forma de pago</CustomText>
                             </View>
 
                             <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
@@ -171,14 +171,14 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                     onPress={() => setMethodPayment(1)}
                                 >
                                     <Icon name='card-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <Text>Credito</Text>
+                                    <CustomText>Credito</CustomText>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
                                     onPress={() => setMethodPayment(2)}
                                 >
                                     <Icon name='cash-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <Text>Contado</Text>
+                                    <CustomText>Contado</CustomText>
                                 </TouchableOpacity>
                             </View>
 
@@ -186,7 +186,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                 methodPayment === 1 &&
                                 <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
                                     <TouchableOpacity onPress={() => navigate("[Modal] - SelectClient")} style={selectStyles(theme).input}>
-                                        <Text>{typeSelected ? typeSelected.nombres : 'Selecciona el cliente...'}</Text>
+                                        <CustomText>{typeSelected ? typeSelected.nombres : 'Selecciona el cliente...'}</CustomText>
                                     </TouchableOpacity>
                                 </View>
                             }

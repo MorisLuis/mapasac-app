@@ -17,7 +17,6 @@ export const ProfileScreenStyles = (theme: Theme, typeTheme: string) => StyleShe
         paddingVertical: globalStyles(theme).globalMarginBottom.marginBottom * 0.75,
         borderWidth: 1,
         borderColor: "transparent",
-        //borderBottomColor: theme.color_border,
         display: "flex",
         flexDirection: 'row',
         justifyContent: "space-between",
@@ -40,7 +39,6 @@ export const ProfileScreenStyles = (theme: Theme, typeTheme: string) => StyleShe
     divider: {
         height: 1,
         width: "100%",
-        backgroundColor: theme.color_border,
-        //marginVertical: globalStyles(theme).globalMarginBottom.marginBottom * 1
+        backgroundColor: theme.color_border
     }
 })

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Text, TouchableOpacity, View } from 'react-native';
-import ProductInterface from '../../interface/product';
+import { TouchableOpacity, View } from 'react-native';
 import { ProductItemSearchStyles } from '../../theme/UI/cardsStyles';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
 
 interface OneDataCardInterface {
     data: string;
@@ -24,7 +24,7 @@ export const OneDataCard = ({
             onPress={onClick}
         >
             <View style={ProductItemSearchStyles(theme, typeTheme).information}>
-                <Text style={ProductItemSearchStyles(theme, typeTheme).description}>{data}</Text>
+                <CustomText style={ProductItemSearchStyles(theme, typeTheme).description}>{data}</CustomText>
             </View>
         </TouchableOpacity>
     )

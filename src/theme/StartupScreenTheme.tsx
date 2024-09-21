@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalStyles } from "../appTheme";
+import { Theme, globalStyles } from "./appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 

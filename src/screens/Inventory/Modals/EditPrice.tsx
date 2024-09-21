@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { editProductStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import { View, TouchableOpacity } from 'react-native';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
-import { Counter } from '../../../components/Ui/Counter';
+import { Counter } from '../../../components/Inputs/Counter';
 import DotLoader from '../../../components/Ui/DotLaoder';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+import CustomText from '../../../components/Ui/CustumText';
+import { EditProductStyles } from '../../../theme/EditProductTheme';
 
 type EditPricePageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editPrice'>;
 
@@ -71,15 +72,15 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
             visible={true}
             onClose={handleCloseModal}
         >
-            <View style={editProductStyles(theme).EditProductInBag_header}>
-                <Text style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</Text>
+            <View style={EditProductStyles(theme).EditProductInBag_header}>
+                <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
                 <Counter counter={piezasCount} setCounter={setPiezasCount} unit={"MXN"} secondaryDesign />
             </View>
 
             {
                 piezasCount < 1 &&
                 <View>
-                    <Text style={editProductStyles(theme).EditProductInBag_warning}>Si lo dejas en 0 se eliminare el producto.</Text>
+                    <CustomText style={EditProductStyles(theme).EditProductInBag_warning}>Si lo dejas en 0 se eliminare el producto.</CustomText>
                 </View>
             }
 
@@ -90,9 +91,9 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
                 onPress={onEdit}
                 disabled={editingProduct}
             >
-                <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                     {editingProduct ? <DotLoader /> : "Editar"}
-                </Text>
+                </CustomText>
             </TouchableOpacity>
         </ModalMiddle>
     );

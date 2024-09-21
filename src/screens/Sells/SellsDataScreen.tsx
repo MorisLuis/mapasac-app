@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,6 +17,7 @@ import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../../components/Ui/CustumText';
 
 type SellsDataScreenRouteProp = RouteProp<SellsNavigationStackParamList, 'SellsDataScreen'>;
 
@@ -181,7 +182,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             </View>
 
             <View style={SellsDataScreenTheme(theme, typeTheme).titleContent}>
-                <Text style={SellsDataScreenTheme(theme, typeTheme).title}>{title}</Text>
+                <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>{title}</CustomText>
             </View>
 
             <TouchableOpacity
@@ -191,20 +192,20 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             >
                 <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                     <Icon name={'resize-outline'} color={iconColor} size={globalFont.font_normal} />
-                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Clase:</Text>
+                    <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>Clase:</CustomText>
                 </View>
                 <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
                     <Controller
                         control={control}
                         name="typeClass"
                         render={({ field: { value } }) => (
-                            <Text style={SellsDataScreenTheme(theme, typeTheme).label}>
+                            <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>
                                 {
                                     !haveClasses ? "No tiene clase" :
                                         value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim())
                                             : "Selecciona la clase"
                                 }
-                            </Text>
+                            </CustomText>
                         )}
                     />
                     <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
@@ -221,13 +222,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         >
                             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                                 <Icon name={'bag-handle'} color={iconColor} size={globalFont.font_normal} />
-                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Cantidad:</Text>
+                                <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>Cantidad:</CustomText>
                             </View>
                             <Controller
                                 control={control}
                                 name="pieces"
                                 render={({ field: { value } }) => (
-                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? value : "Seleccion cantidad"}</Text>
+                                    <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? value : "Seleccion cantidad"}</CustomText>
                                 )}
                             />
                         </TouchableOpacity>
@@ -238,14 +239,14 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         >
                             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                                 <Icon name={'shapes'} color={iconColor} size={globalFont.font_normal} />
-                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Unidad:</Text>
+                                <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>Unidad:</CustomText>
                             </View>
                             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_right}>
                                 <Controller
                                     control={control}
                                     name="units"
                                     render={({ field: { value } }) => (
-                                        <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</Text>
+                                        <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>{value?.descripcio ? value.descripcio : "Seleccion Unidad"}</CustomText>
                                     )}
                                 />
                                 <Icon name={'code'} color={iconColor} size={globalFont.font_normal} style={{ transform: [{ rotate: '90deg' }] }} />
@@ -258,13 +259,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         >
                             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                                 <Icon name={'pricetags'} color={iconColor} size={globalFont.font_normal} />
-                                <Text style={SellsDataScreenTheme(theme, typeTheme).label}>Precio:</Text>
+                                <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>Precio:</CustomText>
                             </View>
                             <Controller
                                 control={control}
                                 name="price"
                                 render={({ field: { value } }) => (
-                                    <Text style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? format(Number(value)) : "Selecciona precio"}</Text>
+                                    <CustomText style={SellsDataScreenTheme(theme, typeTheme).label}>{value ? format(Number(value)) : "Selecciona precio"}</CustomText>
                                 )}
                             />
                         </TouchableOpacity>
@@ -275,13 +276,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                                 onPress={handleSubmit(onSubmit)}
                                 disabled={buttondisabled}
                             >
-                                <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Publicar</Text>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Publicar</CustomText>
                             </TouchableOpacity>
                         </View>
                     </>
                     :
                     <View>
-                        <Text>Cargando...</Text>
+                        <CustomText>Cargando...</CustomText>
                     </View>
             }
         </View>

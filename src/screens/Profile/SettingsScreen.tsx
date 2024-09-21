@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
-import Toggle from '../../components/Ui/Toggle';
+import Toggle from '../../components/Inputs/Toggle';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { SettingsScreenStyles } from '../../theme/SettingsScreenTheme';
 import { useTheme } from '../../context/ThemeContext';

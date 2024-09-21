@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSkeleton';
@@ -16,6 +16,7 @@ import ClientInterface from '../../interface/utils';
 import { OneDataCard } from '../../components/Cards/OneDataCard';
 import { SellsNavigationProp } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../../components/Ui/CustumText';
 
 
 export const SelectClient = () => {
@@ -153,7 +154,7 @@ export const SelectClient = () => {
                             onPress={onPostInventary}
                         >
                             <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                            <Text style={buttonStyles(theme, typeTheme).buttonText}>Guardar</Text>
+                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
                         </TouchableOpacity>
                     </View>
                 </View>

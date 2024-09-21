@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../../components/Ui/CustumText';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -66,7 +67,7 @@ export const SelectClassScreen = ({
         const sameValue = (item.rcapa && item.rcapa.trim() !== "") ? item.rcapa.trim() === optionSelected?.rcapa.trim() : item.ridinveclas === optionSelected?.ridinveclas;
         return (
             <TouchableOpacity style={[SelectScreenTheme(theme, typeTheme).optionsContainer]} onPress={() => handleSelectOption(item)}>
-                <Text style={SelectScreenTheme(theme, typeTheme).optionText}>{(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}</Text>
+                <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}</CustomText>
                 <View style={[sameValue ? SelectScreenTheme(theme, typeTheme).optionCheckActive : SelectScreenTheme(theme, typeTheme).optionCheck]}></View>
             </TouchableOpacity>
         )
@@ -99,7 +100,7 @@ export const SelectClassScreen = ({
         >
             <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                 <View style={SelectScreenTheme(theme, typeTheme).header}>
-                    <Text style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona {isCapa ? "la capa" : "el tipo"}.</Text>
+                    <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona {isCapa ? "la capa" : "el tipo"}.</CustomText>
                 </View>
 
                 <FlatList
@@ -115,7 +116,7 @@ export const SelectClassScreen = ({
                         onPress={handleSave}
                         disabled={buttondisabled}
                     >
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Seleccionar</Text>
+                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Seleccionar</CustomText>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -123,6 +124,6 @@ export const SelectClassScreen = ({
     )
         :
         <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-            <Text>Cargando...</Text>
+            <CustomText>Cargando...</CustomText>
         </View>
 };

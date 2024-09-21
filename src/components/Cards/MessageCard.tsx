@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleProp, Text, View, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../context/ThemeContext';
 import { MessageCardStyles } from '../../theme/UI/cardsStyles';
+import CustomText from '../Ui/CustumText';
 
 interface MessageCardInterface {
     title: string;
@@ -28,8 +29,8 @@ export const MessageCard = ({
             </View>
 
             <View style={MessageCardStyles(theme, typeTheme).text}>
-                <Text style={MessageCardStyles(theme, typeTheme).title}>{title}</Text>
-                <Text style={MessageCardStyles(theme, typeTheme).message}>{message}</Text>
+                <CustomText style={MessageCardStyles(theme, typeTheme).title}>{title}</CustomText>
+                <CustomText style={MessageCardStyles(theme, typeTheme).message}>{message}</CustomText>
             </View>
         </View>
     );

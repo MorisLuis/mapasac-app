@@ -4,7 +4,6 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SellsScreen: {
-        backgroundColor: theme.background_color,
     },
     content: {
         paddingHorizontal: globalStyles(theme).globalPadding.padding,

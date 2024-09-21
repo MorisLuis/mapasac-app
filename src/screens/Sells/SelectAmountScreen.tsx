@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import {CounterSecondary} from '../../components/Ui/CounterSecondary';
+import {CounterSecondary} from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import CustomText from '../../components/Ui/CustumText';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
 type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
@@ -48,7 +49,7 @@ export const SelectAmountScreen = ({
         >
             <View style={SelectAmountScreenTheme(theme, typeTheme).SelectAmountScreen}>
                 <View style={SelectAmountScreenTheme(theme, typeTheme).header}>
-                    <Text style={SelectAmountScreenTheme(theme, typeTheme).headerTitle}>Escribe la cantidad.</Text>
+                    <CustomText style={SelectAmountScreenTheme(theme, typeTheme).headerTitle}>Escribe la cantidad.</CustomText>
                 </View>
 
                 <View style={SelectAmountScreenTheme(theme, typeTheme).amountContent}>
@@ -67,7 +68,7 @@ export const SelectAmountScreen = ({
                         onPress={handleSave}
                         disabled={buttondisabled}
                     >
-                        <Text style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</Text>
+                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</CustomText>
                     </TouchableOpacity>
                 </View>
             </View>

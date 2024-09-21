@@ -1,6 +1,7 @@
 import React from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
+import CustomText from '../components/Ui/CustumText';
 
 interface LoadingScreenInterface {
     message?: string;
@@ -28,7 +29,7 @@ export const LoadingScreen = ({
                 color={iconColor}
                 style={{ marginBottom: 10 }}
             />
-            <Text style={{ color: theme.text_color }}>{message}</Text>
+            <CustomText style={{ color: theme.text_color }}>{message}</CustomText>
         </View>
     )
 }

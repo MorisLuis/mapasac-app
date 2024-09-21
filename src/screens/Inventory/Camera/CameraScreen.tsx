@@ -1,17 +1,18 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Text, Platform, Button } from 'react-native';
+import { View, TouchableOpacity, Platform } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProductInterface from '../../../interface/product';
-import { cameraStyles } from '../../../theme/CameraCustumTheme';
-import { CameraPermission } from '../../../components/screens/CameraPermission';
+import { CameraScreenStyles } from '../../../theme/CameraScreenTheme';
+import { CameraPermission } from '../../../components/Screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
-import { cameraSettings } from './cameraSettings';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
+import CustomText from '../../../components/Ui/CustumText';
+import { CameraSettings } from './CameraSettings';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 
@@ -21,7 +22,7 @@ export type OnReadCodeData = {
     };
 };
 
-const CameraTest: React.FC = () => {
+const CameraScreen: React.FC = () => {
 
     const { handleCameraAvailable, cameraAvailable, startScanning } = useContext(SettingsContext);
     const { handleUpdateSummary } = useContext(InventoryBagContext);
@@ -61,7 +62,7 @@ const CameraTest: React.FC = () => {
         handleRequestPermission,
         codeScanned,
         setCodeDetected
-    } = cameraSettings({
+    } = CameraSettings({
         handleOpenProductsFoundByCodebar,
         setProductsScanned,
         productsScanned,
@@ -113,10 +114,10 @@ const CameraTest: React.FC = () => {
     }
 
     return (
-        <View style={cameraStyles(theme).cameraScreen}>
+        <View style={CameraScreenStyles(theme).cameraScreen}>
 
-            <View style={cameraStyles(theme).backgroundBlurTop}></View>
-            <View style={cameraStyles(theme).backgroundBlurBottom}></View>
+            <View style={CameraScreenStyles(theme).backgroundBlurTop}></View>
+            <View style={CameraScreenStyles(theme).backgroundBlurBottom}></View>
 
             <Camera
                 key={cameraKey}
@@ -128,18 +129,18 @@ const CameraTest: React.FC = () => {
                     };
                     codeScanned({ codes: event.nativeEvent.codeStringValue })
                 }}
-                style={cameraStyles(theme).camera}
+                style={CameraScreenStyles(theme).camera}
                 torchMode={lightOn ? "on" : "off"}
             />
 
-            <View style={cameraStyles(theme, typeTheme).actions}>
-                <View style={cameraStyles(theme, typeTheme).flash}>
+            <View style={CameraScreenStyles(theme, typeTheme).actions}>
+                <View style={CameraScreenStyles(theme, typeTheme).flash}>
                     <TouchableOpacity onPress={() => setLightOn(!lightOn)}>
                         <Icon name={lightOn ? "flash" : "flash-outline"} size={22} color={iconColor} />
                     </TouchableOpacity>
                 </View>
 
-                <View style={cameraStyles(theme, typeTheme).cog}>
+                <View style={CameraScreenStyles(theme, typeTheme).cog}>
                     <TouchableOpacity onPress={handleOpenInputModal}>
                         <Icon name={"barcode-outline"} size={22} color={iconColor} />
                     </TouchableOpacity>
@@ -148,12 +149,12 @@ const CameraTest: React.FC = () => {
 
             {
                 !startScanning ?
-                    <View style={cameraStyles(theme).message}>
-                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo al inventario.</Text>
+                    <View style={CameraScreenStyles(theme).message}>
+                        <CustomText style={CameraScreenStyles(theme, typeTheme).textmessage}>Escanea un código de barras para agregarlo al inventario.</CustomText>
                     </View>
                     :
-                    <View style={cameraStyles(theme).message}>
-                        <Text style={cameraStyles(theme, typeTheme).textmessage}>Escaneando...</Text>
+                    <View style={CameraScreenStyles(theme).message}>
+                        <CustomText style={CameraScreenStyles(theme, typeTheme).textmessage}>Escaneando...</CustomText>
                     </View>
             }
 
@@ -161,4 +162,4 @@ const CameraTest: React.FC = () => {
     );
 };
 
-export default CameraTest;
+export default CameraScreen;

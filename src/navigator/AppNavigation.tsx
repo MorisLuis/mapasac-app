@@ -15,9 +15,11 @@ import { SuccesMessage } from '../screens/SuccesMessage';
 
 // useNavigation() type. 
 export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
+export type CombineNavigationProp = NativeStackNavigationProp<Partial<CombinedSellsAndInventoryNavigationStackParamList>>;
+
 export type CombinedInventoryAndAppNavigationStackParamList = InventoryNavigationStackParamList & AppNavigationStackParamList;
 export type CombinedSellsAndAppNavigationStackParamList = SellsNavigationStackParamList & AppNavigationStackParamList;
-export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationStackParamList & InventoryNavigationStackParamList;
+export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationStackParamList & InventoryNavigationStackParamList & AppNavigationStackParamList;
 
 export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;

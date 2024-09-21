@@ -110,17 +110,17 @@ export const ConfirmationScreen = () => {
                                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
-                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
+                                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</CustomText>
+                                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</CustomText>
                                         </View>
                                         <View
                                             style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</Text>
+                                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</CustomText>
+                                            <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{getTypeOfMovementsName()}</CustomText>
                                         </View>
                                     </View>
                                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</CustomText>
                                     </View>
                                 </View>
                             }
@@ -135,9 +135,9 @@ export const ConfirmationScreen = () => {
                     onPress={onPostInventory}
                     disabled={createInventaryLoading}
                 >
-                    <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                         {createInventaryLoading ? <DotLoader /> : "Confirmar"}
-                    </Text>
+                    </CustomText>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -145,7 +145,7 @@ export const ConfirmationScreen = () => {
         :
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
-                <Text>Redireccionando...</Text>
+                <CustomText>Redireccionando...</CustomText>
             </View>
         </SafeAreaView>
 };

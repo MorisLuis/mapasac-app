@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../context/ThemeContext';
-import { productDetailsStyles } from '../../theme/productDetailsTheme';
+import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
 import { CodebarUpdateScreenStyles } from '../../theme/CodebarUpdateScreenTheme';
+import CustomText from '../Ui/CustumText';
 
 interface CodebarUpdateOptionCardInterface {
     message: string;
@@ -23,25 +24,22 @@ export const CodebarUpdateOptionCard = ({
 
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black"
-    const iconColorActive = typeTheme === 'dark' ? "black" : "white"
 
     return visible && (
         <TouchableOpacity
-            style={[productDetailsStyles(theme).optionCodebar, active && productDetailsStyles(theme).selectedOption]}
+            style={[ProductDetailsStyles(theme).optionCodebar, active && ProductDetailsStyles(theme).selectedOption]}
             onPress={onClick}
         >
             <Icon
                 name={icon}
                 size={24}
-                color={iconColor} style={productDetailsStyles(theme).optionCodebar_icon}
-                //color={active ? iconColorActive : iconColor} style={productDetailsStyles(theme).optionCodebar_icon}
+                color={iconColor} style={ProductDetailsStyles(theme).optionCodebar_icon}
             />
-            <Text
+            <CustomText
                 style={CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText}
-                //style={[active ? CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarTextActive : CodebarUpdateScreenStyles(theme, typeTheme).optionCodebarText]}
             >
                 {message}
-            </Text>
+            </CustomText>
         </TouchableOpacity>
     );
 };

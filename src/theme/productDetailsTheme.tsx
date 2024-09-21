@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "./appTheme";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductDetailsPage: {
         flex: 1,
         padding: globalStyles(theme).globalPadding.padding,
@@ -75,7 +75,8 @@ export const productDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         fontSize: globalFont.font_med,
         fontWeight: "bold",
         color: theme.text_color,
-        width: "90%"
+        width: "90%",
+        fontFamily: 'Rubik-Bold'
     },
     price: {
         fontWeight: "bold",

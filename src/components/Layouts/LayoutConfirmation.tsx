@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, SafeAreaView, FlatList } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductInterfaceBag } from '../../interface/product';
 import { ProductSellsInterfaceBag } from '../../interface/productSells';
@@ -9,6 +9,7 @@ import { buttonStyles } from '../../theme/UI/buttons';
 import DotLoader from '../Ui/DotLaoder';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';
+import CustomText from '../Ui/CustumText';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -65,25 +66,25 @@ const LayoutConfirmation = ({
             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
                 <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
                     <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</Text>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</Text>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</CustomText>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</CustomText>
                     </View>
                     <View
                         style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</Text>
-                        <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{movementType()}</Text>
+                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</CustomText>
+                        <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{movementType()}</CustomText>
                     </View>
                     {
                         Type === 'sells' &&
                         <View
                             style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                            <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</Text>
-                            <Text style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</Text>
+                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</CustomText>
+                            <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</CustomText>
                         </View>
                     }
                 </View>
                 {/* <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                    <Text style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</Text>
+                    <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</CustomText>
                 </View> */}
             </View>
         )
@@ -125,9 +126,9 @@ const LayoutConfirmation = ({
                         onPress={onPost}
                         disabled={buttonPostDisabled}
                     >
-                        <Text style={buttonStyles(theme, typeTheme).buttonText}>
+                        <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
                             {buttonPostDisabled ? <DotLoader /> : "Confirmar"}
-                        </Text>
+                        </CustomText>
                     </TouchableOpacity>
                 </View>
             )}
@@ -136,7 +137,7 @@ const LayoutConfirmation = ({
         :
         <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
             <View>
-                <Text>Redireccionando sells...</Text>
+                <CustomText>Redireccionando sells...</CustomText>
             </View>
         </SafeAreaView>
 
