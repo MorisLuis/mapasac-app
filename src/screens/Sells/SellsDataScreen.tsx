@@ -7,9 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
-import ProductInterface from '../../interface/product';
 import { UnitData } from '../../interface/units';
 import ClassInterface from '../../interface/class';
 import EnlacemobInterface from '../../interface/enlacemob';
@@ -18,6 +16,7 @@ import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type SellsDataScreenRouteProp = RouteProp<SellsNavigationStackParamList, 'SellsDataScreen'>;
 
@@ -120,7 +119,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
 
-        try {            
+        try {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
             if (product.error) return handleError(product.error);
             setValue('price', product?.precio.toString());
@@ -128,7 +127,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 unidad: product?.unidad as number,
                 descripcio: product?.unidad_nombre?.trim() as string
             });
-    
+
             if (typeClass) {
                 setValue('typeClass', {
                     rcapa: typeClass?.rcapa?.trim(),
@@ -138,7 +137,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                     clase: typeClass.clase
                 });
             }
-    
+
             setValue('capa', capa);
             setValue("idinveclas", idinveclas);
         } catch (error) {
@@ -271,13 +270,12 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         </TouchableOpacity>
 
                         <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                            <ButtonCustum
+                                title="Publicar"
                                 onPress={handleSubmit(onSubmit)}
                                 disabled={buttondisabled}
-                            >
-                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Publicar</CustomText>
-                            </TouchableOpacity>
+                                buttonColor='yellow'
+                            />
                         </View>
                     </>
                     :

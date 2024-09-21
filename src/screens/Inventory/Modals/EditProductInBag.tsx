@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 type EditProductInBagPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - editProductInBag'>;
 
@@ -64,7 +65,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
         >
             <View style={EditProductStyles(theme).EditProductInBag_header}>
                 <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
-                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign/>
+                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign />
             </View>
 
             {
@@ -74,17 +75,13 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
                 </View>
             }
 
-            <TouchableOpacity
-                style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                ...(editingProduct ? [buttonStyles(theme).disabled] : [])
-                ]}
+            <ButtonCustum
+                title="Editar"
                 onPress={onEdit}
                 disabled={editingProduct}
-            >
-                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                    {editingProduct ? <DotLoader /> : "Editar"}
-                </CustomText>
-            </TouchableOpacity>
+                buttonColor='black'
+            />
+
         </ModalMiddle>
     );
 };

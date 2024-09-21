@@ -13,6 +13,7 @@ import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { ProfileNavigationProp } from '../../navigator/ProfileNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 
 export const ProfileScreen = () => {
@@ -65,9 +66,11 @@ export const ProfileScreen = () => {
 
                 <View style={ProfileScreenStyles(theme, typeTheme).divider}></View>
 
-                <TouchableOpacity onPress={handleLogOut} style={[buttonStyles(theme, typeTheme).button, globalStyles(theme).globalMarginBottom, { marginTop: globalStyles(theme).globalMarginBottom.marginBottom * 2 }]}>
-                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Cerrar sesión</CustomText>
-                </TouchableOpacity>
+                <ButtonCustum
+                    title="Cerrar sesión"
+                    onPress={handleLogOut}
+                    buttonColor='white'
+                />
 
                 <View>
                     <CustomText style={{ color: theme.text_color }}>Version: {version}</CustomText>

@@ -24,6 +24,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../navigator/AppNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
+import ButtonCustum from '../Inputs/ButtonCustum';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -181,7 +182,7 @@ export const LayoutBag = ({
                     value={searchText}
                     style={[
                         inputStyles(theme).searchBar,
-                        { 
+                        {
                             marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
                             marginBottom: 0
                         },
@@ -247,13 +248,14 @@ export const LayoutBag = ({
                             >
                                 <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
                             </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black, { width: "79%" }]}
+
+                            <ButtonCustum
+                                title='Guardar'
                                 onPress={onPost}
-                            >
-                                <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
-                            </TouchableOpacity>
+                                buttonColor='black'
+                                extraStyles={{ width: "79%" }}
+                                iconName="bookmark-outline"
+                            />
                         </View>
                     </View>
                 }
@@ -271,21 +273,21 @@ export const LayoutBag = ({
                 visible={openModalDecision}
                 message="Seguro de limpiar el inventario actual?"
             >
-                <TouchableOpacity
-                    style={[buttonStyles(theme).button, buttonStyles(theme).red, globalStyles(theme).globalMarginBottomSmall]}
+                <ButtonCustum
+                    title="Limpiar carrito"
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
-                >
-                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                        {loadingCleanBag ? <DotLoader /> : "Limpiar carrito"}
-                    </CustomText>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[buttonStyles(theme).button, buttonStyles(theme).white]}
+                    buttonColor='red'
+                    iconName="close"
+                    extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
+                />
+
+                <ButtonCustum
+                    title="Cancelar"
                     onPress={() => setOpenModalDecision(false)}
-                >
-                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Cancelar</CustomText>
-                </TouchableOpacity>
+                    disabled={loadingCleanBag}
+                    buttonColor='white'
+                />
             </ModalDecision>
         </>
     )

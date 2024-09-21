@@ -23,7 +23,6 @@ const ModalDecision = ({
         Keyboard.dismiss();
     };
 
-
     return (
         <Modal
             animationType="slide"

@@ -1,17 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { editProductStyles } from '../../theme/ModalRenders/SearchCodebarWithInputTheme';
+import { View } from 'react-native';
 import ModalMiddle from '../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../context/ThemeContext';
-import { buttonStyles } from '../../theme/UI/buttons';
-import { globalStyles } from '../../theme/appTheme';
 import { Counter } from '../../components/Inputs/Counter';
-import DotLoader from '../../components/Ui/DotLaoder';
 import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import { EditProductStyles } from '../../theme/EditProductTheme';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type EditProductSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - editProductSellInBag'>;
 
@@ -65,29 +63,25 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
             visible={true}
             onClose={handleCloseModal}
         >
-            <View style={editProductStyles(theme).EditProductInBag_header}>
-                <CustomText style={editProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
-                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign/>
+            <View style={EditProductStyles(theme).EditProductInBag_header}>
+                <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
+                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign />
             </View>
 
             {
                 piezasCount < 1 &&
                 <View>
-                    <CustomText style={editProductStyles(theme).EditProductInBag_warning}>Si lo dejas en 0 se eliminare el producto.</CustomText>
+                    <CustomText style={EditProductStyles(theme).EditProductInBag_warning}>Si lo dejas en 0 se eliminare el producto.</CustomText>
                 </View>
             }
 
-            <TouchableOpacity
-                style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                ...(editingProduct ? [buttonStyles(theme).disabled] : [])
-                ]}
+            <ButtonCustum
+                title='Editar'
                 onPress={onEdit}
+                buttonColor='black'
                 disabled={editingProduct}
-            >
-                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                    {editingProduct ? <DotLoader /> : "Editar"}
-                </CustomText>
-            </TouchableOpacity>
+            />
+
         </ModalMiddle>
     );
 };

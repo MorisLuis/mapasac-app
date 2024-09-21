@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -167,6 +167,8 @@ export const ModuleOption = ({
                         </View>
                     </TouchableOpacity>
             }
+
+            <Button title='press' onPress={() => navigate('succesMessageScreen', { message: 'ola', redirection: 'ClosingPage'})}/>
         </View>
     )
 }

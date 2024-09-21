@@ -15,6 +15,7 @@ import { TextInput } from 'react-native-paper';
 import { useForm } from '../../hooks/useForm';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 
 export const LoginScreen = () => {
@@ -87,16 +88,14 @@ export const LoginScreen = () => {
                     />
 
                     <View style={LoginScreenStyles(theme).buttonContainer}>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={[buttonStyles(theme).button, buttonStyles(theme).black]}
+
+                        <ButtonCustum
+                            title="Iniciar sesión"
                             onPress={onLogin}
                             disabled={loadingLogin}
-                        >
-                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                                {loadingLogin ? <DotLoader /> : "Iniciar sesión"}
-                            </CustomText>
-                        </TouchableOpacity>
+                            buttonColor='black'
+                        />
+
                     </View>
                 </View>
             </SafeAreaView>

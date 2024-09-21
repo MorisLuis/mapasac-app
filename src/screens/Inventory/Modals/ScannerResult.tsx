@@ -16,6 +16,7 @@ import { useTheme } from '../../../context/ThemeContext';
 import Toast from 'react-native-toast-message';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 type ScannerResultRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - scannerResultScreen'>;
 
@@ -50,7 +51,7 @@ const ScannerResult = ({
 
         addProduct(inventoryBody as ProductInterface);
 
-        if(fromProductDetails) {
+        if (fromProductDetails) {
             Toast.show({
                 type: 'tomatoToast',
                 text1: 'Se agrego el producto la inventario!'
@@ -125,36 +126,35 @@ const ScannerResult = ({
                             </View>
                         </View>
 
-                        <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' },
-                            ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
-                            ]}
+                        <ButtonCustum
+                            title="Agregar al inventario"
                             onPress={handleAddToInventory}
                             disabled={buttondisabled}
-                        >
-                            <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
-                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar al inventario</CustomText>
-                        </TouchableOpacity>
+                            buttonColor='white'
+                        />
+
                     </View>
                     :
                     <View>
                         <EmptyMessageCard title={fromInput ? `No existe producto con este codigo.` : `No existe producto con codigo de barras:`} message={`${codeBar}`} icon='help-circle' />
 
-                        <TouchableOpacity
+                        <ButtonCustum
+                            title='Buscar producto'
                             onPress={handleSearchByCode}
-                            style={[buttonStyles(theme).button, buttonStyles(theme).white, { marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }]}
-                        >
-                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Buscar producto</CustomText>
-                        </TouchableOpacity>
+                            buttonColor='black'
+                            extraStyles={{ marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
+                            iconName="bookmark-outline"
+                        />
 
                         {
                             (codeBar && codeBar !== "") &&
-                            <TouchableOpacity
+                            <ButtonCustum
+                                title='Asignar a un producto'
                                 onPress={handleAssignCodeToProduct}
-                                style={[buttonStyles(theme).button, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
-                            >
-                                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Asignar a un producto</CustomText>
-                            </TouchableOpacity>
+                                buttonColor='black'
+                                extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }}
+                                iconName="bookmark-outline"
+                            />
                         }
                     </View>
             }

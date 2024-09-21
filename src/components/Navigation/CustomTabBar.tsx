@@ -11,18 +11,25 @@ import { CombineNavigationProp } from '../../navigator/AppNavigation';
 
 
 interface CustomTabBarInterface {
+    Type: 'Sells' | 'Inventory' | 'Sells-Restaurant'
     renderTabButton?: (route: any, index: number) => React.JSX.Element;
     state?: TabNavigationState<ParamListBase>;
 }
 
-const CustomTabBar = ({ renderTabButton, state }: CustomTabBarInterface) => {
+const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) => {
     const { numberOfItems } = useContext(InventoryBagContext);
     const { navigate } = useNavigation<CombineNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
 
     const handleOpenBagInventory = () => {
-        navigate('bagInventoryScreen');
+        if( Type === 'Sells') {
+            navigate('BagSellsScreen');
+        } else if ( Type === 'Inventory' ) {
+            navigate('bagInventoryScreen');
+        } else  {
+            navigate('bagInventoryScreen');
+        }
     };
 
     const handleGoOnboarding = () => {

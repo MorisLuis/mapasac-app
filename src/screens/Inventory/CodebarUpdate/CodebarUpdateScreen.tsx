@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { ProductDetailsStyles } from '../../../theme/ProductDetailsTheme';
-import { buttonStyles } from '../../../theme/UI/buttons';
 import { globalStyles } from '../../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
 import { updateCodeBar } from '../../../services/codebar';
@@ -13,10 +11,11 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenTheme';
 import { CodebarUpdateOptionCard } from '../../../components/Cards/CodebarUpdateOptionCard';
-import Icon from 'react-native-vector-icons/Ionicons';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
+import { ProductDetailsStyles } from '../../../theme/ProductDetailsTheme';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -34,7 +33,6 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const [changeTypeOfCodebar, setChangeTypeOfCodebar] = useState(false);
     const [optionSelected, setOptionSelected] = useState<number>(0)
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType);
-    const iconColor = theme.color_primary
 
     const hanldeCodebarTypeSelected = (value: number) => {
         handleGetCodebarType(value)
@@ -81,6 +79,12 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
             handleError(error);
         }
 
+    }
+
+    const handleCloseModalCamera = () => {
+        handleCodebarScannedProcces(false)
+        updateBarCode('')
+        setOpenModalCamera(false)
     }
 
     useEffect(() => {
@@ -141,14 +145,6 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                         active={optionSelected === 2}
                     />
 
-                    {/* <CodebarUpdateOptionCard
-                        message="Actualizar con código libre"
-                        icon="shuffle-outline"
-                        onClick={() => setOptionSelected(3)}
-                        active={optionSelected === 3}
-                        visible={currentType?.type === 'Libre'}
-                    /> */}
-
                     <CodebarUpdateOptionCard
                         message='Escribir manualmente'
                         icon="text-outline"
@@ -158,28 +154,22 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                 </View>
 
                 {optionSelected !== 0 && (
-                    <TouchableOpacity style={buttonStyles(theme).button} onPress={handleGoToNextStep}>
-                        <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Avanzar</CustomText>
-                        <Icon name="arrow-forward" size={16} color={iconColor} />
-                    </TouchableOpacity>
+                    <ButtonCustum
+                        title='Avanzar'
+                        onPress={handleGoToNextStep}
+                        buttonColor='black'
+                        iconName="arrow-forward"
+                    />
                 )}
             </View>
 
             <ModalBottom
                 visible={openModalCamera}
-                onClose={() => {
-                    setOpenModalCamera(false);
-                    updateBarCode('')
-                    handleCodebarScannedProcces(false)
-                }}
+                onClose={handleCloseModalCamera}
             >
                 <CameraModal
                     selectedProduct={selectedProduct}
-                    onClose={() => {
-                        handleCodebarScannedProcces(false)
-                        updateBarCode('')
-                        setOpenModalCamera(false)
-                    }}
+                    onClose={handleCloseModalCamera}
                 />
             </ModalBottom>
         </>

@@ -9,6 +9,7 @@ import ClassInterface from '../../interface/class';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -111,13 +112,12 @@ export const SelectClassScreen = ({
                 />
 
                 <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                    <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                    <ButtonCustum
+                        title='Seleccionar'
                         onPress={handleSave}
+                        buttonColor='yellow'
                         disabled={buttondisabled}
-                    >
-                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Seleccionar</CustomText>
-                    </TouchableOpacity>
+                    />
                 </View>
             </View>
         </KeyboardAvoidingView>

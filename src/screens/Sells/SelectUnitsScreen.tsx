@@ -9,6 +9,7 @@ import UnitInterfacce, { UnitData } from '../../interface/units';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
 
@@ -94,13 +95,13 @@ export const SelectUnitScreen = ({
                         />
 
                         <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                            <ButtonCustum
+                                title='Agregar'
                                 onPress={handleSave}
+                                buttonColor='yellow'
                                 disabled={buttondisabled}
-                            >
-                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</CustomText>
-                            </TouchableOpacity>
+                                extraStyles={{ width: "79%" }}
+                            />
                         </View>
                     </View>
                     :

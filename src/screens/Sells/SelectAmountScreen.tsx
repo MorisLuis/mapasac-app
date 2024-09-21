@@ -4,9 +4,10 @@ import { useTheme } from '../../context/ThemeContext';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import {CounterSecondary} from '../../components/Inputs/CounterSecondary';
+import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
 type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
@@ -63,13 +64,12 @@ export const SelectAmountScreen = ({
                 </View>
 
                 <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                    <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).yellow, { display: 'flex', flexDirection: 'row' }, ...(buttondisabled ? [buttonStyles(theme).disabled] : [])]}
+                    <ButtonCustum
+                        title='Agregar'
                         onPress={handleSave}
+                        buttonColor='yellow'
                         disabled={buttondisabled}
-                    >
-                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar</CustomText>
-                    </TouchableOpacity>
+                    />
                 </View>
             </View>
         </KeyboardAvoidingView>

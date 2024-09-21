@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { buttonStyles } from '../../../theme/UI/buttons';
-import { globalStyles } from '../../../theme/appTheme';
 import { Counter } from '../../../components/Inputs/Counter';
-import DotLoader from '../../../components/Ui/DotLaoder';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 type EditPricePageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editPrice'>;
 
@@ -84,17 +82,13 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
                 </View>
             }
 
-            <TouchableOpacity
-                style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                ...(editingProduct ? [buttonStyles(theme).disabled] : [])
-                ]}
+            <ButtonCustum
+                title="Editar"
                 onPress={onEdit}
                 disabled={editingProduct}
-            >
-                <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                    {editingProduct ? <DotLoader /> : "Editar"}
-                </CustomText>
-            </TouchableOpacity>
+                buttonColor='black'
+            />
+
         </ModalMiddle>
     );
 };

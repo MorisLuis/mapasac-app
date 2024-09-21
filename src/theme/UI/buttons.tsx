@@ -103,7 +103,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     // Colors
     white: {
-        backgroundColor: typeTheme === 'light' ? theme.color_primary : "transparent",
+        backgroundColor: "transparent",
         color: theme.text_color,
         borderWidth: 1,
         borderColor: theme.color_border_tertiary,

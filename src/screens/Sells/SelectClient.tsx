@@ -17,6 +17,7 @@ import { OneDataCard } from '../../components/Cards/OneDataCard';
 import { SellsNavigationProp } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 
 export const SelectClient = () => {
@@ -65,7 +66,7 @@ export const SelectClient = () => {
 
     const handleSearch = async (text: string) => {
 
-        try {            
+        try {
             setSearchText(text);
             if (text === '') {
                 setDataUploaded(false)
@@ -81,7 +82,7 @@ export const SelectClient = () => {
             setFilteredClients(clientsSearch || []);
         } catch (error) {
             handleError(error);
-        } finally{
+        } finally {
             setPage(1);
         };
 
@@ -150,13 +151,13 @@ export const SelectClient = () => {
                 (filteredClients.length > 0 && dataUploaded) &&
                 <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
                     <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
-                        <TouchableOpacity
-                            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme).black]}
+                        <ButtonCustum
+                            title='Agregar'
                             onPress={onPostInventary}
-                        >
-                            <Icon name='bookmark-outline' color={iconColor} size={globalFont.font_normal} />
-                            <CustomText style={buttonStyles(theme, typeTheme).buttonText}>Guardar</CustomText>
-                        </TouchableOpacity>
+                            buttonColor='black'
+                            //disabled={buttondisabled}
+                            iconName='bookmark-outline'
+                        />
                     </View>
                 </View>
             }

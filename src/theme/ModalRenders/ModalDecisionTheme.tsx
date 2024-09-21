@@ -29,7 +29,8 @@ export const ModalDecisionStyles = (theme: Theme, typeTheme: string) => StyleShe
         fontSize: globalFont.font_med,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         paddingTop:  globalStyles(theme).globalPadding.padding,
-        width: "85%",
-        color: theme.text_color
+        width: "95%",
+        color: theme.text_color,
+        fontFamily: 'Rubik-Regular'
     }
 });

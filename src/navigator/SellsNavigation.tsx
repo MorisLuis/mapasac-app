@@ -57,7 +57,7 @@ export const SellsNavigation = () => {
                 component={SellsScreen}
                 options={() => ({
                     header: props => (
-                        <CustomTabBar />
+                        <CustomTabBar Type='Sells'/>
                     )
                 })}
             />

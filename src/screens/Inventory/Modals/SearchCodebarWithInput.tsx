@@ -14,6 +14,7 @@ import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import ProductInterface from '../../../interface/product';
 import CustomText from '../../../components/Ui/CustumText';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 export const SearchCodebarWithInput = () => {
 
@@ -90,17 +91,13 @@ export const SearchCodebarWithInput = () => {
                     placeholder="Ej: 6541q"
                     placeholderTextColor={theme.color_gray}
                 />
-                <TouchableOpacity
-                    style={[buttonStyles(theme).button, buttonStyles(theme).black, globalStyles(theme).globalMarginBottomSmall,
-                    ...(buttondisabled ? [buttonStyles(theme).disabled] : [])
-                    ]}
+
+                <ButtonCustum
+                    title="Buscar producto"
                     onPress={handleSearchProductByCodebarInput}
                     disabled={buttondisabled}
-                >
-                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                        {loadingSearch ? <DotLoader /> : "Buscar producto"}
-                    </CustomText>
-                </TouchableOpacity>
+                    buttonColor='black'
+                />
 
                 <ScrollView horizontal style={SearchCodebarWithInputStyles(theme).optionsContainer}>
                     <TouchableOpacity

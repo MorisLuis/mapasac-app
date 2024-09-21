@@ -10,6 +10,7 @@ import DotLoader from '../Ui/DotLaoder';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';
 import CustomText from '../Ui/CustumText';
+import ButtonCustum from '../Inputs/ButtonCustum';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -83,9 +84,6 @@ const LayoutConfirmation = ({
                         </View>
                     }
                 </View>
-                {/* <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContent}>
-                    <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationProductsContentHeader}>Productos</CustomText>
-                </View> */}
             </View>
         )
     }
@@ -120,17 +118,16 @@ const LayoutConfirmation = ({
             </View>
 
             {availableToPost && (
-                <View style={ConfirmationScreenStyles(theme, typeTheme).footer}>
-                    <TouchableOpacity
-                        style={[buttonStyles(theme).button, buttonStyles(theme).black, buttonPostDisabled && buttonStyles(theme).disabled]}
-                        onPress={onPost}
-                        disabled={buttonPostDisabled}
-                    >
-                        <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                            {buttonPostDisabled ? <DotLoader /> : "Confirmar"}
-                        </CustomText>
-                    </TouchableOpacity>
-                </View>
+                <>
+                    <View style={ConfirmationScreenStyles(theme, typeTheme).footer}>
+                        <ButtonCustum
+                            title='Confirmar'
+                            onPress={onPost}
+                            buttonColor='black'
+                            disabled={buttonPostDisabled}
+                        />
+                    </View>
+                </>
             )}
         </SafeAreaView>
     )

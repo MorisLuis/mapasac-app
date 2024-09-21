@@ -16,6 +16,7 @@ import { MessageCard } from '../../components/Cards/MessageCard';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 type ProductDetailsPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreen'>;
 type InventoryDetailsScreenPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - inventoryDetailsScreen'>;
@@ -185,13 +186,11 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 
             {!fromModal && (
                 <View style={ProductDetailsStyles(theme, typeTheme).footer}>
-                    <TouchableOpacity
-                        style={[buttonStyles(theme, typeTheme).button, buttonStyles(theme, typeTheme).yellow, { display: 'flex', flexDirection: 'row', width: "100%" }]}
+                    <ButtonCustum
+                        title="Agregar a inventario"
                         onPress={handleAddToInventory}
-                    >
-                        <Icon name="add-circle-outline" size={16} color={"black"} style={{ marginRight: 10 }} />
-                        <CustomText style={buttonStyles(theme, typeTheme).buttonTextSecondary}>Agregar a inventario</CustomText>
-                    </TouchableOpacity>
+                        buttonColor='black'
+                    />
                 </View>
             )}
         </>

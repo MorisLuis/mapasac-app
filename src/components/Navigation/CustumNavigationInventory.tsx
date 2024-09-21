@@ -86,6 +86,7 @@ const CustumNavigationInventory = ({ state, descriptors, navigation } : CustomTa
 
     return (
         <CustomTabBar
+            Type='Inventory'
             renderTabButton={renderTabButton}
             state={state}
         />

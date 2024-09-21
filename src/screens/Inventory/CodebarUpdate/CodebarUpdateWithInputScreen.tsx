@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Alert, KeyboardType, TextInput, TouchableOpacity, View } from 'react-native'
-import { buttonStyles } from '../../../theme/UI/buttons';
+import { Alert, KeyboardType, TextInput, View } from 'react-native'
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { useNavigation } from '@react-navigation/native';
@@ -9,11 +8,11 @@ import codebartypes from '../../../utils/codebarTypes.json';
 import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdateWithInputScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
-import DotLoader from '../../../components/Ui/DotLaoder';
 import { getProductByCodeBar } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -103,15 +102,12 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
             />
 
             {regex.test(text) && (
-                <TouchableOpacity
-                    style={buttonStyles(theme).button}
+                <ButtonCustum
+                    title="Actualizar"
                     onPress={hanldeUpdateCodebarWithCodeRandom}
                     disabled={loading}
-                >
-                    <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                        {loading ? <DotLoader /> : "Actualizar"}
-                    </CustomText>
-                </TouchableOpacity>
+                    buttonColor='white'
+                />
             )}
         </View>)
 }
