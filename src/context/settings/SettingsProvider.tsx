@@ -12,7 +12,8 @@ export interface SettingsInterface {
     codeBarStatus?: boolean;
     codeBar?: string;
     codebarType?: number;
-    startScanning?: boolean
+    startScanning?: boolean;
+    actualModule?: 'Sells' | "Sells-Restaurant" | 'Inventory'
 }
 
 export const SettingsInitialState: SettingsInterface = {
@@ -22,13 +23,18 @@ export const SettingsInitialState: SettingsInterface = {
     codeBarStatus: false,
     codeBar: "",
     codebarType: 1,
-    startScanning: false
+    startScanning: false,
+    actualModule: 'Inventory'
 }
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
 
     const [state, dispatch] = useReducer(settingsReducer, SettingsInitialState);
-    const { handleError } = useErrorHandler()
+    const { handleError } = useErrorHandler();
+
+    const handleSetActualModule = ( module: SettingsInterface['actualModule'] ) => {
+        dispatch({ type: '[Settings] - Module state', actualModule: module });
+    }
 
     const handleVibrationState = (value: boolean) => {
         dispatch({ type: '[Settings] - Vibration state', vibration: value });
@@ -76,6 +82,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
     return (
         <SettingsContext.Provider value={{
             ...state,
+            handleSetActualModule,
             handleVibrationState,
             handleCameraAvailable,
             handleLimitProductsScanned,
@@ -83,8 +90,8 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
             handleCodebarScannedProcces,
             handleGetCodebarType,
             handleStartScanning,
-            updateBarCode
-            
+            updateBarCode,
+            actualModule: state.actualModule
         }}
         >
             {children}

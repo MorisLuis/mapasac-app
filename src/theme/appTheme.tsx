@@ -15,6 +15,7 @@ export interface Theme {
     color_green: string;
     color_gray: string;
     color_yellow: string;
+    color_purple: string;
     color_black: string;
     color_red_light: string;
     color_border: string;
@@ -43,6 +44,7 @@ export const lightTheme = {
     color_green: "#58B754",
     color_gray: "gray",
     color_yellow: "#EDBD42",
+    color_purple: '#9592F7',
     color_black: "black",
     color_red_light: "#ff000056",
     color_border: "#26282C",
@@ -71,6 +73,7 @@ export const darkTheme = {
     color_green: "#58B754",
     color_gray: "#3a3a3a",
     color_yellow: "#EDBD42",
+    color_purple: '#9592F7',
     color_black: "black",
     color_red_light: "#ff000056",
     color_border: "#f1f1f1",

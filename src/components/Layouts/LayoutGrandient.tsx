@@ -1,36 +1,64 @@
-import { View } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../../context/ThemeContext';
 
 interface LayoutGrandientInterface {
     children: React.ReactNode;
-    color: string;
+    color: 'green' | 'purple';
 }
 
 const LayoutGrandient = ({ children, color }: LayoutGrandientInterface) => {
 
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
 
     const handleBackgroundColor = () => {
-        let colorGradient = '#D8D2F6'; // Valor predeterminado
-        if (color === 'green') {
-            colorGradient = '#CEEFE4'; // Asegúrate de que el color tenga el símbolo '#'
-        }
-        return colorGradient;
-    }
+        let colorGradient: string;
 
-    // Si no hay color, no renders nada
-    if (!color) return null;
+        if (color === 'green') {
+            colorGradient = adjustColor(theme.color_green, 100);
+        } else if (color === 'purple') {
+            colorGradient = adjustColor(theme.color_purple, 0);
+        } else {
+            colorGradient = '#CEEFE4'; // Valor predeterminado
+        }
+
+        // Convertir el color ajustado a formato RGBA con opacidad
+        const rgbColor = hexToRgb(colorGradient);
+        return `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`; // Cambia el 0.5 a la opacidad deseada
+    };
 
     return (
         <LinearGradient
-            colors={[handleBackgroundColor(), theme.background_color ]} // Color morado a blanco
-            locations={[0, 0.5]} // Cambia el color en la mitad
+            colors={[handleBackgroundColor(), theme.background_color]}
+            locations={[0, 0.5]}
         >
             {children}
         </LinearGradient>
     );
-}
+};
 
 export default LayoutGrandient;
+
+
+
+
+// Función para ajustar la luminosidad de un color hexadecimal
+const adjustColor = (hex: string, amount: number) => {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+
+    r = Math.min(255, Math.max(0, r + amount));
+    g = Math.min(255, Math.max(0, g + amount));
+    b = Math.min(255, Math.max(0, b + amount));
+
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+};
+
+// Función para convertir hex a rgb
+const hexToRgb = (hex: string) => {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+};

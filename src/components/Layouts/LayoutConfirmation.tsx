@@ -123,7 +123,7 @@ const LayoutConfirmation = ({
                         <ButtonCustum
                             title='Confirmar'
                             onPress={onPost}
-                            buttonColor='black'
+                            buttonColor='green'
                             disabled={buttonPostDisabled}
                         />
                     </View>

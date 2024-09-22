@@ -78,7 +78,7 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
             <ButtonCustum
                 title='Editar'
                 onPress={onEdit}
-                buttonColor='black'
+                buttonColor='green'
                 disabled={editingProduct}
             />
 

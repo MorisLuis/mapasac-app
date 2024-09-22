@@ -189,7 +189,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                     <ButtonCustum
                         title="Agregar a inventario"
                         onPress={handleAddToInventory}
-                        buttonColor='black'
+                        buttonColor='green'
                     />
                 </View>
             )}

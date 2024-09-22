@@ -126,7 +126,7 @@ const ScannerResult = ({
                             title="Agregar al inventario"
                             onPress={handleAddToInventory}
                             disabled={loadingAddProduct}
-                            buttonColor='black'
+                            buttonColor='green'
                         />
 
                     </View>
@@ -137,7 +137,7 @@ const ScannerResult = ({
                         <ButtonCustum
                             title='Buscar producto'
                             onPress={handleSearchByCode}
-                            buttonColor='black'
+                            buttonColor='green'
                             extraStyles={{ marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                             iconName="bookmark-outline"
                         />
@@ -147,7 +147,7 @@ const ScannerResult = ({
                             <ButtonCustum
                                 title='Asignar a un producto'
                                 onPress={handleAssignCodeToProduct}
-                                buttonColor='black'
+                                buttonColor='green'
                                 extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }}
                                 iconName="bookmark-outline"
                             />

@@ -79,7 +79,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
                 title="Editar"
                 onPress={onEdit}
                 disabled={editingProduct}
-                buttonColor='black'
+                buttonColor='green'
             />
 
         </ModalMiddle>

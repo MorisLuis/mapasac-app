@@ -10,6 +10,7 @@ import { SellsNavigationProp, SellsNavigationStackParamList } from '../../naviga
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
+import CardSelect from '../../components/Cards/CardSelect';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -67,10 +68,11 @@ export const SelectClassScreen = ({
     const renderItem = ({ item }: { item: ClassInterface }) => {
         const sameValue = (item.rcapa && item.rcapa.trim() !== "") ? item.rcapa.trim() === optionSelected?.rcapa.trim() : item.ridinveclas === optionSelected?.ridinveclas;
         return (
-            <TouchableOpacity style={[SelectScreenTheme(theme, typeTheme).optionsContainer]} onPress={() => handleSelectOption(item)}>
-                <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}</CustomText>
-                <View style={[sameValue ? SelectScreenTheme(theme, typeTheme).optionCheckActive : SelectScreenTheme(theme, typeTheme).optionCheck]}></View>
-            </TouchableOpacity>
+            <CardSelect
+                onPress={() => handleSelectOption(item)}
+                message={(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}
+                sameValue={sameValue}
+            />
         )
     }
 
@@ -115,7 +117,7 @@ export const SelectClassScreen = ({
                     <ButtonCustum
                         title='Seleccionar'
                         onPress={handleSave}
-                        buttonColor='yellow'
+                        buttonColor='green'
                         disabled={buttondisabled}
                     />
                 </View>

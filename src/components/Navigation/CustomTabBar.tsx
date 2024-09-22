@@ -7,8 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import CustomText from '../Ui/CustumText';
 import { CombineNavigationProp } from '../../navigator/AppNavigation';
-
-
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 interface CustomTabBarInterface {
     Type: 'Sells' | 'Inventory' | 'Sells-Restaurant'
@@ -18,16 +17,17 @@ interface CustomTabBarInterface {
 
 const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) => {
     const { numberOfItems } = useContext(InventoryBagContext);
+    const { actualModule } = useContext(SettingsContext);
     const { navigate } = useNavigation<CombineNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
 
     const handleOpenBagInventory = () => {
-        if( Type === 'Sells') {
+        if (Type === 'Sells') {
             navigate('BagSellsScreen');
-        } else if ( Type === 'Inventory' ) {
+        } else if (Type === 'Inventory') {
             navigate('bagInventoryScreen');
-        } else  {
+        } else {
             navigate('bagInventoryScreen');
         }
     };
@@ -59,7 +59,7 @@ const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) =
                             <Icon name="albums-outline" size={22} color={iconColor} />
                         </TouchableOpacity>
                         {parseInt(numberOfItems) > 0 && (
-                            <View style={customTabBarStyles(theme, typeTheme).bagCounter}>
+                            <View style={customTabBarStyles(theme, typeTheme, actualModule).bagCounter}>
                                 <CustomText>{parseInt(numberOfItems)}</CustomText>
                             </View>
                         )}

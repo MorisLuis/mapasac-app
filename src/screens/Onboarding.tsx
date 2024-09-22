@@ -11,6 +11,7 @@ import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
 import useErrorHandler from '../hooks/useErrorHandler';
 import { AppNavigationProp } from '../navigator/AppNavigation';
 import CustomText from '../components/Ui/CustumText';
+import { SettingsContext } from '../context/settings/SettingsContext';
 
 interface modulesInterface {
     idappmob: number,
@@ -95,6 +96,8 @@ export const ModuleOption = ({
 
     const { theme, typeTheme } = useTheme();
     const { navigate } = useNavigation<AppNavigationProp>();
+    const { handleSetActualModule } = useContext(SettingsContext);
+
     const iconColor = typeTheme === 'light' ? theme.color_primary : theme.text_color_secondary
 
     const moduleNavigate = (option: number) => {
@@ -136,10 +139,23 @@ export const ModuleOption = ({
         }
     }
 
+    const handleSelectOption = (opcion: modulesInterface['idappmob']) => {
+
+        if (opcion === 1) {
+            handleSetActualModule('Inventory')
+        } else if (opcion === 2) {
+            handleSetActualModule('Sells')
+        } else {
+            handleSetActualModule('Sells-Restaurant')
+        }
+
+        moduleNavigate(opcion)
+    }
+
     return (
         <View style={OnboardingScreenStyles(theme, typeTheme).moduleOptionRow}>
             <TouchableOpacity
-                onPress={() => moduleNavigate(option.idappmob)}
+                onPress={() => handleSelectOption(option.idappmob)}
                 style={[OnboardingScreenStyles(theme, typeTheme).moduleOption, extraStyles(option).styles]}
             >
                 <Icon name={extraStyles(option).icon} size={24} color={iconColor} />
@@ -151,7 +167,7 @@ export const ModuleOption = ({
             {
                 option2 ?
                     <TouchableOpacity
-                        onPress={() => moduleNavigate(option2.idappmob)}
+                        onPress={() => handleSelectOption(option2.idappmob)}
                         style={[OnboardingScreenStyles(theme, typeTheme).moduleOption, extraStyles(option2).styles]}
                     >
                         <Icon name={extraStyles(option2).icon} size={24} color={iconColor} />

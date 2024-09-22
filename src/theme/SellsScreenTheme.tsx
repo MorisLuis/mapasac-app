@@ -15,13 +15,17 @@ export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleShee
         marginBottom: hp("2.5%"),
         marginTop: hp("7.5%")
     },
+    header_title: {
+        fontSize: globalFont.font_med,
+        fontFamily: 'Rubik-Bold'
+    },
     header_subtitle: {
-        color: theme.text_color_light,
-        fontSize: globalFont.font_normal
+        color: theme.text_color,
+        fontSize: globalFont.font_sm
     },
     header_total: {
         color: theme.text_color,
-        fontSize: globalFont.font_med
-
+        fontSize: globalFont.font_med,
+        fontFamily: 'Rubik-Regular' 
     }
 })

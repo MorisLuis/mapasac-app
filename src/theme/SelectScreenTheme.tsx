@@ -14,21 +14,25 @@ export const SelectScreenTheme = (theme: Theme, typeTheme?: string) => StyleShee
     headerTitle: {
         fontSize: globalFont.font_med,
         textAlign:"center",
-        color: theme.text_color
+        color: theme.text_color,
+        fontFamily: 'Rubik-Bold'
     },
     optionsContainer: {
         display: "flex",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignContent: "center",
-        padding: globalStyles(theme).globalPadding.padding / 2, 
-        backgroundColor: theme.background_color_secondary,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
+        padding: globalStyles(theme).globalPadding.padding, 
+        backgroundColor: 'transparent',
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 0.3,
+        borderColor: theme.color_border
     },
     optionText: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color,
+        fontFamily: 'Rubil-Regular'
     },
     optionCheck: {
         width: 20,
@@ -36,13 +40,5 @@ export const SelectScreenTheme = (theme: Theme, typeTheme?: string) => StyleShee
         borderRadius: 100,
         borderWidth: 1,
         borderColor: theme.text_color,
-    },
-    optionCheckActive: {
-        width: 20,
-        height: 20,
-        borderRadius: 100,
-        borderWidth: 5,
-        borderColor: theme.text_color
     }
-
 })

@@ -114,8 +114,10 @@ export const LayoutSell = ({
                     {products.length > 1 ?
                         <>
                             <View style={SellsScreenStyles(theme).header}>
+                            <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
+
                                 <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
-                                <CustomText style={[SellsScreenStyles(theme).header_total, { fontFamily: 'Rubik-Bold' }]}>{format(totalPrice)}</CustomText>
+                                <CustomText style={[SellsScreenStyles(theme).header_total]}>{format(totalPrice)}</CustomText>
                             </View>
 
                             <FlatList

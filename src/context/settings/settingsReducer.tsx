@@ -9,10 +9,12 @@ export interface SettingsState {
     codeBar?: string;
     codebarType?: number;
     startScanning?: boolean;
+    actualModule?: 'Sells' | "Sells-Restaurant" | 'Inventory';
 }
 
 
 type SettingsActionType =
+    | { type: '[Settings] - Module state', actualModule: SettingsState['actualModule'] }
     | { type: '[Settings] - Vibration state', vibration: boolean }
     | { type: '[Settings] - CameraAvailable state', cameraAvailable: boolean }
     | { type: '[Settings] - limitProductsScanned state', limitProductsScanned: number }
@@ -25,6 +27,12 @@ type SettingsActionType =
 export const settingsReducer = (state: SettingsState, action: SettingsActionType): SettingsState => {
 
     switch (action.type) {
+
+        case '[Settings] - Module state':
+            return {
+                ...state,
+                actualModule: action.actualModule
+            }
 
         case '[Settings] - Vibration state':
             return {

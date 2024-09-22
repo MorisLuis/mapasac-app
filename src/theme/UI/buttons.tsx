@@ -109,11 +109,15 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         borderColor: theme.color_border_tertiary,
     },
 
-    black: {
-        backgroundColor: theme.color_tertiary,
+    purple: {
+        backgroundColor: theme.color_purple,
         color: theme.text_color_secondary
     },
 
+    green: {
+        backgroundColor: theme.color_tertiary,
+        color: theme.text_color_secondary
+    },
 
     yellow: {
         backgroundColor: theme.color_tertiary,

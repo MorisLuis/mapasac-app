@@ -46,7 +46,6 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     content: {
         flex: 2,
         marginHorizontal: "auto",
-        //width: 400,
         paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     moduleOptionRow: {

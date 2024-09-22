@@ -157,7 +157,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                     <ButtonCustum
                         title='Avanzar'
                         onPress={handleGoToNextStep}
-                        buttonColor='black'
+                        buttonColor='green'
                         iconName="arrow-forward"
                     />
                 )}

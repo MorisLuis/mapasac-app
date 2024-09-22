@@ -93,7 +93,7 @@ export const LoginScreen = () => {
                             title="Iniciar sesión"
                             onPress={onLogin}
                             disabled={loadingLogin}
-                            buttonColor='black'
+                            buttonColor='green'
                         />
 
                     </View>

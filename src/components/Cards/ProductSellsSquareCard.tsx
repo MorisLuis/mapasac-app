@@ -6,6 +6,7 @@ import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
+import { globalStyles } from '../../theme/appTheme';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -51,10 +52,12 @@ export const ProductSellsSquareCard = ({
             {
                 product.imagen ? (
                     <View style={ProductSellsCardTheme(theme, typeTheme).item}>
-                        <Image
-                            source={{ uri: `data:image/png;base64,${product.imagen}` }}
-                            style={ProductSellsCardTheme(theme, typeTheme).image}
-                        />
+                        <View style={ProductSellsCardTheme(theme, typeTheme).imageContainer}>
+                            <Image
+                                source={{ uri: `data:image/png;base64,${product.imagen}` }}
+                                style={ProductSellsCardTheme(theme, typeTheme).image}
+                            />
+                        </View>
                         <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</CustomText>
                     </View>
                 )

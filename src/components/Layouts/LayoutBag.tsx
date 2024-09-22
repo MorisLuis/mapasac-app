@@ -252,7 +252,7 @@ export const LayoutBag = ({
                             <ButtonCustum
                                 title='Guardar'
                                 onPress={onPost}
-                                buttonColor='black'
+                                buttonColor='green'
                                 extraStyles={{ width: "79%" }}
                                 iconName="bookmark-outline"
                             />

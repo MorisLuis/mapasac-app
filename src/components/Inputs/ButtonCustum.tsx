@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { buttonStyles } from '../../theme/UI/buttons'
 import { useTheme } from '../../context/ThemeContext'
 import CustomText from '../Ui/CustumText'
@@ -6,13 +6,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../theme/appTheme'
 import { TouchableOpacity } from 'react-native';
 import DotLoader from '../Ui/DotLaoder';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 interface ButtonCustumInterface {
     onPress: () => void;
     title: string;
 
     disabled?: boolean;
-    buttonColor: 'black' | "white" | "red" | 'yellow';
+    loading?: boolean;
+    buttonColor: 'green' | "white" | "red" | 'yellow' | 'purple';
     iconName?: string;
     iconColor?: string;
     extraStyles?: any;
@@ -25,14 +27,27 @@ const ButtonCustum = ({
     iconName,
     iconColor,
     extraStyles,
-    disabled
+    disabled,
+    loading
 }: ButtonCustumInterface) => {
 
     const { theme, typeTheme } = useTheme();
+    const { actualModule } = useContext(SettingsContext);
+
+    // Modify the color of the button depends of the module.
+    const modifyButtonColor = () => {
+        let buttonColorNew = buttonColor;
+
+        if( buttonColor === 'green' ){
+            buttonColorNew = actualModule === 'Sells' ? 'purple' : 'green'
+        };
+
+        return buttonColorNew
+    }
 
     return (
         <TouchableOpacity
-            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme)[buttonColor], { ...extraStyles }]}
+            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme)[modifyButtonColor()], { ...extraStyles }]}
             onPress={onPress}
             disabled={disabled}
         >
@@ -42,7 +57,7 @@ const ButtonCustum = ({
             {
                 disabled ?
                     <CustomText style={buttonStyles(theme, typeTheme).buttonText}>
-                        {disabled ? <DotLoader /> : title}
+                        {loading ? <DotLoader /> : title}
                     </CustomText>
                     :
                     <CustomText style={buttonStyles(theme, typeTheme).buttonText}>

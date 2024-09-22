@@ -38,16 +38,14 @@ export const customHeaderStyles = (theme: Theme) => StyleSheet.create({
     backText: {
         marginLeft: 5,
         color: theme.text_color,
-        fontFamily: 'Rubik-Bold'
-        //backgroundColor: 'red'
+        fontFamily: 'Rubik-Bold',
+        fontSize: globalFont.font_sm
     },
     titleHeader: {
         marginBottom: 0,
         padding: 0,
-        //height: globalFont.font_normal + 3,
         color: theme.text_color,
         fontFamily: 'Rubik-Bold'
-        //backgroundColor: 'red'
     },
     right: {
         display: 'flex',

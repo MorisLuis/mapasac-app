@@ -154,7 +154,7 @@ export const SelectClient = () => {
                         <ButtonCustum
                             title='Agregar'
                             onPress={onPostInventary}
-                            buttonColor='black'
+                            buttonColor='green'
                             //disabled={buttondisabled}
                             iconName='bookmark-outline'
                         />

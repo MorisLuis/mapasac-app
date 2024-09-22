@@ -324,7 +324,14 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         position: 'relative'
     },
     item: {
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2
+    },
+    imageContainer: {
+        padding: 5,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
+        borderWidth: 0.2,
+        borderColor: theme.color_border_tertiary,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
     image: {
         flex: 1,
@@ -334,21 +341,19 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         resizeMode: "cover",
         display: "flex",
         width: "100%",
-        minHeight: 120,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2
+        minHeight: 120
     },
     notImage: {
         flex: 1,
-        borderWidth: 2,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderColor: theme.background_color,
         display: "flex",
         width: "100%",
-        minHeight: 120,
-        backgroundColor: theme.background_color,
-
+        minHeight: 120 + 10,
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
 
+        padding: 5,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
+        borderWidth: 0.2,
+        borderColor: theme.color_border_tertiary,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
@@ -358,7 +363,6 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold',
-        backgroundColor: theme.background_color,
         borderWidth: 1,
         borderColor: theme.color_border_secondary,
         height: wp("15%"),
@@ -375,7 +379,8 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         paddingBottom: globalStyles(theme).globalPadding.padding / 3,
         display: "flex",
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Rubik-Regular'
     }
 
 });
