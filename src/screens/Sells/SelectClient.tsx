@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSkeleton';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
@@ -16,9 +15,7 @@ import ClientInterface from '../../interface/utils';
 import { OneDataCard } from '../../components/Cards/OneDataCard';
 import { SellsNavigationProp } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
-import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
-
 
 export const SelectClient = () => {
     const { navigate } = useNavigation<SellsNavigationProp>();
