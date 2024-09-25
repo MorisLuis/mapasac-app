@@ -9,8 +9,8 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     },
     header: {
         flexDirection: 'row',
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-        alignItems: 'flex-end'
+        //marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+       // alignItems: 'flex-end'
     },
     title: {
         fontSize: globalFont.font_big,

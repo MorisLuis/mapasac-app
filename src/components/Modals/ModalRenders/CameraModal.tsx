@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Vibration, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Vibration, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'react-native-camera-kit';
 
@@ -107,101 +107,102 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
         setProductExistent(false)
     }
 
-    return (
-        <View style={CameraModalStyles(theme).cameraScreen}>
-            {
-                !productExistent ?
-                    <>
-                        <View style={CameraModalStyles(theme).header}>
-                            <CustomText style={CameraModalStyles(theme).header_title}>Escanea el codigo</CustomText>
-                            {
-                                (codeBar && !codebarTest) ?
-                                    <CustomText style={CameraModalStyles(theme).header_message}>
-                                        Revisa el tipo de codigo de barras requerido, cambiar si asi lo deseas.
-                                    </CustomText>
-                                    : (codeBar && !codeIsScanning) ?
+    return ( 
+        <SafeAreaView>
+            <View style={CameraModalStyles(theme).cameraScreen}>
+                {
+                    !productExistent ?
+                        <>
+                            <View style={CameraModalStyles(theme).header}>
+                                <CustomText style={CameraModalStyles(theme).header_title}>Escanea el codigo</CustomText>
+                                {
+                                    (codeBar && !codebarTest) ?
                                         <CustomText style={CameraModalStyles(theme).header_message}>
-                                            Asegurate que es el codigo que deseas asignarle a este producto.
+                                            Revisa el tipo de codigo de barras requerido, cambiar si asi lo deseas.
                                         </CustomText>
-                                        :
-                                        <View >
-                                            <CustomText style={{ color: theme.text_color }}>Escanea el codigo que le pondras a este producto.</CustomText>
-                                            <CustomText style={CameraModalStyles(theme).header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</CustomText>
-                                        </View>
-                            }
-                        </View>
-
-                        {
-                            (!codeBar && codeIsScanning) ?
-                                <ActivityIndicator
-                                    size={50}
-                                    color={iconColor}
-                                />
-                                :
-                                (!codeBar && !codeIsScanning) ?
-                                    <View style={CameraModalStyles(theme).content}>
-                                        <Camera
-                                            scanBarcode={true}
-                                            onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
-                                            style={CameraModalStyles(theme).camera}
-                                        />
-                                    </View>
-                                    :
-                                    (codeBar && !codeIsScanning && !codebarTest) ?
-                                        <View>
-                                            <CustomText style={[CameraModalStyles(theme).textcodebarFound, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}>{codeBar}</CustomText>
-                                            <CustomText style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</CustomText>
-                                            <TouchableOpacity
-                                                style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
-                                                onPress={handleTryAgain}
-                                            >
-                                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
-                                            </TouchableOpacity>
-                                        </View>
-                                        :
-                                        <>
-                                            <View style={CameraModalStyles(theme).codebarFound}>
-                                                <CustomText style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</CustomText>
+                                        : (codeBar && !codeIsScanning) ?
+                                            <CustomText style={CameraModalStyles(theme).header_message}>
+                                                Asegurate que es el codigo que deseas asignarle a este producto.
+                                            </CustomText>
+                                            :
+                                            <View >
+                                                <CustomText style={{ color: theme.text_color }}>Escanea el codigo que le pondras a este producto.</CustomText>
+                                                <CustomText style={CameraModalStyles(theme).header_message_scanner}>Actualmente el codigo de barras es tipo: {currentType?.type}.</CustomText>
                                             </View>
+                                }
+                            </View>
 
-                                            <MessageCard
-                                                title='El tipo de codigo de barras es:'
-                                                message={`${identifyBarcodeType(codeBar as string)}`}
-                                                icon="barcode-outline"
-                                                extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
+                            {
+                                (!codeBar && codeIsScanning) ?
+                                    <ActivityIndicator
+                                        size={50}
+                                        color={iconColor}
+                                    />
+                                    :
+                                    (!codeBar && !codeIsScanning) ?
+                                        <View style={CameraModalStyles(theme).content}>
+                                            <Camera
+                                                scanBarcode={true}
+                                                onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
+                                                style={CameraModalStyles(theme).camera}
                                             />
-
-
-                                            {
-                                                codeBar &&
+                                        </View>
+                                        :
+                                        (codeBar && !codeIsScanning && !codebarTest) ?
+                                            <View>
+                                                <CustomText style={[CameraModalStyles(theme).textcodebarFound, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}>{codeBar}</CustomText>
+                                                <CustomText style={CameraModalStyles(theme).warningMessage}>{currentType?.errorMessage}</CustomText>
                                                 <TouchableOpacity
                                                     style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
-                                                    onPress={hanldeUpdateCodebar}
+                                                    onPress={handleTryAgain}
                                                 >
-                                                    <Icon name={"bookmark-outline"} size={18} color={iconColor} />
-                                                    <CustomText style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</CustomText>
+                                                    <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
                                                 </TouchableOpacity>
-                                            }
+                                            </View>
+                                            :
+                                            <>
+                                                <View style={CameraModalStyles(theme).codebarFound}>
+                                                    <CustomText style={CameraModalStyles(theme).textcodebarFound}>{codeBar}</CustomText>
+                                                </View>
 
-                                        </>
-                        }
-                    </>
-                    :
-                    <>
-                        <View style={CameraModalStyles(theme).header}>
-                            <CustomText style={CameraModalStyles(theme).header_title}>Producto encontrado</CustomText>
-                            <CustomText style={CameraModalStyles(theme).header_message}>
-                                Se encontro un producto con el codigo de barras: {codeBar}
-                            </CustomText>
-                        </View>
+                                                <MessageCard
+                                                    title='El tipo de codigo de barras es:'
+                                                    message={`${identifyBarcodeType(codeBar as string)}`}
+                                                    icon="barcode-outline"
+                                                    extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
+                                                />
 
-                        <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
-                            <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
-                        </TouchableOpacity>
-                    </>
-            }
 
-        </View>
+                                                {
+                                                    codeBar &&
+                                                    <TouchableOpacity
+                                                        style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                                                        onPress={hanldeUpdateCodebar}
+                                                    >
+                                                        <Icon name={"bookmark-outline"} size={18} color={iconColor} />
+                                                        <CustomText style={buttonStyles(theme).buttonTextTertiary}>Asignar codigo de barras</CustomText>
+                                                    </TouchableOpacity>
+                                                }
+
+                                            </>
+                            }
+                        </>
+                        :
+                        <>
+                            <View style={CameraModalStyles(theme).header}>
+                                <CustomText style={CameraModalStyles(theme).header_title}>Producto encontrado</CustomText>
+                                <CustomText style={CameraModalStyles(theme).header_message}>
+                                    Se encontro un producto con el codigo de barras: {codeBar}
+                                </CustomText>
+                            </View>
+
+                            <TouchableOpacity style={[buttonStyles(theme).button_small, { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]} onPress={handleTryAgain}>
+                                <CustomText style={buttonStyles(theme, typeTheme).buttonTextTertiary}>Intentar de nuevo</CustomText>
+                            </TouchableOpacity>
+                        </>
+                }
+            </View>
+        </SafeAreaView>
     );
 };
 

@@ -4,9 +4,9 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 export const CodebarUpdateScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     CodebarUpdateScreen: {
+        height: "100%",
         backgroundColor: theme.background_color,
-        padding: globalStyles(theme).globalPadding.padding,
-        height: "100%"
+        padding: globalStyles(theme).globalPadding.padding
     },
     selectorCodebarType: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom

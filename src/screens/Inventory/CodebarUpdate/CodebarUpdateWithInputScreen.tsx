@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Alert, KeyboardType, TextInput, View } from 'react-native'
+import { Alert, KeyboardType, SafeAreaView, TextInput, View } from 'react-native'
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +13,7 @@ import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import FooterScreen from '../../../components/Navigation/FooterScreen';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -30,9 +31,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
-
     const hanldeUpdateCodebarWithCodeRandom = async () => {
-
         try {
             if (!selectedProduct) return;
             if (!regex.test(text)) return;
@@ -65,7 +64,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     }
 
     const onUpdateCodeBar = async () => {
-
         try {
             const codebar = await updateCodeBar({
                 codebarras: text as string,
@@ -79,7 +77,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
         } finally {
             setLoading(false)
         };
-
     }
 
     const handleTextChange = (value: string) => {
@@ -87,27 +84,36 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     };
 
     return (
-        <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
+        <SafeAreaView>
+            <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
 
-            <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
+                <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
 
-            <CustomText style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</CustomText>
+                <CustomText style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</CustomText>
 
-            <TextInput
-                style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
-                placeholder="Ej: 654s1q"
-                onChangeText={handleTextChange}
-                keyboardType={currentType?.keyboardType as KeyboardType}
-                maxLength={currentType?.maxLength}
-            />
-
-            {regex.test(text) && (
-                <ButtonCustum
-                    title="Actualizar"
-                    onPress={hanldeUpdateCodebarWithCodeRandom}
-                    disabled={loading}
-                    buttonColor='white'
+                <TextInput
+                    style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
+                    placeholder="Ej: 654s1q"
+                    onChangeText={handleTextChange}
+                    keyboardType={currentType?.keyboardType as KeyboardType}
+                    maxLength={currentType?.maxLength}
                 />
-            )}
-        </View>)
+
+                <FooterScreen
+                    buttonTitle='Actualizar'
+                    buttonDisabled={loading || !regex.test(text)}
+                    buttonOnPress={hanldeUpdateCodebarWithCodeRandom}
+                />
+
+                {regex.test(text) && (
+                    <ButtonCustum
+                        title="Actualizar"
+                        onPress={hanldeUpdateCodebarWithCodeRandom}
+                        disabled={loading}
+                        buttonColor='white'
+                    />
+                )}
+            </View>
+        </SafeAreaView>
+    )
 }

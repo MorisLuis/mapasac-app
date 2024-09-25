@@ -5,9 +5,10 @@ import { useTheme } from '../../context/ThemeContext';
 interface LayoutGrandientInterface {
     children: React.ReactNode;
     color: 'green' | 'purple';
+    locations?: number[]
 }
 
-const LayoutGrandient = ({ children, color }: LayoutGrandientInterface) => {
+const LayoutGrandient = ({ children, color, locations }: LayoutGrandientInterface) => {
 
     const { theme } = useTheme();
 
@@ -30,7 +31,7 @@ const LayoutGrandient = ({ children, color }: LayoutGrandientInterface) => {
     return (
         <LinearGradient
             colors={[handleBackgroundColor(), theme.background_color]}
-            locations={[0, 0.5]}
+            locations={locations ?? [0, 0.5]}
         >
             {children}
         </LinearGradient>

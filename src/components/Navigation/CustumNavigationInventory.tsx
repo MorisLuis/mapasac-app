@@ -13,10 +13,11 @@ import { InventoryNavigationProp } from '../../navigator/InventoryNavigation';
 interface CustomTabBarProps {
     state: TabNavigationState<ParamListBase>;
     descriptors: MaterialTopTabDescriptorMap;
-    navigation: NavigationHelpers<ParamListBase, MaterialTopTabNavigationEventMap>
+    navigation: NavigationHelpers<ParamListBase, MaterialTopTabNavigationEventMap>;
+    absolute?: boolean
 }
 
-const CustumNavigationInventory = ({ state, descriptors, navigation } : CustomTabBarProps) => {
+const CustumNavigationInventory = ({ state, descriptors, navigation, absolute }: CustomTabBarProps) => {
 
     const { handleCameraAvailable, startScanning } = useContext(SettingsContext);
     const { navigate } = useNavigation<InventoryNavigationProp>();
@@ -89,6 +90,7 @@ const CustumNavigationInventory = ({ state, descriptors, navigation } : CustomTa
             Type='Inventory'
             renderTabButton={renderTabButton}
             state={state}
+            absolute={absolute}
         />
     )
 }

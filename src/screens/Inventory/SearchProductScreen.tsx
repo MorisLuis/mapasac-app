@@ -96,49 +96,50 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
 
     return (
-        <SafeAreaView style={SearchProductScreenStyles(theme).SearchProductScreen}>
-            <View style={SearchProductScreenStyles(theme).content}>
-                <Searchbar
-                    ref={searchInputRef}
-                    placeholder="Buscar producto por nombre..."
-                    onChangeText={query => setSearchQuery(query)}
-                    value={searchQuery}
-                    style={[inputStyles(theme).searchBar]}
-                    iconColor={theme.text_color}
-                    placeholderTextColor={theme.text_color}
-                    icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                    clearIcon={() => searchQuery !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                    inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
-                />
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={SearchProductScreenStyles(theme).SearchProductScreen}>
+                <View style={SearchProductScreenStyles(theme).content}>
+                    <Searchbar
+                        ref={searchInputRef}
+                        placeholder="Buscar producto por nombre..."
+                        onChangeText={query => setSearchQuery(query)}
+                        value={searchQuery}
+                        style={[inputStyles(theme).searchBar]}
+                        iconColor={theme.text_color}
+                        placeholderTextColor={theme.text_color}
+                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                        clearIcon={() => searchQuery !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
+                    />
 
-                {loading ? (
-                    // Mostrar el contenido de carga cuando se está cargando
-                    <View>
-                        {Array.from({ length: 10 }).map((_, index) => (
-                            <ProductInventoryCardSkeleton key={index} />
-                        ))}
-                    </View>
-                ) : (
-                    productsInInventory.length > 0 ? (
-                        // Mostrar la lista de productos cuando hay resultados
-                        <FlatList
-                            data={productsInInventory}
-                            renderItem={renderItem}
-                            keyExtractor={product => `${product.idinvearts}`}
-                            onEndReached={loadMoreItem}
-                            onEndReachedThreshold={0}
-                        />
-                    ) : (
-                        // Mostrar mensaje de sin resultados cuando no hay productos
+                    {loading ? (
+                        // Mostrar el contenido de carga cuando se está cargando
                         <View>
-                            <CustomText >
-                                No se encontraron productos.
-                            </CustomText>
+                            {Array.from({ length: 10 }).map((_, index) => (
+                                <ProductInventoryCardSkeleton key={index} />
+                            ))}
                         </View>
-                    )
-                )}
+                    ) : (
+                        productsInInventory.length > 0 ? (
+                            // Mostrar la lista de productos cuando hay resultados
+                            <FlatList
+                                data={productsInInventory}
+                                renderItem={renderItem}
+                                keyExtractor={product => `${product.idinvearts}`}
+                                onEndReached={loadMoreItem}
+                                onEndReachedThreshold={0}
+                            />
+                        ) : (
+                            // Mostrar mensaje de sin resultados cuando no hay productos
+                            <View>
+                                <CustomText >
+                                    No se encontraron productos.
+                                </CustomText>
+                            </View>
+                        )
+                    )}
+                </View>
             </View>
-
             <ModalBottom
                 visible={openModalAdvice}
                 onClose={() => setOpenModalAdvice(false)}

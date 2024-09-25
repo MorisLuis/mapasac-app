@@ -86,7 +86,7 @@ export const Inventory = () => {
 
     const renderFooter = () => {
         return (
-            <View style={InventoryScreenStyles(theme).footerContent}>
+            <View>
                 {
                     productsInInventory.length > 0 && productsInInventory.length >= totalProducts ?
                         <CustomText style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</CustomText>
@@ -123,7 +123,7 @@ export const Inventory = () => {
 
     return (
         <LayoutGrandient color="green">
-            <SafeAreaView style={InventoryScreenStyles(theme).Inventory}>
+            <SafeAreaView>
                 <View style={InventoryScreenStyles(theme).content}>
 
                     <View style={InventoryScreenStyles(theme).header}>

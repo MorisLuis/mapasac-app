@@ -9,14 +9,16 @@ import CustomText from '../Ui/CustumText';
 import { CombineNavigationProp } from '../../navigator/AppNavigation';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import LayoutGrandient from '../Layouts/LayoutGrandient';
 
 interface CustomTabBarInterface {
     Type: 'Sells' | 'Inventory' | 'Sells-Restaurant'
     renderTabButton?: (route: any, index: number) => React.JSX.Element;
     state?: TabNavigationState<ParamListBase>;
+    absolute?: boolean;
 }
 
-const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) => {
+const CustomTabBar = ({ renderTabButton, state, Type, absolute }: CustomTabBarInterface) => {
     const { numberOfItems } = useContext(InventoryBagContext);
     const { numberOfItemsSells } = useContext(SellsBagContext);
 
@@ -35,12 +37,25 @@ const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) =
         }
     };
 
+    const handleLayoutColor = () => {
+        let color : "green" | "purple" = "green";
+        if (Type === 'Sells') {
+            color = "purple"
+        } else if (Type === 'Inventory') {
+            color = "green"
+        } else {
+            color = "green"
+        }
+
+        return color;
+    }
+
     const handleGoOnboarding = () => {
         navigate("OnboardingScreen")
     };
 
-    return (
-        <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
+    const renderCustumTabBar = () => {
+        return (
             <View style={customTabBarStyles(theme).content}>
 
                 <View style={customTabBarStyles(theme).content_left}>
@@ -74,7 +89,24 @@ const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) =
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        )
+    }
+
+    return (
+        <>
+            {
+                absolute ?
+                    <SafeAreaView style={customTabBarStyles(theme).customTabBarAbsolute}>
+                        {renderCustumTabBar()}
+                    </SafeAreaView>
+                    :
+                    <LayoutGrandient color={handleLayoutColor()} locations={[1, 1]}>
+                        <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
+                            {renderCustumTabBar()}
+                        </SafeAreaView>
+                    </LayoutGrandient>
+            }
+        </>
     );
 };
 

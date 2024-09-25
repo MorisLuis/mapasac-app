@@ -3,10 +3,9 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 export const SettingsScreenStyles = (theme: Theme) => StyleSheet.create({
     SettingsScreen: {
-        flex: 1,
+        
         padding: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color,
-        paddingVertical: globalStyles(theme).globalPadding.padding * 2
+        backgroundColor: theme.background_color
     },
     section: {
         display: "flex"

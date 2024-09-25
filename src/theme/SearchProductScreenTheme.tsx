@@ -5,11 +5,10 @@ import {Theme, globalFont, globalStyles } from "./appTheme";
 export const SearchProductScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SearchProductScreen: {
         flex: 1,
-        backgroundColor: theme.background_color
+        backgroundColor: theme.background_color,
+        padding: globalStyles(theme).globalPadding.padding,
     },
     content: {
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        marginTop: globalStyles(theme).globalPadding.padding,
     },
     adviceHeader: {
         display: "flex",

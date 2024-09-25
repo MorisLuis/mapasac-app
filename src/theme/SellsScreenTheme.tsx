@@ -11,7 +11,6 @@ export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleShee
         display: "flex",
         flexDirection: "column",
         marginBottom: hp("2.5%"),
-        marginTop: hp("7.5%")
     },
     header_title: {
         fontSize: globalFont.font_med,

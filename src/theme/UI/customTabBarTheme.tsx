@@ -6,14 +6,14 @@ import { SettingsInterface } from "../../context/settings/SettingsProvider";
 
 export const customTabBarStyles = (theme: Theme, typeTheme?: string, actualModule?: SettingsInterface['actualModule']) => StyleSheet.create({
     customTabBar: {
+    },
+    customTabBarAbsolute: {
         position: 'absolute',
         flexDirection: 'row',
         top: 0,
         left: 0,
         zIndex: 1,
-        width: "100%",
-        height: globalFont.font_med,
-        paddingTop: hp("1%")
+        width: "100%"
     },
     content: {
         display: "flex",

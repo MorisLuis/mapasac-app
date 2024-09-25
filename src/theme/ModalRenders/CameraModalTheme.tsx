@@ -14,17 +14,14 @@ export const CameraModalStyles = (theme: Theme ) =>  StyleSheet.create({
         overflow: "hidden"
     },
     camera: {
-        width: "100%",
-        backgroundColor: "black"
+        width: "100%"
     },
     header: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     header_title: {
         fontSize: globalFont.font_med,
-        fontWeight: "bold",
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-        color: theme.text_color
+        fontFamily: 'Rubik-Bold'
     },
     header_message: {
         fontSize: globalFont.font_normal,

@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductDetailsPage: {
-        flex: 1,
+        display: 'flex',
         padding: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color,
     },

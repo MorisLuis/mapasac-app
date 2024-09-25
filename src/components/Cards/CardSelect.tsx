@@ -9,16 +9,19 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 interface CardSelectInterface {
     onPress: () => void;
     message: string;
-    sameValue: boolean;
+    sameValue?: boolean;
+    icon?: string;
 }
 
 const CardSelect = ({
     onPress,
     message,
-    sameValue
+    sameValue,
+    icon
 }: CardSelectInterface) => {
 
     const { theme, typeTheme } = useTheme();
+    const iconColor = typeTheme === 'dark' ? "white" : "black"
     const { actualModule } = useContext(SettingsContext);
 
     // Modify the color of the button depends of the module.
@@ -38,11 +41,21 @@ const CardSelect = ({
         <TouchableOpacity
             style={[
                 SelectScreenTheme(theme, typeTheme).optionsContainer,
-                sameValue && { backgroundColor: modifyButtonColor() + "40" }
+                sameValue && { backgroundColor: modifyButtonColor() + "20" }
             ]}
             onPress={onPress}
         >
-            <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{message}</CustomText>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                {
+                    icon &&
+                    <Icon
+                        name={icon}
+                        size={20}
+                        color={iconColor}
+                    />
+                }
+                <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{message}</CustomText>
+            </View>
 
             {
                 sameValue ?

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { globalStyles } from '../../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
 import { updateCodeBar } from '../../../services/codebar';
@@ -10,12 +10,12 @@ import codebartypes from '../../../utils/codebarTypes.json';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenTheme';
-import { CodebarUpdateOptionCard } from '../../../components/Cards/CodebarUpdateOptionCard';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import { ProductDetailsStyles } from '../../../theme/ProductDetailsTheme';
-import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import CardSelect from '../../../components/Cards/CardSelect';
+import FooterScreen from '../../../components/Navigation/FooterScreen';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -96,7 +96,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
 
 
     return (
-        <>
+        <SafeAreaView>
             <View style={CodebarUpdateScreenStyles(theme).CodebarUpdateScreen}>
                 <View style={ProductDetailsStyles(theme).optionsContent}>
                     {
@@ -129,38 +129,33 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                             </View>
                     }
 
-
-                    <CodebarUpdateOptionCard
+                    <CardSelect
+                        onPress={() => setOptionSelected(1)}
                         message={`Actualizar código con: ${codeBar}`}
+                        sameValue={optionSelected === 1}
                         icon="barcode-outline"
-                        onClick={() => setOptionSelected(1)}
-                        active={optionSelected === 1}
-                        visible={codeBarStatus}
                     />
 
-                    <CodebarUpdateOptionCard
+                    <CardSelect
+                        onPress={() => setOptionSelected(2)}
                         message={`Usar camara para escanear codigo`}
+                        sameValue={optionSelected === 2}
                         icon="camera-outline"
-                        onClick={() => setOptionSelected(2)}
-                        active={optionSelected === 2}
                     />
 
-                    <CodebarUpdateOptionCard
+                    <CardSelect
+                        onPress={() => setOptionSelected(4)}
                         message='Escribir manualmente'
+                        sameValue={optionSelected === 4}
                         icon="text-outline"
-                        onClick={() => setOptionSelected(4)}
-                        active={optionSelected === 4}
                     />
                 </View>
 
-                {optionSelected !== 0 && (
-                    <ButtonCustum
-                        title='Avanzar'
-                        onPress={handleGoToNextStep}
-                        buttonColor='green'
-                        iconName="arrow-forward"
-                    />
-                )}
+                <FooterScreen
+                    buttonDisabled={optionSelected === 0}
+                    buttonOnPress={handleGoToNextStep}
+                    buttonTitle='Avanzar'
+                />
             </View>
 
             <ModalBottom
@@ -172,6 +167,6 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                     onClose={handleCloseModalCamera}
                 />
             </ModalBottom>
-        </>
+        </SafeAreaView>
     )
 }

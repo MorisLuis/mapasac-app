@@ -4,9 +4,9 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 export const PersonalInformationStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     PersonalInformation: {
-        padding: globalStyles(theme).globalPadding.padding,
+        height: '100%',
         backgroundColor: theme.background_color,
-        height: '100%'
+        padding: globalStyles(theme).globalPadding.padding
     },
 
     profile: {

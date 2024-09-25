@@ -24,6 +24,7 @@ export const ScannerNavigation = ({ route }: any) => {
                             state={props.state}
                             descriptors={props.descriptors}
                             navigation={props.navigation}
+                            absolute={true}
                         />
                 }
                 initialRouteName={initialScreen}

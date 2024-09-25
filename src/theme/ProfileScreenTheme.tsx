@@ -4,14 +4,9 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 export const ProfileScreenStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ProfileScreen: {
-        flex: 1,
+        display: 'flex',
         padding: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color
-    },
-    content: {
-        display: "flex",
-        flexDirection: "column",
-        flex: 1,
     },
     section: {
         paddingVertical: globalStyles(theme).globalMarginBottom.marginBottom * 0.75,
@@ -35,6 +30,9 @@ export const ProfileScreenStyles = (theme: Theme, typeTheme: string) => StyleShe
     logOutDBText: {
         textDecorationLine: "underline",
         color: theme.text_color
+    },
+    closeSession: {
+        marginVertical: globalStyles(theme).globalMarginBottom.marginBottom,
     },
     divider: {
         height: 1,

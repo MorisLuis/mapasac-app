@@ -7,7 +7,8 @@ export const CameraScreenStyles = (theme: Theme, typeTheme?: string) => StyleShe
     cameraScreen: {
         flex: 1,
         backgroundColor: theme.color_black,
-        position: "relative"
+        position: "relative",
+        padding: globalStyles().globalPadding.padding
     },
     camera: {
         flex: 1,
@@ -93,7 +94,7 @@ export const CameraScreenStyles = (theme: Theme, typeTheme?: string) => StyleShe
     },
     actions: {
         position: "absolute",
-        right: wp("5%"),
+        right: globalStyles().globalPadding.padding,
         top: hp("42.5%"),
         zIndex: 2
     },
