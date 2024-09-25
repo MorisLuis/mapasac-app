@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
+import FooterScreen from '../../components/Navigation/FooterScreen';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
 type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
@@ -62,14 +63,12 @@ export const SelectAmountScreen = ({
                     </View>
                 </View>
 
-                <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                    <ButtonCustum
-                        title='Agregar'
-                        onPress={handleSave}
-                        buttonColor='yellow'
-                        disabled={buttondisabled}
-                    />
-                </View>
+
+                <FooterScreen
+                    buttonTitle="Publicar"
+                    buttonOnPress={handleSave}
+                    buttonDisabled={buttondisabled}
+                />
             </View>
         </KeyboardAvoidingView>
     );

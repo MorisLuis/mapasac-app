@@ -50,35 +50,36 @@ export const OnboardingScreen = () => {
 
 
     return (
-        <SafeAreaView style={OnboardingScreenStyles(theme).OnboardingScreen}>
+        <SafeAreaView>
+            <View style={OnboardingScreenStyles(theme).OnboardingScreen}>
+                <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigate("ProfileNavigation")}>
+                    <View style={OnboardingScreenStyles(theme).topbar_profile}>
+                        <CustomText style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</CustomText>
+                    </View>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigate("ProfileNavigation")}>
-                <View style={OnboardingScreenStyles(theme).topbar_profile}>
-                    <CustomText style={OnboardingScreenStyles(theme).topbar_profile_text}>{user?.razonsocial?.substring(0, 1)}</CustomText>
+                <View style={OnboardingScreenStyles(theme).header}>
+                    <CustomText style={OnboardingScreenStyles(theme).headerTitle}>{user?.empresa?.trim()}</CustomText>
                 </View>
-            </TouchableOpacity>
 
-            <View style={OnboardingScreenStyles(theme).header}>
-                <CustomText style={OnboardingScreenStyles(theme).headerTitle}>{user?.empresa?.trim()}</CustomText>
-            </View>
-
-            <View style={OnboardingScreenStyles(theme).content}>
-                {
-                    modules ?
-                        oddModules?.map((option, index) => (
-                            <View key={option.idappmob}>
-                                <ModuleOption
-                                    option={option}
-                                    option2={evenModules && evenModules[index]}
-                                />
-                            </View>
-                        ))
-                        :
-                        <>
-                            <ModulesSkeleton />
-                            <ModulesSkeleton />
-                        </>
-                }
+                <View style={OnboardingScreenStyles(theme).content}>
+                    {
+                        modules ?
+                            oddModules?.map((option, index) => (
+                                <View key={option.idappmob}>
+                                    <ModuleOption
+                                        option={option}
+                                        option2={evenModules && evenModules[index]}
+                                    />
+                                </View>
+                            ))
+                            :
+                            <>
+                                <ModulesSkeleton />
+                                <ModulesSkeleton />
+                            </>
+                    }
+                </View>
             </View>
         </SafeAreaView>
     )

@@ -6,11 +6,8 @@ import { useTheme } from '../../context/ThemeContext';
 import { globalStyles } from '../../theme/appTheme';
 import { LoginScreenStyles } from '../../theme/LoginScreenTheme';
 import { inputStyles } from '../../theme/UI/inputs';
-import { buttonStyles } from '../../theme/UI/buttons';
-
 import { LoadingScreen } from '../LoadingScreen';
 import { InputPassword } from '../../components/Inputs/InputPassword';
-import DotLoader from '../../components/Ui/DotLaoder';
 import { TextInput } from 'react-native-paper';
 import { useForm } from '../../hooks/useForm';
 import { useProtectPage } from '../../hooks/useProtectPage';

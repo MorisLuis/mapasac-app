@@ -11,6 +11,7 @@ import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';
 import CustomText from '../Ui/CustumText';
 import ButtonCustum from '../Inputs/ButtonCustum';
+import FooterScreen from '../Navigation/FooterScreen';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -95,9 +96,8 @@ const LayoutConfirmation = ({
     });
 
     return !protectThisPage ? (
-        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-            <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreenContent}>
-
+        <SafeAreaView >
+            <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
                 {loadData ? (
                     <FlatList
                         data={data}
@@ -115,20 +115,15 @@ const LayoutConfirmation = ({
                 ) : (
                     <ConfirmationSkeleton />
                 )}
-            </View>
 
-            {availableToPost && (
-                <>
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).footer}>
-                        <ButtonCustum
-                            title='Confirmar'
-                            onPress={onPost}
-                            buttonColor='green'
-                            disabled={buttonPostDisabled}
-                        />
-                    </View>
-                </>
-            )}
+                {availableToPost && (
+                    <FooterScreen
+                        buttonOnPress={onPost}
+                        buttonDisabled={buttonPostDisabled}
+                        buttonTitle='Confirmar'
+                    />
+                )}
+            </View>
         </SafeAreaView>
     )
         :

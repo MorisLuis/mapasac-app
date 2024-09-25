@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, TextInput, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
@@ -8,8 +8,8 @@ import ClassInterface from '../../interface/class';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
-import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import CardSelect from '../../components/Cards/CardSelect';
+import FooterScreen from '../../components/Navigation/FooterScreen';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -71,12 +71,18 @@ export const SelectClassScreen = ({
         );
     };
 
+    const handleGetClasess = async () => {
+        const classesData = await getProductsSellsFromFamily(cvefamilia as number);
+        if (classesData.error) return handleError(classesData.error);
+        setClasses(classesData)
+    };
+
     const renderItem = ({ item }: { item: ClassInterface }) => {
-        const sameValue = (item.rcapa && item.rcapa.trim() !== "") ? item.rcapa.trim() === optionSelected?.rcapa.trim() : item.ridinveclas === optionSelected?.ridinveclas;
+        const sameValue = (item.rcapa && item?.rcapa?.trim() !== "") ? item?.rcapa?.trim() === optionSelected?.rcapa?.trim() : item.ridinveclas === optionSelected?.ridinveclas;
         return (
             <CardSelect
                 onPress={() => handleSelectOption(item)}
-                message={(item.rcapa && item.rcapa.trim() !== "") ? item?.rcapa?.trim() : item.clase}
+                message={(item.rcapa && item?.rcapa?.trim() !== "") ? item?.rcapa?.trim() : item.clase}
                 sameValue={sameValue}
             />
         )
@@ -92,21 +98,12 @@ export const SelectClassScreen = ({
     }, []);
 
     useEffect(() => {
-        const handleGetClasess = async () => {
-            const classesData = await getProductsSellsFromFamily(cvefamilia as number);
-            if (classesData.error) return handleError(classesData.error);
-            setClasses(classesData)
-        };
         handleGetClasess();
     }, []);
 
 
     return classes ? (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.select({ ios: 60, android: 80 })}
-        >
+        <SafeAreaView>
             <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                 <View style={SelectScreenTheme(theme, typeTheme).header}>
                     <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona {isCapa ? "la capa" : "el tipo"}.</CustomText>
@@ -119,16 +116,13 @@ export const SelectClassScreen = ({
                     onEndReachedThreshold={0}
                 />
 
-                <View style={{ paddingBottom: Platform.select({ ios: "20%", android: "20%" }) }}>
-                    <ButtonCustum
-                        title='Seleccionar'
-                        onPress={handleSave}
-                        buttonColor='green'
-                        disabled={buttondisabled}
-                    />
-                </View>
+                <FooterScreen
+                    buttonTitle="Publicar"
+                    buttonOnPress={handleSave}
+                    buttonDisabled={buttondisabled}
+                />
             </View>
-        </KeyboardAvoidingView>
+        </SafeAreaView>
     )
         :
         <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>

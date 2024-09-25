@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
@@ -129,8 +129,8 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
     const renderScreen = () => {
         return (
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationPaymentInfo}>
+            <SafeAreaView>
+                <View>
                     {
                         methodPayment !== 0 &&
                         <View style={{
@@ -201,7 +201,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                     }
 
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 

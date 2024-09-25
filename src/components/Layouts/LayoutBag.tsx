@@ -6,7 +6,7 @@ import { getSearchProductInBack } from '../../services/searchs';
 import { ProductInterfaceBag } from '../../interface/product';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { inputStyles } from '../../theme/UI/inputs';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { EmptyMessageCard } from '../Cards/EmptyMessageCard';
 import { InventoryBagSkeleton } from '../Skeletons/InventoryBagSkeleton';
 import { buttonStyles } from '../../theme/UI/buttons';
@@ -173,101 +173,102 @@ export const LayoutBag = ({
 
     return (
         <>
-            <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
+            <SafeAreaView>
+                <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
-                <Searchbar
-                    ref={searchInputRef}
-                    placeholder="Buscar producto por nombre..."
-                    onChangeText={query => handleSearch(query)}
-                    value={searchText}
-                    style={[
-                        inputStyles(theme).searchBar,
-                        {
-                            marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
-                            marginBottom: 0
-                        },
-                        hideSearch && { display: 'none' }]
-                    }
-                    iconColor={theme.text_color}
-                    placeholderTextColor={theme.text_color}
-                    icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                    clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                    inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
-                />
-
-                {
-                    (bags.length > 0 && dataUploaded) ?
-                        <FlatList
-                            style={InventoryBagScreenStyles(theme, typeTheme).content}
-                            data={bags}
-                            renderItem={renderItem}
-                            keyExtractor={product => `${product.idenlacemob}`}
-                            onEndReached={loadBags}
-                            onEndReachedThreshold={0.5}
-                        />
-                        : (bags.length <= 0 && dataUploaded && !cleanSearchText) ?
-                            <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                                {
-                                    searchText !== "" ?
-                                        <EmptyMessageCard
-                                            title="No hay productos con ese nombre."
-                                            message='Intenta escribiendo algo diferente.'
-                                            icon='sad-outline'
-                                        />
-                                        :
-                                        <EmptyMessageCard
-                                            title="No tienes productos aún."
-                                            message='Empieza a agregar productos al inventario'
-                                            icon='rocket-outline'
-                                        />
-                                }
-                            </View>
-                            :
-                            <InventoryBagSkeleton length={10} />
-                }
-
-                {/* FOOTER */}
-                {
-                    (bags.length > 0 && dataUploaded) &&
-                    <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
-                        {
-                            Type === "sells" &&
-                            <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                                <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</CustomText>
-                                <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
-                                    {
-                                        deletingProductId ? "Calculando..." : format(totalPrice || 0)
-                                    }
-                                </CustomText>
-                            </View>
+                    <Searchbar
+                        ref={searchInputRef}
+                        placeholder="Buscar producto por nombre..."
+                        onChangeText={query => handleSearch(query)}
+                        value={searchText}
+                        style={[
+                            inputStyles(theme).searchBar,
+                            {
+                                marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+                            },
+                            hideSearch && { display: 'none' }]
                         }
-                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
-                            <TouchableOpacity
-                                style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall, { width: "19%" }]}
-                                onPress={() => setOpenModalDecision(true)}
-                            >
-                                <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
-                            </TouchableOpacity>
+                        iconColor={theme.text_color}
+                        placeholderTextColor={theme.text_color}
+                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
+                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
+                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
+                    />
 
-                            <ButtonCustum
-                                title='Guardar'
-                                onPress={onPost}
-                                buttonColor='green'
-                                extraStyles={{ width: "79%" }}
-                                iconName="bookmark-outline"
+                    {
+                        (bags.length > 0 && dataUploaded) ?
+                            <FlatList
+                                style={InventoryBagScreenStyles(theme, typeTheme).content}
+                                data={bags}
+                                renderItem={renderItem}
+                                keyExtractor={product => `${product.idenlacemob}`}
+                                onEndReached={loadBags}
+                                onEndReachedThreshold={0.5}
                             />
-                        </View>
-                    </View>
-                }
+                            : (bags.length <= 0 && dataUploaded && !cleanSearchText) ?
+                                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                                    {
+                                        searchText !== "" ?
+                                            <EmptyMessageCard
+                                                title="No hay productos con ese nombre."
+                                                message='Intenta escribiendo algo diferente.'
+                                                icon='sad-outline'
+                                            />
+                                            :
+                                            <EmptyMessageCard
+                                                title="No tienes productos aún."
+                                                message='Empieza a agregar productos al inventario'
+                                                icon='rocket-outline'
+                                            />
+                                    }
+                                </View>
+                                :
+                                <InventoryBagSkeleton length={10} />
+                    }
 
-                {/* LOADING INDICATOR */}
-                {
-                    loadingCleanBag &&
-                    <View>
-                        <DotLoader />
-                    </View>
-                }
-            </View>
+                    {/* FOOTER */}
+                    {
+                        (bags.length > 0 && dataUploaded) &&
+                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
+                            {
+                                Type === "sells" &&
+                                <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
+                                    <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</CustomText>
+                                    <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                                        {
+                                            deletingProductId ? "Calculando..." : format(totalPrice || 0)
+                                        }
+                                    </CustomText>
+                                </View>
+                            }
+                            <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
+                                <TouchableOpacity
+                                    style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall, { width: "19%" }]}
+                                    onPress={() => setOpenModalDecision(true)}
+                                >
+                                    <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
+                                </TouchableOpacity>
+
+                                <ButtonCustum
+                                    title='Guardar'
+                                    onPress={onPost}
+                                    buttonColor='green'
+                                    extraStyles={{ width: "79%" }}
+                                    iconName="bookmark-outline"
+                                />
+                            </View>
+                        </View>
+                    }
+
+                    {/* LOADING INDICATOR */}
+                    {
+                        loadingCleanBag &&
+                        <View>
+                            <DotLoader />
+                        </View>
+                    }
+                </View>
+            </SafeAreaView>
 
             <ModalDecision
                 visible={openModalDecision}

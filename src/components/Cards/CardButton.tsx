@@ -19,6 +19,7 @@ interface CardButtonInterface {
     controlValue: keyof FormType;
     icon?: string;
     isPrice?: boolean;
+    specialValue?: string;
 }
 
 const CardButton = ({
@@ -29,7 +30,8 @@ const CardButton = ({
     control,
     controlValue,
     icon,
-    isPrice
+    isPrice,
+    specialValue
 }: CardButtonInterface) => {
     const { typeTheme, theme } = useTheme();
     const [currentValue, setCurrentValue] = useState<string | number>(valueDefault);
@@ -82,7 +84,7 @@ const CardButton = ({
                     }, [newValue]);
                     return (
                         <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                            {newValue}
+                            {specialValue ? specialValue : newValue}
                         </CustomText>
                     );
                 }}

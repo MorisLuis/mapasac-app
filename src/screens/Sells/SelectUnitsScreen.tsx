@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { View, TextInput, FlatList } from 'react-native';
+import { View, TextInput, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
@@ -79,25 +79,27 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
     }
 
     return (
-        <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-            <View style={SelectScreenTheme(theme, typeTheme).header}>
-                <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>
-                    Selecciona la unidad.
-                </CustomText>
+        <SafeAreaView>
+            <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
+                <View style={SelectScreenTheme(theme, typeTheme).header}>
+                    <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>
+                        Selecciona la unidad.
+                    </CustomText>
+                </View>
+
+                <FlatList
+                    data={units}
+                    renderItem={renderItem}
+                    keyExtractor={item => `${item.idinveunid}`}
+                    onEndReachedThreshold={0}
+                />
+
+                <FooterScreen
+                    buttonTitle='Agregar'
+                    buttonOnPress={handleSave}
+                    buttonDisabled={false}
+                />
             </View>
-
-            <FlatList
-                data={units}
-                renderItem={renderItem}
-                keyExtractor={item => `${item.idinveunid}`}
-                onEndReachedThreshold={0}
-            />
-
-            <FooterScreen
-                buttonTitle='Agregar'
-                buttonOnPress={handleSave}
-                buttonDisabled={false}
-            />
-        </View>
+        </SafeAreaView>
     );
 };

@@ -101,9 +101,8 @@ export const LayoutSell = ({
 
     return (
         <LayoutGrandient color="purple">
-            <SafeAreaView style={[SellsScreenStyles(theme, typeTheme).SellsScreen]}>
-                <View style={SellsScreenStyles(theme).content}>
-
+            <SafeAreaView>
+                <View style={SellsScreenStyles(theme).SellsScreen}>
                     {products.length > 1 ?
                         <>
                             <View style={SellsScreenStyles(theme).header}>

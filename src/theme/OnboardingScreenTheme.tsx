@@ -4,15 +4,15 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     OnboardingScreen: {
-        paddingVertical: globalStyles(theme).globalPadding.padding,
+        //paddingVertical: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color,
         height: hp('100%'),
+        padding: globalStyles().globalPadding.padding
     },
     topbar: {
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        //paddingHorizontal: globalStyles(theme).globalPadding.padding,
         height: hp('5%'),
         minHeight: 40,
-
         display: "flex",
         flexDirection: "row",
         justifyContent: "flex-end"
@@ -38,7 +38,7 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     headerTitle: {
         fontSize: globalFont.font_med * 1.2,
         color: theme.text_color,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        //paddingHorizontal: globalStyles(theme).globalPadding.padding,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
         width: wp("80%"),
         fontFamily: 'Rubik-Bold'
@@ -46,7 +46,7 @@ export const OnboardingScreenStyles = (theme: Theme, typeTheme?: string) => Styl
     content: {
         flex: 2,
         marginHorizontal: "auto",
-        paddingHorizontal: globalStyles(theme).globalPadding.padding
+        //paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
     moduleOptionRow: {
         flexDirection: "row",

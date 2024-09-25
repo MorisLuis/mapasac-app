@@ -114,8 +114,8 @@ export const uiNavigationStyles = (theme: Theme, typeTheme?: string) => StyleShe
         backgroundColor: theme.background_color,
         position: 'absolute',
         bottom: 0,
-        right: globalStyles(theme).globalPadding.padding / 2,
-        width: wp("100%") - globalStyles(theme).globalPadding.padding,
+        right: globalStyles(theme).globalPadding.padding,
+        width: wp("100%") - globalStyles().globalPadding.padding * 2,
     },
     FooterScreenContainer: {
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom

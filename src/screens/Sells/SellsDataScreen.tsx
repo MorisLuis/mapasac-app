@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
@@ -129,9 +129,9 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
         try {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-            if(!product) return
+            if (!product) return
             if (product.error) return handleError(product.error);
-            console.log({product: JSON.stringify(product, null, 2)})
+            console.log({ product: JSON.stringify(product, null, 2) })
 
             setValue('price', product?.precio.toString());
             setValue('units', { value: product?.unidad_nombre?.trim(), id: product?.unidad });
@@ -144,15 +144,22 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         }
     }, [setValue, typeClass]);
 
-    const handleGoToClassScreen = useCallback(() => {
+    const handleGoToClassScreen = () => {
         if (totalClasses > 1) {
+            if(!productSellData?.capa) return;
             navigate('[Modal] - ClassScreen',
                 {
-                    valueDefault: getValues('typeClass') as any,
+                    valueDefault: {
+                        clase: getValues('typeClass').value,
+                        rcapa: productSellData?.capa,
+                        ridinvearts: productSellData?.idinvearts,
+                        ridinveclas: productSellData?.idinveclas,
+                        rproducto: getValues('typeClass').value
+                    },
                     cvefamilia: cveFamiliaValue
                 });
         }
-    }, [totalClasses, cveFamiliaValue, getValues, navigate]);
+    };
 
     // Reset Values
     useEffect(() => {
@@ -180,78 +187,91 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     }, [productSellData]);
 
     return (
-        <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
-            <View style={SellsDataScreenTheme(theme, typeTheme).header}>
-                <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>
-                    {title?.trim()}
-                </CustomText>
-                <Tag
-                    message={`${totalClasses} ${totalClasses == 1 ? 'Clase' : 'Clases'}`}
-                    color='purple'
-                    extraStyles={{ marginBottom: globalFont.font_sm / 2 }}
+        <SafeAreaView>
+            <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
+                <View style={SellsDataScreenTheme(theme, typeTheme).header}>
+                    <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>
+                        {title?.trim()}
+                    </CustomText>
+                    <Tag
+                        message={`${totalClasses} ${totalClasses == 1 ? 'Clase' : 'Clases'}`}
+                        color='purple'
+                        extraStyles={{ marginBottom: globalFont.font_sm / 2 }}
+                    />
+                </View>
+
+                <ImageContainerCustum
+                    imageValue=';'
+                    size="small"
+                />
+
+                {/* 
+                 <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
+                                {
+                                    !haveClasses ? "No tiene clase" :
+                                        value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim())
+                                            : "Selecciona la clase"
+                                }
+                            </CustomText>
+                */}
+
+                <CardButton
+                    onPress={handleGoToClassScreen}
+                    label='Clase:'
+                    valueDefault='Seleccionar la clase'
+                    color='blue'
+                    control={control}
+                    controlValue='typeClass'
+                    icon='resize-outline'
+                    specialValue={productSellData?.capa ? productSellData?.capa.trim() : undefined}
+                />
+
+                {
+                    (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) ?
+                        <>
+                            <CardButton
+                                onPress={() => navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
+                                label='Cantidad:'
+                                valueDefault='Seleccionar cantidad'
+                                color='green'
+                                control={control}
+                                controlValue='pieces'
+                                icon="bag-handle"
+                            />
+
+                            <CardButton
+                                onPress={() => navigate('[Modal] - UnitScreen', { valueDefault: getValues('units') })}
+                                label='Unidad:'
+                                valueDefault='Seleccionar Unidad'
+                                color='red'
+                                control={control}
+                                controlValue='units'
+                                icon="shapes"
+                            />
+
+                            <CardButton
+                                onPress={() => navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
+                                label='Precio:'
+                                valueDefault='Seleccionar precio'
+                                color='purple'
+                                control={control}
+                                controlValue='price'
+                                icon="pricetags"
+                                isPrice={true}
+                            />
+                        </>
+                        :
+                        <View>
+                            <CustomText>Cargando...</CustomText>
+                        </View>
+                }
+
+                <FooterScreen
+                    buttonTitle="Publicar"
+                    buttonOnPress={handleSubmit(onSubmit)}
+                    buttonDisabled={buttonDisabled}
                 />
             </View>
-
-            <ImageContainerCustum
-                imageValue=';'
-                size="small"
-            />
-
-            <CardButton
-                onPress={handleGoToClassScreen}
-                label='Clase:'
-                valueDefault='Seleccionar la clase'
-                color='blue'
-                control={control}
-                controlValue='typeClass'
-                icon='resize-outline'
-            />
-
-            {
-                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) ?
-                    <>
-                        <CardButton
-                            onPress={() => navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
-                            label='Cantidad:'
-                            valueDefault='Seleccionar cantidad'
-                            color='green'
-                            control={control}
-                            controlValue='pieces'
-                            icon="bag-handle"
-                        />
-
-                        <CardButton
-                            onPress={() => navigate('[Modal] - UnitScreen', { valueDefault: getValues('units') })}
-                            label='Unidad:'
-                            valueDefault='Seleccionar Unidad'
-                            color='red'
-                            control={control}
-                            controlValue='units'
-                            icon="shapes"
-                        />
-
-                        <CardButton
-                            onPress={() => navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
-                            label='Precio:'
-                            valueDefault='Seleccionar precio'
-                            color='purple'
-                            control={control}
-                            controlValue='price'
-                            icon="pricetags"
-                            isPrice={true}
-                        />
-
-                        <FooterScreen
-                            buttonTitle="Publicar"
-                            buttonOnPress={handleSubmit(onSubmit)}
-                            buttonDisabled={buttonDisabled}
-                        />
-                    </>
-                    :
-                    <View>
-                        <CustomText>Cargando...</CustomText>
-                    </View>
-            }
-        </View>
+        </SafeAreaView>
     );
 };

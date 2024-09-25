@@ -4,12 +4,10 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SellsScreen: {
-    },
-    content: {
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        padding: globalStyles().globalPadding.padding,
         height: "100%"
     },
-    header:{
+    header: {
         display: "flex",
         flexDirection: "column",
         marginBottom: hp("2.5%"),
@@ -26,6 +24,6 @@ export const SellsScreenStyles = (theme: Theme, typeTheme?: string) => StyleShee
     header_total: {
         color: theme.text_color,
         fontSize: globalFont.font_med,
-        fontFamily: 'Rubik-Regular' 
+        fontFamily: 'Rubik-Regular'
     }
 })

@@ -4,18 +4,17 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const SelectAmountScreenTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SelectAmountScreen: {
-        flex:1,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
+        height: '100%',
+        padding: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color
     },
     header: {
-        padding: globalStyles(theme).globalPadding.padding,
-        
     },
     headerTitle: {
         fontSize: globalFont.font_med,
         textAlign:"center",
-        color: theme.text_color
+        color: theme.text_color,
+        fontFamily: 'Rubik-Bold'
     },
     amountContent: {
         flex:1,

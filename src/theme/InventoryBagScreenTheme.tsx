@@ -6,15 +6,13 @@ import { Theme, globalFont, globalStyles } from "./appTheme";
 
 export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     InventoryBagScreen: {
-        backgroundColor: theme.background_color,
-        height: "100%",
+        height: '100%',
+        padding: globalStyles(theme).globalPadding.padding,
+        backgroundColor: theme.background_color
     },
-
     content: {
         minHeight: "auto",
-        height: "85%",
-        padding: globalStyles(theme).globalPadding.padding,
-        marginBottom: "37.5%"
+        height: "85%"
     },
     message: {
         padding: globalStyles(theme).globalPadding.padding,
@@ -22,14 +20,10 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     footer: {
         backgroundColor: theme.background_color,
-        padding: globalStyles(theme).globalPadding.padding,
-        height: "25%",
-        maxHeight: 150,
         width: "100%",
         position: "absolute",
         bottom: 0,
-
-        borderTopWidth: 1,
+        left: globalStyles(theme).globalPadding.padding,
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_secondary,
     },
     footer_actions: {

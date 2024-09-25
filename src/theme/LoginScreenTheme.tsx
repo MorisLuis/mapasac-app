@@ -5,7 +5,8 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export const LoginScreenStyles = (theme: Theme, typeTheme?:string) => StyleSheet.create({
     LoginScreen: {
         flex: 1,
-        backgroundColor: theme.background_color
+        backgroundColor: theme.background_color,
+        padding: globalStyles().globalPadding.padding
     },
     LoginDBScreen: {
         flex: 1,
@@ -13,7 +14,6 @@ export const LoginScreenStyles = (theme: Theme, typeTheme?:string) => StyleSheet
     },
     formContainer: {
         flex: 1,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
         justifyContent: 'center',
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
