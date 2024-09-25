@@ -12,4 +12,6 @@ export default interface EnlacemobInterface {
     folcontado?: number;
     capa?: string;
     idinveclas?: number;
+    comentario?: string;
+    fecalta?: Date; 
 }

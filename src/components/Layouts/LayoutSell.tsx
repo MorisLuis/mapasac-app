@@ -39,20 +39,7 @@ export const LayoutSell = ({
         }
     };
 
-    useEffect(() => {
-        const getTotalCountOfProducts = async () => {
-            const total = await getTotalProductSells();
-            if (total.error) {
-                handleError(total.error);
-                return;
-            }
-            setTotalProducts(Number(total));
-        }
-        getTotalCountOfProducts()
-    }, [])
-
     const handleGetPrice = async () => {
-
         try {
             const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
             if (totalprice.error) return handleError(totalprice.error);
@@ -60,12 +47,10 @@ export const LayoutSell = ({
         } catch (error) {
             handleError(error);
         };
-
     };
 
 
     const handleGetProducts = async () => {
-
         try {
             setIsLoading(true);
             const products = await getProductsSells(currentPage);
@@ -93,6 +78,14 @@ export const LayoutSell = ({
         isLoading ? <ActivityIndicator size="large" color={theme.color_primary} /> : null
     ), [isLoading, theme.color_primary]);
 
+    useEffect(() => {
+        const getTotalCountOfProducts = async () => {
+            const total = await getTotalProductSells();
+            if (total.error) return handleError(total.error);
+            setTotalProducts(Number(total));
+        }
+        getTotalCountOfProducts()
+    }, [])
 
     useFocusEffect(
         useCallback(() => {

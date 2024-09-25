@@ -27,6 +27,7 @@ export interface ProductSellsInterface {
 
     precio?: string;
 
+    // to know how many classes has.
     classcount?: string;
 }
 

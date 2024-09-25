@@ -2,7 +2,7 @@ import { InventoryBagInterface } from "./InventoryBagProvider";
 
 
 type InventoryBagActionType =
-    | { type: '[InventoryBag] - Post Inventory'}
+    | { type: '[InventoryBag] - Post Inventory' }
     | {
         type: '[InventoryBag] - Update Summary',
         payload: {
@@ -27,11 +27,11 @@ export const innventoryBagReducer = (state: InventoryBagInterface, action: Inven
                 ...action.payload
             }
 
-            case '[InventoryBag] - LogOut':
-                return {
-                    ...state,
-                    numberOfItems: "0"
-                }
+        case '[InventoryBag] - LogOut':
+            return {
+                ...state,
+                numberOfItems: "0"
+            }
 
         default:
             return state

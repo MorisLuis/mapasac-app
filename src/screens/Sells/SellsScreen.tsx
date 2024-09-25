@@ -9,10 +9,10 @@ export const SellsScreen = () => {
         <ProductSellsSquareCard product={item} />
     ), []);
 
-        return (
-            <LayoutSell
-                renderItem={renderItem}
-                opcion={2}
-            />
-        )
+    return (
+        <LayoutSell
+            renderItem={renderItem}
+            opcion={2}
+        />
+    )
 };

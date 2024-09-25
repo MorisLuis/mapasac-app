@@ -17,11 +17,11 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const [state, dispatch] = useReducer(sellsBagReducer, SellsBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
-    const { handleError } = useErrorHandler()
+    const { handleError } = useErrorHandler();
 
     const handleUpdateSummary = async () => {
         try {
-            const total = await getTotalProductsInBag({opcion: 2, mercado: true});
+            const total = await getTotalProductsInBag({ opcion: 2, mercado: true });
             if (total.error) return handleError(total.error);
 
             const numberOfItemsSells = total;
@@ -39,9 +39,8 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const addProductSell = async (sellBody: EnlacemobInterface) => {
         try {
-            const product = await addProductInBag({product: sellBody, mercado: true});
+            const product = await addProductInBag({ product: sellBody, mercado: true });
             if (product.error) return handleError(product.error);
-
             setProductAdded(true);
         } catch (error) {
             handleError(error)
@@ -52,7 +51,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const deleteProductSell = async (idenlacemob: number) => {
         try {
-            const product = await deleteProductInBag({idenlacemob, mercado: true});
+            const product = await deleteProductInBag({ idenlacemob, mercado: true });
             if (product.error) return handleError(product.error);
 
             setProductAdded(true);
@@ -76,7 +75,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     }
 
     const handleCleanState = () => {
-        dispatch({ type: '[SellsBag] - LogOut'})
+        dispatch({ type: '[SellsBag] - LogOut' })
     }
 
     const resetAfterPost = () => {

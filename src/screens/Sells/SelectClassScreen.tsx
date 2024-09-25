@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
@@ -56,11 +55,18 @@ export const SelectClassScreen = ({
         navigation.navigate('SellsDataScreen',
             {
                 totalClasses: totalClasses,
-                cvefamilia: cvefamilia,
-                typeClass: value,
                 descripcio: descripcio,
                 image: image,
-                productSellData: { idinvearts: value.ridinvearts, capa: value.rcapa, idinveclas: value.ridinveclas }
+                cvefamilia: cvefamilia,
+                typeClass: {
+                    id: value.ridinvearts,
+                    value: value.rproducto
+                },
+                productSellData: {
+                    idinvearts: value.ridinvearts,
+                    capa: value.rcapa,
+                    idinveclas: value.ridinveclas
+                }
             }
         );
     };

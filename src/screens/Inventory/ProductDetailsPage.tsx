@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useRef, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetailsSkeleton';

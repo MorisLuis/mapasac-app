@@ -38,7 +38,7 @@ const ButtonCustum = ({
     const modifyButtonColor = () => {
         let buttonColorNew = buttonColor;
 
-        if( buttonColor === 'green' ){
+        if (buttonColor === 'green') {
             buttonColorNew = actualModule === 'Sells' ? 'purple' : 'green'
         };
 
@@ -47,7 +47,12 @@ const ButtonCustum = ({
 
     return (
         <TouchableOpacity
-            style={[buttonStyles(theme).button, buttonStyles(theme, typeTheme)[modifyButtonColor()], { ...extraStyles }]}
+            style={[
+                buttonStyles(theme).button,
+                buttonStyles(theme, typeTheme)[modifyButtonColor()],
+                disabled && { opacity: 0.6 }
+                , { ...extraStyles }
+            ]}
             onPress={onPress}
             disabled={disabled}
         >

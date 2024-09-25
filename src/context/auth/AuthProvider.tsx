@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: any) => {
     const navigation = useNavigation<any>();
     const { handleError } = useErrorHandler()
 
-    useEffect(() => {
+    /* useEffect(() => {
         const statusLogin = state.status;
         if (statusLogin == 'checking') {
             return;
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: any) => {
             navigation.navigate('OnboardingScreen')
         }
 
-    }, [state.status])
+    }, [state.status]) */
 
     useEffect(() => {
         checkToken();

@@ -10,6 +10,7 @@ export const useErrorHandler = () => {
     const navigation = useNavigation<AppNavigationProp>();
 
     const handleError = async (error: any) => {
+        console.log({error})
         const { status: statusCode, Message, Metodo } = error ?? {}
 
         const status = error?.response?.status || statusCode;

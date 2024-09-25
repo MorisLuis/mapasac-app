@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { CounterSecondary } from '../../components/Inputs/CounterSecondary';

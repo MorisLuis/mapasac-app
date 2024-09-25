@@ -5,11 +5,4 @@ export default interface ClassInterface {
     ridinvearts: number;
     ridinveclas: number;
     rproducto: string;
-}
-
-/* export type ClassData = {
-    rcapa: string;
-    ridinvearts: number;
-    rproducto: string;
-    ridinveclas: number;
-} */
+};

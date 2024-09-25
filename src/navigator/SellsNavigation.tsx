@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassInterface from '../interface/class';
-import { UnitData } from '../interface/units';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 
 // Screens
@@ -21,26 +20,33 @@ import CustomTabBar from '../components/Navigation/CustomTabBar';
 // useNavigation() type.
 export type SellsNavigationProp = NativeStackNavigationProp<Partial<SellsNavigationStackParamList>>;
 
+export type UnitType = {
+    value: string;
+    id: number;
+};
+
+export type SellsDataScreenTypeProps = {
+    totalClasses?: number;
+    descripcio?: string;
+    image?: string;
+    cvefamilia?: number;
+    pieces?: string;
+    price?: string;
+    typeClass?: UnitType;
+    units?: UnitType;
+    productSellData?: { idinvearts: number, capa: string, idinveclas: number };
+}
+
 export type SellsNavigationStackParamList = {
     SellsScreen: undefined;
-    SellsDataScreen: {
-        totalClasses?: number;
-        descripcio?: string;
-        image?: string;
-        cvefamilia?: number;
-        pieces?: string;
-        price?: string;
-        typeClass?: ClassInterface;
-        units?: UnitData;
-        productSellData?: { idinvearts: number, capa: string, idinveclas: number };
-    };
+    SellsDataScreen: SellsDataScreenTypeProps;
     BagSellsScreen: undefined;
 
     "[Modal] - editProductSellInBag": { product: ProductSellsInterface };
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - UnitScreen": { valueDefault: UnitData };
-    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio: string, image: string, totalClasses: number };
+    "[Modal] - UnitScreen": { valueDefault: UnitType };
+    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
     "[Modal] - SelectClient": undefined;
 
     "[Sells] - confirmationScreen": { client?: ClientInterface };

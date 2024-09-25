@@ -6,18 +6,20 @@ import { useTheme } from '../../context/ThemeContext'
 
 interface TagInterface {
     message: string;
-    color: 'green'
+    color: 'green' | 'purple';
+    extraStyles?: any 
 }
 
 const Tag = ({
     message,
-    color
+    color,
+    extraStyles
 }: TagInterface) => {
 
     const { theme, typeTheme } = useTheme();
 
     return (
-        <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color]]}>
+        <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color], {...extraStyles}]}>
             <CustomText
                 style={[
                     uiElementeStyles(theme, typeTheme).tagText,

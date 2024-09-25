@@ -6,10 +6,11 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
+import ClassInterface from '../../interface/class';
 import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { SellsNavigationProp, SellsNavigationStackParamList, UnitType } from '../../navigator/SellsNavigation';
+import { SellsNavigationStackParamList, UnitType } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
@@ -25,7 +26,7 @@ export type FormType = {
     typeClass: UnitType;
     units: UnitType;
     capa: string;
-    idinveclas: number;
+    idinveclas?: number;
 };
 
 interface SellsDataScreenInterface {
@@ -33,30 +34,19 @@ interface SellsDataScreenInterface {
 };
 
 export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
-
-    const {
-        pieces,
-        price,
-        typeClass,
-        units,
-        cvefamilia,
-        productSellData,
-        descripcio,
-        image,
-        totalClasses: totalClassesProp
-    } = route?.params ?? {};
-
+    const { pieces, price, typeClass, units, cvefamilia, productSellData, descripcio, image, totalClasses: totalClassesProp } = route?.params ?? {};
+    const { typeTheme, theme } = useTheme();
     const { user } = useContext(AuthContext);
     const { addProductSell } = useContext(SellsBagContext);
-    const { typeTheme, theme } = useTheme();
-    const { goBack, navigate } = useNavigation<SellsNavigationProp>();
-    const { handleError } = useErrorHandler();
+    const { goBack, navigate } = useNavigation<any>();
+    const { handleError } = useErrorHandler()
 
     const [title, setTitle] = useState<string>();
-    //const [imageValue, setImageValue] = useState<string>();
-    const [idInveartsValue, setIdInveartsValue] = useState<number>();
-    const [cveFamiliaValue, setCveFamiliaValue] = useState<number>();
-    const [totalClasses] = useState<number>(totalClassesProp ?? 0);
+    const [imageValue, setImageValue] = useState<string>();
+
+    const [idinveartsValue, setIdinveartsValue] = useState<number>();
+    const [cvefamiliaValue, setCvefamiliaValue] = useState<number>();
+    const [totalClasses] = useState<number>(totalClassesProp ? totalClassesProp : 0);
 
     const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
         defaultValues: {
@@ -69,110 +59,107 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         },
     });
 
-    const hasClasses = totalClasses > 0;
-    const formCompleted = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
-    const buttonDisabled = !hasClasses ? !(watch('units') && watch('price') && watch('pieces')) : !formCompleted;
+    const haveClasses = totalClasses > 0;
+    const completeTheForm = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
+    const buttondisabled = !haveClasses ? !(watch('units') && watch('price') && watch('pieces')) : !completeTheForm;
 
     const onSubmit = useCallback(() => {
-        const { pieces, price, typeClass, units, capa, idinveclas } = getValues();
-        if (!idinveclas && hasClasses) return console.log("Information is missing");
-
-        const parsedPieces = parseFloat(pieces);
-        const parsedPrice = parseFloat(price);
-        const parsedTypeClass = Number(typeClass?.id) || idInveartsValue;
-        const parsedUnits = Number(units.id);
-        const parsedIdinveclas = idinveclas;
-        const userId = user?.idusrmob ?? 0;
-
-        if (!parsedTypeClass) return console.log("parsedTypeClass is missing");
+        if (!getValues('idinveclas') && haveClasses) return;
 
         const bagProduct: EnlacemobInterface = {
-            cantidad: isNaN(parsedPieces) ? 0 : parsedPieces,
-            precio: isNaN(parsedPrice) ? 0 : parsedPrice,
-            idinvearts: isNaN(parsedTypeClass) ? 0 : parsedTypeClass,
-            unidad: parsedUnits,
-            capa: capa || '',
-            idusrmob: userId,
-            idinveclas: parsedIdinveclas
+            cantidad: parseFloat(getValues('pieces')),
+            precio: parseFloat(getValues('price')),
+            idinvearts: Number(getValues('typeClass')) || idinveartsValue as number,
+            unidad: Number(getValues('units')),
+            capa: getValues('capa'),
+            idusrmob: user?.idusrmob as number,
+            idinveclas: getValues('idinveclas')
         };
 
         goBack();
         addProductSell(bagProduct);
-    }, [getValues, hasClasses, idInveartsValue, goBack, addProductSell, user?.idusrmob]);
+    }, [getValues, haveClasses, idinveartsValue, goBack, addProductSell, user?.idusrmob]);
 
-    const handleGetTotalClasses = useCallback(async () => {
+    const handleGetTotal = useCallback(async () => {
         if (!cvefamilia) return;
 
         try {
-            const totalClassesData = await getTotalClassesSells(cvefamilia);
-            if (totalClassesData.error) return handleError(totalClassesData.error);
+            const total = await getTotalClassesSells(cvefamilia);
+            if (total.error) return handleError(total.error);
 
-            if (totalClassesData == "1") { // if has class.
+
+            if (total === "1") {
                 const classesData = await getProductsSellsFromFamily(cvefamilia);
                 if (classesData.error) return handleError(classesData.error);
+
                 const clases = classesData[0];
                 const { ridinvearts: idinvearts, rcapa: capa, ridinveclas: idinveclas } = clases ?? {};
-                setValue('typeClass', { id: clases.ridinvearts, value: clases.rproducto });
+
+                setValue('typeClass', {
+                    id: clases.ridinvearts,
+                    value: clases.rproducto
+                });
 
                 handleGetProduct({ idinvearts, capa, idinveclas });
-            } else if (totalClassesData == "0") { // if dont has class.
+            } else if (total === "0") {
                 const product = await getIdinveartsProduct(cvefamilia);
                 if (product.error) return handleError(product.error);
-                setIdInveartsValue(product.idinvearts);
+
+                setIdinveartsValue(product.idinvearts);
             }
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         }
 
     }, [cvefamilia, setValue]);
 
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
+
         try {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-            if(!product) return
-            if (product.error) return handleError(product.error);
             console.log({product: JSON.stringify(product, null, 2)})
-
+            if (product.error) return handleError(product.error);
             setValue('price', product?.precio.toString());
-            setValue('units', { value: product?.unidad_nombre?.trim(), id: product?.unidad });
+            setValue('units', {
+                value: product?.unidad_nombre?.trim(),
+                id: product?.unidad
+            });
+
+            if (typeClass) {
+                setValue('typeClass', {
+                    id: typeClass.id,
+                    value: typeClass.value
+                });
+            }
+
             setValue('capa', capa);
             setValue("idinveclas", idinveclas);
-            if (typeClass) setValue('typeClass', { id: typeClass.id, value: typeClass.value });
-
         } catch (error) {
             handleError(error);
         }
     }, [setValue, typeClass]);
 
     const handleGoToClassScreen = useCallback(() => {
-        if (totalClasses > 1) {
-            navigate('[Modal] - ClassScreen',
-                {
-                    valueDefault: getValues('typeClass') as any,
-                    cvefamilia: cveFamiliaValue
-                });
+        if (totalClasses && totalClasses > 1) {
+            navigate('[Modal] - ClassScreen', { from: "typeClass", valueDefault: getValues('typeClass'), cvefamilia: cvefamiliaValue });
         }
-    }, [totalClasses, cveFamiliaValue, getValues, navigate]);
+    }, [totalClasses, cvefamiliaValue, getValues, navigate]);
 
-    // Reset Values
     useEffect(() => {
-        // The data comes from props.
-        // To Form
+        console.log({typeClass})
+        // Actualiza los valores usando setValue solo para los casos en que el setter se necesita
         if (pieces) setValue('pieces', pieces);
         if (price) setValue('price', price);
         if (typeClass) setValue('typeClass', typeClass);
         if (units) setValue('units', units);
 
-        // To Page
-        if (cvefamilia) setCveFamiliaValue(cvefamilia);
+        // Actualiza valores usando setters específicos
+        if (cvefamilia) setCvefamiliaValue(cvefamilia);
         if (descripcio) setTitle(descripcio);
-        //if (image) setImageValue(image);
-
-        // Get total Classes.
-        handleGetTotalClasses();
+        if (image) setImageValue(image);
+        handleGetTotal();
     }, [pieces, price, typeClass, units, cvefamilia, descripcio, image]);
 
-    // Get product when come only from 'SelectClassScreen'.
     useEffect(() => {
         if (!productSellData) return;
         const { idinvearts, capa, idinveclas } = productSellData ?? {};
@@ -201,14 +188,16 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 onPress={handleGoToClassScreen}
                 label='Clase:'
                 valueDefault='Seleccionar la clase'
-                color='blue'
+                color='green'
                 control={control}
                 controlValue='typeClass'
                 icon='resize-outline'
+                isCapa={true}
+            /*  disabled={!haveClasses} */
             />
 
             {
-                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) ?
+                (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !haveClasses)) ?
                     <>
                         <CardButton
                             onPress={() => navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
@@ -218,16 +207,18 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                             control={control}
                             controlValue='pieces'
                             icon="bag-handle"
+                            isUnit={true}
                         />
 
                         <CardButton
-                            onPress={() => navigate('[Modal] - UnitScreen', { valueDefault: getValues('units') })}
+                            onPress={() => navigate('[Modal] - UnitScreen', { from: "units", valueDefault: getValues('units') })}
                             label='Unidad:'
                             valueDefault='Seleccionar Unidad'
                             color='red'
                             control={control}
                             controlValue='units'
                             icon="shapes"
+                            isUnit={true}
                         />
 
                         <CardButton
@@ -244,7 +235,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                         <FooterScreen
                             buttonTitle="Publicar"
                             buttonOnPress={handleSubmit(onSubmit)}
-                            buttonDisabled={buttonDisabled}
+                            buttonDisabled={buttondisabled}
                         />
                     </>
                     :

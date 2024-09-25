@@ -1,4 +1,3 @@
-import { da } from "date-fns/locale";
 import { api } from "../api/api";
 import EnlacemobInterface from "../interface/enlacemob";
 import ProductInterface from "../interface/product";

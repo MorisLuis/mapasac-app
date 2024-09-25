@@ -6,7 +6,6 @@ import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { globalStyles } from '../../theme/appTheme';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -21,15 +20,16 @@ export const ProductSellsSquareCard = ({
     const iconColor = typeTheme === 'dark' ? "white" : "gray"
 
     const handleSelectProduct = async () => {
-        const count = parseInt(product.classcount ?? "0")
+        const count = parseInt(product.classcount ?? "0");
         if (count <= 1) {
             navigation.navigate('SellsDataScreen',
                 {
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,
-                    idinvearts: product.ridinvearts,
                     image: product.imagen,
-                    totalClasses: product.classcount
+                    totalClasses: product.classcount,
+
+                    idinvearts: product.ridinvearts
                 }
             );
         } else {

@@ -8,6 +8,7 @@ import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext
 import CustomText from '../Ui/CustumText';
 import { CombineNavigationProp } from '../../navigator/AppNavigation';
 import { SettingsContext } from '../../context/settings/SettingsContext';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 interface CustomTabBarInterface {
     Type: 'Sells' | 'Inventory' | 'Sells-Restaurant'
@@ -17,6 +18,8 @@ interface CustomTabBarInterface {
 
 const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) => {
     const { numberOfItems } = useContext(InventoryBagContext);
+    const { numberOfItemsSells } = useContext(SellsBagContext);
+
     const { actualModule } = useContext(SettingsContext);
     const { navigate } = useNavigation<CombineNavigationProp>();
     const { theme, typeTheme } = useTheme();
@@ -34,7 +37,7 @@ const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) =
 
     const handleGoOnboarding = () => {
         navigate("OnboardingScreen")
-    }
+    };
 
     return (
         <SafeAreaView style={customTabBarStyles(theme).customTabBar}>
@@ -60,7 +63,12 @@ const CustomTabBar = ({ renderTabButton, state, Type }: CustomTabBarInterface) =
                         </TouchableOpacity>
                         {parseInt(numberOfItems) > 0 && (
                             <View style={customTabBarStyles(theme, typeTheme, actualModule).bagCounter}>
-                                <CustomText>{parseInt(numberOfItems)}</CustomText>
+                                {
+                                    actualModule === 'Sells' ?
+                                        <CustomText>{parseInt(numberOfItemsSells)}</CustomText>
+                                        :
+                                        <CustomText>{parseInt(numberOfItems)}</CustomText>
+                                }
                             </View>
                         )}
                     </View>
