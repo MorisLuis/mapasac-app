@@ -14,7 +14,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         borderWidth: 0.2,
         borderColor: theme.color_border,
         borderRadius: globalStyles().borderRadius.borderRadius,
-        marginBottom: 30
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
     },
     confirmationContainer: {
         backgroundColor: theme.background_color_secondary,
@@ -64,9 +64,9 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         backgroundColor: theme.background_color_secondary,
         borderWidth: 0.3,
         borderColor: theme.color_border,
-        padding: 10,
+        padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles().borderRadius.borderRadius,
-        marginBottom: 20
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
     },
 
     typeMethodContainer: {

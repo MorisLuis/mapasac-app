@@ -75,7 +75,7 @@ const CardButton = ({
                 </CustomText>
             </View>
             {
-                (control && controlValue) ?
+                (control && controlValue) &&
                     <Controller
                         control={control}
                         name={controlValue}
@@ -91,12 +91,6 @@ const CardButton = ({
                             );
                         }}
                     />
-                    : specialValue ?
-                        <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                            {specialValue ?? specialValue}
-                        </CustomText>
-                        :
-                        <></>
             }
         </TouchableOpacity>
     );

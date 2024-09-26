@@ -164,7 +164,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         />
     ), [createSellLoading, bags]);
 
-
     const renderScreen = () => {
         return (
             <SafeAreaView>
@@ -200,7 +199,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             valueDefault='Seleccionar la clase'
                             color='black'
                             icon='people-sharp'
-                            specialValue={typeSelected ? typeSelected.nombres : undefined}
+                            specialValue={typeSelected ? typeSelected.nombres.trim() : undefined}
                         />
 
                         <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>

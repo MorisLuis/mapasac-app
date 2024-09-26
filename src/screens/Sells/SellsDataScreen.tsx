@@ -131,7 +131,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
             if (!product) return
             if (product.error) return handleError(product.error);
-            console.log({ product: JSON.stringify(product, null, 2) })
 
             setValue('price', product?.precio.toString());
             setValue('units', { value: product?.unidad_nombre?.trim(), id: product?.unidad });

@@ -43,8 +43,6 @@ const LayoutConfirmation = ({
     totalPrice
 }: LayoutConfirmationInterface) => {
 
-    console.log({ availableToPost })
-
     const { theme, typeTheme } = useTheme();
 
     const movementType = () => {

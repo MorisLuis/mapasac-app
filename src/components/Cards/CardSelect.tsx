@@ -45,7 +45,7 @@ const CardSelect = ({
             ]}
             onPress={onPress}
         >
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, maxWidth: "90%" }}>
                 {
                     icon &&
                     <Icon
@@ -54,7 +54,13 @@ const CardSelect = ({
                         color={iconColor}
                     />
                 }
-                <CustomText style={SelectScreenTheme(theme, typeTheme).optionText}>{message}</CustomText>
+                <CustomText
+                    style={[SelectScreenTheme(theme, typeTheme).optionText]}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
+                    {message}
+                </CustomText>
             </View>
 
             {

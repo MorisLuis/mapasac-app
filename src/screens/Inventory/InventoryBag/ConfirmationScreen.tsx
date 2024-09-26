@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
-import { ProductInventoryConfirmationCard } from '../../../components/Cards/ProductInventoryConfirmationCard';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { ProductInterfaceBag } from '../../../interface/product';
 import { getBagInventory } from '../../../services/bag';
