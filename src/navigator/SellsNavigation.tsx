@@ -11,9 +11,9 @@ import { SelectAmountScreen } from '../screens/Sells/SelectAmountScreen';
 import { SelectUnitScreen } from '../screens/Sells/SelectUnitsScreen';
 import { SellsBagScreen } from '../screens/Sells/SellsBag/SellsBagScreen';
 import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationSellsScreen';
-import { EditProductSellInBag } from '../screens/Sells/EditProductSellInBag';
+import { EditProductSellInBag } from '../screens/Sells/SellsBag/EditProductSellInBag';
 import { ProductSellsInterface } from '../interface/productSells';
-import { SelectClient } from '../screens/Sells/SelectClient';
+import { SelectClient } from '../screens/Sells/SellsBag/SelectClient';
 import ClientInterface from '../interface/utils';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
 

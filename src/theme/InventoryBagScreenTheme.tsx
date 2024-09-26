@@ -36,7 +36,8 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
         flexDirection: "row",
         alignItems: 'flex-end',
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
-        gap: 10
+        gap: 10,
+        marginTop: 10
     },
     priceText: {
         fontSize: globalFont.font_med,

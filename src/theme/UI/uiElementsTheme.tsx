@@ -126,6 +126,9 @@ export const uiNavigationStyles = (theme: Theme, typeTheme?: string) => StyleShe
         bottom: 0,
         right: globalStyles(theme).globalPadding.padding,
         width: wp("100%") - globalStyles().globalPadding.padding * 2,
+        borderEndWidth: 0,
+        display: 'flex',
+        alignItems: 'flex-end'
     },
     FooterTwoButtonsScreenContainer: {
         display: 'flex',

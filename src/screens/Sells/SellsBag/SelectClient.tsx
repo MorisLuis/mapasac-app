@@ -1,21 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '../../../context/ThemeContext';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
-import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
-import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSkeleton';
-import { globalFont } from '../../theme/appTheme';
+import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
+import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
+import { InventoryBagSkeleton } from '../../../components/Skeletons/InventoryBagSkeleton';
+import { globalFont } from '../../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
-import { getSearchClients } from '../../services/searchs';
-import { inputStyles } from '../../theme/UI/inputs';
-import { getClients } from '../../services/utils';
-import ClientInterface from '../../interface/utils';
-import { SellsNavigationProp } from '../../navigator/SellsNavigation';
-import useErrorHandler from '../../hooks/useErrorHandler';
-import FooterScreen from '../../components/Navigation/FooterScreen';
-import CardSelect from '../../components/Cards/CardSelect';
+import { getSearchClients } from '../../../services/searchs';
+import { inputStyles } from '../../../theme/UI/inputs';
+import { getClients } from '../../../services/utils';
+import ClientInterface from '../../../interface/utils';
+import { SellsNavigationProp } from '../../../navigator/SellsNavigation';
+import useErrorHandler from '../../../hooks/useErrorHandler';
+import FooterScreen from '../../../components/Navigation/FooterScreen';
+import CardSelect from '../../../components/Cards/CardSelect';
 
 export const SelectClient = () => {
     const { navigate } = useNavigation<SellsNavigationProp>();
