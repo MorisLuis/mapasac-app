@@ -154,6 +154,13 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         <ProductSellsCard
             product={item}
             onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
+            renderRightProp={() => {
+                return (
+                    <View>
+                        <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
+                    </View>
+                )
+            }}
         />
     ), [createSellLoading, bags]);
 

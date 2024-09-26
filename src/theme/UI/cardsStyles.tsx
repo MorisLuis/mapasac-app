@@ -31,8 +31,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     },
     dataItem: {
         display: "flex",
-        flexDirection: "row",
-        //marginBottom:0
+        flexDirection: "row"
     },
     dataItemText: {
         fontSize: globalFont.font_normal,

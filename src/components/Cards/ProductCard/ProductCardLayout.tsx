@@ -17,6 +17,7 @@ export interface ProductCardInterface<T extends ProductSellsInterface | ProductI
     deletingProduct?: boolean;
     children?: React.ReactNode;
     renderRight?: () => React.ReactNode;
+    renderRightProp?: () => React.ReactNode;
 }
 
 // Subcomponente reutilizable para la sección de datos

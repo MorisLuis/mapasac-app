@@ -13,11 +13,14 @@ export const ProductSellsCard = ({
     showDelete,
     onDelete,
     onClick,
-    deletingProduct
+    deletingProduct,
+    renderRightProp
 }: ProductCardInterface<ProductSellsInterface>) => {
 
     const { theme } = useTheme();
 
+
+    // This is renderRight default
     const renderRight = () => {
         return (
             <>
@@ -38,10 +41,10 @@ export const ProductSellsCard = ({
             onDelete={onDelete}
             onClick={onClick}
             deletingProduct={deletingProduct}
-            renderRight={renderRight}
+            renderRight={renderRightProp ? renderRightProp : renderRight}
         >
             <>
-                <ProductInfo label="Precio" value={format(parseFloat(product.precio as string))} />
+                <ProductInfo label="Precio" value={`${format(parseFloat(product.precio as string))} / ${quantityFormat(product.cantidad ?? 0)}`} />
                 <ProductInfo label="Importe" value={format(parseFloat(product.precio as string) * (product.cantidad ? product.cantidad : 0))} />
 
                 {product?.capa?.trim() && <ProductInfo label="Capa" value={product.capa.trim()} />}
