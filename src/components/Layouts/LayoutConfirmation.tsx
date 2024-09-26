@@ -11,6 +11,7 @@ import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';
 import FooterScreen from '../Navigation/FooterScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ModuleInterface } from '../../interface/utils';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -19,7 +20,7 @@ interface LayoutConfirmationInterface {
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     loadBags: () => Promise<void>;
     ListHeaderComponent?: () => React.JSX.Element;
-    Type: 'sells' | 'inventory' | 'sells-restaurant';
+    Type:  ModuleInterface['module'];
     onPost: () => Promise<void>;
     loadData: boolean;
     availableToPost: boolean;
@@ -46,7 +47,7 @@ const LayoutConfirmation = ({
     const { theme, typeTheme } = useTheme();
 
     const movementType = () => {
-        if (Type === 'inventory') {
+        if (Type === 'Inventory') {
             return 'Inventario'
         } else {
             return 'Venta'
@@ -54,7 +55,7 @@ const LayoutConfirmation = ({
     }
 
     const navigateProtectPage = () => {
-        if (Type === 'inventory') {
+        if (Type === 'Inventory') {
             return 'ScanneNavigation'
         } else {
             return 'SellsScreen'
@@ -81,7 +82,7 @@ const LayoutConfirmation = ({
                             <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{movementType()}</CustomText>
                         </View>
                         {
-                            Type === 'sells' &&
+                            Type === 'Sells' &&
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
                                 <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Total: </CustomText>
                                 <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{format(totalPrice as number)}</CustomText>

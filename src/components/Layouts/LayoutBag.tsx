@@ -26,6 +26,7 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import ButtonCustum from '../Inputs/ButtonCustum';
 import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
+import { ModuleInterface } from '../../interface/utils';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -34,7 +35,7 @@ interface LayoutBagInterface {
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     bags: CombinedProductInterface[];
     setBags: React.Dispatch<React.SetStateAction<ProductInterfaceBag[]>> | React.Dispatch<React.SetStateAction<ProductSellsInterfaceBag[]>>;
-    Type: 'sells' | 'inventory' | 'sells-restaurant';
+    Type: ModuleInterface['module']
 
     // Sells
     totalPrice?: number;
@@ -71,7 +72,7 @@ export const LayoutBag = ({
 
     const onPost = async () => {
         goBack();
-        if (Type === 'inventory') {
+        if (Type === 'Inventory') {
             navigate('confirmationScreen');
         } else {
             navigate('[Sells] - confirmationScreen', { client: undefined });
@@ -86,7 +87,7 @@ export const LayoutBag = ({
 
             if (product.error) return handleError(product.error);
 
-            if (Type === 'inventory') {
+            if (Type === 'Inventory') {
                 await resetAfterPostInventory()
             } else {
                 await resetAfterPost();
@@ -243,7 +244,7 @@ export const LayoutBag = ({
                     {/* FOOTER */}
                     <FooterTwoButtonsScreen
                         visible={bags.length > 0 && dataUploaded}
-                        visibleChildren={Type === "sells"}
+                        visibleChildren={Type === 'Sells'}
 
                         buttonTitle="Guardar"
                         buttonDisabled={false}

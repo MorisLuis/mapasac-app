@@ -1,4 +1,5 @@
 import UserInterface from "../../interface/user"
+import { ModuleInterface } from "../../interface/utils";
 
 export interface SettingsState {
     vibration?: boolean;
@@ -9,7 +10,7 @@ export interface SettingsState {
     codeBar?: string;
     codebarType?: number;
     startScanning?: boolean;
-    actualModule?: 'Sells' | "Sells-Restaurant" | 'Inventory';
+    actualModule:  ModuleInterface['module']
 }
 
 

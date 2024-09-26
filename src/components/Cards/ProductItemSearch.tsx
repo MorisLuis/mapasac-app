@@ -20,7 +20,6 @@ export const ProductItemSearch = ({
     fromModal
 }: ProductItemSearchInterface) => {
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     return (
         <TouchableOpacity style={ProductItemSearchStyles(theme, typeTheme).ProductItemSearch} onPress={onClick}>

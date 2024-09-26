@@ -3,6 +3,7 @@ import { SettingsContext } from './SettingsContext';
 import { settingsReducer } from './settingsReducer';
 import UserInterface from '../../interface/user';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { ModuleInterface } from '../../interface/utils';
 
 export interface SettingsInterface {
     vibration?: boolean;
@@ -13,7 +14,7 @@ export interface SettingsInterface {
     codeBar?: string;
     codebarType?: number;
     startScanning?: boolean;
-    actualModule?: 'Sells' | "Sells-Restaurant" | 'Inventory'
+    actualModule: ModuleInterface['module']
 }
 
 export const SettingsInitialState: SettingsInterface = {
@@ -91,7 +92,7 @@ export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
             handleGetCodebarType,
             handleStartScanning,
             updateBarCode,
-            actualModule: state.actualModule
+            actualModule: state.actualModule ?? 'Inventory'
         }}
         >
             {children}

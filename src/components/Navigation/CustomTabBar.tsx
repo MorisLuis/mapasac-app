@@ -10,9 +10,10 @@ import { CombineNavigationProp } from '../../navigator/AppNavigation';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import LayoutGrandient from '../Layouts/LayoutGrandient';
+import { ModuleInterface } from '../../interface/utils';
 
 interface CustomTabBarInterface {
-    Type: 'Sells' | 'Inventory' | 'Sells-Restaurant'
+    Type:  ModuleInterface['module'];
     renderTabButton?: (route: any, index: number) => React.JSX.Element;
     state?: TabNavigationState<ParamListBase>;
     absolute?: boolean;

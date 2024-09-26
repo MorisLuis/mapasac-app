@@ -5,6 +5,7 @@ import { SelectScreenTheme } from '../../theme/SelectScreenTheme'
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SettingsContext } from '../../context/settings/SettingsContext';
+import { handleColorWithModule } from '../../utils/handleColorWithModule';
 
 interface CardSelectInterface {
     onPress: () => void;
@@ -25,7 +26,7 @@ const CardSelect = ({
     const { actualModule } = useContext(SettingsContext);
 
     // Modify the color of the button depends of the module.
-    const modifyButtonColor = () => {
+    /* const modifyButtonColor = () => {
         let buttonColorNew: string = theme.color_primary;
 
         if (actualModule === 'Sells') {
@@ -35,13 +36,13 @@ const CardSelect = ({
         }
 
         return buttonColorNew
-    }
+    } */
 
     return (
         <TouchableOpacity
             style={[
                 SelectScreenTheme(theme, typeTheme).optionsContainer,
-                sameValue && { backgroundColor: modifyButtonColor() + "20" }
+                sameValue && { backgroundColor: handleColorWithModule({ actualModule }) + "40" }
             ]}
             onPress={onPress}
         >
@@ -65,7 +66,7 @@ const CardSelect = ({
 
             {
                 sameValue ?
-                    <Icon name='checkmark-circle' size={20} color={modifyButtonColor()} />
+                    <Icon name='checkmark-circle' size={20} color={handleColorWithModule({ actualModule })} />
                     :
                     <View style={SelectScreenTheme(theme, typeTheme).optionCheck}>
                     </View>
