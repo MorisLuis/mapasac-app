@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterfaceBag } from '../../../interface/productSells';
-import { ProductSellsCard } from '../../../components/Cards/ProductSellsCard';
+import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 

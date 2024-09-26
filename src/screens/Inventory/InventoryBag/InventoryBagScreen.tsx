@@ -1,9 +1,9 @@
 import React, { useCallback, useState, useContext } from 'react';
 import { Alert } from 'react-native';
-import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import { ProductInterfaceBag } from '../../../interface/product';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
+import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 
 export const InventoryBagScreen = () => {
 

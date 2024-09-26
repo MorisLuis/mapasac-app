@@ -29,15 +29,20 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
     footer_actions: {
         display: "flex",
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        gap: 10
     },
     footer_price: {
         display: "flex",
         flexDirection: "row",
+        alignItems: 'flex-end',
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
-        justifyContent: "space-between"
+        gap: 10
     },
     priceText: {
+        fontSize: globalFont.font_med,
+        fontFamily: 'Rubik-Bold'
+    },
+    priceLabel: {
         fontSize: globalFont.font_normal
     }
 })

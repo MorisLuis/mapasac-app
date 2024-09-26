@@ -51,11 +51,11 @@ export const LayoutBag = ({
 }: LayoutBagInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const searchInputRef = useRef<any>(null);
-    const { goBack, navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
-    const { resetAfterPost } = useContext(SellsBagContext);
+    const { resetAfterPost, numberOfItemsSells } = useContext(SellsBagContext);
     const { resetAfterPost: resetAfterPostInventory } = useContext(InventoryBagContext);
     const { handleError } = useErrorHandler()
+    const searchInputRef = useRef<any>(null);
+    const { goBack, navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
 
     const [searchText, setSearchText] = useState<string>('');
     const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
@@ -171,11 +171,37 @@ export const LayoutBag = ({
         loadBags();
     }, []);
 
+    // Primera condición: Si los bags están vacíos y los datos no se han cargado
+    if ((bags.length <= 0 && !dataUploaded) || cleanSearchText) {
+        return <InventoryBagSkeleton length={10} />
+    }
+
+    if (parseInt(numberOfItemsSells) <= 0) {
+        return (
+            <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                <EmptyMessageCard
+                    title="No tienes productos aún."
+                    message="Empieza a agregar productos al inventario"
+                    icon="rocket-outline"
+                />
+            </View>
+        )
+    };
+
+    if (loadingCleanBag) {
+        return (
+            <View>
+                <DotLoader />
+            </View>
+        )
+    };
+
     return (
         <>
             <SafeAreaView>
                 <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
+                    {/* Search Bar */}
                     <Searchbar
                         ref={searchInputRef}
                         placeholder="Buscar producto por nombre..."
@@ -183,11 +209,9 @@ export const LayoutBag = ({
                         value={searchText}
                         style={[
                             inputStyles(theme).searchBar,
-                            {
-                                marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
-                            },
-                            hideSearch && { display: 'none' }]
-                        }
+                            { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom },
+                            hideSearch && { display: 'none' }
+                        ]}
                         iconColor={theme.text_color}
                         placeholderTextColor={theme.text_color}
                         icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
@@ -195,8 +219,9 @@ export const LayoutBag = ({
                         inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
                     />
 
+
                     {
-                        (bags.length > 0 && dataUploaded) ?
+                        !(bags.length <= 0 && searchText.length > 0) ?
                             <FlatList
                                 style={InventoryBagScreenStyles(theme, typeTheme).content}
                                 data={bags}
@@ -205,91 +230,66 @@ export const LayoutBag = ({
                                 onEndReached={loadBags}
                                 onEndReachedThreshold={0.5}
                             />
-                            : (bags.length <= 0 && dataUploaded && !cleanSearchText) ?
-                                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                                    {
-                                        searchText !== "" ?
-                                            <EmptyMessageCard
-                                                title="No hay productos con ese nombre."
-                                                message='Intenta escribiendo algo diferente.'
-                                                icon='sad-outline'
-                                            />
-                                            :
-                                            <EmptyMessageCard
-                                                title="No tienes productos aún."
-                                                message='Empieza a agregar productos al inventario'
-                                                icon='rocket-outline'
-                                            />
-                                    }
-                                </View>
-                                :
-                                <InventoryBagSkeleton length={10} />
+                            :
+                            <EmptyMessageCard
+                                title="No hay productos con ese nombre."
+                                message="Intenta escribiendo algo diferente."
+                                icon="sad-outline"
+                            />
                     }
 
+
                     {/* FOOTER */}
-                    {
-                        (bags.length > 0 && dataUploaded) &&
+                    {bags.length > 0 && dataUploaded && (
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
-                            {
-                                Type === "sells" &&
+                            {Type === "sells" && (
                                 <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                                    <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceText}>Total:</CustomText>
+                                    <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
                                     <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
-                                        {
-                                            deletingProductId ? "Calculando..." : format(totalPrice || 0)
-                                        }
+                                        {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
                                     </CustomText>
                                 </View>
-                            }
+                            )}
                             <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
                                 <TouchableOpacity
                                     style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall, { width: "19%" }]}
                                     onPress={() => setOpenModalDecision(true)}
                                 >
-                                    <Icon name='trash-outline' color={iconColor} size={globalFont.font_normal} />
+                                    <Icon name="trash-outline" color={iconColor} size={globalFont.font_normal} />
                                 </TouchableOpacity>
 
                                 <ButtonCustum
-                                    title='Guardar'
+                                    title="Guardar"
                                     onPress={onPost}
-                                    buttonColor='green'
+                                    buttonColor="green"
                                     extraStyles={{ width: "79%" }}
                                     iconName="bookmark-outline"
                                 />
                             </View>
                         </View>
-                    }
+                    )}
 
-                    {/* LOADING INDICATOR */}
-                    {
-                        loadingCleanBag &&
-                        <View>
-                            <DotLoader />
-                        </View>
-                    }
                 </View>
             </SafeAreaView>
 
-            <ModalDecision
-                visible={openModalDecision}
-                message="Seguro de limpiar el inventario actual?"
-            >
+            {/* Modal */}
+            <ModalDecision visible={openModalDecision} message="Seguro de limpiar el inventario actual?">
                 <ButtonCustum
                     title="Limpiar carrito"
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
-                    buttonColor='red'
+                    buttonColor="red"
                     iconName="close"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
                 />
-
                 <ButtonCustum
                     title="Cancelar"
                     onPress={() => setOpenModalDecision(false)}
                     disabled={loadingCleanBag}
-                    buttonColor='white'
+                    buttonColor="white"
                 />
             </ModalDecision>
         </>
-    )
+    );
+
 }

@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, View } from 'react-native'
 
 import { getProducts, getTotalProducts } from '../../../services/products';
-import { ProductInventoryCard } from '../../../components/Cards/ProductInventoryCard';
 import ProductInterface from '../../../interface/product';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,6 +15,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';
 import { globalFont } from '../../../theme/appTheme';
 import Tag from '../../../components/Ui/Tag';
+import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 
 export const Inventory = () => {
 
