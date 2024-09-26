@@ -10,10 +10,37 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         padding: globalStyles(theme).globalPadding.padding
     },
     confirmationSells: {
-        borderBottomWidth: 1,
-        borderBottomColor: theme.color_border_tertiary,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        padding: globalStyles().globalPadding.padding / 3,
+        borderWidth: 0.2,
+        borderColor: theme.color_border,
+        borderRadius: globalStyles().borderRadius.borderRadius,
+        marginBottom: 30
     },
+    confirmationContainer: {
+        backgroundColor: theme.background_color_secondary,
+        padding: globalStyles().globalPadding.padding,
+        borderWidth: 0.2,
+        borderColor: theme.color_border,
+        borderRadius: globalStyles().borderRadius.borderRadius / 2
+    },
+    subtitleConfirmation: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        marginBottom: 15
+    },
+    confirmationItem: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10,
+        justifyContent: 'space-between'
+    },
+    confirmationItemLabel: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+
     confirmation: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
@@ -33,22 +60,16 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         paddingVertical: globalStyles(theme).globalPadding.padding,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
     },
-    confirmationItems: {
-        display: 'flex',
-    },
-    confirmationItems_number: {
-        fontSize: globalFont.font_big * 1.5,
-        color: theme.text_color
-    },
-    confirmationMovement: {
-        display: "flex",
-        flexDirection: 'row',
-        gap: 10
-    },
-    confirmationDataHeader: {
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom / 2
-    },
     paymentMethodContainer: {
+        backgroundColor: theme.background_color_secondary,
+        borderWidth: 0.3,
+        borderColor: theme.color_border,
+        padding: 10,
+        borderRadius: globalStyles().borderRadius.borderRadius,
+        marginBottom: 20
+    },
+
+    typeMethodContainer: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -58,11 +79,12 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     paymentMethodClient: {
         display: "flex",
         gap: 10,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        backgroundColor: theme.background_color
     },
     paymentMethodItem: {
         flex: 1,
-        backgroundColor: theme.background_color_tertiary,
+        backgroundColor: theme.background_color_secondary,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
@@ -71,7 +93,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     paymentMethodItemActive: {
         flex: 1,
-        backgroundColor: theme.color_tertiary,
+        backgroundColor: theme.color_purple,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
@@ -86,6 +108,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     confirmationText: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color,
+        fontWeight: 'bold'
     }
 })

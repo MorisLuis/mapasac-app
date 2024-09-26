@@ -8,17 +8,21 @@ interface FooterScreenInterface {
     buttonTitle: string;
     buttonOnPress: () => void;
     buttonDisabled: boolean;
+
+    visible?: boolean
 };
 
 const FooterScreen = ({
     buttonTitle,
     buttonOnPress,
-    buttonDisabled
+    buttonDisabled,
+
+    visible = true
 }: FooterScreenInterface ) => {
 
     const { typeTheme, theme } = useTheme();
 
-    return (
+    return visible && (
         <SafeAreaView style={uiNavigationStyles(theme, typeTheme).FooterScreen}>
             <View style={uiNavigationStyles(theme, typeTheme).FooterScreenContainer}>
                 <ButtonCustum

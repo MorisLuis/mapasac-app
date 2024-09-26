@@ -5,7 +5,6 @@ import { quantityFormat } from '../../../utils/quantityFormat';
 import { ProductSellsInterface } from '../../../interface/productSells';
 import { format } from '../../../utils/currency';
 import CustomText from '../../Ui/CustumText';
-import ProductInterface from '../../../interface/product';
 import { LayoutProductCard, ProductCardInterface, ProductInfo } from './ProductCardLayout';
 
 

@@ -14,9 +14,9 @@ interface CardButtonInterface {
     onPress: () => void;
     label: string;
     valueDefault: string;
-    color: 'purple' | 'green' | 'red' | 'blue';
-    control: Control<FormType, any>;
-    controlValue: keyof FormType;
+    color: 'purple' | 'green' | 'red' | 'blue' | 'black';
+    control?: Control<FormType, any>;
+    controlValue?: keyof FormType;
     icon?: string;
     isPrice?: boolean;
     specialValue?: string;
@@ -71,24 +71,33 @@ const CardButton = ({
                 <CustomText
                     style={[SellsDataScreenTheme(theme, typeTheme).label, { color: theme[`color_${color}`] }]}
                 >
-                    {label}
+                    {specialValue ?? label}
                 </CustomText>
             </View>
-            <Controller
-                control={control}
-                name={controlValue}
-                render={({ field: { value } }) => {
-                    const newValue = value ? handleValue(value) : valueDefault;
-                    useEffect(() => {
-                        setCurrentValue(newValue);
-                    }, [newValue]);
-                    return (
+            {
+                (control && controlValue) ?
+                    <Controller
+                        control={control}
+                        name={controlValue}
+                        render={({ field: { value } }) => {
+                            const newValue = value ? handleValue(value) : valueDefault;
+                            useEffect(() => {
+                                setCurrentValue(newValue);
+                            }, [newValue]);
+                            return (
+                                <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
+                                    {specialValue ? specialValue : newValue}
+                                </CustomText>
+                            );
+                        }}
+                    />
+                    : specialValue ?
                         <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                            {specialValue ? specialValue : newValue}
+                            {specialValue ?? specialValue}
                         </CustomText>
-                    );
-                }}
-            />
+                        :
+                        <></>
+            }
         </TouchableOpacity>
     );
 };

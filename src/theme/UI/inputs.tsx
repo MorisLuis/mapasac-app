@@ -55,7 +55,7 @@ export const selectStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color_secondary,
+        backgroundColor: theme.background_color,
         color: theme.text_color,
 
         paddingVertical: globalStyles(theme).globalPadding.padding,

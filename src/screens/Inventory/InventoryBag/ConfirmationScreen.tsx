@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 
 export const ConfirmationScreen = () => {
 
@@ -95,10 +96,10 @@ export const ConfirmationScreen = () => {
     };
 
     const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
-        <ProductInventoryConfirmationCard
+        <ProductInventoryCard
             product={item}
             onClick={() => navigation.navigate('[Modal] - editProductInBag', { product: item })}
-            disabled={createInventaryLoading}
+            //disabled={createInventaryLoading}
         />
     ), [createInventaryLoading]);
 

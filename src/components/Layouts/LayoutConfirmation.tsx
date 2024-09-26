@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
+import CustomText from '../Ui/CustumText';
 import { ProductInterfaceBag } from '../../interface/product';
 import { ProductSellsInterfaceBag } from '../../interface/productSells';
 import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
 import { ConfirmationSkeleton } from '../Skeletons/ConfirmationSkeleton';
-import { buttonStyles } from '../../theme/UI/buttons';
-import DotLoader from '../Ui/DotLaoder';
+import { globalFont } from '../../theme/appTheme';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';
-import CustomText from '../Ui/CustumText';
-import ButtonCustum from '../Inputs/ButtonCustum';
 import FooterScreen from '../Navigation/FooterScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -26,7 +25,6 @@ interface LayoutConfirmationInterface {
     availableToPost: boolean;
     buttonPostDisabled: boolean;
     numberOfItems: string;
-
     totalPrice?: number
 }
 
@@ -44,6 +42,8 @@ const LayoutConfirmation = ({
     numberOfItems,
     totalPrice
 }: LayoutConfirmationInterface) => {
+
+    console.log({ availableToPost })
 
     const { theme, typeTheme } = useTheme();
 
@@ -65,27 +65,33 @@ const LayoutConfirmation = ({
 
     const renderListHeaderComponent = () => {
         return (
-            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmation}>
-                <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationInfo}>
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems}>
-                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItems_number}>{numberOfItems}</CustomText>
-                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Productos afectados.</CustomText>
-                    </View>
-                    <View
-                        style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                        <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Tipo de movimiento:</CustomText>
-                        <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{movementType()}</CustomText>
-                    </View>
-                    {
-                        Type === 'sells' &&
-                        <View
-                            style={ConfirmationScreenStyles(theme, typeTheme).confirmationMovement}>
-                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Total:</CustomText>
-                            <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>{format(totalPrice as number)}</CustomText>
-                        </View>
-                    }
+            <>
+                <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
+                    <Icon name='checkmark-circle-sharp' color={theme.color_secondary} size={globalFont.font_normal} />
+                    <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_secondary }}>Confirmacion de pedido</CustomText>
                 </View>
-            </View>
+                <View style={ConfirmationScreenStyles(theme).confirmationSells}>
+
+                    <View style={ConfirmationScreenStyles(theme).confirmationContainer}>
+                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Productos afectados: </CustomText>
+                            <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{numberOfItems}</CustomText>
+                        </View>
+
+                        <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                            <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Tipo de movimiento: </CustomText>
+                            <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{movementType()}</CustomText>
+                        </View>
+                        {
+                            Type === 'sells' &&
+                            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                                <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Total: </CustomText>
+                                <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{format(totalPrice as number)}</CustomText>
+                            </View>
+                        }
+                    </View>
+                </View>
+            </>
         )
     }
 
@@ -95,43 +101,53 @@ const LayoutConfirmation = ({
         navigatePage: navigateProtectPage()
     });
 
-    return !protectThisPage ? (
+
+    if (protectThisPage) {
+        return (
+            <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+                <View>
+                    <CustomText>Redireccionando sells...</CustomText>
+                </View>
+            </SafeAreaView>
+        )
+    }
+
+    if (!loadData) {
+        return (
+            <ConfirmationSkeleton />
+        )
+    }
+
+    return (
         <SafeAreaView >
             <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-                {loadData ? (
-                    <FlatList
-                        data={data}
-                        renderItem={renderItem}
-                        keyExtractor={item => `${item.idenlacemob}`} // Asegúrate de que `idenlacemob` esté presente en ambos tipos
-                        onEndReached={loadBags}
-                        onEndReachedThreshold={0.5}
-                        ListHeaderComponent={
-                            <>
-                                {renderListHeaderComponent()}
-                                {ListHeaderComponent?.()}
-                            </>
-                        }
-                    />
-                ) : (
-                    <ConfirmationSkeleton />
-                )}
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => `${item.idenlacemob}`}
+                    onEndReached={loadBags}
+                    onEndReachedThreshold={0.5}
+                    ListHeaderComponent={
+                        <>
+                            {renderListHeaderComponent()}
+                            {ListHeaderComponent?.()}
+                            <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
+                                <Icon name='pricetags-sharp' color={theme.text_color} size={globalFont.font_normal} />
+                                <CustomText style={{ fontFamily: 'Rubik-Bold' }}>Productos</CustomText>
+                            </View>
+                        </>
+                    }
+                />
 
-                {availableToPost && (
-                    <FooterScreen
-                        buttonOnPress={onPost}
-                        buttonDisabled={buttonPostDisabled}
-                        buttonTitle='Confirmar'
-                    />
-                )}
+                <FooterScreen
+                    buttonOnPress={onPost}
+                    buttonDisabled={buttonPostDisabled}
+                    buttonTitle='Confirmar'
+                    visible={availableToPost}
+                />
             </View>
         </SafeAreaView>
     )
-        :
-        <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-            <View>
-                <CustomText>Redireccionando sells...</CustomText>
-            </View>
-        </SafeAreaView>
 
 };
 

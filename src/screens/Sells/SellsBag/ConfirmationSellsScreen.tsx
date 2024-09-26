@@ -6,12 +6,10 @@ import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/nati
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
-import { ProductSellsConfirmationCard } from '../../../components/Cards/ProductSellsConfirmationCard';
 import { postSells, postSellsInterface } from '../../../services/sells';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { globalFont, globalStyles } from '../../../theme/appTheme';
+import { globalFont } from '../../../theme/appTheme';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
-import { selectStyles } from '../../../theme/UI/inputs';
 import ClientInterface from '../../../interface/utils';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -19,6 +17,8 @@ import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigatio
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import CustomText from '../../../components/Ui/CustumText';
+import CardButton from '../../../components/Cards/CardButton';
+import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -57,7 +57,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                 comments
             }
             const postSell = await postSells(sellBody);
-            
+
             if (postSell.error) {
                 handleError(postSell.error);
                 return;
@@ -82,7 +82,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const loadBags = async () => {
         if (isLoading || !hasMore) return;
 
-        try {            
+        try {
             setIsLoading(true);
             const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
 
@@ -91,7 +91,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                 handleError(newBags.error);
                 return;
             }
-    
+
             if (newBags && newBags.length > 0) {
                 setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
                 setPage(page + 1);
@@ -127,87 +127,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         setTypeSelected(client)
     }
 
-    const renderScreen = () => {
-        return (
-            <SafeAreaView>
-                <View>
-                    {
-                        methodPayment !== 0 &&
-                        <View style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: "space-between",
-                            alignItems: 'center'
-                        }}>
-                            {
-                                !openConfirmationInfo ? <CustomText>Metodo de pago</CustomText> : <View></View>
-                            }
-                            <TouchableOpacity
-                                onPress={() => setOpenConfirmationInfo(!openConfirmationInfo)}
-                                style={{
-                                    display: "flex",
-                                    borderWidth: 1,
-                                    backgroundColor: theme.background_color_tertiary,
-                                    borderColor: theme.color_border_tertiary,
-                                    padding: globalStyles(theme).globalPadding.padding / 4,
-                                    borderRadius: globalStyles(theme).borderRadius.borderRadius
-                                }}
-                            >
-                                <Icon name={openConfirmationInfo ? 'chevron-down-outline' : 'chevron-up-outline'} color={iconColor} size={globalFont.font_normal} />
-                            </TouchableOpacity>
-                        </View>
-                    }
-
-                    {
-                        openConfirmationInfo &&
-                        <>
-                            <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationDataHeader}>
-                                <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationText}>Forma de pago</CustomText>
-                            </View>
-
-                            <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
-                                <TouchableOpacity
-                                    style={methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
-                                    onPress={() => setMethodPayment(1)}
-                                >
-                                    <Icon name='card-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <CustomText>Credito</CustomText>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
-                                    onPress={() => setMethodPayment(2)}
-                                >
-                                    <Icon name='cash-outline' color={iconColor} size={globalFont.font_normal} />
-                                    <CustomText>Contado</CustomText>
-                                </TouchableOpacity>
-                            </View>
-
-                            {
-                                methodPayment === 1 &&
-                                <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                                    <TouchableOpacity onPress={() => navigate("[Modal] - SelectClient")} style={selectStyles(theme).input}>
-                                        <CustomText>{typeSelected ? typeSelected.nombres : 'Selecciona el cliente...'}</CustomText>
-                                    </TouchableOpacity>
-                                </View>
-                            }
-
-                            {
-                                methodPayment !== 0 &&
-                                <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                                    <TextInputContainer label='Comentarios' setComments={setComments} value={comments} />
-                                </View>
-                            }
-                        </>
-                    }
-
-                </View>
-            </SafeAreaView>
-        )
-    }
-
     const refreshBags = async () => {
 
-        try {            
+        try {
             setIsLoading(true);
             const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
 
@@ -229,12 +151,60 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
-        <ProductSellsConfirmationCard
+        <ProductSellsCard
             product={item}
             onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
-            disabled={createSellLoading}
         />
     ), [createSellLoading, bags]);
+
+
+    const renderScreen = () => {
+        return (
+            <SafeAreaView>
+                <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
+                    <Icon name='card-sharp' color={theme.color_red} size={globalFont.font_normal} />
+                    <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>
+                </View>
+
+                {
+                    openConfirmationInfo &&
+                    <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
+                        <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
+                            <TouchableOpacity
+                                style={methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                                onPress={() => setMethodPayment(1)}
+                            >
+                                <Icon name='card-sharp' color={iconColor} size={globalFont.font_normal} />
+                                <CustomText>Credito</CustomText>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                                onPress={() => setMethodPayment(2)}
+                            >
+                                <Icon name='cash-sharp' color={iconColor} size={globalFont.font_normal} />
+                                <CustomText>Contado</CustomText>
+                            </TouchableOpacity>
+                        </View>
+
+                        <CardButton
+                            onPress={() => navigate("[Modal] - SelectClient")}
+                            label='Selecciona el cliente'
+                            valueDefault='Seleccionar la clase'
+                            color='black'
+                            icon='people-sharp'
+                            specialValue={typeSelected ? typeSelected.nombres : undefined}
+                        />
+
+                        <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
+                            <TextInputContainer setComments={setComments} value={comments} />
+                        </View>
+                    </View>
+                }
+            </SafeAreaView>
+        )
+    }
+
 
     useFocusEffect(
         useCallback(() => {

@@ -15,7 +15,7 @@ interface TextInputContainerInterface {
 
 export const TextInputContainer = ({
     placeholder = "Escribe algo...",
-    label = "label",
+    label,
     setComments,
     value
 }: TextInputContainerInterface) => {
@@ -29,19 +29,32 @@ export const TextInputContainer = ({
 
     return (
         <>
-            <CustomText style={{
-                fontSize: globalFont.font_normal,
-                color: theme.text_color
-            }}
-            >{label}</CustomText>
+            {
+                label &&
+                <CustomText style={{
+                    fontSize: globalFont.font_normal,
+                    color: theme.text_color
+                }}
+                >{label}</CustomText>
+            }
 
             <TextInput
-                style={[inputStyles(theme).input, { height: height, minHeight: 50, marginBottom: globalStyles(theme).globalMarginBottom.marginBottom }]}
+                style={[{
+                    height: height,
+                    minHeight: 50,
+                    marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+                    backgroundColor: theme.background_color_secondary,
+                    paddingHorizontal: globalStyles(theme).globalPadding.padding, // Aquí está el padding horizontal
+                    paddingVertical: 10, // Puedes ajustar el padding vertical si es necesario
+                    borderWidth: 0.5,
+                    borderColor: theme.color_border,
+                    borderRadius: globalStyles().borderRadius.borderRadius
+                }]}
                 onChangeText={handleTextChange}
                 multiline={true}
                 placeholder={placeholder}
                 onContentSizeChange={(event) => setHeight(event.nativeEvent.contentSize.height)}
-                placeholderTextColor={theme.color_gray}
+                placeholderTextColor={theme.text_color}
                 value={value}
             />
         </>
