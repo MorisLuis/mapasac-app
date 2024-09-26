@@ -6,40 +6,80 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SuccesMessage: {
         display: "flex",
+        alignItems: 'center',
         height: "100%",
         width: "100%",
-        backgroundColor: theme.background_color,
-        zIndex: 9999,
-        padding: globalStyles(theme).globalPadding.padding,
-        justifyContent: "center"
-    },
-    header: {
-        position: 'absolute',
-        top: hp("5%"),
-        left: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color_tertiary,
-        borderWidth: 1,
-        borderColor: theme.color_border_secondary,
-        borderRadius: 100,
-        padding: 8,
+        paddingVertical: 100
     },
     content: {
-        padding: globalStyles(theme).globalPadding.padding,
-    },
-    title: {
-        fontSize: globalFont.font_big,
         width: "80%",
-        color: typeTheme === 'light' ? theme.text_color : theme.color_tertiary,
-        fontWeight: "bold",
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    text: {
+    headerText: {
+        textAlign: 'center',
+        fontSize: globalFont.font_med,
+        width: "80%",
+        color: typeTheme === 'light' ? theme.text_color : theme.text_color,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
+        fontFamily: 'Rubik-Bold'
+    },
+    dateContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        backgroundColor: theme.color_tertiary + "40",
+        padding: 10,
+        borderRadius: globalStyles().borderRadius.borderRadius * 2,
+        marginBottom: globalStyles().globalMarginBottom.marginBottom
+    },
+    dataContainer: {
+        padding: globalStyles().globalPadding.padding / 4,
+        borderWidth: 0.2,
+        borderColor: theme.color_border,
+        borderRadius: globalStyles().borderRadius.borderRadius,
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2,
+        width: "100%"
+    },
+    dataContainerInterior: {
+        backgroundColor: theme.background_color_secondary,
+        padding: globalStyles().globalPadding.padding,
+        borderWidth: 0.2,
+        borderColor: theme.color_border,
+        borderRadius: globalStyles().borderRadius.borderRadius / 2
+    },
+    dataHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 5
+    },
+    dataTitle: {
         fontSize: globalFont.font_normal,
-        width: "80%",
-        color: theme.color_tertiary,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        color: theme.color_green,
+        fontFamily: 'Rubik-Bold'
     },
-    actions: {
-        width: "40%",
+    dataDivider: {
+        height: 0.2,
+        backgroundColor: theme.color_border,
+        width: "100%",
+        marginVertical: 10
+    },
+    confirmationItem: {
+        display: "flex",
+        flexDirection: 'row',
+        gap: 10,
+        justifyContent: 'space-between'
+    },
+    confirmationItemLabel: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color
+    },
+    confirmationText: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color,
+        fontWeight: 'bold'
     }
 })

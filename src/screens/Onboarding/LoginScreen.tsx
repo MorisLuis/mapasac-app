@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView, Button } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -13,12 +13,15 @@ import { useForm } from '../../hooks/useForm';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
+import { AppNavigationProp } from '../../navigator/AppNavigation';
+import { useNavigation } from '@react-navigation/native';
 
 
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn, status } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
     const [loadingLogin, setLoadingLogin] = useState(false)
+    const navigation = useNavigation<AppNavigationProp>();
 
     const { usr, pas, onChange } = useForm({
         usr: '',
@@ -95,6 +98,16 @@ export const LoginScreen = () => {
 
                     </View>
                 </View>
+
+                <ButtonCustum
+                    title="Iniciar sesión"
+                    onPress={() => {
+                        console.log("navigate!!")
+                        navigation.navigate('succesMessageScreen', { message: 'ola', redirection: 'LoginPage' })
+                    }}
+                    disabled={loadingLogin}
+                    buttonColor='green'
+                />
             </SafeAreaView>
         </KeyboardAvoidingView>
         :

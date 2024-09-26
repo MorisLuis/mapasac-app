@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, RouteProp } from '@react-navigation/native';
 import { SuccesMessageScreenStyles } from '../theme/SuccesMessageScreenTheme';
@@ -7,6 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { AppNavigationProp, AppNavigationStackParamList } from '../navigator/AppNavigation';
 import CustomText from '../components/Ui/CustumText';
+import { globalFont } from '../theme/appTheme';
+import FooterScreen from '../components/Navigation/FooterScreen';
 
 type SuccesMessageScreenRouteProp = RouteProp<AppNavigationStackParamList, 'succesMessageScreen'>;
 
@@ -15,7 +17,7 @@ interface SuccesMessageProps {
 }
 
 export const SuccesMessage = ({ route }: SuccesMessageProps) => {
-    const { message, redirection } = route.params;
+    const { message, redirection } = route.params ?? {};
     const navigation = useNavigation<AppNavigationProp>();
 
     const { theme, typeTheme } = useTheme();
@@ -26,18 +28,49 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
     };
 
     return (
-        <SafeAreaView style={{ backgroundColor: theme.background_color }}>
-            <View style={[SuccesMessageScreenStyles(theme).SuccesMessage]}>
-                <TouchableOpacity
-                    style={[SuccesMessageScreenStyles(theme).header]}
-                    onPress={handleContinue}
-                >
-                    <Icon name="close-outline" size={24} color={iconColor} />
-                </TouchableOpacity>
-                <View style={SuccesMessageScreenStyles(theme, typeTheme).content}>
-                    <Icon name="checkmark-done-outline" size={hp("10%")} color={iconColor} />
-                    <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).title}>{message}</CustomText>
+        <SafeAreaView>
+            <View style={SuccesMessageScreenStyles(theme).SuccesMessage}>
+                <View style={SuccesMessageScreenStyles(theme).content}>
+                    <Icon name="checkmark-done-outline" size={hp("10%")} color={theme.color_green} />
+                    <CustomText style={SuccesMessageScreenStyles(theme).headerText}>Venta realizada con existo</CustomText>
+
+                    <View style={SuccesMessageScreenStyles(theme).dateContainer}>
+                        <Icon name="calendar" size={globalFont.font_normal} color={theme.color_green} />
+                        <CustomText style={{ color: theme.text_color }}>SE REALIZO: 5:00 PM, 27 ENERO 2024</CustomText>
+                    </View>
+
+                    <View style={SuccesMessageScreenStyles(theme).dataContainer}>
+                        <View style={SuccesMessageScreenStyles(theme).dataContainerInterior}>
+                            <View style={SuccesMessageScreenStyles(theme).dataHeader}>
+                                <Icon name="stats-chart" size={globalFont.font_normal} color={theme.color_green} />
+                                <CustomText style={SuccesMessageScreenStyles(theme).dataTitle}>Resumen</CustomText>
+                            </View>
+
+                            <View style={SuccesMessageScreenStyles(theme).dataDivider}></View>
+
+                            <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
+                                <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Productos afectados: </CustomText>
+                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>3</CustomText>
+                            </View>
+
+                            <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
+                                <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Tipo de movimiento: </CustomText>
+                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>Venta</CustomText>
+                            </View>
+
+                            <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
+                                <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Total importe: </CustomText>
+                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText, { color: theme.color_green }]}>$120,00 MXN</CustomText>
+                            </View>
+                        </View>
+                    </View>
                 </View>
+
+                <FooterScreen
+                    buttonDisabled={false}
+                    buttonOnPress={handleContinue}
+                    buttonTitle='Continuar'
+                />
             </View>
         </SafeAreaView>
     );
