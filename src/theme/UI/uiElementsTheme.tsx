@@ -119,6 +119,17 @@ export const uiNavigationStyles = (theme: Theme, typeTheme?: string) => StyleShe
     },
     FooterScreenContainer: {
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom
+    },
+    FooterTwoButtonsScreen: {
+        backgroundColor: theme.background_color,
+        position: 'absolute',
+        bottom: 0,
+        right: globalStyles(theme).globalPadding.padding,
+        width: wp("100%") - globalStyles().globalPadding.padding * 2,
+    },
+    FooterTwoButtonsScreenContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 10
     }
-
 });

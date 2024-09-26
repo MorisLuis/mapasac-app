@@ -25,6 +25,7 @@ import { CombinedSellsAndInventoryNavigationStackParamList } from '../../navigat
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import ButtonCustum from '../Inputs/ButtonCustum';
+import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -240,35 +241,26 @@ export const LayoutBag = ({
 
 
                     {/* FOOTER */}
-                    {bags.length > 0 && dataUploaded && (
-                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer}>
-                            {Type === "sells" && (
-                                <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                                    <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
-                                    <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
-                                        {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
-                                    </CustomText>
-                                </View>
-                            )}
-                            <View style={InventoryBagScreenStyles(theme, typeTheme).footer_actions}>
-                                <TouchableOpacity
-                                    style={[buttonStyles(theme).button, buttonStyles(theme).white, globalStyles(theme).globalMarginBottomSmall, { width: "19%" }]}
-                                    onPress={() => setOpenModalDecision(true)}
-                                >
-                                    <Icon name="trash-outline" color={iconColor} size={globalFont.font_normal} />
-                                </TouchableOpacity>
+                    <FooterTwoButtonsScreen
+                        visible={bags.length > 0 && dataUploaded}
+                        visibleChildren={Type === "sells"}
 
-                                <ButtonCustum
-                                    title="Guardar"
-                                    onPress={onPost}
-                                    buttonColor="green"
-                                    extraStyles={{ width: "79%" }}
-                                    iconName="bookmark-outline"
-                                />
-                            </View>
+                        buttonTitle="Guardar"
+                        buttonDisabled={false}
+                        buttonOnPress={onPost}
+
+                        buttonSmallOnPress={() => setOpenModalDecision(true)}
+                        buttonSmallDisable={false}
+                        buttonSmallIcon="trash-outline"
+                    >
+                        {/* POSSIBLE AS PROP */}
+                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
+                            <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
+                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                                {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
+                            </CustomText>
                         </View>
-                    )}
-
+                    </FooterTwoButtonsScreen>
                 </View>
             </SafeAreaView>
 
