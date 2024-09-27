@@ -46,7 +46,7 @@ export const SelectAmountScreen = ({
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.select({ ios: 60, android: 80 })}
+            keyboardVerticalOffset={Platform.select({ ios: 120, android: 120 })}
         >
             <View style={SelectAmountScreenTheme(theme, typeTheme).SelectAmountScreen}>
                 <View style={SelectAmountScreenTheme(theme, typeTheme).header}>

@@ -75,6 +75,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
 
     const onSubmit = useCallback(() => {
         const { pieces, price, typeClass, units, capa, idinveclas } = getValues();
+
         if (!idinveclas && hasClasses) return console.log("Information is missing");
 
         const parsedPieces = parseFloat(pieces);
@@ -129,13 +130,13 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
         try {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
-            if (!product) return
-            if (product.error) return handleError(product.error);
 
-            setValue('price', product?.precio.toString());
-            setValue('units', { value: product?.unidad_nombre?.trim(), id: product?.unidad });
             setValue('capa', capa);
             setValue("idinveclas", idinveclas);
+            if (!product) return
+            if (product.error) return handleError(product.error);
+            setValue('price', product?.precio.toString());
+            setValue('units', { value: product?.unidad_nombre?.trim(), id: product?.unidad });
             if (typeClass) setValue('typeClass', { id: typeClass.id, value: typeClass.value });
 
         } catch (error) {
@@ -182,6 +183,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     useEffect(() => {
         if (!productSellData) return;
         const { idinvearts, capa, idinveclas } = productSellData ?? {};
+        console.log({idinvearts, capa, idinveclas})
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
 
@@ -200,19 +202,9 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
                 </View>
 
                 <ImageContainerCustum
-                    imageValue=';'
+                    imageValue={image}
                     size="small"
                 />
-
-                {/* 
-                 <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                                {
-                                    !haveClasses ? "No tiene clase" :
-                                        value ? ((value?.rcapa && value?.rcapa?.trim() !== "") ? value?.rcapa?.trim() : value?.clase?.trim())
-                                            : "Selecciona la clase"
-                                }
-                            </CustomText>
-                */}
 
                 <CardButton
                     onPress={handleGoToClassScreen}

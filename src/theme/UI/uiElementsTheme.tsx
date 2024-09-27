@@ -49,9 +49,9 @@ export const uiImageCustumContainerStyles = (theme: Theme, typeTheme?: string) =
     },
     imageBackground: {
         maxHeight: 180,
-        height: hp("20%"),
         width: hp("20%"),
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        backgroundColor: theme.background_color,
         shadowOffset: {
             width: 10,
             height: 10,
@@ -61,7 +61,6 @@ export const uiImageCustumContainerStyles = (theme: Theme, typeTheme?: string) =
     },
     image: {
         position: 'absolute',
-        resizeMode: 'contain',
         height: '100%',
         width: "100%",
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

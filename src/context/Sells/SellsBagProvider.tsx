@@ -24,6 +24,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const handleUpdateSummary = async () => {
         if(status !== 'authenticated' ) return;
         try {
+            console.log("handleUpdateSummary")
             const total = await getTotalProductsInBag({ opcion: 2, mercado: true });
             if (total?.error) return handleError(total.error);
 
