@@ -10,7 +10,7 @@ const getClients = async ({ limit, page } : getClientsInterface ) => {
         const { data } = await api.get(`/api/utils/clients?limit=${limit}&page=${page}`);
         return data.clients
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 

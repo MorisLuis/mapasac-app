@@ -30,7 +30,6 @@ export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => S
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
-        //backgroundColor: theme.color_tertiary + "40",
         padding: 10,
         borderRadius: globalStyles().borderRadius.borderRadius * 2,
         marginBottom: globalStyles().globalMarginBottom.marginBottom
@@ -58,7 +57,6 @@ export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => S
     },
     dataTitle: {
         fontSize: globalFont.font_normal,
-        //color: theme.color_green,
         fontFamily: 'Rubik-Bold'
     },
     dataDivider: {

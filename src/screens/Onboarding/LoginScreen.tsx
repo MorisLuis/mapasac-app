@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, TouchableOpacity, Image, SafeAreaView, Button } from 'react-native';
+import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -92,14 +92,12 @@ export const LoginScreen = () => {
                     />
 
                     <View style={LoginScreenStyles(theme).buttonContainer}>
-
                         <ButtonCustum
                             title="Iniciar sesión"
                             onPress={onLogin}
                             disabled={loadingLogin}
                             buttonColor='green'
                         />
-
                     </View>
                 </View>
             </SafeAreaView>

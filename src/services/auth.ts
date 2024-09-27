@@ -10,7 +10,7 @@ const postLogin = async ({ usr, pas }: postLoginInterface) => {
         const { data } = await api.post('/api/auth/login', { usr, pas });
         return data;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 
@@ -25,7 +25,7 @@ const renewLogin = async (token: string) => {
         });
         return resp as any;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }

@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import LayoutGrandient from './LayoutGrandient';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 interface LayoutSellInterface {
     renderItem: ({ item }: { item: ProductSellsInterface }) => React.JSX.Element;
@@ -25,6 +26,7 @@ export const LayoutSell = ({
 }: LayoutSellInterface) => {
 
     const { typeTheme, theme } = useTheme();
+    const { status } = useContext(AuthContext);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const { handleUpdateSummary } = useContext(SellsBagContext);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -45,7 +47,6 @@ export const LayoutSell = ({
             if (totalprice.error) return handleError(totalprice.error)
             setTotalPrice(parseFloat(totalprice ?? 0));
         } catch (error: any) {
-            console.log({handleGetPriceE: error})
             handleError(error);
         };
     };
@@ -96,6 +97,7 @@ export const LayoutSell = ({
     );
 
     useEffect(() => {
+        if(status !== 'authenticated' ) return;
         handleGetPrice();
     }, [handleUpdateSummary]);
 
@@ -106,7 +108,7 @@ export const LayoutSell = ({
                     {products.length > 1 ?
                         <>
                             <View style={SellsScreenStyles(theme).header}>
-                            <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
+                                <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
                                 <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
                                 <CustomText style={[SellsScreenStyles(theme).header_total]}>{format(totalPrice)}</CustomText>
                             </View>

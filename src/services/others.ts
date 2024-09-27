@@ -8,7 +8,7 @@ export const getModules = async () => {
         const modules = getModules.data.modules;
         return modules;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }

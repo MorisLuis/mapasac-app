@@ -9,7 +9,7 @@ const getProductsSells = async (PageNumber: number) => {
         return products
     } catch (error: any) {
         console.log({error})
-        return { error: error };
+        return { error: { ...error } };
     }
 
 };
@@ -21,7 +21,7 @@ const getProductsSellsFromFamily = async (cvefamilia: number) => {
         const products = getProduct.data.products;
         return products;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 };
@@ -32,7 +32,7 @@ const getUnits = async () => {
         const getUnits = await api.get(`/api/product/sells/units`);
         return getUnits.data.units;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -50,7 +50,7 @@ const getProductByEnlacemob = async ({ idinvearts, idinveclas, capa }: getProduc
         const product = getProduct.data.product;
         return product;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -63,7 +63,7 @@ const getTotalProductSells = async () => {
         return total;
     } catch (error: any) {
         console.log({error})
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -75,7 +75,7 @@ const getTotalClassesSells = async (cvefamilia: number) => {
         const total = getProduct.data.total;
         return total
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -87,7 +87,7 @@ const getIdinveartsProduct = async (cvefamilia: number) => {
         const product = getProduct.data.product;
         return product
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }

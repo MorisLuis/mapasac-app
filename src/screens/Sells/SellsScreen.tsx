@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { LayoutSell } from '../../components/Layouts/LayoutSell';

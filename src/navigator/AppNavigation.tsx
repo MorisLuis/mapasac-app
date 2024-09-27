@@ -1,7 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsContext } from '../context/settings/SettingsContext';
-import { TESTAPP } from "@env";
 
 // Screens
 import { LoginScreen } from '../screens/Onboarding/LoginScreen';
@@ -13,6 +12,8 @@ import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ClosingScreen } from '../screens/ClosingScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
 import { LoadingScreen } from '../screens/LoadingScreen';
+import { ModuleInterface } from '../interface/utils';
+import { SessionExpiredScreen } from '../screens/SessionExpired';
 
 // useNavigation() type. 
 export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
@@ -25,6 +26,7 @@ export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationS
 export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;
     ClosingPage: undefined;
+    SessionExpiredScreen: undefined;
     LoadingPage?: { message?: string, loading?: boolean };
 
     // Login
@@ -36,7 +38,12 @@ export type AppNavigationStackParamList = {
     ProfileNavigation: undefined;
     SellsNavigation: undefined;
 
-    succesMessageScreen: { message: string, redirection: keyof AppNavigationStackParamList };
+    succesMessageScreen: {
+        redirection: keyof AppNavigationStackParamList,
+        from: ModuleInterface['module'],
+        numberOfProducts: string;
+        importe?: number
+    };
 };
 
 const Stack = createNativeStackNavigator<AppNavigationStackParamList>();
@@ -44,33 +51,35 @@ const Stack = createNativeStackNavigator<AppNavigationStackParamList>();
 export const AppNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
 
-    const authScreens = TESTAPP !== 'FALSE' ? (
+    const stackScreens = useMemo(() => (
         <>
             <Stack.Screen
                 name="StartupScreen"
                 component={StartupScreen}
                 options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+                name='SessionExpiredScreen'
+                component={SessionExpiredScreen}
+                options={{ headerShown: false }}
+            />
+
             <Stack.Screen
                 name="LoginPage"
                 component={LoginScreen}
-                options={{ headerShown: false }}
-            />
-        </>
-    ) : null;
-
-    const stackScreens = useMemo(() => (
-        <>
-            {authScreens}
-            <Stack.Screen
-                name="OnboardingScreen"
-                component={OnboardingScreen}
                 options={{ headerShown: false }}
             />
 
             <Stack.Screen
                 name='LoadingPage'
                 component={LoadingScreen}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="OnboardingScreen"
+                component={OnboardingScreen}
                 options={{ headerShown: false }}
             />
 
@@ -111,7 +120,7 @@ export const AppNavigation = () => {
             />
 
         </>
-    ), [authScreens, handleCameraAvailable, updateBarCode]);
+    ), [handleCameraAvailable, updateBarCode]);
 
     return (
         <Stack.Navigator>

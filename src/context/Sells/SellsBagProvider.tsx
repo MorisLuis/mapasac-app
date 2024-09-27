@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import { SellsBagContext } from './SellsBagContext';
 import { sellsBagReducer } from './SellsBagReducer';
 import EnlacemobInterface from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;
@@ -18,8 +19,10 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const [state, dispatch] = useReducer(sellsBagReducer, SellsBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
     const { handleError } = useErrorHandler();
+    const { status } = useContext(AuthContext);
 
     const handleUpdateSummary = async () => {
+        if(status !== 'authenticated' ) return;
         try {
             const total = await getTotalProductsInBag({ opcion: 2, mercado: true });
             if (total?.error) return handleError(total.error);
@@ -31,7 +34,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
             dispatch({ type: '[SellsBag] - Update Summary', payload: orderSummary });
         } catch (error) {
             handleError(error)
-
+            return;
         } finally {
             setProductAdded(false);
         }
@@ -53,7 +56,6 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const product = await deleteProductInBag({ idenlacemob, mercado: true });
             if (product?.error) return handleError(product.error);
-
             setProductAdded(true);
         } catch (error) {
             handleError(error)

@@ -22,7 +22,7 @@ const updateCodeBar = async ({
 
         return codebar as any;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 

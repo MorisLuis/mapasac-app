@@ -2,7 +2,7 @@ import React from 'react'
 import { ActivityIndicator, Image, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import CustomText from '../components/Ui/CustumText';
-import { LoadingScreenStyles } from '../theme/LoadingScrenTheme';
+import { LoadingScreenStyles } from '../theme/LoadingScreenTheme';
 
 interface LoadingScreenInterface {
     message?: string;

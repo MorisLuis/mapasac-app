@@ -6,7 +6,7 @@ const postInventory = async () => {
         const data = await api.post('/api/invearts/inventory');
         return data as any;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     };
 
 }

@@ -8,7 +8,7 @@ const getProducts = async (PageNumber: number) => {
         const products = getProduct.data.products;
         return products
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     };
 
 }
@@ -21,7 +21,7 @@ const getProductDetails = async (idinvearts: number) => {
         const product = getProduct.data.product;
         return product
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -34,7 +34,7 @@ const getProductByCodeBar = async ({ codeBar }: { codeBar: string }) => {
         const product = getProduct.data.product;
         return product
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 };
@@ -46,7 +46,7 @@ const getProductByClave = async ({ clave }: { clave: string }) => {
         const product = getProduct.data.product;
         return product;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 };
@@ -58,7 +58,7 @@ const getProductByNoArticulo = async ({ noarticulo }: { noarticulo: string }) =>
         const product = getProduct.data.product;
         return product
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 };
@@ -72,7 +72,7 @@ const getTotalProducts = async () => {
         const total = getProduct.data.total;
         return total;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -104,7 +104,7 @@ const updateProduct = async ({
 
         return product as any;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     } finally {
         onFinish?.()
     }

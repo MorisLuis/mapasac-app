@@ -34,7 +34,11 @@ export const ConfirmationScreen = () => {
 
             resetAfterPost();
             setTimeout(() => {
-                navigation.navigate('succesMessageScreen', { message: "Se ha generado con exito su inventario.", redirection: 'InventoryNavigation' });
+                navigation.navigate('succesMessageScreen', { 
+                    redirection: 'InventoryNavigation',
+                    from: 'Inventory',
+                    numberOfProducts: numberOfItems
+                });
             }, 500);
 
         } catch (error: any) {
@@ -113,7 +117,7 @@ export const ConfirmationScreen = () => {
             data={bags}
             renderItem={renderItem}
             loadBags={loadBags}
-            Type="inventory"
+            Type='Inventory'
             onPost={onPostInventory}
             loadData={dataUploaded}
             availableToPost={true}

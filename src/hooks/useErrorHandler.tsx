@@ -4,8 +4,11 @@ import { sendError } from '../services/errors';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import { AppNavigationProp } from '../navigator/AppNavigation';
+import { api } from '../api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useErrorHandler = () => {
+
     const { logOut, user } = useContext(AuthContext);
     const navigation = useNavigation<AppNavigationProp>();
 
@@ -34,14 +37,14 @@ export const useErrorHandler = () => {
 
         if (status === 401) {
             console.log("session ended");
-            navigation.navigate('LoginPage');
-            return logOut?.();
+            navigation.navigate('SessionExpiredScreen');
+            return
         }
-
+        
         if (status === 400 || status === 404) {
-            if (navigation?.canGoBack()) {
+            /* if (navigation?.canGoBack()) {
                 return navigation.goBack();
-            }
+            } */
         }
 
         if (method === undefined) return;

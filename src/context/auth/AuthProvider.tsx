@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         const statusLogin = state.status;
+        console.log({statusLogin})
         if (statusLogin == 'checking') {
             return;
         }
@@ -117,7 +118,7 @@ export const AuthProvider = ({ children }: any) => {
             state.status = "checking"
             const data = await postLogin({ usr, pas })
 
-            if (data?.error) {
+            if (data.error) {
                 handleError(data?.error);
                 return dispatch({ type: 'addError', payload: data.error })
             }
@@ -146,11 +147,11 @@ export const AuthProvider = ({ children }: any) => {
 
         try {
             setLoggingIn(false);
-            await api.get('/api/auth/logout');
+            //await api.get('/api/auth/logout');
             AsyncStorage.removeItem('token');
             dispatch({ type: 'logout' });
-            navigation.goBack();
-            navigation.navigate('LoginPage')
+            /* navigation.goBack();
+            navigation.navigate('LoginPage') */
         } catch (error) {
             console.log({error})
             handleError(error)

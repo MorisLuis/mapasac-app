@@ -19,7 +19,7 @@ const getBagInventory = async ({ page, limit, option, mercado }: getBagInterface
             return data.bag
         }
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 
@@ -38,7 +38,7 @@ const addProductInBag = async ({ product, mercado }: addProductInBagInventoryInt
         }
         return data as any;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 
@@ -59,7 +59,7 @@ const updateProductInBag = async ({ idenlacemob, cantidad, mercado }: updateProd
         }
         return data as any
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 
@@ -80,7 +80,7 @@ const deleteProductInBag = async ({ idenlacemob, mercado }: deleteProductInBagIn
             return data
         }
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -101,7 +101,7 @@ const deleteAllProductsInBag = async ({ opcion, mercado }: deleteAllProductsInBa
             return data
         }
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 
@@ -121,18 +121,17 @@ const getTotalProductsInBag = async ({ opcion, mercado }: getTotalProductsInBagI
             return data.total
         }
     } catch (error: any) {
-        console.log({error})
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
 
 const getTotalPriceBag = async ({ opcion }: getTotalProductsInBagInterface) => {
     try {
-        const { data } = await api.get(`/api/bag/price?opciona=${opcion}&mercado=true`);
+        const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
         return data.total
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 }
 

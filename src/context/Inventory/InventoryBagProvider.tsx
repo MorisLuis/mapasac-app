@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { InventoryBagContext } from './InventoryBagContext';
 import { innventoryBagReducer } from './InventoryBagReducer';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import ProductInterface from '../../interface/product';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { AuthContext } from '../auth/AuthContext';
 
 export interface InventoryBagInterface {
     numberOfItems: string;
@@ -17,9 +18,12 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
-    const { handleError } = useErrorHandler()
+    const { handleError } = useErrorHandler();
+    const { user, status } = useContext(AuthContext);
+
 
     const handleUpdateSummary = async () => {
+        if(status !== 'authenticated' ) return;
         try {
             const total = await getTotalProductsInBag({ opcion: 0 });
             if (total?.error) return handleError(total.error);
@@ -30,7 +34,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
             };
             dispatch({ type: '[InventoryBag] - Update Summary', payload: orderSummary });
         } catch (error) {
-            handleError(error)
+            return handleError(error);
         } finally {
             setProductAdded(false);
         }

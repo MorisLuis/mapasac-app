@@ -73,7 +73,7 @@ const CameraScreen: React.FC = () => {
         requestCameraPermission();
 
         handleUpdateSummary()
-        
+
         return () => {
             handleCameraAvailable(false);
         };

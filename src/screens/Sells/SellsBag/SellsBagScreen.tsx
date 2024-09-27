@@ -61,8 +61,8 @@ export const SellsBagScreen = () => {
                 setTotalPrice(parseFloat(totalpriceData));
             }
 
-        } catch (error) {
-            handleError(error)
+        } catch (error: any) {
+            handleError(error);
         };
 
     };

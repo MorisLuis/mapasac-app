@@ -13,7 +13,7 @@ const getSearchProductInBack = async ({ searchTerm, opcion }: SearchInterface) =
         const products = getProduct.data.products;
         return products
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -25,7 +25,7 @@ const getSearchProductInStock = async ({ searchTerm }: { searchTerm : string }) 
         const products = getProduct.data.products;
         return products
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }
@@ -37,7 +37,7 @@ const getSearchClients = async ({ searchTerm }: { searchTerm : string }) => {
         const products = getProduct.data.clients;
         return products;
     } catch (error: any) {
-        return { error: error };
+        return { error: { ...error } };
     }
 
 }

@@ -64,7 +64,12 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             };
 
             setTimeout(() => {
-                navigate('succesMessageScreen', { message: 'Se ha generado con exito su pedido.', redirection: 'SellsNavigation' });
+                navigate('succesMessageScreen', { 
+                    redirection: 'SellsNavigation',
+                    from: 'Sells',
+                    numberOfProducts: numberOfItemsSells,
+                    importe: totalPrice as number
+                });
                 resetAfterPost();
             }, 500);
 
@@ -111,14 +116,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
         try {
             const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
-
-            if (totalprice.error) {
-                handleError(totalprice.error);
-                return;
-            };
-
+            if (totalprice.error) return handleError(totalprice.error);
             setTotalPrice(parseFloat(totalprice))
-        } catch (error) {
+        } catch (error: any) {
             handleError(error);
         }
     }
