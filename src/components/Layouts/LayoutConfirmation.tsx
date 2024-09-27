@@ -12,6 +12,7 @@ import { format } from '../../utils/currency';
 import FooterScreen from '../Navigation/FooterScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ModuleInterface } from '../../interface/utils';
+import { LoadingScreen } from '../../screens/LoadingScreen';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -103,11 +104,7 @@ const LayoutConfirmation = ({
 
     if (protectThisPage) {
         return (
-            <SafeAreaView style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-                <View>
-                    <CustomText>Redireccionando sells...</CustomText>
-                </View>
-            </SafeAreaView>
+            <LoadingScreen message='Redireccionando...'/>
         )
     }
 

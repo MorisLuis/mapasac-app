@@ -49,7 +49,11 @@ export const LoginScreen = () => {
 
     if (loggingIn) return <LoadingScreen message='Iniciando sesion...' loading={loggingIn} />;
 
-    return !protectThisPage ?
+    if (protectThisPage) {
+        <LoadingScreen message='Redireccionando...' loading={!protectThisPage} />
+    }
+
+    return (
         <KeyboardAvoidingView
             style={[LoginScreenStyles(theme).LoginScreen]}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -103,14 +107,13 @@ export const LoginScreen = () => {
                     title="Iniciar sesión"
                     onPress={() => {
                         console.log("navigate!!")
-                        navigation.navigate('succesMessageScreen', { message: 'ola', redirection: 'LoginPage' })
+                        navigation.navigate('LoadingPage')
                     }}
                     disabled={loadingLogin}
                     buttonColor='green'
                 />
             </SafeAreaView>
         </KeyboardAvoidingView>
-        :
-        <LoadingScreen message='Redireccionando...' loading={!protectThisPage} />
+    )
 };
 

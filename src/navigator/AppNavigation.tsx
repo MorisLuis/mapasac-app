@@ -12,6 +12,7 @@ import { SellsNavigation, SellsNavigationStackParamList } from './SellsNavigatio
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ClosingScreen } from '../screens/ClosingScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
+import { LoadingScreen } from '../screens/LoadingScreen';
 
 // useNavigation() type. 
 export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
@@ -24,6 +25,7 @@ export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationS
 export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;
     ClosingPage: undefined;
+    LoadingPage?: { message?: string, loading?: boolean };
 
     // Login
     LoginPage: undefined;
@@ -63,6 +65,12 @@ export const AppNavigation = () => {
             <Stack.Screen
                 name="OnboardingScreen"
                 component={OnboardingScreen}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name='LoadingPage'
+                component={LoadingScreen}
                 options={{ headerShown: false }}
             />
 

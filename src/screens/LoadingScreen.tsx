@@ -1,35 +1,34 @@
 import React from 'react'
-import { ActivityIndicator, Text, View } from 'react-native'
+import { ActivityIndicator, Image, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import CustomText from '../components/Ui/CustumText';
+import { LoadingScreenStyles } from '../theme/LoadingScrenTheme';
 
 interface LoadingScreenInterface {
     message?: string;
-    loading: boolean
+    loading?: boolean
 };
 
 export const LoadingScreen = ({
-    message,
+    message = "Cargando...",
     loading
 }: LoadingScreenInterface) => {
 
     const { theme } = useTheme();
-    const iconColor = theme.color_tertiary;
-
     return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: theme.background_color,
-            height: "100%"
-        }}>
-            <ActivityIndicator
-                size="large"
-                color={iconColor}
-                style={{ marginBottom: 10 }}
+        <View style={LoadingScreenStyles(theme).LoadingScreen}>
+            <View></View>
+            <Image
+                style={LoadingScreenStyles(theme).logo}
+                source={require('../assets/ic_launcher_monochrome.png')}
             />
-            <CustomText style={{ color: theme.text_color }}>{message}</CustomText>
+            <View style={LoadingScreenStyles(theme).LoadingMessage}>
+                <ActivityIndicator
+                    size="small"
+                    color={theme.text_color}
+                />
+                <CustomText style={{ color: theme.text_color }}>{message}</CustomText>
+            </View>
         </View>
     )
 }
