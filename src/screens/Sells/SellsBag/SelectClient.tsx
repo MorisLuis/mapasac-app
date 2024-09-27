@@ -88,6 +88,7 @@ export const SelectClient = () => {
             onPress={() => setItemSelected(item)} 
             sameValue={item.idclientes === itemSelected?.idclientes}
             message={item.nombres.trim()}
+            subMessage={`No. Cliente: ${item.idclientes}`}
         />
 
     ), [itemSelected]);

@@ -168,7 +168,6 @@ export const MessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet
     }
 })
 
-
 export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => StyleSheet.create({
     ProductItemSearch: {
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
@@ -264,56 +263,6 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
     },
 })
 
-export const ProductInventoryConfirmationCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
-    title: {
-        fontSize: globalFont.font_med,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
-    },
-    ProductInventoryConfirmationCard: {
-        display: "flex",
-        flexDirection: "row",
-        borderWidth: 0.5,
-        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
-        backgroundColor: theme.background_color_secondary,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        paddingHorizontal: globalStyles(theme).globalPadding.padding,
-        paddingVertical: globalStyles(theme).globalPadding.padding / 2,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-    },
-    data: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        maxWidth: "100%"
-    },
-    dataItem: {
-        display: "flex",
-        flexDirection: "row"
-    },
-    dataItemText: {
-        fontSize: globalFont.font_sm,
-        color: theme.text_color
-    },
-    label: {
-        marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
-        fontSize: globalFont.font_sm,
-        color: theme.text_color
-    },
-    information: {
-        maxWidth: "80%"
-    },
-    description: {
-        fontSize: globalFont.font_sm,
-        color: theme.text_color
-    },
-    edit: {
-        display: "flex",
-        alignContent: "center",
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius
-    }
-});
-
 export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     ProductSellsCardTheme: {
         flex: 0.5,
@@ -381,3 +330,42 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
     }
 
 });
+
+
+export const ProductCardSelectTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+    CardSelect: {
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: "center",
+        padding: globalStyles(theme).globalPadding.padding,
+        backgroundColor: 'transparent',
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderWidth: 0.3,
+        borderColor: theme.color_border
+    },
+    CardSelectInfo: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5,
+        maxWidth: "90%"
+    },
+    CardSelectMessage: {
+        fontSize: globalFont.font_normal,
+        color: theme.text_color,
+        fontFamily: 'Rubik-Regular'
+    },
+    CardSelectSubMessage: {
+        fontSize: globalFont.font_sm,
+        fontFamily: 'Rubik-Regular'
+    },
+    optionCheck: {
+        width: 20,
+        height: 20,
+        borderRadius: 100,
+        borderWidth: 1,
+        borderColor: theme.text_color,
+    }
+})
