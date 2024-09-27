@@ -46,7 +46,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
         try {
             setLoading(true); // Activar estado de carga
             const products = await getSearchProductInStock({ searchTerm: searchTerm ? searchTerm : "" });
-            if (products.error) return handleError(products.error);
+            if (products?.error) return handleError(products.error);
             setProductsInInventory(products);
         } catch (error) {
             handleError(error)

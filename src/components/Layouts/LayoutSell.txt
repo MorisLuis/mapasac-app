@@ -42,13 +42,13 @@ export const LayoutSell = ({
     const handleGetPrice = async () => {
         try {
             const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
-            if (totalprice.error) return handleError(totalprice.error)
-            setTotalPrice(parseFloat(totalprice ?? 0));
-        } catch (error: any) {
-            console.log({handleGetPriceE: error})
+            if (totalprice.error) return handleError(totalprice.error);
+            setTotalPrice(parseFloat(totalprice));
+        } catch (error) {
             handleError(error);
         };
     };
+
 
     const handleGetProducts = async () => {
         try {
@@ -81,7 +81,7 @@ export const LayoutSell = ({
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProductSells();
-            if (total?.error) return handleError(total.error);
+            if (total.error) return handleError(total.error);
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()

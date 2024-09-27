@@ -19,6 +19,8 @@ export const ConfirmationSkeleton = () => {
     ]
 
     return (
+        <>
+        {/* 
         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
             <View style={[
                 ConfirmationScreenStyles(theme, typeTheme).confirmationInfo,
@@ -72,5 +74,7 @@ export const ConfirmationSkeleton = () => {
                 ))}
             </View>
         </View>
+        */}
+        </>
     )
 }

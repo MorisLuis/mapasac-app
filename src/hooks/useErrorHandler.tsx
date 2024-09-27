@@ -10,7 +10,7 @@ export const useErrorHandler = () => {
     const navigation = useNavigation<AppNavigationProp>();
 
     const handleError = async (error: any) => {
-        console.log({error})
+        console.log({ errorFHOOK: error })
         const { status: statusCode, Message, Metodo } = error ?? {}
 
         const status = error?.response?.status || statusCode;
@@ -24,34 +24,32 @@ export const useErrorHandler = () => {
                     ? error?.message
                     : error;
 
-        console.log({message, method, status})
-        if (status === 401) {
-            console.log("session ended");
-            navigation.navigate('LoginPage');
-            logOut?.();
-
-            return;
-        }
-
         /* await sendError({
             From: `${user.idusrmob}`,
             Message: message || Message,
             Id_Usuario: user.idusrmob,
             Metodo: method || Metodo || '',
-            code: status.toString()
+            code: status?.toString()
         }); */
+
+        if (status === 401) {
+            console.log("session ended");
+            navigation.navigate('LoginPage');
+            return logOut?.();
+        }
+
+        if (status === 400 || status === 404) {
+            if (navigation?.canGoBack()) {
+                return navigation.goBack();
+            }
+        }
+
+        if (method === undefined) return;
 
         Toast.show({
             type: 'error',
             text1: 'Algo salió mal!'
         });
-
-        // Verifica si es posible ir hacia atrás
-        setTimeout(() => {
-            if (navigation?.canGoBack()) {
-                navigation.goBack();
-            }
-        }, 300);
     };
     return { handleError };
 };

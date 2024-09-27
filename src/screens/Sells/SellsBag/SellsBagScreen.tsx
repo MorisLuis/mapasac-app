@@ -1,39 +1,48 @@
 import React, { useCallback, useState, useEffect, useContext } from 'react';
-import { Alert } from 'react-native';
 import { getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import useErrorHandler from '../../../hooks/useErrorHandler';
+import ModalDecision from '../../../components/Modals/ModalDecision';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import { globalStyles } from '../../../theme/appTheme';
+import { useTheme } from '../../../context/ThemeContext';
 
 export const SellsBagScreen = () => {
 
+    const { theme, typeTheme } = useTheme();
     const { deleteProductSell } = useContext(SellsBagContext);
     const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
-    const [deletingProductId, setDeletingProductId] = useState<number | null>(null);
     const { handleError } = useErrorHandler();
+    const [productIdToDelete, setProductIdToDelete] = useState<number | null>();
+    const [openModalDecision, setOpenModalDecision] = useState(false);
+    const [deletingProduct, setDeletingProduct] = useState(false);
+
+    const confirmDelete = async () => {
+        if(!productIdToDelete) return;
+        setDeletingProduct(true)
+        await deleteProductSell(productIdToDelete);
+        await handleGetPrice();
+        await setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
+
+        setTimeout(() => {
+            setProductIdToDelete(null);
+            setOpenModalDecision(false);
+            setDeletingProduct(false)
+        }, 100);
+    };
+
+    const cancelProduct = () => {
+        setOpenModalDecision(false);
+        setProductIdToDelete(null);
+    }
 
     const handleDeleteProduct = async (productId: number) => {
-        const confirmDelete = async () => {
-            setDeletingProductId(productId);
-            await deleteProductSell(productId);
-            await handleGetPrice();
-            await setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productId));
-
-            setTimeout(() => {
-                setDeletingProductId(null);
-            }, 500);
-        };
-
-        Alert.alert(
-            '¿Seguro de eliminar este producto?',
-            '',
-            [
-                { text: 'Cancelar', style: 'cancel' }, { text: 'Eliminar', onPress: confirmDelete }
-            ]
-        );
+        setProductIdToDelete(productId);
+        setOpenModalDecision(true);
     };
 
     const handleGetPrice = async () => {
@@ -46,12 +55,12 @@ export const SellsBagScreen = () => {
                 return;
             };
 
-            if(!totalpriceData) {
+            if (!totalpriceData) {
                 setTotalPrice(parseFloat("0"));
             } else {
                 setTotalPrice(parseFloat(totalpriceData));
             }
-            
+
         } catch (error) {
             handleError(error)
         };
@@ -62,7 +71,7 @@ export const SellsBagScreen = () => {
         <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob)}
-            deletingProduct={deletingProductId === item.idenlacemob}
+            deletingProduct={productIdToDelete === item.idenlacemob}
             showDelete
         />
     ), [handleDeleteProduct]);
@@ -72,14 +81,38 @@ export const SellsBagScreen = () => {
     }, [handleDeleteProduct]);
 
     return (
-        <LayoutBag
-            opcion={2}
-            renderItem={renderItem}
-            setBags={setBags}
-            bags={bags}
-            totalPrice={totalPrice}
-            deletingProductId={deletingProductId}
-            Type='sells'
-        />
+        <>
+            <LayoutBag
+                opcion={2}
+                renderItem={renderItem}
+                setBags={setBags}
+                bags={bags}
+                totalPrice={totalPrice}
+                deletingProductId={productIdToDelete}
+                Type='Sells'
+            />
+
+            <ModalDecision
+                visible={openModalDecision}
+                message="¿Seguro de eliminar este producto?"
+                >
+                <ButtonCustum
+                    title="Eliminar"
+                    onPress={confirmDelete}
+                    disabled={deletingProduct}
+                    buttonColor="red"
+                    iconName="trash"
+                    extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
+
+                />
+                <ButtonCustum
+                    title="Cancelar"
+                    onPress={cancelProduct}
+                    disabled={deletingProduct}
+                    buttonColor="white"
+                />
+            </ModalDecision>
+
+        </>
     );
 };

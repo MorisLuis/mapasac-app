@@ -67,7 +67,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue });
-                if (response.error) return handleError(response.error);
+                if (response?.error) return handleError(response.error);
 
                 handleVibrate()
                 updateBarCode(codeValue)
@@ -94,7 +94,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                 codebarras: codeBar as string,
                 idinvearts: selectedProduct.idinvearts
             })
-            if (codebar.error) return handleError(codebar.error);
+            if (codebar?.error) return handleError(codebar.error);
             onClose();
             navigation.goBack();
         } catch (error) {

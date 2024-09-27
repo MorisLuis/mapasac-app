@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { postLogin, renewLogin } from '../../services/auth';
 import { api } from '../../api/api';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { AppNavigationProp } from '../../navigator/AppNavigation';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -52,10 +53,10 @@ export const AuthProvider = ({ children }: any) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<AppNavigationProp>();
     const { handleError } = useErrorHandler()
 
-    /* useEffect(() => {
+    useEffect(() => {
         const statusLogin = state.status;
         if (statusLogin == 'checking') {
             return;
@@ -73,7 +74,7 @@ export const AuthProvider = ({ children }: any) => {
             navigation.navigate('OnboardingScreen')
         }
 
-    }, [state.status]) */
+    }, [state.status])
 
     useEffect(() => {
         checkToken();
@@ -116,8 +117,8 @@ export const AuthProvider = ({ children }: any) => {
             state.status = "checking"
             const data = await postLogin({ usr, pas })
 
-            if (data.error) {
-                handleError(data.error);
+            if (data?.error) {
+                handleError(data?.error);
                 return dispatch({ type: 'addError', payload: data.error })
             }
 
@@ -143,13 +144,15 @@ export const AuthProvider = ({ children }: any) => {
 
     const logOut = async () => {
 
-        try {            
+        try {
             setLoggingIn(false);
-            navigation.navigate('ClosingPage')
             await api.get('/api/auth/logout');
             AsyncStorage.removeItem('token');
             dispatch({ type: 'logout' });
+            navigation.goBack();
+            navigation.navigate('LoginPage')
         } catch (error) {
+            console.log({error})
             handleError(error)
         }
     };

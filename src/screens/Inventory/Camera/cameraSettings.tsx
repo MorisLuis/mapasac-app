@@ -94,7 +94,7 @@ export const CameraSettings = ({
 
             try {
                 const response = await getProductByCodeBar({ codeBar: codeValue?.trim() });
-                if (response.error) return handleError(response.error);
+                if (response?.error) return handleError(response.error);
                 handleOpenProductsFoundByCodebar(response);
                 handleVibrate()
                 updateBarCode(codeValue)

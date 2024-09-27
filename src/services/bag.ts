@@ -121,6 +121,7 @@ const getTotalProductsInBag = async ({ opcion, mercado }: getTotalProductsInBagI
             return data.total
         }
     } catch (error: any) {
+        console.log({error})
         return { error: error };
     }
 
@@ -128,7 +129,7 @@ const getTotalProductsInBag = async ({ opcion, mercado }: getTotalProductsInBagI
 
 const getTotalPriceBag = async ({ opcion }: getTotalProductsInBagInterface) => {
     try {
-        const { data } = await api.get(`/api/bag/price?opcion=${opcion}&mercado=true`);
+        const { data } = await api.get(`/api/bag/price?opciona=${opcion}&mercado=true`);
         return data.total
     } catch (error: any) {
         return { error: error };

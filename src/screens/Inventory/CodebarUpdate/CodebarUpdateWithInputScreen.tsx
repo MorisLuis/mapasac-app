@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Alert, KeyboardType, SafeAreaView, TextInput, View } from 'react-native'
+import { KeyboardType, SafeAreaView, TextInput, View } from 'react-native'
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,7 @@ import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigatio
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import FooterScreen from '../../../components/Navigation/FooterScreen';
+import ModalDecision from '../../../components/Modals/ModalDecision';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }
@@ -25,7 +26,8 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const { theme, typeTheme } = useTheme();
     const { codebarType } = useContext(SettingsContext);
     const [text, setText] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [openModalDecision, setOpenModalDecision] = useState(false)
     const { handleError } = useErrorHandler()
 
     const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
@@ -40,21 +42,8 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
             const response = await getProductByCodeBar({ codeBar: text });
             if (response.error) return handleError(response.error);
 
-            const onCancel = () => {
-                goBack()
-                goBack()
-                setLoading(false)
-            }
-
             if (response.length > 0) {
-                Alert.alert(
-                    'Ya existe un producto con este codigo de barras.',
-                    'Deseas continuar?',
-                    [
-                        { text: 'Cancelar', style: 'cancel', onPress: onCancel },
-                        { text: 'Actualizar', onPress: onUpdateCodeBar }
-                    ]
-                );
+                setOpenModalDecision(true);
             } else {
                 onUpdateCodeBar()
             }
@@ -62,6 +51,13 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
             handleError(error)
         }
     }
+
+    const onCancel = () => {
+        goBack()
+        goBack()
+        setLoading(false)
+    }
+
 
     const onUpdateCodeBar = async () => {
         try {
@@ -84,36 +80,54 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     };
 
     return (
-        <SafeAreaView>
-            <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
+        <>
+            <SafeAreaView>
+                <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
 
-                <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
+                    <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
 
-                <CustomText style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</CustomText>
+                    <CustomText style={CodebarUpdateWithInputScreenStyles(theme, typeTheme).warningMessage}>{currentType?.errorMessage}</CustomText>
 
-                <TextInput
-                    style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
-                    placeholder="Ej: 654s1q"
-                    onChangeText={handleTextChange}
-                    keyboardType={currentType?.keyboardType as KeyboardType}
-                    maxLength={currentType?.maxLength}
-                />
-
-                <FooterScreen
-                    buttonTitle='Actualizar'
-                    buttonDisabled={loading || !regex.test(text)}
-                    buttonOnPress={hanldeUpdateCodebarWithCodeRandom}
-                />
-
-                {regex.test(text) && (
-                    <ButtonCustum
-                        title="Actualizar"
-                        onPress={hanldeUpdateCodebarWithCodeRandom}
-                        disabled={loading}
-                        buttonColor='white'
+                    <TextInput
+                        style={[inputStyles(theme).input, globalStyles(theme).globalMarginBottomSmall]}
+                        placeholder="Ej: 654s1q"
+                        onChangeText={handleTextChange}
+                        keyboardType={currentType?.keyboardType as KeyboardType}
+                        maxLength={currentType?.maxLength}
                     />
-                )}
-            </View>
-        </SafeAreaView>
+
+                    <FooterScreen
+                        buttonTitle='Actualizar'
+                        buttonDisabled={loading || !regex.test(text)}
+                        buttonOnPress={hanldeUpdateCodebarWithCodeRandom}
+                    />
+
+                    {regex.test(text) && (
+                        <ButtonCustum
+                            title="Actualizar"
+                            onPress={hanldeUpdateCodebarWithCodeRandom}
+                            disabled={loading}
+                            buttonColor='white'
+                        />
+                    )}
+                </View>
+            </SafeAreaView>
+            <ModalDecision visible={openModalDecision} message="Seguro de limpiar el inventario actual?">
+                <ButtonCustum
+                    title="Ya existe un producto con este codigo de barras. Deseas continuar?"
+                    onPress={onUpdateCodeBar}
+                    //disabled={loadingCleanBag}
+                    buttonColor="red"
+                    iconName="close"
+                    extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
+                />
+                <ButtonCustum
+                    title="Cancelar"
+                    onPress={onCancel}
+                    //disabled={loadingCleanBag}
+                    buttonColor="white"
+                />
+            </ModalDecision>
+        </>
     )
 }

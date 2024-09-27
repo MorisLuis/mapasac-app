@@ -85,7 +85,7 @@ export const LayoutBag = ({
             setLoadingCleanBag(true);
             const product = await deleteAllProductsInBag({ opcion: opcion, mercado: true });
 
-            if (product.error) return handleError(product.error);
+            if (product?.error) return handleError(product.error);
 
             if (Type === 'Inventory') {
                 await resetAfterPostInventory()

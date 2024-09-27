@@ -58,7 +58,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                 codebarras: codeBar as string,
                 idinvearts: selectedProduct.idinvearts
             })
-            if (codebar.error) return handleError(codebar.error);
+            if (codebar?.error) return handleError(codebar.error);
             navigation.goBack()
         } catch (error) {
             handleError(error);
@@ -73,7 +73,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                 codebarras: codeBar as string,
                 idinvearts: selectedProduct.idinvearts
             })
-            if (codebar.error) return handleError(codebar.error);
+            if (codebar?.error) return handleError(codebar.error);
             navigation.goBack();
         } catch (error) {
             handleError(error);

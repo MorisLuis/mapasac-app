@@ -36,7 +36,7 @@ export const Inventory = () => {
         try {
             setIsLoading(true);
             const products = await getProducts(currentPage);
-            if (products.error) return handleError(products.error);
+            if (products?.error) return handleError(products.error);
             setProductsInInventory((prevProducts) => {
                 const newProducts = products?.filter(
                     (product: ProductInterface) =>
@@ -107,7 +107,7 @@ export const Inventory = () => {
     useEffect(() => {
         const getTotalCountOfProducts = async () => {
             const total = await getTotalProducts();
-            if (total.error) return handleError(total.error);
+            if (total?.error) return handleError(total.error);
             setTotalProducts(Number(total));
         }
         getTotalCountOfProducts()

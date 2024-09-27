@@ -42,7 +42,7 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
 
         try {
             const productData = await getProductDetails(product.idinvearts);
-            if (productData.error) return handleError(productData.error);
+            if (productData?.error) return handleError(productData.error);
             setProductDetailsData(productData);
         } catch (error) {
             handleError(error)

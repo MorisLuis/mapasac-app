@@ -102,16 +102,6 @@ export const LoginScreen = () => {
 
                     </View>
                 </View>
-
-                <ButtonCustum
-                    title="Iniciar sesión"
-                    onPress={() => {
-                        console.log("navigate!!")
-                        navigation.navigate('LoadingPage')
-                    }}
-                    disabled={loadingLogin}
-                    buttonColor='green'
-                />
             </SafeAreaView>
         </KeyboardAvoidingView>
     )

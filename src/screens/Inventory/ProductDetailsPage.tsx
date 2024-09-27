@@ -48,7 +48,7 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
     const handleGetProductDetails = async () => {
         try {
             const productData = await getProductDetails(idinvearts);
-            if (productData.error) return handleError(productData.error);
+            if (productData?.error) return handleError(productData.error);
             setProductDetailsData(productData);
         } catch (error) {
             handleError(error)

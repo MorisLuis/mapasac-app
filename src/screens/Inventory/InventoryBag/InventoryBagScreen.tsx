@@ -1,30 +1,41 @@
 import React, { useCallback, useState, useContext } from 'react';
-import { Alert } from 'react-native';
 import { ProductInterfaceBag } from '../../../interface/product';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
+import ModalDecision from '../../../components/Modals/ModalDecision';
+import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import { globalStyles } from '../../../theme/appTheme';
+import { useTheme } from '../../../context/ThemeContext';
 
 export const InventoryBagScreen = () => {
 
     const { deleteProduct } = useContext(InventoryBagContext);
+    const { theme } = useTheme();
     const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [productIdToDelete, setProductIdToDelete] = useState<number | null>();
+    const [openModalDecision, setOpenModalDecision] = useState(false);
+
+    const confirmDelete = async () => {
+        if (!productIdToDelete) return;
+        await deleteProduct(productIdToDelete);
+        await setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
+
+        setTimeout(() => {
+            setProductIdToDelete(null);
+        }, 500);
+    }
+    
+    const cancelDelete = () => {
+        setOpenModalDecision(false);
+        setProductIdToDelete(null);
+    }
 
     const handleDeleteProduct = async (productId: number) => {
-        const confirmDelete = async () => {
-            await deleteProduct(productId);
-            await setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productId));
-        }
-
-        Alert.alert(
-            'Seguro de eliminar este producto?',
-            '',
-            [
-                { text: 'Cancelar', style: 'cancel' },
-                { text: 'Eliminar', onPress: confirmDelete }
-            ]
-        );
+        setProductIdToDelete(productId);
+        setOpenModalDecision(true);
     };
+    
 
     const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
         <ProductInventoryCard
@@ -35,12 +46,32 @@ export const InventoryBagScreen = () => {
     ), [handleDeleteProduct]);
 
     return (
-        <LayoutBag
-            opcion={0}
-            renderItem={renderItem}
-            setBags={setBags}
-            bags={bags}
-            Type='inventory'
-        />
+        <>
+            <LayoutBag
+                opcion={0}
+                renderItem={renderItem}
+                setBags={setBags}
+                bags={bags}
+                Type='Inventory'
+            />
+
+            <ModalDecision visible={openModalDecision} message="Seguro de eliminar el producto del carrito?">
+                <ButtonCustum
+                    title="Eliminar"
+                    onPress={confirmDelete}
+                    //disabled={loadingCleanBag}
+                    buttonColor="red"
+                    iconName="trash"
+                    extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
+
+                />
+                <ButtonCustum
+                    title="Cancelar"
+                    onPress={cancelDelete}
+                    //disabled={loadingCleanBag}
+                    buttonColor="white"
+                />
+            </ModalDecision>
+        </>
     )
 };

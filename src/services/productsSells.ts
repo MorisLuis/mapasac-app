@@ -8,6 +8,7 @@ const getProductsSells = async (PageNumber: number) => {
         const products = getProduct.data.products;
         return products
     } catch (error: any) {
+        console.log({error})
         return { error: error };
     }
 
@@ -61,6 +62,7 @@ const getTotalProductSells = async () => {
         const total = getProduct.data.total;
         return total;
     } catch (error: any) {
+        console.log({error})
         return { error: error };
     }
 
