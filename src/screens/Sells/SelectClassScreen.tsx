@@ -110,7 +110,7 @@ export const SelectClassScreen = ({
 
 
     return classes ? (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                 <View style={SelectScreenTheme(theme, typeTheme).header}>
                     <CustomText style={SelectScreenTheme(theme, typeTheme).headerTitle}>Selecciona {isCapa ? "la capa" : "el tipo"}.</CustomText>

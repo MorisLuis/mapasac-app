@@ -180,7 +180,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                 style={methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
                                 onPress={() => setMethodPayment(1)}
                             >
-                                <Icon name='card-sharp' color={iconColor} size={globalFont.font_normal} />
+                                <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
                                 <CustomText>Credito</CustomText>
                             </TouchableOpacity>
 
@@ -188,7 +188,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                                 style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
                                 onPress={() => setMethodPayment(2)}
                             >
-                                <Icon name='cash-sharp' color={iconColor} size={globalFont.font_normal} />
+                                <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
                                 <CustomText>Contado</CustomText>
                             </TouchableOpacity>
                         </View>

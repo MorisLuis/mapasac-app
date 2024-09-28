@@ -13,6 +13,7 @@ interface CardSelectInterface {
     icon?: string;
 
     subMessage?: string | number;
+    visible?: boolean;
 }
 
 const CardSelect = ({
@@ -21,14 +22,15 @@ const CardSelect = ({
     sameValue,
     icon,
 
-    subMessage
+    subMessage,
+    visible = true
 }: CardSelectInterface) => {
 
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const { handleColorWithModule } = useActionsForModules();
 
-    return (
+    return visible && (
         <TouchableOpacity
             style={[
                 ProductCardSelectTheme(theme, typeTheme).CardSelect,

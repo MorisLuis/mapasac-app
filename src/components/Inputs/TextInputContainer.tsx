@@ -46,8 +46,8 @@ export const TextInputContainer = ({
                     backgroundColor: theme.background_color_secondary,
                     paddingHorizontal: globalStyles(theme).globalPadding.padding, // Aquí está el padding horizontal
                     paddingVertical: 10, // Puedes ajustar el padding vertical si es necesario
-                    borderWidth: 0.5,
-                    borderColor: theme.color_border,
+                    borderWidth: 0.2,
+                    borderColor: theme.color_border_secondary,
                     borderRadius: globalStyles().borderRadius.borderRadius
                 }]}
                 onChangeText={handleTextChange}

@@ -34,7 +34,7 @@ export const ProfileScreen = () => {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <View style={ProfileScreenStyles(theme, typeTheme).ProfileScreen}>
                 <CustomText style={ProfileScreenStyles(theme, typeTheme).title}>Configuación</CustomText>
 

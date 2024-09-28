@@ -16,7 +16,8 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     message: {
         padding: globalStyles(theme).globalPadding.padding,
-        color: theme.text_color
+        color: theme.text_color,
+        backgroundColor: theme.background_color
     },
     footer: {
         backgroundColor: theme.background_color,

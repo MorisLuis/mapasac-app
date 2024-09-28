@@ -81,7 +81,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
 
     return (
         <>
-            <SafeAreaView>
+            <SafeAreaView style={{ backgroundColor: theme.background_color }} >
                 <View style={CodebarUpdateWithInputScreenStyles(theme).CodebarUpdateWithInputScreen}>
 
                     <CustomText style={CodebarUpdateWithInputScreenStyles(theme).inputLabel}>Escribe el codigo que quieras.</CustomText>
@@ -94,6 +94,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                         onChangeText={handleTextChange}
                         keyboardType={currentType?.keyboardType as KeyboardType}
                         maxLength={currentType?.maxLength}
+                        placeholderTextColor={theme.text_color}
                     />
 
                     <FooterScreen

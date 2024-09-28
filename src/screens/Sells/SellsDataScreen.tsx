@@ -183,7 +183,7 @@ export const SellsDataScreen = () => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
                 <View style={SellsDataScreenTheme(theme, typeTheme).header}>
                     <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>

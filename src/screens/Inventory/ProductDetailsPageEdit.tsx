@@ -12,6 +12,7 @@ import { ProductDetailsEditSkeleton } from '../../components/Skeletons/ProductDe
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 import CustomText from '../../components/Ui/CustumText';
+import CardButton from '../../components/Cards/CardButton';
 
 type EditProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreenEdit'>;
 
@@ -61,27 +62,25 @@ export const ProductDetailsPageEdit = ({ route }: ProductDetailsPageEditInterfac
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <ScrollView style={ProductDetailsStyles(theme).ProductDetailsPage}>
-                <TouchableOpacity style={ProductDetailsStyles(theme).editContainer} onPress={handleGoEditDescripcion}>
-                    <View style={ProductDetailsStyles(theme).editContainer_left}>
-                        <Icon name={'reader-outline'} size={18} color={theme.text_color_light} />
-                        <CustomText style={ProductDetailsStyles(theme).editContainer_label}>Descripcion</CustomText>
-                    </View>
-                    <View style={ProductDetailsStyles(theme).editContainer_right}>
-                        <CustomText style={ProductDetailsStyles(theme).editContainer_text}>{productDetailsData.producto}</CustomText>
-                    </View>
-                </TouchableOpacity>
+                <CardButton
+                    onPress={handleGoEditDescripcion}
+                    label='Descripcion:'
+                    valueDefault='Seleccionar la descripcion'
+                    color='blue'
+                    icon='reader-outline'
+                    specialValue={productDetailsData?.producto ? productDetailsData?.producto.trim() : undefined}
+                />
 
-                <TouchableOpacity style={ProductDetailsStyles(theme).editContainer} onPress={handleGoEditPrice}>
-                    <View style={ProductDetailsStyles(theme).editContainer_left}>
-                        <Icon name={'pricetag-outline'} size={18} color={theme.text_color_light} />
-                        <CustomText style={ProductDetailsStyles(theme).editContainer_label}>Precio</CustomText>
-                    </View>
-                    <View style={ProductDetailsStyles(theme).editContainer_right}>
-                        <CustomText style={ProductDetailsStyles(theme).editContainer_text}>{format(productDetailsData.precio1)}</CustomText>
-                    </View>
-                </TouchableOpacity>
+                <CardButton
+                    onPress={handleGoEditPrice}
+                    label='Precio:'
+                    valueDefault='Seleccionar el precio'
+                    color='red'
+                    icon='pricetag-outline'
+                    specialValue={format(productDetailsData.precio1) ? format(productDetailsData.precio1) : undefined}
+                />
             </ScrollView>
         </SafeAreaView>
     )

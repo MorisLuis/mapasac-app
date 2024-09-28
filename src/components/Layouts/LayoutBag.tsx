@@ -27,6 +27,7 @@ import CustomText from '../Ui/CustumText';
 import ButtonCustum from '../Inputs/ButtonCustum';
 import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
 import { ModuleInterface } from '../../interface/utils';
+import useActionsForModules from '../../hooks/useActionsForModules';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -56,11 +57,11 @@ export const LayoutBag = ({
     const { resetAfterPost, numberOfItemsSells } = useContext(SellsBagContext);
     const { resetAfterPost: resetAfterPostInventory } = useContext(InventoryBagContext);
     const { handleError } = useErrorHandler()
+    const { handleColorWithModule } = useActionsForModules();
     const searchInputRef = useRef<any>(null);
     const { goBack, navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
 
     const [searchText, setSearchText] = useState<string>('');
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
@@ -200,7 +201,7 @@ export const LayoutBag = ({
 
     return (
         <>
-            <SafeAreaView>
+            <SafeAreaView style={{ backgroundColor: theme.background_color }} >
                 <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
 
                     {/* Search Bar */}
@@ -216,9 +217,9 @@ export const LayoutBag = ({
                         ]}
                         iconColor={theme.text_color}
                         placeholderTextColor={theme.text_color}
-                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
+                        icon={() => <Icon name="search-outline" size={20} color={theme.text_color} />}
+                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={theme.text_color} />}
+                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular', color: theme.text_color }}
                     />
 
 
@@ -257,7 +258,7 @@ export const LayoutBag = ({
                         {/* POSSIBLE AS PROP */}
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
-                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: typeTheme === "light" ? theme.color_red : theme.color_tertiary }]}>
+                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule() }]}>
                                 {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
                             </CustomText>
                         </View>

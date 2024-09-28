@@ -41,7 +41,7 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         backgroundColor: theme.background_color_secondary,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        borderWidth: 0.5,
+        borderWidth: 0.2,
         borderColor: theme.color_border_secondary
     },
 });

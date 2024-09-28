@@ -3,6 +3,7 @@ import React from 'react'
 import CustomText from './CustumText'
 import { uiElementeStyles } from '../../theme/UI/uiElementsTheme'
 import { useTheme } from '../../context/ThemeContext'
+import useActionsForModules from '../../hooks/useActionsForModules'
 
 interface TagInterface {
     message: string;
@@ -17,16 +18,17 @@ const Tag = ({
 }: TagInterface) => {
 
     const { theme, typeTheme } = useTheme();
+    const {  handleColorWithModule } = useActionsForModules()
 
     return (
         <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color], {...extraStyles}]}>
             <CustomText
                 style={[
                     uiElementeStyles(theme, typeTheme).tagText,
-                    uiElementeStyles(theme, typeTheme)[color],
                     {
                         backgroundColor: 'transparent',
-                        borderWidth: 0
+                        borderWidth: 0,
+                        color: handleColorWithModule()
                     }]}
             >
                 {message}

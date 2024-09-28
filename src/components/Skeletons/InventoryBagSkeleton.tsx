@@ -19,51 +19,47 @@ export const InventoryBagSkeleton = ({ length }: { length: number }) => {
     ]
 
     return (
-        <>
+        <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>
             <ShimmerPlaceHolder
                 shimmerColors={shimmerColors}
                 LinearGradient={LinearGradient}
                 style={[
-                    inputStyles(theme, typeTheme).searchBar,
+                    //inputStyles(theme, typeTheme).searchBar,
                     {
-                        width: "auto", 
-                        height: 45, 
+                        width: "auto",
+                        height: 45,
                         borderRadius: globalStyles(theme).borderRadius.borderRadius,
-                        marginHorizontal: globalStyles(theme).globalMarginBottom.marginBottom,
-                        marginBottom: 0
+                        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
                     },
                 ]}
-            ></ShimmerPlaceHolder>
+            />
 
-            <View style={ProductDetailsSkeletonStyles(theme).ProductDetailsPage}>
-                {
-                    Array.from({ length: length }).map((_, index) => (
-                        <View key={index} style={{ marginBottom: 20 }}>
-                            <View>
-                                <View style={styles(theme).information}>
-                                    <ShimmerPlaceHolder
-                                        style={[styles(theme).description, { width: "95%" }]}
-                                        shimmerColors={shimmerColors}
-                                        LinearGradient={LinearGradient}
-                                    />
-                                    <ShimmerPlaceHolder
-                                        style={styles(theme).description}
-                                        shimmerColors={shimmerColors}
-                                        LinearGradient={LinearGradient}
-                                    />
-                                    <ShimmerPlaceHolder
-                                        style={[styles(theme).description, { width: "35%" }]}
-                                        shimmerColors={shimmerColors}
-                                        LinearGradient={LinearGradient}
-                                    />
-                                </View>
+            {
+                Array.from({ length: length }).map((_, index) => (
+                    <View key={index} style={{ marginBottom: 20 }}>
+                        <View>
+                            <View style={styles(theme).information}>
+                                <ShimmerPlaceHolder
+                                    style={[styles(theme).description, { width: "95%", marginBottom: 5 }]}
+                                    shimmerColors={shimmerColors}
+                                    LinearGradient={LinearGradient}
+                                />
+                                <ShimmerPlaceHolder
+                                    style={[styles(theme).description, { marginBottom: 5 }]}
+                                    shimmerColors={shimmerColors}
+                                    LinearGradient={LinearGradient}
+                                />
+                                <ShimmerPlaceHolder
+                                    style={[styles(theme).description, { width: "35%" }]}
+                                    shimmerColors={shimmerColors}
+                                    LinearGradient={LinearGradient}
+                                />
                             </View>
                         </View>
-                    ))
-                }
-            </View>
-
-        </>
+                    </View>
+                ))
+            }
+        </View>
     )
 
 

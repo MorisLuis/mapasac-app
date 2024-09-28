@@ -43,7 +43,6 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
 }: ProductCardInterface<T>) => {
 
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : theme.color_red;
 
     if (deletingProduct) {
         return (
@@ -64,7 +63,7 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
 
                     {showDelete && (
                         <View style={styles(theme).deleteContainer}>
-                            <Icon name={'close-circle'} size={globalFont.font_normal} color={iconColor} />
+                            <Icon name={'close-circle'} size={globalFont.font_normal} color={theme.color_red} />
                             <CustomText style={styles(theme, typeTheme).delete} onPress={() => onDelete?.(product)}>Eliminar</CustomText>
                         </View>
                     )}

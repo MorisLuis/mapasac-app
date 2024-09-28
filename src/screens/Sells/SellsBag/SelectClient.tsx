@@ -85,7 +85,7 @@ export const SelectClient = () => {
 
     const renderItem = useCallback(({ item }: { item: ClientInterface }) => (
         <CardSelect
-            onPress={() => setItemSelected(item)} 
+            onPress={() => setItemSelected(item)}
             sameValue={item.idclientes === itemSelected?.idclientes}
             message={item.nombres.trim()}
             subMessage={`No. Cliente: ${item.idclientes}`}
@@ -101,10 +101,28 @@ export const SelectClient = () => {
         loadClients();
     }, []);
 
-    return (
-        <SafeAreaView>
-            <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
+    // Primera condición: Si los bags están vacíos y los datos no se han cargado
+    if ((filteredClients.length <= 0 && !dataUploaded)) {
+        return <InventoryBagSkeleton length={10} />
+    }
 
+    if (filteredClients?.length <= 0 && dataUploaded && searchText.length <= 0) {
+        return (
+            <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
+                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                    <EmptyMessageCard
+                        title="No tienes productos aún."
+                        message="Empieza a agregar productos al inventario"
+                        icon="rocket-outline"
+                    />
+                </View>
+            </SafeAreaView>
+        )
+    };
+
+    return (
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
+            <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
                 {/* SEARCH BAR */}
                 {
                     ((filteredClients.length > 0 && dataUploaded) || (filteredClients.length <= 0 && searchText.length > 0 && dataUploaded)) &&
@@ -116,35 +134,30 @@ export const SelectClient = () => {
                         style={[inputStyles(theme).searchBar, inputStyles(theme).input, { gap: 0 }]}
                         iconColor={theme.text_color}
                         placeholderTextColor={theme.text_color}
-                        icon={() => <Icon name="search-outline" size={20} color={iconColor} />}
-                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={iconColor} />}
-                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular' }}
+                        icon={() => <Icon name="search-outline" size={20} color={theme.text_color} />}
+                        clearIcon={() => searchText !== "" && <Icon name="close-circle" size={20} color={theme.text_color} />}
+                        inputStyle={{ fontSize: globalFont.font_normal, fontFamily: 'SourceSans3-Regular', color: theme.text_color }}
                     />
                 }
 
                 {/* PRODUCTS */}
                 {
-                    (filteredClients?.length <= 0 && dataUploaded) ?
-                        <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                            <EmptyMessageCard
-                                title="No hay productos con ese nombre."
-                                message='Intenta escribiendo algo diferente.'
-                                icon='sad-outline'
-                            />
-                        </View>
+                    !(filteredClients.length <= 0 && searchText.length > 0) ?
+                        <FlatList
+                            style={InventoryBagScreenStyles(theme, typeTheme).content}
+                            data={filteredClients}
+                            renderItem={renderItem}
+                            keyExtractor={cliente => `${cliente.idclientes}`}
+                            ListFooterComponent={renderFooter}
+                            onEndReached={searchText !== "" ? null : loadClients}
+                            onEndReachedThreshold={searchText !== "" ? null : 1}
+                        />
                         :
-                        (filteredClients.length > 0 && dataUploaded) ?
-                            <FlatList
-                                style={InventoryBagScreenStyles(theme, typeTheme).content}
-                                data={filteredClients}
-                                renderItem={renderItem}
-                                keyExtractor={cliente => `${cliente.idclientes}`}
-                                ListFooterComponent={renderFooter}
-                                onEndReached={searchText !== "" ? null : loadClients}
-                                onEndReachedThreshold={searchText !== "" ? null : 1}
-                            />
-                            :
-                            <InventoryBagSkeleton length={10} />
+                        <EmptyMessageCard
+                            title="No hay productos con ese nombre."
+                            message='Intenta escribiendo algo diferente.'
+                            icon='sad-outline'
+                        />
                 }
 
                 {/* FOOTER */}

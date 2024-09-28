@@ -5,12 +5,12 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SellsDataScreen: {
         height: '100%',
-        padding: globalStyles().globalPadding.padding
+        padding: globalStyles().globalPadding.padding,
+        backgroundColor: theme.background_color
     },
     header: {
         flexDirection: 'row',
-        //marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
-       // alignItems: 'flex-end'
+        alignItems: 'flex-end'
     },
     title: {
         fontSize: globalFont.font_big,

@@ -11,7 +11,7 @@ export const PrivacyScreen = () => {
     const { theme } = useTheme();
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <ScrollView style={PrivacyScreenStyles(theme).PrivacyScreen}>
                 <CustomText style={PrivacyScreenStyles(theme).paragraph}>
                     Tu privacidad es importante para nosotros. Es nuestra política respetar su

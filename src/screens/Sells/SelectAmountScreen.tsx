@@ -66,7 +66,6 @@ export const SelectAmountScreen = ({
                     </View>
                 </View>
 
-
                 <FooterScreen
                     buttonTitle="Agregar"
                     buttonOnPress={handleSave}

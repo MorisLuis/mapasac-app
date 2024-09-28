@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { globalStyles } from '../../theme/appTheme';
@@ -20,7 +20,10 @@ export const ConfirmationSkeleton = () => {
 
     return (
         <>
-        {/* 
+            <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
+
+            </SafeAreaView>
+            {/* 
         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationSells}>
             <View style={[
                 ConfirmationScreenStyles(theme, typeTheme).confirmationInfo,

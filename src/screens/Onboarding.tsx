@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
@@ -22,7 +22,7 @@ interface modulesInterface {
 
 export const OnboardingScreen = () => {
 
-    const { theme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
     const { user } = useContext(AuthContext);
     const { handleError } = useErrorHandler()
 
@@ -50,7 +50,7 @@ export const OnboardingScreen = () => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={OnboardingScreenStyles(theme).OnboardingScreen}>
                 <TouchableOpacity style={OnboardingScreenStyles(theme).topbar} onPress={() => navigate("ProfileNavigation")}>
                     <View style={OnboardingScreenStyles(theme).topbar_profile}>
@@ -79,8 +79,10 @@ export const OnboardingScreen = () => {
                                 <ModulesSkeleton />
                             </>
                     }
+                    <Button onPress={toggleTheme} title='ola' />
                 </View>
             </View>
+
         </SafeAreaView>
     )
 }
@@ -164,6 +166,7 @@ export const ModuleOption = ({
                     <CustomText style={OnboardingScreenStyles(theme, typeTheme).optionText}>{option.appmob}</CustomText>
                 </View>
             </TouchableOpacity>
+
 
             {
                 option2 ?

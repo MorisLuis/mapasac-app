@@ -111,7 +111,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
     const codebarAvailable = productDetailsData?.codbarras?.trim() !== "";
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={ProductDetailsStyles(theme).ProductDetailsPage}>
                 <ScrollView>
                     <View style={ProductDetailsStyles(theme, typeTheme).imageContainer}>

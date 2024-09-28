@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Theme, globalFont, globalStyles } from '../appTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { ThemeColor } from '../../context/ThemeContext';
 
 
 export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
@@ -12,7 +13,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         borderWidth: 0.25,
-        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
+        borderColor: theme.color_border_secondary,
         backgroundColor: theme.background_color,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 4,
@@ -25,7 +26,7 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         width: "100%",
         backgroundColor: theme.background_color_secondary,
         borderWidth: 0.25,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_secondary,
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius / 2
     },
@@ -68,18 +69,6 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         fontSize: globalFont.font_med / 1.25,
         color: theme.text_color
     },
-    /* stock: {
-        backgroundColor: theme.background_color,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color,
-        borderWidth: 1,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        padding: globalStyles(theme).globalPadding.padding / 2,
-        minWidth: hp("6%"),
-        height: hp("6%"),
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    }, */
     deleteContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -87,12 +76,11 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         paddingTop: globalStyles(theme).globalPadding.padding / 2
     },
     delete: {
-        color: typeTheme === 'light' ? theme.color_red : theme.color_tertiary,
+        color: theme.color_red,
         marginLeft: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-end'
-        //backgroundColor: 'red'
     }
 });
 
@@ -263,7 +251,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
     },
 })
 
-export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.create({
     ProductSellsCardTheme: {
         flex: 0.5,
         display: "flex",
@@ -276,7 +264,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: string) => Style
         padding: 5,
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
         borderWidth: 0.2,
-        borderColor: theme.color_border_tertiary,
+        borderColor: typeTheme === 'dark' ? theme.color_border_secondary : theme.color_border_tertiary,
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
     image: {

@@ -11,7 +11,7 @@ export const SettingsScreen = () => {
     const { vibration, handleVibrationState } = useContext(SettingsContext);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <View style={SettingsScreenStyles(theme).SettingsScreen}>
                 <>
                     <Toggle

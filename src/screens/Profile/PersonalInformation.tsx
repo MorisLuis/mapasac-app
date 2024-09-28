@@ -11,7 +11,7 @@ export const PersonalInformation = () => {
     const { theme, typeTheme } = useTheme();
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <View style={PersonalInformationStyles(theme).PersonalInformation}>
                 <View style={PersonalInformationStyles(theme).profile}>
                     <View style={PersonalInformationStyles(theme).circle}>

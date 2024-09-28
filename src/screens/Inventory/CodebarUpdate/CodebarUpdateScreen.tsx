@@ -96,7 +96,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={CodebarUpdateScreenStyles(theme).CodebarUpdateScreen}>
                 <View style={ProductDetailsStyles(theme).optionsContent}>
                     {
@@ -134,6 +134,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                         message={`Actualizar código con: ${codeBar}`}
                         sameValue={optionSelected === 1}
                         icon="barcode-outline"
+                        visible={codeBar ? true : false}
                     />
 
                     <CardSelect

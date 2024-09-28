@@ -56,6 +56,9 @@ const CardButton = ({
     // Verifica si el valor actual es el valor por defecto
     const isDefaultValue = currentValue === valueDefault;
 
+    // Condicional para cambiar 'black' a 'white' en modo 'dark'
+    const resolvedColor = (color === 'black' && typeTheme === 'dark') ? 'white' : color;
+
     return (
         <TouchableOpacity
             style={[
@@ -66,16 +69,16 @@ const CardButton = ({
         >
             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
                 {icon && (
-                    <Icon name={icon} color={theme[`color_${color}`]} size={globalFont.font_normal} />
+                    <Icon name={icon} color={theme[`color_${resolvedColor}`]} size={globalFont.font_normal} />
                 )}
                 <CustomText
-                    style={[SellsDataScreenTheme(theme, typeTheme).label, { color: theme[`color_${color}`] }]}
+                    style={[SellsDataScreenTheme(theme, typeTheme).label, { color: theme[`color_${resolvedColor}`] }]}
                 >
                     {label}
                 </CustomText>
             </View>
             {
-                (control && controlValue) &&
+                (control && controlValue) ?
                     <Controller
                         control={control}
                         name={controlValue}
@@ -91,6 +94,12 @@ const CardButton = ({
                             );
                         }}
                     />
+                    : specialValue ?
+                        <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
+                            {specialValue}
+                        </CustomText>
+                        :
+                        null
             }
         </TouchableOpacity>
     );

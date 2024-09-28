@@ -21,7 +21,7 @@ interface LayoutConfirmationInterface {
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     loadBags: () => Promise<void>;
     ListHeaderComponent?: () => React.JSX.Element;
-    Type:  ModuleInterface['module'];
+    Type: ModuleInterface['module'];
     onPost: () => Promise<void>;
     loadData: boolean;
     availableToPost: boolean;
@@ -104,7 +104,7 @@ const LayoutConfirmation = ({
 
     if (protectThisPage) {
         return (
-            <LoadingScreen message='Redireccionando...'/>
+            <LoadingScreen message='Redireccionando...' />
         )
     }
 
@@ -115,7 +115,7 @@ const LayoutConfirmation = ({
     }
 
     return (
-        <SafeAreaView >
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
                 <FlatList
                     data={data}

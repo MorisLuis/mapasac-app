@@ -38,7 +38,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     confirmationItemLabel: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        //color: theme.text_color
     },
 
     confirmation: {
@@ -88,8 +88,8 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        borderWidth: 1,
-        borderColor: theme.color_border_tertiary
+        borderWidth: 0.2,
+        borderColor: theme.color_border_secondary
     },
     paymentMethodItemActive: {
         flex: 1,

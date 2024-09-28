@@ -96,7 +96,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
 
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
             <View style={SearchProductScreenStyles(theme).SearchProductScreen}>
                 <View style={SearchProductScreenStyles(theme).content}>
                     <Searchbar

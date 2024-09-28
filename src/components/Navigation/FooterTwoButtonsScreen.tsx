@@ -6,7 +6,6 @@ import { uiNavigationStyles } from '../../theme/UI/uiElementsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../theme/appTheme';
-import CustomText from '../Ui/CustumText';
 
 interface FooterTwoButtonsScreenInterface {
     buttonTitle: string;
@@ -46,7 +45,7 @@ const FooterTwoButtonsScreen = ({
                     onPress={buttonSmallOnPress}
                     disabled={buttonSmallDisable}
                 >
-                    <Icon name={buttonSmallIcon} color={iconColor} size={globalFont.font_normal} />
+                    <Icon name={buttonSmallIcon} color={theme.text_color} size={globalFont.font_normal} />
                 </TouchableOpacity>
                 <ButtonCustum
                     title={buttonTitle}

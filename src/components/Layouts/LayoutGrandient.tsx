@@ -10,7 +10,7 @@ interface LayoutGrandientInterface {
 
 const LayoutGrandient = ({ children, color, locations }: LayoutGrandientInterface) => {
 
-    const { theme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     const handleBackgroundColor = () => {
         let colorGradient: string;
@@ -25,7 +25,9 @@ const LayoutGrandient = ({ children, color, locations }: LayoutGrandientInterfac
 
         // Convertir el color ajustado a formato RGBA con opacidad
         const rgbColor = hexToRgb(colorGradient);
-        return `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`; // Cambia el 0.5 a la opacidad deseada
+        const rgbaColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`
+        const colorReturned = typeTheme === 'dark' ? theme.background_color : `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`
+        return colorReturned;
     };
 
     return (
