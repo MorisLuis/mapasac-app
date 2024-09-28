@@ -5,6 +5,7 @@ import { sellsBagReducer } from './SellsBagReducer';
 import EnlacemobInterface from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
+import { SellsDataScreenTypeProps } from '../../navigator/SellsNavigation';
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;
@@ -17,14 +18,16 @@ export const SellsBagInitialState: SellsBagInterface = {
 export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const [state, dispatch] = useReducer(sellsBagReducer, SellsBagInitialState);
-    const [productAdded, setProductAdded] = useState(false);
-    const { handleError } = useErrorHandler();
     const { status } = useContext(AuthContext);
+    const { handleError } = useErrorHandler();
+
+    const [productAdded, setProductAdded] = useState(false);
+    const [formSellsData, setFormSellsData] = useState<SellsDataScreenTypeProps>({});
+
 
     const handleUpdateSummary = async () => {
         if(status !== 'authenticated' ) return;
         try {
-            console.log("handleUpdateSummary")
             const total = await getTotalProductsInBag({ opcion: 2, mercado: true });
             if (total?.error) return handleError(total.error);
 
@@ -75,7 +78,11 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         } finally {
             handleUpdateSummary()
         }
-    }
+    };
+
+    const updateFormData = (data: SellsDataScreenTypeProps) => {
+        setFormSellsData((prev) => ({ ...prev, ...data }));
+    };
 
     const handleCleanState = () => {
         dispatch({ type: '[SellsBag] - LogOut' })
@@ -101,7 +108,9 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
             editProductSell,
             resetAfterPost,
             handleUpdateSummary,
-            handleCleanState
+            handleCleanState,
+            updateFormData,
+            formSellsData
         }}>
             {children}
         </SellsBagContext.Provider>

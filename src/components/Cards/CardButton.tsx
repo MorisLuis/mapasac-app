@@ -71,7 +71,7 @@ const CardButton = ({
                 <CustomText
                     style={[SellsDataScreenTheme(theme, typeTheme).label, { color: theme[`color_${color}`] }]}
                 >
-                    {specialValue ?? label}
+                    {label}
                 </CustomText>
             </View>
             {

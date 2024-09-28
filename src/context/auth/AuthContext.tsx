@@ -9,7 +9,7 @@ interface ContextProps {
     status: 'checking' | 'authenticated' | 'not-authenticated';
     loggingIn: boolean;
     signIn: (loginData: LoginData) => void;
-    logOut: () => void;
+    logOut: (isExpired?: boolean) => void;
     removeError: () => void;
     getTypeOfMovementsName: () => string;
 }

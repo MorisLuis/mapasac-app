@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         const statusLogin = state.status;
-        console.log({statusLogin})
         if (statusLogin == 'checking') {
             return;
         }
@@ -143,17 +142,18 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
-    const logOut = async () => {
+    const logOut = async (isExpired?: boolean) => {
 
         try {
             setLoggingIn(false);
-            //await api.get('/api/auth/logout');
+            if(!isExpired) await api.get('/api/auth/logout');
             AsyncStorage.removeItem('token');
             dispatch({ type: 'logout' });
-            /* navigation.goBack();
-            navigation.navigate('LoginPage') */
+            if(!isExpired){
+                navigation.goBack();
+                navigation.navigate('LoginPage')
+            };
         } catch (error) {
-            console.log({error})
             handleError(error)
         }
     };

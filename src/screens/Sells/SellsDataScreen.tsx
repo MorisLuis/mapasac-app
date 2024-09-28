@@ -2,14 +2,14 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
 import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { SellsNavigationProp, SellsNavigationStackParamList, UnitType } from '../../navigator/SellsNavigation';
+import { SellsNavigationProp, UnitType } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
@@ -17,7 +17,6 @@ import FooterScreen from '../../components/Navigation/FooterScreen';
 import Tag from '../../components/Ui/Tag';
 import CardButton from '../../components/Cards/CardButton';
 
-type SellsDataScreenRouteProp = RouteProp<SellsNavigationStackParamList, 'SellsDataScreen'>;
 
 export type FormType = {
     pieces: string;
@@ -28,11 +27,10 @@ export type FormType = {
     idinveclas: number;
 };
 
-interface SellsDataScreenInterface {
-    route: SellsDataScreenRouteProp
-};
+export const SellsDataScreen = () => {
 
-export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
+    const { user } = useContext(AuthContext);
+    const { addProductSell, formSellsData } = useContext(SellsBagContext);
 
     const {
         pieces,
@@ -43,11 +41,9 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         productSellData,
         descripcio,
         image,
-        totalClasses: totalClassesProp
-    } = route?.params ?? {};
+        totalClasses
+    } = formSellsData;
 
-    const { user } = useContext(AuthContext);
-    const { addProductSell } = useContext(SellsBagContext);
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsNavigationProp>();
     const { handleError } = useErrorHandler();
@@ -55,7 +51,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const [title, setTitle] = useState<string>();
     const [idInveartsValue, setIdInveartsValue] = useState<number>();
     const [cveFamiliaValue, setCveFamiliaValue] = useState<number>();
-    const [totalClasses] = useState<number>(totalClassesProp ?? 0);
+    //const [totalClasses] = useState<number>(totalClassesProp ?? 0);
 
     const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
         defaultValues: {
@@ -68,7 +64,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         },
     });
 
-    const hasClasses = totalClasses > 0;
+    const hasClasses = (totalClasses ?? 0) > 0;
     const formCompleted = watch("typeClass") && watch('units') && watch('price') && watch('pieces');
     const buttonDisabled = !hasClasses ? !(watch('units') && watch('price') && watch('pieces')) : !formCompleted;
 
@@ -144,8 +140,8 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     }, [setValue, typeClass]);
 
     const handleGoToClassScreen = () => {
-        if (totalClasses > 1) {
-            if(!productSellData?.capa) return;
+        if ((totalClasses ?? 0) > 1) {
+            if (!productSellData?.capa) return;
             navigate('[Modal] - ClassScreen',
                 {
                     valueDefault: {
@@ -182,7 +178,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     useEffect(() => {
         if (!productSellData) return;
         const { idinvearts, capa, idinveclas } = productSellData ?? {};
-        console.log({idinvearts, capa, idinveclas})
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
 

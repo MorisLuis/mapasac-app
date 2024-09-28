@@ -1,15 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { View, TextInput, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
-import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import { SellsDataScreenTypeProps, SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -22,8 +23,10 @@ export const SelectClassScreen = ({
 }: SelectClassScreenInterface) => {
 
     const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route.params;
-    const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<SellsNavigationProp>();
+    const { theme, typeTheme } = useTheme();
+    const { updateFormData } = useContext(SellsBagContext);
+
     const { handleError } = useErrorHandler()
 
     const inputRef = useRef<TextInput>(null);
@@ -34,6 +37,7 @@ export const SelectClassScreen = ({
     const buttondisabled = !value ? true : false;
 
     const handleSelectOption = (value: ClassInterface) => {
+
         setValue({
             rcapa: value.rcapa,
             ridinvearts: value.ridinvearts,
@@ -51,24 +55,25 @@ export const SelectClassScreen = ({
     };
 
     const handleSave = () => {
-        navigation.goBack();
-        navigation.navigate('SellsDataScreen',
-            {
-                totalClasses: totalClasses,
-                descripcio: descripcio,
-                image: image,
-                cvefamilia: cvefamilia,
-                typeClass: {
-                    id: value.ridinvearts,
-                    value: value.rproducto
-                },
-                productSellData: {
-                    idinvearts: value.ridinvearts,
-                    capa: value.rcapa,
-                    idinveclas: value.ridinveclas
-                }
+        const data : SellsDataScreenTypeProps = {
+            totalClasses: totalClasses,
+            descripcio: descripcio,
+            image: image,
+            cvefamilia: cvefamilia,
+            typeClass: {
+                id: value.ridinvearts,
+                value: value.rproducto
+            },
+            productSellData: {
+                idinvearts: value.ridinvearts,
+                capa: value.rcapa,
+                idinveclas: value.ridinveclas
             }
-        );
+        };
+
+        updateFormData(data)
+        navigation.goBack();
+        navigation.navigate('SellsDataScreen');
     };
 
     const handleGetClasess = async () => {
@@ -101,6 +106,8 @@ export const SelectClassScreen = ({
         handleGetClasess();
     }, []);
 
+    
+
 
     return classes ? (
         <SafeAreaView>
@@ -117,7 +124,7 @@ export const SelectClassScreen = ({
                 />
 
                 <FooterScreen
-                    buttonTitle="Publicar"
+                    buttonTitle="Agregar"
                     buttonOnPress={handleSave}
                     buttonDisabled={buttondisabled}
                 />

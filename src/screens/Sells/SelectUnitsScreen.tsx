@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useContext } from 'react';
 import { View, TextInput, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
 
@@ -32,6 +33,7 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
 
     const { valueDefault } = route?.params;
     const { theme, typeTheme } = useTheme();
+    const { updateFormData } = useContext(SellsBagContext);
     const navigation = useNavigation<SellsNavigationProp>();
     const { handleError } = useErrorHandler();
 
@@ -44,7 +46,8 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
     });
 
     const handleSave = useCallback(() => {
-        navigation.navigate('SellsDataScreen', { units: selectedOption });
+        updateFormData({ units: selectedOption })
+        navigation.navigate('SellsDataScreen');
     }, [navigation, selectedOption]);
 
     useEffect(() => {

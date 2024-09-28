@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { View, TextInput, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
@@ -7,6 +7,7 @@ import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
 import FooterScreen from '../../components/Navigation/FooterScreen';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
 type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
@@ -22,6 +23,7 @@ export const SelectAmountScreen = ({
     const { theme, typeTheme } = useTheme();
     const { valueDefault, unit, from } = route.params;
     const navigation = useNavigation<SellsNavigationProp>();
+    const { updateFormData } = useContext(SellsBagContext);
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<string>(valueDefault ?? "0");
@@ -29,9 +31,11 @@ export const SelectAmountScreen = ({
 
     const handleSave = () => {
         if (from === 'pieces') {
-            navigation.navigate('SellsDataScreen', { pieces: value });
+            updateFormData({ pieces: value })
+            navigation.navigate('SellsDataScreen');
         } else {
-            navigation.navigate('SellsDataScreen', { price: value });
+            updateFormData({ price: value })
+            navigation.navigate('SellsDataScreen');
         }
     };
 
@@ -64,7 +68,7 @@ export const SelectAmountScreen = ({
 
 
                 <FooterScreen
-                    buttonTitle="Publicar"
+                    buttonTitle="Agregar"
                     buttonOnPress={handleSave}
                     buttonDisabled={buttondisabled}
                 />

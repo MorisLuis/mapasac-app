@@ -13,7 +13,8 @@ export const SessionExpiredScreen = () => {
     const { logOut } = useContext(AuthContext);
 
     const handleLogOut = () => {
-        logOut();
+        const isExpired = true
+        logOut(isExpired);
     }
 
     return (

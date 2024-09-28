@@ -39,7 +39,7 @@ export type SellsDataScreenTypeProps = {
 
 export type SellsNavigationStackParamList = {
     SellsScreen: undefined;
-    SellsDataScreen: SellsDataScreenTypeProps;
+    SellsDataScreen: undefined;
     BagSellsScreen: undefined;
 
     "[Modal] - editProductSellInBag": { product: ProductSellsInterface };
