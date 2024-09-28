@@ -25,15 +25,17 @@ export const LayoutSell = ({
     opcion
 }: LayoutSellInterface) => {
 
-    const { typeTheme, theme } = useTheme();
+    const { theme } = useTheme();
     const { status } = useContext(AuthContext);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
     const { handleUpdateSummary } = useContext(SellsBagContext);
+
+    const [totalPrice, setTotalPrice] = useState<number>(0);
     const [totalProducts, setTotalProducts] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<ProductSellsInterface[]>([]);
-    const { handleError } = useErrorHandler()
+
+    const { handleError } = useErrorHandler();
 
     const loadMoreItem = () => {
         if (products.length < totalProducts) {
@@ -97,7 +99,7 @@ export const LayoutSell = ({
     );
 
     useEffect(() => {
-        if(status !== 'authenticated' ) return;
+        if (status !== 'authenticated') return;
         handleGetPrice();
     }, [handleUpdateSummary]);
 

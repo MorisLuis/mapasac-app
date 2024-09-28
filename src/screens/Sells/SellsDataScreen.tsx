@@ -53,7 +53,6 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
     const { handleError } = useErrorHandler();
 
     const [title, setTitle] = useState<string>();
-    //const [imageValue, setImageValue] = useState<string>();
     const [idInveartsValue, setIdInveartsValue] = useState<number>();
     const [cveFamiliaValue, setCveFamiliaValue] = useState<number>();
     const [totalClasses] = useState<number>(totalClassesProp ?? 0);
@@ -186,6 +185,7 @@ export const SellsDataScreen = ({ route }: SellsDataScreenInterface) => {
         console.log({idinvearts, capa, idinveclas})
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
+
 
     return (
         <SafeAreaView>
