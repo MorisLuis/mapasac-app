@@ -6,7 +6,6 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
-import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;

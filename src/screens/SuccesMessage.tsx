@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, RouteProp } from '@react-navigation/native';
@@ -9,10 +9,10 @@ import { AppNavigationProp, AppNavigationStackParamList } from '../navigator/App
 import CustomText from '../components/Ui/CustumText';
 import { globalFont } from '../theme/appTheme';
 import FooterScreen from '../components/Navigation/FooterScreen';
-import { handleColorWithModule } from '../utils/handleColorWithModule';
-import { SettingsContext } from '../context/settings/SettingsContext';
 import { format } from '../utils/currency';
 import moment from 'moment-timezone';
+import useActionsForModules from '../hooks/useActionsForModules';
+import useDataForModule from '../hooks/useDataForModule';
 
 type SuccesMessageScreenRouteProp = RouteProp<AppNavigationStackParamList, 'succesMessageScreen'>;
 
@@ -23,29 +23,12 @@ interface SuccesMessageProps {
 export const SuccesMessage = ({ route }: SuccesMessageProps) => {
     const { redirection, from, numberOfProducts, importe } = route.params ?? {};
     const navigation = useNavigation<AppNavigationProp>();
-    const { actualModule } = useContext(SettingsContext);
     const { theme, typeTheme } = useTheme();
+    const { handleColorWithModule } = useActionsForModules();
+    const { movementInfo } = useDataForModule()
 
     const handleContinue = () => {
         navigation.push(redirection);
-    };
-
-    const handleMovementText = () => {
-        let title;
-        let text;
-
-        if (from === 'Inventory') {
-            title = 'Inventario realizado'
-            text = 'Inventario'
-        } else {
-            title = 'Venta realizada'
-            text = 'Venta'
-        }
-
-        return {
-            title,
-            text
-        }
     };
 
     const date = new Date();
@@ -58,19 +41,19 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
         <SafeAreaView>
             <View style={SuccesMessageScreenStyles(theme).SuccesMessage}>
                 <View style={SuccesMessageScreenStyles(theme).content}>
-                    <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule({ actualModule })} />
-                    <CustomText style={SuccesMessageScreenStyles(theme).headerText}>{handleMovementText().title} con existo</CustomText>
+                    <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule()} />
+                    <CustomText style={SuccesMessageScreenStyles(theme).headerText}>{movementInfo.title} con existo</CustomText>
 
-                    <View style={[SuccesMessageScreenStyles(theme).dateContainer, { backgroundColor: handleColorWithModule({ actualModule }) + "40" }]}>
-                        <Icon name="calendar" size={globalFont.font_normal} color={handleColorWithModule({ actualModule })} />
+                    <View style={[SuccesMessageScreenStyles(theme).dateContainer, { backgroundColor: handleColorWithModule() + "40" }]}>
+                        <Icon name="calendar" size={globalFont.font_normal} color={handleColorWithModule()} />
                         <CustomText>SE REALIZO: {formattedDate.toUpperCase()}</CustomText>
                     </View>
 
                     <View style={SuccesMessageScreenStyles(theme).dataContainer}>
                         <View style={SuccesMessageScreenStyles(theme).dataContainerInterior}>
                             <View style={SuccesMessageScreenStyles(theme).dataHeader}>
-                                <Icon name="stats-chart" size={globalFont.font_normal} color={handleColorWithModule({ actualModule })} />
-                                <CustomText style={[SuccesMessageScreenStyles(theme).dataTitle, { color: handleColorWithModule({ actualModule }) }]}>Resumen</CustomText>
+                                <Icon name="stats-chart" size={globalFont.font_normal} color={handleColorWithModule()} />
+                                <CustomText style={[SuccesMessageScreenStyles(theme).dataTitle, { color: handleColorWithModule() }]}>Resumen</CustomText>
                             </View>
 
                             <View style={SuccesMessageScreenStyles(theme).dataDivider}></View>
@@ -82,14 +65,14 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
 
                             <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
                                 <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Tipo de movimiento: </CustomText>
-                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>{handleMovementText().text}</CustomText>
+                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>{movementInfo.text}</CustomText>
                             </View>
 
                             {
                                 importe &&
                                 <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
                                     <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Total importe: </CustomText>
-                                    <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText, { color: handleColorWithModule({ actualModule }) }]}>{format(importe)}</CustomText>
+                                    <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText, { color: handleColorWithModule() }]}>{format(importe)}</CustomText>
                                 </View>
                             }
                         </View>

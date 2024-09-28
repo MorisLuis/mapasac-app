@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { buttonStyles } from '../../theme/UI/buttons'
 import { useTheme } from '../../context/ThemeContext'
 import CustomText from '../Ui/CustumText'
@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../theme/appTheme'
 import { TouchableOpacity } from 'react-native';
 import DotLoader from '../Ui/DotLaoder';
-import { SettingsContext } from '../../context/settings/SettingsContext';
+import useActionsForModules from '../../hooks/useActionsForModules';
 
 interface ButtonCustumInterface {
     onPress: () => void;
@@ -32,26 +32,14 @@ const ButtonCustum = ({
 }: ButtonCustumInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const { actualModule } = useContext(SettingsContext);
-
-    // Modify the color of the button depends of the module.
-    const modifyButtonColor = () => {
-        let buttonColorNew = buttonColor;
-
-        if (buttonColor === 'green') {
-            buttonColorNew = actualModule === 'Sells' ? 'purple' : 'green'
-        };
-
-        return buttonColorNew
-    }
+    const { handleColorWithModule } = useActionsForModules()
 
     return (
         <TouchableOpacity
             style={[
                 buttonStyles(theme).button,
-                buttonStyles(theme, typeTheme)[modifyButtonColor()],
                 disabled && { opacity: 0.6 }
-                , { ...extraStyles }
+                , { ...extraStyles, backgroundColor: handleColorWithModule() }
             ]}
             onPress={onPress}
             disabled={disabled}

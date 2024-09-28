@@ -1,11 +1,10 @@
 import { View, TouchableOpacity } from 'react-native'
-import React, { useContext } from 'react'
+import React from 'react'
 import CustomText from '../Ui/CustumText'
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { SettingsContext } from '../../context/settings/SettingsContext';
-import { handleColorWithModule } from '../../utils/handleColorWithModule';
 import { ProductCardSelectTheme } from '../../theme/UI/cardsStyles';
+import useActionsForModules from '../../hooks/useActionsForModules';
 
 interface CardSelectInterface {
     onPress: () => void;
@@ -27,13 +26,13 @@ const CardSelect = ({
 
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
-    const { actualModule } = useContext(SettingsContext);
+    const { handleColorWithModule } = useActionsForModules();
 
     return (
         <TouchableOpacity
             style={[
                 ProductCardSelectTheme(theme, typeTheme).CardSelect,
-                sameValue && { backgroundColor: handleColorWithModule({ actualModule }) + "40" }
+                sameValue && { backgroundColor: handleColorWithModule() + "40" }
             ]}
             onPress={onPress}
         >
@@ -63,7 +62,7 @@ const CardSelect = ({
 
             {
                 sameValue ?
-                    <Icon name='checkmark-circle' size={20} color={handleColorWithModule({ actualModule })} />
+                    <Icon name='checkmark-circle' size={20} color={handleColorWithModule()} />
                     :
                     <View style={ProductCardSelectTheme(theme, typeTheme).optionCheck}>
                     </View>

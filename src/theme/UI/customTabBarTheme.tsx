@@ -1,10 +1,8 @@
 import { StyleSheet } from "react-native";
 import {Theme, globalFont, globalStyles } from "../appTheme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { SettingsInterface } from "../../context/settings/SettingsProvider";
 
-
-export const customTabBarStyles = (theme: Theme, typeTheme?: string, actualModule?: SettingsInterface['actualModule']) => StyleSheet.create({
+export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     customTabBar: {
     },
     customTabBarAbsolute: {
@@ -84,7 +82,6 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string, actualModul
         top: - globalStyles(theme).globalPadding.padding / 2,
         right: - globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        backgroundColor: actualModule === 'Sells' ? theme.color_purple : actualModule === 'Inventory' ? theme.color_tertiary : theme.color_primary,
         borderWidth: 1,
         borderColor: theme.color_border,
         justifyContent: "center",

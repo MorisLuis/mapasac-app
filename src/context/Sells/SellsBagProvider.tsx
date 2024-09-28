@@ -8,11 +8,11 @@ import { AuthContext } from '../auth/AuthContext';
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;
-}
+};
 
 export const SellsBagInitialState: SellsBagInterface = {
     numberOfItemsSells: "0"
-}
+};
 
 export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
