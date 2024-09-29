@@ -23,12 +23,10 @@ export const SellsScreen = () => {
     );
 
     return (
-        <>
-            {/* <Button onPress={toggleTheme} title='ola' /> */}
-            <LayoutSell
-                renderItem={renderItem}
-                opcion={2}
-            />
-        </>
+
+        <LayoutSell
+            renderItem={renderItem}
+            opcion={2}
+        />
     )
 };

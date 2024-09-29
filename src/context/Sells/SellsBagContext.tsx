@@ -13,7 +13,8 @@ interface ContextProps {
     cleanFormData: () => void;
     
     numberOfItemsSells: string;
-    formSellsData: SellsDataScreenTypeProps
+    formSellsData: SellsDataScreenTypeProps;
+    productAdded: boolean;
 }
 
 export const SellsBagContext = createContext({} as ContextProps)

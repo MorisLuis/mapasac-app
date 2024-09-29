@@ -116,7 +116,8 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
             handleCleanState,
             updateFormData,
             cleanFormData,
-            formSellsData
+            formSellsData,
+            productAdded
         }}>
             {children}
         </SellsBagContext.Provider>

@@ -27,7 +27,7 @@ export const LayoutSell = ({
 
     const { theme } = useTheme();
     const { status } = useContext(AuthContext);
-    const { handleUpdateSummary } = useContext(SellsBagContext);
+    const { handleUpdateSummary, productAdded } = useContext(SellsBagContext);
 
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -44,11 +44,13 @@ export const LayoutSell = ({
     };
 
     const handleGetPrice = async () => {
+        console.log("handleGetPrice")
         try {
             const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
-            if (totalprice.error) return handleError(totalprice.error)
+            if (totalprice?.error) return handleError(totalprice.error)
             setTotalPrice(parseFloat(totalprice ?? 0));
         } catch (error: any) {
+            console.log({ error })
             handleError(error);
         };
     };
@@ -101,7 +103,9 @@ export const LayoutSell = ({
     useEffect(() => {
         if (status !== 'authenticated') return;
         handleGetPrice();
-    }, [handleUpdateSummary]);
+    }, [productAdded]);
+
+    console.log({ productAdded })
 
     return (
         <LayoutGrandient color="purple">
@@ -112,7 +116,11 @@ export const LayoutSell = ({
                             <View style={SellsScreenStyles(theme).header}>
                                 <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
                                 <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
-                                <CustomText style={[SellsScreenStyles(theme).header_total]}>{format(totalPrice)}</CustomText>
+                                <CustomText style={[SellsScreenStyles(theme).header_total]}>
+                                    {
+                                        productAdded ? 'Calculando...' : format(totalPrice)
+                                    }
+                                </CustomText>
                             </View>
 
                             <FlatList
