@@ -39,7 +39,7 @@ const ButtonCustum = ({
             style={[
                 buttonStyles(theme).button,
                 disabled && { opacity: 0.6 }
-                , { ...extraStyles, backgroundColor: handleColorWithModule() }
+                , { ...extraStyles, backgroundColor: handleColorWithModule().primary }
             ]}
             onPress={onPress}
             disabled={disabled}

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
@@ -82,7 +82,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
         try {
             setIsLoading(true);
-            const newBags = await getBagInventory({ page, limit: 5, option: 2, mercado: true });
+            const newBags = await getBagInventory({ page, limit: 5, option: 2 });
 
 
             if (newBags.error) {
@@ -108,7 +108,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const handleGetPrice = async () => {
 
         try {
-            const totalprice = await getTotalPriceBag({ opcion: 2, mercado: true });
+            const totalprice = await getTotalPriceBag({ opcion: 2 });
             if (totalprice.error) return handleError(totalprice.error);
             setTotalPrice(parseFloat(totalprice))
         } catch (error: any) {
@@ -124,7 +124,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
         try {
             setIsLoading(true);
-            const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2, mercado: true });
+            const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 2 });
 
             if (refreshedBags.error) {
                 handleError(refreshedBags.error);

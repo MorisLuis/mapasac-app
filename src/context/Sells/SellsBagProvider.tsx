@@ -26,9 +26,9 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
 
     const handleUpdateSummary = async () => {
-        if(status !== 'authenticated' ) return;
+        if (status !== 'authenticated') return;
         try {
-            const total = await getTotalProductsInBag({ opcion: 2, mercado: true });
+            const total = await getTotalProductsInBag({ opcion: 2 });
             if (total?.error) return handleError(total.error);
 
             const numberOfItemsSells = total;
@@ -46,7 +46,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const addProductSell = async (sellBody: EnlacemobInterface) => {
         try {
-            const product = await addProductInBag({ product: sellBody, mercado: true });
+            const product = await addProductInBag({ product: sellBody, opcion: 2 });
             if (product?.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {
@@ -58,7 +58,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const deleteProductSell = async (idenlacemob: number) => {
         try {
-            const product = await deleteProductInBag({ idenlacemob, mercado: true });
+            const product = await deleteProductInBag({ idenlacemob });
             if (product?.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {
@@ -70,7 +70,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
 
     const editProductSell = async ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
         try {
-            const product = await updateProductInBag({ idenlacemob, cantidad, mercado: true });
+            const product = await updateProductInBag({ idenlacemob, cantidad });
             if (product?.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {
@@ -85,7 +85,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     };
 
     const cleanFormData = () => {
-        setFormSellsData({ });
+        setFormSellsData({});
     };
 
 

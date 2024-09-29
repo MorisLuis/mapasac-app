@@ -11,14 +11,17 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     header: {
         flexDirection: 'row',
         alignItems: 'flex-end',
-        marginBottom: globalStyles().globalMarginBottom.marginBottom
+        marginBottom: globalStyles().globalMarginBottom.marginBottom,
+        height:'auto'
     },
     title: {
         fontSize: globalFont.font_big,
         fontFamily: 'Rubik-Bold',
         alignSelf: 'flex-start',
         marginRight: globalStyles(theme).globalMarginBottom.marginBottom / 2,
-        maxWidth: wp("72.5%")
+        maxWidth: wp("72.5%"),
+        lineHeight: globalFont.font_big
+
     },
     imageContainer: {
         display: "flex",

@@ -8,7 +8,7 @@ import useActionsForModules from '../../hooks/useActionsForModules'
 interface TagInterface {
     message: string;
     color: 'green' | 'purple';
-    extraStyles?: any 
+    extraStyles?: any
 }
 
 const Tag = ({
@@ -18,17 +18,17 @@ const Tag = ({
 }: TagInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const {  handleColorWithModule } = useActionsForModules()
+    const { handleColorWithModule } = useActionsForModules()
 
     return (
-        <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color], {...extraStyles}]}>
+        <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color], { ...extraStyles }]}>
             <CustomText
                 style={[
                     uiElementeStyles(theme, typeTheme).tagText,
                     {
                         backgroundColor: 'transparent',
                         borderWidth: 0,
-                        color: handleColorWithModule()
+                        color: handleColorWithModule().secondary
                     }]}
             >
                 {message}

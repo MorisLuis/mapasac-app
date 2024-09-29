@@ -11,7 +11,7 @@ export const uiElementeStyles = (theme: Theme, typeTheme?: string) => StyleSheet
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
-        maxHeight: 24
+        minHeight: 24
     },
     tagText: {
         fontSize: globalFont.font_normal

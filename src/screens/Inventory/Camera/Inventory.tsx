@@ -70,16 +70,6 @@ export const Inventory = () => {
         return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
     };
 
-    /* const renderLoader = () => {
-        return (
-            isLoading ?
-                Array.from({ length: 10 }).map((_, index) => (
-                    <CardSelectSkeleton />
-                ))
-                : null
-        );
-    }; */
-
     const resetInventory = useCallback(() => {
         setCurrentPage(1);
     }, []);

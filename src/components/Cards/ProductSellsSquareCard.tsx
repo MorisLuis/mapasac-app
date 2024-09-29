@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { SellsNavigationProp } from '../../navigator/SellsNavigation';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { SellsNavigationProp } from '../../interface/navigation';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -21,6 +21,8 @@ export const ProductSellsSquareCard = ({
     const { updateFormData } = useContext(SellsBagContext);
     const navigation = useNavigation<SellsNavigationProp>();
     const iconColor = typeTheme === 'dark' ? "white" : "gray"
+    const platform = Platform.OS;
+
 
     const handleSelectProduct = async () => {
         const count = parseInt(product.classcount ?? "0");
@@ -29,7 +31,6 @@ export const ProductSellsSquareCard = ({
             descripcio: product.descripcio,
             image: product.imagen,
             totalClasses: parseInt(product.classcount as string),
-            //idinvearts: product.ridinvearts
         });
 
         if (count <= 1) {
@@ -54,7 +55,7 @@ export const ProductSellsSquareCard = ({
             {
                 product.imagen ? (
                     <View style={ProductSellsCardTheme(theme, typeTheme).item}>
-                        <View style={ProductSellsCardTheme(theme, typeTheme).imageContainer}>
+                        <View style={ProductSellsCardTheme(theme, typeTheme, platform ).imageContainer}>
                             <Image
                                 source={{ uri: `data:image/png;base64,${product.imagen}` }}
                                 style={ProductSellsCardTheme(theme, typeTheme).image}

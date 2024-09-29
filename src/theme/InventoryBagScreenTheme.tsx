@@ -42,9 +42,11 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     priceText: {
         fontSize: globalFont.font_med,
-        fontFamily: 'Rubik-Bold'
+        fontFamily: 'Rubik-Bold',
+        lineHeight: globalFont.font_med
     },
     priceLabel: {
-        fontSize: globalFont.font_normal
+        fontSize: globalFont.font_normal,
+        lineHeight: globalFont.font_normal
     }
 })

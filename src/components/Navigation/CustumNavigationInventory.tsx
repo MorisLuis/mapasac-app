@@ -43,10 +43,10 @@ const CustumNavigationInventory = ({ state, descriptors, navigation, absolute }:
 
         const textColor = isFocused
             ? (typeTheme === 'dark' ? theme.text_color_secondary : theme.text_color)
-            : (typeTheme === 'dark' ? theme.text_color_secondary : theme.text_color);
+            : (typeTheme === 'dark' ? theme.text_color : theme.text_color);
 
         const containerStyle = {
-            backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.color_black : "transparent")
+            backgroundColor: isFocused ? theme.color_tertiary : (Platform.OS === "android" ? theme.background_color : "transparent")
         };
 
         // Determina si `label` es una función o un string y maneja según corresponda

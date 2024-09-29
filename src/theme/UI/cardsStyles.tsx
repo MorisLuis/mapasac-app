@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Theme, globalFont, globalStyles } from '../appTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ThemeColor } from '../../context/ThemeContext';
+import { Platforms } from '../../interface/utils';
 
 
 export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.create({
@@ -251,7 +252,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
     },
 })
 
-export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.create({
+export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Platform?: Platforms) => StyleSheet.create({
     ProductSellsCardTheme: {
         flex: 0.5,
         display: "flex",
@@ -262,7 +263,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor) => S
     },
     imageContainer: {
         padding: 5,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
+        borderRadius: Platform === 'android' ? globalStyles(theme).borderRadius.borderRadius * 1.5 : globalStyles(theme).borderRadius.borderRadius * 2.5,
         borderWidth: 0.2,
         borderColor: typeTheme === 'dark' ? theme.color_border_secondary : theme.color_border_tertiary,
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,

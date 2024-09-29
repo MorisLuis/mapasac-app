@@ -27,11 +27,12 @@ import LayoutBagSkeleton from '../Skeletons/Screens/LayoutBagSkeleton';
 import ProductInterface from '../../interface/product';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../interface/navigation';
+import { opcionBag } from '../../interface/bag';
 
 export type CombinedProductInterface = ProductInterface | ProductSellsInterface;
 
 interface LayoutBagInterface {
-    opcion: number;
+    opcion: opcionBag;
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     bags: CombinedProductInterface[];
     setBags: React.Dispatch<React.SetStateAction<ProductInterface[]>> | React.Dispatch<React.SetStateAction<ProductSellsInterface[]>>;
@@ -83,7 +84,7 @@ export const LayoutBag = ({
 
         try {
             setLoadingCleanBag(true);
-            const product = await deleteAllProductsInBag({ opcion: opcion, mercado: true });
+            const product = await deleteAllProductsInBag({ opcion: opcion });
 
             if (product?.error) return handleError(product.error);
 
@@ -259,7 +260,7 @@ export const LayoutBag = ({
                         {/* POSSIBLE AS PROP */}
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
-                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule() }]}>
+                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule().primary }]}>
                                 {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
                             </CustomText>
                         </View>

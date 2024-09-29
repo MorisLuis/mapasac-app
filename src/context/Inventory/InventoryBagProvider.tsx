@@ -42,7 +42,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
 
     const addProduct = async (inventoryBody: ProductInterface) => {
         try {
-            const product = await addProductInBag({ product: inventoryBody });
+            const product = await addProductInBag({ product: inventoryBody, opcion: 0 });
             if (product?.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {

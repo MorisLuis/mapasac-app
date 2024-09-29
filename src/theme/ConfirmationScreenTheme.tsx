@@ -66,7 +66,8 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         borderColor: theme.color_border,
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles().borderRadius.borderRadius,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom * 2,
+        height: 'auto'
     },
 
     typeMethodContainer: {
@@ -77,9 +78,9 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     paymentMethodClient: {
-        display: "flex",
-        gap: 10,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+        //display: "flex",
+        //gap: 10,
+        //marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     paymentMethodItem: {
         flex: 1,

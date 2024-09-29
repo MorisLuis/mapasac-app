@@ -96,7 +96,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         alignItems: 'center',
         width: "100%",
         height: "100%",
-        paddingHorizontal: wp("2%"),
+        paddingHorizontal: wp("2%")
     },
     sectionTitle: {
         fontSize: globalFont.font_normal

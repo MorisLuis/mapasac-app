@@ -43,19 +43,19 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
             {/* <Button onPress={toggleTheme} title='ola' /> */}
             <View style={SuccesMessageScreenStyles(theme).SuccesMessage}>
                 <View style={SuccesMessageScreenStyles(theme).content}>
-                    <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule()} />
+                    <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule().primary} />
                     <CustomText style={SuccesMessageScreenStyles(theme).headerText}>{movementInfo.title} con existo</CustomText>
 
-                    <View style={[SuccesMessageScreenStyles(theme).dateContainer, { backgroundColor: handleColorWithModule() + "40" }]}>
-                        <Icon name="calendar" size={globalFont.font_normal} color={handleColorWithModule()} />
+                    <View style={[SuccesMessageScreenStyles(theme).dateContainer, { backgroundColor: handleColorWithModule().primary + "40" }]}>
+                        <Icon name="calendar" size={globalFont.font_normal} color={handleColorWithModule().primary} />
                         <CustomText>SE REALIZO: {formattedDate.toUpperCase()}</CustomText>
                     </View>
 
                     <View style={SuccesMessageScreenStyles(theme).dataContainer}>
                         <View style={SuccesMessageScreenStyles(theme).dataContainerInterior}>
                             <View style={SuccesMessageScreenStyles(theme).dataHeader}>
-                                <Icon name="stats-chart" size={globalFont.font_normal} color={handleColorWithModule()} />
-                                <CustomText style={[SuccesMessageScreenStyles(theme).dataTitle, { color: handleColorWithModule() }]}>Resumen</CustomText>
+                                <Icon name="stats-chart" size={globalFont.font_normal} color={handleColorWithModule().primary} />
+                                <CustomText style={[SuccesMessageScreenStyles(theme).dataTitle, { color: handleColorWithModule().primary }]}>Resumen</CustomText>
                             </View>
 
                             <View style={SuccesMessageScreenStyles(theme).dataDivider}></View>
@@ -74,7 +74,7 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
                                 importe &&
                                 <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
                                     <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Total importe: </CustomText>
-                                    <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText, { color: handleColorWithModule() }]}>{format(importe)}</CustomText>
+                                    <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText, { color: handleColorWithModule().primary }]}>{format(importe)}</CustomText>
                                 </View>
                             }
                         </View>

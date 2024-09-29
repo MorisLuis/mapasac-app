@@ -19,10 +19,16 @@ export const useActionsForModules = () => {
     };
 
     const handleColorWithModule = () => {
-        let buttonColorNew = theme.color_tertiary; 
+        let buttonColorNew = {
+            primary: theme.color_tertiary,
+            secondary: theme.color_green,
+        }
     
         if (actualModule === 'Sells') {
-            buttonColorNew = theme.color_purple; 
+            buttonColorNew = {
+                primary: theme.color_purple,
+                secondary: theme.color_purple,
+            }
         }
         return buttonColorNew;
     };
