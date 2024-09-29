@@ -80,7 +80,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         display: "flex",
         gap: 10,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        backgroundColor: theme.background_color
+        //backgroundColor: theme.background_color
     },
     paymentMethodItem: {
         flex: 1,

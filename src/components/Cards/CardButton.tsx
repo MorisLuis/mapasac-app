@@ -67,7 +67,7 @@ const CardButton = ({
         <TouchableOpacity
             style={[
                 SellsDataScreenTheme(theme, typeTheme).inputContainer,
-                isDefaultValue && { borderColor: theme.color_border_secondary, borderWidth: 1 }
+                isDefaultValue && { borderColor: theme.color_border_tertiary, borderWidth: 1 }
             ]}
             onPress={onPress}
         >

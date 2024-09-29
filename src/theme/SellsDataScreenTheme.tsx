@@ -56,8 +56,8 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
         flexDirection: "row",
         justifyContent: "space-between",
         padding: globalStyles(theme).globalPadding.padding / 1.5,
-        borderWidth: 0.25,
-        borderColor: theme.color_border_secondary,
+        borderWidth: 0.2,
+        borderColor: theme.color_border_secondary
     },
     inputContainer_left: {
         display: 'flex',
@@ -75,8 +75,7 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     label: {
         fontSize: globalFont.font_normal,
         color: theme.text_color,
-        fontFamily: 'SourceSans3-Regular',
-        //maxWidth: "45%"
+        fontFamily: 'SourceSans3-Regular'
     },
     labelValue: {
         fontSize: globalFont.font_normal,

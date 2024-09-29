@@ -38,7 +38,7 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
 
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SuccesMessageScreenStyles(theme).SuccesMessage}>
                 <View style={SuccesMessageScreenStyles(theme).content}>
                     <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule()} />
