@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
 import { ProductSellsInterface } from '../../interface/productSells';
 import { LayoutSell } from '../../components/Layouts/LayoutSell';
@@ -7,7 +7,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export const SellsScreen = () => {
 
-    const { cleanFormData, formSellsData } = useContext(SellsBagContext);
+    const { cleanFormData } = useContext(SellsBagContext);
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsSquareCard product={item} />
@@ -15,9 +15,7 @@ export const SellsScreen = () => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log("updateFormData");
             cleanFormData()
-            console.log({formSellsData})
         }, [])
     );
 

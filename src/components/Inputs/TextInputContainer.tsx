@@ -46,7 +46,7 @@ export const TextInputContainer = ({
                     backgroundColor: theme.background_color_secondary,
                     paddingHorizontal: globalStyles(theme).globalPadding.padding, // Aquí está el padding horizontal
                     borderWidth: 0.2,
-                    borderColor: theme.color_border_secondary,
+                    borderColor: theme.color_border,
                     borderRadius: globalStyles().borderRadius.borderRadius,
                     color: theme.text_color
                 }]}

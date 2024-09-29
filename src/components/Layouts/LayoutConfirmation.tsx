@@ -71,7 +71,6 @@ const LayoutConfirmation = ({
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_secondary }}>Confirmacion de pedido</CustomText>
                 </View>
                 <View style={ConfirmationScreenStyles(theme).confirmationSells}>
-
                     <View style={ConfirmationScreenStyles(theme).confirmationContainer}>
                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
                             <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Productos afectados: </CustomText>

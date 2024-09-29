@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { ThemeColor } from '../../context/ThemeContext';
 
 
-export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.create({
     title: {
         fontSize: globalFont.font_med,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
@@ -12,8 +12,8 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     productInventoryCard: {
         display: "flex",
         flexDirection: "column",
-        borderWidth: 0.25,
-        borderColor: theme.color_border_secondary,
+        borderWidth: 0.2,
+        borderColor: theme.color_border,
         backgroundColor: theme.background_color,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         padding: globalStyles(theme).globalPadding.padding / 4,
@@ -25,8 +25,8 @@ export const styles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
         justifyContent: "space-between",
         width: "100%",
         backgroundColor: theme.background_color_secondary,
-        borderWidth: 0.25,
-        borderColor: theme.color_border_secondary,
+        borderWidth: typeTheme === 'light' ? 1 : 0.2,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border,
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius / 2
     },

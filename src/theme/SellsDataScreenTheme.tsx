@@ -10,7 +10,8 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     },
     header: {
         flexDirection: 'row',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginBottom: globalStyles().globalMarginBottom.marginBottom
     },
     title: {
         fontSize: globalFont.font_big,

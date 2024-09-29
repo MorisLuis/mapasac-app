@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
@@ -30,10 +30,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
     const { client } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
-    const { typeTheme, theme } = useTheme();
+    const { typeTheme, theme, toggleTheme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const { handleError } = useErrorHandler();
-    const iconColor = typeTheme === 'light' ? theme.text_color : theme.text_color_secondary;
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -150,9 +149,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
             renderRightProp={() => {
                 return (
-                    <View>
-                        <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
-                    </View>
+                    <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
                 )
             }}
         />
@@ -161,6 +158,8 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const renderScreen = () => {
         return (
             <SafeAreaView>
+                {/* <Button onPress={toggleTheme} title='ola' /> */}
+
                 <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
                     <Icon name='card-sharp' color={theme.color_red} size={globalFont.font_normal} />
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>

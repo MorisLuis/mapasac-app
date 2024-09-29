@@ -79,8 +79,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     paymentMethodClient: {
         display: "flex",
         gap: 10,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
-        //backgroundColor: theme.background_color
+        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     paymentMethodItem: {
         flex: 1,
@@ -89,7 +88,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 0.2,
-        borderColor: theme.color_border_secondary
+        borderColor: theme.color_border
     },
     paymentMethodItemActive: {
         flex: 1,
@@ -98,7 +97,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary
     },
     confirmationProductsContentHeader: {
         color: theme.text_color,
