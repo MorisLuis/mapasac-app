@@ -51,7 +51,6 @@ export const SellsDataScreen = () => {
     const [title, setTitle] = useState<string>();
     const [idInveartsValue, setIdInveartsValue] = useState<number>();
     const [cveFamiliaValue, setCveFamiliaValue] = useState<number>();
-    //const [totalClasses] = useState<number>(totalClassesProp ?? 0);
 
     const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
         defaultValues: {

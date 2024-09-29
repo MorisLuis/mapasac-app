@@ -32,8 +32,6 @@ const CardSelect = ({
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const { handleColorWithModule } = useActionsForModules();
 
-    console.log({showSelect})
-
     return visible && (
         <TouchableOpacity
             style={[

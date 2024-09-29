@@ -10,6 +10,7 @@ interface ContextProps {
     handleUpdateSummary: () => void;
     handleCleanState: () => void;
     updateFormData: (data: SellsDataScreenTypeProps) => void;
+    cleanFormData: () => void;
     
     numberOfItemsSells: string;
     formSellsData: SellsDataScreenTypeProps

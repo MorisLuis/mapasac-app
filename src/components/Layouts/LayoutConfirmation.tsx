@@ -101,7 +101,6 @@ const LayoutConfirmation = ({
         navigatePage: navigateProtectPage()
     });
 
-
     if (protectThisPage) {
         return (
             <LoadingScreen message='Redireccionando...' />
@@ -138,6 +137,7 @@ const LayoutConfirmation = ({
                 <FooterScreen
                     buttonOnPress={onPost}
                     buttonDisabled={buttonPostDisabled}
+                    buttonLoading={buttonPostDisabled}
                     buttonTitle='Confirmar'
                     visible={availableToPost}
                 />

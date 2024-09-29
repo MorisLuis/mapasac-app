@@ -46,7 +46,7 @@ export type SellsNavigationStackParamList = {
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - UnitScreen": { valueDefault: UnitType };
-    "[Modal] - ClassScreen": { valueDefault: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
+    "[Modal] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
     "[Modal] - SelectClient": undefined;
 
     "[Sells] - confirmationScreen": { client?: ClientInterface };

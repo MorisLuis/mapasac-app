@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface } from '../../interface/productSells';
@@ -6,6 +6,8 @@ import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
+import { SellsNavigationProp } from '../../navigator/SellsNavigation';
+import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 
 interface ProductSellsCardInterface {
     product: ProductSellsInterface;
@@ -16,29 +18,29 @@ export const ProductSellsSquareCard = ({
 }: ProductSellsCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const navigation = useNavigation<any>();
+    const { updateFormData } = useContext(SellsBagContext);
+    const navigation = useNavigation<SellsNavigationProp>();
     const iconColor = typeTheme === 'dark' ? "white" : "gray"
 
     const handleSelectProduct = async () => {
         const count = parseInt(product.classcount ?? "0");
-        if (count <= 1) {
-            navigation.navigate('SellsDataScreen',
-                {
-                    cvefamilia: product.cvefamilia,
-                    descripcio: product.descripcio,
-                    image: product.imagen,
-                    totalClasses: product.classcount,
+        updateFormData({
+            cvefamilia: product.cvefamilia,
+            descripcio: product.descripcio,
+            image: product.imagen,
+            totalClasses: parseInt(product.classcount as string),
+            //idinvearts: product.ridinvearts
+        });
 
-                    idinvearts: product.ridinvearts
-                }
-            );
+        if (count <= 1) {
+            navigation.navigate('SellsDataScreen');
         } else {
             navigation.navigate('[Modal] - ClassScreen',
                 {
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,
                     image: product.imagen,
-                    totalClasses: product.classcount
+                    totalClasses: parseInt(product.classcount as string)
                 }
             );
         }

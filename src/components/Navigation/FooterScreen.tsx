@@ -8,6 +8,7 @@ interface FooterScreenInterface {
     buttonTitle: string;
     buttonOnPress: () => void;
     buttonDisabled: boolean;
+    buttonLoading?: boolean;
 
     visible?: boolean
 };
@@ -16,6 +17,7 @@ const FooterScreen = ({
     buttonTitle,
     buttonOnPress,
     buttonDisabled,
+    buttonLoading,
 
     visible = true
 }: FooterScreenInterface ) => {
@@ -30,6 +32,7 @@ const FooterScreen = ({
                     onPress={buttonOnPress}
                     disabled={buttonDisabled}
                     buttonColor='green'
+                    loading={buttonLoading}
                 />
             </View>
         </SafeAreaView>

@@ -181,13 +181,15 @@ export const LayoutBag = ({
 
     if (parseInt(numberOfItemsSells) <= 0) {
         return (
-            <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
-                <EmptyMessageCard
-                    title="No tienes productos aún."
-                    message="Empieza a agregar productos al inventario"
-                    icon="rocket-outline"
-                />
-            </View>
+            <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
+                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                    <EmptyMessageCard
+                        title="No tienes productos aún."
+                        message="Empieza a agregar productos al inventario"
+                        icon="rocket-outline"
+                    />
+                </View>
+            </SafeAreaView>
         )
     };
 

@@ -84,6 +84,11 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         setFormSellsData((prev) => ({ ...prev, ...data }));
     };
 
+    const cleanFormData = () => {
+        setFormSellsData({ });
+    };
+
+
     const handleCleanState = () => {
         dispatch({ type: '[SellsBag] - LogOut' })
     }
@@ -110,6 +115,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
             handleUpdateSummary,
             handleCleanState,
             updateFormData,
+            cleanFormData,
             formSellsData
         }}>
             {children}

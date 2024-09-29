@@ -54,7 +54,7 @@ const CardButton = ({
         return typeof value === 'number' ? value : value;
     }, [isPrice]);
 
-    const isDefaultValue = useMemo(() => currentValue === valueDefault, [currentValue, valueDefault]);
+    const isDefaultValue = currentValue === valueDefault;
 
     useEffect(() => {
         if (control && controlValue) {
@@ -62,12 +62,11 @@ const CardButton = ({
         }
     }, [valueDefault, control, controlValue]);
 
-
     return (
         <TouchableOpacity
             style={[
                 SellsDataScreenTheme(theme, typeTheme).inputContainer,
-                isDefaultValue && { borderColor: theme.color_border_tertiary, borderWidth: 1 }
+                isDefaultValue && { borderColor: theme.color_border, borderWidth: 1 }
             ]}
             onPress={onPress}
         >
