@@ -11,6 +11,8 @@ import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import CardButtonSkeleton from '../../components/Skeletons/CardButtonSkeleton';
+import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassSkeleton';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 
@@ -30,7 +32,7 @@ export const SelectClassScreen = ({
     const { handleError } = useErrorHandler()
 
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<ClassInterface>(valueDefault);
+    const [value, setValue] = useState<ClassInterface>(valueDefault as ClassInterface);
     const [classes, setClasses] = useState<ClassInterface[]>();
     const [optionSelected, setOptionSelected] = useState<ClassInterface>();
     const isCapa = classes?.[0]?.rcapa?.trim() !== "";
@@ -55,7 +57,7 @@ export const SelectClassScreen = ({
     };
 
     const handleSave = () => {
-        const data : SellsDataScreenTypeProps = {
+        const data: SellsDataScreenTypeProps = {
             totalClasses: totalClasses,
             descripcio: descripcio,
             image: image,
@@ -94,7 +96,7 @@ export const SelectClassScreen = ({
     }
 
     useEffect(() => {
-        setValue(valueDefault);
+        setValue(valueDefault as ClassInterface);
         setOptionSelected(valueDefault)
 
         if (inputRef.current) {
@@ -106,10 +108,11 @@ export const SelectClassScreen = ({
         handleGetClasess();
     }, []);
 
-    
+    if (!classes) {
+        return <SelectClassSkeleton/>
+    }
 
-
-    return classes ? (
+    return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
                 <View style={SelectScreenTheme(theme, typeTheme).header}>
@@ -131,8 +134,4 @@ export const SelectClassScreen = ({
             </View>
         </SafeAreaView>
     )
-        :
-        <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-            <CustomText>Cargando...</CustomText>
-        </View>
 };

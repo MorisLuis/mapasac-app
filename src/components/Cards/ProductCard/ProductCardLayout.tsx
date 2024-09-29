@@ -3,7 +3,6 @@ import { TouchableOpacity, View } from 'react-native';
 import { styles } from '../../../theme/UI/cardsStyles';
 import { useTheme } from '../../../context/ThemeContext';
 import { ProductSellsInterface } from '../../../interface/productSells';
-import { InventoryBagSkeleton } from '../../Skeletons/InventoryBagSkeleton';
 import CustomText from '../../Ui/CustumText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
@@ -47,7 +46,7 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
     if (deletingProduct) {
         return (
             <View style={{ flex: 1 }}>
-                <InventoryBagSkeleton length={1} />
+                
             </View>
         );
     }

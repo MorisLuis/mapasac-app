@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { SafeAreaView, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
@@ -16,7 +16,7 @@ import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import Tag from '../../components/Ui/Tag';
 import CardButton from '../../components/Cards/CardButton';
-
+import CardSelectSkeleton from '../../components/Skeletons/CardSelectSkeleton';
 
 export type FormType = {
     pieces: string;
@@ -180,7 +180,6 @@ export const SellsDataScreen = () => {
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
 
-
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
@@ -200,20 +199,18 @@ export const SellsDataScreen = () => {
                     size="small"
                 />
 
-                <CardButton
-                    onPress={handleGoToClassScreen}
-                    label='Clase:'
-                    valueDefault='Seleccionar la clase'
-                    color='blue'
-                    control={control}
-                    controlValue='typeClass'
-                    icon='resize-outline'
-                    specialValue={productSellData?.capa ? productSellData?.capa.trim() : undefined}
-                />
-
                 {
                     (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) ?
                         <>
+                            <CardButton
+                                onPress={handleGoToClassScreen}
+                                label='Clase:'
+                                valueDefault='Seleccionar la clase'
+                                color='blue'
+                                control={control}
+                                controlValue='typeClass'
+                                icon='resize-outline'
+                            />
                             <CardButton
                                 onPress={() => navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
                                 label='Cantidad:'
@@ -223,7 +220,6 @@ export const SellsDataScreen = () => {
                                 controlValue='pieces'
                                 icon="bag-handle"
                             />
-
                             <CardButton
                                 onPress={() => navigate('[Modal] - UnitScreen', { valueDefault: getValues('units') })}
                                 label='Unidad:'
@@ -233,7 +229,6 @@ export const SellsDataScreen = () => {
                                 controlValue='units'
                                 icon="shapes"
                             />
-
                             <CardButton
                                 onPress={() => navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
                                 label='Precio:'
@@ -246,9 +241,12 @@ export const SellsDataScreen = () => {
                             />
                         </>
                         :
-                        <View>
-                            <CustomText>Cargando...</CustomText>
-                        </View>
+                        <FlatList
+                            data={Array(4).fill({})}
+                            renderItem={() => <CardSelectSkeleton />}
+                            keyExtractor={(_, index) => index.toString()}
+                            onEndReachedThreshold={0.5}
+                        />
                 }
 
                 <FooterScreen

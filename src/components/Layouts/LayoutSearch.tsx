@@ -9,9 +9,10 @@ import { inputStyles } from '../../theme/UI/inputs';
 import ClientInterface from '../../interface/utils';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
-import { InventoryBagSkeleton } from '../../components/Skeletons/InventoryBagSkeleton';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import ProductInterface from '../../interface/product';
+import CardSelectSkeleton from '../Skeletons/CardSelectSkeleton';
+import LayoutSearchSkeleton from '../Skeletons/Screens/LayoutSearchSkeleton';
 
 interface LayoutSearchInterface<T> {
     handleGetItem: (page: number) => Promise<T[]>;
@@ -90,7 +91,7 @@ export const LayoutSearch = <T,>({
     }, []);
 
     if ((filteredItems.length <= 0 && !dataUploaded)) {
-        return <InventoryBagSkeleton length={10} />
+        return <LayoutSearchSkeleton/>
     }
 
     if (filteredItems?.length <= 0 && dataUploaded && searchText.length <= 0) {

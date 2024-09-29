@@ -4,7 +4,7 @@ import { getProductDetails } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductDetailsSkeleton } from '../../components/Skeletons/ProductDetailsSkeleton';
+import { ProductDetailsSkeleton } from '../../components/Skeletons/Screens/ProductDetailsSkeleton';
 import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { globalStyles } from '../../theme/appTheme';

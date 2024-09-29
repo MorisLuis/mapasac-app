@@ -42,7 +42,7 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
         backgroundColor: theme.background_color_secondary,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
         borderWidth: 0.2,
-        borderColor: theme.color_border_secondary
+        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_secondary,
     },
 });
 

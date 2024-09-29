@@ -5,7 +5,6 @@ import { getProducts, getTotalProducts } from '../../../services/products';
 import ProductInterface from '../../../interface/product';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProductInventoryCardSkeleton } from '../../../components/Skeletons/ProductInventoryCardSkeleton';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
@@ -13,9 +12,13 @@ import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';
-import { globalFont } from '../../../theme/appTheme';
+import { globalFont, globalStyles } from '../../../theme/appTheme';
 import Tag from '../../../components/Ui/Tag';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
+import CardSelectSkeleton from '../../../components/Skeletons/CardSelectSkeleton';
+import CardButtonSkeleton from '../../../components/Skeletons/CardButtonSkeleton';
+import { ProductCardSkeleton } from '../../../components/Skeletons/ProductCardSkeleton';
+import InventorySkeleton from '../../../components/Skeletons/Screens/InventorySkeleton';
 
 export const Inventory = () => {
 
@@ -70,15 +73,15 @@ export const Inventory = () => {
         return <ProductInventoryCard product={item} onClick={() => handlePressProduct(item)} />;
     };
 
-    const renderLoader = () => {
+    /* const renderLoader = () => {
         return (
             isLoading ?
                 Array.from({ length: 10 }).map((_, index) => (
-                    <ProductInventoryCardSkeleton key={index} />
+                    <CardSelectSkeleton />
                 ))
                 : null
         );
-    };
+    }; */
 
     const resetInventory = useCallback(() => {
         setCurrentPage(1);
@@ -87,12 +90,7 @@ export const Inventory = () => {
     const renderFooter = () => {
         return (
             <View>
-                {
-                    productsInInventory.length > 0 && productsInInventory.length >= totalProducts ?
-                        <CustomText style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</CustomText>
-                        :
-                        renderLoader()
-                }
+                <CustomText style={InventoryScreenStyles(theme).footerMessage}>Estos son todos los productos que tienes.({totalProducts})</CustomText>
             </View>
         );
     };
@@ -120,6 +118,10 @@ export const Inventory = () => {
         }, [])
     );
 
+    if (productsInInventory.length <= 0) {
+        return <InventorySkeleton />
+    }
+
 
     return (
         <LayoutGrandient color="green">
@@ -130,7 +132,7 @@ export const Inventory = () => {
                         <View style={InventoryScreenStyles(theme).headerContent}>
                             <CustomText style={InventoryScreenStyles(theme).title}>Inventario</CustomText>
                             <View style={InventoryScreenStyles(theme).subtitle}>
-                                <Tag message={`${totalProducts} Productos`} color='green'/>
+                                <Tag message={`${totalProducts} Productos`} color='green' />
                             </View>
                         </View>
 

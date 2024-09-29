@@ -5,7 +5,7 @@ import CustomText from '../Ui/CustumText';
 import { ProductInterfaceBag } from '../../interface/product';
 import { ProductSellsInterfaceBag } from '../../interface/productSells';
 import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
-import { ConfirmationSkeleton } from '../Skeletons/ConfirmationSkeleton';
+import { ConfirmationSkeleton } from '../Skeletons/Screens/ConfirmationSkeleton';
 import { globalFont } from '../../theme/appTheme';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import { format } from '../../utils/currency';

@@ -14,6 +14,8 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import LayoutGrandient from './LayoutGrandient';
 import { AuthContext } from '../../context/auth/AuthContext';
+import { ProductSellsSquareCardSkeleton } from '../Skeletons/ProductSquareCardSkeleton';
+import LayoutSellSkeleton from '../Skeletons/Screens/LayoutSellSkeleton';
 
 interface LayoutSellInterface {
     renderItem: ({ item }: { item: ProductSellsInterface }) => React.JSX.Element;
@@ -105,39 +107,36 @@ export const LayoutSell = ({
         handleGetPrice();
     }, [productAdded]);
 
+
+    if (products.length < 1) {
+        return <LayoutSellSkeleton/>
+    }
+
     return (
         <LayoutGrandient color="purple">
             <SafeAreaView>
                 <View style={SellsScreenStyles(theme).SellsScreen}>
-                    {products.length > 1 ?
-                        <>
-                            <View style={SellsScreenStyles(theme).header}>
-                                <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
-                                <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
-                                <CustomText style={[SellsScreenStyles(theme).header_total]}>
-                                    {
-                                        productAdded ? 'Calculando...' : format(totalPrice)
-                                    }
-                                </CustomText>
-                            </View>
+                    <View style={SellsScreenStyles(theme).header}>
+                        <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
+                        <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
+                        <CustomText style={[SellsScreenStyles(theme).header_total]}>
+                            {
+                                productAdded ? 'Calculando...' : format(totalPrice)
+                            }
+                        </CustomText>
+                    </View>
 
-                            <FlatList
-                                data={products}
-                                numColumns={2}
-                                renderItem={renderItem}
-                                keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
-                                contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                                columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
-                                ListFooterComponent={renderFooter}
-                                onEndReached={loadMoreItem}
-                                onEndReachedThreshold={0}
-                            />
-                        </>
-                        :
-                        <View style={SellsScreenStyles(theme).header}>
-                            <CustomText>Cargando...</CustomText>
-                        </View>
-                    }
+                    <FlatList
+                        data={products}
+                        numColumns={2}
+                        renderItem={renderItem}
+                        keyExtractor={(item: ProductSellsInterface) => item.idinvefami.toString()}
+                        contentContainerStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                        columnWrapperStyle={{ gap: globalStyles(theme).globalPadding.padding }}
+                        ListFooterComponent={renderFooter}
+                        onEndReached={loadMoreItem}
+                        onEndReachedThreshold={0}
+                    />
                 </View>
             </SafeAreaView>
         </LayoutGrandient>

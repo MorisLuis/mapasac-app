@@ -21,7 +21,6 @@ export const ModulesSkeleton = () => {
         <View
             style={[
                 {
-                    //flex: 0.2,
                     marginBottom: globalStyles(theme).globalPadding.padding / 2,
                     flexDirection: 'row',
                     height: 'auto'

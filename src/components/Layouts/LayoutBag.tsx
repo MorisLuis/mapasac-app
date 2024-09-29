@@ -6,10 +6,8 @@ import { getSearchProductInBack } from '../../services/searchs';
 import { ProductInterfaceBag } from '../../interface/product';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { inputStyles } from '../../theme/UI/inputs';
-import { FlatList, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { EmptyMessageCard } from '../Cards/EmptyMessageCard';
-import { InventoryBagSkeleton } from '../Skeletons/InventoryBagSkeleton';
-import { buttonStyles } from '../../theme/UI/buttons';
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import { deleteAllProductsInBag, getBagInventory } from '../../services/bag';
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +26,8 @@ import ButtonCustum from '../Inputs/ButtonCustum';
 import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
 import { ModuleInterface } from '../../interface/utils';
 import useActionsForModules from '../../hooks/useActionsForModules';
+import { ProductCardSkeleton } from '../Skeletons/ProductCardSkeleton';
+import LayoutBagSkeleton from '../Skeletons/Screens/LayoutBagSkeleton';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
 
@@ -176,7 +176,7 @@ export const LayoutBag = ({
 
     // Primera condición: Si los bags están vacíos y los datos no se han cargado
     if ((bags.length <= 0 && !dataUploaded) || cleanSearchText) {
-        return <InventoryBagSkeleton length={10} />
+        return <LayoutBagSkeleton/>
     }
 
     if (parseInt(numberOfItemsSells) <= 0) {
@@ -213,7 +213,7 @@ export const LayoutBag = ({
                         onChangeText={query => handleSearch(query)}
                         value={searchText}
                         style={[
-                            inputStyles(theme).searchBar,
+                            inputStyles(theme, typeTheme).searchBar,
                             { marginBottom: globalStyles(theme).globalMarginBottom.marginBottom },
                             hideSearch && { display: 'none' }
                         ]}

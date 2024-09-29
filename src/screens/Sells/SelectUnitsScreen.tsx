@@ -11,6 +11,7 @@ import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassSkeleton';
 
 type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
 
@@ -72,14 +73,8 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
     ), [selectedOption]);
 
     if (!units) {
-        return (
-            <View style={SelectScreenTheme(theme, typeTheme).SelectScreen}>
-                <View style={SelectScreenTheme(theme, typeTheme).header}>
-                    <CustomText>Cargando...</CustomText>
-                </View>
-            </View>
-        );
-    }
+        return <SelectClassSkeleton />
+    };
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
