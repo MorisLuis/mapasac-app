@@ -1,4 +1,4 @@
-import { View, Text, FlatList, SafeAreaView } from 'react-native'
+import { View, FlatList, SafeAreaView } from 'react-native'
 import React from 'react'
 import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme'
 import { ProductCardSkeleton } from '../ProductCardSkeleton'

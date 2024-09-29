@@ -7,6 +7,7 @@ import CustomText from '../../Ui/CustumText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
 import ProductInterface from '../../../interface/product';
+import { ProductCardSkeleton } from '../../Skeletons/ProductCardSkeleton';
 
 export interface ProductCardInterface<T extends ProductSellsInterface | ProductInterface> {
     product: T;
@@ -46,7 +47,7 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
     if (deletingProduct) {
         return (
             <View style={{ flex: 1 }}>
-                
+                <ProductCardSkeleton/>
             </View>
         );
     }
