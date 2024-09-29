@@ -66,6 +66,7 @@ export const LoginScreen = () => {
                         keyboardType="email-address"
                         style={[inputStyles(theme, typeTheme).input, globalStyles(theme).globalMarginBottomSmall, { borderWidth: 0, paddingHorizontal: globalStyles(theme).globalPadding.padding / 2 }]}
                         selectionColor={theme.text_color}
+                        textColor={theme.text_color}
                         onChangeText={(value) => onChange(value, 'usr')}
                         value={usr}
                         onSubmitEditing={onLogin}

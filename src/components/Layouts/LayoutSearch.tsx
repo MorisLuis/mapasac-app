@@ -11,7 +11,6 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import ProductInterface from '../../interface/product';
-import CardSelectSkeleton from '../Skeletons/CardSelectSkeleton';
 import LayoutSearchSkeleton from '../Skeletons/Screens/LayoutSearchSkeleton';
 
 interface LayoutSearchInterface<T> {

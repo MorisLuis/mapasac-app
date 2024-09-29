@@ -43,6 +43,7 @@ export const InputPassword = ({
                 onSubmitEditing={onLogin}
                 autoCapitalize="none"
                 autoCorrect={false}
+                textColor={theme.text_color}
 
                 style={[inputStyles(theme, typeTheme).input, inputStyles(theme, typeTheme).passwordInput, { borderWidth: 0, paddingHorizontal: globalStyles(theme).globalPadding.padding / 2 }]}
                 mode="outlined"

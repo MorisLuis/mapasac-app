@@ -26,7 +26,6 @@ import ButtonCustum from '../Inputs/ButtonCustum';
 import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
 import { ModuleInterface } from '../../interface/utils';
 import useActionsForModules from '../../hooks/useActionsForModules';
-import { ProductCardSkeleton } from '../Skeletons/ProductCardSkeleton';
 import LayoutBagSkeleton from '../Skeletons/Screens/LayoutBagSkeleton';
 
 export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;

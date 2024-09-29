@@ -14,7 +14,6 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import LayoutGrandient from './LayoutGrandient';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { ProductSellsSquareCardSkeleton } from '../Skeletons/ProductSquareCardSkeleton';
 import LayoutSellSkeleton from '../Skeletons/Screens/LayoutSellSkeleton';
 
 interface LayoutSellInterface {
