@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ParamListBase, TabNavigationState, useNavigation } from '@react-navigation/native';
 import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';

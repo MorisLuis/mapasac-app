@@ -12,7 +12,7 @@ export const InventoryScreenStyles = (theme: Theme) => StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: hp("2.5%"),
-        marginTop: hp("2.5%") // This is because customTabBarAbsolute in CustumTabBar.
+        marginTop: hp("2.5%") + globalStyles(theme).globalPadding.padding // This is because customTabBarAbsolute in CustumTabBar.
     },
     headerContent: {
         display: 'flex'
