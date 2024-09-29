@@ -64,7 +64,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             };
 
             setTimeout(() => {
-                navigate('succesMessageScreen', { 
+                navigate('succesMessageScreen', {
                     redirection: 'SellsNavigation',
                     from: 'Sells',
                     numberOfProducts: numberOfItemsSells,
@@ -195,11 +195,11 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
                         <CardButton
                             onPress={() => navigate("[Modal] - SelectClient")}
-                            label='Selecciona el cliente'
-                            valueDefault='Seleccionar la clase'
+                            label='Cliente'
+                            valueDefault='Seleccionar el cliente'
                             color='black'
                             icon='people-sharp'
-                            specialValue={typeSelected ? typeSelected.nombres.trim() : undefined}
+                            specialValue={typeSelected ? typeSelected.nombres.trim() + "ola jaime" : undefined}
                         />
 
                         <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>

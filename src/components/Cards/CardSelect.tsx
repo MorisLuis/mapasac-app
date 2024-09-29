@@ -14,6 +14,7 @@ interface CardSelectInterface {
 
     subMessage?: string | number;
     visible?: boolean;
+    showSelect?: boolean;
 }
 
 const CardSelect = ({
@@ -23,12 +24,15 @@ const CardSelect = ({
     icon,
 
     subMessage,
-    visible = true
+    visible = true,
+    showSelect = true
 }: CardSelectInterface) => {
 
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
     const { handleColorWithModule } = useActionsForModules();
+
+    console.log({showSelect})
 
     return visible && (
         <TouchableOpacity
@@ -39,7 +43,7 @@ const CardSelect = ({
             onPress={onPress}
         >
             <View style={ProductCardSelectTheme(theme, typeTheme).CardSelectInfo}>
-                { icon && <Icon name={icon} size={20} color={iconColor} /> }
+                {icon && <Icon name={icon} size={20} color={iconColor} />}
                 <View>
                     <CustomText
                         style={[ProductCardSelectTheme(theme, typeTheme).CardSelectMessage]}
@@ -63,12 +67,18 @@ const CardSelect = ({
             </View>
 
             {
-                sameValue ?
-                    <Icon name='checkmark-circle' size={20} color={handleColorWithModule()} />
-                    :
-                    <View style={ProductCardSelectTheme(theme, typeTheme).optionCheck}>
-                    </View>
+                showSelect &&
+                <>
+                    {
+                        (sameValue) ?
+                            <Icon name='checkmark-circle' size={20} color={handleColorWithModule()} />
+                            :
+                            <View style={ProductCardSelectTheme(theme, typeTheme).optionCheck}>
+                            </View>
+                    }
+                </>
             }
+
         </TouchableOpacity>
     )
 }

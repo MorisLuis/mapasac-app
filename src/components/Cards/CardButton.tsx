@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
@@ -15,11 +15,13 @@ interface CardButtonInterface {
     label: string;
     valueDefault: string;
     color: 'purple' | 'green' | 'red' | 'blue' | 'black';
+
+    /* Optional */
+    specialValue?: string;
     control?: Control<FormType, any>;
     controlValue?: keyof FormType;
     icon?: string;
     isPrice?: boolean;
-    specialValue?: string;
 }
 
 const CardButton = ({
@@ -36,71 +38,83 @@ const CardButton = ({
     const { typeTheme, theme } = useTheme();
     const [currentValue, setCurrentValue] = useState<string | number>(valueDefault);
 
-    // Asegurarnos de devolver un string o number
-    const handleValue = (value: string | UnitType | number): string | number => {
+    // Memorizamos el valor resuelto del color y el valor por defecto
+    const resolvedColor = useMemo(
+        () => (color === 'black' && typeTheme === 'dark') ? 'white' : color,
+        [color, typeTheme]
+    );
+
+    const handleValue = useCallback((value: string | UnitType | number): string | number => {
         if (typeof value === 'object' && 'value' in value) {
             return value?.value?.trim();
         }
-
         if (isPrice) {
             return format(Number(value));
         }
+        return typeof value === 'number' ? value : value;
+    }, [isPrice]);
 
-        if (typeof value === 'number') {
-            return value;
+    const isDefaultValue = useMemo(() => currentValue === valueDefault, [currentValue, valueDefault]);
+
+    useEffect(() => {
+        if (control && controlValue) {
+            setCurrentValue(valueDefault);
         }
+    }, [valueDefault, control, controlValue]);
 
-        return value;
-    };
-
-    // Verifica si el valor actual es el valor por defecto
-    const isDefaultValue = currentValue === valueDefault;
-
-    // Condicional para cambiar 'black' a 'white' en modo 'dark'
-    const resolvedColor = (color === 'black' && typeTheme === 'dark') ? 'white' : color;
 
     return (
         <TouchableOpacity
             style={[
                 SellsDataScreenTheme(theme, typeTheme).inputContainer,
-                isDefaultValue && { borderColor: theme.color_border_tertiary, borderWidth: 1 }
+                isDefaultValue && { borderColor: theme.color_border_secondary, borderWidth: 1 }
             ]}
             onPress={onPress}
         >
+            {/* LABEL */}
             <View style={SellsDataScreenTheme(theme, typeTheme).inputContainer_left}>
-                {icon && (
-                    <Icon name={icon} color={theme[`color_${resolvedColor}`]} size={globalFont.font_normal} />
-                )}
+                {icon && <Icon name={icon} color={theme[`color_${resolvedColor}`]} size={globalFont.font_normal} />}
                 <CustomText
                     style={[SellsDataScreenTheme(theme, typeTheme).label, { color: theme[`color_${resolvedColor}`] }]}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
                 >
                     {label}
                 </CustomText>
             </View>
-            {
-                (control && controlValue) ?
-                    <Controller
-                        control={control}
-                        name={controlValue}
-                        render={({ field: { value } }) => {
-                            const newValue = value ? handleValue(value) : valueDefault;
-                            useEffect(() => {
-                                setCurrentValue(newValue);
-                            }, [newValue]);
-                            return (
-                                <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                                    {specialValue ? specialValue : newValue}
-                                </CustomText>
-                            );
-                        }}
-                    />
-                    : specialValue ?
-                        <CustomText style={SellsDataScreenTheme(theme, typeTheme).labelValue}>
-                            {specialValue}
-                        </CustomText>
-                        :
-                        null
-            }
+
+            {/* VALUE */}
+            {control && controlValue ? (
+                <Controller
+                    control={control}
+                    name={controlValue}
+                    render={({ field: { value } }) => {
+
+                        const newValue = value ? handleValue(value) : valueDefault;
+                        useEffect(() => {
+                            setCurrentValue(newValue);
+                        }, [newValue]);
+
+                        return (
+                            <CustomText
+                                style={SellsDataScreenTheme(theme, typeTheme).labelValue}
+                                ellipsizeMode="tail"
+                                numberOfLines={1}
+                            >
+                                {specialValue || newValue}
+                            </CustomText>
+                        );
+                    }}
+                />
+            ) : specialValue ? (
+                <CustomText
+                    style={SellsDataScreenTheme(theme, typeTheme).labelValue}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                >
+                    {specialValue}
+                </CustomText>
+            ) : null}
         </TouchableOpacity>
     );
 };
