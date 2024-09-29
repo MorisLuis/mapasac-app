@@ -9,7 +9,6 @@ import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily
 import EnlacemobInterface from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { SellsNavigationProp, UnitType } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
@@ -17,6 +16,7 @@ import FooterScreen from '../../components/Navigation/FooterScreen';
 import Tag from '../../components/Ui/Tag';
 import CardButton from '../../components/Cards/CardButton';
 import CardSelectSkeleton from '../../components/Skeletons/CardSelectSkeleton';
+import { SellsNavigationProp, UnitType } from '../../interface/navigation';
 
 export type FormType = {
     pieces: string;

@@ -4,10 +4,11 @@ import { useTheme } from '../../context/ThemeContext';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
-import { SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import CustomText from '../../components/Ui/CustumText';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
+import { SellsNavigationProp } from '../../interface/navigation';
 
 type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
 type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;

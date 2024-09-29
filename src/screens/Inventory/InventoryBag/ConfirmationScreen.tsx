@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { ProductInterfaceBag } from '../../../interface/product';
 import { getBagInventory } from '../../../services/bag';
 import { postInventory } from '../../../services/inventory';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { CombinedInventoryAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
+import ProductInterface from '../../../interface/product';
+import { CombinedInventoryAndAppNavigationStackParamList } from '../../../interface/navigation';
 
 export const ConfirmationScreen = () => {
 
@@ -16,7 +16,7 @@ export const ConfirmationScreen = () => {
     const navigation = useNavigation<NativeStackNavigationProp<CombinedInventoryAndAppNavigationStackParamList>>();
     const [createInventaryLoading, setCreateInventaryLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false);
@@ -62,7 +62,7 @@ export const ConfirmationScreen = () => {
             }
 
             if (newBags && newBags.length > 0) {
-                setBags((prevBags: ProductInterfaceBag[]) => [...prevBags, ...newBags]);
+                setBags((prevBags: ProductInterface[]) => [...prevBags, ...newBags]);
                 setPage(page + 1);
             } else {
                 setHasMore(false);
@@ -98,7 +98,7 @@ export const ConfirmationScreen = () => {
 
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
+    const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
         <ProductInventoryCard
             product={item}
             onClick={() => navigation.navigate('[Modal] - editProductInBag', { product: item })}

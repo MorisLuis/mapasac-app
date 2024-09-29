@@ -10,11 +10,11 @@ import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
 import { getProductByCodeBar } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import FooterScreen from '../../../components/Navigation/FooterScreen';
 import ModalDecision from '../../../components/Modals/ModalDecision';
+import { CodebarNavigationProp } from '../../../interface/navigation';
 
 interface CodebarUpdateWithInputScreenInterface {
     selectedProduct: { idinvearts: number }

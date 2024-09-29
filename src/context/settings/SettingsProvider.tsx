@@ -15,7 +15,7 @@ export interface SettingsInterface {
     codebarType?: number;
     startScanning?: boolean;
     actualModule: ModuleInterface['module']
-}
+};
 
 export const SettingsInitialState: SettingsInterface = {
     vibration: true,
@@ -26,7 +26,7 @@ export const SettingsInitialState: SettingsInterface = {
     codebarType: 1,
     startScanning: false,
     actualModule: 'Inventory'
-}
+};
 
 export const SettingsProvider = ({ children }: { children: JSX.Element }) => {
 

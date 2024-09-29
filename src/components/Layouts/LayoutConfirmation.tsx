@@ -2,8 +2,6 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
-import { ProductInterfaceBag } from '../../interface/product';
-import { ProductSellsInterfaceBag } from '../../interface/productSells';
 import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
 import { ConfirmationSkeleton } from '../Skeletons/Screens/ConfirmationSkeleton';
 import { globalFont } from '../../theme/appTheme';
@@ -13,8 +11,10 @@ import FooterScreen from '../Navigation/FooterScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ModuleInterface } from '../../interface/utils';
 import { LoadingScreen } from '../../screens/LoadingScreen';
+import ProductInterface from '../../interface/product';
+import { ProductSellsInterface } from '../../interface/productSells';
 
-export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
+export type CombinedProductInterface = ProductInterface | ProductSellsInterface;
 
 interface LayoutConfirmationInterface {
     data: CombinedProductInterface[];

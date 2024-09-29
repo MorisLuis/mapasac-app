@@ -13,10 +13,10 @@ import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
 import { MessageCard } from '../../components/Cards/MessageCard';
 import useErrorHandler from '../../hooks/useErrorHandler';
-import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import { InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 import CustomText from '../../components/Ui/CustumText';
-import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import FooterScreen from '../../components/Navigation/FooterScreen';
+import { InventoryNavigationProp } from '../../interface/navigation';
 
 type ProductDetailsPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreen'>;
 type InventoryDetailsScreenPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - inventoryDetailsScreen'>;

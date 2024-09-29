@@ -19,7 +19,7 @@ export const InventoryProvider = ({ children }: { children: JSX.Element[] }) => 
     const [state, dispatch] = useReducer(innventoryBagReducer, InventoryBagInitialState);
     const [productAdded, setProductAdded] = useState(false);
     const { handleError } = useErrorHandler();
-    const { user, status } = useContext(AuthContext);
+    const { status } = useContext(AuthContext);
 
 
     const handleUpdateSummary = async () => {

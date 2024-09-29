@@ -5,13 +5,12 @@ import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
-import { ProductSellsInterface, ProductSellsInterfaceBag } from '../../../interface/productSells';
+import { ProductSellsInterface } from '../../../interface/productSells';
 import { postSells, postSellsInterface } from '../../../services/sells';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 import ClientInterface from '../../../interface/utils';
-import { CombinedSellsAndAppNavigationStackParamList } from '../../../navigator/AppNavigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
@@ -19,6 +18,7 @@ import useErrorHandler from '../../../hooks/useErrorHandler';
 import CustomText from '../../../components/Ui/CustumText';
 import CardButton from '../../../components/Cards/CardButton';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
+import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface/navigation';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -36,7 +36,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductSellsInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [dataUploaded, setDataUploaded] = useState(false);
@@ -91,7 +91,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             }
 
             if (newBags && newBags.length > 0) {
-                setBags((prevBags: ProductSellsInterfaceBag[]) => [...prevBags, ...newBags]);
+                setBags((prevBags: ProductSellsInterface[]) => [...prevBags, ...newBags]);
                 setPage(page + 1);
             } else {
                 setHasMore(false);

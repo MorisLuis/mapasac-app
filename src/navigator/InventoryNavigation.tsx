@@ -18,11 +18,8 @@ import { ProductDetailsPageEdit } from '../screens/Inventory/ProductDetailsPageE
 import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
 
-// useNavigation() type. 
-export type InventoryNavigationProp = NativeStackNavigationProp<Partial<InventoryNavigationStackParamList>>;
 
 export type InventoryNavigationStackParamList = {
     // Navigation

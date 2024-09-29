@@ -38,9 +38,4 @@ export default interface ProductInterface {
 
     // The name of the 'unidad'
     unidad_nombre?: string
-    
-}
-
-export interface ProductInterfaceBag extends ProductInterface {
-    key: number
-}
+};

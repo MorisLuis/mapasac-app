@@ -1,4 +1,4 @@
-import { Image, View, LayoutChangeEvent, ImageLoadEventData, NativeSyntheticEvent } from 'react-native';
+import { Image, View, ImageLoadEventData, NativeSyntheticEvent } from 'react-native';
 import React, { useState } from 'react';
 import { uiImageCustumContainerStyles } from '../../theme/UI/uiElementsTheme';
 import { useTheme } from '../../context/ThemeContext';

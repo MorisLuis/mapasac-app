@@ -1,13 +1,13 @@
 import React, { useContext, useMemo } from 'react';
-import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsContext } from '../context/settings/SettingsContext';
 
 // Screens
 import { LoginScreen } from '../screens/Onboarding/LoginScreen';
-import { InventoryNavigation, InventoryNavigationStackParamList } from './InventoryNavigation';
+import { InventoryNavigation } from './InventoryNavigation';
 import { OnboardingScreen } from '../screens/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
-import { SellsNavigation, SellsNavigationStackParamList } from './SellsNavigation';
+import { SellsNavigation } from './SellsNavigation';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
 import { ClosingScreen } from '../screens/ClosingScreen';
 import { SuccesMessage } from '../screens/SuccesMessage';
@@ -15,13 +15,6 @@ import { LoadingScreen } from '../screens/LoadingScreen';
 import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
 
-// useNavigation() type. 
-export type AppNavigationProp = NativeStackNavigationProp<Partial<AppNavigationStackParamList>>;
-export type CombineNavigationProp = NativeStackNavigationProp<Partial<CombinedSellsAndInventoryNavigationStackParamList>>;
-
-export type CombinedInventoryAndAppNavigationStackParamList = InventoryNavigationStackParamList & AppNavigationStackParamList;
-export type CombinedSellsAndAppNavigationStackParamList = SellsNavigationStackParamList & AppNavigationStackParamList;
-export type CombinedSellsAndInventoryNavigationStackParamList = SellsNavigationStackParamList & InventoryNavigationStackParamList & AppNavigationStackParamList;
 
 export type AppNavigationStackParamList = {
     OnboardingScreen: undefined;

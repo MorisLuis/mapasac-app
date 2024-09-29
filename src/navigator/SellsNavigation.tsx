@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { NativeStackNavigationProp, createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClassInterface from '../interface/class';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 
@@ -16,27 +16,9 @@ import { ProductSellsInterface } from '../interface/productSells';
 import { SelectClient } from '../screens/Sells/SellsBag/SelectClient';
 import ClientInterface from '../interface/utils';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
+import { UnitType } from '../interface/navigation';
 
 // useNavigation() type.
-export type SellsNavigationProp = NativeStackNavigationProp<Partial<SellsNavigationStackParamList>>;
-
-export type UnitType = {
-    value: string;
-    id: number;
-};
-
-export type SellsDataScreenTypeProps = {
-    totalClasses?: number;
-    descripcio?: string;
-    image?: string;
-    cvefamilia?: number;
-    pieces?: string;
-    price?: string;
-    typeClass?: UnitType;
-    units?: UnitType;
-    productSellData?: { idinvearts: number, capa: string, idinveclas: number };
-}
-
 export type SellsNavigationStackParamList = {
     SellsScreen: undefined;
     SellsDataScreen: undefined;
@@ -63,7 +45,7 @@ export const SellsNavigation = () => {
                 component={SellsScreen}
                 options={() => ({
                     header: props => (
-                        <CustomTabBar Type='Sells'/>
+                        <CustomTabBar Type='Sells' />
                     )
                 })}
             />

@@ -5,7 +5,7 @@ import { sellsBagReducer } from './SellsBagReducer';
 import EnlacemobInterface from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
-import { SellsDataScreenTypeProps } from '../../navigator/SellsNavigation';
+import { SellsDataScreenTypeProps } from '../../interface/navigation';
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;

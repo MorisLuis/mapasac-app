@@ -9,10 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import ProductInterface from '../../../interface/product';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import { InventoryNavigationProp } from '../../../interface/navigation';
 
 export const SearchCodebarWithInput = () => {
 
@@ -23,7 +23,6 @@ export const SearchCodebarWithInput = () => {
     const [Barcode, onChangeBarcode] = useState('');
     const [typeOfSearch, setTypeOfSearch] = useState('code')
     const [loadingSearch, setLoadingSearch] = useState(false)
-    //const buttondisabled = Barcode.length > 0 || loadingSearch;
     const { handleError } = useErrorHandler()
 
 

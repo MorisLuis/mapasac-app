@@ -1,5 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { AppNavigationProp } from '../interface/navigation';
 
 // Define el tipo de tus parámetros si es necesario
 interface UseProtectPageProps {
@@ -17,7 +18,7 @@ export const useProtectPage = ({
 }: UseProtectPageProps) => {
 
     const { navigate, goBack } = useNavigation<any>();
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<AppNavigationProp>();
 
     const protectThisPage = (numberOfItems && parseFloat(numberOfItems) <= 0 && !loading) ? true : false;
     const protectThisPage2 = protectionCondition;

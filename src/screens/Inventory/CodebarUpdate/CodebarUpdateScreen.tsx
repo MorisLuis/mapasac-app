@@ -11,11 +11,11 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { CodebarUpdateScreenStyles } from '../../../theme/CodebarUpdateScreenTheme';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { CodebarNavigationProp } from '../../../navigator/CodebarUpdateNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import { ProductDetailsStyles } from '../../../theme/ProductDetailsTheme';
 import CardSelect from '../../../components/Cards/CardSelect';
 import FooterScreen from '../../../components/Navigation/FooterScreen';
+import { CodebarNavigationProp } from '../../../interface/navigation';
 
 interface CodebarUpdateScreenInterface {
     selectedProduct: { idinvearts: number }

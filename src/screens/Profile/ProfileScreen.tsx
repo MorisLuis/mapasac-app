@@ -9,9 +9,9 @@ import { useTheme } from '../../context/ThemeContext';
 import DeviceInfo from 'react-native-device-info';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
-import { ProfileNavigationProp } from '../../navigator/ProfileNavigation';
 import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
+import { ProfileNavigationProp } from '../../interface/navigation';
 
 
 export const ProfileScreen = () => {

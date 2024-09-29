@@ -3,9 +3,9 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { sendError } from '../services/errors';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
-import { AppNavigationProp } from '../navigator/AppNavigation';
 import { api } from '../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppNavigationProp } from '../interface/navigation';
 
 export const useErrorHandler = () => {
 

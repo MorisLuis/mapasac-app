@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { postLogin, renewLogin } from '../../services/auth';
 import { api } from '../../api/api';
 import useErrorHandler from '../../hooks/useErrorHandler';
-import { AppNavigationProp } from '../../navigator/AppNavigation';
+import { AppNavigationProp } from '../../interface/navigation';
 
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
@@ -19,11 +19,6 @@ export interface AuthState {
     user: UserInterface;
     codeBar?: string;
     codeBarStatus?: boolean
-}
-
-export interface LoginResponse {
-    usuario: UserInterface;
-    token: string;
 }
 
 export interface LoginData {

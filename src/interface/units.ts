@@ -1,4 +1,4 @@
-export default interface UnitInterfacce {
+export default interface UnitInterface {
     idinveunid: number;
     unidad: number;
     descripcio: string;

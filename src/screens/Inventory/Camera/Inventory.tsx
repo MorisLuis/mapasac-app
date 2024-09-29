@@ -9,16 +9,13 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { InventoryNavigationProp } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';
-import { globalFont, globalStyles } from '../../../theme/appTheme';
+import { globalFont } from '../../../theme/appTheme';
 import Tag from '../../../components/Ui/Tag';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
-import CardSelectSkeleton from '../../../components/Skeletons/CardSelectSkeleton';
-import CardButtonSkeleton from '../../../components/Skeletons/CardButtonSkeleton';
-import { ProductCardSkeleton } from '../../../components/Skeletons/ProductCardSkeleton';
 import InventorySkeleton from '../../../components/Skeletons/Screens/InventorySkeleton';
+import { InventoryNavigationProp } from '../../../interface/navigation';
 
 export const Inventory = () => {
 

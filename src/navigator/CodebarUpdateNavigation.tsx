@@ -7,16 +7,7 @@ import { CustomHeader } from '../components/Ui/CustomHeader';
 import { globalStyles } from '../theme/appTheme';
 import ProductInterface from '../interface/product';
 import { useTheme } from '../context/ThemeContext';
-import { InventoryNavigationStackParamList } from './InventoryNavigation';
-import { RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-export type CodebarNavigationProp = NativeStackNavigationProp<Partial<CodebarNavigationStackParamList>>;
-type CodebarUpdateNavigationPageRouteProp = RouteProp<InventoryNavigationStackParamList, 'CodebarUpdateNavigation'>;
-
-type CodebarUpdateNavigationInterface = {
-    route: CodebarUpdateNavigationPageRouteProp
-};
+import { CodebarUpdateNavigationInterface, CodebarUpdateNavigationPageRouteProp } from '../interface/navigation';
 
 export type CodebarNavigationStackParamList = {
     "[CodebarUpdateNavigation] - UpdateCodeBarScreen": { product: ProductInterface };

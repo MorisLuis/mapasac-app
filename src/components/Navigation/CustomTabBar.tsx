@@ -5,12 +5,11 @@ import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { CombineNavigationProp } from '../../navigator/AppNavigation';
-import { SettingsContext } from '../../context/settings/SettingsContext';
 import LayoutGrandient from '../Layouts/LayoutGrandient';
 import { ModuleInterface } from '../../interface/utils';
 import useActionsForModules from '../../hooks/useActionsForModules';
 import useDataForModule from '../../hooks/useDataForModule';
+import { CombineNavigationProp } from '../../interface/navigation';
 
 interface CustomTabBarInterface {
     Type: ModuleInterface['module'];

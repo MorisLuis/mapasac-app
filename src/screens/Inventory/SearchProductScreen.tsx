@@ -1,14 +1,13 @@
-import React, { useCallback, useState } from 'react';
-import { getSearchClients, getSearchProductInStock } from '../../services/searchs';
-import { getClients } from '../../services/utils';
-import ClientInterface from '../../interface/utils';
+import React, { useCallback } from 'react';
+import { getSearchProductInStock } from '../../services/searchs';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CardSelect from '../../components/Cards/CardSelect';
 import { LayoutSearch } from '../../components/Layouts/LayoutSearch';
 import { getProducts } from '../../services/products';
 import ProductInterface from '../../interface/product';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import { InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import { InventoryNavigationProp } from '../../interface/navigation';
 
 type SearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, 'searchProductScreen'>;
 type ModalSearchProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - searchProductModal'>;

@@ -9,9 +9,9 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
 import useErrorHandler from '../hooks/useErrorHandler';
-import { AppNavigationProp } from '../navigator/AppNavigation';
 import CustomText from '../components/Ui/CustumText';
 import { SettingsContext } from '../context/settings/SettingsContext';
+import { AppNavigationProp } from '../interface/navigation';
 
 interface modulesInterface {
     idappmob: number,

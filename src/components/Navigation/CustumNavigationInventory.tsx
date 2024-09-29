@@ -8,7 +8,7 @@ import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
 import { BlurView } from '@react-native-community/blur';
 import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
-import { InventoryNavigationProp } from '../../navigator/InventoryNavigation';
+import { InventoryNavigationProp } from '../../interface/navigation';
 
 interface CustomTabBarProps {
     state: TabNavigationState<ParamListBase>;

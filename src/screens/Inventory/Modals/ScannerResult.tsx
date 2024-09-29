@@ -13,10 +13,11 @@ import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultThem
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
 import Toast from 'react-native-toast-message';
-import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import Tag from '../../../components/Ui/Tag';
+import { InventoryNavigationProp } from '../../../interface/navigation';
 
 type ScannerResultRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - scannerResultScreen'>;
 
@@ -40,7 +41,6 @@ const ScannerResult = ({
 
     const [loadingAddProduct, setLoadingAddProduct] = useState(false)
     const [counterProduct, setCounterProduct] = useState<number>(0);
-    //const buttondisabled = loadingAddProduct || counterProduct < 1;
 
     const handleAddToInventory = () => {
         setLoadingAddProduct(true)

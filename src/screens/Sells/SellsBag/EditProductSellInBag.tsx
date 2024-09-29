@@ -6,10 +6,11 @@ import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
 import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
-import { SellsNavigationProp, SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
+import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import { SellsNavigationProp } from '../../../interface/navigation';
 
 type EditProductSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - editProductSellInBag'>;
 
@@ -22,7 +23,7 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
     const { product } = route.params;
     const { editProductSell, deleteProductSell } = useContext(SellsBagContext);
     const { goBack } = useNavigation<SellsNavigationProp>();
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
 

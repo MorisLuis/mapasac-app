@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useContext } from 'react';
-import { ProductInterfaceBag } from '../../../interface/product';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
@@ -7,19 +6,20 @@ import ModalDecision from '../../../components/Modals/ModalDecision';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { globalStyles } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
+import ProductInterface from '../../../interface/product';
 
 export const InventoryBagScreen = () => {
 
     const { deleteProduct } = useContext(InventoryBagContext);
     const { theme } = useTheme();
-    const [bags, setBags] = useState<ProductInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductInterface[]>([]);
     const [productIdToDelete, setProductIdToDelete] = useState<number | null>();
     const [openModalDecision, setOpenModalDecision] = useState(false);
 
     const confirmDelete = async () => {
         if (!productIdToDelete) return;
         await deleteProduct(productIdToDelete);
-        await setBags((prevBags: ProductInterfaceBag[]) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
+        await setBags((prevBags: ProductInterface[]) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
 
         setTimeout(() => {
             setProductIdToDelete(null);
@@ -37,7 +37,7 @@ export const InventoryBagScreen = () => {
     };
     
 
-    const renderItem = useCallback(({ item }: { item: ProductInterfaceBag }) => (
+    const renderItem = useCallback(({ item }: { item: ProductInterface }) => (
         <ProductInventoryCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob)}

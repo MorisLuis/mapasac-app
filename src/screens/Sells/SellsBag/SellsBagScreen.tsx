@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect, useContext } from 'react';
 import { getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
-import { ProductSellsInterfaceBag } from '../../../interface/productSells';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import useErrorHandler from '../../../hooks/useErrorHandler';
@@ -9,12 +8,13 @@ import ModalDecision from '../../../components/Modals/ModalDecision';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { globalStyles } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
+import { ProductSellsInterface } from '../../../interface/productSells';
 
 export const SellsBagScreen = () => {
 
     const { theme, typeTheme } = useTheme();
     const { deleteProductSell } = useContext(SellsBagContext);
-    const [bags, setBags] = useState<ProductSellsInterfaceBag[]>([]);
+    const [bags, setBags] = useState<ProductSellsInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const { handleError } = useErrorHandler();
     const [productIdToDelete, setProductIdToDelete] = useState<number | null>();
@@ -67,7 +67,7 @@ export const SellsBagScreen = () => {
 
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductSellsInterfaceBag }) => (
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsCard
             product={item}
             onDelete={() => handleDeleteProduct(item.idenlacemob)}

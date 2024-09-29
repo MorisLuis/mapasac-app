@@ -5,14 +5,14 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
-import { SellsDataScreenTypeProps, SellsNavigationProp, SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
+import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import CardButtonSkeleton from '../../components/Skeletons/CardButtonSkeleton';
 import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassSkeleton';
+import { SellsDataScreenTypeProps, SellsNavigationProp } from '../../interface/navigation';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - ClassScreen'>;
 

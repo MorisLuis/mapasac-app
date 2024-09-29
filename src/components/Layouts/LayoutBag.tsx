@@ -3,7 +3,6 @@ import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { Searchbar } from 'react-native-paper';
 import { getSearchProductInBack } from '../../services/searchs';
-import { ProductInterfaceBag } from '../../interface/product';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { inputStyles } from '../../theme/UI/inputs';
 import { FlatList, SafeAreaView, View } from 'react-native';
@@ -16,10 +15,8 @@ import Toast from 'react-native-toast-message';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import DotLoader from '../Ui/DotLaoder';
 import { format } from '../../utils/currency';
-import { ProductSellsInterfaceBag } from '../../interface/productSells';
 import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { CombinedSellsAndInventoryNavigationStackParamList } from '../../navigator/AppNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
 import ButtonCustum from '../Inputs/ButtonCustum';
@@ -27,14 +24,17 @@ import FooterTwoButtonsScreen from '../Navigation/FooterTwoButtonsScreen';
 import { ModuleInterface } from '../../interface/utils';
 import useActionsForModules from '../../hooks/useActionsForModules';
 import LayoutBagSkeleton from '../Skeletons/Screens/LayoutBagSkeleton';
+import ProductInterface from '../../interface/product';
+import { ProductSellsInterface } from '../../interface/productSells';
+import { CombinedSellsAndInventoryNavigationStackParamList } from '../../interface/navigation';
 
-export type CombinedProductInterface = ProductInterfaceBag | ProductSellsInterfaceBag;
+export type CombinedProductInterface = ProductInterface | ProductSellsInterface;
 
 interface LayoutBagInterface {
     opcion: number;
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     bags: CombinedProductInterface[];
-    setBags: React.Dispatch<React.SetStateAction<ProductInterfaceBag[]>> | React.Dispatch<React.SetStateAction<ProductSellsInterfaceBag[]>>;
+    setBags: React.Dispatch<React.SetStateAction<ProductInterface[]>> | React.Dispatch<React.SetStateAction<ProductSellsInterface[]>>;
     Type: ModuleInterface['module']
 
     // Sells

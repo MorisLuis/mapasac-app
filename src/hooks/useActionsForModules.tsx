@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { SettingsContext } from "../context/settings/SettingsContext";
 import { useNavigation } from "@react-navigation/native";
-import { CombineNavigationProp } from "../navigator/AppNavigation";
 import { useTheme } from "../context/ThemeContext";
+import { CombineNavigationProp } from "../interface/navigation";
 
 export const useActionsForModules = () => {
 

@@ -6,10 +6,11 @@ import { useTheme } from '../../../context/ThemeContext';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
+import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
+import { InventoryNavigationProp } from '../../../interface/navigation';
 
 type EditDescripcioPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editDescripcio'>;
 

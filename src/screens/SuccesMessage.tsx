@@ -5,7 +5,7 @@ import { useNavigation, RouteProp } from '@react-navigation/native';
 import { SuccesMessageScreenStyles } from '../theme/SuccesMessageScreenTheme';
 import { useTheme } from '../context/ThemeContext';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { AppNavigationProp, AppNavigationStackParamList } from '../navigator/AppNavigation';
+import { AppNavigationStackParamList } from '../navigator/AppNavigation';
 import CustomText from '../components/Ui/CustumText';
 import { globalFont } from '../theme/appTheme';
 import FooterScreen from '../components/Navigation/FooterScreen';
@@ -13,6 +13,7 @@ import { format } from '../utils/currency';
 import moment from 'moment-timezone';
 import useActionsForModules from '../hooks/useActionsForModules';
 import useDataForModule from '../hooks/useDataForModule';
+import { AppNavigationProp } from '../interface/navigation';
 
 type SuccesMessageScreenRouteProp = RouteProp<AppNavigationStackParamList, 'succesMessageScreen'>;
 
