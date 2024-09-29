@@ -105,8 +105,6 @@ export const LayoutSell = ({
         handleGetPrice();
     }, [productAdded]);
 
-    console.log({ productAdded })
-
     return (
         <LayoutGrandient color="purple">
             <SafeAreaView>

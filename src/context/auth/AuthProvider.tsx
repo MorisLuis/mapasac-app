@@ -138,7 +138,10 @@ export const AuthProvider = ({ children }: any) => {
                 payload: (error.error) || 'Información incorrecta'
             })
         } finally {
-            setLoggingIn(false)
+            // Not move, is just to avoid see 'login screen' before sign in.
+            setTimeout(() => {
+                setLoggingIn(false)
+            }, 300);
         }
     };
 

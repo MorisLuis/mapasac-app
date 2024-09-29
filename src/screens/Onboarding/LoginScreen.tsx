@@ -13,15 +13,12 @@ import { useForm } from '../../hooks/useForm';
 import { useProtectPage } from '../../hooks/useProtectPage';
 import CustomText from '../../components/Ui/CustumText';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
-import { AppNavigationProp } from '../../navigator/AppNavigation';
-import { useNavigation } from '@react-navigation/native';
 
 
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn, status } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
     const [loadingLogin, setLoadingLogin] = useState(false)
-    const navigation = useNavigation<AppNavigationProp>();
 
     const { usr, pas, onChange } = useForm({
         usr: '',
