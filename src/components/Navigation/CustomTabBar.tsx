@@ -57,13 +57,13 @@ const CustomTabBar = ({ renderTabButton, state, Type, absolute }: CustomTabBarIn
                     }
                 </View>
 
-                <View style={customTabBarStyles(theme).content_right}>
+                <View style={customTabBarStyles(theme, typeTheme).content_right}>
                     <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
                         <TouchableOpacity onPress={useActionsForModules().handleOpenBag}>
                             <Icon name="albums-outline" size={22} color={iconColor} />
                         </TouchableOpacity>
-                        <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule()}]}>
-                            <CustomText>{parseInt(useDataForModule().numberOfItems)}</CustomText>
+                        <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule() }]}>
+                            <CustomText style={{ color: typeTheme === 'dark' ? theme.color_black : theme.text_color }}>{parseInt(useDataForModule().numberOfItems)}</CustomText>
                         </View>
                     </View>
                 </View>

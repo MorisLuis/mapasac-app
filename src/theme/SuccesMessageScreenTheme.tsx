@@ -17,6 +17,18 @@ export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => S
         justifyContent: 'center',
         alignItems: 'center'
     },
+    contentBackground: {
+        maxHeight: 180,
+        width: hp("20%"),
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        backgroundColor: theme.background_color,
+        shadowOffset: {
+            width: 10,
+            height: 10,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 15,
+    },
     headerText: {
         textAlign: 'center',
         fontSize: globalFont.font_med,
@@ -47,7 +59,14 @@ export const SuccesMessageScreenStyles = (theme: Theme, typeTheme?: string) => S
         padding: globalStyles().globalPadding.padding,
         borderWidth: 0.2,
         borderColor: theme.color_border,
-        borderRadius: globalStyles().borderRadius.borderRadius / 2
+        borderRadius: globalStyles().borderRadius.borderRadius / 2,
+        //backgroundColor: theme.background_color,
+        shadowOffset: {
+            width: 10,
+            height: 10,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 15,
     },
     dataHeader: {
         display: 'flex',

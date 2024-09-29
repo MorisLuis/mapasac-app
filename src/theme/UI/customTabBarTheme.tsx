@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import {Theme, globalFont, globalStyles } from "../appTheme";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { Theme, globalFont, globalStyles } from "../appTheme";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     customTabBar: {
@@ -37,7 +37,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         maxHeight: 32,
         marginRight: wp("2%"),
         borderWidth: 0.7,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_secondary,
+        borderColor: theme.color_border,
         backgroundColor: theme.background_color
     },
     buttonBag: {
@@ -75,7 +75,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         alignItems: "center",
         paddingHorizontal: globalStyles(theme).globalPadding.padding
     },
-    bagCounter:{
+    bagCounter: {
         position: "absolute",
         width: hp("3%"),
         height: hp("3%"),
@@ -83,7 +83,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         right: - globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         borderWidth: 1,
-        borderColor: theme.color_border,
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary,
         justifyContent: "center",
         alignItems: "center"
     },
