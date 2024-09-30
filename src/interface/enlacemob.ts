@@ -1,6 +1,6 @@
 
 
-export default interface EnlacemobInterface {
+export interface EnlacemobInterface {
     idenlacemob?: number;
     idinvearts: number;
     codbarras?: string;

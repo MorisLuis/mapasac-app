@@ -14,6 +14,7 @@ import { SuccesMessage } from '../screens/SuccesMessage';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
+import { SellsRestaurantsNavigation } from './SellsRestaurantsNavigation';
 
 
 export type AppNavigationStackParamList = {
@@ -30,6 +31,7 @@ export type AppNavigationStackParamList = {
     InventoryNavigation: undefined;
     ProfileNavigation: undefined;
     SellsNavigation: undefined;
+    SellsRestaurantNavigation: undefined;
 
     succesMessageScreen: {
         redirection: keyof AppNavigationStackParamList,
@@ -81,6 +83,13 @@ export const AppNavigation = () => {
                 component={SellsNavigation}
                 options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+                name='SellsRestaurantNavigation'
+                component={SellsRestaurantsNavigation}
+                options={{ headerShown: false }}
+            />
+
 
             <Stack.Screen
                 name="InventoryNavigation"

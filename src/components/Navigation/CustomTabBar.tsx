@@ -23,14 +23,17 @@ const CustomTabBar = ({ renderTabButton, state, Type, absolute }: CustomTabBarIn
     const { navigate } = useNavigation<CombineNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
-    const { handleColorWithModule } = useActionsForModules()
+    const { handleColorWithModule, handleActionBag } = useActionsForModules()
 
     const handleLayoutColor = () => {
-        let color: "green" | "purple" = "green";
+        let color: "green" | "purple" | 'red' = "green";
+
         if (Type === 'Sells') {
             color = "purple"
         } else if (Type === 'Inventory') {
             color = "green"
+        } else if (Type === 'Sells-Restaurant') {
+            color = "red"
         } else {
             color = "green"
         }
@@ -58,10 +61,10 @@ const CustomTabBar = ({ renderTabButton, state, Type, absolute }: CustomTabBarIn
 
                 <View style={customTabBarStyles(theme, typeTheme).content_right}>
                     <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
-                        <TouchableOpacity onPress={useActionsForModules().handleOpenBag}>
+                        <TouchableOpacity onPress={() => handleActionBag.openBag() }>
                             <Icon name="albums-outline" size={22} color={iconColor} />
                         </TouchableOpacity>
-                        <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule().primary }]}>
+                        <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule.primary }]}>
                             <CustomText style={{ color: typeTheme === 'dark' ? theme.color_black : theme.text_color }}>{parseInt(useDataForModule().numberOfItems)}</CustomText>
                         </View>
                     </View>

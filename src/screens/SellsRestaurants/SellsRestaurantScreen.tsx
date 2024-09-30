@@ -1,19 +1,21 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { ProductSellsSquareCard } from '../../components/Cards/ProductSellsSquareCard';
-import { ProductSellsInterface } from '../../interface/productSells';
+import { ProductSellsRestaurantInterface } from '../../interface/productSells';
 import { CombinedSellsInterface, LayoutSell } from '../../components/Layouts/LayoutSell';
-import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { SellsNavigationProp } from '../../interface/navigation';
-import { getProductsSells } from '../../services/productsSells';
 import useErrorHandler from '../../hooks/useErrorHandler';
+import { getProductsSells } from '../../services/productsSells';
+import { SellsRestaurantNavigationProp } from '../../interface/navigation';
+import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
+import { getProductDetailsRestaurantSells } from '../../services/productsRestaurantSells';
 
-export const SellsScreen = () => {
 
-    const { cleanFormData, updateFormData } = useContext(SellsBagContext);
-    const navigation = useNavigation<SellsNavigationProp>();
+export const SellsRestaurantScreen = () => {
+
+    const navigation = useNavigation<SellsRestaurantNavigationProp>();
+    const { cleanFormData, updateFormData } = useContext(SellsRestaurantBagContext);
     const { handleError } = useErrorHandler();
-    const [products, setProducts] = useState<ProductSellsInterface[]>([]);
+    const [products, setProducts] = useState<ProductSellsRestaurantInterface[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleGetProducts = async (currentPage: number) => {
@@ -24,10 +26,10 @@ export const SellsScreen = () => {
 
             setProducts((prevProducts) => {
                 const newProducts = products?.filter(
-                    (product: ProductSellsInterface) =>
+                    (product: ProductSellsRestaurantInterface) =>
                         !prevProducts.some(
                             (prevProduct) =>
-                                prevProduct.idinvefami === product.idinvefami
+                                prevProduct.clave === product.clave
                         )
                 );
                 return prevProducts ? [...prevProducts, ...newProducts] : newProducts;
@@ -40,31 +42,25 @@ export const SellsScreen = () => {
         }
     };
 
-    const handleSelectProduct = async (product: ProductSellsInterface) => {
-        const count = parseInt(product.classcount ?? "0");
+    const handleSelectProduct = async (product: ProductSellsRestaurantInterface) => {
+        const cvefamilia = product.cvefamilia
+        console.log({cvefamilia})
+        const productData = await getProductDetailsRestaurantSells(cvefamilia);
+        console.log({productData: JSON.stringify(productData, null, 2)});
         updateFormData({
-            cvefamilia: product.cvefamilia,
             descripcio: product.descripcio,
             image: product.imagen,
-            totalClasses: parseInt(product.classcount as string),
-        });
-
-        if (count <= 1) {
-            navigation.navigate('SellsDataScreen');
-        } else {
-            navigation.navigate('[Modal] - ClassScreen',
-                {
-                    cvefamilia: product.cvefamilia,
-                    descripcio: product.descripcio,
-                    image: product.imagen,
-                    totalClasses: parseInt(product.classcount as string)
-                }
-            );
-        }
-    };
+            price: productData[0].precio,
+            capa: productData[0].capa,
+            typeClass: { id: productData[0].idinveclas, value: productData[0].producto },
+            units: productData[0].unidad,
+            ...productData[0]
+        })
+        navigation.navigate('SellsRestaurantsDataScreen');
+    }
 
     const renderItem = useCallback(({ item }: { item: CombinedSellsInterface }) => {
-        const productItem = item as ProductSellsInterface;
+        const productItem = item as ProductSellsRestaurantInterface;
         return (
             <ProductSellsSquareCard
                 imagen={productItem.imagen}
@@ -83,10 +79,11 @@ export const SellsScreen = () => {
     return (
         <LayoutSell
             renderItem={renderItem}
-            opcion={2}
-            handleGetProducts={handleGetProducts}
+            opcion={4}
             products={products}
+            handleGetProducts={handleGetProducts}
             isLoading={isLoading}
+            layoutColor='red'
         />
     )
 };

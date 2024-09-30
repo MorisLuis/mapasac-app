@@ -14,9 +14,9 @@ import { ConfirmationSellsScreen } from '../screens/Sells/SellsBag/ConfirmationS
 import { EditProductSellInBag } from '../screens/Sells/SellsBag/EditProductSellInBag';
 import { ProductSellsInterface } from '../interface/productSells';
 import { SelectClient } from '../screens/Sells/SellsBag/SelectClient';
-import ClientInterface from '../interface/utils';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
 import { UnitType } from '../interface/navigation';
+import { ClientInterface } from '../interface';
 
 // useNavigation() type.
 export type SellsNavigationStackParamList = {

@@ -1,32 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../../context/ThemeContext';
+import useActionsForModules from '../../hooks/useActionsForModules';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 interface LayoutGrandientInterface {
     children: React.ReactNode;
-    color: 'green' | 'purple';
+    color: 'green' | 'purple' | 'red';
     locations?: number[]
 }
 
 const LayoutGrandient = ({ children, color, locations }: LayoutGrandientInterface) => {
 
     const { theme, typeTheme } = useTheme();
+    const { handleColorWithModule } = useActionsForModules()
+    const { actualModule } = useContext(SettingsContext);
 
     const handleBackgroundColor = () => {
-        let colorGradient: string;
-
-        if (color === 'green') {
-            colorGradient = adjustColor(theme.color_green, 100);
-        } else if (color === 'purple') {
-            colorGradient = adjustColor(theme.color_purple, 0);
+        let rgbColor;
+        if( actualModule === 'Inventory'){
+            rgbColor = hexToRgb(adjustColor(handleColorWithModule.primary, 100));
         } else {
-            colorGradient = '#CEEFE4'; // Valor predeterminado
+            rgbColor = hexToRgb(adjustColor(handleColorWithModule.primary, 0));
         }
-
-        // Convertir el color ajustado a formato RGBA con opacidad
-        const rgbColor = hexToRgb(colorGradient);
         const rgbaColor = `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`
-        const colorReturned = typeTheme === 'dark' ? theme.background_color : `rgba(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}, 0.5)`
+        const colorReturned = typeTheme === 'dark' ? theme.background_color : rgbaColor
         return colorReturned;
     };
 

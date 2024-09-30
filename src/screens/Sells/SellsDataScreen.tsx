@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
-import EnlacemobInterface from '../../interface/enlacemob';
+import {EnlacemobInterface} from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import useErrorHandler from '../../hooks/useErrorHandler';

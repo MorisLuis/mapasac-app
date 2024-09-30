@@ -2,10 +2,13 @@ import React from 'react';
 import { styles } from '../../../theme/UI/cardsStyles';
 import { useTheme } from '../../../context/ThemeContext';
 import { quantityFormat } from '../../../utils/quantityFormat';
-import { ProductSellsInterface } from '../../../interface/productSells';
-import { format } from '../../../utils/currency';
+import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../../interface/productSells';
 import CustomText from '../../Ui/CustumText';
 import { LayoutProductCard, ProductCardInterface, ProductInfo } from './ProductCardLayout';
+import { useProductDetails } from '../../../hooks/useSellProductDetailsCard';
+
+
+export type CombinedProductInterface = ProductSellsInterface | ProductSellsRestaurantInterface;
 
 
 export const ProductSellsCard = ({
@@ -15,9 +18,10 @@ export const ProductSellsCard = ({
     onClick,
     deletingProduct,
     renderRightProp
-}: ProductCardInterface<ProductSellsInterface>) => {
+}: ProductCardInterface<CombinedProductInterface>) => {
 
     const { theme } = useTheme();
+    const { productDetails } = useProductDetails(product);
 
 
     // This is renderRight default
@@ -29,7 +33,7 @@ export const ProductSellsCard = ({
                         {quantityFormat(product.cantidad)}
                     </CustomText>
                 )}
-                <CustomText style={styles(theme).quantity_unity}>{product.unidad_nombre?.trim()}</CustomText>
+                <CustomText style={styles(theme).quantity_unity}>{product?.unidad_nombre?.trim()}</CustomText>
             </>
         )
     };
@@ -44,11 +48,9 @@ export const ProductSellsCard = ({
             renderRight={renderRightProp ? renderRightProp : renderRight}
         >
             <>
-                <ProductInfo label="Precio" value={`${format(parseFloat(product.precio as string))} / ${quantityFormat(product.cantidad ?? 0)}`} />
-                <ProductInfo label="Importe" value={format(parseFloat(product.precio as string) * (product.cantidad ? product.cantidad : 0))} />
-
-                {product?.capa?.trim() && <ProductInfo label="Capa" value={product.capa.trim()} />}
-                {product?.clase?.trim() && <ProductInfo label="Clase" value={product.clase.trim()} />}
+                {productDetails.map((detail, index) => (
+                    <ProductInfo key={index} label={detail.label} value={detail.value} />
+                ))}
             </>
         </LayoutProductCard>
     );

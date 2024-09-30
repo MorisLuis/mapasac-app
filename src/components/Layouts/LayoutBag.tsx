@@ -25,17 +25,20 @@ import { ModuleInterface } from '../../interface/utils';
 import useActionsForModules from '../../hooks/useActionsForModules';
 import LayoutBagSkeleton from '../Skeletons/Screens/LayoutBagSkeleton';
 import ProductInterface from '../../interface/product';
-import { ProductSellsInterface } from '../../interface/productSells';
+import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../interface/productSells';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../interface/navigation';
 import { opcionBag } from '../../interface/bag';
 
-export type CombinedProductInterface = ProductInterface | ProductSellsInterface;
+export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 
 interface LayoutBagInterface {
     opcion: opcionBag;
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     bags: CombinedProductInterface[];
-    setBags: React.Dispatch<React.SetStateAction<ProductInterface[]>> | React.Dispatch<React.SetStateAction<ProductSellsInterface[]>>;
+    setBags:
+        React.Dispatch<React.SetStateAction<ProductInterface[]>> |
+        React.Dispatch<React.SetStateAction<ProductSellsInterface[]>> |
+        React.Dispatch<React.SetStateAction<ProductSellsRestaurantInterface[]>>;
     Type: ModuleInterface['module']
 
     // Sells
@@ -54,12 +57,11 @@ export const LayoutBag = ({
 }: LayoutBagInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const { resetAfterPost, numberOfItemsSells } = useContext(SellsBagContext);
-    const { resetAfterPost: resetAfterPostInventory } = useContext(InventoryBagContext);
+    const { handleActionBag } =useActionsForModules()
     const { handleError } = useErrorHandler()
     const { handleColorWithModule } = useActionsForModules();
     const searchInputRef = useRef<any>(null);
-    const { goBack, navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
+    const { goBack } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
 
     const [searchText, setSearchText] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
@@ -73,11 +75,7 @@ export const LayoutBag = ({
 
     const onPost = async () => {
         goBack();
-        if (Type === 'Inventory') {
-            navigate('confirmationScreen');
-        } else {
-            navigate('[Sells] - confirmationScreen', { client: undefined });
-        }
+        handleActionBag.openConfirmation()
     };
 
     const handleCleanTemporal = async () => {
@@ -88,11 +86,7 @@ export const LayoutBag = ({
 
             if (product?.error) return handleError(product.error);
 
-            if (Type === 'Inventory') {
-                await resetAfterPostInventory()
-            } else {
-                await resetAfterPost();
-            }
+            handleActionBag.resetAfterPost()
 
             setTimeout(() => {
                 setLoadingCleanBag(false);
@@ -176,10 +170,10 @@ export const LayoutBag = ({
 
     // Primera condición: Si los bags están vacíos y los datos no se han cargado
     if ((bags.length <= 0 && !dataUploaded) || cleanSearchText) {
-        return <LayoutBagSkeleton/>
+        return <LayoutBagSkeleton />
     }
 
-    if (parseInt(numberOfItemsSells) <= 0) {
+    if (parseInt(handleActionBag.numberOfItems) <= 0) {
         return (
             <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
                 <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
@@ -260,7 +254,7 @@ export const LayoutBag = ({
                         {/* POSSIBLE AS PROP */}
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
-                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule().primary }]}>
+                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule.primary }]}>
                                 {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
                             </CustomText>
                         </View>

@@ -12,9 +12,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ModuleInterface } from '../../interface/utils';
 import { LoadingScreen } from '../../screens/LoadingScreen';
 import ProductInterface from '../../interface/product';
-import { ProductSellsInterface } from '../../interface/productSells';
+import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../interface/productSells';
 
-export type CombinedProductInterface = ProductInterface | ProductSellsInterface;
+export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 
 interface LayoutConfirmationInterface {
     data: CombinedProductInterface[];

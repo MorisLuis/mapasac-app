@@ -1,8 +1,9 @@
 
 
-export default interface ClientInterface {
+export interface ClientInterface {
     idclientes: number;
     nombres: string;
+    ncomercial: string;
 }
 
 export interface ModuleInterface {

@@ -79,7 +79,6 @@ export const OnboardingScreen = () => {
                                 <ModulesSkeleton />
                             </>
                     }
-                    <Button onPress={toggleTheme} title='ola' />
                 </View>
             </View>
 
@@ -109,16 +108,9 @@ export const ModuleOption = ({
             navigate("InventoryNavigation")
         } else if (option === 2) {
             navigate("SellsNavigation")
-        } else { //TEMPORAL
-            Alert.alert(
-                'Permiso Bloqueado',
-                'El permiso no ha sido desbloqueado. Por favor, habla con el administrador.',
-                [
-                    { text: 'Cancelar', style: 'cancel' },
-                ]
-            );
+        } else if (option === 3) {
+            navigate('SellsRestaurantNavigation')
         }
-
     }
 
     const extraStyles = (option: modulesInterface) => {
@@ -133,7 +125,7 @@ export const ModuleOption = ({
             icon = "swap-horizontal-outline"
         } else { // TEMPORAL
             styles = { backgroundColor: option.permisos === 1 ? theme.color_tertiary : theme.color_gray }
-            icon = "thumbs-up-outline"
+            icon = "restaurant-outline"
         }
 
         return {

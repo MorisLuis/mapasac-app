@@ -6,9 +6,8 @@ import { Control, Controller } from 'react-hook-form';
 import { useTheme } from '../../context/ThemeContext';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { globalFont } from '../../theme/appTheme';
-import { FormType } from '../../screens/Sells/SellsDataScreen';
 import { format } from '../../utils/currency';
-import { UnitType } from '../../navigator/SellsNavigation';
+import { UnitType } from '../../interface/navigation';
 
 interface CardButtonInterface {
     onPress: () => void;
@@ -18,8 +17,8 @@ interface CardButtonInterface {
 
     /* Optional */
     specialValue?: string;
-    control?: Control<FormType, any>;
-    controlValue?: keyof FormType;
+    control?: Control<any, any>;
+    controlValue?: keyof any;
     icon?: string;
     isPrice?: boolean;
 }
@@ -86,7 +85,7 @@ const CardButton = ({
             {control && controlValue ? (
                 <Controller
                     control={control}
-                    name={controlValue}
+                    name={controlValue as any}
                     render={({ field: { value } }) => {
 
                         const newValue = value ? handleValue(value) : valueDefault;

@@ -7,6 +7,7 @@ import { AppNavigation } from './src/navigator/AppNavigation';
 import { ShowToastMessage } from './src/components/Ui/ToastMesage';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { SellsProvider } from './src/context/Sells/SellsBagProvider';
+import { SellsRestaurantsProvider } from './src/context/SellsRestaurants/SellsRestaurantsBagProvider';
 
 const App = () => {
   return (
@@ -24,11 +25,13 @@ const AppState = ({ children }: any) => {
     <AuthProvider>
       <ThemeProvider>
         <SettingsProvider>
-          <SellsProvider>
-            <InventoryProvider>
-              {children}
-            </InventoryProvider>
-          </SellsProvider>
+          <SellsRestaurantsProvider>
+            <SellsProvider>
+              <InventoryProvider>
+                {children}
+              </InventoryProvider>
+            </SellsProvider>
+          </SellsRestaurantsProvider>
         </SettingsProvider>
       </ThemeProvider>
     </AuthProvider>

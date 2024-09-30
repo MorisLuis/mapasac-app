@@ -1,51 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { ProductSellsInterface } from '../../interface/productSells';
 import { ProductSellsCardTheme } from '../../theme/UI/cardsStyles';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { SellsBagContext } from '../../context/Sells/SellsBagContext';
-import { SellsNavigationProp } from '../../interface/navigation';
 
 interface ProductSellsCardInterface {
-    product: ProductSellsInterface;
+    imagen?: string;
+    descripcion?: string;
+    handleSelectProduct: () => void
 }
 
 export const ProductSellsSquareCard = ({
-    product,
+    imagen,
+    descripcion,
+    handleSelectProduct
 }: ProductSellsCardInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const { updateFormData } = useContext(SellsBagContext);
-    const navigation = useNavigation<SellsNavigationProp>();
+
     const iconColor = typeTheme === 'dark' ? "white" : "gray"
     const platform = Platform.OS;
-
-
-    const handleSelectProduct = async () => {
-        const count = parseInt(product.classcount ?? "0");
-        updateFormData({
-            cvefamilia: product.cvefamilia,
-            descripcio: product.descripcio,
-            image: product.imagen,
-            totalClasses: parseInt(product.classcount as string),
-        });
-
-        if (count <= 1) {
-            navigation.navigate('SellsDataScreen');
-        } else {
-            navigation.navigate('[Modal] - ClassScreen',
-                {
-                    cvefamilia: product.cvefamilia,
-                    descripcio: product.descripcio,
-                    image: product.imagen,
-                    totalClasses: parseInt(product.classcount as string)
-                }
-            );
-        }
-    }
 
     return (
         <TouchableOpacity
@@ -53,15 +28,15 @@ export const ProductSellsSquareCard = ({
             style={ProductSellsCardTheme(theme, typeTheme).ProductSellsCardTheme}
         >
             {
-                product.imagen ? (
+                imagen ? (
                     <View style={ProductSellsCardTheme(theme, typeTheme).item}>
                         <View style={ProductSellsCardTheme(theme, typeTheme, platform ).imageContainer}>
                             <Image
-                                source={{ uri: `data:image/png;base64,${product.imagen}` }}
+                                source={{ uri: `data:image/png;base64,${imagen}` }}
                                 style={ProductSellsCardTheme(theme, typeTheme).image}
                             />
                         </View>
-                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</CustomText>
+                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{descripcion}</CustomText>
                     </View>
                 )
                     :
@@ -71,7 +46,7 @@ export const ProductSellsSquareCard = ({
                                 <Icon name={'image-outline'} size={24} color={iconColor} />
                             </View>
                         </View>
-                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{product.descripcio}</CustomText>
+                        <CustomText style={ProductSellsCardTheme(theme, typeTheme).title}>{descripcion}</CustomText>
                     </View>
             }
         </TouchableOpacity>

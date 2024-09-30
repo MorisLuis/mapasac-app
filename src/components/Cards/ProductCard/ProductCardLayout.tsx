@@ -2,14 +2,14 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { styles } from '../../../theme/UI/cardsStyles';
 import { useTheme } from '../../../context/ThemeContext';
-import { ProductSellsInterface } from '../../../interface/productSells';
+import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../../interface/productSells';
 import CustomText from '../../Ui/CustumText';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
 import ProductInterface from '../../../interface/product';
 import { ProductCardSkeleton } from '../../Skeletons/ProductCardSkeleton';
 
-export interface ProductCardInterface<T extends ProductSellsInterface | ProductInterface> {
+export interface ProductCardInterface<T extends ProductSellsInterface | ProductInterface | ProductSellsRestaurantInterface> {
     product: T;
     showDelete?: boolean;
     onDelete?: (product: T) => void;
@@ -32,7 +32,7 @@ export const ProductInfo = ({ label, value }: { label: string; value: string | n
 };
 
 
-export const LayoutProductCard = <T extends ProductSellsInterface | ProductInterface>({
+export const LayoutProductCard = <T extends ProductSellsInterface | ProductInterface | ProductSellsRestaurantInterface>({
     product,
     showDelete,
     onDelete,
