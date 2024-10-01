@@ -35,9 +35,9 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
         setEditingProduct(true)
 
         if (piezasCount < 1) {
-            deleteProductSell(product.idenlacemob)
+            deleteProductSell(product.idenlacemob as number)
         } else {
-            editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
+            editProductSell({ idenlacemob: product.idenlacemob as number, cantidad: piezasCount });
         }
 
         setTimeout(() => {

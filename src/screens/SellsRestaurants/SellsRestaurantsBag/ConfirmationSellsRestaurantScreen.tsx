@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -8,9 +8,7 @@ import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme
 import { globalFont } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
-import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
-import { postSells, postSellsInterface } from '../../../services/sells';
-import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
+import { postSellsInterface } from '../../../services/sells';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import CustomText from '../../../components/Ui/CustumText';
@@ -19,6 +17,10 @@ import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductS
 import { SellsRestaurantsNavigationStackParamList } from '../../../navigator/SellsRestaurantsNavigation';
 import { ClientInterface, CombinedSellsAndAppNavigationStackParamList, ProductSellsRestaurantInterface } from '../../../interface';
 import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
+import ModalMiddle from '../../../components/Modals/ModalMiddle';
+import { LocationScreen } from './LocationScreen';
+import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
+import useActionsForModules from '../../../hooks/useActionsForModules';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
 
@@ -33,6 +35,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const { handleError } = useErrorHandler();
+    const { handleColorWithModule } = useActionsForModules()
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -43,19 +46,23 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const [totalPrice, setTotalPrice] = useState<number>();
     const [methodPayment, setMethodPayment] = useState(0);
     const [typeSelected, setTypeSelected] = useState<ClientInterface>();
-    const [comments, setComments] = useState("");
     const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
+    const [openModalLocation, setOpenModalLocation] = useState(false);
     const availableToPost = methodPayment !== 0;
+    const [locationValue, setLocationValue] = useState<inputGoogleValue | undefined>();
 
     const onPostInventory = async () => {
         setCreateSellLoading(true);
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
-                idclientes: typeSelected?.idclientes,
-                comments
-            }
-            const postSell = await postSells(sellBody);
+                idclientes: typeSelected?.idclientes
+            };
+
+            console.log({ sellBody });
+            console.log({})
+
+            /* const postSell = await postSells(sellBody);
 
             if (postSell.error) {
                 handleError(postSell.error);
@@ -68,7 +75,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                 numberOfProducts: numberOfItemsSells,
                 importe: totalPrice as number
             });
-            resetAfterPost();
+            resetAfterPost(); */
 
         } catch (error: any) {
             handleError(error)
@@ -166,7 +173,10 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                     <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
                         <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
                             <TouchableOpacity
-                                style={methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                                style={[
+                                    methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
+                                ]}
                                 onPress={() => setMethodPayment(1)}
                             >
                                 <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
@@ -174,7 +184,10 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                                style={[
+                                    methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
+                                ]}
                                 onPress={() => setMethodPayment(2)}
                             >
                                 <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
@@ -183,19 +196,22 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                         </View>
 
                         <CardButton
-                            onPress={() => navigate("[Modal] - SelectClient")}
-                            label='Cliente'
+                            onPress={() => setOpenModalLocation(true)}
+                            label='Ubicación'
                             valueDefault='Seleccionar el cliente'
                             color='black'
-                            icon='people-sharp'
-                            specialValue={typeSelected ? typeSelected.nombres.trim() + "ola jaime" : undefined}
+                            icon='location'
+                            specialValue={
+                                locationValue
+                                    ? `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}`
+                                    : undefined
+                            }
                         />
                     </View>
                 }
             </SafeAreaView>
         )
-    }
-
+    };
 
     useFocusEffect(
         useCallback(() => {
@@ -205,18 +221,32 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     );
 
     return (
-        <LayoutConfirmation
-            data={bags}
-            renderItem={renderItem}
-            loadBags={loadBags}
-            ListHeaderComponent={renderScreen}
-            Type='Sells'
-            onPost={onPostInventory}
-            loadData={dataUploaded}
-            availableToPost={availableToPost}
-            buttonPostDisabled={createSellLoading}
-            numberOfItems={numberOfItemsSells}
-            totalPrice={totalPrice}
-        />
+        <>
+            <LayoutConfirmation
+                data={bags}
+                renderItem={renderItem}
+                loadBags={loadBags}
+                ListHeaderComponent={renderScreen}
+                Type='Sells'
+                onPost={onPostInventory}
+                loadData={dataUploaded}
+                availableToPost={availableToPost}
+                buttonPostDisabled={createSellLoading}
+                numberOfItems={numberOfItemsSells}
+                totalPrice={totalPrice}
+            />
+
+            <ModalMiddle
+                visible={openModalLocation}
+                onClose={() => setOpenModalLocation(false)}
+                title='Ubicación'
+            >
+                <LocationScreen
+                    locationValue={locationValue}
+                    setLocationValue={setLocationValue}
+                    onClose={() => setOpenModalLocation(false)}
+                />
+            </ModalMiddle>
+        </>
     )
 };

@@ -93,7 +93,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     paymentMethodItemActive: {
         flex: 1,
-        backgroundColor: theme.color_purple,
+        //backgroundColor: theme.color_purple,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,

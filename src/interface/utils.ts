@@ -10,4 +10,5 @@ export interface ModuleInterface {
     module: 'Sells' | "Sells-Restaurant" | 'Inventory'
 }
 
-export type Platforms = "ios" | "android" | "windows" | "macos" | "web"
+export type Platforms = "ios" | "android" | "windows" | "macos" | "web";
+
