@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import EnlacemobInterface from "../../interface/enlacemob";
 import { SellsDataScreenTypeProps } from "../../interface/navigation";
+import { EnlacemobInterface } from "../../interface";
 
 interface ContextProps {
     addProductSell: (sellBody: EnlacemobInterface) => void;

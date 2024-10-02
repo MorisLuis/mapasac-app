@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, useContext } from 'react';
 import { getTotalPriceBag } from '../../../services/bag';
-import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { LayoutBag } from '../../../components/Layouts/LayoutBag';
 import useErrorHandler from '../../../hooks/useErrorHandler';
@@ -9,12 +8,13 @@ import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { globalStyles } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { ProductSellsRestaurantInterface } from '../../../interface/productSells';
+import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
 
 export const SellsRestaurantBagScreen = () => {
 
     const opcion = 4
     const { theme, typeTheme } = useTheme();
-    const { deleteProductSell } = useContext(SellsBagContext);
+    const { deleteProductSell } = useContext(SellsRestaurantBagContext);
     const [bags, setBags] = useState<ProductSellsRestaurantInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const { handleError } = useErrorHandler();
@@ -28,12 +28,12 @@ export const SellsRestaurantBagScreen = () => {
         await deleteProductSell(productIdToDelete);
         await handleGetPrice();
         await setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
+        setOpenModalDecision(false);
 
         setTimeout(() => {
             setProductIdToDelete(null);
-            setOpenModalDecision(false);
             setDeletingProduct(false)
-        }, 100);
+        }, 500);
     };
 
     const cancelProduct = () => {

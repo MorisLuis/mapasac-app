@@ -22,8 +22,8 @@ export const InventoryBagScreen = () => {
         setDeletingProduct(true)
         await deleteProduct(productIdToDelete);
         await setBags((prevBags: ProductInterface[]) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
-
         setOpenModalDecision(false);
+        
         setTimeout(() => {
             setProductIdToDelete(null);
             setDeletingProduct(false)

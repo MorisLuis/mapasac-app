@@ -42,7 +42,6 @@ export const SellsRestaurantDataScreen = () => {
     } = formSellsData;
 
 
-    console.log({formSellsData: JSON.stringify(formSellsData, null, 2)})
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsRestaurantNavigationProp>();
     const [title, setTitle] = useState<string>();
@@ -61,7 +60,7 @@ export const SellsRestaurantDataScreen = () => {
     const formCompleted = watch('price') && watch('pieces');
     const buttonDisabled = !formCompleted;
 
-    const onSubmit = useCallback(() => {
+    const onSubmit = () => {
         const { pieces, price, capa, comments } = getValues();
 
         const parsedPieces = parseFloat(pieces as string);
@@ -80,15 +79,12 @@ export const SellsRestaurantDataScreen = () => {
             unidad: units,
             capa: capa ?? '',
             idusrmob: userId,
-            comentario: commentsState === comments ? comments : commentsState
-            //idinveclas: parsedIdinveclas
+            comentario: commentsState
         };
-
-        console.log({bagProduct})
 
         goBack();
         addProductSell(bagProduct);
-    }, [getValues, goBack, addProductSell, user?.idusrmob]);
+    };
 
     const selectAmount = () => {
         if(commentsState.length > 0){

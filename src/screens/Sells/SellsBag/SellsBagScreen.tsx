@@ -27,12 +27,12 @@ export const SellsBagScreen = () => {
         await deleteProductSell(productIdToDelete);
         await handleGetPrice();
         await setBags((prevBags) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
+        setOpenModalDecision(false);
 
         setTimeout(() => {
             setProductIdToDelete(null);
-            setOpenModalDecision(false);
             setDeletingProduct(false)
-        }, 100);
+        }, 500);
     };
 
     const cancelProduct = () => {
@@ -70,7 +70,7 @@ export const SellsBagScreen = () => {
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsCard
             product={item}
-            onDelete={() => handleDeleteProduct(item.idenlacemob)}
+            onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
             deletingProduct={productIdToDelete === item.idenlacemob}
             showDelete
         />
