@@ -15,14 +15,18 @@ export const InventoryBagScreen = () => {
     const [bags, setBags] = useState<ProductInterface[]>([]);
     const [productIdToDelete, setProductIdToDelete] = useState<number | null>();
     const [openModalDecision, setOpenModalDecision] = useState(false);
+    const [deletingProduct, setDeletingProduct] = useState(false);
 
     const confirmDelete = async () => {
         if (!productIdToDelete) return;
+        setDeletingProduct(true)
         await deleteProduct(productIdToDelete);
         await setBags((prevBags: ProductInterface[]) => prevBags.filter(bag => bag.idenlacemob !== productIdToDelete));
 
+        setOpenModalDecision(false);
         setTimeout(() => {
             setProductIdToDelete(null);
+            setDeletingProduct(false)
         }, 500);
     }
     
@@ -59,7 +63,7 @@ export const InventoryBagScreen = () => {
                 <ButtonCustum
                     title="Eliminar"
                     onPress={confirmDelete}
-                    //disabled={loadingCleanBag}
+                    disabled={deletingProduct}
                     buttonColor="red"
                     iconName="trash"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
@@ -68,7 +72,7 @@ export const InventoryBagScreen = () => {
                 <ButtonCustum
                     title="Cancelar"
                     onPress={cancelDelete}
-                    //disabled={loadingCleanBag}
+                    disabled={deletingProduct}
                     buttonColor="white"
                 />
             </ModalDecision>
