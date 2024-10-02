@@ -8,7 +8,6 @@ import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme
 import { globalFont } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
-import { postSellsInterface } from '../../../services/sells';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import CustomText from '../../../components/Ui/CustumText';
@@ -21,6 +20,7 @@ import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { LocationScreen } from './LocationScreen';
 import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import useActionsForModules from '../../../hooks/useActionsForModules';
+import { postSells, postSellsInterface } from '../../../services';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
 
@@ -56,13 +56,11 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
-                idclientes: typeSelected?.idclientes
+                idclientes: typeSelected?.idclientes,
+                opcion: 4
             };
 
-            console.log({ sellBody });
-            console.log({})
-
-            /* const postSell = await postSells(sellBody);
+            const postSell = await postSells(sellBody);
 
             if (postSell.error) {
                 handleError(postSell.error);
@@ -75,7 +73,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                 numberOfProducts: numberOfItemsSells,
                 importe: totalPrice as number
             });
-            resetAfterPost(); */
+            resetAfterPost();
 
         } catch (error: any) {
             handleError(error)

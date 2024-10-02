@@ -2,13 +2,13 @@ import React, { useCallback, useContext, useState } from 'react';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { getBagInventory } from '../../../services/bag';
-import { postInventory } from '../../../services/inventory';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 import ProductInterface from '../../../interface/product';
 import { CombinedInventoryAndAppNavigationStackParamList } from '../../../interface/navigation';
+import { postInventory } from '../../../services';
 
 export const ConfirmationScreen = () => {
 
@@ -33,19 +33,16 @@ export const ConfirmationScreen = () => {
             };
 
             resetAfterPost();
-            setTimeout(() => {
-                navigation.navigate('succesMessageScreen', { 
-                    redirection: 'InventoryNavigation',
-                    from: 'Inventory',
-                    numberOfProducts: numberOfItems
-                });
-            }, 500);
+            navigation.navigate('succesMessageScreen', { 
+                redirection: 'InventoryNavigation',
+                from: 'Inventory',
+                numberOfProducts: numberOfItems
+            });
 
         } catch (error: any) {
             handleError(error);
         } finally {
             setCreateInventaryLoading(false);
-
         }
     };
 

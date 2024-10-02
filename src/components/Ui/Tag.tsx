@@ -28,7 +28,7 @@ const Tag = ({
                     {
                         backgroundColor: 'transparent',
                         borderWidth: 0,
-                        color: handleColorWithModule().secondary
+                        color: handleColorWithModule.secondary
                     }]}
             >
                 {message}

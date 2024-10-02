@@ -4,14 +4,13 @@ import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getModules } from '../services/others';
 import { AuthContext } from '../context/auth/AuthContext';
-import { Alert } from 'react-native';
 import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
 import useErrorHandler from '../hooks/useErrorHandler';
 import CustomText from '../components/Ui/CustumText';
 import { SettingsContext } from '../context/settings/SettingsContext';
 import { AppNavigationProp } from '../interface/navigation';
+import { getModules } from '../services';
 
 interface modulesInterface {
     idappmob: number,

@@ -9,8 +9,27 @@ const getBagInventory = async ({ page, limit, option }: getBagInterface) => {
     } catch (error: any) {
         return { error: { ...error } };
     }
-}
+};
 
+const getTotalProductsInBag = async ({ opcion }: bagInterface) => {
+
+    try {
+        const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
+        return data.total
+    } catch (error: any) {
+        return { error: { ...error } };
+    }
+
+};
+
+const getTotalPriceBag = async ({ opcion }: bagInterface) => {
+    try {
+        const { data } = await api.get(`/api/bag/price?opcion=${opcion}`);
+        return data.total
+    } catch (error: any) {
+        return { error: { ...error } };
+    }
+};
 
 const addProductInBag = async ({ product, opcion }: addProductInBagInventoryInterface) => {
     try {
@@ -54,32 +73,12 @@ const deleteAllProductsInBag = async ({ opcion }: bagInterface) => {
 
 }
 
-const getTotalProductsInBag = async ({ opcion }: bagInterface) => {
-
-    try {
-        const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
-        return data.total
-    } catch (error: any) {
-        return { error: { ...error } };
-    }
-
-}
-
-const getTotalPriceBag = async ({ opcion }: bagInterface) => {
-    try {
-        const { data } = await api.get(`/api/bag/price?opcion=${opcion}`);
-        return data.total
-    } catch (error: any) {
-        return { error: { ...error } };
-    }
-}
-
 export {
     getBagInventory,
+    getTotalProductsInBag,
+    getTotalPriceBag,
     addProductInBag,
     updateProductInBag,
     deleteProductInBag,
-    deleteAllProductsInBag,
-    getTotalProductsInBag,
-    getTotalPriceBag
+    deleteAllProductsInBag
 }

@@ -6,11 +6,9 @@ import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/nati
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';
 import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface } from '../../../interface/productSells';
-import { postSells, postSellsInterface } from '../../../services/sells';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
-import ClientInterface from '../../../interface/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
@@ -19,6 +17,8 @@ import CustomText from '../../../components/Ui/CustumText';
 import CardButton from '../../../components/Cards/CardButton';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface/navigation';
+import { postSells, postSellsInterface } from '../../../services';
+import { ClientInterface } from '../../../interface';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -53,7 +53,8 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
                 idclientes: typeSelected?.idclientes,
-                comments
+                comments,
+                opcion: 2
             }
             const postSell = await postSells(sellBody);
 

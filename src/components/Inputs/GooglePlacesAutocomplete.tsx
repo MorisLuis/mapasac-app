@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { GooglePlaceData, GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import { useTheme } from '../../context/ThemeContext';
-import { useFocusEffect } from '@react-navigation/native';
 
 export interface inputGoogleValue {
     street: string;

@@ -14,6 +14,20 @@ const getClients = async ({ limit, page } : getClientsInterface ) => {
     }
 }
 
+const getModules = async () => {
+
+    try {
+        const getModules = await api.get(`/api/utils/modules`);
+        const modules = getModules.data.modules;
+        return modules;
+    } catch (error: any) {
+        return { error: { ...error } };
+    }
+
+}
+
+
 export {
-    getClients
+    getClients,
+    getModules
 }

@@ -36,7 +36,7 @@ const CardSelect = ({
         <TouchableOpacity
             style={[
                 ProductCardSelectTheme(theme, typeTheme).CardSelect,
-                sameValue && { backgroundColor: handleColorWithModule().primary + "40" }
+                sameValue && { backgroundColor: handleColorWithModule.primary + "40" }
             ]}
             onPress={onPress}
         >
@@ -69,7 +69,7 @@ const CardSelect = ({
                 <>
                     {
                         (sameValue) ?
-                            <Icon name='checkmark-circle' size={20} color={handleColorWithModule().primary} />
+                            <Icon name='checkmark-circle' size={20} color={handleColorWithModule.primary} />
                             :
                             <View style={ProductCardSelectTheme(theme, typeTheme).optionCheck}>
                             </View>

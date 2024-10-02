@@ -44,9 +44,7 @@ export const SellsRestaurantScreen = () => {
 
     const handleSelectProduct = async (product: ProductSellsRestaurantInterface) => {
         const cvefamilia = product.cvefamilia
-        console.log({cvefamilia})
         const productData = await getProductDetailsRestaurantSells(cvefamilia);
-        console.log({productData: JSON.stringify(productData, null, 2)});
         updateFormData({
             descripcio: product.descripcio,
             image: product.imagen,
@@ -54,7 +52,8 @@ export const SellsRestaurantScreen = () => {
             capa: productData[0].capa,
             typeClass: { id: productData[0].idinveclas, value: productData[0].producto },
             units: productData[0].unidad,
-            ...productData[0]
+            idinvearts: productData[0].idinvearts,
+            //...productData[0]
         })
         navigation.navigate('SellsRestaurantsDataScreen');
     }

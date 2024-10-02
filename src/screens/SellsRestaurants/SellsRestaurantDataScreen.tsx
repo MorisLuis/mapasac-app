@@ -5,7 +5,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
-import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
 import FooterScreen from '../../components/Navigation/FooterScreen';
@@ -23,6 +22,7 @@ export type FormSellsRestaurantType = {
     units?: any,
     descripcio?: string,
     image?: string,
+    idinvearts?: string;
 };
 
 export const SellsRestaurantDataScreen = () => {
@@ -37,7 +37,8 @@ export const SellsRestaurantDataScreen = () => {
         units,
         descripcio,
         image,
-        capa
+        capa,
+        idinvearts
     } = formSellsData;
 
 
@@ -66,6 +67,7 @@ export const SellsRestaurantDataScreen = () => {
         const parsedPieces = parseFloat(pieces as string);
         const parsedPrice = parseFloat(price as string);
         const parsedTypeClass = Number(typeClass?.id);
+        const parsedidinvearts = Number(idinvearts)
         const userId = user?.idusrmob ?? 0;
         
 
@@ -74,7 +76,7 @@ export const SellsRestaurantDataScreen = () => {
         const bagProduct: EnlacemobInterface = {
             cantidad: isNaN(parsedPieces) ? 0 : parsedPieces,
             precio: isNaN(parsedPrice) ? 0 : parsedPrice,
-            idinvearts: isNaN(parsedTypeClass) ? 0 : parsedTypeClass,
+            idinvearts: parsedidinvearts ?? 0,
             unidad: units,
             capa: capa ?? '',
             idusrmob: userId,

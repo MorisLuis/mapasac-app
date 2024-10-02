@@ -1,5 +1,3 @@
-
-
 export interface ClientInterface {
     idclientes: number;
     nombres: string;
