@@ -89,7 +89,7 @@ export const EmptyMessageCardStyles = (theme: Theme, typeTheme: string) => Style
     EmptyMessageCard: {
         backgroundColor: theme.background_color,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: 10,
@@ -125,7 +125,7 @@ export const MessageCardStyles = (theme: Theme, typeTheme: string) => StyleSheet
     MessageCard: {
         backgroundColor: theme.color_tertiary_opacity,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: 10,
@@ -169,7 +169,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: theme.background_color_secondary,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
     },
     ProductItemSearchSelected: {
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
@@ -182,7 +182,7 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: theme.color_tertiary,
-        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_dark : theme.color_border_dark,
     },
     productInventoryCard__Image: {
         width: wp("17.5%"),
@@ -208,14 +208,14 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
         color: theme.text_color
     },
     codebarAvailable: {
-        backgroundColor: typeTheme === 'light' ? theme.color_border_tertiary + '23' : theme.color_border_secondary + '23',
+        backgroundColor: typeTheme === 'light' ? theme.color_border_dark + '23' : theme.color_border_secondary + '23',
         padding: globalStyles(theme).globalPadding.padding / 5,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     textAvailable: {
-        color: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_secondary,
+        color: typeTheme === 'light' ? theme.color_border_dark : theme.color_border_secondary,
         fontSize: globalFont.font_normal
     },
     codebarNotAvailable: {
@@ -265,7 +265,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Plat
         padding: 5,
         borderRadius: Platform === 'android' ? globalStyles(theme).borderRadius.borderRadius * 1.5 : globalStyles(theme).borderRadius.borderRadius * 2.5,
         borderWidth: 0.2,
-        borderColor: typeTheme === 'dark' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'dark' ? theme.color_border_secondary : theme.color_border_dark,
         marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
     },
     image: {
@@ -288,7 +288,7 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Plat
         padding: 5,
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
         borderWidth: 0.2,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'

@@ -5,7 +5,7 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
     input: {
         minHeight: 50,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
         backgroundColor: theme.background_color_secondary,
@@ -42,7 +42,7 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
         backgroundColor: theme.background_color_secondary,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
         borderWidth: 0.2,
-        borderColor: typeTheme === 'light' ? theme.color_border_tertiary : theme.color_border_secondary,
+        borderColor: typeTheme === 'light' ? theme.color_border_dark : theme.color_border_secondary,
     },
 });
 
@@ -52,7 +52,7 @@ export const selectStyles = (theme: Theme, typeTheme?: string) => StyleSheet.cre
         minHeight: 50,
         fontSize: globalFont.font_normal,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         backgroundColor: theme.background_color,

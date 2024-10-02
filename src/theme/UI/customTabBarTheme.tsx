@@ -38,8 +38,8 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         width: hp("5%"),
         maxHeight: 32,
         marginRight: wp("2%"),
-        borderWidth: 0.7,
-        borderColor: theme.color_border,
+        borderWidth: 1,
+        borderColor: theme.color_border_dark,
         backgroundColor: theme.background_color
     },
     buttonBag: {
@@ -49,8 +49,8 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         height: hp("5%"),
         width: hp("5%"),
         maxHeight: 32,
-        borderWidth: 0.7,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_secondary,
+        borderWidth: 1,
+        borderColor: typeTheme === 'light' ? theme.color_border_dark : theme.color_border_secondary,
         backgroundColor: theme.background_color
     },
     navigation: {
@@ -85,7 +85,7 @@ export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleShe
         right: - globalStyles(theme).globalPadding.padding / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_dark : theme.color_border_dark,
         justifyContent: "center",
         alignItems: "center"
     },

@@ -123,7 +123,7 @@ export const CameraScreenStyles = (theme: Theme, typeTheme?: string) => StyleShe
         borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
         backgroundColor: theme.color_tertiary,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         justifyContent: "center",
         alignItems: "center"
     },

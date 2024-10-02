@@ -233,7 +233,7 @@ export const ProductDetailsStyles = (theme: Theme, typeTheme?: string) => StyleS
         width: "100%",
         backgroundColor: theme.background_color_secondary,
         borderTopWidth: 0.75,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         padding: globalStyles(theme).globalPadding.padding,
         display: "flex",
         flexDirection: "row",

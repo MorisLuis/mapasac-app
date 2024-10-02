@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useWatch } from 'react-hook-form'; // Asegúrate de importar useWatch
 import { useTheme } from '../../context/ThemeContext';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { globalFont } from '../../theme/appTheme';
@@ -17,7 +17,7 @@ interface CardButtonInterface {
 
     /* Optional */
     specialValue?: string;
-    control?: Control<any, any>;
+    control?: Control<any, any> | null;  // Permitir control como opcional o null
     controlValue?: keyof any;
     icon?: string;
     isPrice?: boolean;
@@ -28,7 +28,7 @@ const CardButton = ({
     label,
     valueDefault,
     color,
-    control,
+    control = null,  // Definir control con un valor por defecto null
     controlValue,
     icon,
     isPrice,
@@ -55,17 +55,28 @@ const CardButton = ({
 
     const isDefaultValue = currentValue === valueDefault;
 
+    // Solo usar useWatch si control existe y no es null
+    const watchedValue = control && controlValue
+        ? useWatch({
+            control,
+            name: controlValue as string, // Asegúrate de que sea una string válida
+        })
+        : null;
+
     useEffect(() => {
-        if (control && controlValue) {
-            setCurrentValue(valueDefault);
+        if (control && watchedValue !== undefined) {
+            const newValue = watchedValue ? handleValue(watchedValue) : valueDefault;
+            setCurrentValue(newValue);
+        } else {
+            setCurrentValue(valueDefault); // Si no hay control, usar el valor por defecto
         }
-    }, [valueDefault, control, controlValue]);
+    }, [watchedValue, handleValue, valueDefault, control]);
 
     return (
         <TouchableOpacity
             style={[
                 SellsDataScreenTheme(theme, typeTheme).inputContainer,
-                isDefaultValue && { borderColor: theme.color_border, borderWidth: 1 }
+                isDefaultValue && { borderColor: theme.color_border_dark, borderWidth: 1 }
             ]}
             onPress={onPress}
         >
@@ -87,11 +98,7 @@ const CardButton = ({
                     control={control}
                     name={controlValue as any}
                     render={({ field: { value } }) => {
-
                         const newValue = value ? handleValue(value) : valueDefault;
-                        useEffect(() => {
-                            setCurrentValue(newValue);
-                        }, [newValue]);
 
                         return (
                             <CustomText

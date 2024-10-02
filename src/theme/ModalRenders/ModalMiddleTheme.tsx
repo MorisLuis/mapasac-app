@@ -49,7 +49,7 @@ export const ModalMiddlenStyles = (theme: Theme, typeTheme: string) => StyleShee
         justifyContent: "space-between",
         alignItems: "center",
         borderBottomWidth: 1,
-        borderBottomColor: theme.color_border_tertiary
+        borderBottomColor: theme.color_border_dark
     },
     title: {
         fontWeight: "bold",

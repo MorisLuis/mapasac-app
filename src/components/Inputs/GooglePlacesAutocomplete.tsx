@@ -86,13 +86,13 @@ const InputGooglePlaces = ({ locationValue, setLocaltionValue, onFocus, onBlur }
         listView: {
             backgroundColor: theme.background_color_secondary,
             borderWidth: 1,
-            borderColor: theme.color_border_tertiary,
+            borderColor: theme.color_border_dark,
             marginTop: globalStyles().globalMarginBottom.marginBottom,
             borderRadius: globalStyles().borderRadius.borderRadius / 2,
         },
         row: {
             height: 44,
-            borderBottomColor: theme.color_border_tertiary,
+            borderBottomColor: theme.color_border_dark,
             borderBottomWidth: 0.5,
             backgroundColor: theme.background_color_secondary
         },

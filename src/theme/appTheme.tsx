@@ -20,7 +20,7 @@ export interface Theme {
     color_red_light: string;
     color_border: string;
     color_border_secondary: string;
-    color_border_tertiary: string;
+    color_border_dark: string;
     text_color: string;
     text_color_light: string;
     text_color_secondary: string;
@@ -47,9 +47,11 @@ export const lightTheme = {
     color_purple: '#9592F7',
     color_black: "black",
     color_red_light: "#ff000056",
-    color_border: "#26282C",
+
+    color_border: "#6f7b94",
     color_border_secondary: "#cacaca",
-    color_border_tertiary: "#6f7b94",
+    color_border_dark: "#26282C",
+
     text_color: "#1d2a36", // black
     text_color_light: "#8e9dab",
     text_color_secondary: "#f9f9f9", // white
@@ -78,7 +80,7 @@ export const darkTheme = {
     color_red_light: "#ff000056",
     color_border: "#f1f1f1",
     color_border_secondary: "#d6d6d6",
-    color_border_tertiary: "#46484B",
+    color_border_dark: "#46484B",
     text_color: "#f9f9f9",
     text_color_light: "#657482",
     text_color_secondary: "#1d2a36",

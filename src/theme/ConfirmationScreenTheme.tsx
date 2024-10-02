@@ -56,7 +56,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     confirmationInfo: {
         borderBottomWidth: 1,
-        borderBottomColor: theme.color_border_tertiary,
+        borderBottomColor: theme.color_border_dark,
         paddingVertical: globalStyles(theme).globalPadding.padding,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
     },
@@ -98,7 +98,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_tertiary
+        borderColor: typeTheme === 'light' ? theme.color_border : theme.color_border_dark
     },
     confirmationProductsContentHeader: {
         color: theme.text_color,

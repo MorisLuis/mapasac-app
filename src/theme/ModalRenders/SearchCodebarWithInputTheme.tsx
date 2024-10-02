@@ -39,7 +39,7 @@ export const SearchCodebarWithInputStyles = (theme: Theme, typeTheme?: string ) 
         paddingHorizontal: 10,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         marginRight: globalStyles(theme).globalMarginBottomSmall.marginBottom
     },
     optionText: {
@@ -54,6 +54,6 @@ export const SearchCodebarWithInputStyles = (theme: Theme, typeTheme?: string ) 
     },
     optionActive: {
         backgroundColor: theme.color_tertiary,
-        borderColor: theme.color_border_tertiary
+        borderColor: theme.color_border_dark
     }
 });

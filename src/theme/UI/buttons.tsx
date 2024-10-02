@@ -9,7 +9,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         height: hp("5%"),
         backgroundColor: theme.color_tertiary,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         width: "100%",
@@ -25,7 +25,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         flexDirection: "row",
         backgroundColor: theme.background_color_secondary,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
         paddingHorizontal: globalStyles(theme).globalPadding.padding,
         paddingVertical: globalStyles(theme).globalPadding.padding / 2,
@@ -92,7 +92,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
     search: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
         color: theme.text_color
     },
 
@@ -106,7 +106,7 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
         backgroundColor: "transparent",
         color: theme.text_color,
         borderWidth: 1,
-        borderColor: theme.color_border_tertiary,
+        borderColor: theme.color_border_dark,
     },
 
     purple: {

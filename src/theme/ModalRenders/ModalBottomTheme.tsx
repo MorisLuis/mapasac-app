@@ -38,7 +38,7 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         alignItems: "flex-end",
         borderWidth: 1,
         borderColor: 'transparent',
-        borderBottomColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_tertiary,
+        borderBottomColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     }
 });

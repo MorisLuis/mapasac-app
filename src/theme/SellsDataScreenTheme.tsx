@@ -60,8 +60,8 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
         flexDirection: "row",
         justifyContent: "space-between",
         padding: globalStyles(theme).globalPadding.padding / 1.5,
-        borderWidth: 0.2,
-        borderColor: theme.color_border_secondary
+        borderWidth: 1,
+        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color_tertiary,
     },
     inputContainer_left: {
         display: 'flex',
