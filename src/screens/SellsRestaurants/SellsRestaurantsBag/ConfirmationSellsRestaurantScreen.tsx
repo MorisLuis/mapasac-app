@@ -20,7 +20,7 @@ import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { LocationScreen } from './LocationScreen';
 import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import useActionsForModules from '../../../hooks/useActionsForModules';
-import { postSells, postSellsInterface } from '../../../services';
+import { getAddress, postSells, postSellsInterface } from '../../../services';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
 
@@ -211,10 +211,21 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         )
     };
 
+    const handleGetAddress = async () => {
+        const address = await getAddress();
+        setLocationValue({
+            street: address.direccion ?? undefined,
+            number:  address.numero ?? undefined,
+            neighborhood:  address.colonia ?? undefined,
+            locality:  address.estado ?? undefined     
+        })
+    }
+
     useFocusEffect(
         useCallback(() => {
             handleGetPrice();
             refreshBags();
+            handleGetAddress();
         }, [])
     );
 

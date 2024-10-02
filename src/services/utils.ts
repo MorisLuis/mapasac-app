@@ -24,10 +24,23 @@ const getModules = async () => {
         return { error: { ...error } };
     }
 
+};
+
+const getAddress = async () => {
+
+    try {
+        const getAddress = await api.get(`/api/utils/address?idpvtadomi=1`);
+        const address = getAddress.data.address;
+        return address;
+    } catch (error: any) {
+        return { error: { ...error } };
+    }
+
 }
 
 
 export {
     getClients,
-    getModules
+    getModules,
+    getAddress
 }
