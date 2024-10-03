@@ -21,7 +21,7 @@ export const SelectAmountRestaurantScreen = ({
 }: SelectAmountScreenInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const { valueDefault, unit, from } = route.params;
+    const { valueDefault, unit } = route.params;
     const navigation = useNavigation<SellsRestaurantNavigationProp>();
     const { updateFormData } = useContext(SellsRestaurantBagContext);
 

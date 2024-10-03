@@ -38,14 +38,15 @@ export const SellsRestaurantDataScreen = () => {
         descripcio,
         image,
         capa,
-        idinvearts
+        idinvearts,
+        comments
     } = formSellsData;
 
 
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsRestaurantNavigationProp>();
     const [title, setTitle] = useState<string>();
-    const [commentsState, setCommentState] = useState('');
+    //const [commentsState, setCommentState] = useState('');
 
     const { control, handleSubmit, setValue, getValues, watch } = useForm<FormSellsRestaurantType>({
         defaultValues: {
@@ -53,7 +54,7 @@ export const SellsRestaurantDataScreen = () => {
             price: price,
             capa: capa,
             typeClass: typeClass,
-            comments: ''
+            comments: comments
         },
     });
 
@@ -68,7 +69,7 @@ export const SellsRestaurantDataScreen = () => {
         const parsedTypeClass = Number(typeClass?.id);
         const parsedidinvearts = Number(idinvearts)
         const userId = user?.idusrmob ?? 0;
-        
+
 
         if (!parsedTypeClass) return console.log("parsedTypeClass is missing");
 
@@ -79,7 +80,7 @@ export const SellsRestaurantDataScreen = () => {
             unidad: units,
             capa: capa ?? '',
             idusrmob: userId,
-            comentario: commentsState
+            comentario: comments
         };
 
         goBack();
@@ -87,11 +88,6 @@ export const SellsRestaurantDataScreen = () => {
     };
 
     const selectAmount = () => {
-        if(commentsState.length > 0){
-            updateFormData({
-                comments: commentsState
-            })
-        };
         navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') as string, unit: 'PZA' })
     }
 
@@ -102,8 +98,9 @@ export const SellsRestaurantDataScreen = () => {
         if (pieces) setValue('pieces', pieces);
         if (price) setValue('price', price);
         if (descripcio) setTitle(descripcio);
+        if (comments) setValue('comments', comments);
 
-    }, [pieces, price, descripcio]);
+    }, [pieces, price, descripcio, comments]);
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
@@ -151,12 +148,22 @@ export const SellsRestaurantDataScreen = () => {
                         icon="bag-handle"
                     />
 
-                    <View>
+                    <CardButton
+                        onPress={() => navigate('[Modal] - commentInProduct')}
+                        label='Comentarios:'
+                        valueDefault='Escribir comentario'
+                        color='red'
+                        control={control}
+                        controlValue='comments'
+                        icon="chatbox"
+                    />
+
+                    {/* <View>
                         <TextInputContainer
                             setComments={(value) => setCommentState(value)}
                             value={formSellsData.comments}
                         />
-                    </View>
+                    </View> */}
                 </>
 
                 <FooterScreen

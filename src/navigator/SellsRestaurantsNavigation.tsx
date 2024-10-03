@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 
 // Screens
-import { SelectClient } from '../screens/Sells/SellsBag/SelectClient';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
 import { ProductSellsRestaurantInterface } from '../interface/productSells';
 import { SellsRestaurantScreen } from '../screens/SellsRestaurants/SellsRestaurantScreen';
@@ -14,6 +13,7 @@ import { ConfirmationSellsRestaurantScreen } from '../screens/SellsRestaurants/S
 import { EditProductSellRestaurantInBag } from '../screens/SellsRestaurants/SellsRestaurantsBag/EditProductSellRestaurantInBag';
 import { LocationScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/LocationScreen';
 import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete';
+import { CommentsInProduct } from '../screens/SellsRestaurants/CommentsInProduct';
 
 // useNavigation() type.
 export type SellsRestaurantsNavigationStackParamList = {
@@ -23,10 +23,8 @@ export type SellsRestaurantsNavigationStackParamList = {
 
     "[Modal] - editProductSellRestaurantsInBag": { product: ProductSellsRestaurantInterface };
     "[Modal] - EditLocation": { locationValue?: inputGoogleValue };
+    "[Modal] - commentInProduct": { comments: string };
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - SelectClient": undefined;
-
-
     "[SellsRestaurants] - confirmationScreen": { addressDirection?: inputGoogleValue };
 };
 
@@ -104,27 +102,14 @@ export const SellsRestaurantsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - SelectClient"
-                component={SelectClient}
-                options={({ navigation }: any) => ({
-                    presentation: "modal",
-                    header: props => (
-                        <CustomHeader
-                            {...props}
-                            title={"Cliente"}
-                            navigation={navigation}
-                            backCustum={true}
-                            back={() => {
-                                navigation.goBack()
-                            }}
-                        />
-                    )
-                })}
+                name="[Modal] - editProductSellRestaurantsInBag"
+                component={EditProductSellRestaurantInBag}
+                options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name="[Modal] - editProductSellRestaurantsInBag"
-                component={EditProductSellRestaurantInBag}
+                name="[Modal] - commentInProduct"
+                component={CommentsInProduct}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 

@@ -224,7 +224,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         useCallback(() => {
             handleGetPrice();
             getBagInitial();
-        }, [handleGetPrice, getBagInitial])
+        }, [])
     );
 
     // Handle address direction.

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, Ref } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { globalFont, globalStyles } from '../../theme/appTheme';
@@ -12,14 +12,14 @@ interface TextInputContainerInterface {
     onFocus?: () => void;
 }
 
-export const TextInputContainer = ({
+// Usar forwardRef para pasar el ref al TextInput
+export const TextInputContainer = forwardRef<TextInput, TextInputContainerInterface>(({
     placeholder = "Escribe algo...",
     label,
     setComments,
     value,
     onFocus
-}: TextInputContainerInterface) => {
-
+}, ref) => {
     const [height, setHeight] = useState(50); // Altura mínima inicial
     const { theme } = useTheme();
 
@@ -45,6 +45,7 @@ export const TextInputContainer = ({
             )}
 
             <TextInput
+                ref={ref} // Asignar el ref aquí
                 style={[{
                     height: height,  // Aplicar altura dinámica
                     backgroundColor: theme.background_color_secondary,
@@ -64,4 +65,6 @@ export const TextInputContainer = ({
             />
         </View>
     );
-};
+});
+
+TextInputContainer.displayName = 'TextInputContainer'; // Para mostrar el nombre correcto en las herramientas de depuración
