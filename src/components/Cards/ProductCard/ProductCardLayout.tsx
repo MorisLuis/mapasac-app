@@ -26,7 +26,13 @@ export const ProductInfo = ({ label, value }: { label: string; value: string | n
     return (
         <View style={styles(theme).dataItem}>
             <CustomText style={styles(theme).label}>{label}:</CustomText>
-            <CustomText style={styles(theme).dataItemText}>{value}</CustomText>
+            <CustomText
+                style={styles(theme).dataItemText}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+            >
+                {value}
+            </CustomText>
         </View>
     );
 };
@@ -47,7 +53,7 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
     if (deletingProduct) {
         return (
             <View style={{ flex: 1 }}>
-                <ProductCardSkeleton/>
+                <ProductCardSkeleton />
             </View>
         );
     }

@@ -20,6 +20,7 @@ export const useProductDetails = (product: CombinedProductInterface) => {
 
     const capa = product?.capa?.trim();
     const clase = (product as ProductSellsInterface)?.clase?.trim();
+    const comentario = (product as ProductSellsRestaurantInterface)?.comentario?.trim();
 
     let productDetails: { label: string, value: string }[] = [];
 
@@ -35,7 +36,17 @@ export const useProductDetails = (product: CombinedProductInterface) => {
             ...(capa ? [{ label: 'Capa', value: capa }] : []),
             ...(clase ? [{ label: 'Clase', value: clase }] : [])
         );
-    }
+    };
+
+        // Agregar detalles específicos del módulo
+        if (actualModule === 'Sells-Restaurant') {
+            if( comentario ) {
+                productDetails.push(
+                    ...(comentario ? [{ label: 'Comentario', value: comentario }] : []),
+                );
+            }
+        }
+    
 
     return {
         productDetails

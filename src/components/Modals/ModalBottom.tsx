@@ -22,7 +22,8 @@ interface ModalBottomInterface {
         value: number;
     }[];
     menuOptionActive?: Number;
-    onNavigateMenu?: (value: Number) => void
+    onNavigateMenu?: (value: Number) => void;
+    menuDisabled?: boolean
 }
 
 const ModalBottom = ({
@@ -34,16 +35,13 @@ const ModalBottom = ({
     showMenu,
     menuOptions,
     menuOptionActive,
-    onNavigateMenu
+    onNavigateMenu,
+    menuDisabled
 }: ModalBottomInterface) => {
 
     const { theme, typeTheme } = useTheme();
     const { handleColorWithModule } = useActionsForModules()
     const iconColor = typeTheme === 'dark' ? "white" : "black";
-
-    const handleDismissKeyboard = () => {
-        Keyboard.dismiss();
-    };
 
     const renderMenu = () => {
         const visible = menuOptionActive && onNavigateMenu;
@@ -56,7 +54,8 @@ const ModalBottom = ({
                             key={item.value}
                             style={[ ModalBottomStyles(theme).menuModalOption, {
                                 backgroundColor: menuOptionActive === item.value ? handleColorWithModule.primary : theme.background_color,
-                            }]}
+                            }, menuDisabled && { opacity: 0.5 }]}
+                            disabled={menuDisabled}
                         >
                             <CustomText>{item.label}</CustomText>
                         </TouchableOpacity>

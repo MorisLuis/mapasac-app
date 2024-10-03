@@ -51,10 +51,6 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
         }
 
         setTimeout(() => {
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se actualizo la cantidad!'
-            })
             setEditingProduct(false);
             handleCloseModal()
         }, 500);
@@ -102,7 +98,6 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
                 <View style={EditProductStyles(theme).EditProductInBag_header}>
                     <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas editar el comentario?</CustomText>
                     <TextInputContainer
-                    //ref={textInputRef}
                         setComments={(value) => {
                             setComment(value);
                         }}
@@ -133,6 +128,7 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
             menuOptions={MenuOptions}
             menuOptionActive={menuOptionActive}
             onNavigateMenu={handleMenuOptionSelect}
+            menuDisabled={editingProduct}
         >
             {
                 menuOptionActive === 1 ? renderEditCounter() : renderEditComments()
@@ -142,6 +138,7 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
                 title='Editar'
                 onPress={onEdit}
                 disabled={editingProduct}
+                loading={editingProduct}
             />
         </ModalBottom>
     );

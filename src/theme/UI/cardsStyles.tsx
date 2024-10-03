@@ -37,7 +37,8 @@ export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.creat
     },
     dataItemText: {
         fontSize: globalFont.font_normal,
-        color: theme.text_color
+        color: theme.text_color,
+        maxWidth: "80%"
     },
     label: {
         fontWeight: "bold",
