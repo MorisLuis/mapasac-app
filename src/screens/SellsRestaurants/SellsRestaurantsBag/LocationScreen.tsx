@@ -77,7 +77,6 @@ export const LocationScreen = ({ route }: LocationScreenInterface) => {
             <ButtonCustum
                 onPress={onSubmitLocation}
                 title="Seleccionar ubicación"
-                buttonColor='green'
                 extraStyles={{ marginTop: 10 }}
             />
         </ModalBottom>

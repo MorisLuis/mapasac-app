@@ -80,7 +80,6 @@ export const CommentsInProduct = ({ route }: EditProductSellInBagInterface) => {
             <ButtonCustum
                 title='Guardar'
                 onPress={onEdit}
-                buttonColor='green'
                 disabled={editingProduct}
             />
         </ModalBottom>

@@ -64,7 +64,6 @@ export const InventoryBagScreen = () => {
                     title="Eliminar"
                     onPress={confirmDelete}
                     disabled={deletingProduct}
-                    buttonColor="red"
                     iconName="trash"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
 
@@ -73,7 +72,6 @@ export const InventoryBagScreen = () => {
                     title="Cancelar"
                     onPress={cancelDelete}
                     disabled={deletingProduct}
-                    buttonColor="white"
                 />
             </ModalDecision>
         </>

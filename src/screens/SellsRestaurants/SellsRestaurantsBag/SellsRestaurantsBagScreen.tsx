@@ -101,7 +101,6 @@ export const SellsRestaurantBagScreen = () => {
                     title="Eliminar"
                     onPress={confirmDelete}
                     disabled={deletingProduct}
-                    buttonColor="red"
                     iconName="trash"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
 
@@ -110,7 +109,6 @@ export const SellsRestaurantBagScreen = () => {
                     title="Cancelar"
                     onPress={cancelProduct}
                     disabled={deletingProduct}
-                    buttonColor="white"
                 />
             </ModalDecision>
 

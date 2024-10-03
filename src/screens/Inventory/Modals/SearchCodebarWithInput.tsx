@@ -93,7 +93,6 @@ export const SearchCodebarWithInput = () => {
                     title="Buscar producto"
                     onPress={handleSearchProductByCodebarInput}
                     disabled={loadingSearch}
-                    buttonColor='green'
                     extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                 />
 

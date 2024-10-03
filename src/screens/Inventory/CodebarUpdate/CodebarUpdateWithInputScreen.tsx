@@ -108,7 +108,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                             title="Actualizar"
                             onPress={hanldeUpdateCodebarWithCodeRandom}
                             disabled={loading}
-                            buttonColor='white'
                         />
                     )}
                 </View>
@@ -118,7 +117,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                     title="Ya existe un producto con este codigo de barras. Deseas continuar?"
                     onPress={onUpdateCodeBar}
                     //disabled={loadingCleanBag}
-                    buttonColor="red"
                     iconName="close"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
                 />
@@ -126,7 +124,6 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                     title="Cancelar"
                     onPress={onCancel}
                     //disabled={loadingCleanBag}
-                    buttonColor="white"
                 />
             </ModalDecision>
         </>

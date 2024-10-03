@@ -31,7 +31,6 @@ const FooterScreen = ({
                     title={buttonTitle}
                     onPress={buttonOnPress}
                     disabled={buttonDisabled}
-                    buttonColor='green'
                     loading={buttonLoading}
                 />
             </View>

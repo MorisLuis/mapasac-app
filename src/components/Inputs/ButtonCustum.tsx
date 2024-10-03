@@ -14,7 +14,7 @@ interface ButtonCustumInterface {
 
     disabled?: boolean;
     loading?: boolean;
-    buttonColor: 'green' | "white" | "red" | 'yellow' | 'purple';
+    buttonColor?: "white"
     iconName?: string;
     iconColor?: string;
     extraStyles?: any;
@@ -23,12 +23,12 @@ interface ButtonCustumInterface {
 const ButtonCustum = ({
     onPress,
     title,
-    buttonColor,
     iconName,
     iconColor,
     extraStyles,
     disabled,
-    loading
+    loading,
+    buttonColor
 }: ButtonCustumInterface) => {
 
     const { theme, typeTheme } = useTheme();
@@ -39,7 +39,7 @@ const ButtonCustum = ({
             style={[
                 buttonStyles(theme).button,
                 disabled && { opacity: 0.6 }
-                , { ...extraStyles, backgroundColor: handleColorWithModule.primary }
+                , { ...extraStyles, backgroundColor: buttonColor ? buttonColor : handleColorWithModule.primary }
             ]}
             onPress={onPress}
             disabled={disabled}

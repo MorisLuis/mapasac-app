@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { Control, Controller, useWatch } from 'react-hook-form'; // Asegúrate de importar useWatch
+import { Control, Controller, useWatch } from 'react-hook-form';
 import { useTheme } from '../../context/ThemeContext';
 import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
 import { globalFont } from '../../theme/appTheme';
@@ -37,7 +37,6 @@ const CardButton = ({
     const { typeTheme, theme } = useTheme();
     const [currentValue, setCurrentValue] = useState<string | number>(valueDefault);
 
-    // Memorizamos el valor resuelto del color y el valor por defecto
     const resolvedColor = useMemo(
         () => (color === 'black' && typeTheme === 'dark') ? 'white' : color,
         [color, typeTheme]
@@ -76,7 +75,7 @@ const CardButton = ({
         <TouchableOpacity
             style={[
                 SellsDataScreenTheme(theme, typeTheme).inputContainer,
-                isDefaultValue && { borderColor: theme.color_border_dark, borderWidth: 1 }
+                (isDefaultValue && !specialValue ) && { borderColor: theme.color_border_dark, borderWidth: 1 }
             ]}
             onPress={onPress}
         >

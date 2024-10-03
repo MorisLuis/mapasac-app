@@ -268,7 +268,6 @@ export const LayoutBag = ({
                     title="Limpiar carrito"
                     onPress={handleCleanTemporal}
                     disabled={loadingCleanBag}
-                    buttonColor="red"
                     iconName="close"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
                 />

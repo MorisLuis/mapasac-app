@@ -125,7 +125,6 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
             <ButtonCustum
                 title='Editar'
                 onPress={onEdit}
-                buttonColor='green'
                 disabled={editingProduct}
             />
         </ModalBottom>

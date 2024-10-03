@@ -85,7 +85,6 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
                 title="Editar"
                 onPress={onEdit}
                 disabled={editingProduct}
-                buttonColor='green'
             />
 
         </ModalMiddle>

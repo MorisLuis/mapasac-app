@@ -94,7 +94,6 @@ export const LoginScreen = () => {
                             title="Iniciar sesión"
                             onPress={onLogin}
                             disabled={loadingLogin}
-                            buttonColor='green'
                         />
                     </View>
                 </View>

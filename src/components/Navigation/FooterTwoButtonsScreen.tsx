@@ -51,7 +51,6 @@ const FooterTwoButtonsScreen = ({
                     title={buttonTitle}
                     onPress={buttonOnPress}
                     disabled={buttonDisabled}
-                    buttonColor='green'
                     extraStyles={{ flex: 0.8 }}
                 />
             </View>

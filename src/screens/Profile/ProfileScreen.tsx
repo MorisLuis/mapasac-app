@@ -66,7 +66,6 @@ export const ProfileScreen = () => {
                     <ButtonCustum
                         title="Cerrar sesión"
                         onPress={handleLogOut}
-                        buttonColor='white'
                     />
                 </View>
 
