@@ -64,14 +64,16 @@ export const SellsRestaurantDataScreen = () => {
     const onSubmit = () => {
         const { pieces, price, capa, comments } = getValues();
 
+
         const parsedPieces = parseFloat(pieces as string);
         const parsedPrice = parseFloat(price as string);
-        const parsedTypeClass = Number(typeClass?.id);
+        //const parsedTypeClass = Number(typeClass?.id);
         const parsedidinvearts = Number(idinvearts)
         const userId = user?.idusrmob ?? 0;
 
+        //console.log({parsedTypeClass})
 
-        if (!parsedTypeClass) return console.log("parsedTypeClass is missing");
+        //if (!parsedTypeClass) return console.log("parsedTypeClass is missing");
 
         const bagProduct: EnlacemobInterface = {
             cantidad: isNaN(parsedPieces) ? 0 : parsedPieces,

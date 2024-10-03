@@ -65,6 +65,7 @@ const deleteProductInBag = async ({ idenlacemob }: deleteProductInBagInventoryIn
 const deleteAllProductsInBag = async ({ opcion }: bagInterface) => {
 
     try {
+        console.log({opcion})
         const { data } = await api.delete(`/api/bag/all?opcion=${opcion}`);
         return data
     } catch (error: any) {

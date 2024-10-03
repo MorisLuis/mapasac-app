@@ -12,10 +12,8 @@ import { deleteAllProductsInBag, getBagInventory } from '../../services/bag';
 import { useNavigation } from '@react-navigation/native';
 import ModalDecision from '../Modals/ModalDecision';
 import Toast from 'react-native-toast-message';
-import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import DotLoader from '../Ui/DotLaoder';
 import { format } from '../../utils/currency';
-import { InventoryBagContext } from '../../context/Inventory/InventoryBagContext';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../Ui/CustumText';
@@ -28,6 +26,7 @@ import ProductInterface from '../../interface/product';
 import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../interface/productSells';
 import { CombinedSellsAndInventoryNavigationStackParamList } from '../../interface/navigation';
 import { opcionBag } from '../../interface/bag';
+import { SettingsContext } from '../../context/settings/SettingsContext';
 
 export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 
@@ -57,9 +56,9 @@ export const LayoutBag = ({
 }: LayoutBagInterface) => {
 
     const { theme, typeTheme } = useTheme();
-    const { handleActionBag } =useActionsForModules()
+    const { actualModule } = useContext(SettingsContext);
     const { handleError } = useErrorHandler()
-    const { handleColorWithModule } = useActionsForModules();
+    const { handleColorWithModule, handleActionBag } = useActionsForModules();
     const searchInputRef = useRef<any>(null);
     const { goBack } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
 
@@ -89,12 +88,12 @@ export const LayoutBag = ({
             handleActionBag.resetAfterPost()
 
             setTimeout(() => {
-                setLoadingCleanBag(false);
                 goBack();
                 setOpenModalDecision(false);
+                setLoadingCleanBag(false);
                 Toast.show({
                     type: 'tomatoToast',
-                    text1: 'Se limpió el inventario!'
+                    text1: `Se limpió el ${actualModule === 'Inventory' ? 'Inventario' : 'Carrito'}!`
                 });
             }, 100);
         } catch (error) {
@@ -267,9 +266,9 @@ export const LayoutBag = ({
                 <ButtonCustum
                     title="Limpiar carrito"
                     onPress={handleCleanTemporal}
-                    disabled={loadingCleanBag}
                     iconName="close"
                     extraStyles={{ ...globalStyles(theme).globalMarginBottomSmall }}
+                    disabled={loadingCleanBag}
                 />
                 <ButtonCustum
                     title="Cancelar"

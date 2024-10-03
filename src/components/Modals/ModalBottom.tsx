@@ -68,7 +68,7 @@ const ModalBottom = ({
 
     const render = () => {
         return (
-            <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+            <TouchableWithoutFeedback>
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={ModalBottomStyles(theme).modalBottom}>
                         <KeyboardAvoidingView

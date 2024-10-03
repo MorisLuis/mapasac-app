@@ -33,6 +33,7 @@ export const ConfirmationScreen = () => {
             };
 
             resetAfterPost();
+
             navigation.navigate('succesMessageScreen', { 
                 redirection: 'InventoryNavigation',
                 from: 'Inventory',

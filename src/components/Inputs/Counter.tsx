@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { TextInput, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -14,12 +14,12 @@ interface CounterInterface {
     secondaryDesign?: boolean
 }
 
-export const Counter = ({
+export const Counter = forwardRef<TextInput, CounterInterface> (({
     counter,
     setCounter,
     unit,
     secondaryDesign
-}: CounterInterface) => {
+}, ref) => {
 
     const { theme, typeTheme } = useTheme();
     const iconColor = typeTheme === 'dark' ? "white" : "black";
@@ -70,7 +70,7 @@ export const Counter = ({
             <TouchableWithoutFeedback onPress={() => inputRef.current?.focus()}>
                 <View style={[counterStyles(theme).inputContainer, secondaryDesign && { backgroundColor: theme.background_color }]}>
                     <TextInput
-                        ref={inputRef}
+                        ref={ref}
                         value={`${counter.toString()}`}
                         onChangeText={handleInputChange}
                         keyboardType="numeric"
@@ -88,6 +88,6 @@ export const Counter = ({
             </TouchableOpacity>
         </View>
     )
-}
+})
 
-export default Counter;
+Counter.displayName = 'Counter'

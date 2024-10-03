@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { TextInput, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
@@ -12,6 +12,7 @@ import ModalBottom from '../../../components/Modals/ModalBottom';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 import { SellsRestaurantsNavigationStackParamList } from '../../../navigator/SellsRestaurantsNavigation';
 import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
+import { Keyboard } from 'react-native';
 
 const MenuOptions = [
     { label: 'Precio', value: 1 },
@@ -34,6 +35,7 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
     const [editingProduct, setEditingProduct] = useState(false);
     const [comment, setComment] = useState(product.comentario);
     const [menuOptionActive, setMenuOptionActive] = useState<Number>(MenuOptions?.[0].value)
+    const textInputRef = useRef<TextInput>(null);
 
     const onEdit = () => {
         setEditingProduct(true)
@@ -75,7 +77,13 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
             <>
                 <View style={EditProductStyles(theme).EditProductInBag_header}>
                     <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
-                    <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign />
+                    <Counter
+                        //ref={textInputRef}
+                        counter={piezasCount}
+                        setCounter={setPiezasCount}
+                        unit={product?.unidad_nombre}
+                        secondaryDesign
+                    />
                 </View>
 
                 {
@@ -94,6 +102,7 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
                 <View style={EditProductStyles(theme).EditProductInBag_header}>
                     <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas editar el comentario?</CustomText>
                     <TextInputContainer
+                    //ref={textInputRef}
                         setComments={(value) => {
                             setComment(value);
                         }}
@@ -108,6 +117,13 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
     useEffect(() => {
         handleProductPiezasCount();
     }, []);
+
+    useEffect(() => {
+        if (textInputRef.current) {
+            textInputRef.current.focus();
+        }
+    }, []);
+
 
     return (
         <ModalBottom

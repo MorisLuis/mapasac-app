@@ -86,8 +86,9 @@ export const LayoutSell = ({
 
     useEffect(() => {
         if (status !== 'authenticated') return;
+        console.log("useeffect!!!")
         handleGetPrice();
-    }, [productAdded]);
+    }, [productAdded, handleUpdateSummary]);
 
     if (products.length < 1) {
         return <LayoutSellSkeleton />

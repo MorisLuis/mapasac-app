@@ -49,7 +49,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const [locationValue, setLocationValue] = useState<inputGoogleValue | undefined>();
     const availableToPost = methodPayment !== 0;
 
-    const onPostInventory = async () => {
+    const onPostSellRestaurant = async () => {
         setCreateSellLoading(true);
         try {
             const sellBody: postSellsInterface = {
@@ -64,13 +64,14 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                 return;
             };
 
+            resetAfterPost();
+
             navigate('succesMessageScreen', {
                 redirection: 'SellsNavigation',
                 from: 'Sells',
                 numberOfProducts: numberOfItemsSells,
                 importe: totalPrice as number
             });
-            resetAfterPost();
 
         } catch (error: any) {
             handleError(error)
@@ -243,7 +244,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
             loadBags={getMoreProductsFromBag}
             ListHeaderComponent={renderScreen}
             Type='Sells'
-            onPost={onPostInventory}
+            onPost={onPostSellRestaurant}
             loadData={dataUploaded}
             availableToPost={availableToPost}
             buttonPostDisabled={createSellLoading}

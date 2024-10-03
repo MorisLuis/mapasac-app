@@ -109,6 +109,7 @@ export const SellsRestaurantBagScreen = () => {
                     title="Cancelar"
                     onPress={cancelProduct}
                     disabled={deletingProduct}
+                    buttonColor='white'
                 />
             </ModalDecision>
 

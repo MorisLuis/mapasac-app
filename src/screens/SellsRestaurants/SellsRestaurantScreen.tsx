@@ -4,10 +4,9 @@ import { ProductSellsRestaurantInterface } from '../../interface/productSells';
 import { CombinedSellsInterface, LayoutSell } from '../../components/Layouts/LayoutSell';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import useErrorHandler from '../../hooks/useErrorHandler';
-import { getProductsSells } from '../../services/productsSells';
 import { SellsRestaurantNavigationProp } from '../../interface/navigation';
 import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
-import { getProductDetailsRestaurantSells } from '../../services/productsRestaurantSells';
+import { getProductDetailsRestaurantSells, getProductsRestaurantSells } from '../../services/productsRestaurantSells';
 
 
 export const SellsRestaurantScreen = () => {
@@ -21,7 +20,7 @@ export const SellsRestaurantScreen = () => {
     const handleGetProducts = async (currentPage: number) => {
         try {
             setIsLoading(true);
-            const products = await getProductsSells(currentPage);
+            const products = await getProductsRestaurantSells(currentPage);
             if (products.error) return handleError(products.error);
 
             setProducts((prevProducts) => {
@@ -29,7 +28,7 @@ export const SellsRestaurantScreen = () => {
                     (product: ProductSellsRestaurantInterface) =>
                         !prevProducts.some(
                             (prevProduct) =>
-                                prevProduct.clave === product.clave
+                                prevProduct.idinvefami === product.idinvefami
                         )
                 );
                 return prevProducts ? [...prevProducts, ...newProducts] : newProducts;

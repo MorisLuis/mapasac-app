@@ -25,8 +25,6 @@ export const CommentsInProduct = ({ route }: EditProductSellInBagInterface) => {
     const { theme } = useTheme();
     const [editingProduct, setEditingProduct] = useState(false);
     const [comment, setComment] = useState(comments);
-
-    // Referencia al TextInput
     const textInputRef = useRef<TextInput>(null);
 
     const onEdit = () => {
@@ -52,7 +50,7 @@ export const CommentsInProduct = ({ route }: EditProductSellInBagInterface) => {
             <View>
                 <View style={EditProductStyles(theme).EditProductInBag_header}>
                     <TextInputContainer
-                        ref={textInputRef} // Establecer el ref aquí
+                        ref={textInputRef}
                         setComments={(value) => {
                             setComment(value);
                         }}
@@ -65,7 +63,6 @@ export const CommentsInProduct = ({ route }: EditProductSellInBagInterface) => {
     };
 
     useEffect(() => {
-        // Enfocar el TextInput cuando el componente se monta
         if (textInputRef.current) {
             textInputRef.current.focus();
         }

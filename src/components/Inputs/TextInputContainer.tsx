@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, Ref } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { globalFont, globalStyles } from '../../theme/appTheme';
