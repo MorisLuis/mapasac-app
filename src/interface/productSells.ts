@@ -42,6 +42,7 @@ export interface ProductSellsRestaurantInterface {
     idinveclas: number;
     unidad: number;
 
+    comentario?: string;
     cantidad?: number;
     idenlacemob?: number;
     unidad_nombre?: string;

@@ -30,7 +30,7 @@ interface ConfirmationSellsScreenInterface {
 
 export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsScreenInterface) => {
 
-    const opcion = 4
+    const opcion = 4;
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsRestaurantBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();

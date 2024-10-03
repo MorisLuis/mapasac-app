@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { addProductInBag, deleteProductInBag, getTotalProductsInBag, updateProductInBag } from '../../services/bag';
 import { SellsBagContext } from './SellsBagContext';
 import { sellsBagReducer } from './SellsBagReducer';
-import EnlacemobInterface from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
 import { SellsDataScreenTypeProps } from '../../interface/navigation';
+import { EnlacemobInterface } from '../../interface';
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;

@@ -11,6 +11,7 @@ import { SellsRestaurantDataScreen } from '../screens/SellsRestaurants/SellsRest
 import { SelectAmountRestaurantScreen } from '../screens/SellsRestaurants/SelectAmountRestaurantScreen';
 import { SellsRestaurantBagScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/SellsRestaurantsBagScreen';
 import { ConfirmationSellsRestaurantScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/ConfirmationSellsRestaurantScreen';
+import { EditProductSellRestaurantInBag } from '../screens/SellsRestaurants/SellsRestaurantsBag/EditProductSellRestaurantInBag';
 
 // useNavigation() type.
 export type SellsRestaurantsNavigationStackParamList = {
@@ -117,11 +118,11 @@ export const SellsRestaurantsNavigation = () => {
                 })}
             />
 
-            {/* <Stack.Screen
+            <Stack.Screen
                 name="[Modal] - editProductSellRestaurantsInBag"
-                component={EditProductSellInBag}
+                component={EditProductSellRestaurantInBag}
                 options={{ presentation: 'transparentModal', headerShown: false }}
-            /> */}
+            />
 
             <Stack.Screen
                 name="[SellsRestaurants] - confirmationScreen"

@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 import { Theme, globalStyles } from "../appTheme";
+import { th } from "date-fns/locale";
 
 
-export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSheet.create({
+export const ModalBottomStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     modalBottom: {
         flex: 1,
         justifyContent: "flex-end",
-        //position: 'relative',
         padding: globalStyles(theme).globalPadding.padding / 2.5
     },
     modalContent: {
@@ -20,9 +20,9 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        borderRadius: globalStyles(theme).borderRadiusStandard.borderRadius * 2,
+        borderRadius: globalStyles(theme).borderRadiusStandard.borderRadius,
         borderWidth: 1,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.background_color
+        borderColor: theme.color_border
     },
     modalChildren: {
         padding: globalStyles(theme).globalPadding.padding,
@@ -38,7 +38,26 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string ) =>  StyleSh
         alignItems: "flex-end",
         borderWidth: 1,
         borderColor: 'transparent',
-        borderBottomColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border_dark,
+        borderBottomColor: typeTheme === 'light' ? theme.color_border : theme.color_border_dark,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
+    },
+    menuModal: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        gap: 10,
+    },
+    menuModalOption: {
+        display: 'flex',
+        flexShrink: 1,
+        width: 'auto',
+        padding:  globalStyles().globalPadding.padding / 2,
+        borderRadius: globalStyles().borderRadius.borderRadius,
+        paddingHorizontal: globalStyles().globalPadding.padding,
+        minHeight: 40,
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: theme.color_border
     }
 });

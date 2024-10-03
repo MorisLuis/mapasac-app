@@ -1,5 +1,5 @@
 import { api } from "../api/api";
-import { addProductInBagInventoryInterface, bagInterface, deleteProductInBagInventoryInterface, getBagInterface, updateProductInBagInventoryInterface } from "../interface/bag";
+import { addProductInBagInventoryInterface, bagInterface, deleteProductInBagInventoryInterface, getBagInterface, updateProductInBagInterface } from "../interface/bag";
 
 
 const getBagInventory = async ({ page, limit, option }: getBagInterface) => {
@@ -42,10 +42,10 @@ const addProductInBag = async ({ product, opcion }: addProductInBagInventoryInte
 }
 
 
-const updateProductInBag = async ({ idenlacemob, cantidad }: updateProductInBagInventoryInterface) => {
+const updateProductInBag = async (body : updateProductInBagInterface) => {
 
     try {
-        const data = await api.put(`/api/bag`, { idenlacemob, cantidad });
+        const data = await api.put(`/api/bag`, body );
         return data as any
     } catch (error: any) {
         return { error: { ...error } };

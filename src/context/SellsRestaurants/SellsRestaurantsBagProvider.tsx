@@ -7,6 +7,7 @@ import { AuthContext } from '../auth/AuthContext';
 import { SellsDataScreenTypeProps } from '../../interface/navigation';
 import { SellsRestaurantBagContext } from './SellsRestaurantsBagContext';
 import { FormSellsRestaurantType } from '../../screens/SellsRestaurants/SellsRestaurantDataScreen';
+import { updateProductInBagInterface } from '../../interface';
 
 export interface SellsRestaurantsBagInterface {
     numberOfItemsSells: string;
@@ -69,9 +70,9 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
         }
     }
 
-    const editProductSell = async ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
+    const editProductSell = async (body: updateProductInBagInterface) => {
         try {
-            const product = await updateProductInBag({ idenlacemob, cantidad });
+            const product = await updateProductInBag(body);
             if (product?.error) return handleError(product.error);
             setProductAdded(true);
         } catch (error) {

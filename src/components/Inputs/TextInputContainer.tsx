@@ -9,13 +9,15 @@ interface TextInputContainerInterface {
     label?: string;
     setComments: (value: string) => void;
     value?: string;
+    onFocus?: () => void;
 }
 
 export const TextInputContainer = ({
     placeholder = "Escribe algo...",
     label,
     setComments,
-    value
+    value,
+    onFocus
 }: TextInputContainerInterface) => {
 
     const [height, setHeight] = useState(50); // Altura mínima inicial
@@ -58,6 +60,7 @@ export const TextInputContainer = ({
                 onContentSizeChange={handleContentSizeChange}
                 placeholderTextColor={theme.text_color}
                 value={value}
+                onFocus={onFocus}
             />
         </View>
     );

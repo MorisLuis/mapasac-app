@@ -24,9 +24,10 @@ export interface addProductInBagInventoryInterface {
     opcion: opcionBag
 }
 
-export interface updateProductInBagInventoryInterface {
+export interface updateProductInBagInterface {
     idenlacemob: number;
     cantidad: number;
+    comentarios?: string;
 }
 
 export interface deleteProductInBagInventoryInterface {
