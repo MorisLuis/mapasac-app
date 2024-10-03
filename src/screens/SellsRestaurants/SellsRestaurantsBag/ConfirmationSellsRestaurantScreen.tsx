@@ -54,7 +54,8 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
-                opcion: 4
+                opcion: 4,
+                domicilio: locationValue ?  `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}` : ""
             };
 
             const postSell = await postSells(sellBody);

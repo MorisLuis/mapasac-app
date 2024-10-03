@@ -1,4 +1,5 @@
 import { api } from "../api/api";
+import { inputGoogleValue } from "../components/Inputs/GooglePlacesAutocomplete";
 
 const postInventory = async () => {
 
@@ -15,15 +16,17 @@ export interface postSellsInterface {
     clavepago: number; // tipo de pago
     idclientes?: number;
     comments?: string;
-    opcion: 2 | 4
+    domicilio?: string;
+    opcion: 2 | 4;
 }
 
-const postSells = async ({ clavepago, idclientes, comments, opcion } : postSellsInterface ) => {
+const postSells = async ({ clavepago, idclientes, comments, opcion, domicilio } : postSellsInterface ) => {
     try {
         const sellBody = {
             clavepago,
             idclientes,
-            comments
+            comments,
+            domicilio
         };
 
         const data = await api.post(`/api/invearts/sell?opcion=${opcion}`, sellBody);
