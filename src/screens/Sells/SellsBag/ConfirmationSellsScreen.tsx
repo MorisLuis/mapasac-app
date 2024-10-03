@@ -19,6 +19,7 @@ import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductS
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface/navigation';
 import { postSells, postSellsInterface } from '../../../services';
 import { ClientInterface } from '../../../interface';
+import useActionsForModules from '../../../hooks/useActionsForModules';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
 
@@ -33,6 +34,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const { typeTheme, theme, toggleTheme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const { handleError } = useErrorHandler();
+    const { handleColorWithModule } = useActionsForModules()
 
     const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
@@ -171,8 +173,11 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                     openConfirmationInfo &&
                     <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
                         <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
-                            <TouchableOpacity
-                                style={methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                        <TouchableOpacity
+                                style={[
+                                    methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
+                                ]}
                                 onPress={() => setMethodPayment(1)}
                             >
                                 <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
@@ -180,7 +185,10 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                style={methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive : ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem}
+                                style={[
+                                    methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
+                                ]}
                                 onPress={() => setMethodPayment(2)}
                             >
                                 <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
