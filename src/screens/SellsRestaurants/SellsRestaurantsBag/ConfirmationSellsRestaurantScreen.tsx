@@ -18,7 +18,7 @@ import { CombinedSellsAndAppNavigationStackParamList, ProductSellsRestaurantInte
 import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
 import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import useActionsForModules from '../../../hooks/useActionsForModules';
-import { getAddress, postSells, postSellsInterface } from '../../../services';
+import { postSells, postSellsInterface } from '../../../services';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
 
@@ -144,16 +144,6 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         navigate('[Modal] - EditLocation', { locationValue: locationValue })
     };
 
-    const handleGetAddress = useCallback(async () => {
-        const address = await getAddress();
-        setLocationValue({
-            street: address.direccion ?? '',
-            number: address.numero ?? '',
-            neighborhood: address.colonia ?? '',
-            locality: address.estado ?? ''
-        });
-    }, []);
-
     const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => (
         <ProductSellsCard
             product={item}
@@ -230,12 +220,8 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
     // Handle address direction.
     useEffect(() => {
-        if (addressDirection) {
-            setLocationValue(addressDirection);
-        } else {
-            handleGetAddress();
-        }
-    }, [addressDirection, handleGetAddress]);
+        setLocationValue(addressDirection);
+    }, [addressDirection]);
 
     return (
         <LayoutConfirmation

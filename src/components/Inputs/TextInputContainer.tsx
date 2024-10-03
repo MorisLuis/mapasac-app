@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { TextInput, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { globalFont, globalStyles } from '../../theme/appTheme';
@@ -8,8 +8,9 @@ interface TextInputContainerInterface {
     placeholder?: string;
     label?: string;
     setComments: (value: string) => void;
-    value?: string;
+    value?: string;  // Este es el valor inicial que se le asigna al TextInput
     onFocus?: () => void;
+    styles?: any;
 }
 
 // Usar forwardRef para pasar el ref al TextInput
@@ -17,20 +18,29 @@ export const TextInputContainer = forwardRef<TextInput, TextInputContainerInterf
     placeholder = "Escribe algo...",
     label,
     setComments,
-    value,
-    onFocus
+    value,  // El valor inicial
+    onFocus,
+    styles
 }, ref) => {
     const [height, setHeight] = useState(50); // Altura mínima inicial
+    const [localValue, setLocalValue] = useState<string>(value || '');  // Estado interno para manejar el valor
     const { theme } = useTheme();
 
+    // Usar useEffect para actualizar el valor inicial solo cuando el componente se monta o cuando 'value' cambia.
+    useEffect(() => {
+        if (value) {
+            setLocalValue(value);  // Inicializar el valor interno
+        }
+    }, [value]);
+
     const handleTextChange = (text: string) => {
-        setComments(text);
+        setLocalValue(text);  // Actualizar el valor interno del TextInput
+        setComments(text);    // Llamar a la función que se pasa como prop para actualizar el estado en el componente padre
     };
 
     const handleContentSizeChange = (event: any) => {
         const contentHeight = event.nativeEvent.contentSize.height;
-        // Establecer el valor máximo entre 50 y la altura del contenido
-        setHeight(contentHeight < 50 ? 50 : contentHeight);
+        setHeight(contentHeight < 50 ? 50 : contentHeight);  // Ajustar la altura dinámica
     };
 
     return (
@@ -54,17 +64,17 @@ export const TextInputContainer = forwardRef<TextInput, TextInputContainerInterf
                     borderColor: theme.color_border,
                     borderRadius: globalStyles().borderRadius.borderRadius,
                     color: theme.text_color
-                }]}
-                onChangeText={handleTextChange}
+                }, { ...styles }]}
+                onChangeText={handleTextChange}  // Actualiza el estado local y el padre
                 multiline={true}
                 placeholder={placeholder}
                 onContentSizeChange={handleContentSizeChange}
                 placeholderTextColor={theme.text_color}
-                value={value}
+                value={localValue}  // Asignar el valor del estado interno
                 onFocus={onFocus}
             />
         </View>
     );
 });
 
-TextInputContainer.displayName = 'TextInputContainer'; // Para mostrar el nombre correcto en las herramientas de depuración
+TextInputContainer.displayName = 'TextInputContainer';

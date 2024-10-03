@@ -85,19 +85,19 @@ const InputGooglePlaces = ({ locationValue, setLocaltionValue, onFocus, onBlur }
         },
         listView: {
             backgroundColor: theme.background_color_secondary,
-            borderWidth: 1,
-            borderColor: theme.color_border_dark,
-            marginTop: globalStyles().globalMarginBottom.marginBottom,
-            borderRadius: globalStyles().borderRadius.borderRadius / 2,
+            borderWidth: 0.5,
+            borderColor: theme.color_border,
+            marginVertical: globalStyles().globalMarginBottom.marginBottom,
+            borderRadius: globalStyles().borderRadius.borderRadius,
         },
         row: {
             height: 44,
             borderBottomColor: theme.color_border_dark,
-            borderBottomWidth: 0.5,
-            backgroundColor: theme.background_color_secondary
+            borderBottomWidth: 0,
+            backgroundColor: theme.background_color_secondary,
         },
         description: {
-            color: theme.text_color,
+            color: theme.text_color
         },
         poweredContainer: {
             display: 'none'
