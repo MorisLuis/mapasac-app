@@ -32,7 +32,6 @@ const getTotalPriceBag = async ({ opcion }: bagInterface) => {
 };
 
 const addProductInBag = async ({ product, opcion }: addProductInBagInventoryInterface) => {
-    console.log({product: JSON.stringify(product, null, 2)})
     try {
         const data = await api.post(`/api/bag`, { ...product, opcion: opcion });
         return data as any;

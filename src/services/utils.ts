@@ -27,7 +27,6 @@ const getModules = async () => {
 };
 
 const getAddress = async () => {
-
     try {
         const getAddress = await api.get(`/api/utils/address?idpvtadomi=1`);
         const address = getAddress.data.address;

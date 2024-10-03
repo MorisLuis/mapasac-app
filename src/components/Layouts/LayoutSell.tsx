@@ -54,7 +54,6 @@ export const LayoutSell = ({
 
     const handleGetPrice = async () => {
         try {
-            console.log({opcion})
             const totalprice = await getTotalPriceBag({ opcion: opcion });
             if (totalprice?.error) return handleError(totalprice.error)
             setTotalPrice(parseFloat(totalprice ?? 0));

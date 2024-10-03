@@ -112,7 +112,7 @@ const InputGooglePlaces = ({ locationValue, setLocaltionValue, onFocus, onBlur }
     }
 
     const valueInput = (inputText && inputText?.length > 0 || startTpying) ? inputText : 
-    `${locationValue?.street} ${locationValue?.number ? `- ${locationValue?.number}` : ''} ${locationValue?.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue?.locality ? `/ ${locationValue.locality}` : ''}`
+    locationValue ? `${locationValue?.street} ${locationValue?.number ? `- ${locationValue?.number}` : ''} ${locationValue?.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue?.locality ? `/ ${locationValue.locality}` : ''}` : ''
 
     return (
         <GooglePlacesAutocomplete

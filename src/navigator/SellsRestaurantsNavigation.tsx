@@ -12,6 +12,8 @@ import { SelectAmountRestaurantScreen } from '../screens/SellsRestaurants/Select
 import { SellsRestaurantBagScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/SellsRestaurantsBagScreen';
 import { ConfirmationSellsRestaurantScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/ConfirmationSellsRestaurantScreen';
 import { EditProductSellRestaurantInBag } from '../screens/SellsRestaurants/SellsRestaurantsBag/EditProductSellRestaurantInBag';
+import { LocationScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/LocationScreen';
+import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete';
 
 // useNavigation() type.
 export type SellsRestaurantsNavigationStackParamList = {
@@ -20,10 +22,12 @@ export type SellsRestaurantsNavigationStackParamList = {
     BagSellsRestaurantsScreen: undefined;
 
     "[Modal] - editProductSellRestaurantsInBag": { product: ProductSellsRestaurantInterface };
+    "[Modal] - EditLocation": { locationValue?: inputGoogleValue };
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[Modal] - SelectClient": undefined;
 
-    "[SellsRestaurants] - confirmationScreen": undefined;
+
+    "[SellsRestaurants] - confirmationScreen": { addressDirection?: inputGoogleValue };
 };
 
 const Stack = createNativeStackNavigator<SellsRestaurantsNavigationStackParamList>();
@@ -121,6 +125,12 @@ export const SellsRestaurantsNavigation = () => {
             <Stack.Screen
                 name="[Modal] - editProductSellRestaurantsInBag"
                 component={EditProductSellRestaurantInBag}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="[Modal] - EditLocation"
+                component={LocationScreen}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 

@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { useTheme } from '../../../context/ThemeContext';
 import InputGooglePlaces, { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import CustomText from '../../../components/Ui/CustumText';
 import { globalStyles } from '../../../theme/appTheme';
+import ModalBottom from '../../../components/Modals/ModalBottom';
+import { RouteProp, useNavigation } from '@react-navigation/native';
+import { SellsRestaurantsNavigationStackParamList } from '../../../navigator/SellsRestaurantsNavigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface';
+
+type LocationScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[Modal] - EditLocation'>;
 
 interface LocationScreenInterface {
-    locationValue?: inputGoogleValue;
-    setLocationValue: React.Dispatch<React.SetStateAction<inputGoogleValue | undefined>>;
-    onClose?: () => void;
+    route: LocationScreenRouteProp
 };
 
-export const LocationScreen = ({
-    locationValue,
-    setLocationValue,
-    onClose
-}: LocationScreenInterface) => {
+export const LocationScreen = ({ route }: LocationScreenInterface) => {
 
-    const { typeTheme, theme } = useTheme();
+    const { locationValue } = route.params;
+    const { theme } = useTheme();
     const [showData, setShowData] = useState(false);
+    const [locationValueLocal, setLocationValueLocal] = useState<inputGoogleValue>()
+    const { navigate, goBack } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
 
     const onSubmitLocation = () => {
-        setLocationValue(locationValue);
-        onClose?.();
+        navigate('[SellsRestaurants] - confirmationScreen', { addressDirection: locationValueLocal })
     };
 
     const handleFocus = () => {
@@ -31,24 +34,30 @@ export const LocationScreen = ({
     };
 
     const handleBlur = () => {
-        if (locationValue) {
+        if (locationValueLocal) {
             setShowData(true);
         }
     };
 
+    useEffect(() => {
+        if (locationValue) {
+            setLocationValueLocal(locationValue)
+        }
+    }, [locationValue])
+
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={Platform.select({ ios: 0, android: 0 })}
+        <ModalBottom
+            visible={true}
+            onClose={() => goBack()}
         >
             <InputGooglePlaces
-                locationValue={locationValue}
-                setLocaltionValue={setLocationValue}
+                locationValue={locationValueLocal}
+                setLocaltionValue={setLocationValueLocal}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
             />
 
-            {showData && locationValue && (
+            {showData && locationValueLocal && (
                 <View
                     style={{
                         backgroundColor: theme.background_color_secondary,
@@ -58,10 +67,10 @@ export const LocationScreen = ({
                         marginVertical: globalStyles().globalMarginBottom.marginBottom / 2
                     }}
                 >
-                    <CustomText>Calle: {locationValue?.street}</CustomText>
-                    <CustomText>No. Calle: {locationValue?.street}</CustomText>
-                    <CustomText>Colonia: {locationValue?.neighborhood}</CustomText>
-                    <CustomText>Estado: {locationValue?.locality}</CustomText>
+                    <CustomText>Calle: {locationValueLocal?.street}</CustomText>
+                    <CustomText>No. Calle: {locationValueLocal?.street}</CustomText>
+                    <CustomText>Colonia: {locationValueLocal?.neighborhood}</CustomText>
+                    <CustomText>Estado: {locationValueLocal?.locality}</CustomText>
                 </View>
             )}
 
@@ -71,6 +80,6 @@ export const LocationScreen = ({
                 buttonColor='green'
                 extraStyles={{ marginTop: 10 }}
             />
-        </KeyboardAvoidingView>
+        </ModalBottom>
     );
 };

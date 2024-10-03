@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -14,10 +14,8 @@ import CustomText from '../../../components/Ui/CustumText';
 import CardButton from '../../../components/Cards/CardButton';
 import { ProductSellsCard } from '../../../components/Cards/ProductCard/ProductSellsCard';
 import { SellsRestaurantsNavigationStackParamList } from '../../../navigator/SellsRestaurantsNavigation';
-import { ClientInterface, CombinedSellsAndAppNavigationStackParamList, ProductSellsRestaurantInterface } from '../../../interface';
+import { CombinedSellsAndAppNavigationStackParamList, ProductSellsRestaurantInterface } from '../../../interface';
 import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
-import { LocationScreen } from './LocationScreen';
 import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import useActionsForModules from '../../../hooks/useActionsForModules';
 import { getAddress, postSells, postSellsInterface } from '../../../services';
@@ -31,32 +29,31 @@ interface ConfirmationSellsScreenInterface {
 export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsScreenInterface) => {
 
     const opcion = 4;
+    const { addressDirection } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsRestaurantBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const { handleError } = useErrorHandler();
     const { handleColorWithModule } = useActionsForModules()
 
-    const [createSellLoading, setCreateSellLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [bags, setBags] = useState<ProductSellsRestaurantInterface[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
+    const [isLoadingData, setIsLoadingData] = useState(false);
+    const [createSellLoading, setCreateSellLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
+
     const [totalPrice, setTotalPrice] = useState<number>();
     const [methodPayment, setMethodPayment] = useState(0);
-    const [typeSelected, setTypeSelected] = useState<ClientInterface>();
-    const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
-    const [openModalLocation, setOpenModalLocation] = useState(false);
-    const availableToPost = methodPayment !== 0;
     const [locationValue, setLocationValue] = useState<inputGoogleValue | undefined>();
+    const availableToPost = methodPayment !== 0;
 
     const onPostInventory = async () => {
         setCreateSellLoading(true);
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
-                idclientes: typeSelected?.idclientes,
                 opcion: 4
             };
 
@@ -82,11 +79,11 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         }
     };
 
-    const loadBags = async () => {
-        if (isLoading || !hasMore) return;
+    const getMoreProductsFromBag = async () => {
+        if (isLoadingData || !hasMore) return;
 
         try {
-            setIsLoading(true);
+            setIsLoadingData(true);
             const newBags = await getBagInventory({ page, limit: 5, option: opcion });
 
 
@@ -105,26 +102,13 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         } catch (error) {
             handleError(error);
         } finally {
-            setIsLoading(false);
+            setIsLoadingData(false);
         };
-
     };
 
-    const handleGetPrice = async () => {
-
+    const getBagInitial = async () => {
         try {
-            const totalprice = await getTotalPriceBag({ opcion: opcion });
-            if (totalprice.error) return handleError(totalprice.error);
-            setTotalPrice(parseFloat(totalprice))
-        } catch (error: any) {
-            handleError(error);
-        }
-    }
-
-    const refreshBags = async () => {
-
-        try {
-            setIsLoading(true);
+            setIsLoadingData(true);
             const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: opcion });
 
             if (refreshedBags.error) {
@@ -138,11 +122,36 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
             handleError(error);
         } finally {
             setPage(2);
-            setIsLoading(false);
+            setIsLoadingData(false);
             setHasMore(true);
             setDataUploaded(true)
         }
     };
+
+    const handleGetPrice = async () => {
+
+        try {
+            const totalprice = await getTotalPriceBag({ opcion: opcion });
+            if (totalprice.error) return handleError(totalprice.error);
+            setTotalPrice(parseFloat(totalprice))
+        } catch (error: any) {
+            handleError(error);
+        }
+    }
+
+    const handleGoToEditLocation = () => {
+        navigate('[Modal] - EditLocation', { locationValue: locationValue })
+    };
+
+    const handleGetAddress = useCallback(async () => {
+        const address = await getAddress();
+        setLocationValue({
+            street: address.direccion ?? '',
+            number: address.numero ?? '',
+            neighborhood: address.colonia ?? '',
+            locality: address.estado ?? ''
+        });
+    }, []);
 
     const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => (
         <ProductSellsCard
@@ -194,7 +203,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                         </View>
 
                         <CardButton
-                            onPress={() => setOpenModalLocation(true)}
+                            onPress={handleGoToEditLocation}
                             label='Ubicación'
                             valueDefault='Seleccionar el cliente'
                             color='black'
@@ -211,51 +220,35 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         )
     };
 
-    const handleGetAddress = async () => {
-        const address = await getAddress();
-        setLocationValue({
-            street: address.direccion ?? undefined,
-            number:  address.numero ?? undefined,
-            neighborhood:  address.colonia ?? undefined,
-            locality:  address.estado ?? undefined     
-        })
-    }
-
     useFocusEffect(
         useCallback(() => {
             handleGetPrice();
-            refreshBags();
-            handleGetAddress();
-        }, [])
+            getBagInitial();
+        }, [handleGetPrice, getBagInitial])
     );
 
-    return (
-        <>
-            <LayoutConfirmation
-                data={bags}
-                renderItem={renderItem}
-                loadBags={loadBags}
-                ListHeaderComponent={renderScreen}
-                Type='Sells'
-                onPost={onPostInventory}
-                loadData={dataUploaded}
-                availableToPost={availableToPost}
-                buttonPostDisabled={createSellLoading}
-                numberOfItems={numberOfItemsSells}
-                totalPrice={totalPrice}
-            />
+    // Handle address direction.
+    useEffect(() => {
+        if (addressDirection) {
+            setLocationValue(addressDirection);
+        } else {
+            handleGetAddress();
+        }
+    }, [addressDirection, handleGetAddress]);
 
-            <ModalMiddle
-                visible={openModalLocation}
-                onClose={() => setOpenModalLocation(false)}
-                title='Ubicación'
-            >
-                <LocationScreen
-                    locationValue={locationValue}
-                    setLocationValue={setLocationValue}
-                    onClose={() => setOpenModalLocation(false)}
-                />
-            </ModalMiddle>
-        </>
+    return (
+        <LayoutConfirmation
+            data={bags}
+            renderItem={renderItem}
+            loadBags={getMoreProductsFromBag}
+            ListHeaderComponent={renderScreen}
+            Type='Sells'
+            onPost={onPostInventory}
+            loadData={dataUploaded}
+            availableToPost={availableToPost}
+            buttonPostDisabled={createSellLoading}
+            numberOfItems={numberOfItemsSells}
+            totalPrice={totalPrice}
+        />
     )
 };
