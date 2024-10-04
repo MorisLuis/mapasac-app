@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { uiNavigationStyles } from '../../theme/UI/uiElementsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { buttonStyles } from '../../theme/UI/buttons';
-import { globalFont, globalStyles } from '../../theme/appTheme';
+import { globalFont } from '../../theme/appTheme';
 
 interface FooterTwoButtonsScreenInterface {
     buttonTitle: string;

@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Theme, globalFont, globalStyles } from "./appTheme";
-
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
@@ -11,8 +10,7 @@ export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => St
         backgroundColor: theme.background_color
     },
     content: {
-        minHeight: "auto",
-        height: "85%"
+        paddingBottom: hp("20%")
     },
     message: {
         padding: globalStyles(theme).globalPadding.padding,

@@ -35,9 +35,9 @@ interface LayoutBagInterface {
     renderItem: ({ item }: { item: any }) => React.JSX.Element;
     bags: CombinedProductInterface[];
     setBags:
-        React.Dispatch<React.SetStateAction<ProductInterface[]>> |
-        React.Dispatch<React.SetStateAction<ProductSellsInterface[]>> |
-        React.Dispatch<React.SetStateAction<ProductSellsRestaurantInterface[]>>;
+    React.Dispatch<React.SetStateAction<ProductInterface[]>> |
+    React.Dispatch<React.SetStateAction<ProductSellsInterface[]>> |
+    React.Dispatch<React.SetStateAction<ProductSellsRestaurantInterface[]>>;
     Type: ModuleInterface['module']
 
     // Sells
@@ -167,7 +167,6 @@ export const LayoutBag = ({
         loadBags();
     }, []);
 
-    // Primera condición: Si los bags están vacíos y los datos no se han cargado
     if ((bags.length <= 0 && !dataUploaded) || cleanSearchText) {
         return <LayoutBagSkeleton />
     }
@@ -218,23 +217,24 @@ export const LayoutBag = ({
                     />
 
 
-                    {
-                        !(bags.length <= 0 && searchText.length > 0) ?
-                            <FlatList
-                                style={InventoryBagScreenStyles(theme, typeTheme).content}
-                                data={bags}
-                                renderItem={renderItem}
-                                keyExtractor={product => `${product.idenlacemob}`}
-                                onEndReached={loadBags}
-                                onEndReachedThreshold={0.5}
-                            />
-                            :
-                            <EmptyMessageCard
-                                title="No hay productos con ese nombre."
-                                message="Intenta escribiendo algo diferente."
-                                icon="sad-outline"
-                            />
-                    }
+                    <View style={InventoryBagScreenStyles(theme, typeTheme).content}>
+                        {
+                            !(bags.length <= 0 && searchText.length > 0) ?
+                                <FlatList
+                                    data={bags}
+                                    renderItem={renderItem}
+                                    keyExtractor={product => `${product.idenlacemob}`}
+                                    onEndReached={loadBags}
+                                    onEndReachedThreshold={0.5}
+                                />
+                                :
+                                <EmptyMessageCard
+                                    title="No hay productos con ese nombre."
+                                    message="Intenta escribiendo algo diferente."
+                                    icon="sad-outline"
+                                />
+                        }
+                    </View>
 
 
                     {/* FOOTER */}
@@ -250,7 +250,6 @@ export const LayoutBag = ({
                         buttonSmallDisable={false}
                         buttonSmallIcon="trash-outline"
                     >
-                        {/* POSSIBLE AS PROP */}
                         <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
                             <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
                             <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule.primary }]}>
