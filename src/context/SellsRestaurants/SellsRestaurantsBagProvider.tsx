@@ -31,11 +31,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
         if (status !== 'authenticated') return;
         try {
             const total = await getTotalProductsInBag({ opcion: 4 });
-            console.log('handleUpdateSummary');
-            console.log({total})
             if (total?.error) return handleError(total.error);
-
-
             const numberOfItemsSells = total;
             const orderSummary = {
                 numberOfItemsSells
