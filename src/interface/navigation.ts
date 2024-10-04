@@ -60,8 +60,8 @@ export type SellsDataScreenTypeProps = {
     units?: UnitType;
     productSellData?: { idinvearts: number, capa: string, idinveclas: number };
     comments?: string;
-    capa?: string;
-    idinvearts?: number;
+    /* capa?: string;
+    idinvearts?: number; */
 }
 
 // Sells Restaurants navigation.

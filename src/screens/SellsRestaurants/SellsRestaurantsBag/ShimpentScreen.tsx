@@ -14,7 +14,7 @@ export interface shimpentMethodInterface {
 
 export const shimpentMethod: shimpentMethodInterface[] = [
     { id: 1, value: "Para comer" },
-    { id: 2, value: "Para llever" },
+    { id: 2, value: "Para llevar" },
     { id: 3, value: "A domicilio" },
     { id: 4, value: "Cliente recoge" }
 ];

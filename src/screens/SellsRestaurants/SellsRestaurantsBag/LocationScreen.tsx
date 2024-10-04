@@ -82,7 +82,7 @@ export const LocationScreen = ({ route }: LocationScreenInterface) => {
                     onBlur={handleBlur}
                 />
 
-                {showData && locationValueLocal && (
+                {locationValueLocal && (
                     <TouchableOpacity
                         style={LocationScreenStyles(theme).LocationScreenContent}
                         onPress={() => setLocationNavigation(2)}

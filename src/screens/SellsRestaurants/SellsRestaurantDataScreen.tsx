@@ -11,7 +11,6 @@ import FooterScreen from '../../components/Navigation/FooterScreen';
 import CardButton from '../../components/Cards/CardButton';
 import { UnitType, EnlacemobInterface, SellsRestaurantNavigationProp } from '../../interface';
 import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
-import { TextInputContainer } from '../../components/Inputs/TextInputContainer';
 
 export type FormSellsRestaurantType = {
     pieces?: string;

@@ -4,7 +4,6 @@ import { SellsRestaurantsBagReducer } from './SellsRestaurantsBagReducer';
 import {EnlacemobInterface} from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
-import { SellsDataScreenTypeProps } from '../../interface/navigation';
 import { SellsRestaurantBagContext } from './SellsRestaurantsBagContext';
 import { FormSellsRestaurantType } from '../../screens/SellsRestaurants/SellsRestaurantDataScreen';
 import { updateProductInBagInterface } from '../../interface';
@@ -81,7 +80,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
         }
     };
 
-    const updateFormData = (data: SellsDataScreenTypeProps) => {
+    const updateFormData = (data: FormSellsRestaurantType) => {
         setFormSellsData((prev) => ({ ...prev, ...data }));
     };
 

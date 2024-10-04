@@ -24,7 +24,7 @@ interface SuccesMessageProps {
 export const SuccesMessage = ({ route }: SuccesMessageProps) => {
     const { redirection, numberOfProducts, importe } = route.params ?? {};
     const navigation = useNavigation<AppNavigationProp>();
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
     const { handleColorWithModule } = useActionsForModules();
     const { movementInfo } = useDataForModule()
 

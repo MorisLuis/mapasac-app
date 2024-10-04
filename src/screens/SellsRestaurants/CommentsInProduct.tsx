@@ -32,10 +32,6 @@ export const CommentsInProduct = ({ route }: EditProductSellInBagInterface) => {
         updateFormData({ comments: comment });
 
         setTimeout(() => {
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se actualizo la cantidad!'
-            });
             setEditingProduct(false);
             handleCloseModal();
         }, 500);

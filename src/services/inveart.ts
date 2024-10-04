@@ -18,16 +18,17 @@ export interface postSellsInterface {
     comments?: string;
     domicilio?: string;
     opcion: 2 | 4;
-    idviaenvio: 0 | 1 | 2 | 3 | 4
+    idviaenvio?: 0 | 1 | 2 | 3 | 4
 }
 
-const postSells = async ({ clavepago, idclientes, comments, opcion, domicilio } : postSellsInterface ) => {
+const postSells = async ({ clavepago, idclientes, comments, opcion, domicilio, idviaenvio } : postSellsInterface ) => {
     try {
         const sellBody = {
             clavepago,
             idclientes,
             comments,
-            domicilio
+            domicilio,
+            idviaenvio
         };
 
         const data = await api.post(`/api/invearts/sell?opcion=${opcion}`, sellBody);

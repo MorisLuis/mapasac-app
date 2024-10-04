@@ -46,7 +46,7 @@ export const CommentsInSell = ({ route }: CommentsInSellInterface) => {
                         setComments={(value) => {
                             setComment(value);
                         }}
-                        value={comments}
+                        value={comments?.toUpperCase()}
                         onFocus={() => setComment('')}
                     />
                 </View>

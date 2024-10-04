@@ -11,7 +11,6 @@ interface ContextProps {
     signIn: (loginData: LoginData) => void;
     logOut: (isExpired?: boolean) => void;
     removeError: () => void;
-    getTypeOfMovementsName: () => string;
 }
 
 

@@ -49,7 +49,6 @@ const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
 export const InventoryNavigation = () => {
     const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
-    const { getTypeOfMovementsName } = useContext(AuthContext);
 
     const commonOptions: any = {
         headerBackTitle: 'Atrás',
@@ -78,7 +77,7 @@ export const InventoryNavigation = () => {
                     header: props => (
                         <CustomHeader
                             {...props}
-                            title={getTypeOfMovementsName()}
+                            title={"Inventario"}
                             navigation={navigation}
                             backCustum={true}
                             back={() => {

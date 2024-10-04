@@ -161,19 +161,13 @@ export const AuthProvider = ({ children }: any) => {
     };
 
 
-    // TEMPORAL
-    const getTypeOfMovementsName = () => {
-        return "Inventario"
-    }
-
     return (
         <AuthContext.Provider value={{
             ...state,
             signIn,
             loggingIn,
             logOut,
-            removeError,
-            getTypeOfMovementsName
+            removeError
         }}>
             {children}
         </AuthContext.Provider>

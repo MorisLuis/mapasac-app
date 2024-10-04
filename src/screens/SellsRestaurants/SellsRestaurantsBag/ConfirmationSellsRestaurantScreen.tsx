@@ -53,6 +53,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const onPostSellRestaurant = async () => {
         setCreateSellLoading(true);
         if(!methodShipmentLocal) return;
+        console.log({methodShipmentLocal})
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
@@ -68,19 +69,18 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                 return;
             };
 
-            resetAfterPost();
-
-            navigate('succesMessageScreen', {
-                redirection: 'SellsNavigation',
-                from: 'Sells',
-                numberOfProducts: numberOfItemsSells,
-                importe: totalPrice as number
-            });
+            await resetAfterPost();
 
         } catch (error: any) {
             handleError(error)
         } finally {
             setCreateSellLoading(false);
+            navigate('succesMessageScreen', {
+                redirection: 'SellsRestaurantNavigation',
+                from: 'Sells',
+                numberOfProducts: numberOfItemsSells,
+                importe: totalPrice as number
+            });
         }
     };
 

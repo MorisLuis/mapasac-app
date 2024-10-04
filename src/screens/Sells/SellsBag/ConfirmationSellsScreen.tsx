@@ -63,19 +63,18 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                 return;
             };
 
-            resetAfterPost();
+            await resetAfterPost();
 
+        } catch (error: any) {
+            handleError(error)
+        } finally {
+            setCreateSellLoading(false);
             navigate('succesMessageScreen', {
                 redirection: 'SellsNavigation',
                 from: 'Sells',
                 numberOfProducts: numberOfItemsSells,
                 importe: totalPrice as number
             });
-
-        } catch (error: any) {
-            handleError(error)
-        } finally {
-            setCreateSellLoading(false);
         }
     };
 

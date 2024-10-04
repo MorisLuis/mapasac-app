@@ -18,8 +18,8 @@ export const api = axios.create(
             'Content-Type': 'application/json',
         }
     }
-) */
-
+)
+ */
 
 // Interceptor to add the token to headers
 api.interceptors.request.use(
