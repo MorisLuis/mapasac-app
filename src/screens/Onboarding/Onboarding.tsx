@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, SafeAreaView, TouchableOpacity, View } from 'react-native'
-import { useTheme } from '../context/ThemeContext';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native'
+import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
-import { OnboardingScreenStyles } from '../theme/OnboardingScreenTheme';
+import { OnboardingScreenStyles } from '../../theme/OnboardingScreenTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../context/auth/AuthContext';
-import { ModulesSkeleton } from '../components/Skeletons/ModulesSkeleton';
-import useErrorHandler from '../hooks/useErrorHandler';
-import CustomText from '../components/Ui/CustumText';
-import { SettingsContext } from '../context/settings/SettingsContext';
-import { AppNavigationProp } from '../interface/navigation';
-import { getModules } from '../services';
+import { AuthContext } from '../../context/auth/AuthContext';
+import { ModulesSkeleton } from '../../components/Skeletons/ModulesSkeleton';
+import useErrorHandler from '../../hooks/useErrorHandler';
+import CustomText from '../../components/Ui/CustumText';
+import { SettingsContext } from '../../context/settings/SettingsContext';
+import { AppNavigationProp } from '../../interface/navigation';
+import { getModules } from '../../services';
+import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 interface modulesInterface {
     idappmob: number,
@@ -21,7 +22,7 @@ interface modulesInterface {
 
 export const OnboardingScreen = () => {
 
-    const { theme, toggleTheme } = useTheme();
+    const { theme } = useTheme();
     const { user } = useContext(AuthContext);
     const { handleError } = useErrorHandler()
 
@@ -79,8 +80,8 @@ export const OnboardingScreen = () => {
                             </>
                     }
                 </View>
-            </View>
 
+            </View>
         </SafeAreaView>
     )
 }

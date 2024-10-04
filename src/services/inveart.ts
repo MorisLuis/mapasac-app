@@ -18,6 +18,7 @@ export interface postSellsInterface {
     comments?: string;
     domicilio?: string;
     opcion: 2 | 4;
+    idviaenvio: 0 | 1 | 2 | 3 | 4
 }
 
 const postSells = async ({ clavepago, idclientes, comments, opcion, domicilio } : postSellsInterface ) => {

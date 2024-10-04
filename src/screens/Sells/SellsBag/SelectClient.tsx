@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { getSearchClients } from '../../../services/searchs';
 import { getClients } from '../../../services/utils';
-import ClientInterface from '../../../interface/utils';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import CardSelect from '../../../components/Cards/CardSelect';
 import { LayoutSearch } from '../../../components/Layouts/LayoutSearch';
 import { useNavigation } from '@react-navigation/native';
+import { ClientInterface } from '../../../interface';
 
 export const SelectClient = () => {
 

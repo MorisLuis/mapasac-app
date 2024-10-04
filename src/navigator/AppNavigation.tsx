@@ -5,7 +5,7 @@ import { SettingsContext } from '../context/settings/SettingsContext';
 // Screens
 import { LoginScreen } from '../screens/Onboarding/LoginScreen';
 import { InventoryNavigation } from './InventoryNavigation';
-import { OnboardingScreen } from '../screens/Onboarding';
+import { OnboardingScreen } from '../screens/Onboarding/Onboarding';
 import { ProfileNavigation } from './ProfileNavigation';
 import { SellsNavigation } from './SellsNavigation';
 import { StartupScreen } from '../screens/Onboarding/StartupScreen';
@@ -15,9 +15,13 @@ import { LoadingScreen } from '../screens/LoadingScreen';
 import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
 import { SellsRestaurantsNavigation } from './SellsRestaurantsNavigation';
+import { TestScreen } from '../screens/test';
+import { globalStyles } from '../theme/appTheme';
+import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
 
 
 export type AppNavigationStackParamList = {
+    test: undefined;
     OnboardingScreen: undefined;
     ClosingPage: undefined;
     SessionExpiredScreen: undefined;
@@ -58,6 +62,16 @@ export const AppNavigation = () => {
                 name='SessionExpiredScreen'
                 component={SessionExpiredScreen}
                 options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name='test'
+                component={TestScreen}
+                options={{
+                    headerShown: false,
+                    presentation: 'modal',
+                    contentStyle: ModalScreenStyles().ModalScreen,
+                }}
             />
 
             <Stack.Screen

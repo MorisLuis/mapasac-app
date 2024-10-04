@@ -14,6 +14,8 @@ import { EditProductSellRestaurantInBag } from '../screens/SellsRestaurants/Sell
 import { LocationScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/LocationScreen';
 import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete';
 import { CommentsInProduct } from '../screens/SellsRestaurants/CommentsInProduct';
+import ShimpentScreen from '../screens/SellsRestaurants/SellsRestaurantsBag/ShimpentScreen';
+import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
 
 // useNavigation() type.
 export type SellsRestaurantsNavigationStackParamList = {
@@ -23,9 +25,11 @@ export type SellsRestaurantsNavigationStackParamList = {
 
     "[Modal] - editProductSellRestaurantsInBag": { product: ProductSellsRestaurantInterface };
     "[Modal] - EditLocation": { locationValue?: inputGoogleValue };
+    "[Modal] - EditShipment": undefined;
+
     "[Modal] - commentInProduct": { comments: string };
     "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
-    "[SellsRestaurants] - confirmationScreen": { addressDirection?: inputGoogleValue };
+    "[SellsRestaurants] - confirmationScreen": { addressDirection?: inputGoogleValue, methodShipment?: 1 | 2 | 3 | 4  };
 };
 
 const Stack = createNativeStackNavigator<SellsRestaurantsNavigationStackParamList>();
@@ -117,6 +121,16 @@ export const SellsRestaurantsNavigation = () => {
                 name="[Modal] - EditLocation"
                 component={LocationScreen}
                 options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="[Modal] - EditShipment"
+                component={ShimpentScreen}
+                options={{
+                    presentation: 'modal',
+                    headerShown: false,
+                    contentStyle: ModalScreenStyles().ModalScreen
+                }}
             />
 
             <Stack.Screen

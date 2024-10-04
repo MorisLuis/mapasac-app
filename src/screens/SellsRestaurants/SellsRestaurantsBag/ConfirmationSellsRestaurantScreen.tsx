@@ -19,6 +19,7 @@ import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/Sel
 import { inputGoogleValue } from '../../../components/Inputs/GooglePlacesAutocomplete';
 import useActionsForModules from '../../../hooks/useActionsForModules';
 import { postSells, postSellsInterface } from '../../../services';
+import { shimpentMethod, shimpentMethodInterface } from './ShimpentScreen';
 
 type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
 
@@ -29,7 +30,7 @@ interface ConfirmationSellsScreenInterface {
 export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsScreenInterface) => {
 
     const opcion = 4;
-    const { addressDirection } = route?.params ?? {};
+    const { addressDirection, methodShipment } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsRestaurantBagContext);
     const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
@@ -46,14 +47,17 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const [totalPrice, setTotalPrice] = useState<number>();
     const [methodPayment, setMethodPayment] = useState(0);
     const [locationValue, setLocationValue] = useState<inputGoogleValue | undefined>();
-    const availableToPost = methodPayment !== 0;
+    const [methodShipmentLocal, setMethodShipmentLocal] = useState<shimpentMethodInterface['id']>()
+    const availableToPost = (methodPayment !== 0 && methodShipmentLocal && locationValue !== undefined) ? true : false;
 
     const onPostSellRestaurant = async () => {
         setCreateSellLoading(true);
+        if(!methodShipmentLocal) return;
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
                 opcion: 4,
+                idviaenvio: methodShipmentLocal,
                 domicilio: locationValue ? `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}` : ""
             };
 
@@ -203,6 +207,17 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                                 : undefined
                         }
                     />
+
+                    <CardButton
+                        onPress={() => navigate('[Modal] - EditShipment')}
+                        label='Tipo de envio'
+                        valueDefault='Seleccionar el envio'
+                        color='black'
+                        icon='send'
+                        specialValue={
+                            methodShipmentLocal ? shimpentMethod.find((item) => methodShipmentLocal === item.id)?.value : undefined
+                        }
+                    />
                 </View>
             </SafeAreaView>
         )
@@ -217,8 +232,12 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
     // Handle address direction.
     useEffect(() => {
-        setLocationValue(addressDirection);
+        if(addressDirection) setLocationValue(addressDirection);
     }, [addressDirection]);
+
+    useEffect(() => {
+       if(methodShipment) setMethodShipmentLocal(methodShipment);
+    }, [methodShipment]);
 
     return (
         <LayoutConfirmation

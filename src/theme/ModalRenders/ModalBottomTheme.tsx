@@ -3,15 +3,15 @@ import { Theme, globalStyles } from "../appTheme";
 import { th } from "date-fns/locale";
 
 
-export const ModalBottomStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const ModalBottomStyles = (theme?: Theme, typeTheme?: string) => StyleSheet.create({
     modalBottom: {
         flex: 1,
         justifyContent: "flex-end",
         padding: globalStyles(theme).globalPadding.padding / 2.5
     },
     modalContent: {
-        backgroundColor: theme.background_color,
-        shadowColor: theme.background_color_tertiary,
+        backgroundColor: theme?.background_color,
+        shadowColor: theme?.background_color_tertiary,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -22,7 +22,7 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string) => StyleShee
         width: "100%",
         borderRadius: globalStyles(theme).borderRadiusStandard.borderRadius,
         borderWidth: 1,
-        borderColor: theme.color_border
+        borderColor: theme?.color_border
     },
     modalChildren: {
         padding: globalStyles(theme).globalPadding.padding,
@@ -38,7 +38,7 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string) => StyleShee
         alignItems: "flex-end",
         borderWidth: 1,
         borderColor: 'transparent',
-        borderBottomColor: typeTheme === 'light' ? theme.color_border : theme.color_border_dark,
+        borderBottomColor: typeTheme === 'light' ? theme?.color_border : theme?.color_border_dark,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
     menuModal: {
@@ -58,6 +58,6 @@ export const ModalBottomStyles = (theme: Theme, typeTheme?: string) => StyleShee
         minHeight: 40,
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: theme.color_border
+        borderColor: theme?.color_border
     }
 });

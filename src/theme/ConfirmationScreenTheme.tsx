@@ -38,7 +38,6 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     confirmationItemLabel: {
         fontSize: globalFont.font_normal,
-        //color: theme.text_color
     },
 
     confirmation: {
@@ -77,11 +76,6 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         gap: 10,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
     },
-    paymentMethodClient: {
-        //display: "flex",
-        //gap: 10,
-        //marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
-    },
     paymentMethodItem: {
         flex: 1,
         backgroundColor: theme.background_color_secondary,
@@ -93,7 +87,6 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     },
     paymentMethodItemActive: {
         flex: 1,
-        //backgroundColor: theme.color_purple,
         width: "100%",
         padding: globalStyles(theme).globalPadding.padding,
         borderRadius: globalStyles(theme).borderRadius.borderRadius,
