@@ -17,6 +17,7 @@ import { SelectClient } from '../screens/Sells/SellsBag/SelectClient';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
 import { UnitType } from '../interface/navigation';
 import { ClientInterface } from '../interface';
+import { CommentsInSell } from '../screens/Sells/CommentsInProduct';
 
 // useNavigation() type.
 export type SellsNavigationStackParamList = {
@@ -30,8 +31,9 @@ export type SellsNavigationStackParamList = {
     "[Modal] - UnitScreen": { valueDefault: UnitType };
     "[Modal] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
     "[Modal] - SelectClient": undefined;
+    "[Modal] - commentInSell": { comments: string };
 
-    "[Sells] - confirmationScreen": { client?: ClientInterface };
+    "[Sells] - confirmationScreen": { client?: ClientInterface, comments?: string };
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -186,6 +188,12 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Modal] - editProductSellInBag"
                 component={EditProductSellInBag}
+                options={{ presentation: 'transparentModal', headerShown: false }}
+            />
+
+            <Stack.Screen
+                name='[Modal] - commentInSell'
+                component={CommentsInSell}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 

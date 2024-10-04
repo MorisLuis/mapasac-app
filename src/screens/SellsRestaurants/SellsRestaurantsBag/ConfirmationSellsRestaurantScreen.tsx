@@ -42,7 +42,6 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const [createSellLoading, setCreateSellLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
 
     const [totalPrice, setTotalPrice] = useState<number>();
     const [methodPayment, setMethodPayment] = useState(0);
@@ -55,7 +54,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
                 opcion: 4,
-                domicilio: locationValue ?  `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}` : ""
+                domicilio: locationValue ? `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}` : ""
             };
 
             const postSell = await postSells(sellBody);
@@ -167,47 +166,44 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>
                 </View>
 
-                {
-                    openConfirmationInfo &&
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
-                        <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
-                            <TouchableOpacity
-                                style={[
-                                    methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
-                                ]}
-                                onPress={() => setMethodPayment(1)}
-                            >
-                                <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
-                                <CustomText>Credito</CustomText>
-                            </TouchableOpacity>
+                <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
+                    <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
+                        <TouchableOpacity
+                            style={[
+                                methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
+                            ]}
+                            onPress={() => setMethodPayment(1)}
+                        >
+                            <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
+                            <CustomText>Credito</CustomText>
+                        </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={[
-                                    methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
-                                ]}
-                                onPress={() => setMethodPayment(2)}
-                            >
-                                <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
-                                <CustomText>Contado</CustomText>
-                            </TouchableOpacity>
-                        </View>
-
-                        <CardButton
-                            onPress={handleGoToEditLocation}
-                            label='Ubicación'
-                            valueDefault='Seleccionar el cliente'
-                            color='black'
-                            icon='location'
-                            specialValue={
-                                locationValue
-                                    ? `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}`
-                                    : undefined
-                            }
-                        />
+                        <TouchableOpacity
+                            style={[
+                                methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
+                            ]}
+                            onPress={() => setMethodPayment(2)}
+                        >
+                            <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
+                            <CustomText>Contado</CustomText>
+                        </TouchableOpacity>
                     </View>
-                }
+
+                    <CardButton
+                        onPress={handleGoToEditLocation}
+                        label='Ubicación'
+                        valueDefault='Seleccionar el cliente'
+                        color='black'
+                        icon='location'
+                        specialValue={
+                            locationValue
+                                ? `${locationValue.street.trim()} ${locationValue.number ? `- ${locationValue.number}` : ''} ${locationValue.neighborhood ? `/ ${locationValue.neighborhood}` : ''} ${locationValue.locality ? `/ ${locationValue.locality}` : ''}`
+                                : undefined
+                        }
+                    />
+                </View>
             </SafeAreaView>
         )
     };

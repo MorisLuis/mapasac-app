@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { EnlacemobInterface } from "../../interface/enlacemob";
 import { FormSellsRestaurantType } from "../../screens/SellsRestaurants/SellsRestaurantDataScreen";
-import { updateProductInBagInterface } from "../../interface";
+import { SellsDataScreenTypeProps, updateProductInBagInterface } from "../../interface";
 
 interface ContextProps {
     addProductSell: (sellBody: EnlacemobInterface) => void;
@@ -10,7 +10,7 @@ interface ContextProps {
     resetAfterPost: () => void;
     handleUpdateSummary: () => void;
     handleCleanState: () => void;
-    updateFormData: (data: any) => void;
+    updateFormData: (data: SellsDataScreenTypeProps) => void;
     cleanFormData: () => void;
     
     numberOfItemsSells: string;

@@ -8,7 +8,6 @@ import { SellsBagContext } from '../../../context/Sells/SellsBagContext';
 import { ProductSellsInterface } from '../../../interface/productSells';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
-import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SellsNavigationStackParamList } from '../../../navigator/SellsNavigation';
 import LayoutConfirmation from '../../../components/Layouts/LayoutConfirmation';
@@ -29,7 +28,7 @@ interface ConfirmationSellsScreenInterface {
 
 export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterface) => {
 
-    const { client } = route?.params ?? {};
+    const { client, comments } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
     const { typeTheme, theme, toggleTheme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
@@ -45,8 +44,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [totalPrice, setTotalPrice] = useState<number>();
     const [methodPayment, setMethodPayment] = useState(0);
     const [typeSelected, setTypeSelected] = useState<ClientInterface>();
-    const [comments, setComments] = useState("");
-    const [openConfirmationInfo, setOpenConfirmationInfo] = useState(true);
+    const [commentsLocal, setCommentsLocal] = useState("");
     const availableToPost = methodPayment !== 0;
 
     const onPostInventory = async () => {
@@ -55,7 +53,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
                 idclientes: typeSelected?.idclientes,
-                comments,
+                comments: commentsLocal,
                 opcion: 2
             }
             const postSell = await postSells(sellBody);
@@ -169,47 +167,55 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>
                 </View>
 
-                {
-                    openConfirmationInfo &&
-                    <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
-                        <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
+                <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodContainer}>
+                    <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
                         <TouchableOpacity
-                                style={[
-                                    methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
-                                ]}
-                                onPress={() => setMethodPayment(1)}
-                            >
-                                <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
-                                <CustomText>Credito</CustomText>
-                            </TouchableOpacity>
+                            style={[
+                                methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
+                            ]}
+                            onPress={() => setMethodPayment(1)}
+                        >
+                            <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
+                            <CustomText>Credito</CustomText>
+                        </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={[
-                                    methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                        ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
-                                ]}
-                                onPress={() => setMethodPayment(2)}
-                            >
-                                <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
-                                <CustomText>Contado</CustomText>
-                            </TouchableOpacity>
-                        </View>
-
-                        <CardButton
-                            onPress={() => navigate("[Modal] - SelectClient")}
-                            label='Cliente'
-                            valueDefault='Seleccionar el cliente'
-                            color='black'
-                            icon='people-sharp'
-                            specialValue={typeSelected ? typeSelected.nombres.trim() + "ola jaime" : undefined}
-                        />
-
-                        <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                            <TextInputContainer setComments={setComments} value={comments} />
-                        </View>
+                        <TouchableOpacity
+                            style={[
+                                methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
+                            ]}
+                            onPress={() => setMethodPayment(2)}
+                        >
+                            <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
+                            <CustomText>Contado</CustomText>
+                        </TouchableOpacity>
                     </View>
-                }
+
+                    <CardButton
+                        onPress={() => navigate("[Modal] - SelectClient")}
+                        label='Cliente'
+                        valueDefault='Seleccionar el cliente'
+                        color='black'
+                        icon='people-sharp'
+                        specialValue={typeSelected ? typeSelected.nombres.trim() : undefined}
+                    />
+
+
+                    <CardButton
+                        onPress={() => navigate("[Modal] - commentInSell", { comments: commentsLocal })}
+                        label='Comentarios'
+                        valueDefault='Escribir comentario'
+                        color='black'
+                        icon='chatbox-ellipses'
+                        specialValue={commentsLocal ? commentsLocal.trim() : undefined}
+                    />
+
+
+                    {/* <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
+                            <TextInputContainer setComments={setComments} value={comments} />
+                        </View> */}
+                </View>
             </SafeAreaView>
         )
     }
@@ -223,8 +229,12 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     );
 
     useEffect(() => {
-        handleGetClient();
-    }, [client])
+        if (client) handleGetClient();
+    }, [client]);
+
+    useEffect(() => {
+        if (comments) setCommentsLocal(comments);
+    }, [comments]);
 
     return (
         <LayoutConfirmation
@@ -234,11 +244,11 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             ListHeaderComponent={renderScreen}
             Type='Sells'
             onPost={onPostInventory}
+            numberOfItems={numberOfItemsSells}
+            totalPrice={totalPrice}
             loadData={dataUploaded}
             availableToPost={availableToPost}
             buttonPostDisabled={createSellLoading}
-            numberOfItems={numberOfItemsSells}
-            totalPrice={totalPrice}
         />
     )
 };
