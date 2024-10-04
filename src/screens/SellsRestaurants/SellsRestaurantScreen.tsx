@@ -51,8 +51,7 @@ export const SellsRestaurantScreen = () => {
             capa: productData[0].capa,
             typeClass: { id: productData[0].idinveclas, value: productData[0].producto },
             units: productData[0].unidad,
-            idinvearts: productData[0].idinvearts,
-            //...productData[0]
+            idinvearts: productData[0].idinvearts
         })
         navigation.navigate('SellsRestaurantsDataScreen');
     }
