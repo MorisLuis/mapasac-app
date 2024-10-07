@@ -5,7 +5,7 @@ import {EnlacemobInterface} from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
 import { SellsRestaurantBagContext } from './SellsRestaurantsBagContext';
-import { FormSellsRestaurantType } from '../../screens/SellsRestaurants/SellsRestaurantDataScreen';
+import { FormSellsRestaurantType } from '../../screens/SellsRestaurants/ProductDetailsSellsRestaurants';
 import { updateProductInBagInterface } from '../../interface';
 
 export interface SellsRestaurantsBagInterface {

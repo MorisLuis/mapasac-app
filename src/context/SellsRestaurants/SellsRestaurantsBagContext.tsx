@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { EnlacemobInterface } from "../../interface/enlacemob";
-import { FormSellsRestaurantType } from "../../screens/SellsRestaurants/SellsRestaurantDataScreen";
+import { FormSellsRestaurantType } from "../../screens/SellsRestaurants/ProductDetailsSellsRestaurants";
 import { updateProductInBagInterface } from "../../interface";
 
 interface ContextProps {

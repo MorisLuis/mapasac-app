@@ -27,7 +27,7 @@ export type FormType = {
     idinveclas: number;
 };
 
-export const SellsDataScreen = () => {
+export const ProductDetailsSells = () => {
 
     const { user } = useContext(AuthContext);
     const { addProductSell, formSellsData } = useContext(SellsBagContext);

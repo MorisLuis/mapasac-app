@@ -6,7 +6,7 @@ import { CustomHeader } from '../components/Ui/CustomHeader';
 import CustomTabBar from '../components/Navigation/CustomTabBar';
 import { ProductSellsRestaurantInterface } from '../interface/productSells';
 import { SellsRestaurantScreen } from '../screens/SellsRestaurants/SellsRestaurantScreen';
-import { SellsRestaurantDataScreen } from '../screens/SellsRestaurants/SellsRestaurantDataScreen';
+import { ProductDetailsSellsRestaurants } from '../screens/SellsRestaurants/ProductDetailsSellsRestaurants';
 import { SelectAmountRestaurantScreen } from '../screens/SellsRestaurants/SelectAmountRestaurantScreen';
 import { SellsRestaurantBagScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/SellsRestaurantsBagScreen';
 import { ConfirmationSellsRestaurantScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/ConfirmationSellsRestaurantScreen';
@@ -52,7 +52,7 @@ export const SellsRestaurantsNavigation = () => {
 
             <Stack.Screen
                 name="SellsRestaurantsDataScreen"
-                component={SellsRestaurantDataScreen}
+                component={ProductDetailsSellsRestaurants}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
                     header: props => (

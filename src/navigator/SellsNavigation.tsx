@@ -6,7 +6,7 @@ import { CustomHeader } from '../components/Ui/CustomHeader';
 // Screens
 import { SelectClassScreen } from '../screens/Sells/SelectClassScreen';
 import { SellsScreen } from '../screens/Sells/SellsScreen';
-import { SellsDataScreen } from '../screens/Sells/SellsDataScreen';
+import { ProductDetailsSells } from '../screens/Sells/ProductDetailsSells';
 import { SelectAmountScreen } from '../screens/Sells/SelectAmountScreen';
 import { SelectUnitScreen } from '../screens/Sells/SelectUnitsScreen';
 import { SellsBagScreen } from '../screens/Sells/SellsBag/SellsBagScreen';
@@ -53,7 +53,7 @@ export const SellsNavigation = () => {
 
             <Stack.Screen
                 name="SellsDataScreen"
-                component={SellsDataScreen}
+                component={ProductDetailsSells}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
                     header: props => (

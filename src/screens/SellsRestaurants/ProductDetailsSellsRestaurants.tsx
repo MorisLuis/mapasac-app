@@ -24,7 +24,7 @@ export type FormSellsRestaurantType = {
     idinvearts?: string;
 };
 
-export const SellsRestaurantDataScreen = () => {
+export const ProductDetailsSellsRestaurants = () => {
 
     const { user } = useContext(AuthContext);
     const { addProductSell, formSellsData, updateFormData } = useContext(SellsRestaurantBagContext);
