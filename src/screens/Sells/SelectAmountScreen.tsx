@@ -10,8 +10,8 @@ import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import { SellsNavigationProp } from '../../interface/navigation';
 
-type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PiecesScreen'>;
-type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - PriceScreen'>;
+type PiecesScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - PiecesScreen'>;
+type PriceScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - PriceScreen'>;
 
 interface SelectAmountScreenInterface {
     route: PiecesScreenRouteProp | PriceScreenRouteProp

@@ -16,6 +16,8 @@ import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete'
 import { CommentsInProduct } from '../screens/SellsRestaurants/CommentsInProduct';
 import ShimpentScreen from '../screens/SellsRestaurants/SellsRestaurantsBag/ShimpentScreen';
 import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
+import ClassInterface from '../interface/class';
+import { SelectRestaurantClassScreen } from '../screens/SellsRestaurants/SelectRestaurantClassScreen';
 
 // useNavigation() type.
 export type SellsRestaurantsNavigationStackParamList = {
@@ -23,13 +25,13 @@ export type SellsRestaurantsNavigationStackParamList = {
     SellsRestaurantsDataScreen: undefined;
     BagSellsRestaurantsScreen: undefined;
 
-    "[Modal] - editProductSellRestaurantsInBag": { product: ProductSellsRestaurantInterface };
-    "[Modal] - EditLocation": { locationValue?: inputGoogleValue };
-    "[Modal] - EditShipment": undefined;
-
-    "[Modal] - commentInProduct": { comments: string };
-    "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
-    "[SellsRestaurants] - confirmationScreen": { addressDirection?: inputGoogleValue, methodShipment?: 1 | 2 | 3 | 4  };
+    "[SellsRestaurants] - EditProductInBag": { product: ProductSellsRestaurantInterface };
+    "[SellsRestaurants] - EditLocation": { locationValue?: inputGoogleValue };
+    "[SellsRestaurants] - EditShipment": undefined;
+    "[SellsRestaurants] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
+    "[SellsRestaurants] - CommentInProduct": { comments: string };
+    "[SellsRestaurants] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
+    "[SellsRestaurants] - ConfirmationScreen": { addressDirection?: inputGoogleValue, methodShipment?: 1 | 2 | 3 | 4 };
 };
 
 const Stack = createNativeStackNavigator<SellsRestaurantsNavigationStackParamList>();
@@ -87,7 +89,7 @@ export const SellsRestaurantsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - PiecesScreen"
+                name="[SellsRestaurants] - PiecesScreen"
                 component={SelectAmountRestaurantScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -106,25 +108,44 @@ export const SellsRestaurantsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - editProductSellRestaurantsInBag"
+                name="[SellsRestaurants] - ClassScreen"
+                component={SelectRestaurantClassScreen}
+                options={({ navigation }: any) => ({
+                    presentation: "modal",
+                    header: props => (
+                        <CustomHeader
+                            {...props}
+                            title={"Clase"}
+                            navigation={navigation}
+                            backCustum={true}
+                            back={() => {
+                                navigation.goBack()
+                            }}
+                        />
+                    )
+                })}
+            />
+
+            <Stack.Screen
+                name="[SellsRestaurants] - EditProductInBag"
                 component={EditProductSellRestaurantInBag}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name="[Modal] - commentInProduct"
+                name="[SellsRestaurants] - CommentInProduct"
                 component={CommentsInProduct}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name="[Modal] - EditLocation"
+                name="[SellsRestaurants] - EditLocation"
                 component={LocationScreen}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name="[Modal] - EditShipment"
+                name="[SellsRestaurants] - EditShipment"
                 component={ShimpentScreen}
                 options={{
                     presentation: 'modal',
@@ -134,7 +155,7 @@ export const SellsRestaurantsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[SellsRestaurants] - confirmationScreen"
+                name="[SellsRestaurants] - ConfirmationScreen"
                 component={ConfirmationSellsRestaurantScreen}
                 options={({ navigation }: any) => ({
                     header: props => (

@@ -12,7 +12,7 @@ import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import ModalBottom from '../../components/Modals/ModalBottom';
 import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
 
-type EditProductSellRestaurantScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[Modal] - commentInProduct'>;
+type EditProductSellRestaurantScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - CommentInProduct'>;
 
 interface EditProductSellInBagInterface {
     route: EditProductSellRestaurantScreenRouteProp

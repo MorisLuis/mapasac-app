@@ -52,7 +52,7 @@ export const SellsScreen = () => {
         if (count <= 1) {
             navigation.navigate('SellsDataScreen');
         } else {
-            navigation.navigate('[Modal] - ClassScreen',
+            navigation.navigate('[Sells] - ClassScreen',
                 {
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,

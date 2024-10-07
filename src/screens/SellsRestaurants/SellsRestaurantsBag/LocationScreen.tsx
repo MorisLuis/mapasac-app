@@ -14,7 +14,7 @@ import { globalFont } from '../../../theme/appTheme';
 import { LocationScreenStyles } from '../../../theme/LocationScreenTheme';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 
-type LocationScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[Modal] - EditLocation'>;
+type LocationScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - EditLocation'>;
 
 interface LocationScreenInterface {
     route: LocationScreenRouteProp
@@ -56,7 +56,7 @@ export const LocationScreen = ({ route }: LocationScreenInterface) => {
     const [locationNavigation, setLocationNavigation] = useState<1 | 2>(1)
 
     const onSubmitLocation = () => {
-        navigate('[SellsRestaurants] - confirmationScreen', { addressDirection: locationValueLocal })
+        navigate('[SellsRestaurants] - ConfirmationScreen', { addressDirection: locationValueLocal })
     };
 
     const handleFocus = () => {

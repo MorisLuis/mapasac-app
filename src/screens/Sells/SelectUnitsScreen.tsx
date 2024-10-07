@@ -14,7 +14,7 @@ import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassS
 import { SellsNavigationProp, UnitType } from '../../interface/navigation';
 import UnitInterface from '../../interface/units';
 
-type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - UnitScreen'>;
+type SelectUnitScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - UnitScreen'>;
 
 
 interface SelectAmountScreenInterface {

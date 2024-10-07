@@ -21,7 +21,7 @@ import useActionsForModules from '../../../hooks/useActionsForModules';
 import { postSells, postSellsInterface } from '../../../services';
 import { shimpentMethod, shimpentMethodInterface } from './ShimpentScreen';
 
-type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - confirmationScreen'>;
+type ConfirmationSellsScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - ConfirmationScreen'>;
 
 interface ConfirmationSellsScreenInterface {
     route: ConfirmationSellsScreenRouteProp;
@@ -145,13 +145,13 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     }
 
     const handleGoToEditLocation = () => {
-        navigate('[Modal] - EditLocation', { locationValue: locationValue })
+        navigate('[SellsRestaurants] - EditLocation', { locationValue: locationValue })
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => (
         <ProductSellsCard
             product={item}
-            onClick={() => navigate('[Modal] - editProductSellRestaurantsInBag', { product: item })}
+            onClick={() => navigate('[SellsRestaurants] - EditProductInBag', { product: item })}
             renderRightProp={() => {
                 return (
                     <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
@@ -209,7 +209,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                     />
 
                     <CardButton
-                        onPress={() => navigate('[Modal] - EditShipment')}
+                        onPress={() => navigate('[SellsRestaurants] - EditShipment')}
                         label='Tipo de envio'
                         valueDefault='Seleccionar el envio'
                         color='black'

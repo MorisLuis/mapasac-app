@@ -5,27 +5,27 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
 import { getProductsSellsFromFamily } from '../../services/productsSells';
 import ClassInterface from '../../interface/class';
-import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassSkeleton';
-import { SellsDataScreenTypeProps, SellsNavigationProp } from '../../interface/navigation';
+import { SellsDataScreenTypeProps, SellsRestaurantNavigationProp } from '../../interface';
+import { SellsRestaurantsNavigationStackParamList } from '../../navigator/SellsRestaurantsNavigation';
 
-type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - ClassScreen'>;
+type SelectRestaClassScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - ClassScreen'>;
 
-interface SelectClassScreenInterface {
-    route: SelectClassScreenRouteProp
+interface SelectRestaurantClassScreenInterface {
+    route: SelectRestaClassScreenRouteProp
 }
 
-export const SelectClassScreen = ({
+export const SelectRestaurantClassScreen = ({
     route
-}: SelectClassScreenInterface) => {
+}: SelectRestaurantClassScreenInterface) => {
 
     const { valueDefault, cvefamilia, descripcio, image, totalClasses } = route.params;
-    const navigation = useNavigation<SellsNavigationProp>();
+    const navigation = useNavigation<SellsRestaurantNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { updateFormData } = useContext(SellsBagContext);
 
@@ -75,7 +75,7 @@ export const SelectClassScreen = ({
 
         updateFormData(data)
         navigation.goBack();
-        navigation.navigate('SellsDataScreen');
+        navigation.navigate('SellsRestaurantsDataScreen');
     };
 
     const handleGetClasess = async () => {

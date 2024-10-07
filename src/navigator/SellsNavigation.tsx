@@ -25,15 +25,14 @@ export type SellsNavigationStackParamList = {
     SellsDataScreen: undefined;
     BagSellsScreen: undefined;
 
-    "[Modal] - editProductSellInBag": { product: ProductSellsInterface };
-    "[Modal] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - PriceScreen": { valueDefault: string, unit?: string, from: string };
-    "[Modal] - UnitScreen": { valueDefault: UnitType };
-    "[Modal] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
-    "[Modal] - SelectClient": undefined;
-    "[Modal] - commentInSell": { comments: string };
-
-    "[Sells] - confirmationScreen": { client?: ClientInterface, comments?: string };
+    "[Sells] - EditProductInBag": { product: ProductSellsInterface };
+    "[Sells] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
+    "[Sells] - PriceScreen": { valueDefault: string, unit?: string, from: string };
+    "[Sells] - UnitScreen": { valueDefault: UnitType };
+    "[Sells] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
+    "[Sells] - SelectClient": undefined;
+    "[Sells] - CommentInSell": { comments: string };
+    "[Sells] - ConfirmationScreen": { client?: ClientInterface, comments?: string };
 };
 
 const Stack = createNativeStackNavigator<SellsNavigationStackParamList>();
@@ -91,7 +90,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - PiecesScreen"
+                name="[Sells] - PiecesScreen"
                 component={SelectAmountScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -110,7 +109,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - PriceScreen"
+                name="[Sells] - PriceScreen"
                 component={SelectAmountScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -129,7 +128,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - UnitScreen"
+                name="[Sells] - UnitScreen"
                 component={SelectUnitScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -148,7 +147,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - ClassScreen"
+                name="[Sells] - ClassScreen"
                 component={SelectClassScreen}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -167,7 +166,7 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - SelectClient"
+                name="[Sells] - SelectClient"
                 component={SelectClient}
                 options={({ navigation }: any) => ({
                     presentation: "modal",
@@ -186,19 +185,19 @@ export const SellsNavigation = () => {
             />
 
             <Stack.Screen
-                name="[Modal] - editProductSellInBag"
+                name="[Sells] - EditProductInBag"
                 component={EditProductSellInBag}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name='[Modal] - commentInSell'
+                name='[Sells] - CommentInSell'
                 component={CommentsInSell}
                 options={{ presentation: 'transparentModal', headerShown: false }}
             />
 
             <Stack.Screen
-                name="[Sells] - confirmationScreen"
+                name='[Sells] - ConfirmationScreen'
                 component={ConfirmationSellsScreen}
                 options={({ navigation }: any) => ({
                     header: props => (

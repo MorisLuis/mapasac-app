@@ -25,7 +25,7 @@ const ShimpentScreen = () => {
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
 
     const goBackToConfirmation = () => {
-        navigate('[SellsRestaurants] - confirmationScreen', { methodShipment: methodShipment })
+        navigate('[SellsRestaurants] - ConfirmationScreen', { methodShipment: methodShipment })
     }
 
     return (

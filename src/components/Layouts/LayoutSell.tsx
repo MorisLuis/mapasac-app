@@ -86,7 +86,6 @@ export const LayoutSell = ({
 
     useEffect(() => {
         if (status !== 'authenticated') return;
-        console.log("useeffect!!!")
         handleGetPrice();
     }, [productAdded, handleUpdateSummary]);
 

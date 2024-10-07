@@ -20,7 +20,7 @@ import { postSells, postSellsInterface } from '../../../services';
 import { ClientInterface } from '../../../interface';
 import useActionsForModules from '../../../hooks/useActionsForModules';
 
-type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - confirmationScreen'>;
+type ConfirmationSellsScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - ConfirmationScreen'>;
 
 interface ConfirmationSellsScreenInterface {
     route: ConfirmationSellsScreenRouteProp;
@@ -147,7 +147,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
         <ProductSellsCard
             product={item}
-            onClick={() => navigate('[Modal] - editProductSellInBag', { product: item })}
+            onClick={() => navigate('[Sells] - EditProductInBag', { product: item })}
             renderRightProp={() => {
                 return (
                     <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
@@ -192,7 +192,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                     </View>
 
                     <CardButton
-                        onPress={() => navigate("[Modal] - SelectClient")}
+                        onPress={() => navigate("[Sells] - SelectClient")}
                         label='Cliente'
                         valueDefault='Seleccionar el cliente'
                         color='black'
@@ -202,7 +202,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
 
                     <CardButton
-                        onPress={() => navigate("[Modal] - commentInSell", { comments: commentsLocal })}
+                        onPress={() => navigate("[Sells] - CommentInSell", { comments: commentsLocal })}
                         label='Comentarios'
                         valueDefault='Escribir comentario'
                         color='black'

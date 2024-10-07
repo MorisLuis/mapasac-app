@@ -19,7 +19,7 @@ const MenuOptions = [
     { label: 'Comentarios', value: 2 }
 ];
 
-type EditProductSellRestaurantScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[Modal] - editProductSellRestaurantsInBag'>;
+type EditProductSellRestaurantScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - EditProductInBag'>;
 
 interface EditProductSellInBagInterface {
     route: EditProductSellRestaurantScreenRouteProp

@@ -10,7 +10,7 @@ import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import ModalBottom from '../../components/Modals/ModalBottom';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 
-type CommentsInSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - commentInSell'>;
+type CommentsInSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - CommentInSell'>;
 
 interface CommentsInSellInterface {
     route: CommentsInSellScreenRouteProp
@@ -34,7 +34,7 @@ export const CommentsInSell = ({ route }: CommentsInSellInterface) => {
     };
 
     const handleCloseModal = () => {
-        navigate('[Sells] - confirmationScreen', { comments: comment });
+        navigate('[Sells] - ConfirmationScreen', { comments: comment });
     };
 
     const renderEditComments = () => {

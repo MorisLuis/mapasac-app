@@ -10,7 +10,7 @@ import { SellsRestaurantNavigationProp } from '../../interface';
 import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
 import { SellsRestaurantsNavigationStackParamList } from '../../navigator/SellsRestaurantsNavigation';
 
-type PiecesScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[Modal] - PiecesScreen'>;
+type PiecesScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - PiecesScreen'>;
 
 interface SelectAmountScreenInterface {
     route: PiecesScreenRouteProp

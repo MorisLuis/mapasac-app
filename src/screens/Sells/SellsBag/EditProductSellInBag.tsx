@@ -12,7 +12,7 @@ import { EditProductStyles } from '../../../theme/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { SellsNavigationProp } from '../../../interface/navigation';
 
-type EditProductSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Modal] - editProductSellInBag'>;
+type EditProductSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - EditProductInBag'>;
 
 interface EditProductSellInBagInterface {
     route: EditProductSellScreenRouteProp
@@ -35,9 +35,9 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
         setEditingProduct(true)
 
         if (piezasCount < 1) {
-            deleteProductSell(product.idenlacemob)
+            deleteProductSell(product.idenlacemob as number)
         } else {
-            editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
+            editProductSell({ idenlacemob: product.idenlacemob as number, cantidad: piezasCount });
         }
 
         setTimeout(() => {

@@ -141,7 +141,7 @@ export const SellsDataScreen = () => {
     const handleGoToClassScreen = () => {
         if ((totalClasses ?? 0) > 1) {
             if (!productSellData?.capa) return;
-            navigate('[Modal] - ClassScreen',
+            navigate('[Sells] - ClassScreen',
                 {
                     valueDefault: {
                         clase: getValues('typeClass').value,
@@ -212,7 +212,7 @@ export const SellsDataScreen = () => {
                                 icon='resize-outline'
                             />
                             <CardButton
-                                onPress={() => navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
+                                onPress={() => navigate('[Sells] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
                                 label='Cantidad:'
                                 valueDefault='Seleccionar cantidad'
                                 color='green'
@@ -221,7 +221,7 @@ export const SellsDataScreen = () => {
                                 icon="bag-handle"
                             />
                             <CardButton
-                                onPress={() => navigate('[Modal] - UnitScreen', { valueDefault: getValues('units') })}
+                                onPress={() => navigate('[Sells] - UnitScreen', { valueDefault: getValues('units') })}
                                 label='Unidad:'
                                 valueDefault='Seleccionar Unidad'
                                 color='red'
@@ -230,7 +230,7 @@ export const SellsDataScreen = () => {
                                 icon="shapes"
                             />
                             <CardButton
-                                onPress={() => navigate('[Modal] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
+                                onPress={() => navigate('[Sells] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
                                 label='Precio:'
                                 valueDefault='Seleccionar precio'
                                 color='purple'

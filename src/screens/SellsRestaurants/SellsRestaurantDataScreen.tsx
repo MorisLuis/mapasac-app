@@ -84,7 +84,7 @@ export const SellsRestaurantDataScreen = () => {
     };
 
     const selectAmount = () => {
-        navigate('[Modal] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') as string, unit: 'PZA' })
+        navigate('[SellsRestaurants] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') as string, unit: 'PZA' })
     }
 
 
@@ -145,7 +145,7 @@ export const SellsRestaurantDataScreen = () => {
                     />
 
                     <CardButton
-                        onPress={() => navigate('[Modal] - commentInProduct')}
+                        onPress={() => navigate('[SellsRestaurants] - CommentInProduct')}
                         label='Comentarios:'
                         valueDefault='Escribir comentario'
                         color='red'
