@@ -7,7 +7,7 @@ import { InventoryBagContext } from '../../../context/Inventory/InventoryBagCont
 import Toast from 'react-native-toast-message';
 import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
-import { EditProductStyles } from '../../../theme/EditProductTheme';
+import { EditProductStyles } from '../../../theme/Screens/Inventory/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { InventoryNavigationProp } from '../../../interface/navigation';
 import ModalBottom from '../../../components/Modals/ModalBottom';

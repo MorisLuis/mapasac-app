@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import CustomText from '../Ui/CustumText';
 import { useTheme } from '../../context/ThemeContext';
-import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
+import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import { globalFont, globalStyles } from '../../theme/appTheme';

@@ -1,11 +1,11 @@
 import React from 'react'
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../../context/ThemeContext';
-import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
+import { ConfirmationScreenStyles } from '../../../theme/Layout/ConfirmationScreenTheme';
 import { ProductCardSkeleton } from '../ProductCardSkeleton';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
-import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme';
+import { LayoutBagStyles } from '../../../theme/Layout/LayoutBagTheme';
 
 export const ConfirmationSkeleton = () => {
     const { theme, typeTheme } = useTheme();
@@ -38,7 +38,7 @@ export const ConfirmationSkeleton = () => {
                 <FlatList
                     data={Array(6).fill({})}
                     renderItem={() => <ProductCardSkeleton />}
-                    style={InventoryBagScreenStyles(theme, typeTheme).content}
+                    style={LayoutBagStyles(theme, typeTheme).content}
                     keyExtractor={(_, index) => index.toString()}
                 />
             </View>

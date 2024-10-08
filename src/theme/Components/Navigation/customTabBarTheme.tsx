@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "../appTheme";
+import { Theme, globalFont, globalStyles } from "../../appTheme";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const customTabBarStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({

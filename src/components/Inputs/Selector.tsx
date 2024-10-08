@@ -1,6 +1,6 @@
 import React from 'react'
 import RNPickerSelect from 'react-native-picker-select';
-import { selectStyles } from '../../theme/UI/inputs';
+import { selectStyles } from '../../theme/Components/inputs';
 import { View } from 'react-native'
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import { useTheme } from '../../context/ThemeContext';

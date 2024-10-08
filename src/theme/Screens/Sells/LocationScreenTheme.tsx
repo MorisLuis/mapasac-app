@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalStyles } from "./appTheme";
+import { Theme, globalStyles } from "../../appTheme";
 
 export const LocationScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
 

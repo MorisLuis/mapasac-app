@@ -15,7 +15,7 @@ import { LocationScreen } from '../screens/SellsRestaurants/SellsRestaurantsBag/
 import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete';
 import { CommentsInProduct } from '../screens/SellsRestaurants/CommentsInProduct';
 import ShimpentScreen from '../screens/SellsRestaurants/SellsRestaurantsBag/ShimpentScreen';
-import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
+import { ModalScreenStyles } from '../theme/Modals/ModalTheme';
 import { SelectRestaurantClassScreen } from '../screens/SellsRestaurants/SelectRestaurantClassScreen';
 
 // Definición de tipos para la navegación

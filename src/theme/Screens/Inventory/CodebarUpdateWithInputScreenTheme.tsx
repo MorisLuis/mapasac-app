@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import {Theme, globalFont, globalStyles } from "./appTheme";
+import {Theme, globalFont, globalStyles } from "../../appTheme";
 
 export const CodebarUpdateWithInputScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     CodebarUpdateWithInputScreen: {

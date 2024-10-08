@@ -5,7 +5,7 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { SellsRestaurantsNavigationStackParamList } from '../../navigator/SellsRestaurantsNavigation';
 import { SellsNavigationProp } from '../../interface';
 import { useTheme } from '../../context/ThemeContext';
-import { EditProductStyles } from '../../theme/EditProductTheme';
+import { EditProductStyles } from '../../theme/Screens/Inventory/EditProductTheme';
 import { TextInputContainer } from '../../components/Inputs/TextInputContainer';
 import ButtonCustum from '../../components/Inputs/ButtonCustum';
 import ModalBottom from '../../components/Modals/ModalBottom';

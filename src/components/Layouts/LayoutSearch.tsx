@@ -1,11 +1,11 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
+import { LayoutBagStyles } from '../../theme/Layout/LayoutBagTheme';
 import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
-import { inputStyles } from '../../theme/UI/inputs';
+import { inputStyles } from '../../theme/Components/inputs';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import FooterScreen from '../../components/Navigation/FooterScreen';
@@ -96,7 +96,7 @@ export const LayoutSearch = <T,>({
     if (filteredItems?.length <= 0 && dataUploaded && searchText.length <= 0) {
         return (
             <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
-                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                <View style={LayoutBagStyles(theme, typeTheme).message}>
                     <EmptyMessageCard
                         title="No tienes productos aún."
                         message="Empieza a agregar productos al inventario"
@@ -109,7 +109,7 @@ export const LayoutSearch = <T,>({
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
-            <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
+            <View style={LayoutBagStyles(theme, typeTheme).InventoryBagScreen}>
                 {/* SEARCH BAR */}
                 <Searchbar
                     ref={searchInputRef}
@@ -128,7 +128,7 @@ export const LayoutSearch = <T,>({
                 {
                     !(filteredItems.length <= 0 && searchText.length > 0) ?
                         <FlatList
-                            style={InventoryBagScreenStyles(theme, typeTheme).content}
+                            style={LayoutBagStyles(theme, typeTheme).content}
                             data={filteredItems}
                             renderItem={renderItem}
                             keyExtractor={(item) => `${(item as ClientInterface).idclientes || (item as ProductInterface).clave}`}

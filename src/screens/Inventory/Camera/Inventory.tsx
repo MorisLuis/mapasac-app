@@ -7,7 +7,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
-import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme';
+import { InventoryScreenStyles } from '../../../theme/Screens/Inventory/InventoryScreenTheme';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import CustomText from '../../../components/Ui/CustumText';
 import LayoutGrandient from '../../../components/Layouts/LayoutGrandient';

@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../../theme/appTheme';
-import { LocationScreenStyles } from '../../../theme/LocationScreenTheme';
+import { LocationScreenStyles } from '../../../theme/Screens/Sells/LocationScreenTheme';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 
 type LocationScreenRouteProp = RouteProp<SellsRestaurantsNavigationStackParamList, '[SellsRestaurants] - EditLocation'>;

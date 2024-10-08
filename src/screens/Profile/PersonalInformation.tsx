@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
-import { PersonalInformationStyles } from '../../theme/PersonalInformationTheme';
+import { PersonalInformationStyles } from '../../theme/Screens/Profile/PersonalInformationTheme';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../../components/Ui/CustumText';
 

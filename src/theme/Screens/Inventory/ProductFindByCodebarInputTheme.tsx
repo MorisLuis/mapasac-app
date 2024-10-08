@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "../appTheme";
+import { Theme } from "../../appTheme";
 
 
 export const ProductFindByCodebarInputStyles = (theme:Theme) => StyleSheet.create({

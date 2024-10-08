@@ -4,7 +4,7 @@ import { useTheme } from '../../../context/ThemeContext'
 import { globalFont, globalStyles } from '../../../theme/appTheme'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
-import { SelectScreenTheme } from '../../../theme/SelectScreenTheme'
+import { SelectScreenTheme } from '../../../theme/Screens/Sells/SelectScreenTheme'
 import CardButtonSkeleton from '../CardButtonSkeleton'
 
 export default function SelectClassSkeleton() {

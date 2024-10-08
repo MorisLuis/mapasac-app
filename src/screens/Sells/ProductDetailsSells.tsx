@@ -4,7 +4,7 @@ import { FlatList, SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
-import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
+import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
 import {EnlacemobInterface} from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';

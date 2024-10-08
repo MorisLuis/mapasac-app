@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SafeAreaView, ScrollView } from 'react-native'
 import { useTheme } from '../../context/ThemeContext';
-import { PrivacyScreenStyles } from '../../theme/PrivacyScreenTheme';
+import { PrivacyScreenStyles } from '../../theme/Screens/Profile/PrivacyScreenTheme';
 import CustomText from '../../components/Ui/CustumText';
 
 

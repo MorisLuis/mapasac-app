@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
-import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
+import { ConfirmationScreenStyles } from '../../../theme/Layout/ConfirmationScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';

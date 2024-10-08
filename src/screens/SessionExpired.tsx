@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native';
-import { buttonStyles } from '../theme/UI/buttons';
+import { buttonStyles } from '../theme/Components/buttons';
 import { useTheme } from '../context/ThemeContext';
 import { globalFont, globalStyles } from '../theme/appTheme';
 import { SessionExpiredStyles } from '../theme/SessionExpiredScreenTheme';

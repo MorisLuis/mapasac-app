@@ -1,8 +1,8 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import { buttonStyles } from '../../theme/UI/buttons';
+import { buttonStyles } from '../../theme/Components/buttons';
 import { useTheme } from '../../context/ThemeContext';
-import { CameraPermissionStyles } from '../../theme/ExtraScreens/CameraPermissionTheme';
+import { CameraPermissionStyles } from '../../theme/Screens/Inventory/CameraPermissionTheme';
 import CustomText from '../Ui/CustumText';
 
 interface CameraPermissionInterface {

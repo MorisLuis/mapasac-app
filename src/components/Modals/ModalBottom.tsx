@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import { Modal, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { Modal, View, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ModalBottomStyles } from '../../theme/ModalRenders/ModalBottomTheme';
+import { ModalBottomStyles } from '../../theme/Modals/ModalBottomTheme';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
 import useActionsForModules from '../../hooks/useActionsForModules';

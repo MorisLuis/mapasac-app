@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
+import { SelectScreenTheme } from '../../theme/Screens/Sells/SelectScreenTheme';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CustomText from '../../components/Ui/CustumText';
 import CardSelect from '../../components/Cards/CardSelect';

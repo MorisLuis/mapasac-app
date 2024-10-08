@@ -1,12 +1,12 @@
 import { View, TouchableOpacity, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalStyles } from '../../theme/appTheme';
 
 
 interface ModalScreenInterface {
-    children: any;
+    children: ReactNode;
     onClose: () => void;
 }
 

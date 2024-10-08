@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { counterSecondaryStyles } from '../../theme/UI/counterStyles';
 import { useTheme } from '../../context/ThemeContext';
-import { buttonStyles } from '../../theme/UI/buttons';
+import { buttonStyles } from '../../theme/Components/buttons';
 import CustomText from '../Ui/CustumText';
 
 interface CounterInterface {

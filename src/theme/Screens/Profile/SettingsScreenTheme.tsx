@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "./appTheme";
+import { Theme, globalFont, globalStyles } from "../../appTheme";
 
 export const SettingsScreenStyles = (theme: Theme) => StyleSheet.create({
     SettingsScreen: {

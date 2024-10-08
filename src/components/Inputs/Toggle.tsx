@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Switch, Platform, ViewStyle, StyleProp } from 'react-native';
-import { toggleStyles } from '../../theme/UI/inputs';
+import { toggleStyles } from '../../theme/Components/inputs';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';

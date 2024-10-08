@@ -6,7 +6,7 @@ import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProductInterface from '../../../interface/product';
-import { CameraScreenStyles } from '../../../theme/CameraScreenTheme';
+import { CameraScreenStyles } from '../../../theme/Screens/Inventory/CameraScreenTheme';
 import { CameraPermission } from '../../../components/Screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';

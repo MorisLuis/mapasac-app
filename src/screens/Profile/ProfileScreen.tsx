@@ -4,7 +4,7 @@ import { SafeAreaView, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { ProfileScreenStyles } from '../../theme/ProfileScreenTheme';
+import { ProfileScreenStyles } from '../../theme/Screens/Profile/ProfileScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import DeviceInfo from 'react-native-device-info';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';

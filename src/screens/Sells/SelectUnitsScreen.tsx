@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback, useContext } from 'rea
 import { View, TextInput, FlatList, SafeAreaView } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { SelectScreenTheme } from '../../theme/SelectScreenTheme';
+import { SelectScreenTheme } from '../../theme/Screens/Sells/SelectScreenTheme';
 import { getUnits } from '../../services/productsSells';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';
 import useErrorHandler from '../../hooks/useErrorHandler';

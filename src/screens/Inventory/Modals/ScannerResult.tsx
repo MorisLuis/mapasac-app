@@ -5,11 +5,11 @@ import { InventoryBagContext } from '../../../context/Inventory/InventoryBagCont
 import ProductInterface from '../../../interface/product';
 import { Counter } from '../../../components/Inputs/Counter';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { buttonStyles } from '../../../theme/UI/buttons';
+import { buttonStyles } from '../../../theme/Components/buttons';
 import { globalFont, globalStyles } from '../../../theme/appTheme';
 import { EmptyMessageCard } from '../../../components/Cards/EmptyMessageCard';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
-import { modalRenderstyles } from '../../../theme/ModalRenders/ScannerResultTheme';
+import { ScannerResultStyles } from '../../../theme/Screens/Inventory/ScannerResultTheme';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 import { useTheme } from '../../../context/ThemeContext';
 import Toast from 'react-native-toast-message';
@@ -87,12 +87,12 @@ const ScannerResult = ({
         >
             {
                 (product) ?
-                    <View style={modalRenderstyles(theme).ScannerResult}>
-                        <View style={modalRenderstyles(theme).product}>
+                    <View style={ScannerResultStyles(theme).ScannerResult}>
+                        <View style={ScannerResultStyles(theme).product}>
                             <View>
-                                <CustomText style={modalRenderstyles(theme).codeLabel}>Codigo: </CustomText>
-                                <CustomText style={modalRenderstyles(theme).codeValue}>{product?.clave}</CustomText>
-                                <View style={modalRenderstyles(theme).otherInfo}>
+                                <CustomText style={ScannerResultStyles(theme).codeLabel}>Codigo: </CustomText>
+                                <CustomText style={ScannerResultStyles(theme).codeValue}>{product?.clave}</CustomText>
+                                <View style={ScannerResultStyles(theme).otherInfo}>
                                     {
                                         product?.codbarras ?
                                             <Tag message='No tiene codigo' color='green'/>
@@ -105,7 +105,7 @@ const ScannerResult = ({
                             </View>
                         </View>
 
-                        <View style={modalRenderstyles(theme).counterContainer}>
+                        <View style={ScannerResultStyles(theme).counterContainer}>
                             <View style={{ width: "40%" }}>
                                 {
                                     (seeProductDetails && !fromProductDetails) &&

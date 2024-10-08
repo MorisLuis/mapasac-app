@@ -4,7 +4,7 @@ import ButtonCustum from '../Inputs/ButtonCustum'
 import { useTheme } from '../../context/ThemeContext';
 import { uiNavigationStyles } from '../../theme/UI/uiElementsTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { buttonStyles } from '../../theme/UI/buttons';
+import { buttonStyles } from '../../theme/Components/buttons';
 import { globalFont } from '../../theme/appTheme';
 
 interface FooterTwoButtonsScreenInterface {

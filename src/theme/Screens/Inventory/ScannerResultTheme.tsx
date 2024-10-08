@@ -1,10 +1,9 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "../appTheme";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Theme, globalFont, globalStyles } from "../../appTheme";
 const { height } = Dimensions.get('window');
 
 
-export const modalRenderstyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const ScannerResultStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',

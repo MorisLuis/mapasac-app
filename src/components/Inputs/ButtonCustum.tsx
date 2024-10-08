@@ -1,5 +1,5 @@
 import React from 'react'
-import { buttonStyles } from '../../theme/UI/buttons'
+import { buttonStyles } from '../../theme/Components/buttons'
 import { useTheme } from '../../context/ThemeContext'
 import CustomText from '../Ui/CustumText'
 import Icon from 'react-native-vector-icons/Ionicons';

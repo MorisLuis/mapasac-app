@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 
-import { inputStyles } from '../../theme/UI/inputs';
+import { inputStyles } from '../../theme/Components/inputs';
 
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
-import { SellsScreenStyles } from '../../theme/SellsScreenTheme';
+import { SellsScreenStyles } from '../../theme/Screens/Sells/SellsScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../interface/productSells';
 import { format } from '../../utils/currency';

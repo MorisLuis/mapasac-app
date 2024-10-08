@@ -5,7 +5,7 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
-import { ProductFindByCodebarInputStyles } from '../../../theme/ModalRenders/ProductFindByCodebarInputTheme';
+import { ProductFindByCodebarInputStyles } from '../../../theme/Screens/Inventory/ProductFindByCodebarInputTheme';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 import { InventoryNavigationProp } from '../../../interface/navigation';
 import ModalBottom from '../../../components/Modals/ModalBottom';

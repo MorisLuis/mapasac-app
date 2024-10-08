@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { InventoryBagScreenStyles } from '../../theme/InventoryBagScreenTheme';
+import { LayoutBagStyles } from '../../theme/Layout/LayoutBagTheme';
 import { useTheme } from '../../context/ThemeContext';
 import { Searchbar } from 'react-native-paper';
 import { getSearchProductInBack } from '../../services/searchs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { inputStyles } from '../../theme/UI/inputs';
+import { inputStyles } from '../../theme/Components/inputs';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { EmptyMessageCard } from '../Cards/EmptyMessageCard';
 import { globalFont, globalStyles } from '../../theme/appTheme';
@@ -174,7 +174,7 @@ export const LayoutBag = ({
     if (parseInt(handleActionBag.numberOfItems) <= 0) {
         return (
             <SafeAreaView style={{ backgroundColor: theme.background_color, flex: 1 }} >
-                <View style={InventoryBagScreenStyles(theme, typeTheme).message}>
+                <View style={LayoutBagStyles(theme, typeTheme).message}>
                     <EmptyMessageCard
                         title="No tienes productos aún."
                         message="Empieza a agregar productos al inventario"
@@ -196,7 +196,7 @@ export const LayoutBag = ({
     return (
         <>
             <SafeAreaView style={{ backgroundColor: theme.background_color }} >
-                <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
+                <View style={LayoutBagStyles(theme, typeTheme).InventoryBagScreen}>
 
                     {/* Search Bar */}
                     <Searchbar
@@ -217,7 +217,7 @@ export const LayoutBag = ({
                     />
 
 
-                    <View style={InventoryBagScreenStyles(theme, typeTheme).content}>
+                    <View style={LayoutBagStyles(theme, typeTheme).content}>
                         {
                             !(bags.length <= 0 && searchText.length > 0) ?
                                 <FlatList
@@ -250,9 +250,9 @@ export const LayoutBag = ({
                         buttonSmallDisable={false}
                         buttonSmallIcon="trash-outline"
                     >
-                        <View style={InventoryBagScreenStyles(theme, typeTheme).footer_price}>
-                            <CustomText style={InventoryBagScreenStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
-                            <CustomText style={[InventoryBagScreenStyles(theme, typeTheme).priceText, { color: handleColorWithModule.primary }]}>
+                        <View style={LayoutBagStyles(theme, typeTheme).footer_price}>
+                            <CustomText style={LayoutBagStyles(theme, typeTheme).priceLabel}>Total:</CustomText>
+                            <CustomText style={[LayoutBagStyles(theme, typeTheme).priceText, { color: handleColorWithModule.primary }]}>
                                 {deletingProductId ? "Calculando..." : format(totalPrice || 0)}
                             </CustomText>
                         </View>

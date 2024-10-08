@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
 import { Control, Controller, useWatch } from 'react-hook-form';
 import { useTheme } from '../../context/ThemeContext';
-import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
+import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
 import { UnitType } from '../../interface/navigation';

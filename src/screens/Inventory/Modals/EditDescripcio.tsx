@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, TextInput } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
-import { inputStyles } from '../../../theme/UI/inputs';
+import { inputStyles } from '../../../theme/Components/inputs';
 import { updateProduct } from '../../../services/products';
 import useErrorHandler from '../../../hooks/useErrorHandler';
 import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
-import { EditProductStyles } from '../../../theme/EditProductTheme';
+import { EditProductStyles } from '../../../theme/Screens/Inventory/EditProductTheme';
 import { InventoryNavigationProp } from '../../../interface/navigation';
 import ModalBottom from '../../../components/Modals/ModalBottom';
 

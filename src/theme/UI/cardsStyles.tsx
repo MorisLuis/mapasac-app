@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Theme, globalFont, globalStyles } from '../appTheme';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { ThemeColor } from '../../context/ThemeContext';
@@ -320,7 +320,6 @@ export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Plat
     }
 
 });
-
 
 export const ProductCardSelectTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     CardSelect: {

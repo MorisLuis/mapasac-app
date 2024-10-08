@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect, RouteProp } from '@react-navigation/nati
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { ConfirmationScreenStyles } from '../../../theme/ConfirmationScreenTheme';
+import { ConfirmationScreenStyles } from '../../../theme/Layout/ConfirmationScreenTheme';
 import { globalFont } from '../../../theme/appTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { getBagInventory, getTotalPriceBag } from '../../../services/bag';

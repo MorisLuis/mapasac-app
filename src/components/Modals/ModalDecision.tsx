@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Modal, StyleSheet, View, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
-import { ModalDecisionStyles } from '../../theme/ModalRenders/ModalDecisionTheme';
+import { ModalDecisionStyles } from '../../theme/Modals/ModalDecisionTheme';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
 
 interface ModalDecisionInterface {
     visible: boolean;
-    children: any;
+    children: ReactNode;
     message: string
 }
 

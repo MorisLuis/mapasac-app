@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "./appTheme";
+import { Theme, globalFont, globalStyles } from "../appTheme";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-export const InventoryBagScreenStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
+export const LayoutBagStyles = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     InventoryBagScreen: {
         height: '100%',
         padding: globalStyles(theme).globalPadding.padding,

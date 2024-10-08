@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import ProductInterface from '../../interface/product';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
-import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
+import { ProductDetailsStyles } from '../../theme/Screens/Inventory/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';

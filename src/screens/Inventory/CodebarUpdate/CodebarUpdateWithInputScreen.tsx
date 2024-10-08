@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { KeyboardType, SafeAreaView, TextInput, View } from 'react-native'
 import { globalStyles } from '../../../theme/appTheme';
-import { inputStyles } from '../../../theme/UI/inputs';
+import { inputStyles } from '../../../theme/Components/inputs';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import codebartypes from '../../../utils/codebarTypes.json';
-import { CodebarUpdateWithInputScreenStyles } from '../../../theme/CodebarUpdateWithInputScreenTheme';
+import { CodebarUpdateWithInputScreenStyles } from '../../../theme/Screens/Inventory/CodebarUpdateWithInputScreenTheme';
 import { useTheme } from '../../../context/ThemeContext';
 import { updateCodeBar } from '../../../services/codebar';
 import { getProductByCodeBar } from '../../../services/products';

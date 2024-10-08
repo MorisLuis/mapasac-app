@@ -2,7 +2,7 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
-import { ConfirmationScreenStyles } from '../../theme/ConfirmationScreenTheme';
+import { ConfirmationScreenStyles } from '../../theme/Layout/ConfirmationScreenTheme';
 import { ConfirmationSkeleton } from '../Skeletons/Screens/ConfirmationSkeleton';
 import { globalFont } from '../../theme/appTheme';
 import { useProtectPage } from '../../hooks/useProtectPage';

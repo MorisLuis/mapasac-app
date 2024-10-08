@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext';
 
 import { globalStyles } from '../../theme/appTheme';
 import { LoginScreenStyles } from '../../theme/LoginScreenTheme';
-import { inputStyles } from '../../theme/UI/inputs';
+import { inputStyles } from '../../theme/Components/inputs';
 import { LoadingScreen } from '../LoadingScreen';
 import { InputPassword } from '../../components/Inputs/InputPassword';
 import { TextInput } from 'react-native-paper';

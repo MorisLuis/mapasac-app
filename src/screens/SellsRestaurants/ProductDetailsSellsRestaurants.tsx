@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
-import { SellsDataScreenTheme } from '../../theme/SellsDataScreenTheme';
+import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import { AuthContext } from '../../context/auth/AuthContext';
 import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';

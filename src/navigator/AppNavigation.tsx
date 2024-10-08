@@ -16,7 +16,7 @@ import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
 import { SellsRestaurantsNavigation } from './SellsRestaurantsNavigation';
 import { TestScreen } from '../screens/test';
-import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
+import { ModalScreenStyles } from '../theme/Modals/ModalTheme';
 
 
 export type AppNavigationStackParamList = {

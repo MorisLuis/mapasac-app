@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Theme, globalFont, globalStyles } from "./appTheme";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Theme, globalFont, globalStyles } from "../../appTheme";
 
 export const SelectAmountScreenTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     SelectAmountScreen: {

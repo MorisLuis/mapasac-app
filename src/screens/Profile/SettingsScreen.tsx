@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { SafeAreaView, View } from 'react-native'
 import Toggle from '../../components/Inputs/Toggle';
 import { SettingsContext } from '../../context/settings/SettingsContext';
-import { SettingsScreenStyles } from '../../theme/SettingsScreenTheme';
+import { SettingsScreenStyles } from '../../theme/Screens/Profile/SettingsScreenTheme';
 import { useTheme } from '../../context/ThemeContext';
 
 export const SettingsScreen = () => {

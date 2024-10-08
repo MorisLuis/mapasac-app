@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'react-native-camera-kit';
 
 import { globalStyles } from '../../../theme/appTheme';
-import { buttonStyles } from '../../../theme/UI/buttons';
-import { CameraModalStyles } from '../../../theme/ModalRenders/CameraModalTheme';
+import { buttonStyles } from '../../../theme/Components/buttons';
+import { CameraModalStyles } from '../../../theme/Screens/Inventory/CameraModalTheme';
 
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';

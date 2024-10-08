@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ParamListBase, TabNavigationState, useNavigation } from '@react-navigation/native';
-import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
+import { customTabBarStyles } from '../../theme/Components/Navigation/customTabBarTheme';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';

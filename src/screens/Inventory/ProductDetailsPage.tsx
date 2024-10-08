@@ -5,7 +5,7 @@ import ProductInterface from '../../interface/product';
 import { RouteProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../../components/Skeletons/Screens/ProductDetailsSkeleton';
-import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
+import { ProductDetailsStyles } from '../../theme/Screens/Inventory/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { Theme, globalStyles } from '../../theme/appTheme';
 import { identifyBarcodeType } from '../../utils/identifyBarcodeType';

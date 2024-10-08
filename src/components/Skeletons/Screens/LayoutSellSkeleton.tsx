@@ -2,7 +2,7 @@ import { View, Text, FlatList, SafeAreaView } from 'react-native'
 import React from 'react'
 import { useTheme } from '../../../context/ThemeContext'
 import { globalFont, globalStyles } from '../../../theme/appTheme'
-import { SellsScreenStyles } from '../../../theme/SellsScreenTheme'
+import { SellsScreenStyles } from '../../../theme/Screens/Sells/SellsScreenTheme'
 import { ProductSellsSquareCardSkeleton } from '../ProductSquareCardSkeleton'
 import LayoutGrandient from '../../Layouts/LayoutGrandient'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';

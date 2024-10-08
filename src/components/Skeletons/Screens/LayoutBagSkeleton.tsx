@@ -1,9 +1,9 @@
 import { View, FlatList, SafeAreaView } from 'react-native'
 import React from 'react'
-import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme'
+import { LayoutBagStyles } from '../../../theme/Layout/LayoutBagTheme'
 import { ProductCardSkeleton } from '../ProductCardSkeleton'
 import { useTheme } from '../../../context/ThemeContext'
-import { inputStyles } from '../../../theme/UI/inputs'
+import { inputStyles } from '../../../theme/Components/inputs'
 import { globalStyles } from '../../../theme/appTheme'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,7 +20,7 @@ export default function LayoutBagSkeleton() {
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
-            <View style={InventoryBagScreenStyles(theme, typeTheme).InventoryBagScreen}>
+            <View style={LayoutBagStyles(theme, typeTheme).InventoryBagScreen}>
                 <ShimmerPlaceholder
                     style={[
                         inputStyles(theme).searchBar,
@@ -36,7 +36,7 @@ export default function LayoutBagSkeleton() {
                 <FlatList
                     data={Array(6).fill({})}
                     renderItem={() => <ProductCardSkeleton />}
-                    style={InventoryBagScreenStyles(theme, typeTheme).content}
+                    style={LayoutBagStyles(theme, typeTheme).content}
                     keyExtractor={(_, index) => index.toString()} // Usamos el índice como key temporal
                 />
             </View>

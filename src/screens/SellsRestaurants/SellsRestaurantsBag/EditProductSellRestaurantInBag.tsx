@@ -5,7 +5,7 @@ import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
 import Toast from 'react-native-toast-message';
 import CustomText from '../../../components/Ui/CustumText';
-import { EditProductStyles } from '../../../theme/EditProductTheme';
+import { EditProductStyles } from '../../../theme/Screens/Inventory/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { SellsNavigationProp } from '../../../interface/navigation';
 import ModalBottom from '../../../components/Modals/ModalBottom';

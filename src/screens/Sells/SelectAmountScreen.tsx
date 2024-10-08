@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import { View, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
+import { SelectAmountScreenTheme } from '../../theme/Screens/Sells/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { CounterSecondary } from '../../components/Inputs/CounterSecondary';
 import { SellsNavigationStackParamList } from '../../navigator/SellsNavigation';

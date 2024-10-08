@@ -1,14 +1,14 @@
 import { View, Text, FlatList, SafeAreaView } from 'react-native'
 import React from 'react'
-import { InventoryBagScreenStyles } from '../../../theme/InventoryBagScreenTheme'
+import { LayoutBagStyles } from '../../../theme/Layout/LayoutBagTheme'
 import { ProductCardSkeleton } from '../ProductCardSkeleton'
 import { useTheme } from '../../../context/ThemeContext'
-import { inputStyles } from '../../../theme/UI/inputs'
+import { inputStyles } from '../../../theme/Components/inputs'
 import { globalFont, globalStyles } from '../../../theme/appTheme'
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
 import LayoutGrandient from '../../Layouts/LayoutGrandient'
-import { InventoryScreenStyles } from '../../../theme/InventoryScreenTheme'
+import { InventoryScreenStyles } from '../../../theme/Screens/Inventory/InventoryScreenTheme'
 
 export default function InventorySkeleton() {
     const { theme, typeTheme } = useTheme();

@@ -7,7 +7,7 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from '../Ui/CustumText';
 import { BlurView } from '@react-native-community/blur';
-import { customTabBarStyles } from '../../theme/UI/customTabBarTheme';
+import { customTabBarStyles } from '../../theme/Components/Navigation/customTabBarTheme';
 import { InventoryNavigationProp } from '../../interface/navigation';
 
 interface CustomTabBarProps {

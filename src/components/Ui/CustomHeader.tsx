@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProductInterface from '../../interface/product';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { customHeaderStyles } from '../../theme/UI/customHeader';
+import { customHeaderStyles } from '../../theme/Components/Navigation/customHeader';
 import { useTheme } from '../../context/ThemeContext';
 import CustomText from './CustumText';
 
