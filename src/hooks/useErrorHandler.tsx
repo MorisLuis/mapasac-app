@@ -3,13 +3,11 @@ import { AuthContext } from '../context/auth/AuthContext';
 import { sendError } from '../services/errors';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
-import { api } from '../api/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppNavigationProp } from '../interface/navigation';
 
 export const useErrorHandler = () => {
 
-    const { logOut, user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const navigation = useNavigation<AppNavigationProp>();
 
     const handleError = async (error: any) => {
@@ -27,13 +25,13 @@ export const useErrorHandler = () => {
                     ? error?.message
                     : error;
 
-        /* await sendError({
+        await sendError({
             From: `${user.idusrmob}`,
             Message: message || Message,
             Id_Usuario: user.idusrmob,
             Metodo: method || Metodo || '',
             code: status?.toString()
-        }); */
+        });
 
         if (status === 401) {
             console.log("session ended");
