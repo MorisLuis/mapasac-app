@@ -4,7 +4,6 @@ import { getProductByClave, getProductByNoArticulo } from '../../../services/pro
 import { globalStyles } from '../../../theme/appTheme';
 import { inputStyles } from '../../../theme/UI/inputs';
 import { SearchCodebarWithInputStyles } from '../../../theme/ModalRenders/SearchCodebarWithInputTheme';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { useNavigation } from '@react-navigation/native';
 import { SettingsContext } from '../../../context/settings/SettingsContext';
 import { useTheme } from '../../../context/ThemeContext';
@@ -13,6 +12,7 @@ import ProductInterface from '../../../interface/product';
 import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 export const SearchCodebarWithInput = () => {
 
@@ -69,7 +69,7 @@ export const SearchCodebarWithInput = () => {
     }
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={handleCloseModal}
         >
@@ -134,6 +134,6 @@ export const SearchCodebarWithInput = () => {
                     </TouchableOpacity>
                 </ScrollView>
             </View>
-        </ModalMiddle>
+        </ModalBottom>
     );
 };

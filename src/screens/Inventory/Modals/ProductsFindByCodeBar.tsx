@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import ProductInterface from '../../../interface/product';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { InventoryNavigationStackParamList } from '../../../navigator/InventoryNavigation';
@@ -9,6 +8,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import { ProductFindByCodebarInputStyles } from '../../../theme/ModalRenders/ProductFindByCodebarInputTheme';
 import { ProductInventoryCard } from '../../../components/Cards/ProductCard/ProductInventoryCard';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 type ProductsFindByCodeBarRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - productsFindByCodeBarModal'>;
 
@@ -30,7 +30,7 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
     if (!products) return;
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={() => navigation.goBack()}
         >
@@ -46,6 +46,6 @@ export const ProductsFindByCodeBar = ({ route }: ProductFindByCodeBarInterface) 
                     )
                 }
             </View>
-        </ModalMiddle>
+        </ModalBottom>
     )
 }

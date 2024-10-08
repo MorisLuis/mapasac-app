@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, TextInput } from 'react-native';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { inputStyles } from '../../../theme/UI/inputs';
@@ -11,6 +10,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 type EditDescripcioPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editDescripcio'>;
 
@@ -28,13 +28,9 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
     const inputRef = useRef<TextInput>(null);
     const { handleError } = useErrorHandler()
 
-    const handleCloseModal = () => {
-        goBack()
-    }
-
-    const handleEditDescripcio = (text: string) => {
-        setDescripcioState(text)
-    }
+    const handleCloseModal = () => goBack();
+    const handleEditDescripcio = (text: string) => setDescripcioState(text);
+    const handleProductPiezasCount = () => setDescripcioState(product?.producto)
 
     const onFinish = () => {
         setEditingProduct(false);
@@ -59,15 +55,11 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
     }
 
     useEffect(() => {
-        const handleProductPiezasCount = () => {
-            setDescripcioState(product?.producto)
-        }
-
         handleProductPiezasCount()
     }, [])
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={handleCloseModal}
         >
@@ -87,6 +79,6 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
                 disabled={editingProduct}
             />
 
-        </ModalMiddle>
+        </ModalBottom>
     );
 };

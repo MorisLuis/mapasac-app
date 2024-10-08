@@ -20,32 +20,6 @@ interface LocationScreenInterface {
     route: LocationScreenRouteProp
 };
 
-const LocationTextInput = ({
-    label,
-    field,
-    locationValueLocal,
-    setLocationValueLocal,
-}: {
-    label: string;
-    field: keyof inputGoogleValue;
-    locationValueLocal: inputGoogleValue | undefined;
-    setLocationValueLocal: React.Dispatch<React.SetStateAction<inputGoogleValue | undefined>>;
-}) => (
-    <TextInputContainer
-        setComments={(value) => setLocationValueLocal((prev) => ({
-            ...prev,
-            street: prev?.street || '',
-            number: prev?.number || '',
-            neighborhood: prev?.neighborhood || '',
-            locality: prev?.locality || '',
-            [field]: value
-        }))}
-        value={locationValueLocal?.[field]}
-        styles={{ marginBottom: 20 }}
-        label={label}
-    />
-);
-
 export const LocationScreen = ({ route }: LocationScreenInterface) => {
 
     const { locationValue } = route.params;
@@ -162,3 +136,29 @@ export const LocationScreen = ({ route }: LocationScreenInterface) => {
         </ModalBottom>
     );
 };
+
+const LocationTextInput = ({
+    label,
+    field,
+    locationValueLocal,
+    setLocationValueLocal,
+}: {
+    label: string;
+    field: keyof inputGoogleValue;
+    locationValueLocal: inputGoogleValue | undefined;
+    setLocationValueLocal: React.Dispatch<React.SetStateAction<inputGoogleValue | undefined>>;
+}) => (
+    <TextInputContainer
+        setComments={(value) => setLocationValueLocal((prev) => ({
+            ...prev,
+            street: prev?.street || '',
+            number: prev?.number || '',
+            neighborhood: prev?.neighborhood || '',
+            locality: prev?.locality || '',
+            [field]: value
+        }))}
+        value={locationValueLocal?.[field]}
+        styles={{ marginBottom: 20 }}
+        label={label}
+    />
+);

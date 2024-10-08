@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
@@ -11,6 +10,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 type EditPricePageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - editPrice'>;
 
@@ -22,7 +22,7 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
 
     const { product } = route.params;
     const { goBack } = useNavigation<InventoryNavigationProp>();
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const { handleError } = useErrorHandler()
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
@@ -67,7 +67,7 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
     }, [])
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={handleCloseModal}
         >
@@ -89,6 +89,6 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
                 disabled={editingProduct}
             />
 
-        </ModalMiddle>
+        </ModalBottom>
     );
 };

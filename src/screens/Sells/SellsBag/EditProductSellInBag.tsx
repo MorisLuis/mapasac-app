@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
@@ -11,6 +10,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { SellsNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 type EditProductSellScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - EditProductInBag'>;
 
@@ -60,7 +60,7 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
     }, [])
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={handleCloseModal}
         >
@@ -82,6 +82,6 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
                 disabled={editingProduct}
             />
 
-        </ModalMiddle>
+        </ModalBottom>
     );
 };

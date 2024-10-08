@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
-import { ModalScreenStyles } from '../../theme/ModalRenders/ModalTheme';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalStyles } from '../../theme/appTheme';
@@ -16,11 +15,10 @@ const ModalScreen = ({
     onClose
 }: ModalScreenInterface) => {
 
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
 
     return (
         <View style={{
-            //height: "110%",
             width: '100%',
             borderRadius: 10,
         }}>
@@ -28,7 +26,6 @@ const ModalScreen = ({
                 <View
                     style={{
                         backgroundColor: theme.background_color,
-                        //minHeight: '10%',
                         borderTopRightRadius: 10,
                         borderTopStartRadius: 10,
                         paddingHorizontal: globalStyles().globalPadding.padding,

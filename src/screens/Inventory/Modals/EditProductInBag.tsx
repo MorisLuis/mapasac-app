@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import ModalMiddle from '../../../components/Modals/ModalMiddle';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
@@ -11,6 +10,7 @@ import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 type EditProductInBagPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[Modal] - editProductInBag'>;
 
@@ -23,7 +23,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     const { product } = route.params;
     const { editProduct, deleteProduct } = useContext(InventoryBagContext);
     const { goBack } = useNavigation<InventoryNavigationProp>();
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const [piezasCount, setPiezasCount] = useState(0);
     const [editingProduct, setEditingProduct] = useState(false)
 
@@ -57,7 +57,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     }, [])
 
     return (
-        <ModalMiddle
+        <ModalBottom
             visible={true}
             onClose={handleCloseModal}
         >
@@ -79,6 +79,6 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
                 disabled={editingProduct}
             />
 
-        </ModalMiddle>
+        </ModalBottom>
     );
 };
