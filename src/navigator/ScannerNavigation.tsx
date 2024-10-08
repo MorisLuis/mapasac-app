@@ -11,15 +11,10 @@ export type ScannerNavigationStackParamList = {
     "[ScannerNavigation] - inventory": undefined;
 };
 
-interface ScannerNavigationProps {
-    route: RouteProp<ScannerNavigationStackParamList, '[ScannerNavigation] - camera' | '[ScannerNavigation] - inventory'>;
-}
-
 export const ScannerNavigation = ({ route }: any) => {
 
     const TopTabs = createMaterialTopTabNavigator<ScannerNavigationStackParamList>();
     const initialScreen = route?.params?.screen || '[ScannerNavigation] - camera';
-    //const initialScreen = route?.params || '[ScannerNavigation] - camera';
 
     return (
         <View style={{ flex: 1 }} >

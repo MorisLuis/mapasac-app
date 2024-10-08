@@ -25,7 +25,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
 
     const navigation = useNavigation<CodebarNavigationProp>();
     const { updateBarCode, handleCodebarScannedProcces, handleGetCodebarType, codebarType, codeBar, codeBarStatus } = useContext(SettingsContext);
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const { handleError } = useErrorHandler()
 
     const [openModalCamera, setOpenModalCamera] = useState(false)

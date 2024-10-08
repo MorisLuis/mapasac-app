@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ProductDetailsSkeleton } from '../../components/Skeletons/Screens/ProductDetailsSkeleton';
 import { ProductDetailsStyles } from '../../theme/ProductDetailsTheme';
 import { SettingsContext } from '../../context/settings/SettingsContext';
-import { globalStyles } from '../../theme/appTheme';
+import { Theme, globalStyles } from '../../theme/appTheme';
 import { identifyBarcodeType } from '../../utils/identifyBarcodeType';
 import { useTheme } from '../../context/ThemeContext';
 import { format } from '../../utils/currency';
@@ -70,10 +70,6 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
                 if (shouldCleanUp.current) {
                     setProductDetailsData(undefined);
                 }
-
-                /* if (fromUpdateCodebar) {
-                    shouldCleanUp.current = true;
-                } */
             };
         }, [selectedProduct])
     );
@@ -86,7 +82,6 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
             handleEditProduct={handleEditProduct}
             fromModal={fromModal}
             codeBar={codeBar}
-        //fromUpdateCodebar={fromUpdateCodebar}
         />
     ) : (
         <ProductDetailsSkeleton />
@@ -96,8 +91,8 @@ export const ProductDetailsPage = ({ route }: ProductDetailsPageInterface) => {
 
 interface ProductDetailsContentInterface {
     productDetailsData: ProductInterface,
-    handleOptionsToUpdateCodebar: any,
-    handleAddToInventory: any,
+    handleOptionsToUpdateCodebar: () => void,
+    handleAddToInventory: () => void,
     handleEditProduct: () => void;
 
     fromModal?: boolean,
@@ -199,7 +194,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
 interface ProductDetailItem {
     label: string,
     value: string | number,
-    theme: any,
+    theme: Theme,
     isLastChild?: boolean
 }
 
