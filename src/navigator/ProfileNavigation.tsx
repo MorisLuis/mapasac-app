@@ -39,7 +39,7 @@ export const ProfileNavigation = () => {
             <ProfileTabs.Screen
                 name="[ProfileNavigation] - personalInformationScreen"
                 component={PersonalInformation}
-                options={({ navigation, route }) => ({
+                options={({ navigation}) => ({
                     header: props => (
                         <CustomHeader
                             title="Información Personal"

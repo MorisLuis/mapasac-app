@@ -18,7 +18,7 @@ import ShimpentScreen from '../screens/SellsRestaurants/SellsRestaurantsBag/Shim
 import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
 import { SelectRestaurantClassScreen } from '../screens/SellsRestaurants/SelectRestaurantClassScreen';
 
-// useNavigation() type.
+// Definición de tipos para la navegación
 export type SellsRestaurantsNavigationStackParamList = {
     SellsRestaurantsScreen: undefined;
     SellsRestaurantsDataScreen: undefined;
@@ -36,33 +36,28 @@ export type SellsRestaurantsNavigationStackParamList = {
 const Stack = createNativeStackNavigator<SellsRestaurantsNavigationStackParamList>();
 
 export const SellsRestaurantsNavigation = () => {
-
     const stackScreens = useMemo(() => (
         <>
             <Stack.Screen
                 name="SellsRestaurantsScreen"
                 component={SellsRestaurantScreen}
-                options={() => ({
-                    header: props => (
-                        <CustomTabBar Type='Sells-Restaurant' />
-                    )
-                })}
+                options={{
+                    header: () => <CustomTabBar Type='Sells-Restaurant' />
+                }}
             />
 
             <Stack.Screen
                 name="SellsRestaurantsDataScreen"
                 component={ProductDetailsSellsRestaurants}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
-                    header: props => (
+                    header: (props) => (
                         <CustomHeader
                             {...props}
-                            title={""}
+                            title=""
                             navigation={navigation}
                             backCustum={true}
-                            back={() => {
-                                navigation.goBack()
-                            }}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -71,17 +66,15 @@ export const SellsRestaurantsNavigation = () => {
             <Stack.Screen
                 name="BagSellsRestaurantsScreen"
                 component={SellsRestaurantBagScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
-                    header: props => (
+                    header: (props) => (
                         <CustomHeader
                             {...props}
-                            title={"Ventas"}
+                            title="Ventas"
                             navigation={navigation}
                             backCustum={true}
-                            back={() => {
-                                navigation.goBack()
-                            }}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -90,17 +83,15 @@ export const SellsRestaurantsNavigation = () => {
             <Stack.Screen
                 name="[SellsRestaurants] - PiecesScreen"
                 component={SelectAmountRestaurantScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
-                    header: props => (
+                    header: (props) => (
                         <CustomHeader
                             {...props}
-                            title={"Cantidad"}
+                            title="Cantidad"
                             navigation={navigation}
                             backCustum={true}
-                            back={() => {
-                                navigation.goBack()
-                            }}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -109,17 +100,15 @@ export const SellsRestaurantsNavigation = () => {
             <Stack.Screen
                 name="[SellsRestaurants] - ClassScreen"
                 component={SelectRestaurantClassScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
-                    header: props => (
+                    header: (props) => (
                         <CustomHeader
                             {...props}
-                            title={"Clase"}
+                            title="Clase"
                             navigation={navigation}
                             backCustum={true}
-                            back={() => {
-                                navigation.goBack()
-                            }}
+                            back={() => navigation.goBack()}
                         />
                     )
                 })}
@@ -156,11 +145,11 @@ export const SellsRestaurantsNavigation = () => {
             <Stack.Screen
                 name="[SellsRestaurants] - ConfirmationScreen"
                 component={ConfirmationSellsRestaurantScreen}
-                options={({ navigation }: any) => ({
-                    header: props => (
+                options={({ navigation }) => ({
+                    header: (props) => (
                         <CustomHeader
                             {...props}
-                            title={"Confirmación"}
+                            title="Confirmación"
                             navigation={navigation}
                             backCustum={true}
                             back={() => navigation.goBack()}

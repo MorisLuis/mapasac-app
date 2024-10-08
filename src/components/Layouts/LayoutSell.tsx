@@ -57,7 +57,7 @@ export const LayoutSell = ({
             const totalprice = await getTotalPriceBag({ opcion: opcion });
             if (totalprice?.error) return handleError(totalprice.error)
             setTotalPrice(parseFloat(totalprice ?? 0));
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         };
     };

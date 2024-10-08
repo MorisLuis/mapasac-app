@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { StyleProp, View, ViewStyle } from 'react-native'
 import React from 'react'
 import CustomText from './CustumText'
 import { uiElementeStyles } from '../../theme/UI/uiElementsTheme'
@@ -8,7 +8,7 @@ import useActionsForModules from '../../hooks/useActionsForModules'
 interface TagInterface {
     message: string;
     color: 'green' | 'purple';
-    extraStyles?: any
+    extraStyles?: StyleProp<ViewStyle>;
 }
 
 const Tag = ({
@@ -21,7 +21,12 @@ const Tag = ({
     const { handleColorWithModule } = useActionsForModules()
 
     return (
-        <View style={[uiElementeStyles(theme, typeTheme).tagContainer, uiElementeStyles(theme, typeTheme)[color], { ...extraStyles }]}>
+        <View
+            style={[
+                uiElementeStyles(theme, typeTheme).tagContainer,
+                uiElementeStyles(theme, typeTheme)[color],
+                extraStyles
+            ]}>
             <CustomText
                 style={[
                     uiElementeStyles(theme, typeTheme).tagText,

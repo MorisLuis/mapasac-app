@@ -6,12 +6,12 @@ import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, Searchbar } from 'react-native-paper';
 import { inputStyles } from '../../theme/UI/inputs';
-import ClientInterface from '../../interface/utils';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { EmptyMessageCard } from '../../components/Cards/EmptyMessageCard';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import ProductInterface from '../../interface/product';
 import LayoutSearchSkeleton from '../Skeletons/Screens/LayoutSearchSkeleton';
+import { ClientInterface } from '../../interface';
 
 interface LayoutSearchInterface<T> {
     handleGetItem: (page: number) => Promise<T[]>;

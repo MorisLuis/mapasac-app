@@ -16,7 +16,6 @@ import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
 import { SellsRestaurantsNavigation } from './SellsRestaurantsNavigation';
 import { TestScreen } from '../screens/test';
-import { globalStyles } from '../theme/appTheme';
 import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
 
 

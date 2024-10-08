@@ -40,7 +40,7 @@ export const ConfirmationScreen = () => {
                 numberOfProducts: numberOfItems
             });
 
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         } finally {
             setCreateInventaryLoading(false);

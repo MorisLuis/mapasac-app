@@ -19,7 +19,7 @@ export const SelectClient = () => {
             newClients = await getClients({ page, limit: 5 });
             if (newClients.error) return handleError(newClients.error);
             return newClients;
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         }
         return newClients;
@@ -31,7 +31,7 @@ export const SelectClient = () => {
             clientsSearch = await getSearchClients({ searchTerm: text });
             if (clientsSearch.error) return handleError(clientsSearch.error);
             return clientsSearch;
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         }
         return clientsSearch;

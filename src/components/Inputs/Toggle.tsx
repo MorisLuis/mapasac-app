@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Switch, Platform } from 'react-native';
+import { View, Switch, Platform, ViewStyle, StyleProp } from 'react-native';
 import { toggleStyles } from '../../theme/UI/inputs';
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,9 +8,9 @@ import CustomText from '../Ui/CustumText';
 interface ToggleInterface {
     label: string;
     message: string;
-    extraStyles: any;
+    extraStyles: StyleProp<ViewStyle>;
     value?: boolean;
-    onChange: any
+    onChange: (newValue: boolean) => void;
 }
 
 const Toggle = ({
@@ -66,7 +66,6 @@ const Toggle = ({
                             Platform.OS === 'android' && !isEnabled ? toggleStyles(theme, typeTheme).SwitchThumbColorAndroidNotEnabled.backgroundColor :
                                 Platform.OS === 'ios' && isEnabled ? toggleStyles(theme, typeTheme).SwitchThumbColorIOSdEnabled.backgroundColor : toggleStyles(theme, typeTheme).SwitchThumbColorIOSdNotEnabled.backgroundColor
                     }
-                    //ios_backgroundColor={theme.background_color_tertiary}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                 />

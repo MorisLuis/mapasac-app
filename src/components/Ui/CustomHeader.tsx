@@ -11,8 +11,7 @@ interface CustomHeaderInterface {
     navigation: any;
     title: string;
     backAvailable?: boolean;
-    back?: () => void;
-    backCustum?: boolean;
+    back?: { title: string } | (() => void);
     secondaryDesign?: boolean;
     route?: {
         params?: {
@@ -26,7 +25,6 @@ export const CustomHeader = ({
     navigation,
     title,
     backAvailable = true,
-    backCustum = false,
     back,
     secondaryDesign,
     route
@@ -37,14 +35,15 @@ export const CustomHeader = ({
     const iconColor = typeTheme === 'dark' ? "white" : "black"
 
     const handleOnPress = () => {
-        if (typeof back === 'function' && backCustum) {
-            back();
-        } else if (typeof back === 'function') {
-            back?.();
+        if (typeof back === 'function') {
+            back(); // Si es una función
+        } else if (back && typeof back === 'object' && 'title' in back) {
+            console.log(back.title); // Hacer algo con el title si es un objeto
         } else {
-            navigation.goBack();
+            navigation.goBack(); // Acción por defecto
         }
-    }
+    };
+    
 
 
     return (

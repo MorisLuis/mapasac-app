@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { AuthProvider } from './src/context/auth/AuthProvider';
 import { SettingsProvider } from './src/context/settings/SettingsProvider';
 import { InventoryProvider } from './src/context/Inventory/InventoryBagProvider';
@@ -20,7 +20,7 @@ const App = () => {
   );
 };
 
-const AppState = ({ children }: any) => {
+const AppState = ({ children }: { children: ReactNode }) => {
   return (
     <AuthProvider>
       <ThemeProvider>

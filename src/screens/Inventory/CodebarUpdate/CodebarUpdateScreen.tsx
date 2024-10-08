@@ -4,7 +4,7 @@ import { globalStyles } from '../../../theme/appTheme';
 import { useNavigation } from '@react-navigation/native';
 import { updateCodeBar } from '../../../services/codebar';
 import ModalBottom from '../../../components/Modals/ModalBottom';
-import CameraModal from '../../../components/Modals/ModalRenders/CameraModal';
+import CameraModal from './CameraModal';
 import { Selector } from '../../../components/Inputs/Selector';
 import codebartypes from '../../../utils/codebarTypes.json';
 import { SettingsContext } from '../../../context/settings/SettingsContext';

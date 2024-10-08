@@ -70,7 +70,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
             await resetAfterPost();
 
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         } finally {
             setCreateSellLoading(false);
@@ -138,7 +138,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
             const totalprice = await getTotalPriceBag({ opcion: opcion });
             if (totalprice.error) return handleError(totalprice.error);
             setTotalPrice(parseFloat(totalprice))
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         }
     }

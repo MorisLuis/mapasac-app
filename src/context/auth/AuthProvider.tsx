@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useReducer, useEffect, useState } from 'react';
 
 import UserInterface from '../../interface/user';
@@ -44,7 +44,7 @@ const AUTH_INITIAL_STATE: AuthState = {
 }
 
 
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
     const [loggingIn, setLoggingIn] = useState(false);
@@ -99,8 +99,7 @@ export const AuthProvider = ({ children }: any) => {
                 }
             });
 
-        } catch (error: any) {
-            //handleError(error)
+        } catch (error) {
             return dispatch({ type: 'notAuthenticated' });
         }
     }
@@ -144,10 +143,10 @@ export const AuthProvider = ({ children }: any) => {
 
         try {
             setLoggingIn(false);
-            if(!isExpired) await api.get('/api/auth/logout');
+            if (!isExpired) await api.get('/api/auth/logout');
             AsyncStorage.removeItem('token');
             dispatch({ type: 'logout' });
-            if(!isExpired){
+            if (!isExpired) {
                 navigation.goBack();
                 navigation.navigate('LoginPage')
             };

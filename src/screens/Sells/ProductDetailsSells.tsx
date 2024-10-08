@@ -115,7 +115,7 @@ export const ProductDetailsSells = () => {
                 if (product.error) return handleError(product.error);
                 setIdInveartsValue(product.idinvearts);
             }
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         }
 

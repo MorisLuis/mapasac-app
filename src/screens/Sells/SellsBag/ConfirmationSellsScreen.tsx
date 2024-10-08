@@ -65,7 +65,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
             await resetAfterPost();
 
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         } finally {
             setCreateSellLoading(false);
@@ -112,7 +112,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             const totalprice = await getTotalPriceBag({ opcion: 2 });
             if (totalprice.error) return handleError(totalprice.error);
             setTotalPrice(parseFloat(totalprice))
-        } catch (error: any) {
+        } catch (error) {
             handleError(error);
         }
     }

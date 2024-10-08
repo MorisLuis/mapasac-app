@@ -28,7 +28,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             newClients = await getProducts(page);
             if (newClients.error) return handleError(newClients.error);
             return newClients;
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         }
         return newClients;
@@ -40,7 +40,7 @@ export const SearchProductScreen = ({ route }: SearchProductScreenInterface) => 
             clientsSearch = await getSearchProductInStock({ searchTerm: text });
             if (clientsSearch.error) return handleError(clientsSearch.error);
             return clientsSearch;
-        } catch (error: any) {
+        } catch (error) {
             handleError(error)
         }
         return clientsSearch;

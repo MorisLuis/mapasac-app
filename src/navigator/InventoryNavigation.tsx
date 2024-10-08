@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductInterface from '../interface/product';
 import { CustomHeader } from '../components/Ui/CustomHeader';
 import { CodebarUpdateNavigation } from './CodebarUpdateNavigation';
@@ -19,6 +19,7 @@ import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
+import { StackNavigationOptions } from '@react-navigation/stack';
 
 
 export type InventoryNavigationStackParamList = {
@@ -47,13 +48,14 @@ export type InventoryNavigationStackParamList = {
 
 const Stack = createNativeStackNavigator<InventoryNavigationStackParamList>();
 
-export const InventoryNavigation = () => {
-    const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
+const commonOptions: NativeStackNavigationOptions = {
+    headerBackTitle: 'Atrás',
+    headerTitleAlign: 'center',
+};
 
-    const commonOptions: any = {
-        headerBackTitle: 'Atrás',
-        headerTitleAlign: 'center'
-    };
+export const InventoryNavigation = () => {
+
+    const { handleCameraAvailable, updateBarCode } = useContext(SettingsContext);
 
     const stackScreens = useMemo(() => (
         <>
@@ -72,14 +74,13 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="bagInventoryScreen"
                 component={InventoryBagScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
                             {...props}
                             title={"Inventario"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -91,14 +92,13 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="confirmationScreen"
                 component={ConfirmationScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
 
                     header: props => (
                         <CustomHeader
                             {...props}
                             title={"Confirmación"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )
@@ -108,7 +108,7 @@ export const InventoryNavigation = () => {
             <Stack.Screen
                 name="searchProductScreen"
                 component={SearchProductScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     header: props => (
                         <CustomHeader
                             {...props}
@@ -151,7 +151,6 @@ export const InventoryNavigation = () => {
                             {...props}
                             title="Detalles de Producto"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack();
                                 updateBarCode('');
@@ -176,7 +175,6 @@ export const InventoryNavigation = () => {
                             {...props}
                             title="Editando Producto"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )

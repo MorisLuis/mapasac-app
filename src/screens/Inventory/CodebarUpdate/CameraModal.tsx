@@ -15,10 +15,11 @@ import { updateCodeBar } from '../../../services/codebar';
 
 import codebartypes from '../../../utils/codebarTypes.json';
 import { identifyBarcodeType, identifyUPCOrEANBarcode } from '../../../utils/identifyBarcodeType';
-import { MessageCard } from '../../Cards/MessageCard';
+import { MessageCard } from '../../../components/Cards/MessageCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useErrorHandler from '../../../hooks/useErrorHandler';
-import CustomText from '../../Ui/CustumText';
+import CustomText from '../../../components/Ui/CustumText';
+import { CodebarNavigationProp } from '../../../interface';
 
 interface CameraModalInterface {
     selectedProduct: { idinvearts: number }
@@ -28,7 +29,7 @@ interface CameraModalInterface {
 const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const { vibration, updateBarCode, codebarType, codeBar } = useContext(SettingsContext);
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<CodebarNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { handleError } = useErrorHandler()
 

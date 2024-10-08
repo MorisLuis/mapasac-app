@@ -54,7 +54,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="SellsDataScreen"
                 component={ProductDetailsSells}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -73,7 +73,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="BagSellsScreen"
                 component={SellsBagScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -92,7 +92,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Sells] - PiecesScreen"
                 component={SelectAmountScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -111,7 +111,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Sells] - PriceScreen"
                 component={SelectAmountScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -130,7 +130,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Sells] - UnitScreen"
                 component={SelectUnitScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -149,7 +149,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Sells] - ClassScreen"
                 component={SelectClassScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -168,7 +168,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name="[Sells] - SelectClient"
                 component={SelectClient}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     presentation: "modal",
                     header: props => (
                         <CustomHeader
@@ -199,7 +199,7 @@ export const SellsNavigation = () => {
             <Stack.Screen
                 name='[Sells] - ConfirmationScreen'
                 component={ConfirmationSellsScreen}
-                options={({ navigation }: any) => ({
+                options={({ navigation }) => ({
                     header: props => (
                         <CustomHeader
                             {...props}

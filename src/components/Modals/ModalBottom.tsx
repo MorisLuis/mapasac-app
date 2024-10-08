@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Modal, View, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ModalBottomStyles } from '../../theme/ModalRenders/ModalBottomTheme';
@@ -9,7 +9,7 @@ import useActionsForModules from '../../hooks/useActionsForModules';
 interface ModalBottomInterface {
     visible: boolean;
     onClose: () => void;
-    children: any;
+    children: ReactNode;
 
     blurNotAvailable?: boolean;
     blurType?: any;

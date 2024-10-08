@@ -2,21 +2,22 @@ import React from 'react';
 import { View } from 'react-native';
 import { CodebarUpdateScreen } from '../screens/Inventory/CodebarUpdate/CodebarUpdateScreen';
 import { CodebarUpdateWithInputScreen } from '../screens/Inventory/CodebarUpdate/CodebarUpdateWithInputScreen';
-import { createStackNavigator } from '@react-navigation/stack';
-import { CustomHeader } from '../components/Ui/CustomHeader';
+import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import { globalStyles } from '../theme/appTheme';
 import ProductInterface from '../interface/product';
 import { useTheme } from '../context/ThemeContext';
-import { CodebarUpdateNavigationInterface, CodebarUpdateNavigationPageRouteProp } from '../interface/navigation';
+import { CodebarUpdateNavigationInterface } from '../interface/navigation';
+import { CustomHeader } from '../components/Ui/CustomHeader';
 
 export type CodebarNavigationStackParamList = {
     "[CodebarUpdateNavigation] - UpdateCodeBarScreen": { product: ProductInterface };
     "[CodebarUpdateNavigation] - UpdateCodeBarWithInput": { title: string }
 };
 
-export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterface) => {
+// Crear el stack navigator
+const Stack = createStackNavigator<CodebarNavigationStackParamList>();
 
-    const Stack = createStackNavigator<CodebarNavigationStackParamList>();
+export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterface) => {
     const { selectedProduct } = route.params;
     const { theme } = useTheme();
 
@@ -25,11 +26,12 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
 
             <Stack.Screen
                 name="[CodebarUpdateNavigation] - UpdateCodeBarScreen"
-                options={({ navigation }) => ({
-                    header: props =>
+                options={({ navigation, route }): StackNavigationOptions => ({
+                    header: (props) => (
                         <View style={{ paddingTop: globalStyles(theme).globalPadding.padding, backgroundColor: theme.background_color }}>
                             <CustomHeader title="Crear codigo de barras" navigation={navigation} />
                         </View>
+                    ),
                 })}
             >
                 {props => <CodebarUpdateScreen {...props} selectedProduct={selectedProduct} />}
@@ -37,11 +39,17 @@ export const CodebarUpdateNavigation = ({ route }: CodebarUpdateNavigationInterf
 
             <Stack.Screen
                 name="[CodebarUpdateNavigation] - UpdateCodeBarWithInput"
-                options={({ navigation }) => ({
-                    header: (props: any) =>
+                options={({ navigation, route }): StackNavigationOptions => ({
+                    header: (props) => (
                         <View style={{ paddingTop: globalStyles(theme).globalPadding.padding, backgroundColor: theme.background_color }}>
-                            <CustomHeader {...props} title={props.route.params.title} navigation={navigation} />
+                            <CustomHeader
+                                {...props}
+                                title={route.params.title}
+                                navigation={navigation}
+                                back={navigation.goBack}
+                            />
                         </View>
+                    ),
                 })}
             >
                 {props => <CodebarUpdateWithInputScreen {...props} selectedProduct={selectedProduct} />}

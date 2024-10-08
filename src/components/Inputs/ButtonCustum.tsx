@@ -4,7 +4,7 @@ import { useTheme } from '../../context/ThemeContext'
 import CustomText from '../Ui/CustumText'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { globalFont } from '../../theme/appTheme'
-import { TouchableOpacity } from 'react-native';
+import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 import DotLoader from '../Ui/DotLaoder';
 import useActionsForModules from '../../hooks/useActionsForModules';
 
@@ -17,7 +17,7 @@ interface ButtonCustumInterface {
     buttonColor?: "white"
     iconName?: string;
     iconColor?: string;
-    extraStyles?: any;
+    extraStyles?: StyleProp<ViewStyle>;
 }
 
 const ButtonCustum = ({
@@ -38,8 +38,9 @@ const ButtonCustum = ({
         <TouchableOpacity
             style={[
                 buttonStyles(theme).button,
-                disabled && { opacity: 0.6 }
-                , { ...extraStyles, backgroundColor: buttonColor ? buttonColor : handleColorWithModule.primary }
+                disabled && { opacity: 0.6 },
+                extraStyles,
+                {backgroundColor: buttonColor ? buttonColor : handleColorWithModule.primary }
             ]}
             onPress={onPress}
             disabled={disabled}

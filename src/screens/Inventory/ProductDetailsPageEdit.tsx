@@ -9,8 +9,9 @@ import { format } from '../../utils/currency';
 import { getProductDetails } from '../../services/products';
 import { ProductDetailsEditSkeleton } from '../../components/Skeletons/Screens/ProductDetailsEditSkeleton';
 import useErrorHandler from '../../hooks/useErrorHandler';
-import { InventoryNavigationProp, InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
+import {InventoryNavigationStackParamList } from '../../navigator/InventoryNavigation';
 import CardButton from '../../components/Cards/CardButton';
+import { InventoryNavigationProp } from '../../interface';
 
 type EditProductPageRouteProp = RouteProp<InventoryNavigationStackParamList, '[ProductDetailsPage] - productDetailsScreenEdit'>;
 
