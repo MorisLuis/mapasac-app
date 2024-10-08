@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { View, TextInput, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { SelectAmountScreenTheme } from '../../theme/SelectAmountScreenTheme';
 import { RouteProp, useNavigation } from '@react-navigation/native';
@@ -21,8 +21,8 @@ export const SelectAmountScreen = ({
     route
 }: SelectAmountScreenInterface) => {
 
-    const { theme, typeTheme } = useTheme();
     const { valueDefault, unit, from } = route.params;
+    const { theme, typeTheme } = useTheme();
     const navigation = useNavigation<SellsNavigationProp>();
     const { updateFormData } = useContext(SellsBagContext);
 

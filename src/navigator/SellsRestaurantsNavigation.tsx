@@ -16,7 +16,6 @@ import { inputGoogleValue } from '../components/Inputs/GooglePlacesAutocomplete'
 import { CommentsInProduct } from '../screens/SellsRestaurants/CommentsInProduct';
 import ShimpentScreen from '../screens/SellsRestaurants/SellsRestaurantsBag/ShimpentScreen';
 import { ModalScreenStyles } from '../theme/ModalRenders/ModalTheme';
-import ClassInterface from '../interface/class';
 import { SelectRestaurantClassScreen } from '../screens/SellsRestaurants/SelectRestaurantClassScreen';
 
 // useNavigation() type.
@@ -28,7 +27,7 @@ export type SellsRestaurantsNavigationStackParamList = {
     "[SellsRestaurants] - EditProductInBag": { product: ProductSellsRestaurantInterface };
     "[SellsRestaurants] - EditLocation": { locationValue?: inputGoogleValue };
     "[SellsRestaurants] - EditShipment": undefined;
-    "[SellsRestaurants] - ClassScreen": { valueDefault?: ClassInterface, cvefamilia?: number, descripcio?: string, image?: string, totalClasses?: number };
+    "[SellsRestaurants] - ClassScreen": { valueDefault?: number, cvefamilia: string };
     "[SellsRestaurants] - CommentInProduct": { comments: string };
     "[SellsRestaurants] - PiecesScreen": { valueDefault: string, unit?: string, from: string };
     "[SellsRestaurants] - ConfirmationScreen": { addressDirection?: inputGoogleValue, methodShipment?: 1 | 2 | 3 | 4 };

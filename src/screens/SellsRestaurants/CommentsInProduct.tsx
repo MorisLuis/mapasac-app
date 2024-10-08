@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { TextInput, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 
-import Toast from 'react-native-toast-message';
 import { SellsRestaurantsNavigationStackParamList } from '../../navigator/SellsRestaurantsNavigation';
 import { SellsNavigationProp } from '../../interface';
 import { useTheme } from '../../context/ThemeContext';

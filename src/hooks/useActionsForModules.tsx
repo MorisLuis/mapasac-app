@@ -28,14 +28,14 @@ export const useActionsForModules = () => {
             case 'Sells':
                 return {
                     openBag: () => navigate('BagSellsScreen'),
-                    openConfirmation: () => navigate('[Sells] - confirmationScreen'),
+                    openConfirmation: () => navigate('[Sells] - ConfirmationScreen'),
                     resetAfterPost: resetAfterPostMarket,
                     numberOfItems: numberOfItemsSells
                 };
             case 'Sells-Restaurant':
                 return {
                     openBag: () => navigate('BagSellsRestaurantsScreen'),
-                    openConfirmation: () => navigate('[SellsRestaurants] - confirmationScreen'),
+                    openConfirmation: () => navigate('[SellsRestaurants] - ConfirmationScreen'),
                     resetAfterPost: resetAfterPostSellsRestaurant,
                     numberOfItems: numberOfItemsSellsRestaurant
                 };

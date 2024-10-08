@@ -4,8 +4,21 @@ import { SellsBagContext } from './SellsBagContext';
 import { sellsBagReducer } from './SellsBagReducer';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
-import { SellsDataScreenTypeProps } from '../../interface/navigation';
-import { EnlacemobInterface } from '../../interface';
+import { EnlacemobInterface, UnitType } from '../../interface';
+
+export type SellsDataFormType = {
+    cvefamilia?: number;
+    pieces?: string;
+    price?: string;
+    typeClass?: UnitType;
+    units?: UnitType;
+    productSellData?: { idinvearts: number, capa: string, idinveclas: number };
+
+    totalClasses?: number;
+    descripcio?: string;
+    image?: string;
+};
+
 
 export interface SellsBagInterface {
     numberOfItemsSells: string;
@@ -22,7 +35,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
     const { handleError } = useErrorHandler();
 
     const [productAdded, setProductAdded] = useState(false);
-    const [formSellsData, setFormSellsData] = useState<SellsDataScreenTypeProps>({});
+    const [formSellsData, setFormSellsData] = useState<SellsDataFormType>({});
 
 
     const handleUpdateSummary = async () => {
@@ -80,7 +93,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         }
     };
 
-    const updateFormData = (data: SellsDataScreenTypeProps) => {
+    const updateFormData = (data: SellsDataFormType) => {
         setFormSellsData((prev) => ({ ...prev, ...data }));
     };
 

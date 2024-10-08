@@ -12,7 +12,8 @@ import CardSelect from '../../components/Cards/CardSelect';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import SelectClassSkeleton from '../../components/Skeletons/Screens/SelectClassSkeleton';
-import { SellsDataScreenTypeProps, SellsNavigationProp } from '../../interface/navigation';
+import { SellsNavigationProp } from '../../interface/navigation';
+import { SellsDataFormType } from '../../context/Sells/SellsBagProvider';
 
 type SelectClassScreenRouteProp = RouteProp<SellsNavigationStackParamList, '[Sells] - ClassScreen'>;
 
@@ -57,7 +58,7 @@ export const SelectClassScreen = ({
     };
 
     const handleSave = () => {
-        const data: SellsDataScreenTypeProps = {
+        const data: SellsDataFormType = {
             totalClasses: totalClasses,
             descripcio: descripcio,
             image: image,

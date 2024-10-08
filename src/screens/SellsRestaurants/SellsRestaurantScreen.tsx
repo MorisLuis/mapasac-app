@@ -35,7 +35,7 @@ export const SellsRestaurantScreen = () => {
             });
 
         } catch (error) {
-            handleError(error)
+            handleError(error);
         } finally {
             setIsLoading(false);
         }
@@ -44,16 +44,26 @@ export const SellsRestaurantScreen = () => {
     const handleSelectProduct = async (product: ProductSellsRestaurantInterface) => {
         const cvefamilia = product.cvefamilia
         const productData = await getProductDetailsRestaurantSells(cvefamilia);
-        updateFormData({
-            descripcio: product.descripcio,
-            image: product.imagen,
-            price: productData[0].precio,
-            capa: productData[0].capa,
-            typeClass: { id: productData[0].idinveclas, value: productData[0].producto },
-            units: productData[0].unidad,
-            idinvearts: productData[0].idinvearts
-        })
-        navigation.navigate('SellsRestaurantsDataScreen');
+
+        if (productData.length > 1) {
+            updateFormData({
+                cvefamilia: cvefamilia,
+                totalClasses: productData.length
+            })
+            navigation.navigate('[SellsRestaurants] - ClassScreen', { cvefamilia: cvefamilia });
+        } else {
+            updateFormData({
+                descripcio: product.descripcio,
+                image: product.imagen,
+                price: productData[0].precio,
+                capa: productData[0].capa,
+                typeClass: { id: productData[0].idinveclas, value: productData[0].producto },
+                units: productData[0].unidad,
+                idinvearts: productData[0].idinvearts,
+                totalClasses: 1
+            })
+            navigation.navigate('SellsRestaurantsDataScreen');
+        }
     }
 
     const renderItem = useCallback(({ item }: { item: CombinedSellsInterface }) => {

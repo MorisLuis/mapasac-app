@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { SellsDataScreenTypeProps } from "../../interface/navigation";
 import { EnlacemobInterface } from "../../interface";
+import { SellsDataFormType } from "./SellsBagProvider";
 
 interface ContextProps {
     addProductSell: (sellBody: EnlacemobInterface) => void;
@@ -9,11 +9,11 @@ interface ContextProps {
     resetAfterPost: () => void;
     handleUpdateSummary: () => void;
     handleCleanState: () => void;
-    updateFormData: (data: SellsDataScreenTypeProps) => void;
+    updateFormData: (data: SellsDataFormType) => void;
     cleanFormData: () => void;
     
     numberOfItemsSells: string;
-    formSellsData: SellsDataScreenTypeProps;
+    formSellsData: SellsDataFormType;
     productAdded: boolean;
 }
 

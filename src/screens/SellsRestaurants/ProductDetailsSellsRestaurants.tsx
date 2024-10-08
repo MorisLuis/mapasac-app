@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { SafeAreaView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
@@ -9,25 +9,14 @@ import CustomText from '../../components/Ui/CustumText';
 import ImageContainerCustum from '../../components/Ui/ImageContainerCustum';
 import FooterScreen from '../../components/Navigation/FooterScreen';
 import CardButton from '../../components/Cards/CardButton';
-import { UnitType, EnlacemobInterface, SellsRestaurantNavigationProp } from '../../interface';
+import { EnlacemobInterface, SellsRestaurantNavigationProp } from '../../interface';
 import { SellsRestaurantBagContext } from '../../context/SellsRestaurants/SellsRestaurantsBagContext';
-
-export type FormSellsRestaurantType = {
-    pieces?: string;
-    price?: string;
-    capa?: string;
-    comments?: string;
-    typeClass?: UnitType;
-    units?: any,
-    descripcio?: string,
-    image?: string,
-    idinvearts?: string;
-};
+import { SellsRestaurantDataFormType } from '../../context/SellsRestaurants/SellsRestaurantsBagProvider';
 
 export const ProductDetailsSellsRestaurants = () => {
 
     const { user } = useContext(AuthContext);
-    const { addProductSell, formSellsData, updateFormData } = useContext(SellsRestaurantBagContext);
+    const { addProductSell, formSellsData } = useContext(SellsRestaurantBagContext);
 
     const {
         pieces,
@@ -38,16 +27,16 @@ export const ProductDetailsSellsRestaurants = () => {
         image,
         capa,
         idinvearts,
-        comments
+        comments,
+        totalClasses,
+        cvefamilia
     } = formSellsData;
-
 
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsRestaurantNavigationProp>();
     const [title, setTitle] = useState<string>();
-    //const [commentsState, setCommentState] = useState('');
 
-    const { control, handleSubmit, setValue, getValues, watch } = useForm<FormSellsRestaurantType>({
+    const { control, handleSubmit, setValue, getValues, watch } = useForm<SellsRestaurantDataFormType>({
         defaultValues: {
             pieces: pieces,
             price: price,
@@ -63,17 +52,15 @@ export const ProductDetailsSellsRestaurants = () => {
     const onSubmit = () => {
         const { pieces, price, capa, comments } = getValues();
 
-
         const parsedPieces = parseFloat(pieces as string);
-        const parsedPrice = parseFloat(price as string);
         const parsedidinvearts = Number(idinvearts)
         const userId = user?.idusrmob ?? 0;
 
         const bagProduct: EnlacemobInterface = {
             cantidad: isNaN(parsedPieces) ? 0 : parsedPieces,
-            precio: isNaN(parsedPrice) ? 0 : parsedPrice,
+            precio: price ?? 0,
             idinvearts: parsedidinvearts ?? 0,
-            unidad: units,
+            unidad: units ?? 0,
             capa: capa ?? '',
             idusrmob: userId,
             comentario: comments
@@ -85,8 +72,13 @@ export const ProductDetailsSellsRestaurants = () => {
 
     const selectAmount = () => {
         navigate('[SellsRestaurants] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') as string, unit: 'PZA' })
-    }
+    };
 
+    const handleNavigateToClass = () => {
+        if (totalClasses && totalClasses <= 1) return;
+        if (!cvefamilia) return;
+        navigate('[SellsRestaurants] - ClassScreen', { cvefamilia: cvefamilia, valueDefault: idinvearts });
+    }
 
     // Reset Values
     useEffect(() => {
@@ -95,8 +87,9 @@ export const ProductDetailsSellsRestaurants = () => {
         if (price) setValue('price', price);
         if (descripcio) setTitle(descripcio);
         if (comments) setValue('comments', comments);
+        if (typeClass) setValue('typeClass', typeClass);
 
-    }, [pieces, price, descripcio, comments]);
+    }, [pieces, price, descripcio, comments, typeClass]);
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
@@ -114,7 +107,7 @@ export const ProductDetailsSellsRestaurants = () => {
 
                 <>
                     <CardButton
-                        onPress={() => console.log()}
+                        onPress={handleNavigateToClass}
                         label='Clase:'
                         valueDefault='Seleccionar la clase'
                         color='blue'

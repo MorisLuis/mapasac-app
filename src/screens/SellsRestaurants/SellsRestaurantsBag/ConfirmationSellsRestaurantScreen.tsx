@@ -53,7 +53,6 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
     const onPostSellRestaurant = async () => {
         setCreateSellLoading(true);
         if(!methodShipmentLocal) return;
-        console.log({methodShipmentLocal})
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,

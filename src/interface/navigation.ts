@@ -32,7 +32,6 @@ export type CodebarUpdateNavigationInterface = {
     route: CodebarUpdateNavigationPageRouteProp
 };
 
-
 // Inventory navigation.
 export type InventoryNavigationProp = NativeStackNavigationProp<Partial<InventoryNavigationStackParamList>>;
 
@@ -48,21 +47,6 @@ export type UnitType = {
     value: string;
     id: number;
 };
-
-export type SellsDataScreenTypeProps = {
-    totalClasses?: number;
-    descripcio?: string;
-    image?: string;
-    cvefamilia?: number;
-    pieces?: string;
-    price?: string;
-    typeClass?: UnitType;
-    units?: UnitType;
-    productSellData?: { idinvearts: number, capa: string, idinveclas: number };
-    comments?: string;
-    /* capa?: string;
-    idinvearts?: number; */
-}
 
 // Sells Restaurants navigation.
 export type SellsRestaurantNavigationProp = NativeStackNavigationProp<Partial<SellsRestaurantsNavigationStackParamList>>;

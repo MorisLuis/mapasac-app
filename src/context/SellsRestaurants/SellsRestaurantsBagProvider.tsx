@@ -5,8 +5,23 @@ import {EnlacemobInterface} from '../../interface/enlacemob';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import { AuthContext } from '../auth/AuthContext';
 import { SellsRestaurantBagContext } from './SellsRestaurantsBagContext';
-import { FormSellsRestaurantType } from '../../screens/SellsRestaurants/ProductDetailsSellsRestaurants';
-import { updateProductInBagInterface } from '../../interface';
+import { UnitType, updateProductInBagInterface } from '../../interface';
+
+export type SellsRestaurantDataFormType = {
+    cvefamilia?: string;
+    pieces?: string;
+    price?: number;
+    typeClass?: UnitType;
+    comments?: string;
+    units?: number;
+    capa?: string;
+    idinvearts?: number;
+    
+    descripcio?: string;
+    image?: string;
+    totalClasses?: number;
+};
+
 
 export interface SellsRestaurantsBagInterface {
     numberOfItemsSells: string;
@@ -23,7 +38,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
     const { handleError } = useErrorHandler();
 
     const [productAdded, setProductAdded] = useState(false);
-    const [formSellsData, setFormSellsData] = useState<FormSellsRestaurantType>({});
+    const [formSellsData, setFormSellsData] = useState<SellsRestaurantDataFormType>({});
 
 
     const handleUpdateSummary = async () => {
@@ -80,7 +95,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
         }
     };
 
-    const updateFormData = (data: FormSellsRestaurantType) => {
+    const updateFormData = (data: SellsRestaurantDataFormType) => {
         setFormSellsData((prev) => ({ ...prev, ...data }));
     };
 
