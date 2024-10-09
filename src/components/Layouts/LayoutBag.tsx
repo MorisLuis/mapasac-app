@@ -59,7 +59,7 @@ export const LayoutBag = ({
     const { actualModule } = useContext(SettingsContext);
     const { handleError } = useErrorHandler()
     const { handleColorWithModule, handleActionBag } = useActionsForModules();
-    const searchInputRef = useRef<any>(null);
+    const searchInputRef = useRef(null);
     const { goBack } = useNavigation<NativeStackNavigationProp<CombinedSellsAndInventoryNavigationStackParamList>>();
 
     const [searchText, setSearchText] = useState<string>('');

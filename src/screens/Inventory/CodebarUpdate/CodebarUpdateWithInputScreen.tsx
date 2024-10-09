@@ -30,7 +30,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const [openModalDecision, setOpenModalDecision] = useState(false)
     const { handleError } = useErrorHandler()
 
-    const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
+    const currentType = codebartypes.barcodes.find((code) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {

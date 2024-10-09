@@ -16,14 +16,14 @@ import { ClientInterface } from '../../interface';
 interface LayoutSearchInterface<T> {
     handleGetItem: (page: number) => Promise<T[]>;
     handleSearchItem: (text: string) => Promise<T[]>;
-    onSelect?: (asg?: any) => void;
+    onSelect?: (item?: T) => void;
 
     renderItem: ({ item }: { item: T }) => React.JSX.Element;
     title: string;
     footerVisible?: boolean
 }
 
-export const LayoutSearch = <T,>({
+export const LayoutSearch = <T extends ClientInterface | ProductInterface>({
     handleGetItem,
     handleSearchItem,
     renderItem,
@@ -40,7 +40,7 @@ export const LayoutSearch = <T,>({
     const [isLoading, setIsLoading] = useState(false);
     const [dataUploaded, setDataUploaded] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const searchInputRef = useRef<any>(null);
+    const searchInputRef = useRef(null);
 
     const loadItems = useCallback(async () => {
         if (isLoading || !hasMore) return;

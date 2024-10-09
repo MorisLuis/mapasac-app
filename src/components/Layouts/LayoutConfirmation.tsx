@@ -13,7 +13,6 @@ import { ModuleInterface } from '../../interface/utils';
 import { LoadingScreen } from '../../screens/LoadingScreen';
 import ProductInterface from '../../interface/product';
 import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../interface/productSells';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 

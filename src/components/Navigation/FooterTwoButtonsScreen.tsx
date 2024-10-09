@@ -1,5 +1,5 @@
 import { View, SafeAreaView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import ButtonCustum from '../Inputs/ButtonCustum'
 import { useTheme } from '../../context/ThemeContext';
 import { uiNavigationStyles } from '../../theme/UI/uiElementsTheme';
@@ -16,7 +16,7 @@ interface FooterTwoButtonsScreenInterface {
     buttonSmallDisable: boolean;
     buttonSmallIcon: string;
 
-    children: any;
+    children: ReactNode;
     visible: boolean;
     visibleChildren: boolean;
 };

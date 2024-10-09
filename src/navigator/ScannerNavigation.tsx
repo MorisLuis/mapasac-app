@@ -4,7 +4,6 @@ import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from '@react-na
 import { Inventory } from '../screens/Inventory/Camera/Inventory';
 import CameraScreen from '../screens/Inventory/Camera/CameraScreen';
 import CustumNavigationInventory from '../components/Navigation/CustumNavigationInventory';
-import { RouteProp } from '@react-navigation/native';
 
 export type ScannerNavigationStackParamList = {
     "[ScannerNavigation] - camera": undefined,

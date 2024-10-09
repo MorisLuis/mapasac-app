@@ -8,31 +8,32 @@ import { useTheme } from '../../context/ThemeContext';
 import CustomText from './CustumText';
 
 interface CustomHeaderInterface {
-    navigation: any;
+    navigation: {
+        goBack: () => void;
+    };
     title: string;
     backAvailable?: boolean;
     back?: { title: string } | (() => void);
     secondaryDesign?: boolean;
     route?: {
         params?: {
-            selectedProduct?: ProductInterface
+            selectedProduct?: ProductInterface;
             fromModal?: boolean;
         };
     };
 }
 
-export const CustomHeader = ({
+export const CustomHeader: React.FC<CustomHeaderInterface> = ({
     navigation,
     title,
     backAvailable = true,
     back,
     secondaryDesign,
     route
-}: CustomHeaderInterface) => {
-
-    const { fromModal } = route?.params || {}
+}) => {
+    const { fromModal } = route?.params || {};
     const { theme, typeTheme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColor = typeTheme === 'dark' ? "white" : "black";
 
     const handleOnPress = () => {
         if (typeof back === 'function') {
@@ -43,8 +44,6 @@ export const CustomHeader = ({
             navigation.goBack(); // Acción por defecto
         }
     };
-    
-
 
     return (
         <>
@@ -55,7 +54,7 @@ export const CustomHeader = ({
                             style={customHeaderStyles(theme).back}
                             onPress={handleOnPress}
                         >
-                                <Icon name="caret-back" size={hp("2.5%")} color={iconColor} />
+                            <Icon name="caret-back" size={hp("2.5%")} color={iconColor} />
                             <CustomText style={customHeaderStyles(theme).backText}>Atrás</CustomText>
                         </TouchableOpacity>
                     )}
@@ -63,7 +62,7 @@ export const CustomHeader = ({
                 </SafeAreaView>
             ) : (
                 <SafeAreaView style={{ backgroundColor: secondaryDesign ? theme.background_color_secondary : theme.background_color }}>
-                    <View style={secondaryDesign ? customHeaderStyles(theme).CustomHeaderSecondary :  customHeaderStyles(theme).CustomHeader}>
+                    <View style={secondaryDesign ? customHeaderStyles(theme).CustomHeaderSecondary : customHeaderStyles(theme).CustomHeader}>
                         {backAvailable && (
                             <TouchableOpacity
                                 style={customHeaderStyles(theme).back}
@@ -79,15 +78,18 @@ export const CustomHeader = ({
             )}
         </>
     );
-
 }
 
+interface CustomBackButtonProps {
+    navigation: {
+        goBack: () => void;
+    };
+    onClick?: () => void; // Define el tipo como una función opcional
+}
 
-export const CustomBackButton = ({ navigation, onClick }: any) => {
-
-
+export const CustomBackButton: React.FC<CustomBackButtonProps> = ({ navigation, onClick }) => {
     const { typeTheme, theme } = useTheme();
-    const iconColor = typeTheme === 'dark' ? "white" : "black"
+    const iconColor = typeTheme === 'dark' ? "white" : "black";
 
     const handlePress = () => {
         onClick?.();
@@ -109,8 +111,6 @@ export const CustomBackButton = ({ navigation, onClick }: any) => {
         </TouchableOpacity>
     );
 };
-
-
 
 const stylesHeaderBack = StyleSheet.create({
     back: {

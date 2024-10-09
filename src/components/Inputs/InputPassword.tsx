@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity } from 'react-native'
-
 import { inputStyles } from '../../theme/Components/inputs';
-
 import { useTheme } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from 'react-native-paper';

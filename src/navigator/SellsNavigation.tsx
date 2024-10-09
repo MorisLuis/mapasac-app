@@ -61,7 +61,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={""}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -80,7 +79,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Ventas"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -99,7 +97,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Cantidad"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -118,7 +115,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Cantidad"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -137,7 +133,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Clase"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -156,7 +151,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Clase"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -175,7 +169,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Cliente"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => {
                                 navigation.goBack()
                             }}
@@ -205,7 +198,6 @@ export const SellsNavigation = () => {
                             {...props}
                             title={"Confirmación"}
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )

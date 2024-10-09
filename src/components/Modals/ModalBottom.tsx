@@ -12,7 +12,6 @@ interface ModalBottomInterface {
     children: ReactNode;
 
     blurNotAvailable?: boolean;
-    blurType?: any;
     blurAmount?: number;
 
     //Menu

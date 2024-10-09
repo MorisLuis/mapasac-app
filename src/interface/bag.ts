@@ -1,12 +1,6 @@
 import { EnlacemobInterface } from "./enlacemob";
 import ProductInterface from "./product";
 
-/* 
-    opcion : 0 => Inventory
-    opcion : 2 => Sells
-    opcion : 4 => Sells Restaurants
-*/
-
 export type opcionBag = 0 | 2 | 4;
 
 export interface bagInterface {

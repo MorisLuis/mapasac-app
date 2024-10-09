@@ -63,7 +63,7 @@ export const CameraSettings = ({
         }
     };
 
-    const codeScanned = async ({ codes }: any) => {
+    const codeScanned = async ({ codes }: { codes: string }) => {
         handleStartScanning(true)
         handleCameraAvailable(false)
         setProductsScanned(undefined)
@@ -100,7 +100,7 @@ export const CameraSettings = ({
                 updateBarCode(codeValue)
             } catch (error) {
                 handleError(error)
-            }  finally {
+            } finally {
                 handleStartScanning(false)
                 setCodeDetected(false)
                 handleCameraAvailable(true)

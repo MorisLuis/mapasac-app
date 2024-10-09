@@ -32,7 +32,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const [codebartypeSelected, setCodebartypeSelected] = useState<number>();
     const [changeTypeOfCodebar, setChangeTypeOfCodebar] = useState(false);
     const [optionSelected, setOptionSelected] = useState<number>(0)
-    const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType);
+    const currentType = codebartypes.barcodes.find((code) => code.id === codebarType);
 
     const hanldeCodebarTypeSelected = (value: number) => {
         handleGetCodebarType(value)
@@ -113,7 +113,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                             <View style={CodebarUpdateScreenStyles(theme).selectorCodebarType}>
                                 <Selector
                                     label={"Tipo de codigo de barras: "}
-                                    items={codebartypes.barcodes.map((item: any) => {
+                                    items={codebartypes.barcodes.map((item) => {
                                         return { label: item?.type, value: item?.id }
                                     })}
                                     value={codebartypes?.barcodes.find((code) => code?.id === codebartypeSelected)?.type || "Code 128"}

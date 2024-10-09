@@ -5,13 +5,13 @@ import useErrorHandler from '../../../hooks/useErrorHandler';
 import CardSelect from '../../../components/Cards/CardSelect';
 import { LayoutSearch } from '../../../components/Layouts/LayoutSearch';
 import { useNavigation } from '@react-navigation/native';
-import { ClientInterface } from '../../../interface';
+import { ClientInterface, SellsNavigationProp } from '../../../interface';
 
 export const SelectClient = () => {
 
     const { handleError } = useErrorHandler()
     const [itemSelected, setItemSelected] = useState<ClientInterface | null>(null);
-    const { navigate } = useNavigation<any>();
+    const { navigate } = useNavigation<SellsNavigationProp>();
 
     const handleGetClient = async (page: number) => {
         let newClients
@@ -48,7 +48,7 @@ export const SelectClient = () => {
 
     const onSelect = useCallback(() => {
         if (itemSelected) {
-            navigate("[Sells] - confirmationScreen", { client: itemSelected });
+            navigate("[Sells] - ConfirmationScreen", { client: itemSelected });
         }
     }, [itemSelected, navigate]);
 

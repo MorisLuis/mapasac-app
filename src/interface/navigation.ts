@@ -16,13 +16,12 @@ export type CombinedInventoryAndAppNavigationStackParamList = InventoryNavigatio
 export type CombinedSellsAndAppNavigationStackParamList =
     SellsNavigationStackParamList &
     AppNavigationStackParamList &
-    SellsRestaurantsNavigationStackParamList &
     SellsRestaurantsNavigationStackParamList;
 
 export type CombinedSellsAndInventoryNavigationStackParamList =
+    AppNavigationStackParamList &
     SellsNavigationStackParamList &
     InventoryNavigationStackParamList &
-    AppNavigationStackParamList &
     SellsRestaurantsNavigationStackParamList;
 
 // Codebar navigation

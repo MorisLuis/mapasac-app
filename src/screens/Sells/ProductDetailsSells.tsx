@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
 import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import { getIdinveartsProduct, getProductByEnlacemob, getProductsSellsFromFamily, getTotalClassesSells } from '../../services/productsSells';
-import {EnlacemobInterface} from '../../interface/enlacemob';
+import { EnlacemobInterface } from '../../interface/enlacemob';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { SellsBagContext } from '../../context/Sells/SellsBagContext';
 import useErrorHandler from '../../hooks/useErrorHandler';
@@ -23,6 +23,12 @@ export type FormType = {
     price: string;
     typeClass: UnitType;
     units: UnitType;
+    capa: string;
+    idinveclas: number;
+};
+
+type ProductSellDataType = {
+    idinvearts: number;
     capa: string;
     idinveclas: number;
 };
@@ -121,7 +127,7 @@ export const ProductDetailsSells = () => {
 
     }, [cvefamilia, setValue]);
 
-    const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: any) => {
+    const handleGetProduct = useCallback(async ({ idinvearts, capa, idinveclas }: ProductSellDataType) => {
         try {
             const product = await getProductByEnlacemob({ idinvearts, capa, idinveclas });
 

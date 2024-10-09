@@ -1,13 +1,12 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { AppNavigationProp } from '../interface/navigation';
+import { CombineNavigationProp, CombinedSellsAndInventoryNavigationStackParamList } from '../interface';
 
-// Define el tipo de tus parámetros si es necesario
 interface UseProtectPageProps {
     numberOfItems?: string;
-    protectionCondition?: any;
+    protectionCondition?: boolean;
     loading?: boolean;
-    navigatePage: string
+    navigatePage: keyof CombinedSellsAndInventoryNavigationStackParamList | 'back';
 }
 
 export const useProtectPage = ({
@@ -16,33 +15,27 @@ export const useProtectPage = ({
     loading,
     navigatePage
 }: UseProtectPageProps) => {
+    const { navigate, canGoBack } = useNavigation<any>();
 
-    const { navigate, goBack } = useNavigation<any>();
-    const navigation = useNavigation<AppNavigationProp>();
-
-    const protectThisPage = (numberOfItems && parseFloat(numberOfItems) <= 0 && !loading) ? true : false;
+    const protectThisPage = numberOfItems && parseFloat(numberOfItems) <= 0 && !loading;
     const protectThisPage2 = protectionCondition;
 
     useFocusEffect(
         useCallback(() => {
             const checkAccess = async () => {
-                if( navigatePage === 'back' ) {
-                    return navigation.canGoBack() ? navigation.canGoBack?.() : navigation.navigate('OnboardingScreen')
+                if (navigatePage === 'back') {
+                    return canGoBack() ? canGoBack() : navigate('OnboardingScreen');
                 }
 
-                if (protectThisPage) {
-                    return navigate(navigatePage);
-                }
-
-                if (protectThisPage2) {
+                if (protectThisPage || protectThisPage2) {
                     return navigate(navigatePage);
                 }
             };
             checkAccess();
-        }, [protectThisPage, protectThisPage2,navigate])
+        }, [protectThisPage, protectThisPage2, navigatePage, navigate, canGoBack])
     );
 
     return {
-        protectThisPage: protectThisPage ? protectThisPage : protectThisPage2
-    }
+        protectThisPage: protectThisPage || protectThisPage2,
+    };
 };

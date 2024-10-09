@@ -56,7 +56,6 @@ export const SellsRestaurantsNavigation = () => {
                             {...props}
                             title=""
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )
@@ -73,7 +72,6 @@ export const SellsRestaurantsNavigation = () => {
                             {...props}
                             title="Ventas"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )
@@ -90,7 +88,6 @@ export const SellsRestaurantsNavigation = () => {
                             {...props}
                             title="Cantidad"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )
@@ -107,7 +104,6 @@ export const SellsRestaurantsNavigation = () => {
                             {...props}
                             title="Clase"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )
@@ -151,7 +147,6 @@ export const SellsRestaurantsNavigation = () => {
                             {...props}
                             title="Confirmación"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )

@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import { useTheme } from '../../context/ThemeContext';
 import { globalStyles } from '../../theme/appTheme';
 
 const SelectPicker = () => {
-    const { theme, typeTheme, toggleTheme } = useTheme();
+    const { theme, typeTheme } = useTheme();
 
     return (
         <RNPickerSelect

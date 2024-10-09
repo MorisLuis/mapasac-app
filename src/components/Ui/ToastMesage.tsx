@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { globalFont } from '../../theme/appTheme';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
+import Toast, { BaseToast, BaseToastProps, ErrorToast, ToastProps } from 'react-native-toast-message';
 import CustomText from './CustumText';
 
 const toastConfig = {
-    success: (props: any) => (
+    success: (props: BaseToastProps) => (
         <BaseToast
             {...props}
             style={{ borderLeftColor: 'pink' }}
@@ -17,7 +17,7 @@ const toastConfig = {
             }}
         />
     ),
-    error: (props: any) => (
+    error: (props: BaseToastProps) => (
         <ErrorToast
             {...props}
             text1Style={{
@@ -29,26 +29,25 @@ const toastConfig = {
         />
     ),
 
-    tomatoToast: ({ text1, props }: any) => (
+    tomatoToast: ({ text1 }: BaseToastProps) => (
         <View style={styles.ToastMessage}>
-            <Icon name="checkmark-circle" size={24} color="yellowgreen" style={styles.icon}/>
+            <Icon name="checkmark-circle" size={24} color="yellowgreen" style={styles.icon} />
             <CustomText numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
                 {text1}
             </CustomText>
-            <CustomText>{props.uuid}</CustomText>
         </View>
     ),
 
-    tomatoError: ({ text1, props }: any) => (
+    tomatoError: ({ text1 }: BaseToastProps) => (
         <View style={styles.ToastMessage}>
-            <Icon name="close-circle" size={24} color="red" style={styles.icon}/>
+            <Icon name="close-circle" size={24} color="red" style={styles.icon} />
             <CustomText numberOfLines={2} ellipsizeMode="tail" style={styles.message}>
                 {text1}
             </CustomText>
-            {/* <CustomText>{props.uuid}</CustomText> */}
         </View>
     )
 };
+
 
 export const ShowToastMessage = () => {
     return <Toast config={toastConfig} />
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     },
     message: {
         fontSize: globalFont.font_normal,
-        flexShrink: 1, 
-        marginRight: 10, 
+        flexShrink: 1,
+        marginRight: 10,
     }
 });

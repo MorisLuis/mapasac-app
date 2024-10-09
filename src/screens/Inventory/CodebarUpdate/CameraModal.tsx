@@ -39,7 +39,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
     const [codebarTest, setCodebarTest] = useState(true);
 
     const iconColor = typeTheme === 'dark' ? "white" : "black"
-    const currentType = codebartypes.barcodes.find((code: any) => code.id === codebarType)
+    const currentType = codebartypes.barcodes.find((code) => code.id === codebarType)
     const regex = new RegExp(currentType?.regex as string);
 
     const handleVibrate = () => {
@@ -48,7 +48,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
         }
     };
 
-    const codeScanned = async ({ codes }: any) => {
+    const codeScanned = async ({ codes }: { codes: string }) => {
 
         setCodeIsScanning(true)
         if (codes.length > 0 && isScanningAllowed) {
@@ -144,7 +144,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                                         <View style={CameraModalStyles(theme).content}>
                                             <Camera
                                                 scanBarcode={true}
-                                                onReadCode={(event: any) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
+                                                onReadCode={(event: { nativeEvent: { codeStringValue: string } }) => codeScanned({ codes: event.nativeEvent.codeStringValue })}
                                                 style={CameraModalStyles(theme).camera}
                                             />
                                         </View>
