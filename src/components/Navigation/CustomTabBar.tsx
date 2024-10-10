@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { ParamListBase, TabNavigationState, useNavigation } from '@react-navigation/native';
 import { customTabBarStyles } from '../../theme/Components/Navigation/customTabBarTheme';
@@ -59,16 +59,16 @@ const CustomTabBar = ({ renderTabButton, state, Type, absolute }: CustomTabBarIn
                     }
                 </View>
 
-                <View style={customTabBarStyles(theme, typeTheme).content_right}>
-                    <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
-                        <TouchableOpacity onPress={() => handleActionBag.openBag() }>
+                <TouchableOpacity onPress={() => handleActionBag.openBag()}>
+                    <View style={customTabBarStyles(theme, typeTheme).content_right}>
+                        <View style={customTabBarStyles(theme, typeTheme).buttonBag}>
                             <Icon name="albums-outline" size={22} color={iconColor} />
-                        </TouchableOpacity>
-                        <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule.primary }]}>
-                            <CustomText style={{ color: typeTheme === 'dark' ? theme.color_black : theme.text_color }}>{parseInt(useDataForModule().numberOfItems)}</CustomText>
+                            <View style={[customTabBarStyles(theme, typeTheme).bagCounter, { backgroundColor: handleColorWithModule.primary }]}>
+                                <CustomText style={{ color: typeTheme === 'dark' ? theme.color_black : theme.text_color }}>{parseInt(useDataForModule().numberOfItems)}</CustomText>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
         )
     }
