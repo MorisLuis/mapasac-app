@@ -17,7 +17,7 @@ interface CardButtonInterface {
 
     /* Optional */
     specialValue?: string;
-    control?: Control | null;
+    control?: Control<any, any> | null;
     controlValue?: keyof any;
     icon?: string;
     isPrice?: boolean;

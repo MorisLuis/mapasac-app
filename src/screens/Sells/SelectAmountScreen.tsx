@@ -28,7 +28,7 @@ export const SelectAmountScreen = ({
 
     const inputRef = useRef<TextInput>(null);
     const [value, setValue] = useState<string>(valueDefault ?? "0");
-    const buttondisabled = false;
+    const buttondisabled = parseInt(value) <= 0;
 
     const handleSave = () => {
         if (from === 'pieces') {

@@ -40,7 +40,6 @@ export const SelectClassScreen = ({
     const buttondisabled = !value ? true : false;
 
     const handleSelectOption = (value: ClassInterface) => {
-
         setValue({
             rcapa: value.rcapa,
             ridinvearts: value.ridinvearts,
@@ -59,13 +58,12 @@ export const SelectClassScreen = ({
 
     const handleSave = () => {
         const data: SellsDataFormType = {
-            totalClasses: totalClasses,
             descripcio: descripcio,
             image: image,
             cvefamilia: cvefamilia,
             typeClass: {
                 id: value.ridinvearts,
-                value: value.rproducto
+                value: value.rcapa.trim() !== "" ? value.rcapa.trim() : value.clase
             },
             productSellData: {
                 idinvearts: value.ridinvearts,

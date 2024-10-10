@@ -49,7 +49,7 @@ export const ProductDetailsSells = () => {
         image,
         totalClasses
     } = formSellsData;
-
+    
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsNavigationProp>();
     const { handleError } = useErrorHandler();
@@ -179,12 +179,13 @@ export const ProductDetailsSells = () => {
         handleGetTotalClasses();
     }, [pieces, price, typeClass, units, cvefamilia, descripcio, image]);
 
-    // Get product when come only from 'SelectClassScreen'.
+    // Get product when came from 'SelectClassScreen'.
     useEffect(() => {
         if (!productSellData) return;
         const { idinvearts, capa, idinveclas } = productSellData ?? {};
         handleGetProduct({ idinvearts, capa, idinveclas });
     }, [productSellData]);
+
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
@@ -216,6 +217,7 @@ export const ProductDetailsSells = () => {
                                 control={control}
                                 controlValue='typeClass'
                                 icon='resize-outline'
+                                specialValue={getValues('typeClass') === undefined ? "NO TIENE CLASE" : undefined}
                             />
                             <CardButton
                                 onPress={() => navigate('[Sells] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}

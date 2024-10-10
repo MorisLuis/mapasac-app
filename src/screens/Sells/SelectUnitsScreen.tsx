@@ -41,11 +41,12 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
 
     const inputRef = useRef<TextInput>(null);
     const [units, setUnits] = useState<UnitInterface[] | null>(null);
-
     const [selectedOption, setSelectedOption] = useState<UnitType>({
         id: valueDefault?.id,
         value: valueDefault?.value
     });
+
+    const buttonDisabled = selectedOption.id === undefined ? true : false
 
     const handleSave = useCallback(() => {
         updateFormData({ units: selectedOption })
@@ -96,7 +97,7 @@ export const SelectUnitScreen = ({ route }: SelectAmountScreenInterface) => {
                 <FooterScreen
                     buttonTitle='Agregar'
                     buttonOnPress={handleSave}
-                    buttonDisabled={false}
+                    buttonDisabled={buttonDisabled}
                 />
             </View>
         </SafeAreaView>
