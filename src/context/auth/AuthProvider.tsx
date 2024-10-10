@@ -111,11 +111,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             state.status = "checking"
             const data = await postLogin({ usr, pas })
 
-            if (data.error) {
-                handleError(data?.error);
-                return dispatch({ type: 'addError', payload: data.error })
-            }
-
             await AsyncStorage.setItem('token', data.token);
 
             dispatch({

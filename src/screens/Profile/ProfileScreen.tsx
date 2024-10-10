@@ -92,7 +92,7 @@ export const ProfileScreen = () => {
 
             <ModalDecision
                 visible={openModalDecision}
-                message="Seguro de cerrar sesión"
+                message="Seguro de cerrar sesión?"
             >
                 <ButtonCustum
                     title="Cerrar sesión"

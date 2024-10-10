@@ -25,12 +25,10 @@ export const LoginScreen = () => {
         pas: ''
     });
 
-
     useEffect(() => {
         if (errorMessage.length === 0) return;
         Alert.alert('Login incorrecto', errorMessage, [{ text: 'Ok', onPress: removeError }]);
     }, []);
-
 
     const onLogin = () => {
         setLoadingLogin(true)
