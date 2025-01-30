@@ -10,7 +10,6 @@ import { SearchProductScreen } from '../screens/Inventory/SearchProductScreen';
 import { SearchCodebarWithInput } from '../screens/Inventory/Modals/SearchCodebarWithInput';
 import ScannerResult from '../screens/Inventory/Modals/ScannerResult';
 import { ProductsFindByCodeBar } from '../screens/Inventory/Modals/ProductsFindByCodeBar';
-import { AuthContext } from '../context/auth/AuthContext';
 import { ConfirmationScreen } from '../screens/Inventory/InventoryBag/ConfirmationScreen';
 import { EditProductInBag } from '../screens/Inventory/Modals/EditProductInBag';
 import { ScannerNavigation } from './ScannerNavigation';
@@ -19,7 +18,6 @@ import { EditPrice } from '../screens/Inventory/Modals/EditPrice';
 import { EditDescripcio } from '../screens/Inventory/Modals/EditDescripcio';
 import { InventoryBagScreen } from '../screens/Inventory/InventoryBag/InventoryBagScreen';
 import { ProductDetailsPage } from '../screens/Inventory/ProductDetailsPage';
-import { StackNavigationOptions } from '@react-navigation/stack';
 
 
 export type InventoryNavigationStackParamList = {

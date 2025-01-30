@@ -12,7 +12,7 @@ import { ProductSellsInterface } from '../../../interface/productSells';
 
 export const SellsBagScreen = () => {
 
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const { deleteProductSell } = useContext(SellsBagContext);
     const [bags, setBags] = useState<ProductSellsInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);

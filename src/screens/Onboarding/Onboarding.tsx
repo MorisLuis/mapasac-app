@@ -11,7 +11,6 @@ import CustomText from '../../components/Ui/CustumText';
 import { SettingsContext } from '../../context/settings/SettingsContext';
 import { AppNavigationProp } from '../../interface/navigation';
 import { getModules } from '../../services';
-import ButtonCustum from '../../components/Inputs/ButtonCustum';
 
 interface modulesInterface {
     idappmob: number,
@@ -33,7 +32,6 @@ export const OnboardingScreen = () => {
     const evenModules = modules?.filter(module => module.idappmob % 2 === 0);
 
     const onGetModules = async () => {
-
         try {
             const modulesData = await getModules();
             if (modulesData?.error) return handleError(modulesData.error);

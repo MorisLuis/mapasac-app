@@ -77,7 +77,7 @@ export const SellsNavigation = () => {
                     header: props => (
                         <CustomHeader
                             {...props}
-                            title={"Ventas"}
+                            title={"Pedidos"}
                             navigation={navigation}
                             back={() => {
                                 navigation.goBack()

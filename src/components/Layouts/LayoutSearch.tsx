@@ -131,7 +131,7 @@ export const LayoutSearch = <T extends ClientInterface | ProductInterface>({
                             style={LayoutBagStyles(theme, typeTheme).content}
                             data={filteredItems}
                             renderItem={renderItem}
-                            keyExtractor={(item) => `${(item as ClientInterface).idclientes || (item as ProductInterface).clave}`}
+                            keyExtractor={(item) => `${(item as ClientInterface).idclientes || (item as ProductInterface).idinvearts}`}
                             ListFooterComponent={renderFooter}
                             onEndReached={searchText !== "" ? null : loadItems}
                             onEndReachedThreshold={searchText !== "" ? null : 1}

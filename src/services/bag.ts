@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { api } from "../api/api";
 import { addProductInBagInventoryInterface, bagInterface, deleteProductInBagInventoryInterface, getBagInterface, updateProductInBagInterface } from "../interface/bag";
 
@@ -6,8 +7,8 @@ const getBagInventory = async ({ page, limit, option }: getBagInterface) => {
     try {
         const { data } = await api.get(`/api/bag?limit=${limit}&page=${page}&option=${option}`);
         return data.bag
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 };
 
@@ -16,8 +17,8 @@ const getTotalProductsInBag = async ({ opcion }: bagInterface) => {
     try {
         const { data } = await api.get(`/api/bag/total?opcion=${opcion}`);
         return data.total
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 
 };
@@ -26,8 +27,8 @@ const getTotalPriceBag = async ({ opcion }: bagInterface) => {
     try {
         const { data } = await api.get(`/api/bag/price?opcion=${opcion}`);
         return data.total
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 };
 
@@ -35,8 +36,8 @@ const addProductInBag = async ({ product, opcion }: addProductInBagInventoryInte
     try {
         const data = await api.post(`/api/bag`, { ...product, opcion: opcion });
         return data as any;
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 }
 
@@ -46,8 +47,8 @@ const updateProductInBag = async (body : updateProductInBagInterface) => {
     try {
         const data = await api.put(`/api/bag`, body );
         return data as any
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 }
 
@@ -56,8 +57,8 @@ const deleteProductInBag = async ({ idenlacemob }: deleteProductInBagInventoryIn
     try {
         const { data } = await api.delete(`/api/bag/${idenlacemob}`);
         return data
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     }
 
 }
@@ -67,8 +68,8 @@ const deleteAllProductsInBag = async ({ opcion }: bagInterface) => {
     try {
         const { data } = await api.delete(`/api/bag/all?opcion=${opcion}`);
         return data
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: { ...error as AxiosError } };
     };
 
 }

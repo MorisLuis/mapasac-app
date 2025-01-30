@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { buttonStyles } from '../../theme/Components/buttons';
 import { useTheme } from '../../context/ThemeContext';
 import { CameraPermissionStyles } from '../../theme/Screens/Inventory/CameraPermissionTheme';
@@ -27,9 +27,9 @@ export const CameraPermission = ({
 
             {
                 availableAuthorization &&
-                <View>
-                    <TouchableOpacity style={buttonStyles(theme).button_small} onPress={requestPermissions}>
-                        <CustomText style={{ color: theme.text_color }}>Autorizar camara</CustomText>
+                <View >
+                <TouchableOpacity style={buttonStyles(theme).button_small} onPress={requestPermissions}>
+                        <Text style={{ color: theme.text_color }}>Autorizar camara</Text>
                     </TouchableOpacity>
                 </View>
             }

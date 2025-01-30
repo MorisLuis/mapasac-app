@@ -98,8 +98,8 @@ export const LayoutSell = ({
             <SafeAreaView>
                 <View style={SellsScreenStyles(theme).SellsScreen}>
                     <View style={SellsScreenStyles(theme).header}>
-                        <CustomText style={SellsScreenStyles(theme).header_title}>Ventas</CustomText>
-                        <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de venta</CustomText>
+                        <CustomText style={SellsScreenStyles(theme).header_title}>Pedidos</CustomText>
+                        <CustomText style={SellsScreenStyles(theme).header_subtitle}>Total de pedido</CustomText>
                         <CustomText style={[SellsScreenStyles(theme).header_total]}>
                             {
                                 productAdded ? 'Calculando...' : format(totalPrice)

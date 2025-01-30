@@ -122,6 +122,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             });
 
         } catch (error: any) {
+
             dispatch({
                 type: 'addError',
                 payload: (error.error) || 'Información incorrecta'

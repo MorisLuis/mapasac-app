@@ -51,7 +51,7 @@ const LayoutConfirmation = ({
         if (Type === 'Inventory') {
             return 'Inventario'
         } else {
-            return 'Venta'
+            return 'Pedido'
         }
     }
 

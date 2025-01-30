@@ -26,7 +26,7 @@ export const SettingsScreen = () => {
 
                     <Toggle
                         label='Apariencia'
-                        message="Personaliza el aspecto de Olei en tu dispositivo."
+                        message="Personaliza el aspecto de la aplicación en tu dispositivo."
                         extraStyles={{}}
                         value={typeTheme === 'light' ? true : false}
                         onChange={(value: boolean) => toggleTheme()}

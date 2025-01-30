@@ -19,8 +19,8 @@ export const useDataForModule = () => {
     // Data showed in 'SuccesMessage'.
     const { title, text } =
         actualModule === 'Inventory' ? { title: 'Inventario realizado', text: 'Inventario' } :
-            actualModule === 'Sells-Restaurant' ? { title: 'Venta realizada', text: 'Venta' } :
-                { title: 'Venta realizada', text: 'Venta' };
+            actualModule === 'Sells-Restaurant' ? { title: 'Pedido realizada', text: 'Pedido' } :
+                { title: 'Pedido realizado', text: 'Pedido' };
 
     // Retornar ambos valores calculados
     return {

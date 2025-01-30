@@ -15,5 +15,12 @@ export const CameraPermissionStyles = (theme: Theme ) =>  StyleSheet.create({
     messageText: {
         color: theme.text_color_secondary,
         fontSize: globalFont.font_normal
+    },
+    authButton: {
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'red',
+        alignItems: 'center',
+        textAlign: 'center'
     }
 });

@@ -3,7 +3,6 @@ import { TextInput, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../context/ThemeContext';
 import { Counter } from '../../../components/Inputs/Counter';
-import Toast from 'react-native-toast-message';
 import CustomText from '../../../components/Ui/CustumText';
 import { EditProductStyles } from '../../../theme/Screens/Inventory/EditProductTheme';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
@@ -12,7 +11,6 @@ import ModalBottom from '../../../components/Modals/ModalBottom';
 import { TextInputContainer } from '../../../components/Inputs/TextInputContainer';
 import { SellsRestaurantsNavigationStackParamList } from '../../../navigator/SellsRestaurantsNavigation';
 import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/SellsRestaurantsBagContext';
-import { Keyboard } from 'react-native';
 
 const MenuOptions = [
     { label: 'Precio', value: 1 },

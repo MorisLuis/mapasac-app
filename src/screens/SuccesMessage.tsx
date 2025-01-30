@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, RouteProp } from '@react-navigation/native';
 import { SuccesMessageScreenStyles } from '../theme/SuccesMessageScreenTheme';
@@ -22,6 +22,7 @@ interface SuccesMessageProps {
 }
 
 export const SuccesMessage = ({ route }: SuccesMessageProps) => {
+    
     const { redirection, numberOfProducts, importe } = route.params ?? {};
     const navigation = useNavigation<AppNavigationProp>();
     const { theme, typeTheme } = useTheme();

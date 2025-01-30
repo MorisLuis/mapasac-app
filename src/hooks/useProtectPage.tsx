@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { CombineNavigationProp, CombinedSellsAndInventoryNavigationStackParamList } from '../interface';
+import { CombinedSellsAndInventoryNavigationStackParamList } from '../interface';
 
 interface UseProtectPageProps {
     numberOfItems?: string;

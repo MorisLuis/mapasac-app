@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { getSearchProductInStock } from '../../services/searchs';
 import useErrorHandler from '../../hooks/useErrorHandler';
 import CardSelect from '../../components/Cards/CardSelect';
