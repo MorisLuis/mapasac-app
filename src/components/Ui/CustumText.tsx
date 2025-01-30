@@ -9,7 +9,11 @@ const CustomText: React.FC<TextProps & { style?: TextStyle }> = ({ style, ...pro
 
     return (
         <Text
-            style={[{ fontFamily: 'SourceSans3-Regular', fontSize: globalFont.font_normal, color: theme.text_color }, style]}
+            style={[{ 
+                fontFamily: 'SourceSans3-Regular', 
+                fontSize: globalFont.font_normal, 
+                color: theme.text_color
+            }, style]}
             {...props}
         />
     );

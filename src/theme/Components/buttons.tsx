@@ -61,7 +61,9 @@ export const buttonStyles = (theme: Theme, typeTheme?: string) =>  StyleSheet.cr
 
     buttonTextClear: {
         color: theme.text_color_light,
-        fontSize: globalFont.font_sm
+        fontSize: globalFont.font_sm,
+        width: "100%",
+        textAlign: 'center'
     },
 
     // Others
