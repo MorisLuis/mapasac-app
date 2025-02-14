@@ -52,7 +52,7 @@ export const ProductDetailsSellsRestaurants = () => {
     const onSubmit = () => {
         const { pieces, price, capa, comments } = getValues();
 
-        const parsedPieces = parseFloat(pieces as string);
+        const parsedPieces = parseFloat(pieces ?? '');
         const parsedidinvearts = Number(idinvearts)
         const userId = user?.idusrmob ?? 0;
 
@@ -71,7 +71,7 @@ export const ProductDetailsSellsRestaurants = () => {
     };
 
     const selectAmount = () => {
-        navigate('[SellsRestaurants] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') as string, unit: 'PZA' })
+        navigate('[SellsRestaurants] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces') ?? '', unit: 'PZA' })
     };
 
     const handleNavigateToClass = () => {

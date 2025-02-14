@@ -40,7 +40,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const iconColor = typeTheme === 'dark' ? "white" : "black"
     const currentType = codebartypes.barcodes.find((code) => code.id === codebarType)
-    const regex = new RegExp(currentType?.regex as string);
+    const regex = new RegExp(currentType?.regex ?? '');
 
     const handleVibrate = () => {
         if (vibration) {
@@ -90,12 +90,18 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
     const hanldeUpdateCodebar = async () => {
 
-        try {            
+        try {
+            if(!codeBar) return;
+
             const codebar = await updateCodeBar({
-                codebarras: codeBar as string,
+                codebarras: codeBar,
                 idinvearts: selectedProduct.idinvearts
-            })
-            if (codebar?.error) return handleError(codebar.error);
+            });
+
+            if ('error' in codebar || codebar.status !== 200) {
+                return handleError(codebar);
+            }
+
             onClose();
             navigation.goBack();
         } catch (error) {
@@ -108,7 +114,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
         setProductExistent(false)
     }
 
-    return ( 
+    return (
         <SafeAreaView>
             <View style={CameraModalStyles(theme).cameraScreen}>
                 {
@@ -168,7 +174,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
 
                                                 <MessageCard
                                                     title='El tipo de codigo de barras es:'
-                                                    message={`${identifyBarcodeType(codeBar as string)}`}
+                                                    message={`${identifyBarcodeType(codeBar ?? '')}`}
                                                     icon="barcode-outline"
                                                     extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                                                 />

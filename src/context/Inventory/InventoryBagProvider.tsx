@@ -43,7 +43,11 @@ export const InventoryProvider = ({ children }: { children: ReactNode }) => {
     const addProduct = async (inventoryBody: ProductInterface) => {
         try {
             const product = await addProductInBag({ product: inventoryBody, opcion: 0 });
-            if (product?.error) return handleError(product.error);
+
+            if ('error' in product || product.status !== 200) {
+                return handleError(product);
+            }
+
             setProductAdded(true);
         } catch (error) {
             handleError(error)
@@ -67,7 +71,9 @@ export const InventoryProvider = ({ children }: { children: ReactNode }) => {
     const editProduct = async ({ idenlacemob, cantidad }: { idenlacemob: number, cantidad: number }) => {
         try {
             const product = await updateProductInBag({ idenlacemob, cantidad });
-            if (product?.error) return handleError(product.error);
+            if ('error' in product || product.status !== 200) {
+                return handleError(product);
+            }
 
             setProductAdded(true);
         } catch (error) {

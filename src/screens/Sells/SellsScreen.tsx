@@ -46,7 +46,7 @@ export const SellsScreen = () => {
             cvefamilia: product.cvefamilia,
             descripcio: product.descripcio,
             image: product.imagen,
-            totalClasses: parseInt(product.classcount as string),
+            totalClasses: parseInt(product.classcount ?? ''),
         });
 
         if (count <= 1) {
@@ -57,7 +57,7 @@ export const SellsScreen = () => {
                     cvefamilia: product.cvefamilia,
                     descripcio: product.descripcio,
                     image: product.imagen,
-                    totalClasses: parseInt(product.classcount as string)
+                    totalClasses: parseInt(product.classcount ?? '')
                 }
             );
         }

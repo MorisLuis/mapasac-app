@@ -85,7 +85,7 @@ const LayoutConfirmation = <T extends CombinedProductInterface>({
                             Type === 'Sells' &&
                             <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
                                 <CustomText style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}>Total: </CustomText>
-                                <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{format(totalPrice as number)}</CustomText>
+                                <CustomText style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}>{format(totalPrice ?? 0)}</CustomText>
                             </View>
                         }
                     </View>

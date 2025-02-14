@@ -48,8 +48,9 @@ export const EditPrice = ({ route }: EditPriceInterface) => {
                 onFinish: onFinish
             });
 
-            if (productUpdated.error) return handleError(productUpdated.error);
-
+            if ('error' in productUpdated || productUpdated.status !== 200) {
+                return handleError(productUpdated);
+            };
         } catch (error) {
             handleCloseModal();
             handleError(error)

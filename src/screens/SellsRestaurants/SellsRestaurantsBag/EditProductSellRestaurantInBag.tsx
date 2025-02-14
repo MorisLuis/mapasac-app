@@ -36,13 +36,13 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
     const textInputRef = useRef<TextInput>(null);
 
     const onEdit = () => {
+        if(!product.idenlacemob) return;
         setEditingProduct(true)
-
         if (piezasCount < 1) {
-            deleteProductSell(product.idenlacemob as number)
+            deleteProductSell(product.idenlacemob)
         } else {
             editProductSell({
-                idenlacemob: product.idenlacemob as number,
+                idenlacemob: product.idenlacemob,
                 cantidad: piezasCount,
                 comentarios: comment
             });
@@ -59,7 +59,7 @@ export const EditProductSellRestaurantInBag = ({ route }: EditProductSellInBagIn
     };
 
     const handleProductPiezasCount = () => {
-        setPiezasCount(product?.cantidad as number)
+        setPiezasCount(product?.cantidad ?? 0)
     };
 
     const handleMenuOptionSelect = useCallback((value: Number) => {

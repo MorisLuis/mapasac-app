@@ -44,10 +44,12 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
             const productUpdated = await updateProduct({
                 idinvearts: product?.idinvearts,
                 dataValue: "producto",
-                data: descripcioState as string,
+                data: descripcioState ?? '',
                 onFinish: onFinish
             });
-            if (productUpdated.error) return handleError(productUpdated.error);
+            if ('error' in productUpdated || productUpdated.status !== 200) {
+                return handleError(productUpdated);
+            };
         } catch (error) {
             handleError(error)
         }

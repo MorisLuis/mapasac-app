@@ -31,7 +31,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const { handleError } = useErrorHandler()
 
     const currentType = codebartypes.barcodes.find((code) => code.id === codebarType)
-    const regex = new RegExp(currentType?.regex as string);
+    const regex = new RegExp(currentType?.regex ?? '');
 
     const hanldeUpdateCodebarWithCodeRandom = async () => {
         try {
@@ -62,10 +62,14 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
     const onUpdateCodeBar = async () => {
         try {
             const codebar = await updateCodeBar({
-                codebarras: text as string,
+                codebarras: text,
                 idinvearts: selectedProduct.idinvearts
             });
-            if (codebar.error) return handleError(codebar.error);
+
+            if ('error' in codebar || codebar.status !== 200) {
+                return handleError(codebar);
+            }
+
             goBack()
             goBack()
         } catch (error) {
@@ -123,7 +127,7 @@ export const CodebarUpdateWithInputScreen = ({ selectedProduct }: CodebarUpdateW
                 <ButtonCustum
                     title="Cancelar"
                     onPress={onCancel}
-                    //disabled={loadingCleanBag}
+                //disabled={loadingCleanBag}
                 />
             </ModalDecision>
         </>

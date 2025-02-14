@@ -54,8 +54,9 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const hanldeUpdateCodebarWithCodeFound = async () => {
 
         try {
+            if(!codeBar) return;
             const codebar = await updateCodeBar({
-                codebarras: codeBar as string,
+                codebarras: codeBar,
                 idinvearts: selectedProduct.idinvearts
             })
 
@@ -73,8 +74,9 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
     const hanldeUpdateCodebarWithCodeRandom = async () => {
 
         try {
+            if(!codeBar) return;
             const codebar = await updateCodeBar({
-                codebarras: codeBar as string,
+                codebarras: codeBar,
                 idinvearts: selectedProduct.idinvearts
             })
 

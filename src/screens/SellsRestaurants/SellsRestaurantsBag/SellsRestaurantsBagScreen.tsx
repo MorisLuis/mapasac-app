@@ -71,7 +71,7 @@ export const SellsRestaurantBagScreen = () => {
     const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => (
         <ProductSellsCard
             product={item}
-            onDelete={() => handleDeleteProduct(item.idenlacemob as number)}
+            onDelete={() => handleDeleteProduct(item.idenlacemob ?? 0)}
             deletingProduct={productIdToDelete === item.idenlacemob}
             showDelete
         />

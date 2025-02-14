@@ -141,7 +141,7 @@ const ProductDetailsContent = React.memo(({ productDetailsData, handleOptionsToU
                         (codeBar && fromUpdateCodebar) &&
                         <MessageCard
                             title='El tipo de codigo de barras es:'
-                            message={`${identifyBarcodeType(codeBar as string)}`}
+                            message={`${identifyBarcodeType(codeBar)}`}
                             icon="barcode-outline"
                             extraStyles={{ marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom }}
                         />

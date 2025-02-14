@@ -34,7 +34,7 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
     const onEdit = () => {
         setEditingProduct(true)
         if (piezasCount < 1) {
-            deleteProduct(product.idenlacemob as number)
+            deleteProduct(product.idenlacemob)
         } else {
             editProduct({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
         }
@@ -50,7 +50,8 @@ export const EditProductInBag = ({ route }: EditProductInBagInterface) => {
 
     useEffect(() => {
         const handleProductPiezasCount = () => {
-            setPiezasCount(product?.cantidad as number)
+            if(!product?.cantidad) return;
+            setPiezasCount(product?.cantidad)
         }
 
         handleProductPiezasCount()

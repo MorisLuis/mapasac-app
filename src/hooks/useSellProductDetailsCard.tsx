@@ -10,11 +10,11 @@ export const useProductDetails = (product: CombinedProductInterface) => {
     const { actualModule } = useContext(SettingsContext);
 
     const formattedPrice = format(
-        typeof product.precio === 'number' ? product.precio : parseFloat(product.precio as string)
+        typeof product.precio === 'number' ? product.precio : parseFloat(product.precio ?? '')
     );
 
     const totalImporte = format(
-        (typeof product.precio === 'number' ? product.precio : parseFloat(product.precio as string)) *
+        (typeof product.precio === 'number' ? product.precio : parseFloat(product.precio ?? '')) *
         (product.cantidad ?? 0)
     );
 

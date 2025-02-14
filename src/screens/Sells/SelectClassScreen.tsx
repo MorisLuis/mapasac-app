@@ -95,7 +95,9 @@ export const SelectClassScreen = ({
     }
 
     useEffect(() => {
-        setValue(valueDefault as ClassInterface);
+        if(valueDefault) {
+            setValue(valueDefault);
+        }
         setOptionSelected(valueDefault)
 
         if (inputRef.current) {

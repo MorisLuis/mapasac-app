@@ -49,7 +49,7 @@ const ScannerResult = ({
             cantidad: counterProduct === 0 ? 1 : counterProduct
         }
 
-        addProduct(inventoryBody as ProductInterface);
+        addProduct(inventoryBody);
 
         if (fromProductDetails) {
             Toast.show({

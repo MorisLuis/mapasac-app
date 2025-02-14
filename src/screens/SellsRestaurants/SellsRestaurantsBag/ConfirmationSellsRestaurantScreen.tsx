@@ -63,10 +63,9 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
             const postSell = await postSells(sellBody);
 
-            if (postSell.error) {
-                handleError(postSell.error);
-                return;
-            };
+            if ('error' in postSell || postSell.status !== 200) {
+                return handleError(postSell);
+            }
 
             await resetAfterPost();
 
@@ -74,7 +73,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
                 redirection: 'SellsRestaurantNavigation',
                 from: 'Sells',
                 numberOfProducts: numberOfItemsSells,
-                importe: totalPrice as number,
+                importe: totalPrice,
                 folio: postSell.data.folio
             });
 
