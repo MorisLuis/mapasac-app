@@ -16,9 +16,9 @@ import { ProductSellsInterface, ProductSellsRestaurantInterface } from '../../in
 
 export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 
-interface LayoutConfirmationInterface {
-    data: CombinedProductInterface[];
-    renderItem: ({ item }: { item: any }) => React.JSX.Element;
+interface LayoutConfirmationInterface<T extends CombinedProductInterface> {
+    data: T[];
+    renderItem: ({ item }: { item: T }) => React.JSX.Element;
     loadBags: () => Promise<void>;
     ListHeaderComponent?: () => React.JSX.Element;
     Type: ModuleInterface['module'];
@@ -31,7 +31,7 @@ interface LayoutConfirmationInterface {
 }
 
 
-const LayoutConfirmation = ({
+const LayoutConfirmation = <T extends CombinedProductInterface>({
     data,
     renderItem,
     loadBags,
@@ -43,7 +43,7 @@ const LayoutConfirmation = ({
     buttonPostDisabled,
     numberOfItems,
     totalPrice
-}: LayoutConfirmationInterface) => {
+}: LayoutConfirmationInterface<T>) => {
 
     const { theme, typeTheme } = useTheme();
 

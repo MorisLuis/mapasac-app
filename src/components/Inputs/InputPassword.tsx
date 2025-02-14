@@ -6,14 +6,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from 'react-native-paper';
 import { globalStyles } from '../../theme/appTheme';
 
+type FieldType = 'pas'
+
 
 interface InputPasswordInterface {
     password?: string;
-    onChange: (value: string, field: any) => void;
+    onChange: (value: string, field: FieldType) => void;
     onLogin: () => void;
     placeholder: string;
 
-    inputName: string
+    inputName: FieldType
 }
 
 export const InputPassword = ({

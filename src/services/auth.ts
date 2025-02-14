@@ -23,7 +23,7 @@ const renewLogin = async (token: string) => {
                 'x-token': token || ''
             }
         });
-        return resp as any;
+        return resp;
     } catch (error) {
         return { error: error };
     }

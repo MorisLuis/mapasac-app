@@ -2,14 +2,18 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../Ui/CustumText';
-import { Control, Controller, useWatch } from 'react-hook-form';
+import { Control, Controller, Path, useWatch } from 'react-hook-form';
 import { useTheme } from '../../context/ThemeContext';
 import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
 import { globalFont } from '../../theme/appTheme';
 import { format } from '../../utils/currency';
 import { UnitType } from '../../interface/navigation';
+import { FormType } from '../../screens/Sells/ProductDetailsSells';
+import { SellsRestaurantDataFormType } from '../../context/SellsRestaurants/SellsRestaurantsBagProvider';
 
-interface CardButtonInterface {
+export type FormTypeCombined = FormType | SellsRestaurantDataFormType;
+
+interface CardButtonInterface<T extends FormTypeCombined> {
     onPress: () => void;
     label: string;
     valueDefault: string;
@@ -17,13 +21,13 @@ interface CardButtonInterface {
 
     /* Optional */
     specialValue?: string;
-    control?: Control<any, any> | null;
-    controlValue?: keyof any;
+    control?: Control<T, unknown> | null;
+    controlValue?: Path<T>;
     icon?: string;
     isPrice?: boolean;
 }
 
-const CardButton = ({
+const CardButton = <T extends FormTypeCombined>({
     onPress,
     label,
     valueDefault,
@@ -33,7 +37,7 @@ const CardButton = ({
     icon,
     isPrice,
     specialValue
-}: CardButtonInterface) => {
+}: CardButtonInterface<T>) => {
     const { typeTheme, theme } = useTheme();
     const [currentValue, setCurrentValue] = useState<string | number>(valueDefault);
 
@@ -58,7 +62,7 @@ const CardButton = ({
     const watchedValue = control && controlValue
         ? useWatch({
             control,
-            name: controlValue as string, // Asegúrate de que sea una string válida
+            name: controlValue
         })
         : null;
 
@@ -95,7 +99,7 @@ const CardButton = ({
             {control && controlValue ? (
                 <Controller
                     control={control}
-                    name={controlValue as any}
+                    name={controlValue}
                     render={({ field: { value } }) => {
                         const newValue = value ? handleValue(value) : valueDefault;
 

@@ -20,7 +20,7 @@ import { ModalScreenStyles } from '../theme/Modals/ModalTheme';
 
 
 export type AppNavigationStackParamList = {
-    test: undefined;
+    //test: undefined;
     OnboardingScreen: undefined;
     ClosingPage: undefined;
     SessionExpiredScreen: undefined;
@@ -63,7 +63,7 @@ export const AppNavigation = () => {
                 component={SessionExpiredScreen}
                 options={{ headerShown: false }}
             />
-
+{/* 
             <Stack.Screen
                 name='test'
                 component={TestScreen}
@@ -72,7 +72,7 @@ export const AppNavigation = () => {
                     presentation: 'modal',
                     contentStyle: ModalScreenStyles().ModalScreen,
                 }}
-            />
+            /> */}
 
             <Stack.Screen
                 name="LoginPage"

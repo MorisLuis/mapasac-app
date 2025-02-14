@@ -27,11 +27,10 @@ export const ConfirmationScreen = () => {
         try {
             const inventory = await postInventory();
 
-            if (inventory.error) {
-                handleError(inventory.error);
-                return;
-            };
-
+            if ('error' in inventory || inventory.status !== 200) {
+                return handleError(inventory);
+            }
+    
             resetAfterPost();
 
             navigation.navigate('succesMessageScreen', { 
@@ -55,7 +54,7 @@ export const ConfirmationScreen = () => {
             const newBags = await getBagInventory({ page, limit: 5, option: 0 });
 
             if (newBags.error) {
-                handleError(newBags.error);
+                handleError(newBags);
                 return;
             }
 
@@ -80,7 +79,7 @@ export const ConfirmationScreen = () => {
             const refreshedBags = await getBagInventory({ page: 1, limit: 5, option: 0 });
 
             if (refreshedBags.error) {
-                handleError(refreshedBags.error);
+                handleError(refreshedBags);
                 return;
             }
 
@@ -100,7 +99,6 @@ export const ConfirmationScreen = () => {
         <ProductInventoryCard
             product={item}
             onClick={() => navigation.navigate('[Modal] - editProductInBag', { product: item })}
-            //disabled={createInventaryLoading}
         />
     ), [createInventaryLoading]);
 

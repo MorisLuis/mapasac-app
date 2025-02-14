@@ -28,7 +28,6 @@ export const ProfileNavigation = () => {
                             {...props}
                             title="Perfil"
                             navigation={navigation}
-                            backCustum={true}
                             back={() => navigation.goBack()}
                         />
                     )

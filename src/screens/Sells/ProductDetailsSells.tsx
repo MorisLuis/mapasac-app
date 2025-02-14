@@ -58,7 +58,7 @@ export const ProductDetailsSells = () => {
     const [idInveartsValue, setIdInveartsValue] = useState<number>();
     const [cveFamiliaValue, setCveFamiliaValue] = useState<number>();
 
-    const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType>({
+    const { control, handleSubmit, setValue, getValues, watch } = useForm<FormType, unknown>({
         defaultValues: {
             pieces: pieces,
             price: price,

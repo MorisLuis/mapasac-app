@@ -30,30 +30,25 @@ import { SettingsContext } from '../../context/settings/SettingsContext';
 
 export type CombinedProductInterface = ProductInterface | ProductSellsInterface | ProductSellsRestaurantInterface;
 
-interface LayoutBagInterface {
+interface LayoutBagProps<T extends CombinedProductInterface> {
     opcion: opcionBag;
-    renderItem: ({ item }: { item: any }) => React.JSX.Element;
-    bags: CombinedProductInterface[];
-    setBags:
-    React.Dispatch<React.SetStateAction<ProductInterface[]>> |
-    React.Dispatch<React.SetStateAction<ProductSellsInterface[]>> |
-    React.Dispatch<React.SetStateAction<ProductSellsRestaurantInterface[]>>;
-    Type: ModuleInterface['module']
-
-    // Sells
+    renderItem: ({ item }: { item: T }) => React.JSX.Element;
+    bags: T[];
+    setBags: React.Dispatch<React.SetStateAction<T[]>>;
+    Type: ModuleInterface['module'];
     totalPrice?: number;
     deletingProductId?: number | null;
 }
 
-export const LayoutBag = ({
+export const LayoutBag = <T extends CombinedProductInterface>({
     opcion,
     renderItem,
     bags,
     setBags,
     totalPrice,
     deletingProductId,
-    Type
-}: LayoutBagInterface) => {
+    Type,
+}: LayoutBagProps<T>) => {
 
     const { theme, typeTheme } = useTheme();
     const { actualModule } = useContext(SettingsContext);

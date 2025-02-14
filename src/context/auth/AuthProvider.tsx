@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [])
 
     const checkToken = async () => {
-
         try {
             const token = await AsyncStorage.getItem('token');
 
@@ -86,7 +85,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             // Hay token
             const resp = await renewLogin(token);
 
-            if (resp.status !== 200) {
+            // Verificamos si resp contiene error o si el status no es 200
+            if ('error' in resp || resp.status !== 200) {
                 return dispatch({ type: 'notAuthenticated' });
             }
 
@@ -102,38 +102,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         } catch (error) {
             return dispatch({ type: 'notAuthenticated' });
         }
-    }
+    };
 
     const signIn = async ({ usr, pas }: LoginData) => {
-        setLoggingIn(true)
+        setLoggingIn(true);
 
         try {
-            state.status = "checking"
-            const data = await postLogin({ usr, pas })
+            state.status = "checking";
+            const data = await postLogin({ usr, pas });
 
-            await AsyncStorage.setItem('token', data.token);
+            // Si el objeto devuelto tiene la propiedad 'error', lanzamos el error.
+            if ("error" in data) {
+                throw new Error(data.error);
+            }
+
+            await AsyncStorage.setItem("token", data.token);
 
             dispatch({
-                type: 'signUp',
+                type: "signUp",
                 payload: {
-                    token: data?.token,
-                    user: data?.user
-                }
+                    token: data.token,
+                    user: data.user,
+                },
             });
-
-        } catch (error: any) {
-
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : "Información incorrecta";
             dispatch({
-                type: 'addError',
-                payload: (error.error) || 'Información incorrecta'
-            })
+                type: "addError",
+                payload: errorMessage,
+            });
         } finally {
-            // Not move, is just to avoid see 'login screen' before sign in.
+            // Se retrasa un poco para evitar ver la pantalla de login antes del sign in.
             setTimeout(() => {
-                setLoggingIn(false)
+                setLoggingIn(false);
             }, 300);
         }
     };
+
 
     const logOut = async (isExpired?: boolean) => {
 
