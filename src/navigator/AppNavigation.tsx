@@ -40,7 +40,8 @@ export type AppNavigationStackParamList = {
         redirection: keyof AppNavigationStackParamList,
         from: ModuleInterface['module'],
         numberOfProducts: string;
-        importe?: number
+        importe?: number,
+        folio?: string
     };
 };
 

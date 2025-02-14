@@ -65,16 +65,19 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
             await resetAfterPost();
 
-        } catch (error) {
-            handleError(error)
-        } finally {
-            setCreateSellLoading(false);
             navigate('succesMessageScreen', {
                 redirection: 'SellsNavigation',
                 from: 'Sells',
                 numberOfProducts: numberOfItemsSells,
-                importe: totalPrice as number
+                importe: totalPrice as number,
+                folio: postSell.data.folio
             });
+
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setCreateSellLoading(false);
+
         }
     };
 
@@ -144,17 +147,20 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
         }
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => (
-        <ProductSellsCard
-            product={item}
-            onClick={() => navigate('[Sells] - EditProductInBag', { product: item })}
-            renderRightProp={() => {
-                return (
-                    <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
-                )
-            }}
-        />
-    ), [createSellLoading, bags]);
+    const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => {
+
+        return (
+            <ProductSellsCard
+                product={item}
+                onClick={() => navigate('[Sells] - EditProductInBag', { product: item })}
+                renderRightProp={() => {
+                    return (
+                        <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
+                    )
+                }}
+            />
+        )
+    }, [createSellLoading, bags]);
 
     const renderScreen = () => {
         return (
@@ -170,10 +176,10 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                     <View style={ConfirmationScreenStyles(theme, typeTheme).typeMethodContainer}>
                         <TouchableOpacity
                             style={[
-                                methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
+                                methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
                             ]}
-                            onPress={() => setMethodPayment(1)}
+                            onPress={() => setMethodPayment(2)}
                         >
                             <Icon name='card-sharp' color={theme.text_color} size={globalFont.font_normal} />
                             <CustomText>Credito</CustomText>
@@ -181,10 +187,10 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
                         <TouchableOpacity
                             style={[
-                                methodPayment === 2 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
-                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 2 && { backgroundColor: handleColorWithModule.primary }
+                                methodPayment === 1 ? ConfirmationScreenStyles(theme, typeTheme).paymentMethodItemActive :
+                                    ConfirmationScreenStyles(theme, typeTheme).paymentMethodItem, methodPayment === 1 && { backgroundColor: handleColorWithModule.primary }
                             ]}
-                            onPress={() => setMethodPayment(2)}
+                            onPress={() => setMethodPayment(1)}
                         >
                             <Icon name='cash-sharp' color={theme.text_color} size={globalFont.font_normal} />
                             <CustomText>Contado</CustomText>
@@ -209,11 +215,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
                         icon='chatbox-ellipses'
                         specialValue={commentsLocal ? commentsLocal.trim() : undefined}
                     />
-
-
-                    {/* <View style={ConfirmationScreenStyles(theme, typeTheme).paymentMethodClient}>
-                            <TextInputContainer setComments={setComments} value={comments} />
-                        </View> */}
                 </View>
             </SafeAreaView>
         )

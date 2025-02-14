@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GooglePlaceData, GooglePlaceDetail, GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import { useTheme } from '../../context/ThemeContext';
+import 'react-native-get-random-values';
 
 export interface inputGoogleValue {
     street: string;

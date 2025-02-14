@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Animated, ViewStyle } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { LoaderStyles } from '../../theme/UI/loaderStyles';
+import { LoaderStyles } from '../../theme/UI/LoaderStyles';
 
 const DotLoader = () => {
     const { theme, typeTheme } = useTheme();

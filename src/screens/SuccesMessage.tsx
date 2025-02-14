@@ -23,7 +23,7 @@ interface SuccesMessageProps {
 
 export const SuccesMessage = ({ route }: SuccesMessageProps) => {
     
-    const { redirection, numberOfProducts, importe } = route.params ?? {};
+    const { redirection, numberOfProducts, importe, folio } = route.params ?? {};
     const navigation = useNavigation<AppNavigationProp>();
     const { theme, typeTheme } = useTheme();
     const { handleColorWithModule } = useActionsForModules();
@@ -69,6 +69,11 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
                             <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
                                 <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Tipo de movimiento: </CustomText>
                                 <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>{movementInfo.text}</CustomText>
+                            </View>
+
+                            <View style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItem}>
+                                <CustomText style={SuccesMessageScreenStyles(theme, typeTheme).confirmationItemLabel}>Folio: </CustomText>
+                                <CustomText style={[SuccesMessageScreenStyles(theme, typeTheme).confirmationText]}>{folio}</CustomText>
                             </View>
 
                             {

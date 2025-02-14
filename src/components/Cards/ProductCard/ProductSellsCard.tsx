@@ -23,7 +23,6 @@ export const ProductSellsCard = ({
     const { theme } = useTheme();
     const { productDetails } = useProductDetails(product);
 
-
     // This is renderRight default
     const renderRight = () => {
         return (

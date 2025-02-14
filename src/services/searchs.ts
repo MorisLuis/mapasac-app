@@ -12,8 +12,8 @@ const getSearchProductInBack = async ({ searchTerm, opcion }: SearchInterface) =
         const getProduct = await api.get(`/api/search/productInBag?term=${searchTerm}&opcion=${opcion}`);
         const products = getProduct.data.products;
         return products
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 }
@@ -24,8 +24,8 @@ const getSearchProductInStock = async ({ searchTerm }: { searchTerm : string }) 
         const getProduct = await api.get(`/api/search/product?term=${searchTerm}`);
         const products = getProduct.data.products;
         return products
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 }
@@ -36,8 +36,8 @@ const getSearchClients = async ({ searchTerm }: { searchTerm : string }) => {
         const getProduct = await api.get(`/api/search/clients?term=${searchTerm}`);
         const products = getProduct.data.clients;
         return products;
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 }

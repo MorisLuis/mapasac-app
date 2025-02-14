@@ -52,7 +52,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
     const onPostSellRestaurant = async () => {
         setCreateSellLoading(true);
-        if(!methodShipmentLocal) return;
+        if (!methodShipmentLocal) return;
         try {
             const sellBody: postSellsInterface = {
                 clavepago: methodPayment,
@@ -70,16 +70,18 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
             await resetAfterPost();
 
-        } catch (error) {
-            handleError(error)
-        } finally {
-            setCreateSellLoading(false);
             navigate('succesMessageScreen', {
                 redirection: 'SellsRestaurantNavigation',
                 from: 'Sells',
                 numberOfProducts: numberOfItemsSells,
-                importe: totalPrice as number
+                importe: totalPrice as number,
+                folio: postSell.data.folio
             });
+
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setCreateSellLoading(false);
         }
     };
 
@@ -147,23 +149,23 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
         navigate('[SellsRestaurants] - EditLocation', { locationValue: locationValue })
     };
 
-    const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => (
-        <ProductSellsCard
-            product={item}
-            onClick={() => navigate('[SellsRestaurants] - EditProductInBag', { product: item })}
-            renderRightProp={() => {
-                return (
-                    <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
-                )
-            }}
-        />
-    ), [createSellLoading, bags]);
+    const renderItem = useCallback(({ item }: { item: ProductSellsRestaurantInterface }) => {
+        return (
+            <ProductSellsCard
+                product={item}
+                onClick={() => navigate('[SellsRestaurants] - EditProductInBag', { product: item })}
+                renderRightProp={() => {
+                    return (
+                        <Icon name='open-outline' color={theme.text_color} size={globalFont.font_normal} />
+                    )
+                }}
+            />
+        )
+    }, [createSellLoading, bags]);
 
     const renderScreen = () => {
         return (
             <SafeAreaView>
-                {/* <Button onPress={toggleTheme} title='ola' /> */}
-
                 <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
                     <Icon name='card-sharp' color={theme.color_red} size={globalFont.font_normal} />
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>
@@ -231,11 +233,11 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
     // Handle address direction.
     useEffect(() => {
-        if(addressDirection) setLocationValue(addressDirection);
+        if (addressDirection) setLocationValue(addressDirection);
     }, [addressDirection]);
 
     useEffect(() => {
-       if(methodShipment) setMethodShipmentLocal(methodShipment);
+        if (methodShipment) setMethodShipmentLocal(methodShipment);
     }, [methodShipment]);
 
     return (

@@ -1,13 +1,12 @@
 import { api } from "../api/api";
-import { inputGoogleValue } from "../components/Inputs/GooglePlacesAutocomplete";
 
 const postInventory = async () => {
 
     try {
         const data = await api.post('/api/invearts/inventory');
-        return data as any;
-    } catch (error: any) {
-        return { error: { ...error } };
+        return data;
+    } catch (error) {
+        return { error: error };
     };
 
 }
@@ -32,9 +31,9 @@ const postSells = async ({ clavepago, idclientes, comments, opcion, domicilio, i
         };
 
         const data = await api.post(`/api/invearts/sell?opcion=${opcion}`, sellBody);
-        return data as any;
-    } catch (error: any) {
-        return { error: { ...error } };
+        return data;
+    } catch (error) {
+        return { error: error };
     };
 
 };

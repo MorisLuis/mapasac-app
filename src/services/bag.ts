@@ -35,7 +35,7 @@ const getTotalPriceBag = async ({ opcion }: bagInterface) => {
 const addProductInBag = async ({ product, opcion }: addProductInBagInventoryInterface) => {
     try {
         const data = await api.post(`/api/bag`, { ...product, opcion: opcion });
-        return data as any;
+        return data;
     } catch (error) {
         return { error: { ...error as AxiosError } };
     }
@@ -46,7 +46,7 @@ const updateProductInBag = async (body : updateProductInBagInterface) => {
 
     try {
         const data = await api.put(`/api/bag`, body );
-        return data as any
+        return data
     } catch (error) {
         return { error: { ...error as AxiosError } };
     }

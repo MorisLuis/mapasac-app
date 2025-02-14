@@ -7,8 +7,8 @@ const getProducts = async (PageNumber: number) => {
         const getProduct = await api.get(`/api/product?page=${PageNumber}&limit=10`);
         const products = getProduct.data.products;
         return products
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     };
 
 }
@@ -20,8 +20,8 @@ const getProductDetails = async (idinvearts: number) => {
         const getProduct = await api.get(`/api/product/byid?idinvearts=${idinvearts}`);
         const product = getProduct.data.product;
         return product
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 }
@@ -33,8 +33,8 @@ const getProductByCodeBar = async ({ codeBar }: { codeBar: string }) => {
         const getProduct = await api.get(`/api/product/bycodebar?codbarras=${codeBar}`);
         const product = getProduct.data.product;
         return product
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 };
@@ -45,8 +45,8 @@ const getProductByClave = async ({ clave }: { clave: string }) => {
         const getProduct = await api.get(`/api/product/byclave?clave=${clave}`);
         const product = getProduct.data.product;
         return product;
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 };
@@ -57,8 +57,8 @@ const getProductByNoArticulo = async ({ noarticulo }: { noarticulo: string }) =>
         const getProduct = await api.get(`/api/product/bynoarticulo?noarticulo=${noarticulo}`);
         const product = getProduct.data.product;
         return product
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 };
@@ -71,8 +71,8 @@ const getTotalProducts = async () => {
         const getProduct = await api.get(`/api/product/total`);
         const total = getProduct.data.total;
         return total;
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 }
@@ -102,9 +102,9 @@ const updateProduct = async ({
             text1: `Se actualizó ${dataValue}!`
         });
 
-        return product as any;
-    } catch (error: any) {
-        return { error: { ...error } };
+        return product;
+    } catch (error) {
+        return { error: error };
     } finally {
         onFinish?.()
     }

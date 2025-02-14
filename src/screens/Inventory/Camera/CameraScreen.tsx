@@ -11,8 +11,8 @@ import { CameraPermission } from '../../../components/Screens/CameraPermission';
 import { Camera } from 'react-native-camera-kit';
 import { InventoryBagContext } from '../../../context/Inventory/InventoryBagContext';
 import CustomText from '../../../components/Ui/CustumText';
-import { CameraSettings } from './CameraSettings';
 import { InventoryNavigationProp } from '../../../interface/navigation';
+import { CameraSettings } from './cameraSettings';
 
 type PermissionStatus = 'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked';
 

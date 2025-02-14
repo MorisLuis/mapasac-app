@@ -7,8 +7,8 @@ const getProductsRestaurantSells = async (PageNumber: number) => {
         const getProduct = await api.get(`/api/product/sellsRestaurant?page=${PageNumber}&limit=10`);
         const products = getProduct.data.products;
         return products
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     }
 
 };
@@ -19,8 +19,8 @@ const getProductDetailsRestaurantSells = async (cvefamilia: string) => {
         const getProduct = await api.get(`/api/product/sellsRestaurant/byid?cvefamilia=${cvefamilia}`);
         const product = getProduct.data.product;
         return product
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     };
 
 }
@@ -31,8 +31,8 @@ const getTotalProductRestaurantSells = async () => {
         const getProduct = await api.get(`/api/product/sellsRestaurant/total`);
         const total = getProduct.data.total;
         return total;
-    } catch (error: any) {
-        return { error: { ...error } };
+    } catch (error) {
+        return { error: error };
     };
 
 }
