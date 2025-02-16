@@ -60,7 +60,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                 idinvearts: selectedProduct.idinvearts
             })
 
-            if ('error' in codebar || codebar.status !== 200) {
+            if ('error' in codebar) {
                 return handleError(codebar);
             }
 
@@ -80,7 +80,7 @@ export const CodebarUpdateScreen = ({ selectedProduct }: CodebarUpdateScreenInte
                 idinvearts: selectedProduct.idinvearts
             })
 
-            if ('error' in codebar || codebar.status !== 200) {
+            if ('error' in codebar) {
                 return handleError(codebar);
             }
 

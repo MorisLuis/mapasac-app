@@ -115,6 +115,7 @@ export const uiNavigationStyles = (theme: Theme, typeTheme?: string) => StyleShe
         bottom: 0,
         right: globalStyles(theme).globalPadding.padding,
         width: wp("100%") - globalStyles().globalPadding.padding * 2,
+        height: 100
     },
     FooterScreenContainer: {
         marginVertical: globalStyles(theme).globalMarginBottomSmall.marginBottom

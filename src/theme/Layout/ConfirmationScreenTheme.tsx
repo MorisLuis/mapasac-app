@@ -7,7 +7,8 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
     ConfirmationScreen: {
         height: "100%",
         backgroundColor: theme.background_color,
-        padding: globalStyles(theme).globalPadding.padding
+        padding: globalStyles(theme).globalPadding.padding,
+        paddingBottom: 100
     },
     confirmationSells: {
         padding: globalStyles().globalPadding.padding / 3,
@@ -21,7 +22,7 @@ export const ConfirmationScreenStyles = (theme: Theme, typeTheme?: string) => St
         padding: globalStyles().globalPadding.padding,
         borderWidth: 0.2,
         borderColor: theme.color_border,
-        borderRadius: globalStyles().borderRadius.borderRadius / 2
+        borderRadius: globalStyles().borderRadius.borderRadius / 2,
     },
     subtitleConfirmation: {
         display: 'flex',

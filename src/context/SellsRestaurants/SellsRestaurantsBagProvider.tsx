@@ -62,7 +62,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
     const addProductSell = async (sellBody: EnlacemobInterface) => {
         try {
             const product = await addProductInBag({ product: sellBody, opcion: 4 });
-            if ('error' in product || product.status !== 200) {
+            if ('error' in product) {
                 return handleError(product);
             };
             setProductAdded(true);
@@ -76,7 +76,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
     const deleteProductSell = async (idenlacemob: number) => {
         try {
             const product = await deleteProductInBag({ idenlacemob });
-            if ('error' in product || product.status !== 200) {
+            if ('error' in product) {
                 return handleError(product);
             };
             setProductAdded(true);
@@ -90,7 +90,7 @@ export const SellsRestaurantsProvider = ({ children }: { children: JSX.Element }
     const editProductSell = async (body: updateProductInBagInterface) => {
         try {
             const product = await updateProductInBag(body);
-            if ('error' in product || product.status !== 200) {
+            if ('error' in product) {
                 return handleError(product);
             };
             setProductAdded(true);

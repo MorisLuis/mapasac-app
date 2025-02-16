@@ -85,8 +85,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             // Hay token
             const resp = await renewLogin(token);
 
-            // Verificamos si resp contiene error o si el status no es 200
-            if ('error' in resp || resp.status !== 200) {
+            // Verificamos si resp contiene error
+            if ('error' in resp) {
                 return dispatch({ type: 'notAuthenticated' });
             }
 

@@ -63,7 +63,7 @@ export const ConfirmationSellsRestaurantScreen = ({ route }: ConfirmationSellsSc
 
             const postSell = await postSells(sellBody);
 
-            if ('error' in postSell || postSell.status !== 200) {
+            if ('error' in postSell) {
                 return handleError(postSell);
             }
 

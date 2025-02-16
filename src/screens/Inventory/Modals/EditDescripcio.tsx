@@ -47,7 +47,7 @@ export const EditDescripcio = ({ route }: EditDescripcioInterface) => {
                 data: descripcioState ?? '',
                 onFinish: onFinish
             });
-            if ('error' in productUpdated || productUpdated.status !== 200) {
+            if ('error' in productUpdated) {
                 return handleError(productUpdated);
             };
         } catch (error) {

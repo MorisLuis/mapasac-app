@@ -32,14 +32,18 @@ const useErrorHandler = () => {
                 error.response?.data?.message ??
                 "Error desconocido";
 
-            console.log({ status, method, message });
+            console.log({
+                status: JSON.stringify(status, null, 2),
+                method: JSON.stringify(method, null, 2),
+                message: JSON.stringify(message, null, 2),
+            });
 
             if (status === 401) {
                 navigation.navigate('SessionExpiredScreen');
                 return logOut?.();
             };
 
-            if(!avoidAPI){
+            if (!avoidAPI) {
                 await sendError({
                     From: `${user.idusrmob}`,
                     Message: message,
@@ -49,7 +53,7 @@ const useErrorHandler = () => {
                 });
             }
 
-            if(!avoidToast){
+            if (!avoidToast) {
                 Toast.show({
                     type: 'tomatoError',
                     text1: message
@@ -63,7 +67,7 @@ const useErrorHandler = () => {
             };
 
         } else {
-            console.error("Unknown error:", error);
+            console.log("Unknown error:", JSON.stringify(error, null, 2));
         }
     };
 

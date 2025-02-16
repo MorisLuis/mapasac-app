@@ -6,7 +6,8 @@ export const SelectScreenTheme = (theme: Theme, typeTheme?: string) => StyleShee
     SelectScreen: {
         height: "100%",
         backgroundColor: theme.background_color,
-        padding: globalStyles().globalPadding.padding
+        padding: globalStyles().globalPadding.padding,
+        paddingBottom: 100
     },
     header: {
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom

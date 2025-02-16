@@ -98,7 +98,7 @@ const CameraModal = ({ selectedProduct, onClose }: CameraModalInterface) => {
                 idinvearts: selectedProduct.idinvearts
             });
 
-            if ('error' in codebar || codebar.status !== 200) {
+            if ('error' in codebar) {
                 return handleError(codebar);
             }
 

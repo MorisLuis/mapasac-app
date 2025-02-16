@@ -61,7 +61,8 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const product = await addProductInBag({ product: sellBody, opcion: 2 });
 
-            if ('error' in product || product.status !== 200) {
+            //console.log({product: JSON.stringify(product.status, null, 2)})
+            if ('error' in product) {
                 return handleError(product);
             };
 
@@ -77,7 +78,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const product = await deleteProductInBag({ idenlacemob });
 
-            if ('error' in product || product.status !== 200) {
+            if ('error' in product) {
                 return handleError(product);
             };
 
@@ -93,7 +94,7 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const product = await updateProductInBag({ idenlacemob, cantidad });
 
-            if ('error' in product || product.status !== 200) {
+            if ('error' in product) {
                 return handleError(product);
             };
 

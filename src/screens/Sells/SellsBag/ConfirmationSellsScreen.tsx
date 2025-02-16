@@ -47,7 +47,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [commentsLocal, setCommentsLocal] = useState("");
     const availableToPost = methodPayment !== 0;
 
-    const onPostInventory = async () => {
+    const onPostSells = async () => {
         setCreateSellLoading(true);
         try {
             const sellBody: postSellsInterface = {
@@ -58,7 +58,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             }
             const postSell = await postSells(sellBody);
 
-            if ('error' in postSell || postSell.status !== 200) {
+            if ('error' in postSell) {
                 return handleError(postSell);
             };
 
@@ -242,7 +242,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             loadBags={loadBags}
             ListHeaderComponent={renderScreen}
             Type='Sells'
-            onPost={onPostInventory}
+            onPost={onPostSells}
             numberOfItems={numberOfItemsSells}
             totalPrice={totalPrice}
             loadData={dataUploaded}

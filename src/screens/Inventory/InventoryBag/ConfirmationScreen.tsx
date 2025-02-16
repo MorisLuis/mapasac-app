@@ -27,7 +27,7 @@ export const ConfirmationScreen = () => {
         try {
             const inventory = await postInventory();
 
-            if ('error' in inventory || inventory.status !== 200) {
+            if ('error' in inventory) {
                 return handleError(inventory);
             }
     

@@ -7,7 +7,8 @@ export const LayoutBagStyles = (theme: Theme, typeTheme?: string) => StyleSheet.
     InventoryBagScreen: {
         height: '100%',
         padding: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color
+        backgroundColor: theme.background_color,
+        paddingBottom: 100
     },
     content: {
         paddingBottom: hp("20%")

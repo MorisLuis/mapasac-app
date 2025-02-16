@@ -15,9 +15,6 @@ import { LoadingScreen } from '../screens/LoadingScreen';
 import { ModuleInterface } from '../interface/utils';
 import { SessionExpiredScreen } from '../screens/SessionExpired';
 import { SellsRestaurantsNavigation } from './SellsRestaurantsNavigation';
-import { TestScreen } from '../screens/test';
-import { ModalScreenStyles } from '../theme/Modals/ModalTheme';
-
 
 export type AppNavigationStackParamList = {
     //test: undefined;
@@ -63,16 +60,6 @@ export const AppNavigation = () => {
                 component={SessionExpiredScreen}
                 options={{ headerShown: false }}
             />
-{/* 
-            <Stack.Screen
-                name='test'
-                component={TestScreen}
-                options={{
-                    headerShown: false,
-                    presentation: 'modal',
-                    contentStyle: ModalScreenStyles().ModalScreen,
-                }}
-            /> */}
 
             <Stack.Screen
                 name="LoginPage"

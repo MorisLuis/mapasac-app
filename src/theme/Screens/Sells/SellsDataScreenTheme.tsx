@@ -6,7 +6,8 @@ export const SellsDataScreenTheme = (theme: Theme, typeTheme?: string) => StyleS
     SellsDataScreen: {
         height: '100%',
         padding: globalStyles().globalPadding.padding,
-        backgroundColor: theme.background_color
+        backgroundColor: theme.background_color,
+        paddingBottom: 100
     },
     header: {
         flexDirection: 'row',

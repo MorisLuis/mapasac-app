@@ -5,7 +5,8 @@ export const SelectAmountScreenTheme = (theme: Theme, typeTheme?: string) => Sty
     SelectAmountScreen: {
         height: '100%',
         padding: globalStyles(theme).globalPadding.padding,
-        backgroundColor: theme.background_color
+        backgroundColor: theme.background_color,
+        paddingBottom: 100
     },
     header: {
     },
