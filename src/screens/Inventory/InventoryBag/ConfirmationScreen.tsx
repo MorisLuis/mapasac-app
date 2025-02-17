@@ -36,7 +36,8 @@ export const ConfirmationScreen = () => {
             navigation.navigate('succesMessageScreen', { 
                 redirection: 'InventoryNavigation',
                 from: 'Inventory',
-                numberOfProducts: numberOfItems
+                numberOfProducts: numberOfItems,
+                folio: inventory.data.folio
             });
 
         } catch (error) {
