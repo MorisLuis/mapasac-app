@@ -61,7 +61,6 @@ export const SellsProvider = ({ children }: { children: JSX.Element }) => {
         try {
             const product = await addProductInBag({ product: sellBody, opcion: 2 });
 
-            //console.log({product: JSON.stringify(product.status, null, 2)})
             if ('error' in product) {
                 return handleError(product);
             };

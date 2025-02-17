@@ -26,7 +26,7 @@ export const SelectAmountRestaurantScreen = ({
     const { updateFormData } = useContext(SellsRestaurantBagContext);
 
     const inputRef = useRef<TextInput>(null);
-    const [value, setValue] = useState<string>(valueDefault ?? "0");
+    const [value, setValue] = useState<string>(valueDefault !== '' ? valueDefault : "0");
     const buttondisabled = parseInt(value) <= 0;
 
     const handleSave = () => {
@@ -39,7 +39,6 @@ export const SelectAmountRestaurantScreen = ({
             inputRef.current.focus();
         }
     }, []);
-
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

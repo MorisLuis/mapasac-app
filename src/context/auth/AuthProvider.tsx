@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         if (statusLogin == 'not-authenticated') {
-
             return navigation.reset({
                 index: 0,
                 routes: [{ name: 'LoginPage' }],
@@ -106,18 +105,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const signIn = async ({ usr, pas }: LoginData) => {
         setLoggingIn(true);
-
+    
         try {
             state.status = "checking";
             const data = await postLogin({ usr, pas });
-
-            // Si el objeto devuelto tiene la propiedad 'error', lanzamos el error.
+    
+            // Ahora `data.error` existirá y se manejará correctamente
             if ("error" in data) {
-                throw new Error(data.error);
+                return handleError({
+                    error: data.error
+                }, true);
             }
-
+    
             await AsyncStorage.setItem("token", data.token);
-
             dispatch({
                 type: "signUp",
                 payload: {
@@ -132,13 +132,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 payload: errorMessage,
             });
         } finally {
-            // Se retrasa un poco para evitar ver la pantalla de login antes del sign in.
             setTimeout(() => {
                 setLoggingIn(false);
             }, 300);
         }
     };
-
+    
 
     const logOut = async (isExpired?: boolean) => {
 

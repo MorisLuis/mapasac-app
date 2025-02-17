@@ -38,8 +38,6 @@ export const CustomHeader: React.FC<CustomHeaderInterface> = ({
     const handleOnPress = () => {
         if (typeof back === 'function') {
             back(); // Si es una función
-        } else if (back && typeof back === 'object' && 'title' in back) {
-            console.log(back.title); // Hacer algo con el title si es un objeto
         } else {
             navigation.goBack(); // Acción por defecto
         }

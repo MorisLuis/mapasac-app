@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Platform, KeyboardAvoidingView, Keyboard, Alert, SafeAreaView } from 'react-native';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -18,12 +18,13 @@ import ButtonCustum from '../../components/Inputs/ButtonCustum';
 export const LoginScreen = () => {
     const { signIn, errorMessage, removeError, loggingIn, status } = useContext(AuthContext);
     const { theme, typeTheme } = useTheme();
-    const [loadingLogin, setLoadingLogin] = useState(false)
 
     const { usr, pas, onChange } = useForm({
         usr: '',
         pas: ''
     });
+
+    const buttonDisabled = usr === '' || pas === ''
 
     useEffect(() => {
         if (errorMessage.length === 0) return;
@@ -31,10 +32,8 @@ export const LoginScreen = () => {
     }, []);
 
     const onLogin = () => {
-        setLoadingLogin(true)
         Keyboard.dismiss();
         signIn({ usr, pas });
-        setLoadingLogin(false)
     };
 
     const { protectThisPage } = useProtectPage({
@@ -91,7 +90,7 @@ export const LoginScreen = () => {
                         <ButtonCustum
                             title="Iniciar sesión"
                             onPress={onLogin}
-                            disabled={loadingLogin}
+                            disabled={buttonDisabled}
                         />
                     </View>
                 </View>

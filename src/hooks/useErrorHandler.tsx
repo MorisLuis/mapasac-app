@@ -16,12 +16,37 @@ const isAxiosError = (error: unknown): error is CustomAxiosError => {
     );
 };
 
+interface CustomError {
+    error: {
+        message: string;
+        success: boolean;
+    };
+}
+
+const isCustomError = (error: unknown): error is CustomError => {
+    if (typeof error !== 'object' || error === null) return false;
+
+    if (!('error' in error)) return false;
+
+    const errObj = (error as CustomError).error;
+
+    return (
+        typeof errObj === 'object' &&
+        'message' in errObj &&
+        typeof errObj.message === 'string' &&
+        'success' in errObj &&
+        typeof errObj.success === 'boolean'
+    );
+};
+
+
 
 const useErrorHandler = () => {
     const { user, logOut } = useContext(AuthContext);
     const navigation = useNavigation<AppNavigationProp>();
 
     const handleError = async (error: unknown, avoidAPI?: boolean, avoidToast?: boolean): Promise<void> => {
+
         if (isAxiosError(error)) {
             // Supongamos que tienes valores por defecto en statusCode y Metodo definidos en otro lado.
             const status = error.response?.status;
@@ -31,12 +56,6 @@ const useErrorHandler = () => {
                 error.response?.data?.error ??
                 error.response?.data?.message ??
                 "Error desconocido";
-
-            console.log({
-                status: JSON.stringify(status, null, 2),
-                method: JSON.stringify(method, null, 2),
-                message: JSON.stringify(message, null, 2),
-            });
 
             if (status === 401) {
                 navigation.navigate('SessionExpiredScreen');
@@ -65,6 +84,27 @@ const useErrorHandler = () => {
                 logOut?.();
                 return;
             };
+
+        } else if (isCustomError(error)) {
+
+            const { error: { message } } = error as CustomError
+
+            if (!avoidAPI) {
+                await sendError({
+                    From: `${user.idusrmob}`,
+                    Message: message,
+                    Id_Usuario: user.idusrmob,
+                    Metodo: '',
+                    code: '404'
+                });
+            }
+
+            if (!avoidToast) {
+                Toast.show({
+                    type: 'tomatoError',
+                    text1: message
+                });
+            }
 
         } else {
             console.log("Unknown error:", JSON.stringify(error, null, 2));
