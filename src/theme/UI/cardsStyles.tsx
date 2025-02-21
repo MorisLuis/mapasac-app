@@ -253,73 +253,75 @@ export const ProductItemSearchStyles = (theme: Theme, typeTheme: string) => Styl
     },
 })
 
-export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Platform?: Platforms) => StyleSheet.create({
-    ProductSellsCardTheme: {
-        flex: 0.5,
-        display: "flex",
-        position: 'relative'
-    },
-    item: {
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2
-    },
-    imageContainer: {
-        padding: 5,
-        borderRadius: Platform === 'android' ? globalStyles(theme).borderRadius.borderRadius * 1.5 : globalStyles(theme).borderRadius.borderRadius * 2.5,
-        borderWidth: 0.2,
-        borderColor: typeTheme === 'dark' ? theme.color_border_secondary : theme.color_border_dark,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
-    },
-    image: {
-        flex: 1,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2,
-        borderWidth: 0.5,
-        borderColor: theme.color_border_secondary,
-        resizeMode: "cover",
-        display: "flex",
-        width: "100%",
-        minHeight: 120
-    },
-    notImage: {
-        flex: 1,
-        display: "flex",
-        width: "100%",
-        minHeight: 120 + 10,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+// Estilos actualizados
+export const ProductSellsCardTheme = (theme: Theme, typeTheme?: ThemeColor, Platform?: Platforms) =>
+    StyleSheet.create({
+        ProductSellsCardTheme: {
+            flex: 0.5,
+            display: "flex",
+            position: 'relative'
+        },
+        item: {
+            // Puedes agregar aquí un borderRadius si lo requieres
+        },
+        imageContainer: {
+            padding: 5, // Espacio entre la imagen y el borde del contenedor
+            borderWidth: 0.2,
+            borderColor: typeTheme === 'dark' ? theme.color_border : theme.color_border_dark,
+            marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+            borderRadius: globalStyles(theme).borderRadius.borderRadius, // Radio para el contenedor
+            overflow: 'hidden', // Clipa el contenido según el borderRadius
+            minHeight: 150
+        },
+        image: {
+            flex: 1,
+            width: "100%",
+            minHeight: 120,
+            borderRadius: globalStyles(theme).borderRadius.borderRadius * 1.5,
+            borderWidth: 0.5,
+            borderColor: theme.color_border
+        },
+        // ... el resto de estilos se mantienen sin cambios
+        notImage: {
+            flex: 1,
+            display: "flex",
+            width: "100%",
+            minHeight: 130,
+            marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+            padding: 5,
+            borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
+            borderWidth: 0.2,
+            borderColor: theme.color_border_dark,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+        },
+        notImageBackground: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            borderWidth: 0.25,
+            borderColor: theme.color_border_dark,
+            height: wp("15%"),
+            width: wp("15%"),
+            borderRadius: globalStyles(theme).borderRadius.borderRadius,
+            transform: [{ rotate: '-25deg' }],
+            position: "absolute",
+            zIndex: 1
+        },
+        title: {
+            fontSize: globalFont.font_normal,
+            color: theme.text_color,
+            textTransform: "capitalize",
+            paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
+            paddingBottom: globalStyles(theme).globalPadding.padding / 3,
+            display: "flex",
+            textAlign: 'center',
+            fontFamily: 'Rubik-Regular'
+        }
+    });
 
-        padding: 5,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius * 2.5,
-        borderWidth: 0.2,
-        borderColor: theme.color_border_dark,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    notImageBackground: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: 'bold',
-        borderWidth: 0.25,
-        borderColor: theme.color_border_dark,
-        height: wp("15%"),
-        width: wp("15%"),
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        transform: [{ rotate: '-25deg' }],
-        position: "absolute",
-        zIndex: 1
-    },
-    title: {
-        fontSize: globalFont.font_normal,
-        color: theme.text_color,
-        textTransform: "capitalize",
-        paddingHorizontal: globalStyles(theme).globalPadding.padding / 2,
-        paddingBottom: globalStyles(theme).globalPadding.padding / 3,
-        display: "flex",
-        textAlign: 'center',
-        fontFamily: 'Rubik-Regular'
-    }
-
-});
 
 export const ProductCardSelectTheme = (theme: Theme, typeTheme?: string) => StyleSheet.create({
     CardSelect: {

@@ -30,7 +30,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
 
     const { client, comments } = route?.params ?? {};
     const { numberOfItemsSells, resetAfterPost } = useContext(SellsBagContext);
-    const { typeTheme, theme, toggleTheme } = useTheme();
+    const { typeTheme, theme } = useTheme();
     const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
     const { handleError } = useErrorHandler();
     const { handleColorWithModule } = useActionsForModules()
@@ -45,7 +45,7 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [methodPayment, setMethodPayment] = useState(0);
     const [typeSelected, setTypeSelected] = useState<ClientInterface>();
     const [commentsLocal, setCommentsLocal] = useState("");
-    const availableToPost = methodPayment !== 0;
+    const availableToPost = methodPayment !== 0 && client !== undefined;
 
     const onPostSells = async () => {
         setCreateSellLoading(true);

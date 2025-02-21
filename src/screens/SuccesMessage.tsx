@@ -45,7 +45,7 @@ export const SuccesMessage = ({ route }: SuccesMessageProps) => {
             <View style={SuccesMessageScreenStyles(theme).SuccesMessage}>
                 <View style={SuccesMessageScreenStyles(theme).content}>
                     <Icon name="checkmark-done-outline" size={hp("10%")} color={handleColorWithModule.primary} />
-                    <CustomText style={SuccesMessageScreenStyles(theme).headerText}>{movementInfo.title} con existo</CustomText>
+                    <CustomText style={SuccesMessageScreenStyles(theme).headerText}>{movementInfo.title} con exito</CustomText>
 
                     <View style={[SuccesMessageScreenStyles(theme).dateContainer, { backgroundColor: handleColorWithModule.primary + "40" }]}>
                         <Icon name="calendar" size={globalFont.font_normal} color={handleColorWithModule.primary} />
