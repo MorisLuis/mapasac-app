@@ -13,7 +13,7 @@ import { SellsRestaurantBagContext } from '../../../context/SellsRestaurants/Sel
 export const SellsRestaurantBagScreen = () => {
 
     const opcion = 4
-    const { theme, typeTheme } = useTheme();
+    const { theme } = useTheme();
     const { deleteProductSell } = useContext(SellsRestaurantBagContext);
     const [bags, setBags] = useState<ProductSellsRestaurantInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);

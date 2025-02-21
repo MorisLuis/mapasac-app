@@ -20,7 +20,7 @@ export const ModalBottomStyles = (theme?: Theme, typeTheme?: string) => StyleShe
         shadowRadius: 4,
         elevation: 5,
         width: "100%",
-        borderRadius: globalStyles(theme).borderRadiusStandard.borderRadius,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius,
         borderWidth: 1,
         borderColor: theme?.color_border
     },

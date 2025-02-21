@@ -132,9 +132,9 @@ export const SellsRestaurantsNavigation = () => {
                 name="[SellsRestaurants] - EditShipment"
                 component={ShimpentScreen}
                 options={{
-                    presentation: 'modal',
+                    presentation: 'transparentModal',
                     headerShown: false,
-                    contentStyle: ModalScreenStyles().ModalScreen
+                    //contentStyle: ModalScreenStyles().ModalScreen
                 }}
             />
 

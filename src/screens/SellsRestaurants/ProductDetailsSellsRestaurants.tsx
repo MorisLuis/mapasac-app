@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { SellsDataScreenTheme } from '../../theme/Screens/Sells/SellsDataScreenTheme';
@@ -94,66 +94,61 @@ export const ProductDetailsSellsRestaurants = () => {
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
-                <View style={SellsDataScreenTheme(theme, typeTheme).header}>
-                    <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>
-                        {title?.trim()}
-                    </CustomText>
-                </View>
+                <ScrollView>
+                    <View style={SellsDataScreenTheme(theme, typeTheme).header}>
+                        <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>
+                            {title?.trim()}
+                        </CustomText>
+                    </View>
 
-                <ImageContainerCustum
-                    imageValue={image}
-                    size="small"
-                />
-
-                <>
-                    <CardButton
-                        onPress={handleNavigateToClass}
-                        label='Clase:'
-                        valueDefault='Seleccionar la clase'
-                        color='blue'
-                        control={control}
-                        controlValue='typeClass'
-                        icon='resize-outline'
+                    <ImageContainerCustum
+                        imageValue={image}
+                        size="small"
                     />
 
-                    <CardButton
-                        onPress={() => console.log("")}
-                        label='Precio:'
-                        valueDefault='Seleccionar precio'
-                        color='purple'
-                        control={control}
-                        controlValue='price'
-                        icon="pricetags"
-                        isPrice={true}
-                    />
-
-                    <CardButton
-                        onPress={selectAmount}
-                        label='Cantidad:'
-                        valueDefault='Seleccionar cantidad'
-                        color='green'
-                        control={control}
-                        controlValue='pieces'
-                        icon="bag-handle"
-                    />
-
-                    <CardButton
-                        onPress={() => navigate('[SellsRestaurants] - CommentInProduct')}
-                        label='Comentarios:'
-                        valueDefault='Escribir comentario'
-                        color='red'
-                        control={control}
-                        controlValue='comments'
-                        icon="chatbox"
-                    />
-
-                    {/* <View>
-                        <TextInputContainer
-                            setComments={(value) => setCommentState(value)}
-                            value={formSellsData.comments}
+                    <>
+                        <CardButton
+                            onPress={handleNavigateToClass}
+                            label='Clase:'
+                            valueDefault='Seleccionar la clase'
+                            color='blue'
+                            control={control}
+                            controlValue='typeClass'
+                            icon='resize-outline'
                         />
-                    </View> */}
-                </>
+
+                        <CardButton
+                            onPress={() => console.log("")}
+                            label='Precio:'
+                            valueDefault='Seleccionar precio'
+                            color='purple'
+                            control={control}
+                            controlValue='price'
+                            icon="pricetags"
+                            isPrice={true}
+                        />
+
+                        <CardButton
+                            onPress={selectAmount}
+                            label='Cantidad:'
+                            valueDefault='Seleccionar cantidad'
+                            color='green'
+                            control={control}
+                            controlValue='pieces'
+                            icon="bag-handle"
+                        />
+
+                        <CardButton
+                            onPress={() => navigate('[SellsRestaurants] - CommentInProduct')}
+                            label='Comentarios:'
+                            valueDefault='Escribir comentario'
+                            color='red'
+                            control={control}
+                            controlValue='comments'
+                            icon="chatbox"
+                        />
+                    </>
+                </ScrollView>
 
                 <FooterScreen
                     buttonTitle="Publicar"

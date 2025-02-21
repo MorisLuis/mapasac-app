@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CombinedSellsAndAppNavigationStackParamList } from '../../../interface';
 import { useNavigation } from '@react-navigation/native';
 import ButtonCustum from '../../../components/Inputs/ButtonCustum';
+import ModalBottom from '../../../components/Modals/ModalBottom';
 
 export interface shimpentMethodInterface {
     id: 1 | 2 | 3 | 4;
@@ -22,15 +23,16 @@ export const shimpentMethod: shimpentMethodInterface[] = [
 const ShimpentScreen = () => {
 
     const [methodShipment, setMethodShipment] = useState<shimpentMethodInterface['id']>(1)
-    const { navigate } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
+    const { navigate, goBack } = useNavigation<NativeStackNavigationProp<CombinedSellsAndAppNavigationStackParamList>>();
 
     const goBackToConfirmation = () => {
         navigate('[SellsRestaurants] - ConfirmationScreen', { methodShipment: methodShipment })
     }
 
     return (
-        <ModalScreen
-            onClose={() => console.log()}
+        <ModalBottom
+            visible={true}
+            onClose={() => goBack()}
         >
             <View>
                 {
@@ -50,7 +52,7 @@ const ShimpentScreen = () => {
                 />
             </View>
 
-        </ModalScreen>
+        </ModalBottom>
     )
 }
 

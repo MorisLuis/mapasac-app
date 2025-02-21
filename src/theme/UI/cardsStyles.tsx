@@ -13,12 +13,13 @@ export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.creat
     productInventoryCard: {
         display: "flex",
         flexDirection: "column",
+    
+        padding: 5, // Espacio entre la imagen y el borde del contenedor
         borderWidth: 0.2,
-        borderColor: theme.color_border,
-        backgroundColor: theme.background_color,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
-        padding: globalStyles(theme).globalPadding.padding / 4,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom,
+        borderColor: typeTheme === 'dark' ? theme.color_border : theme.color_border_dark,
+        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius, // Radio para el contenedor
+        overflow: 'hidden'
     },
     productInventoryCard__data: {
         flex: 1,

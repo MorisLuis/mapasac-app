@@ -3,6 +3,7 @@ import { NativeSyntheticEvent, StyleProp, TextInput, TextInputContentSizeChangeE
 import { useTheme } from '../../context/ThemeContext';
 import { globalFont, globalStyles } from '../../theme/appTheme';
 import CustomText from '../Ui/CustumText';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 interface TextInputContainerInterface {
     placeholder?: string;
@@ -60,8 +61,9 @@ export const TextInputContainer = forwardRef<TextInput, TextInputContainerInterf
                     paddingHorizontal: globalStyles(theme).globalPadding.padding,
                     borderWidth: 0.2,
                     borderColor: theme.color_border,
-                    borderRadius: globalStyles().borderRadius.borderRadius,
-                    color: theme.text_color
+                    borderRadius: globalStyles().borderRadius.borderRadius / 2,
+                    color: theme.text_color,
+                    minHeight: hp("5%")
                 }, styles ]}
                 onChangeText={handleTextChange}
                 multiline={true}

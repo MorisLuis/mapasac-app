@@ -114,7 +114,10 @@ const LayoutConfirmation = <T extends CombinedProductInterface>({
 
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
-            <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
+            <View style={[
+                ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen, 
+                availableToPost ? { paddingBottom: 100 } : {}
+                ]}>
                 <FlatList
                     data={data}
                     renderItem={renderItem}

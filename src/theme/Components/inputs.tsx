@@ -38,7 +38,7 @@ export const inputStyles = (theme: Theme, typeTheme?: string) => StyleSheet.crea
     },
 
     searchBar: {
-        borderRadius: globalStyles(theme).borderRadius.borderRadius,
+        borderRadius: globalStyles(theme).borderRadius.borderRadius/2,
         backgroundColor: theme.background_color_secondary,
         marginBottom: globalStyles(theme).globalMarginBottom.marginBottom,
         borderWidth: 0.2,
