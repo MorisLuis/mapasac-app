@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FlatList, SafeAreaView, View } from 'react-native';
+import { FlatList, SafeAreaView, ScrollView, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigation } from '@react-navigation/native';
 import { globalFont } from '../../theme/appTheme';
@@ -49,7 +49,7 @@ export const ProductDetailsSells = () => {
         image,
         totalClasses
     } = formSellsData;
-    
+
     const { typeTheme, theme } = useTheme();
     const { goBack, navigate } = useNavigation<SellsNavigationProp>();
     const { handleError } = useErrorHandler();
@@ -187,9 +187,9 @@ export const ProductDetailsSells = () => {
     }, [productSellData]);
 
 
-    return (
-        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
-            <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
+    const renderHeader = () => {
+        return (
+            <>
                 <View style={SellsDataScreenTheme(theme, typeTheme).header}>
                     <CustomText style={SellsDataScreenTheme(theme, typeTheme).title}>
                         {title?.trim()}
@@ -200,63 +200,73 @@ export const ProductDetailsSells = () => {
                         extraStyles={{ marginBottom: globalFont.font_sm / 2 }}
                     />
                 </View>
-
                 <ImageContainerCustum
                     imageValue={image}
                     size="small"
                 />
+            </>
+        )
+    }
 
-                {
-                    (watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) ?
-                        <>
-                            <CardButton
-                                onPress={handleGoToClassScreen}
-                                label='Clase:'
-                                valueDefault='Seleccionar la clase'
-                                color='blue'
-                                control={control}
-                                controlValue='typeClass'
-                                icon='resize-outline'
-                                specialValue={getValues('typeClass') === undefined ? "NO TIENE CLASE" : undefined}
-                            />
-                            <CardButton
-                                onPress={() => navigate('[Sells] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
-                                label='Cantidad:'
-                                valueDefault='Seleccionar cantidad'
-                                color='green'
-                                control={control}
-                                controlValue='pieces'
-                                icon="bag-handle"
-                            />
-                            <CardButton
-                                onPress={() => navigate('[Sells] - UnitScreen', { valueDefault: getValues('units') })}
-                                label='Unidad:'
-                                valueDefault='Seleccionar Unidad'
-                                color='red'
-                                control={control}
-                                controlValue='units'
-                                icon="shapes"
-                            />
-                            <CardButton
-                                onPress={() => navigate('[Sells] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
-                                label='Precio:'
-                                valueDefault='Seleccionar precio'
-                                color='purple'
-                                control={control}
-                                controlValue='price'
-                                icon="pricetags"
-                                isPrice={true}
-                            />
-                        </>
-                        :
-                        <FlatList
-                            data={Array(4).fill({})}
-                            renderItem={() => <CardSelectSkeleton />}
-                            keyExtractor={(_, index) => index.toString()}
-                            onEndReachedThreshold={0.5}
-                        />
-                }
+    if (!watch('typeClass') || (totalClasses !== undefined && totalClasses !== null && !hasClasses)) {
+        return (
+            <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
+                {renderHeader()}
+                <FlatList
+                    data={Array(4).fill({})}
+                    renderItem={() => <CardSelectSkeleton />}
+                    keyExtractor={(_, index) => index.toString()}
+                    onEndReachedThreshold={0.5}
+                />
+            </View>
+        )
+    }
 
+    return (
+        <SafeAreaView style={{ backgroundColor: theme.background_color }} >
+            <View style={SellsDataScreenTheme(theme, typeTheme).SellsDataScreen}>
+                <ScrollView>
+                    {renderHeader()}
+
+                    <CardButton
+                        onPress={handleGoToClassScreen}
+                        label='Clase:'
+                        valueDefault='Seleccionar la clase'
+                        color='blue'
+                        control={control}
+                        controlValue='typeClass'
+                        icon='resize-outline'
+                        specialValue={getValues('typeClass') === undefined ? "NO TIENE CLASE" : undefined}
+                    />
+                    <CardButton
+                        onPress={() => navigate('[Sells] - PiecesScreen', { from: "pieces", valueDefault: getValues('pieces'), unit: 'PZA' })}
+                        label='Cantidad:'
+                        valueDefault='Seleccionar cantidad'
+                        color='green'
+                        control={control}
+                        controlValue='pieces'
+                        icon="bag-handle"
+                    />
+                    <CardButton
+                        onPress={() => navigate('[Sells] - UnitScreen', { valueDefault: getValues('units') })}
+                        label='Unidad:'
+                        valueDefault='Seleccionar Unidad'
+                        color='red'
+                        control={control}
+                        controlValue='units'
+                        icon="shapes"
+                    />
+                    <CardButton
+                        onPress={() => navigate('[Sells] - PriceScreen', { from: "price", valueDefault: getValues('price'), unit: 'MXN' })}
+                        label='Precio:'
+                        valueDefault='Seleccionar precio'
+                        color='purple'
+                        control={control}
+                        controlValue='price'
+                        icon="pricetags"
+                        isPrice={true}
+                    />
+                </ScrollView>
                 <FooterScreen
                     buttonTitle="Publicar"
                     buttonOnPress={handleSubmit(onSubmit)}

@@ -26,31 +26,41 @@ export default function ImageContainerCustum({
         setImageHeight(calculatedHeight > 180 ? 180 : calculatedHeight);  // Respect maxHeight
     };
 
+    const imageRender = () => {
+        return (
+            <View style={[
+                uiImageCustumContainerStyles(theme, typeTheme).imageBackground,
+                { height: imageHeight || 180, maxHeight: 180 }  // Dynamic height with maxHeight 180
+            ]}>
+                <Image
+                    source={{ uri: `data:image/png;base64,${imageValue}` }}
+                    style={uiImageCustumContainerStyles(theme, typeTheme).image}
+                    onLoad={handleImageLoad}  // Trigger when image is loaded to get size
+                    resizeMode="cover"  // Contain the image inside the view
+                />
+            </View>
+        )
+    };
+
+    const notImageRender = () => {
+        return (
+            <View style={uiImageCustumContainerStyles(theme, typeTheme).notImage}>
+                <View style={uiImageCustumContainerStyles(theme).notImageBackground}>
+                    <Icon name={'image-outline'} size={24} color={'gray'} />
+                </View>
+            </View>
+        )
+    }
+
     return (
-        <View style={[
-            uiImageCustumContainerStyles(theme, typeTheme).imageContainer,
-            size && { height: 200 }
-        ]}>
+        <View
+            style={[
+                uiImageCustumContainerStyles(theme, typeTheme).imageContainer,
+                size && { height: 200 }
+            ]}
+        >
             {
-                imageValue ? (
-                    <View style={[
-                        uiImageCustumContainerStyles(theme, typeTheme).imageBackground,
-                        { height: imageHeight || 180, maxHeight: 180 }  // Dynamic height with maxHeight 180
-                    ]}>
-                        <Image
-                            source={{ uri: `data:image/png;base64,${imageValue}` }}
-                            style={uiImageCustumContainerStyles(theme, typeTheme).image}
-                            onLoad={handleImageLoad}  // Trigger when image is loaded to get size
-                            resizeMode="cover"  // Contain the image inside the view
-                        />
-                    </View>
-                ) : (
-                    <View style={uiImageCustumContainerStyles(theme, typeTheme).notImage}>
-                        <View style={uiImageCustumContainerStyles(theme).notImageBackground}>
-                            <Icon name={'image-outline'} size={24} color={'gray'} />
-                        </View>
-                    </View>
-                )
+                imageValue ? imageRender() : notImageRender()
             }
         </View>
     );
