@@ -124,6 +124,7 @@ const LayoutConfirmation = <T extends CombinedProductInterface>({
                     keyExtractor={item => `${item.idenlacemob}`}
                     onEndReached={loadBags}
                     onEndReachedThreshold={0.5}
+                    ItemSeparatorComponent={() => <View style={{ height: 10 }} />} // Espaciado de 10px
                     ListHeaderComponent={
                         <>
                             {renderListHeaderComponent()}

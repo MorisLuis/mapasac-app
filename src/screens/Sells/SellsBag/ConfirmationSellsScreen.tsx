@@ -45,7 +45,9 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [methodPayment, setMethodPayment] = useState(0);
     const [typeSelected, setTypeSelected] = useState<ClientInterface>();
     const [commentsLocal, setCommentsLocal] = useState("");
-    const availableToPost = methodPayment !== 0 && client !== undefined;
+    const availableToPost = methodPayment !== 0 && typeSelected !== undefined;
+
+    console.log({typeSelected})
 
     const onPostSells = async () => {
         setCreateSellLoading(true);
@@ -164,8 +166,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const renderScreen = () => {
         return (
             <SafeAreaView>
-                {/* <Button onPress={toggleTheme} title='ola' /> */}
-
                 <View style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
                     <Icon name='card-sharp' color={theme.color_red} size={globalFont.font_normal} />
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_red }}>Forma de pago</CustomText>
