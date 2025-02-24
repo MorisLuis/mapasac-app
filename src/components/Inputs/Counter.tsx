@@ -14,7 +14,7 @@ interface CounterInterface {
     secondaryDesign?: boolean
 }
 
-export const Counter = forwardRef<TextInput, CounterInterface> (({
+export const Counter = forwardRef<TextInput, CounterInterface>(({
     counter,
     setCounter,
     unit,
@@ -30,20 +30,24 @@ export const Counter = forwardRef<TextInput, CounterInterface> (({
     }
 
     const handleInputChange = (value: string) => {
-        let numericValue;
         const normalizedValue = value.replace(',', '.');
         const decimalCount = (normalizedValue.match(/\./g) || []).length;
 
-        if( decimalCount > 1) return;
+        if (decimalCount > 1) return;
 
-        if(value.endsWith('.')){
-            numericValue = Number(value.concat("1"));
-        } else {
-            numericValue = Number(value);
-        }
+        // Si termina en punto, concatenamos un dígito para hacer una conversión válida
+        const adjustedValue = normalizedValue.endsWith('.')
+            ? normalizedValue + '1'
+            : normalizedValue;
+
+        const numericValue = Number(adjustedValue);
+
+        // Si la conversión da NaN, salimos de la función
+        if (isNaN(numericValue)) return;
 
         setCounter(numericValue);
     }
+
 
     const subtractProduct = () => {
         if (counter <= 0) return 0;

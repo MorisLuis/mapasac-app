@@ -60,7 +60,10 @@ export const LayoutProductCard = <T extends ProductSellsInterface | ProductInter
 
 
     return (
-        <TouchableOpacity style={styles(theme, typeTheme).productInventoryCard} onPress={onClick}>
+        <TouchableOpacity
+            style={styles(theme, typeTheme).productInventoryCard}
+            onPress={onClick}
+        >
             <View style={styles(theme).productInventoryCard__data}>
                 <View style={styles(theme).information}>
                     <CustomText style={styles(theme).description}>{product.producto}</CustomText>

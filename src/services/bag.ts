@@ -52,7 +52,6 @@ const updateProductInBag = async (body: updateProductInBagInterface) => {
         return data
     } catch (error) {
         return { error: error };
-
     }
 }
 

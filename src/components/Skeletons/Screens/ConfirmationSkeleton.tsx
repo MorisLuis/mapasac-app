@@ -4,42 +4,46 @@ import { useTheme } from '../../../context/ThemeContext';
 import { ConfirmationScreenStyles } from '../../../theme/Layout/ConfirmationScreenTheme';
 import { ProductCardSkeleton } from '../ProductCardSkeleton';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import LinearGradient from 'react-native-linear-gradient';
 import { LayoutBagStyles } from '../../../theme/Layout/LayoutBagTheme';
 
 export const ConfirmationSkeleton = () => {
     const { theme, typeTheme } = useTheme();
 
-    const shimmerColors = [
-        theme.background_color_tertiary,
-        typeTheme === "light" ? "#eaeaea" : "#3a3a3a",
-        theme.background_color_tertiary
-    ]
 
     return (
 
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen}>
-                <ShimmerPlaceholder
-                    style={ConfirmationScreenStyles(theme).subtitleConfirmation}
-                    shimmerColors={shimmerColors}
-                    LinearGradient={LinearGradient}
-                >
+                <ShimmerPlaceholder style={ConfirmationScreenStyles(theme).subtitleConfirmation}>
+                    <ShimmerPlaceholder></ShimmerPlaceholder>
                 </ShimmerPlaceholder>
-                <ProductCardSkeleton />
 
-                <ShimmerPlaceholder
-                    style={ConfirmationScreenStyles(theme).subtitleConfirmation}
-                    shimmerColors={shimmerColors}
-                    LinearGradient={LinearGradient}
-                >
+                <ShimmerPlaceholder style={ConfirmationScreenStyles(theme).confirmationSells}>
+                    <ShimmerPlaceholder style={ConfirmationScreenStyles(theme).confirmationContainer}>
+                        <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                            <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}></ShimmerPlaceholder>
+                            <ShimmerPlaceholder style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}></ShimmerPlaceholder>
+                        </ShimmerPlaceholder>
+
+                        <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                            <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}></ShimmerPlaceholder>
+                            <ShimmerPlaceholder style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}></ShimmerPlaceholder>
+                        </ShimmerPlaceholder>
+                        <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
+                            <ShimmerPlaceholder style={ConfirmationScreenStyles(theme, typeTheme).confirmationItemLabel}></ShimmerPlaceholder>
+                            <ShimmerPlaceholder style={[ConfirmationScreenStyles(theme, typeTheme).confirmationText]}></ShimmerPlaceholder>
+                        </ShimmerPlaceholder>
+
+                    </ShimmerPlaceholder>
                 </ShimmerPlaceholder>
+
 
                 <FlatList
                     data={Array(6).fill({})}
                     renderItem={() => <ProductCardSkeleton />}
                     style={LayoutBagStyles(theme, typeTheme).content}
                     keyExtractor={(_, index) => index.toString()}
+                    ItemSeparatorComponent={() => <View style={{ height: 20 }} />} // Espaciado de 10px
                 />
             </View>
         </SafeAreaView>

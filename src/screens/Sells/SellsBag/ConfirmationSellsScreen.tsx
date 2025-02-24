@@ -47,8 +47,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     const [commentsLocal, setCommentsLocal] = useState("");
     const availableToPost = methodPayment !== 0 && typeSelected !== undefined;
 
-    console.log({typeSelected})
-
     const onPostSells = async () => {
         setCreateSellLoading(true);
         try {
@@ -149,7 +147,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
     };
 
     const renderItem = useCallback(({ item }: { item: ProductSellsInterface }) => {
-
         return (
             <ProductSellsCard
                 product={item}
@@ -218,7 +215,6 @@ export const ConfirmationSellsScreen = ({ route }: ConfirmationSellsScreenInterf
             </SafeAreaView>
         )
     }
-
 
     useFocusEffect(
         useCallback(() => {

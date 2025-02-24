@@ -6,18 +6,11 @@ import { Platforms } from '../../interface/utils';
 
 
 export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.create({
-    title: {
-        fontSize: globalFont.font_med,
-        marginBottom: globalStyles(theme).globalMarginBottom.marginBottom
-    },
     productInventoryCard: {
         display: "flex",
         flexDirection: "column",
-    
-        //padding: 5, // Espacio entre la imagen y el borde del contenedor
-        //borderWidth: 0.2,
+        borderWidth: 0.5,
         borderColor: typeTheme === 'dark' ? theme.color_border : theme.color_border_dark,
-        marginBottom: globalStyles(theme).globalMarginBottomSmall.marginBottom / 2,
         borderRadius: globalStyles(theme).borderRadius.borderRadius, // Radio para el contenedor
         overflow: 'hidden'
     },
@@ -26,11 +19,7 @@ export const styles = (theme: Theme, typeTheme?: ThemeColor) => StyleSheet.creat
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        backgroundColor: theme.background_color_secondary,
-        borderWidth: typeTheme === 'light' ? 1 : 0.2,
-        borderColor: typeTheme === 'light' ? theme.color_border_secondary : theme.color_border,
-        padding: globalStyles(theme).globalPadding.padding / 2,
-        borderRadius: globalStyles(theme).borderRadius.borderRadius / 2
+        padding: globalStyles(theme).globalPadding.padding / 2
     },
     dataItem: {
         display: "flex",

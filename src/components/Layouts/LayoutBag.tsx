@@ -220,6 +220,7 @@ export const LayoutBag = <T extends CombinedProductInterface>({
                                     renderItem={renderItem}
                                     keyExtractor={product => `${product.idenlacemob}`}
                                     onEndReached={loadBags}
+                                    ItemSeparatorComponent={() => <View style={{ height: 20 }} />} // Espaciado de 10px
                                     onEndReachedThreshold={0.5}
                                 />
                                 :

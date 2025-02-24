@@ -70,6 +70,7 @@ const LayoutConfirmation = <T extends CombinedProductInterface>({
                     <Icon name='checkmark-circle-sharp' color={theme.color_secondary} size={globalFont.font_normal} />
                     <CustomText style={{ fontFamily: 'Rubik-Bold', color: theme.color_secondary }}>Confirmacion de pedido</CustomText>
                 </View>
+    
                 <View style={ConfirmationScreenStyles(theme).confirmationSells}>
                     <View style={ConfirmationScreenStyles(theme).confirmationContainer}>
                         <View style={ConfirmationScreenStyles(theme, typeTheme).confirmationItem}>
@@ -115,9 +116,9 @@ const LayoutConfirmation = <T extends CombinedProductInterface>({
     return (
         <SafeAreaView style={{ backgroundColor: theme.background_color }} >
             <View style={[
-                ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen, 
+                ConfirmationScreenStyles(theme, typeTheme).ConfirmationScreen,
                 availableToPost ? { paddingBottom: 100 } : {}
-                ]}>
+            ]}>
                 <FlatList
                     data={data}
                     renderItem={renderItem}

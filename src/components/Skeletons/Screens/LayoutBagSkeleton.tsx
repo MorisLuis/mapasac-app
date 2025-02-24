@@ -38,6 +38,7 @@ export default function LayoutBagSkeleton() {
                     renderItem={() => <ProductCardSkeleton />}
                     style={LayoutBagStyles(theme, typeTheme).content}
                     keyExtractor={(_, index) => index.toString()} // Usamos el índice como key temporal
+                    ItemSeparatorComponent={() => <View style={{ height: 20 }} />} // Espaciado de 10px
                 />
             </View>
         </SafeAreaView>

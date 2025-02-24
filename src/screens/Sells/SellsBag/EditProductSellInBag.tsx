@@ -32,29 +32,33 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
     }
 
     const onEdit = () => {
-        setEditingProduct(true)
+        try {
+            setEditingProduct(true)
 
-        if(!product.idenlacemob) return;
-        if (piezasCount < 1) {
-            deleteProductSell(product.idenlacemob)
-        } else {
-            editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
+            if (!product.idenlacemob) return;
+            if (piezasCount < 1) {
+                deleteProductSell(product.idenlacemob)
+            } else {
+                editProductSell({ idenlacemob: product.idenlacemob, cantidad: piezasCount });
+            }
+
+            setTimeout(() => {
+                Toast.show({
+                    type: 'tomatoToast',
+                    text1: 'Se actualizo la cantidad!'
+                })
+                setEditingProduct(false);
+                handleCloseModal()
+            }, 500);
+        } catch (error) {
+            console.log({ error })
         }
-
-        setTimeout(() => {
-            Toast.show({
-                type: 'tomatoToast',
-                text1: 'Se actualizo la cantidad!'
-            })
-            setEditingProduct(false);
-            handleCloseModal()
-        }, 500);
 
     }
 
     useEffect(() => {
         const handleProductPiezasCount = () => {
-            if(!product?.cantidad) return
+            if (!product?.cantidad) return
             setPiezasCount(product?.cantidad)
         }
 
@@ -68,7 +72,12 @@ export const EditProductSellInBag = ({ route }: EditProductSellInBagInterface) =
         >
             <View style={EditProductStyles(theme).EditProductInBag_header}>
                 <CustomText style={EditProductStyles(theme).EditProductInBag_title}>Deseas cambiar la cantidad de piezas?</CustomText>
-                <Counter counter={piezasCount} setCounter={setPiezasCount} unit={product?.unidad_nombre} secondaryDesign />
+                <Counter
+                    counter={piezasCount}
+                    setCounter={setPiezasCount}
+                    unit={product?.unidad_nombre}
+                    secondaryDesign
+                />
             </View>
 
             {

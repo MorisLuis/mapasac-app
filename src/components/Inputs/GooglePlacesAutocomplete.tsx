@@ -59,7 +59,7 @@ const InputGooglePlaces = ({ locationValue, setLocaltionValue, onFocus, onBlur }
     };
 
     const GooglePlacesAutocompleteQuery = {
-        key: 'AIzaSyAaIBopBnPxPwUOnUlSaK3q94uiRN3bD9s',
+        key: 'AIzaSyAdRH2f0yD4Jq8-ZggRjCpKq4eSqufuby8',
         language: 'es',
         components: 'country:mx',
     };
